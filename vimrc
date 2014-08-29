@@ -2,6 +2,11 @@
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
+" =============== Character Fixes ====================
+
+scriptencoding utf-8
+set encoding=utf-8
+
 " ================ General Config ====================
 
 set number                      "Line numbers are good
@@ -12,6 +17,8 @@ set showmode                    "Show current mode down the bottom
 set gcr=a:blinkon0              "Disable cursor blink
 set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
+set ruler                       "Show ruler
+set undolevels=1000
 
 " This makes vim act like all other editors, buffers can
 " exist in the background without being in a window.
@@ -26,6 +33,10 @@ syntax on
 " The mapleader has to be set before vundle starts loading all 
 " the plugins.
 let mapleader=","
+
+" highlight funky characters and whatnot
+set list
+set listchars=tab:▸\ ,trail:ـ,extends:➧,eol:¬
 
 " =============== Vundle Initialization ===============
 " This loads all the plugins specified in ~/.vim/vundles.vim

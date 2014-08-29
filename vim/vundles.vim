@@ -26,8 +26,9 @@ runtime ruby.vundle
 runtime git.vundle
 runtime languages.vundle
 runtime project.vundle
-"runtime vim-improvements.vundle
+runtime vim-improvements.vundle
 runtime appearance.vundle
+runtime search.vundle
 
 call vundle#end()
 
