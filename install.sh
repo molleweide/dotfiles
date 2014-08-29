@@ -3,6 +3,7 @@
 echo "Setting GitHub user to dbalatero"
 git config --global github.user dbalatero
 
+echo "Setting up vimrc"
 if [ ! -f ~/.vimrc ]; then
   ln -s ~/.dotfiles/vimrc ~/.vimrc
 fi
