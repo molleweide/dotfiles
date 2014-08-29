@@ -114,3 +114,7 @@ noremap <Left> <nop>
 noremap <Right> <nop>
 noremap <Up> <nop>
 noremap <Down> <nop>
+
+" remap ESC to jk
+inoremap jk <esc>
+inoremap <esc> <nop>
