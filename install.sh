@@ -1,7 +1,30 @@
 #!/bin/bash
 
-echo "Setting GitHub user to dbalatero"
-git config --global github.user dbalatero
+printf "What is your GitHub username? > "
+read github_user
+git config -f ~/.gitconfig.user github.user "$github_user"
+
+printf "What is your git name? > "
+read git_name
+git config -f ~/.gitconfig.user user.name "$git_name"
+
+printf "What is your git email? > "
+read git_email
+git config -f ~/.gitconfig.user user.email "$git_email"
+
+echo "Setting up git"
+if [ ! -f ~/.gitconfig ]; then
+  ln -s ~/.dotfiles/git/gitconfig ~/.gitconfig
+fi
+
+if [ ! -f ~/.gitignore ]; then
+  ln -s ~/.dotfiles/git/gitignore ~/.gitignore
+fi
+
+echo "Setting up pry"
+if [ ! -f ~/.pryrc ]; then
+  ln -s ~/.dotfiles/irb/pryrc ~/.pryrc
+fi
 
 echo "Setting up vimrc"
 if [ ! -f ~/.vimrc ]; then
