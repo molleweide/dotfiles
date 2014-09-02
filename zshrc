@@ -1,3 +1,5 @@
+export DISABLE_AUTO_TITLE="true"
+
 source $HOME/.zsh/antigen.zsh
 
 antigen use oh-my-zsh
@@ -7,7 +9,6 @@ antigen bundle git
 antigen bundle rails
 antigen bundle ruby
 antigen bundle rvm
-antigen bundle tmux
 antigen bundle zeus
 
 antigen bundle ssh-agent
