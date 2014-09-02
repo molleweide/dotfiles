@@ -11,6 +11,7 @@ antigen bundle tmux
 antigen bundle zeus
 
 # Functionality diffs
+antigen bundle autojump
 antigen bundle command-not-found
 antigen bundle vi-mode
 antigen bundle zsh-users/zsh-syntax-highlighting
