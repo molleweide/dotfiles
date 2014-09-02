@@ -113,7 +113,7 @@
 [core]
   autocrlf = false
   editor = vim
-  excludesfile = ~/.yadr/git/gitignore
+  excludesfile = ~/.gitignore
 [advice]
   statusHints = false
 [diff]
