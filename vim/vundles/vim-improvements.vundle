@@ -1,5 +1,5 @@
 Bundle "AndrewRadev/splitjoin.vim"
-Bundle "Shougo/neocomplete.git"
+Bundle "ervandew/supertab"
 Bundle "briandoll/change-inside-surroundings.vim"
 Bundle "godlygeek/tabular"
 Bundle "tomtom/tcomment_vim.git"
