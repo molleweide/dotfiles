@@ -7,11 +7,12 @@ antigen bundle git
 antigen bundle rails
 antigen bundle ruby
 antigen bundle rvm
+antigen bundle tmux
 antigen bundle zeus
 
 # Functionality diffs
-antigen bundle vi-mode
 antigen bundle command-not-found
+antigen bundle vi-mode
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Add src() command to reload zshrc
