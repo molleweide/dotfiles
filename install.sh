@@ -12,6 +12,15 @@ printf "What is your git email? > "
 read git_email
 git config -f ~/.gitconfig.user user.email "$git_email"
 
+echo "Setting up ZSH..."
+if [ ! -f ~/.zshrc ]; then
+  ln -s ~/.dotfiles/zshrc ~/.zshrc
+fi
+
+if [ ! -d ~/.zsh ]; then
+  ln -s ~/.dotfiles/zsh ~/.zsh
+fi
+
 echo "Setting up git"
 if [ ! -f ~/.gitconfig ]; then
   ln -s ~/.dotfiles/git/gitconfig ~/.gitconfig
@@ -24,6 +33,11 @@ fi
 echo "Setting up pry"
 if [ ! -f ~/.pryrc ]; then
   ln -s ~/.dotfiles/irb/pryrc ~/.pryrc
+fi
+
+echo "Setting up tmux"
+if [ ! -f ~/.tmux.conf ]; then
+  ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
 fi
 
 echo "Setting up vimrc"
