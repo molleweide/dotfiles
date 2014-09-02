@@ -14,6 +14,9 @@ antigen bundle vi-mode
 antigen bundle command-not-found
 antigen bundle zsh-users/zsh-syntax-highlighting
 
+# Add src() command to reload zshrc
+antigen bundle zsh_reload
+
 antigen theme simple
 
 antigen apply
