@@ -1,8 +1,7 @@
 #!/bin/bash
 
-printf "What is your GitHub username? > "
-read github_user
-git config -f ~/.gitconfig.user github.user "$github_user"
+brew install fasd
+brew install zsh
 
 printf "What is your git name? > "
 read git_name
