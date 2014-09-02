@@ -46,6 +46,7 @@ if filereadable(expand("~/.vim/vundles.vim"))
   source ~/.vim/vundles.vim
 endif
 
+
 " ================ Turn Off Swap Files ==============
 
 set noswapfile
@@ -56,7 +57,7 @@ set nowb
 " Keep undo history across sessions, by storing in file.
 
 if has('persistent_undo')
-  silent !mkdir ~/.vim/backups > /dev/null 2>&1
+  "silent !mkdir ~/.vim/backups > /dev/null 2>&1
   set undodir=~/.vim/backups
   set undofile
 endif
