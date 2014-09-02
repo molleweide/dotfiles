@@ -10,6 +10,8 @@ antigen bundle rvm
 antigen bundle tmux
 antigen bundle zeus
 
+antigen bundle ssh-agent
+
 # Functionality diffs
 antigen bundle autojump
 antigen bundle command-not-found
