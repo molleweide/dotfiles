@@ -1,0 +1,1 @@
+alias sz="script/zeus"
