@@ -3,13 +3,19 @@
 brew install fasd
 brew install zsh
 
-printf "What is your git name? > "
-read git_name
-git config -f ~/.gitconfig.user user.name "$git_name"
+if [ ! -f ~/.gitconfig.user ]; then
+  printf "What is your GitHub username? > "
+  read github_user
+  git config -f ~/.gitconfig.user github.user "$github_user"
 
-printf "What is your git email? > "
-read git_email
-git config -f ~/.gitconfig.user user.email "$git_email"
+  printf "What is your git name? > "
+  read git_name
+  git config -f ~/.gitconfig.user user.name "$git_name"
+
+  printf "What is your git email? > "
+  read git_email
+  git config -f ~/.gitconfig.user user.email "$git_email"
+fi
 
 echo "Setting up ZSH..."
 if [ ! -f ~/.zshrc ]; then
