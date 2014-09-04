@@ -1,4 +1,5 @@
 export DISABLE_AUTO_TITLE="true"
+setopt AUTO_PUSHD
 
 source $HOME/.zsh/antigen.zsh
 
