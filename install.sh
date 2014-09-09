@@ -35,6 +35,10 @@ if [ ! -f ~/.gitignore ]; then
   ln -s ~/.dotfiles/git/gitignore ~/.gitignore
 fi
 
+if [ ! -d ~/.git_template ]; then
+  ln -s ~/.dotfiles/git/template ~/.git_template
+fi
+
 echo "Setting up pry"
 if [ ! -f ~/.pryrc ]; then
   ln -s ~/.dotfiles/irb/pryrc ~/.pryrc
