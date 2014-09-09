@@ -40,6 +40,18 @@ if [ ! -f ~/.pryrc ]; then
   ln -s ~/.dotfiles/irb/pryrc ~/.pryrc
 fi
 
+if [ ! -f ~/.unescaped_colors.rb ]; then
+  ln -s ~/.dotfiles/irb/unescaped_colors.rb ~/.unescaped_colors.rb
+fi
+
+if [ ! -f ~/.escaped_colors.rb ]; then
+  ln -s ~/.dotfiles/irb/escaped_colors.rb ~/.escaped_colors.rb
+fi
+
+if [ ! -f ~/.aprc ]; then
+  ln -s ~/.dotfiles/irb/aprc ~/.aprc
+fi
+
 echo "Setting up tmux"
 if [ ! -f ~/.tmux.conf ]; then
   ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
