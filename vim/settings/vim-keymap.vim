@@ -109,3 +109,6 @@ noremap <Down> <nop>
 " remap ESC to jk
 inoremap jk <esc>
 inoremap <esc> <nop>
+
+" I keep hitting shift + K and it pukes all over vim, don't need it, remap it!
+noremap <S-k> <nop>
