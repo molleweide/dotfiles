@@ -12,4 +12,4 @@ let g:syntastic_quiet_messages = {'level': 'warnings'}
 
 let g:syntastic_mode_map = { 'mode': 'active',
                            \ 'active_filetypes': [],
-                           \ 'passive_filetypes': ['ruby', 'haml'] }
+                           \ 'passive_filetypes': ['ruby', 'haml', 'sass'] }
