@@ -1,5 +1,6 @@
 Bundle "briancollins/vim-jst"
 Bundle "pangloss/vim-javascript"
+Bundle "elzr/vim-json"
 Bundle "rodjek/vim-puppet"
 Bundle "othree/javascript-libraries-syntax.vim"
 Bundle "digitaltoad/vim-jade.git"
