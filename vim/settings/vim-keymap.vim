@@ -29,6 +29,9 @@ endfunction
 " RSI Prevention - keyboard remaps
 " ========================================
 
+" add ctrl+[ for ESC
+inoremap <c-[> <ESC>
+
 " ,# Surround a word with #{ruby interpolation}
 map ,# ysiw#
 vmap ,# c#{<C-R>"}<ESC>
