@@ -4,6 +4,10 @@ let g:vroom_use_zeus = 1
 let g:vroom_use_bundle_exec = 0
 let g:vroom_use_dispatch = 0
 
+" Setup vimux so vroom dispatches in the side Terminal panel
+let g:vroom_clear_screen = 0
+let g:vroom_use_vimux = 1
+
 let g:dispatch_compilers = {
       \ 'bundle exec': '',
       \ 'clear;': '',
