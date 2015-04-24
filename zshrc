@@ -7,18 +7,10 @@ antigen use oh-my-zsh
 
 # Tool completion/aliases
 antigen bundle git
-antigen bundle rails
-antigen bundle ruby
-antigen bundle rvm
-antigen bundle zeus
-
 antigen bundle ssh-agent
 
 # Functionality diffs
 antigen bundle autojump
-antigen bundle command-not-found
-antigen bundle emoji-clock
-antigen bundle fasd
 antigen bundle vi-mode
 antigen bundle zsh-users/zsh-syntax-highlighting
 
