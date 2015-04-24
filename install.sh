@@ -4,6 +4,7 @@ brew install fasd
 brew install zsh
 brew install direnv
 brew install tmux
+brew install wget
 
 if [ ! -f ~/.gitconfig.user ]; then
   printf "What is your GitHub username? > "
