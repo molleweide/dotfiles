@@ -1,6 +1,7 @@
 #!/bin/bash
 
 brew install fasd
+brew install git
 brew install zsh
 brew install direnv
 brew install tmux
