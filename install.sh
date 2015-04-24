@@ -5,6 +5,9 @@ brew install zsh
 brew install direnv
 brew install tmux
 brew install wget
+brew install reattach-to-user-namespace
+brew install the_silver_searcher
+brew install autojump
 
 if [ ! -f ~/.gitconfig.user ]; then
   printf "What is your GitHub username? > "
