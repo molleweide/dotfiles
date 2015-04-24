@@ -1,3 +1,5 @@
+let g:showmarks_enable=0
+
 "mark syntax errors with :signs
 let g:syntastic_enable_signs=1
 
