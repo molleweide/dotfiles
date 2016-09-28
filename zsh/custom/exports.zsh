@@ -1,0 +1,1 @@
+export ENABLE_GULP_NOTIFY=1
