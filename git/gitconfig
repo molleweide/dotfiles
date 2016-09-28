@@ -65,6 +65,8 @@
   # remote
   r = remote -v                     # show remotes (verbose)
 
+  sync = !git fetch origin && git rebase -i origin/master
+
   # reset
   unstage = reset HEAD              # remove files from index (tracking)
   uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
