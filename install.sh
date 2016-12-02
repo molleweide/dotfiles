@@ -4,6 +4,7 @@ brew install fasd
 brew install git
 brew install zsh
 brew install direnv
+brew install autoenv
 brew install tmux
 brew install wget
 brew install reattach-to-user-namespace
