@@ -30,6 +30,6 @@ aug filetype_ruby
   au BufWritePre *.rb :%s/\s\+$//e
 aug END
 
-au BufRead,BufNewFile {Capfile,Gemfile,Rakefile,Thorfile,Sharkfile,config.ru,.caprc,.irbrc,irb_tempfile*} set ft=ruby
+au BufRead,BufNewFile {Capfile,Gemfile,Rakefile,Thorfile,Sharkfile,config.ru,.caprc,.irbrc,irb_tempfile*,*.arb} set ft=ruby
 au BufRead,BufNewFile {Procfile*} set ft=yaml
 au BufRead,BufNewFile *.hamlc set ft=haml
