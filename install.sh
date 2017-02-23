@@ -1,5 +1,6 @@
 #!/bin/bash
 
+brew install neovim/neovim/neovim
 brew install fasd
 brew install git
 brew install zsh
@@ -82,6 +83,10 @@ if [ ! -d ~/.vim/bundle/vundle ]; then
   echo "Cloning Vundle to ~/.vim"
   git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 fi
+
+echo "Setting up Neovim config"
+mkdir -p ~/.config
+ln -s ~/.dotfiles/nvim ~/.config/nvim
 
 echo "Installing plugins"
 vim +PluginInstall +qall
