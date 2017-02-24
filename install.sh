@@ -12,6 +12,12 @@ brew install reattach-to-user-namespace
 brew install the_silver_searcher
 brew install autojump
 
+if [ ! -d ~/.dotfiles/dependencies/fonts ]; then
+  echo "Setting up patched Powerline fonts..."
+  git clone git@github.com:powerline/fonts.git ~/.dotfiles/dependencies/fonts
+  ~/.dotfiles/dependencies/fonts/install.sh
+fi
+
 if [ ! -f ~/.gitconfig.user ]; then
   printf "What is your GitHub username? > "
   read github_user
