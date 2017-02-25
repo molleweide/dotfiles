@@ -98,9 +98,14 @@ if [ ! -d ~/.vim/bundle/vundle ]; then
   git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 fi
 
-echo "Setting up Neovim config"
-mkdir -p ~/.config
-ln -s ~/.dotfiles/nvim ~/.config/nvim
+if [ ! -d ~/.config ]; then
+  mkdir -p ~/.config
+fi
+
+if [ ! -d ~/.config/nvim ]; then
+  echo "Setting up Neovim config"
+  ln -s ~/.dotfiles/nvim ~/.config/nvim
+fi
 
 echo "Installing plugins"
 vim +PluginInstall +qall
