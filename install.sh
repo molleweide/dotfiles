@@ -110,7 +110,11 @@ fi
 echo "Installing plugins"
 vim +PluginInstall +qall
 
+echo "Installing nvim plugins"
+nvim +PlugInstall
+
 cd ~/.vim/bundle/ctrlp-cmatcher
 CFLAGS=-Qunused-arguments CPPFLAGS=-Qunused-arguments ./install.sh
 
-brew install ctags
+cd ~/.local/share/nvim/plugged/ctrlp-cmatcher
+CFLAGS=-Qunused-arguments CPPFLAGS=-Qunused-arguments ./install.sh
