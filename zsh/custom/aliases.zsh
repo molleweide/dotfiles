@@ -3,6 +3,7 @@ ms() { bash -c "cd ~/code/mariners && ./scoreboard $@" }
 alias dbm="rake db:migrate && rake db:test:prepare"
 alias ole="bin/open_last_error"
 alias c="citizen"
+alias vim="nvim"
 
 zroute() { zeus rake routes | ag $@ }
 
