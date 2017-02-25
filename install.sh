@@ -6,7 +6,7 @@ brew install git
 brew install zsh
 brew install direnv
 brew install autoenv
-brew install tmux
+brew install choppsv1/term24/tmux  # 24-bit color version
 brew install wget
 brew install reattach-to-user-namespace
 brew install the_silver_searcher
@@ -74,6 +74,14 @@ fi
 echo "Setting up tmux"
 if [ ! -f ~/.tmux.conf ]; then
   ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
+fi
+
+if [ ! -d ~/.tmux ]; then
+  ln -s ~/.dotfiles/tmux ~/.tmux
+fi
+
+if [ ! -d ~/.tmux/plugins/tpm ]; then
+  git clone git@github.com:tmux-plugins/tpm.git ~/.tmux/plugins/tpm
 fi
 
 echo "Setting up vimrc"
