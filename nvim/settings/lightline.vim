@@ -1,7 +1,7 @@
 let g:lightline = {
       \ 'colorscheme': 'solarized',
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
       \   'right': [ [ 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
       \ 'component_function': {
@@ -11,7 +11,6 @@ let g:lightline = {
       \   'filetype': 'MyFiletype',
       \   'fileencoding': 'MyFileencoding',
       \   'mode': 'MyMode',
-      \   'ctrlpmark': 'CtrlPMark',
       \   'readonly': '%{&readonly?"x":""}',
       \ },
       \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },

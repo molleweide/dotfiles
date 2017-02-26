@@ -42,8 +42,10 @@ Plug 'tpope/vim-git'
 """"""
 " Projects
 """"""
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'FelikZ/ctrlp-py-matcher'
+" Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 Plug 'tpope/vim-eunuch'
