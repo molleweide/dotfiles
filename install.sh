@@ -1,6 +1,7 @@
 #!/bin/bash
 
-brew install neovim/neovim/neovim
+brew install getantibody/tap/antibody
+brew install neovim/neovim/neovim --HEAD
 brew install fasd
 brew install git
 brew install zsh
@@ -11,6 +12,32 @@ brew install wget
 brew install reattach-to-user-namespace
 brew install the_silver_searcher
 brew install autojump
+brew install pyenv
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+pyenv install -s 2.7.13
+pyenv install -s 3.6.0
+
+if [ ! -d $(pyenv root)/plugins/pyenv-virtualenv ]; then
+  git clone https://github.com/yyuu/pyenv-virtualenv.git \
+    $(pyenv root)/plugins/pyenv-virtualenv
+fi
+
+if ! pyenv virtualenvs | grep -r py2neovim; then
+  pyenv virtualenv 2.7.13 py2neovim
+fi
+
+if ! pyenv virtualenvs | grep -q py3neovim; then
+  pyenv virtualenv 3.6.0 py3neovim
+fi
+
+pyenv activate py2neovim
+pip install neovim
+
+pyenv activate py3neovim
+pip install neovim
 
 if [ ! -d ~/.dotfiles/dependencies/fonts ]; then
   echo "Setting up patched Powerline fonts..."
