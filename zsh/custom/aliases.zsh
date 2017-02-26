@@ -4,6 +4,7 @@ alias dbm="rake db:migrate && rake db:test:prepare"
 alias ole="bin/open_last_error"
 alias c="citizen"
 alias vim="nvim"
+alias tn="tmuxinator"
 
 zroute() { zeus rake routes | ag $@ }
 

@@ -99,6 +99,11 @@ if [ ! -f ~/.unescaped_colors.rb ]; then
   ln -s ~/.dotfiles/irb/unescaped_colors.rb ~/.unescaped_colors.rb
 fi
 
+if [ ! -d ~/.tmuxinator ]; then
+  echo "Setting up Tmuxinator"
+  ln -s ~/.dotfiles/tmuxinator ~/.tmuxinator
+fi
+
 if [ ! -f ~/.escaped_colors.rb ]; then
   ln -s ~/.dotfiles/irb/escaped_colors.rb ~/.escaped_colors.rb
 fi
