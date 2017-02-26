@@ -42,6 +42,12 @@ pip install neovim
 pyenv activate py3neovim
 pip install neovim
 
+if [ ! -L ~/.rvm/hooks/after_install_add_default_gems ]; then
+  echo "Symlinking hooks to RVM"
+  mkdir -p ~/.rvm/hooks
+  ln -s ~/.dotfiles/rvm/hooks/after_install_add_default_gems ~/.rvm/hooks/
+fi
+
 if [ ! -d ~/.dotfiles/dependencies/fonts ]; then
   echo "Setting up patched Powerline fonts..."
   git clone git@github.com:powerline/fonts.git ~/.dotfiles/dependencies/fonts
