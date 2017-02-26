@@ -15,6 +15,8 @@ brew install the_silver_searcher
 brew install autojump
 brew install pyenv
 
+export PYTHON_CONFIGURE_OPTS="--enable-framework"
+
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 

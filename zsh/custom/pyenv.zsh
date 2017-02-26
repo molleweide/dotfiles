@@ -1,3 +1,6 @@
+export PYTHON_CONFIGURE_OPTS="--enable-framework"
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+
 # To use Homebrew's directories rather than ~/.pyenv add to your profile:
 export PYENV_ROOT=/usr/local/var/pyenv
 

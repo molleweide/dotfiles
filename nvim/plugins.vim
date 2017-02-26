@@ -43,7 +43,7 @@ Plug 'tpope/vim-git'
 " Projects
 """"""
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'JazzCore/ctrlp-cmatcher'
+Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 Plug 'tpope/vim-eunuch'
@@ -64,7 +64,7 @@ Plug 'Peeja/vim-cdo'
 " Vim improvements
 """"""
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'briandoll/change-inside-surroundings.vim'
 Plug 'godlygeek/tabular'
 Plug 'tomtom/tcomment_vim'

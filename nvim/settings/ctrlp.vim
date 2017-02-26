@@ -1,5 +1,5 @@
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard']
-let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
 " Don't manage working directory
 let g:ctrlp_working_path_mode = 0
