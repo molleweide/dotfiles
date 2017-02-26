@@ -1,0 +1,5 @@
+rvm $rvm_ruby_string@global do gem install --no-ri --no-rdoc \
+  bundler \
+  zeus \
+  tmuxinator \
+  neovim
