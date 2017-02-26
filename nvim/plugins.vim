@@ -64,6 +64,7 @@ Plug 'Peeja/vim-cdo'
 " Vim improvements
 """"""
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'Valloric/YouCompleteMe'
 Plug 'briandoll/change-inside-surroundings.vim'
 Plug 'godlygeek/tabular'
 Plug 'tomtom/tcomment_vim'
