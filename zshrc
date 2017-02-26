@@ -1,29 +1,36 @@
 export DISABLE_AUTO_TITLE="true"
 setopt AUTO_PUSHD
 
-source $HOME/.zsh/antigen.zsh
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
 
-antigen use oh-my-zsh
+zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/ssh-agent", from:oh-my-zsh
+zplug "plugins/autojump", from:oh-my-zsh
+zplug "plugins/vi-mode", from:oh-my-zsh
+zplug "plugins/zsh_reload", from:oh-my-zsh
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "caiogondim/bullet-train.zsh", as:theme
 
-# Tool completion/aliases
-antigen bundle git
-antigen bundle ssh-agent
+BULLETTRAIN_PROMPT_ORDER=(
+  status
+  custom
+  context
+  dir
+  ruby
+  nvm
+  git
+  cmd_exec_time
+)
 
-# Functionality diffs
-antigen bundle autojump
-antigen bundle vi-mode
-antigen bundle zsh-users/zsh-syntax-highlighting
+if ! zplug check --verbose; then
+  printf "Install? [y/N]: "
+  if read -q; then
+    echo; zplug install
+  fi
+fi
 
-# Add src() command to reload zshrc
-antigen bundle zsh_reload
-
-# Use my custom theme gist
-# antigen theme https://gist.github.com/51dba9c555e680d7e883.git dbalatero
-
-antigen theme \
-  https://github.com/dbalatero/bullet-train-oh-my-zsh-theme bullet-train
-
-antigen apply
+zplug load
 
 for file in $HOME/.zsh/custom/**/*.zsh
 do

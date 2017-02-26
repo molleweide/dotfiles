@@ -5,6 +5,7 @@ brew install neovim/neovim/neovim --HEAD
 brew install fasd
 brew install git
 brew install zsh
+brew install zplug
 brew install direnv
 brew install autoenv
 brew install choppsv1/term24/tmux  # 24-bit color version
