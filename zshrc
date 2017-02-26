@@ -4,13 +4,17 @@ setopt AUTO_PUSHD
 export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
-zplug "plugins/git", from:oh-my-zsh
-zplug "plugins/ssh-agent", from:oh-my-zsh
+zplug "caiogondim/bullet-train.zsh", as:theme
+zplug "dijitalmunky/nvm-auto", defer:3
 zplug "plugins/autojump", from:oh-my-zsh
+zplug "plugins/elixir", from:oh-my-zsh
+zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/jsontools", from:oh-my-zsh
+zplug "plugins/ssh-agent", from:oh-my-zsh
 zplug "plugins/vi-mode", from:oh-my-zsh
 zplug "plugins/zsh_reload", from:oh-my-zsh
+zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug "caiogondim/bullet-train.zsh", as:theme
 
 BULLETTRAIN_PROMPT_ORDER=(
   status
@@ -30,6 +34,9 @@ if ! zplug check --verbose; then
   fi
 fi
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
 zplug load
 
 for file in $HOME/.zsh/custom/**/*.zsh
@@ -38,8 +45,3 @@ do
 done
 
 source $HOME/.zsh/after.zsh
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-export NVM_DIR="/Users/dbalatero/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
