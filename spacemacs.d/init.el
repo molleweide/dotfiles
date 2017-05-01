@@ -39,15 +39,23 @@ values."
      helm
      ;; auto-completion
      ;; better-defaults
+     elixir
      emacs-lisp
-     ;; git
-     ;; markdown
+     emoji
+     git
+     github
+     html
+     javascript
+     markdown
+     react
+     ruby
+     ruby-on-rails
      ;; org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
-     ;; spell-checking
-     ;; syntax-checking
+     spell-checking
+     syntax-checking
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
@@ -133,7 +141,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               :size 18
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -143,7 +151,7 @@ values."
    ;; (default "SPC")
    dotspacemacs-emacs-command-key "SPC"
    ;; The key used for Vim Ex commands (default ":")
-   dotspacemacs-ex-command-key ":"
+   dotspacemacs-ex-command-key ";"
    ;; The leader key accessible in `emacs state' and `insert state'
    ;; (default "M-m")
    dotspacemacs-emacs-leader-key "M-m"
@@ -220,10 +228,10 @@ values."
    dotspacemacs-loading-progress-bar t
    ;; If non nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup nil
+   dotspacemacs-fullscreen-at-startup t
    ;; If non nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
-   dotspacemacs-fullscreen-use-non-native nil
+   dotspacemacs-fullscreen-use-non-native t
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
@@ -259,7 +267,7 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -290,7 +298,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup "all"
    ))
 
 (defun dotspacemacs/user-init ()
@@ -309,7 +317,27 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (setq-default evil-escape-key-sequence "jk")
+  (define-key evil-normal-state-map (kbd "C-h") #'evil-window-left)
+  (define-key evil-normal-state-map (kbd "C-j") #'evil-window-down)
+  (define-key evil-normal-state-map (kbd "C-k") #'evil-window-up)
+  (define-key evil-normal-state-map (kbd "C-l") #'evil-window-right)
+  (define-key evil-normal-state-map (kbd "C-p") #'helm-projectile-find-file)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol nil)
+ '(package-selected-packages
+   (quote
+    (ob-elixir mmm-mode markdown-toc markdown-mode magit-gh-pulls github-search github-clone github-browse-file gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck-mix flycheck-credo flycheck emoji-cheat-sheet-plus auto-dictionary alchemist company elixir-mode web-mode web-beautify tagedit slim-mode scss-mode sass-mode pug-mode projectile-rails inflections livid-mode skewer-mode simple-httpd less-css-mode json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc helm-css-scss haml-mode feature-mode emmet-mode coffee-mode smeargle rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake orgit minitest magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor chruby bundler inf-ruby ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
