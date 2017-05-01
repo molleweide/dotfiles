@@ -41,7 +41,7 @@ windows:
       root: ~/code/falling-fruit
       layout: main-vertical
       panes:
-        - cd api && node app.js
+        - cd api && nodemon app.js
         - rails s
   - ffm-editor:
       root: ~/code/falling-fruit-mobile

@@ -19,6 +19,7 @@ Plug 'moll/vim-node', { 'for': ['javascript'] }
 Plug 'mxw/vim-jsx'
 Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
 Plug 'elzr/vim-json', { 'for': ['json'] }
+Plug 'digitaltoad/vim-pug'
 
 "" Elixir
 Plug 'elixir-lang/vim-elixir'
@@ -32,6 +33,7 @@ Plug 'ck3g/vim-change-hash-syntax'
 Plug 'tpope/vim-bundler'
 Plug 'skalnik/vim-vroom'
 Plug 'tpope/vim-dispatch'
+Plug 'slim-template/vim-slim'
 
 """""""""
 " Git
@@ -80,5 +82,6 @@ Plug 'vim-scripts/AnsiEsc.vim'
 Plug 'vim-scripts/AutoTag'
 Plug 'vim-scripts/sudo.vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'yegappan/greplace'
 
 call plug#end()

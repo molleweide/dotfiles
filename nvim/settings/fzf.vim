@@ -4,10 +4,7 @@ let g:fzf_action = {
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
 
-let g:fzf_source = 'git ls-files . -co --exclude-standard'
-
-" Default fzf layout
-" - down / up / left / right
+" Default fzf layout down / up / left / right
 let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_sink = 'e'
 
@@ -32,4 +29,6 @@ let g:fzf_colors =
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-noremap <C-p> :FZF<CR>
+let fzf_source = '(git ls-files . -co --exclude-standard || ag --hidden --ignore .git --ignore node_modules -g "")'
+
+noremap <C-p> :call fzf#vim#files('', { 'source': fzf_source })<CR>

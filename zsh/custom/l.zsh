@@ -1,3 +1,4 @@
+alias l="ls -al"
 alias ll="l"
 alias lll="l"
 alias llll="l"

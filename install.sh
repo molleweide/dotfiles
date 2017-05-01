@@ -4,11 +4,12 @@ brew install getantibody/tap/antibody
 brew install neovim/neovim/neovim --HEAD
 brew install fasd
 brew install git
+brew install sl
 brew install zsh
 brew install zplug
 brew install direnv
 brew install autoenv
-brew install choppsv1/term24/tmux  # 24-bit color version
+brew install tmux
 brew install wget
 brew install reattach-to-user-namespace
 brew install the_silver_searcher

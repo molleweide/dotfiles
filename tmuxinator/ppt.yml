@@ -1,7 +1,7 @@
-# ~/.tmuxinator/labkit.yml
+# ~/.tmuxinator/ppt.yml
 
-name: labkit
-root: ~/code/deloitte-lab-kit
+name: ppt
+root: ~/code/deloitte-ppt
 
 # Optional tmux socket
 # socket_name: foo
@@ -28,7 +28,7 @@ root: ~/code/deloitte-lab-kit
 # attach: false
 
 # Runs after everything. Use it to attach to tmux with custom options etc.
-# post: tmux -CC attach -t labkit
+# post: tmux -CC attach -t ppt
 
 windows:
   - editor:
@@ -36,8 +36,3 @@ windows:
       panes:
         - vim
         - # empty
-  - server:
-      panes:
-        - yarn start
-        - bin/start_powerpoint_server 3002
-
