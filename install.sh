@@ -15,6 +15,7 @@ brew install reattach-to-user-namespace
 brew install the_silver_searcher
 brew install autojump
 brew install pyenv
+brew install d12frosted/emacs-plus/emacs-plus
 
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
 
@@ -27,6 +28,16 @@ pyenv install -s 3.6.0
 if [ ! -d $(pyenv root)/plugins/pyenv-virtualenv ]; then
   git clone https://github.com/yyuu/pyenv-virtualenv.git \
     $(pyenv root)/plugins/pyenv-virtualenv
+fi
+
+echo "Setting up spacemacs..."
+
+if [ ! -d $HOME/.emacs.d ]; then
+  git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+fi
+
+if [ ! -d $HOME/.spacemacs.d ]; then
+  ln -s ~/.dotfiles/spacemacs.d ~/.spacemacs.d
 fi
 
 if ! pyenv virtualenvs | grep -r py2neovim; then
