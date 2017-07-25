@@ -1,7 +1,7 @@
-# ~/.tmuxinator/labkit.yml
+# ~/.tmuxinator/tip.yml
 
-name: labkit
-root: ~/code/deloitte-lab-kit
+name: tip
+root: ~/code/tlab-pll
 
 # Optional tmux socket
 # socket_name: foo
@@ -28,16 +28,16 @@ root: ~/code/deloitte-lab-kit
 # attach: false
 
 # Runs after everything. Use it to attach to tmux with custom options etc.
-# post: tmux -CC attach -t labkit
+# post: tmux -CC attach -t michigan
 
 windows:
   - editor:
       layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
       panes:
         - vim
-        - nvm use
+        - # empty
   - server:
+      layout: main-vertical
       panes:
-        - nvm use && yarn start
-        - nvm use && bin/start_powerpoint_server 3002
-
+        - zeus start
+        - rails s

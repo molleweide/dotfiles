@@ -16,6 +16,9 @@ brew install the_silver_searcher
 brew install autojump
 brew install pyenv
 brew install d12frosted/emacs-plus/emacs-plus
+brew install koekeishiya/formulae/khd
+
+ln -sf /usr/local/opt/chunkwm/share/chunkwm_plugins ~/.chunkwm_plugins
 
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
 
@@ -24,6 +27,13 @@ eval "$(pyenv virtualenv-init -)"
 
 pyenv install -s 2.7.13
 pyenv install -s 3.6.0
+
+if [ ! -d ~/Library/Application\ Support/Übersicht/widgets ]; then
+  mkdir -p ~/Library/Application\ Support/Übersicht
+
+  ln -sf ~/.dotfiles/Ubersicht/widgets \
+    ~/Library/Application\ Support/Übersicht/widgets
+fi
 
 if [ ! -d $(pyenv root)/plugins/pyenv-virtualenv ]; then
   git clone https://github.com/yyuu/pyenv-virtualenv.git \
@@ -89,6 +99,10 @@ if [ ! -d ~/.zsh ]; then
   ln -s ~/.dotfiles/zsh ~/.zsh
 fi
 
+if [ ! -d ~/.zshenv ]; then
+  ln -s ~/.dotfiles/zsh/zshenv ~/.zshenv
+fi
+
 echo "Setting up git"
 if [ ! -f ~/.gitconfig ]; then
   ln -s ~/.dotfiles/git/gitconfig ~/.gitconfig
@@ -123,6 +137,17 @@ fi
 if [ ! -f ~/.aprc ]; then
   ln -s ~/.dotfiles/irb/aprc ~/.aprc
 fi
+
+echo "Setting up chunkwm"
+
+if [ ! -f ~/.chunkwmrc ]; then
+  ln -s ~/.dotfiles/chunkwmrc ~/.chunkwmrc
+fi
+
+if [ ! -f ~/.khdrc ]; then
+  ln -s ~/.dotfiles/khdrc ~/.khdrc
+fi
+
 
 echo "Setting up tmux"
 if [ ! -f ~/.tmux.conf ]; then
@@ -159,6 +184,9 @@ if [ ! -d ~/.config/nvim ]; then
   echo "Setting up Neovim config"
   ln -s ~/.dotfiles/nvim ~/.config/nvim
 fi
+
+brew services start khd
+brew services start crisidev/chunkwm/chunkwm
 
 echo "Installing plugins"
 vim +PluginInstall +qall

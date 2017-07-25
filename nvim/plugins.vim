@@ -35,6 +35,8 @@ Plug 'skalnik/vim-vroom'
 Plug 'tpope/vim-dispatch'
 Plug 'slim-template/vim-slim'
 
+Plug 'cakebaker/scss-syntax.vim'
+
 """""""""
 " Git
 """""""""
@@ -83,5 +85,6 @@ Plug 'vim-scripts/AutoTag'
 Plug 'vim-scripts/sudo.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'yegappan/greplace'
+Plug 'w0rp/ale'
 
 call plug#end()

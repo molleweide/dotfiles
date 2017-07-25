@@ -1,5 +1,4 @@
 eval "$(direnv hook zsh)"
-source $(brew --prefix autoenv)/activate.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

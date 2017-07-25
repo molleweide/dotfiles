@@ -2,7 +2,14 @@ let g:lightline = {
       \ 'colorscheme': 'solarized',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
-      \   'right': [ [ 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+      \   'right': [
+      \     ['lineinfo'],
+      \     ['percent'],
+      \     ['ale_error', 'ale_warning', 'ale_ok', 'fileformat', 'fileencoding', 'filetype']
+      \   ]
+      \ },
+      \ 'component_function_visible_condition': {
+      \   'mode': 1,
       \ },
       \ 'component_function': {
       \   'fugitive': 'MyFugitive',
@@ -13,9 +20,24 @@ let g:lightline = {
       \   'mode': 'MyMode',
       \   'readonly': '%{&readonly?"x":""}',
       \ },
+      \ 'component_expand': {
+      \   'ale_error':   'ale#ale_error',
+      \   'ale_warning': 'ale#ale_warning',
+      \   'ale_ok':      'ale#ale_ok',
+      \ },
+      \ 'component_type': {
+      \   'ale_error':   'error',
+      \   'ale_warning': 'warning',
+      \   'ale_ok':      'ok',
+      \ },
       \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
       \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
       \ }
+
+augroup LightLineOnALE
+  autocmd!
+  autocmd User ALELint call lightline#update()
+augroup END
 
 augroup LightlineColorscheme
 	autocmd!
