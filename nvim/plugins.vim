@@ -87,4 +87,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'yegappan/greplace'
 Plug 'w0rp/ale'
 
+" Load this last
+Plug 'ryanoasis/vim-devicons'
+
 call plug#end()
