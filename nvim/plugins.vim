@@ -62,6 +62,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'scrooloose/nerdtree'
+Plug 'mhinz/vim-startify'
 
 """"""
 " Search
