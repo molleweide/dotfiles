@@ -31,9 +31,14 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'Keithbsmiley/rspec.vim'
 Plug 'ck3g/vim-change-hash-syntax'
 Plug 'tpope/vim-bundler'
-Plug 'skalnik/vim-vroom'
+" Plug 'skalnik/vim-vroom'
+Plug 'janko-m/vim-test'
 Plug 'tpope/vim-dispatch'
 Plug 'slim-template/vim-slim'
+Plug 'joker1007/vim-ruby-heredoc-syntax'
+
+" Required for vim-ruby-heredoc-syntax...
+Plug 'kchmck/vim-coffee-script'
 
 Plug 'cakebaker/scss-syntax.vim'
 
@@ -42,6 +47,7 @@ Plug 'cakebaker/scss-syntax.vim'
 """""""""
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
+Plug 'tpope/vim-rhubarb'
 
 """"""
 " Projects
@@ -54,12 +60,13 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 Plug 'tpope/vim-eunuch'
 Plug 'benmills/vimux'
+Plug 'christoomey/vim-tmux-navigator'
 
 """"""
 " Search
 """"""
 
-Plug 'rking/ag.vim'
+Plug 'mileszs/ack.vim'
 Plug 'vim-scripts/IndexedSearch'
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'skwp/greplace.vim'

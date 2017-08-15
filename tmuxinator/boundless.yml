@@ -37,7 +37,9 @@ windows:
         - vim
         - # empty
   - server:
-      layout: main-vertical
+      layout: tiled
       panes:
-        # - zeus start
-        - rails s
+        - zeus start
+        - sleep 2 && zeus s
+        - tail -f log/test.log
+        - npm run watch

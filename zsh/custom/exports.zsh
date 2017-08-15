@@ -3,7 +3,7 @@ export ENABLE_GULP_NOTIFY=1
 export JRUBY_OPTS="--dev"
 
 # Editor
-export EDITOR=vim
+export EDITOR=nvim
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 # Mutt

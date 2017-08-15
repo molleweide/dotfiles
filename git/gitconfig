@@ -56,7 +56,7 @@
   pl = pull                         # pull
 
   # push
-  ps = push                         # push
+  ps = push -u                         # push
   please = push --force-with-lease
 
   # rebase
@@ -116,7 +116,7 @@
   ff = only
 [core]
   autocrlf = false
-  editor = vim
+	editor = nvim
   excludesfile = ~/.gitignore
 [advice]
   statusHints = false

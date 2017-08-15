@@ -3,6 +3,7 @@
 brew install getantibody/tap/antibody
 brew install neovim/neovim/neovim --HEAD
 brew install fasd
+brew install phantomjs
 brew install git
 brew install sl
 brew install zsh
@@ -15,10 +16,16 @@ brew install reattach-to-user-namespace
 brew install the_silver_searcher
 brew install autojump
 brew install pyenv
-brew install d12frosted/emacs-plus/emacs-plus
-brew install koekeishiya/formulae/khd
+brew install --HEAD pyenv-virtualenv
+brew install fzf
+brew install ctags
 
-ln -sf /usr/local/opt/chunkwm/share/chunkwm_plugins ~/.chunkwm_plugins
+if [ ! -f $HOME/.fzf.zsh ]; then
+  /usr/local/opt/fzf/install
+fi
+
+brew tap caskroom/fonts
+brew cask install font-hack-nerd-font
 
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
 
@@ -26,7 +33,8 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 pyenv install -s 2.7.13
-pyenv install -s 3.6.0
+pyenv install -s 3.6.2
+pyenv global 3.6.2
 
 if [ ! -d ~/Library/Application\ Support/Übersicht/widgets ]; then
   mkdir -p ~/Library/Application\ Support/Übersicht
@@ -40,22 +48,12 @@ if [ ! -d $(pyenv root)/plugins/pyenv-virtualenv ]; then
     $(pyenv root)/plugins/pyenv-virtualenv
 fi
 
-echo "Setting up spacemacs..."
-
-if [ ! -d $HOME/.emacs.d ]; then
-  git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
-fi
-
-if [ ! -d $HOME/.spacemacs.d ]; then
-  ln -s ~/.dotfiles/spacemacs.d ~/.spacemacs.d
-fi
-
 if ! pyenv virtualenvs | grep -r py2neovim; then
   pyenv virtualenv 2.7.13 py2neovim
 fi
 
 if ! pyenv virtualenvs | grep -q py3neovim; then
-  pyenv virtualenv 3.6.0 py3neovim
+  pyenv virtualenv 3.6.2 py3neovim
 fi
 
 pyenv activate py2neovim
@@ -116,6 +114,11 @@ if [ ! -d ~/.git_template ]; then
   ln -s ~/.dotfiles/git/template ~/.git_template
 fi
 
+echo "Setting up ctags"
+if [ ! -f ~/.ctags ]; then
+  ln -s ~/.dotfiles/ctags ~/.ctags
+fi
+
 echo "Setting up pry"
 if [ ! -f ~/.pryrc ]; then
   ln -s ~/.dotfiles/irb/pryrc ~/.pryrc
@@ -138,17 +141,6 @@ if [ ! -f ~/.aprc ]; then
   ln -s ~/.dotfiles/irb/aprc ~/.aprc
 fi
 
-echo "Setting up chunkwm"
-
-if [ ! -f ~/.chunkwmrc ]; then
-  ln -s ~/.dotfiles/chunkwmrc ~/.chunkwmrc
-fi
-
-if [ ! -f ~/.khdrc ]; then
-  ln -s ~/.dotfiles/khdrc ~/.khdrc
-fi
-
-
 echo "Setting up tmux"
 if [ ! -f ~/.tmux.conf ]; then
   ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
@@ -162,20 +154,6 @@ if [ ! -d ~/.tmux/plugins/tpm ]; then
   git clone git@github.com:tmux-plugins/tpm.git ~/.tmux/plugins/tpm
 fi
 
-echo "Setting up vimrc"
-if [ ! -f ~/.vimrc ]; then
-  ln -s ~/.dotfiles/vimrc ~/.vimrc
-fi
-
-if [ ! -d ~/.vim ]; then
-  ln -s ~/.dotfiles/vim ~/.vim
-fi
-
-if [ ! -d ~/.vim/bundle/vundle ]; then
-  echo "Cloning Vundle to ~/.vim"
-  git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-fi
-
 if [ ! -d ~/.config ]; then
   mkdir -p ~/.config
 fi
@@ -185,17 +163,5 @@ if [ ! -d ~/.config/nvim ]; then
   ln -s ~/.dotfiles/nvim ~/.config/nvim
 fi
 
-brew services start khd
-brew services start crisidev/chunkwm/chunkwm
-
-echo "Installing plugins"
-vim +PluginInstall +qall
-
 echo "Installing nvim plugins"
 nvim +PlugInstall
-
-cd ~/.vim/bundle/ctrlp-cmatcher
-CFLAGS=-Qunused-arguments CPPFLAGS=-Qunused-arguments ./install.sh
-
-cd ~/.local/share/nvim/plugged/ctrlp-cmatcher
-CFLAGS=-Qunused-arguments CPPFLAGS=-Qunused-arguments ./install.sh
