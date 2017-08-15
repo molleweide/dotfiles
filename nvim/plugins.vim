@@ -61,6 +61,7 @@ Plug 'xolox/vim-session'
 Plug 'tpope/vim-eunuch'
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'scrooloose/nerdtree'
 
 """"""
 " Search

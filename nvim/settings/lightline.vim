@@ -93,11 +93,11 @@ function! MyFugitive()
 endfunction
 
 function! MyFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
 
 function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
 endfunction
 
 function! MyFileencoding()

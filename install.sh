@@ -68,10 +68,28 @@ if [ ! -L ~/.rvm/hooks/after_install_add_default_gems ]; then
   ln -s ~/.dotfiles/rvm/hooks/after_install_add_default_gems ~/.rvm/hooks/
 fi
 
-if [ ! -d ~/.dotfiles/dependencies/fonts ]; then
+if [ ! -d ~/.dotfiles/dependencied/fonts ]; then
   echo "Setting up patched Powerline fonts..."
   git clone git@github.com:powerline/fonts.git ~/.dotfiles/dependencies/fonts
   ~/.dotfiles/dependencies/fonts/install.sh
+fi
+
+nerd_fonts_dir=$HOME/.dotfiles/dependencies/patched-nerd-fonts
+
+if [ ! -d $nerd_fonts_dir ]; then
+  echo "Pulling in patched nerd-fonts..."
+
+  mkdir -p $nerd_fonts_dir
+
+  cd $nerd_fonts_dir && \
+    git init && \
+    mkdir .git/info && \
+    git remote add origin https://github.com/ryanoasis/nerd-fonts.git && \
+    git config core.sparsecheckout true && \
+    echo "patched-fonts/*" >> .git/info/sparse-checkout && \
+    git pull --depth=1 origin master
+
+  cp $nerd_fonts_dir/**/*.ttf $HOME/Library/Fonts
 fi
 
 if [ ! -f ~/.gitconfig.user ]; then
