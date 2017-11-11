@@ -6,7 +6,9 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'frankier/neovim-colors-solarized-truecolor-only'
 Plug 'chrisbra/Colorizer'
 Plug 'itchyny/lightline.vim'
-Plug 'jby/tmux.vim'
+Plug 'tmux-plugins/vim-tmux'
+Plug 'chriskempson/base16-vim'
+
 
 """""""
 " Languages
@@ -20,6 +22,9 @@ Plug 'mxw/vim-jsx'
 Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
 Plug 'elzr/vim-json', { 'for': ['json'] }
 Plug 'digitaltoad/vim-pug'
+Plug 'sbdchd/neoformat'
+
+Plug 'tomlion/vim-solidity'
 
 "" Elixir
 Plug 'elixir-lang/vim-elixir'
@@ -41,6 +46,11 @@ Plug 'joker1007/vim-ruby-heredoc-syntax'
 Plug 'kchmck/vim-coffee-script'
 
 Plug 'cakebaker/scss-syntax.vim'
+
+" Dear god
+Plug 'StanAngeloff/php.vim'
+Plug '2072/PHP-Indenting-for-VIm'
+Plug 'captbaritone/better-indent-support-for-php-with-html'
 
 """""""""
 " Git

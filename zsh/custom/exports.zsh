@@ -13,4 +13,6 @@ export MUTT_SMTP_URL="smtp://dbalatero@smtp.gmail.com:587/"
 
 # Path
 export PATH="$HOME/.local/bin:/usr/local/bin:$PATH"
+export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="$PATH:`yarn global bin`"
+export PATH="$PATH:$HOME/.composer/vendor/bin"

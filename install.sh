@@ -43,6 +43,11 @@ if [ ! -d ~/Library/Application\ Support/Übersicht/widgets ]; then
     ~/Library/Application\ Support/Übersicht/widgets
 fi
 
+if [ ! -d ~/.config/base16-shell ]; then
+  git clone git clone https://github.com/chriskempson/base16-shell.git \
+    ~/.config/base16-shell
+fi
+
 if [ ! -d $(pyenv root)/plugins/pyenv-virtualenv ]; then
   git clone https://github.com/yyuu/pyenv-virtualenv.git \
     $(pyenv root)/plugins/pyenv-virtualenv

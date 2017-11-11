@@ -66,6 +66,7 @@
   # remote
   r = remote -v                     # show remotes (verbose)
 
+  sp = !git sync && git please
   sync = !git fetch origin && git rebase -i origin/master
 
   # reset

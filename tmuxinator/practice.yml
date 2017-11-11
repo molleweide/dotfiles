@@ -1,7 +1,7 @@
-# ~/.tmuxinator/boundless.yml
+# ~/.tmuxinator/practice.yml
 
-name: boundless
-root: ~/code/boundless/app.boundless.co
+name: practice
+root: ~/code/practice
 
 # Optional tmux socket
 # socket_name: foo
@@ -10,7 +10,7 @@ root: ~/code/boundless/app.boundless.co
 # pre: sudo /etc/rc.d/mysqld start
 
 # Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
-pre_window: nvm use && rvm use
+# pre_window: rbenv shell 2.0.0-p247
 
 # Pass command line options to tmux. Useful for specifying a different tmux.conf.
 # tmux_options: -f ~/.tmux.mac.conf
@@ -34,12 +34,10 @@ windows:
   - editor:
       layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
       panes:
-        - vim
-        - # empty
+        - nvm use && vim
+        - nvm use
   - server:
       layout: tiled
       panes:
-        - rails s
-        - tail -f log/test.log
-        - ./bin/webpack-dev-server
-        - docker-compose up
+        - nvm use && rails s
+        - nvm use && ./bin/webpack-dev-server

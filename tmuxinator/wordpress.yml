@@ -1,7 +1,7 @@
-# ~/.tmuxinator/boundless.yml
+# ~/.tmuxinator/wordpress.yml
 
-name: boundless
-root: ~/code/boundless/app.boundless.co
+name: wordpress
+root: ~/code/boundless/www.boundless.co
 
 # Optional tmux socket
 # socket_name: foo
@@ -10,7 +10,7 @@ root: ~/code/boundless/app.boundless.co
 # pre: sudo /etc/rc.d/mysqld start
 
 # Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
-pre_window: nvm use && rvm use
+pre_window: rvm use
 
 # Pass command line options to tmux. Useful for specifying a different tmux.conf.
 # tmux_options: -f ~/.tmux.mac.conf
@@ -28,18 +28,15 @@ pre_window: nvm use && rvm use
 # attach: false
 
 # Runs after everything. Use it to attach to tmux with custom options etc.
-# post: tmux -CC attach -t coasst
+# post: tmux -CC attach -t wordpress
 
 windows:
   - editor:
       layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
       panes:
-        - vim
+        - cd .. && vim
         - # empty
   - server:
       layout: tiled
       panes:
-        - rails s
-        - tail -f log/test.log
-        - ./bin/webpack-dev-server
-        - docker-compose up
+        - ./node_modules/.bin/webpack --watch

@@ -8,5 +8,5 @@ let test#strategy = 'vimux'
 let g:test#preserve_screen = 1
 
 if filereadable('client/scripts/mocha')
-  let test#javascript#mocha#executable = 'scripts/mocha'
+  let test#javascript#mocha#executable = 'client/scripts/mocha'
 endif

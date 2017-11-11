@@ -75,5 +75,3 @@ do
 done
 
 source $HOME/.zsh/after.zsh
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -39,5 +39,5 @@ windows:
   - server:
       layout: main-vertical
       panes:
-        - zeus start
-        - sleep 2 && zeus s
+        - rails s
+        - ./bin/webpack-dev-server
