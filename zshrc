@@ -28,7 +28,6 @@ compinit
 # End of lines added by compinstall
 
 # zplug "zsh-users/zsh-history-substring-search"
-# zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 for file in $HOME/.zsh/plugins/**/*.zsh
 do
