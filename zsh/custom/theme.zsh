@@ -20,11 +20,15 @@ git_prompt() {
 }
 
 node_prompt() {
-  version=$(node --version || echo "")
+  local nvmrc=$(nvm_find_nvmrc)
 
-  if [ ! -z $version ]; then
-    echo "[$version]"
-  fi
+  if [ ! -z $nvmrc ]; then
+    version=$((cat $nvmrc 2>/dev/null) || echo "")
+
+    if [ ! -z $version ]; then
+      echo "[$version]"
+    fi
+  fi 
 }
 
 # Get the name of the branch we are on
@@ -34,7 +38,12 @@ git_prompt_info() {
   if [ -n "$branch_prompt" ]; then
     status_icon=$(git_status)
     # xargs strips whitespace
-    echo "($branch_prompt) $status_icon" | xargs
+
+    if [ -z $status_icon ]; then
+      echo "($branch_prompt)"
+    else
+      echo "($branch_prompt) $status_icon"
+    fi
   fi
 }
 
@@ -45,4 +54,4 @@ git_status() {
   fi
 }
 
-export PROMPT='%{$fg[green]%}${PWD/#$HOME/~}%{$reset_color%} %{$fg[yellow]%}$(git_prompt_info)%{$reset_color%} %% ' #%{$fg[red]%}$(rvm_prompt)%{$reset_color%} %{$fg[blue]%}$(node_prompt)%{$reset_color%} %% '
+export PROMPT='%{$fg[green]%}${PWD/#$HOME/~}%{$reset_color%} %{$fg[yellow]%}$(git_prompt_info)%{$reset_color%} %{$fg[red]%}$(rvm_prompt)%{$reset_color%} %{$fg[blue]%}$(node_prompt)%{$reset_color%} %% '
