@@ -17,61 +17,36 @@ setopt hist_ignore_space
 setopt inc_append_history
 setopt share_history # share command history data
 
-# zmodload zsh/zprof
+fpath=(/usr/local/share/zsh-completions $fpath)
 
-export ZPLUG_HOME=/usr/local/opt/zplug
-source $ZPLUG_HOME/init.zsh
+# The following lines were added by compinstall
+zstyle ':completion:*' completer _complete _ignored
+zstyle :compinstall filename '/Users/dbalatero/.zshrc'
 
-# zplug "caiogondim/bullet-train.zsh", as:theme
-zplug "dijitalmunky/nvm-auto", defer:3
-zplug "plugins/autojump", from:oh-my-zsh
-# zplug "plugins/elixir", from:oh-my-zsh
-zplug "plugins/git", from:oh-my-zsh
-zplug "plugins/ssh-agent", from:oh-my-zsh
-zplug "plugins/vi-mode", from:oh-my-zsh
-zplug "plugins/zsh_reload", from:oh-my-zsh
-zplug "zsh-users/zsh-history-substring-search"
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
 
-if ! zplug check --verbose; then
-  printf "Install? [y/N]: "
-  if read -q; then
-    echo; zplug install
-  fi
-fi
+# zplug "dijitalmunky/nvm-auto", defer:3
+# zplug "zsh-users/zsh-history-substring-search"
+# zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-zplug load
-
-# BULLETTRAIN_PROMPT_ORDER=(
-#   status
-#   custom
-#   context
-#   dir
-#   ruby
-#   nvm
-#   git
-#   cmd_exec_time
-# )
-#
-# zsh export NVM_DIR="$HOME/.nvm"
-# zsh [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-# function zsh_plugin() {
-#   source $HOME/.zsh/plugins/$1.zsh
-# }
-#
-# zsh_plugin autojump
-# zsh_plugin git
-# zsh_plugin reload
-# zsh_plugin ssh-agent
-# zsh_plugin vi-mode
+for file in $HOME/.zsh/plugins/**/*.zsh
+do
+  source $file
+done
 
 for file in $HOME/.zsh/custom/**/*.zsh
 do
   source $file
 done
 
-source $HOME/.zsh/after.zsh
+eval "$(direnv hook zsh)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"

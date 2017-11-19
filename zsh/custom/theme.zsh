@@ -45,4 +45,4 @@ git_status() {
   fi
 }
 
-export PROMPT='%{$fg[green]%}${PWD/#$HOME/~}%{$reset_color%} %{$fg[red]%}$(rvm_prompt)%{$reset_color%} %{$fg[blue]%}$(node_prompt)%{$reset_color%} %{$fg[yellow]%}$(git_prompt_info)%{$reset_color%} %% '
+export PROMPT='%{$fg[green]%}${PWD/#$HOME/~}%{$reset_color%} %{$fg[yellow]%}$(git_prompt_info)%{$reset_color%} %% ' #%{$fg[red]%}$(rvm_prompt)%{$reset_color%} %{$fg[blue]%}$(node_prompt)%{$reset_color%} %% '

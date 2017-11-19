@@ -7,6 +7,7 @@ brew install phantomjs
 brew install git
 brew install sl
 brew install zsh
+brew install zsh-completions
 brew install zplug
 brew install direnv
 brew install autoenv
@@ -19,6 +20,13 @@ brew install pyenv
 brew install --HEAD pyenv-virtualenv
 brew install fzf
 brew install ctags
+
+(stat -f '%Su' /usr/local | grep root) && \
+  echo "Fixing /usr/local permissions..." && \
+  sudo chown -R $(whoami):staff /usr/local && \
+  sudo chmod -R 755 /usr/local/share/zsh/site-functions && \
+  sudo chown -R root:wheel /usr/local/share/zsh/site-functions && \
+  sudo chmod g-w /usr/local/share
 
 if [ ! -f $HOME/.fzf.zsh ]; then
   /usr/local/opt/fzf/install
