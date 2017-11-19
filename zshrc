@@ -27,7 +27,6 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
-# zplug "dijitalmunky/nvm-auto", defer:3
 # zplug "zsh-users/zsh-history-substring-search"
 # zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
