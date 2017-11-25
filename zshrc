@@ -1,22 +1,36 @@
 export DISABLE_AUTO_TITLE="true"
-setopt AUTO_CD
 setopt AUTO_PUSHD
 setopt PROMPT_SUBST
 
-function zplugin() {
-  source $HOME/.zsh/plugins/$1
-}
+if [ -z "$HISTFILE" ]; then
+  HISTFILE=$HOME/.zsh_history
+fi
 
-zplugin history
-zplugin completion
-zplugin autojump
-zplugin git
-zplugin nvm-auto
-zplugin reload
-zplugin ssh-agent
-zplugin vi-mode
-zplugin fast-syntax-highlighting
-zplugin zsh-history-substring-search
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt append_history
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups # ignore duplication command history list
+setopt hist_ignore_space
+setopt inc_append_history
+setopt share_history # share command history data
+
+fpath=(/usr/local/share/zsh-completions $fpath)
+
+# The following lines were added by compinstall
+zstyle ':completion:*' completer _complete _ignored
+zstyle :compinstall filename '/Users/dbalatero/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+for file in $HOME/.zsh/plugins/**/*.zsh
+do
+  source $file
+done
 
 for file in $HOME/.zsh/custom/**/*.zsh
 do
@@ -30,5 +44,6 @@ export NVM_DIR="$HOME/.nvm"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+[ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
