@@ -17,6 +17,25 @@ function setup_zsh_symlinks() {
   symlink_dotfile zsh/zshenv ~/.zshenv
 }
 
+function zsh_binary() {
+  echo /usr/local/bin/zsh
+}
+
+function update_shell_whitelist() {
+  local zshbin=$(zsh_binary)
+  if ! cat /etc/shells | grep -q $zshbin; then 
+    echo "Adding $zshbin to /etc/shells, please enter your sudo password"
+    sudo echo $zshbin >> /etc/shells
+  fi
+}
+
+function chsh_zsh() {
+  if [[ "$SHELL" != "$(zsh_binary)" ]]; then
+    local current_user=$USER
+    sudo chsh -s $(zsh_binary) $current_user
+  fi
+}
+
 function install_fzf() {
   if [ ! -f $HOME/.fzf.zsh ]; then
     /usr/local/opt/fzf/install
@@ -38,3 +57,5 @@ brew_install_all "${packages[@]}"
 fix_brew_permissions
 setup_zsh_symlinks
 install_fzf
+update_shell_whitelist
+chsh_zsh
