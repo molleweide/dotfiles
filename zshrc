@@ -39,5 +39,5 @@ done
 
 # Add RVM to PATH for scripting. Make sure this is the last
 # PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+export PATH="$HOME/.rvm/bin:$PATH"
 [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
