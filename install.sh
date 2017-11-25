@@ -1,32 +1,16 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-brew install getantibody/tap/antibody
+installers="${BASH_SOURCE%/*}/installers"
+
+$installers/homebrew
+$installers/zsh
+
 brew install neovim/neovim/neovim --HEAD
-brew install fasd
 brew install phantomjs
-brew install git
-brew install sl
-brew install zsh
-brew install zsh-completions
-brew install zplug
-brew install direnv
-brew install autoenv
 brew install tmux
-brew install wget
-brew install reattach-to-user-namespace
-brew install the_silver_searcher
-brew install autojump
 brew install pyenv
 brew install --HEAD pyenv-virtualenv
-brew install fzf
 brew install ctags
-
-(stat -f '%Su' /usr/local | grep root) && \
-  echo "Fixing /usr/local permissions..." && \
-  sudo chown -R $(whoami):staff /usr/local && \
-  sudo chmod -R 755 /usr/local/share/zsh/site-functions && \
-  sudo chown -R root:wheel /usr/local/share/zsh/site-functions && \
-  sudo chmod g-w /usr/local/share
 
 if [ ! -f $HOME/.fzf.zsh ]; then
   /usr/local/opt/fzf/install
@@ -43,13 +27,6 @@ eval "$(pyenv virtualenv-init -)"
 pyenv install -s 2.7.13
 pyenv install -s 3.6.2
 pyenv global 3.6.2
-
-if [ ! -d ~/Library/Application\ Support/Übersicht/widgets ]; then
-  mkdir -p ~/Library/Application\ Support/Übersicht
-
-  ln -sf ~/.dotfiles/Ubersicht/widgets \
-    ~/Library/Application\ Support/Übersicht/widgets
-fi
 
 if [ ! -d ~/.config/base16-shell ]; then
   git clone git clone https://github.com/chriskempson/base16-shell.git \
@@ -74,12 +51,6 @@ pip install neovim
 
 pyenv activate py3neovim
 pip install neovim
-
-if [ ! -L ~/.rvm/hooks/after_install_add_default_gems ]; then
-  echo "Symlinking hooks to RVM"
-  mkdir -p ~/.rvm/hooks
-  ln -s ~/.dotfiles/rvm/hooks/after_install_add_default_gems ~/.rvm/hooks/
-fi
 
 if [ ! -d ~/.dotfiles/dependencied/fonts ]; then
   echo "Setting up patched Powerline fonts..."
@@ -123,18 +94,6 @@ if [ ! -f ~/.gitconfig.user ]; then
   git config -f ~/.gitconfig.user user.email "$git_email"
 fi
 
-echo "Setting up ZSH..."
-if [ ! -f ~/.zshrc ]; then
-  ln -s ~/.dotfiles/zshrc ~/.zshrc
-fi
-
-if [ ! -d ~/.zsh ]; then
-  ln -s ~/.dotfiles/zsh ~/.zsh
-fi
-
-if [ ! -d ~/.zshenv ]; then
-  ln -s ~/.dotfiles/zsh/zshenv ~/.zshenv
-fi
 
 echo "Setting up git"
 if [ ! -f ~/.gitconfig ]; then

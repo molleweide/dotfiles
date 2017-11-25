@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+if test ! $(which brew); then
+  echo "Installing homebrew"
+  ruby -e "$(curl -fsSL \
+    https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+  brew update
+fi
+
+echo -e "\n\nInstalling homebrew packages..."
+echo "=============================="
+
+packages=(
+  ack
+  autoenv
+  direnv
+  fasd
+  fzf
+  git
+  reattach-to-user-namespace
+  sl
+  the_silver_searcher
+  wget
+)
+
+brew_install_all "${packages[@]}"
