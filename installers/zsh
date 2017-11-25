@@ -25,6 +25,7 @@ function install_fzf() {
 
 packages=(
   autoenv
+  autojump
   direnv
   fasd
   fzf
