@@ -105,6 +105,10 @@ if [ ! -d $nerd_fonts_dir ]; then
   cp $nerd_fonts_dir/**/*.ttf $HOME/Library/Fonts
 fi
 
+if [ ! -f ~/.rvmrc ]; then
+  ln -s ~/.dotfiles/rvmrc ~/.rvmrc
+fi
+
 if [ ! -f ~/.gitconfig.user ]; then
   printf "What is your GitHub username? > "
   read github_user
