@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+require_installer homebrew
+require_installer ruby
+require_installer python
+
+function install_neovim() {
+  if ! brew tap | grep -q neovim; then
+    brew tap neovim/neovim
+  fi
+
+  brew_install neovim --HEAD
+}
+
+function setup_neovim_config() {
+  mkdir -p ~/.config
+  symlink_dotfile nvim ~/.config/nvim
+}
+
+function install_neovim_plugins() {
+  echo "Installing nvim plugins"
+  nvim +PlugInstall +qall
+}
+
+install_neovim
+setup_neovim_config
+install_neovim_plugins

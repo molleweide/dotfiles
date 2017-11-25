@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+export PYTHON_CONFIGURE_OPTS="--enable-framework"
+
+function load_pyenv() {
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+}
+
+function install_python_versions() {
+  pyenv install -s 2.7.13
+  pyenv install -s 3.6.2
+  pyenv global 2.7.13
+}
+
+function install_pyenv_virtualenvs() {
+  if [ ! -d $(pyenv root)/plugins/pyenv-virtualenv ]; then
+    git clone https://github.com/yyuu/pyenv-virtualenv.git \
+      $(pyenv root)/plugins/pyenv-virtualenv
+  fi
+
+  if ! pyenv virtualenvs | grep -q py2neovim; then
+    pyenv virtualenv 2.7.13 py2neovim
+    pyenv activate py2neovim
+    pip install neovim
+  fi
+
+  if ! pyenv virtualenvs | grep -q py3neovim; then
+    pyenv virtualenv 3.6.2 py3neovim
+    pyenv activate py3neovim
+    pip install neovim
+  fi
+}
+
+brew_install pyenv
+brew_install pyenv-virtualenv
+
+load_pyenv
+install_python_versions
+install_pyenv_virtualenvs

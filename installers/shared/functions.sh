@@ -6,7 +6,7 @@ function brew_install() {
   if brew list "$package" > /dev/null 2>&1; then
     echo "$package already installed... skipping."
   else
-    brew install $package
+    brew install $@
   fi
 }
 
@@ -32,4 +32,11 @@ function symlink_dotfile() {
     echo "Symlinking $full_file_path -> $destination"
     ln -s $full_file_path $destination
   fi
+}
+
+function require_installer() {
+  local name=$1
+  local installer_path="$(dotfiles_location)/installers/$name"
+
+  $installer_path
 }

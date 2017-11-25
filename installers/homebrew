@@ -12,6 +12,7 @@ fi
 
 packages=(
   ack
+  emojify
   reattach-to-user-namespace
   sl
   the_silver_searcher
