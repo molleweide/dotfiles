@@ -1,8 +1,0 @@
-Bundle "tpope/vim-rails.git"
-Bundle "tpope/vim-rake.git"
-Bundle "vim-ruby/vim-ruby"
-Bundle "Keithbsmiley/rspec.vim"
-Bundle "ck3g/vim-change-hash-syntax"
-Bundle "tpope/vim-bundler"
-Plugin 'skalnik/vim-vroom'
-Plugin 'tpope/vim-dispatch'

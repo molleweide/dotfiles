@@ -1,6 +1,0 @@
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'JazzCore/ctrlp-cmatcher'
-Bundle "xolox/vim-misc"
-Bundle "xolox/vim-session"
-Bundle "tpope/vim-eunuch"
-Bundle "benmills/vimux"
