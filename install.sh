@@ -11,6 +11,3 @@ require_installer ruby
 require_installer tmux
 require_installer fonts
 require_installer neovim
-
-echo "Installing nvim plugins"
-nvim +PlugInstall
