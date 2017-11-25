@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+function install_nerd_fonts() {
+  local nerd_fonts_dir="$(dotfiles_location)/dependencies/patched-nerd-fonts"
+
+  if [ ! -d $nerd_fonts_dir ]; then
+    echo "Pulling in patched nerd-fonts..."
+
+    mkdir -p $nerd_fonts_dir
+
+    cd $nerd_fonts_dir && \
+      git init && \
+      mkdir .git/info && \
+      git remote add origin https://github.com/ryanoasis/nerd-fonts.git && \
+      git config core.sparsecheckout true && \
+      echo "patched-fonts/*" >> .git/info/sparse-checkout && \
+      git pull --depth=1 origin master
+
+    cp $nerd_fonts_dir/**/*.ttf $HOME/Library/Fonts
+  fi
+}
+
+install_nerd_fonts

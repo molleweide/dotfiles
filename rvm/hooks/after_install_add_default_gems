@@ -1,5 +1,12 @@
+#!/usr/bin/env bash
+
+rvm $rvm_ruby_string do rvm gemset create global
+
 rvm $rvm_ruby_string@global do gem install --no-ri --no-rdoc \
+  awesome_print \
   bundler \
-  zeus \
+  hirb \
+  neovim \
+  pry \
   tmuxinator \
-  neovim
+  zeus

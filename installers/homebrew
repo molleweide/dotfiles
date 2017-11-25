@@ -10,16 +10,8 @@ if test ! $(which brew); then
   brew update
 fi
 
-echo -e "\n\nInstalling homebrew packages..."
-echo "=============================="
-
 packages=(
   ack
-  autoenv
-  direnv
-  fasd
-  fzf
-  git
   reattach-to-user-namespace
   sl
   the_silver_searcher

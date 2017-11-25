@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+function install_tmux_plugins() {
+  local install_script="$HOME/.tmux/plugins/tpm/bin/install_plugins"
+
+  if [ -x $install_script ]; then
+    $install_script
+  fi
+}
+
+function setup_tmux_config() {
+  symlink_dotfile tmux.conf ~/.tmux.conf
+  symlink_dotfile tmux ~/.tmux
+
+  if [ ! -d ~/.tmux/plugins/tpm ]; then
+    git clone git@github.com:tmux-plugins/tpm.git ~/.tmux/plugins/tpm
+    install_tmux_plugins
+  fi
+}
+
+function setup_tmuxinator() {
+  symlink_dotfile tmuxinator ~/.tmuxinator
+}
+
+brew_install tmux
+
+setup_tmux_config
+setup_tmuxinator

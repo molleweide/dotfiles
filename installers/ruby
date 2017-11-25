@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+function setup_rvmrc() {
+  symlink_dotfile rvmrc ~/.rvmrc
+}
+
+function install_latest_ruby() {
+  rvm install ruby --latest
+}
+
+function install_global_gem_hooks() {
+  local destination="$HOME/.rvm/hooks/after_install_add_default_gems"
+
+  symlink_dotfile rvm/hooks/after_install_add_default_gems $destination
+  chmod +x $destination
+}
+
+function install_rvm() {
+  if [ ! -e ~/.rvm ]; then
+    \curl -L https://get.rvm.io | bash -s -- --ignore-dotfiles
+
+    install_global_gem_hooks
+    install_latest_ruby
+  fi
+}
+
+function setup_pry() {
+  symlink_dotfile irb/pryrc ~/.pryrc
+  symlink_dotfile irb/unescaped_colors.rb ~/.unescaped_colors.rb
+  symlink_dotfile irb/escaped_colors.rb ~/.escaped_colors.rb
+  symlink_dotfile irb/aprc ~/.aprc
+}
+
+setup_rvmrc
+setup_pry
+install_rvm
+install_global_gem_hooks

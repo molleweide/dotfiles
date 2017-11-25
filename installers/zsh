@@ -17,8 +17,23 @@ function setup_zsh_symlinks() {
   symlink_dotfile zsh/zshenv ~/.zshenv
 }
 
-brew_install zsh
-brew_install zsh-completions
+function install_fzf() {
+  if [ ! -f $HOME/.fzf.zsh ]; then
+    /usr/local/opt/fzf/install
+  fi
+}
+
+packages=(
+  autoenv
+  direnv
+  fasd
+  fzf
+  zsh
+  zsh-completions
+)
+
+brew_install_all "${packages[@]}"
 
 fix_brew_permissions
 setup_zsh_symlinks
+install_fzf

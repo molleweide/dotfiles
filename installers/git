@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+function setup_user_gitconfig() {
+  if [ ! -f ~/.gitconfig.user ]; then
+    printf "What is your GitHub username? > "
+    read github_user
+    git config -f ~/.gitconfig.user github.user "$github_user"
+
+    printf "What is your git name? > "
+    read git_name
+    git config -f ~/.gitconfig.user user.name "$git_name"
+
+    printf "What is your git email? > "
+    read git_email
+    git config -f ~/.gitconfig.user user.email "$git_email"
+  fi
+}
+
+function setup_git_dotfiles() {
+  symlink_dotfile git/gitconfig ~/.gitconfig
+  symlink_dotfile git/gitignore ~/.gitignore
+  symlink_dotfile git/template ~/.git_template
+}
+
+brew_install git
+
+setup_user_gitconfig
+setup_git_dotfiles
