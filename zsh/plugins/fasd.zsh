@@ -23,7 +23,7 @@ alias j='z'
 alias zz='fasd_cd -d -i'
 
 function v() {
-  vim $(fasd -a $@)
+  nvim $(fasd -a $@)
 }
 
 # add zsh hook
