@@ -2,6 +2,17 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
+function install_patched_powerline_fonts() {
+  local clone_dir="$(dotfiles_location)/dependencies/fonts"
+
+  if [ ! -d "$clone_dir" ]; then
+    echo "Setting up patched Powerline fonts..."
+    git clone git@github.com:powerline/fonts.git "$clone_dir"
+
+    $clone_dir/install.sh
+  fi
+}
+
 function install_nerd_fonts() {
   local nerd_fonts_dir="$(dotfiles_location)/dependencies/patched-nerd-fonts"
 
@@ -24,4 +35,5 @@ function install_nerd_fonts() {
 
 dotheader "Setting up fonts..."
 
+install_patched_powerline_fonts
 install_nerd_fonts
