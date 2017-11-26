@@ -16,8 +16,9 @@ installer_download() {
 mount_dmg() {
   local dmg_path=$1
   local mount_path=$(
-    hdiutil attach -noautoopen "$dmg_path" | \
-      awk '{ split($0, a, /[[:space:]]{2,}/); print a[2] }'
+    (yes | hdiutil attach -noautoopen "$dmg_path") | \
+      grep 'Volumes' |
+      awk '{ n=split($0, a, /[[:space:]]{2,}/); print a[n] }'
   )
 
   echo "$mount_path"
@@ -82,7 +83,7 @@ install_simple_dmg_copy() {
     cp -r "$app_to_copy" /Applications
 
     unmount_dmg "$mount_path"
-    rm -fr $pkg_path
+    rm -fr $dmg_path
   else
     already_installed_msg "$name"
   fi
@@ -98,6 +99,36 @@ install_simple_zip() {
     unzip -d /Applications "$zip_path"
 
     rm -fr $zip_path
+  else
+    already_installed_msg "$name"
+  fi
+}
+
+install_inception_zip() {
+  local name=$1
+  local url=$2
+
+  if ! app_installed "$name"; then
+    local zip_path=$(installer_download "$url" "$name.zip")
+    local tmp_directory=$(mktemp -d -t 'dotfiles')
+
+    unzip -d "$tmp_directory" "$zip_path" >/dev/null
+
+    dmg_path=$(
+      find -E "$tmp_directory" \
+        -not -path '*/\.*' \
+        -iregex "\/[[:alpha:][:digit:]]+.*\.dmg$"
+    )
+
+    local mount_path=$(mount_dmg "$dmg_path")
+    local app_to_copy="$mount_path/$name.app"
+
+    cp -r "$app_to_copy" /Applications
+
+    unmount_dmg "$mount_path"
+
+    rm -fr $zip_path
+    rm -fr $tmp_directory
   else
     already_installed_msg "$name"
   fi
@@ -142,6 +173,42 @@ install_dropbox() {
   install_dmg_with_installer "Dropbox" "$url" "Dropbox.app"
 }
 
+install_firefox() {
+  local url="https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US"
+  install_simple_dmg_copy "Firefox" "$url"
+}
+
+install_google_chrome() {
+  local url="https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg"
+  install_simple_dmg_copy "Google Chrome" "$url"
+}
+
+install_licecap() {
+  local url="https://www.cockos.com/licecap/licecap125.dmg"
+  install_simple_dmg_copy "LICEcap" "$url"
+}
+
+install_mammon() {
+  local name="Mammon"
+
+  if ! app_installed "$name"; then
+    local url=$(
+      curl -L --silent "https://teamfox.co/mammon" | \
+        grep -Eo '(http|https)://[^"]+latest.zip[^"]*' | \
+        sed -E -e 's/dl=0/dl=1/g'
+    )
+
+    install_inception_zip "Mammon" "$url"
+  else
+    already_installed_msg "$name"
+  fi
+}
+
+install_swinsian() {
+  url="https://swinsian.com/sparkle/Swinsian.zip"
+  install_simple_zip "Swinsian" "$url"
+}
+
 install_zooom2() {
   local name="Zooom2"
   local path="$HOME/Dropbox/Mac Software/Zooom2.app"
@@ -164,15 +231,15 @@ install_alfred
 install_bartender
 install_better_touch_tool
 install_dropbox
-# Firefox
-# Google Chrome
-# LICEcap
-# Mammon
+install_firefox
+install_google_chrome
+install_licecap
+install_mammon
 # On The Job 3
 # OpenEmu
 # Signal
 # Splice
 # Steam
-# Swinsian
+install_swinsian
 # VLC
 install_zooom2
