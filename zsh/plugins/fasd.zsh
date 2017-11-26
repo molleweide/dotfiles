@@ -19,7 +19,12 @@ fasd_cd() {
 }
 
 alias z='fasd_cd -d'
+alias j='z'
 alias zz='fasd_cd -d -i'
+
+function v() {
+  vim $(fasd -a $@)
+}
 
 # add zsh hook
 _fasd_preexec() {
