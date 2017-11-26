@@ -265,7 +265,7 @@ install_zooom2() {
 
   if ! app_installed "$name"; then
     if [ ! -e "$path" ]; then
-      dotsay "@b@red[[ERROR installing $name - mount and sync Dropbox and try again]]"
+      dotsay "@b@red[[ERROR installing $name at $path - mount and sync Dropbox and try again]]"
     else
       cp -r "$path" /Applications
     fi
