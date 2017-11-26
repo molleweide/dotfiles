@@ -219,6 +219,11 @@ install_splice() {
   install_dmg_with_installer "Splice" "$url" "Splice Installer.app"
 }
 
+install_steam() {
+  local url="https://steamcdn-a.akamaihd.net/client/installer/steam.dmg"
+  install_simple_dmg_copy "Steam" "$url"
+}
+
 install_swinsian() {
   local url="https://swinsian.com/sparkle/Swinsian.zip"
   install_simple_zip "Swinsian" "$url"
@@ -259,7 +264,7 @@ install_mammon
 install_openemu
 install_signal
 install_splice
-# Steam
+install_steam
 install_swinsian
 install_vlc
 install_zooom2
