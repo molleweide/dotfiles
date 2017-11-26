@@ -204,8 +204,23 @@ install_mammon() {
   fi
 }
 
+install_openemu() {
+  local url="https://github.com/OpenEmu/OpenEmu/releases/download/v2.0.5/OpenEmu_2.0.5.zip"
+  install_simple_zip "OpenEmu" "$url"
+}
+
+install_signal() {
+  local url="https://updates.signal.org/desktop/Signal-mac-1.0.39.zip"
+  install_simple_zip "Signal" "$url"
+}
+
+install_splice() {
+  local url="https://s3-us-west-1.amazonaws.com/splicedesktop/install/stable/Splice.dmg"
+  install_dmg_with_installer "Splice" "$url" "Splice Installer.app"
+}
+
 install_swinsian() {
-  url="https://swinsian.com/sparkle/Swinsian.zip"
+  local url="https://swinsian.com/sparkle/Swinsian.zip"
   install_simple_zip "Swinsian" "$url"
 }
 
@@ -236,8 +251,8 @@ install_google_chrome
 install_licecap
 install_mammon
 # On The Job 3
-# OpenEmu
-# Signal
+install_openemu
+install_signal
 # Splice
 # Steam
 install_swinsian
