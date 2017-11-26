@@ -2,7 +2,7 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-requires_installer homebrew
+require_installer homebrew
 
 function setup_rvmrc() {
   symlink_dotfile rvmrc ~/.rvmrc
