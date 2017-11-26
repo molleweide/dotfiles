@@ -2,5 +2,38 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
+mas_app_id() {
+  local name=$1
+
+  mas search "$name" | awk '{ print $1 }'
+}
+
+mas_install() {
+  local name=$1
+  local app_id=$(mas_app_id "$name")
+
+  if ! mas list | grep -q $app_id; then
+    mas install $app_id
+  fi
+}
+
+mas_ensure_signed_in() {
+  if ! mas account >/dev/null 2>&1; then
+    printf "What is your Apple ID? > "
+    read apple_id
+    mas signin $apple_id
+  else
+    dotsay "@b@blue[[Currently signed into the App Store as $(mas account)]]"
+  fi
+}
+
 dotheader "Setting up Mac App Store..."
+
 brew_install mas
+mas_ensure_signed_in
+
+# mas_install "Boom 2"
+# mas_install "Capo 3"
+# mas_install "GarageBand"
+# mas_install "Logic Pro X"
+# mas_install "Xcode"
