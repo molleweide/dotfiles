@@ -51,6 +51,7 @@ Plug 'cakebaker/scss-syntax.vim'
 Plug 'StanAngeloff/php.vim'
 Plug '2072/PHP-Indenting-for-VIm'
 Plug 'captbaritone/better-indent-support-for-php-with-html'
+Plug 'vim-scripts/applescript.vim'
 
 """""""""
 " Git
