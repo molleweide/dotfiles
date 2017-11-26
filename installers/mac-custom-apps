@@ -204,6 +204,11 @@ install_mammon() {
   fi
 }
 
+install_on_the_job() {
+  local url="http://stuntsoftware.com/downloads/OnTheJob.zip"
+  install_simple_zip "On The Job" "$url"
+}
+
 install_openemu() {
   local url="https://github.com/OpenEmu/OpenEmu/releases/download/v2.0.5/OpenEmu_2.0.5.zip"
   install_simple_zip "OpenEmu" "$url"
@@ -260,7 +265,7 @@ install_firefox
 install_google_chrome
 install_licecap
 install_mammon
-# On The Job 3
+install_on_the_job
 install_openemu
 install_signal
 install_splice
