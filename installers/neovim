@@ -20,8 +20,12 @@ function setup_neovim_config() {
   symlink_dotfile nvim ~/.config/nvim
 }
 
+function ensure_plugin_directory() {
+  mkdir -p ~/.local/share/nvim/plugged
+}
+
 function install_neovim_plugins() {
-  echo "Installing nvim plugins"
+  dotsay "@b@blue[[+ Installing nvim plugins]]"
   nvim +PlugInstall +qall
 }
 
@@ -29,4 +33,5 @@ dotheader "Setting up Neovim..."
 
 install_neovim
 setup_neovim_config
+ensure_plugin_directory
 install_neovim_plugins
