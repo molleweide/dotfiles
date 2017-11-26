@@ -55,7 +55,7 @@ dotheader "Setting up ZSH..."
 
 brew_install_all "${packages[@]}"
 
-fix_brew_permissions
+# fix_brew_permissions
 setup_zsh_symlinks
 install_fzf
 update_shell_whitelist
