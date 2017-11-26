@@ -19,4 +19,6 @@ packages=(
   wget
 )
 
+dotheader "Setting up Homebrew..."
+
 brew_install_all "${packages[@]}"

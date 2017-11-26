@@ -24,6 +24,8 @@ function setup_git_dotfiles() {
   symlink_dotfile git/template ~/.git_template
 }
 
+dotheader "Setting up Git..."
+
 brew_install git
 
 setup_user_gitconfig

@@ -34,6 +34,8 @@ function install_pyenv_virtualenvs() {
   fi
 }
 
+dotheader "Setting up Python..."
+
 brew_install pyenv
 brew_install pyenv-virtualenv
 

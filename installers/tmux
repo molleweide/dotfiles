@@ -24,6 +24,8 @@ function setup_tmuxinator() {
   symlink_dotfile tmuxinator ~/.tmuxinator
 }
 
+dotheader "Setting up Tmux..."
+
 brew_install tmux
 
 setup_tmux_config

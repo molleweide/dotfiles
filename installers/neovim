@@ -25,6 +25,8 @@ function install_neovim_plugins() {
   nvim +PlugInstall +qall
 }
 
+dotheader "Setting up Neovim..."
+
 install_neovim
 setup_neovim_config
 install_neovim_plugins

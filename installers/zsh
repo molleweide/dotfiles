@@ -51,6 +51,8 @@ packages=(
   zsh-completions
 )
 
+dotheader "Setting up ZSH..."
+
 brew_install_all "${packages[@]}"
 
 fix_brew_permissions

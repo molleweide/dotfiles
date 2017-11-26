@@ -12,4 +12,6 @@ packages=(
   phantomjs
 )
 
+dotheader "Setting up devtools..."
+
 brew_install_all "${packages[@]}"

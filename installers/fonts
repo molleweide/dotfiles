@@ -22,4 +22,6 @@ function install_nerd_fonts() {
   fi
 }
 
+dotheader "Setting up fonts..."
+
 install_nerd_fonts
