@@ -254,10 +254,6 @@ install_swinsian() {
   install_simple_zip "Swinsian" "$url"
 }
 
-add_swinsian_tmux_integration() {
-  ln -sf $(dotfiles_location)/bin/swinsian_status $HOME/.local/bin
-}
-
 install_vlc() {
   local url="http://mirror.os6.org/videolan/vlc/2.2.6/macosx/vlc-2.2.6.dmg"
   install_simple_dmg_copy "VLC" "$url"
@@ -296,6 +292,5 @@ install_signal
 install_splice
 install_steam
 install_swinsian
-add_swinsian_tmux_integration
 install_vlc
 install_zooom2
