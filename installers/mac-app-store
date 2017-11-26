@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+dotheader "Setting up Mac App Store..."
+brew_install mas
