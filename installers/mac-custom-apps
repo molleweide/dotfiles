@@ -209,6 +209,26 @@ install_on_the_job() {
   install_simple_zip "On The Job" "$url"
 }
 
+setup_on_the_job_dropbox_sync() {
+  local synced_dir="$HOME/Dropbox/On The Job 3"
+  local support_dir="$HOME/Library/Application Support/On The Job 3"
+
+  if [ ! -d $HOME/Dropbox ]; then
+    dotsay "@b@red[[ERROR Dropbox needs to be setup to finish configuring On The Job]]"
+    return 1
+  fi
+
+  if [ ! -d "$synced_dir" ]; then
+    dotsay "@b@red[[ERROR the OTJ Dropbox dir needs to be synced to finish configuring On The Job]]"
+    return 1
+  fi
+
+  if [[ ! -L "$support_dir" ]]; then
+    dotsay "@b@blue[[Synced On the Job with Dropbox]]"
+    ln -sf "$synced_dir" "$support_dir"
+  fi
+}
+
 install_openemu() {
   local url="https://github.com/OpenEmu/OpenEmu/releases/download/v2.0.5/OpenEmu_2.0.5.zip"
   install_simple_zip "OpenEmu" "$url"
@@ -266,6 +286,7 @@ install_google_chrome
 install_licecap
 install_mammon
 install_on_the_job
+setup_on_the_job_dropbox_sync
 install_openemu
 install_signal
 install_splice
