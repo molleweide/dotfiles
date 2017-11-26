@@ -89,7 +89,7 @@ Plug 'Peeja/vim-cdo'
 " Vim improvements
 """"""
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py && YouCompleteMe/third_party/ycmd/third_party/tern_runtime && npm install --production' }
 Plug 'briandoll/change-inside-surroundings.vim'
 Plug 'godlygeek/tabular'
 Plug 'tomtom/tcomment_vim'

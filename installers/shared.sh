@@ -2,4 +2,8 @@
 
 shared_dir="${BASH_SOURCE%/*}/shared"
 
-source "$shared_dir/functions.sh"
+if [[ "$SOURCED_SHARED_DOTFILES" != "yes" ]]; then
+  source "$shared_dir/functions.sh"
+
+  SOURCED_SHARED_DOTFILES="yes"
+fi
