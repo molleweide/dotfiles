@@ -2,6 +2,8 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
+requires_installer homebrew
+
 function fix_brew_permissions() {
   (stat -f '%Su' /usr/local | grep root) && \
     echo "Fixing /usr/local permissions..." && \
