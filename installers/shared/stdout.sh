@@ -2,6 +2,7 @@
 
 dotheader() {
   dotsay "@b@green[[$1]]"
+  echo
 }
 
 dotsay() {

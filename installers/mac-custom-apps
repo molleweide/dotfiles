@@ -1,0 +1,178 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+installer_download() {
+  local url=$1
+  local filename=$2
+  local output_path="/tmp/${filename}"
+
+  curl -L "$url" -o "$output_path"
+
+  echo $output_path
+  return 0
+}
+
+mount_dmg() {
+  local dmg_path=$1
+  local mount_path=$(
+    hdiutil attach -noautoopen "$dmg_path" | \
+      awk '{ split($0, a, /[[:space:]]{2,}/); print a[2] }'
+  )
+
+  echo "$mount_path"
+  return 0
+}
+
+unmount_dmg() {
+  hdiutil detach "$1" >/dev/null
+}
+
+app_installed() {
+  test -e "/Applications/$1.app"
+}
+
+run_program_and_wait() {
+  local installer_path=$1
+  open -W "$installer_path"
+}
+
+run_installer_pkg() {
+  local pkg_path=$1
+  sudo installer -pkg "$pkg_path" -target /
+}
+
+downloading_msg() {
+  dotsay "@b@blue[[+ Downloading and installing $1]]"
+}
+
+already_installed_msg() {
+  dotsay "+ $name already installed"
+}
+
+install_dmg_with_installer() {
+  local name=$1
+  local url=$2
+  local installer_path=$3
+
+  if ! app_installed "$name"; then
+    downloading_msg "$name"
+
+    local dmg_path=$(installer_download "$url" "$name.dmg")
+    local mount_path=$(mount_dmg "$dmg_path")
+
+    run_program_and_wait "$mount_path/$installer_path"
+
+    unmount_dmg "$mount_path"
+    rm -fr $dmg_path
+  else
+    already_installed_msg "$name"
+  fi
+}
+
+install_simple_dmg_copy() {
+  local name=$1
+  local url=$2
+
+  if ! app_installed "$name"; then
+    local dmg_path=$(installer_download "$url" "$name.dmg")
+    local mount_path=$(mount_dmg "$dmg_path")
+    local app_to_copy="$mount_path/$name.app"
+
+    cp -r "$app_to_copy" /Applications
+
+    unmount_dmg "$mount_path"
+    rm -fr $pkg_path
+  else
+    already_installed_msg "$name"
+  fi
+}
+
+install_simple_zip() {
+  local name=$1
+  local url=$2
+
+  if ! app_installed "$name"; then
+    local zip_path=$(installer_download "$url" "$name.zip")
+
+    unzip -d /Applications "$zip_path"
+
+    rm -fr $zip_path
+  else
+    already_installed_msg "$name"
+  fi
+}
+
+install_pkg() {
+  local name=$1
+  local url=$2
+
+  if ! app_installed "$name"; then
+    local pkg_path=$(installer_download "$url" "$name.pkg")
+
+    run_installer_pkg "$pkg_path"
+    rm -fr $pkg_path
+  else
+    already_installed_msg "$name"
+  fi
+}
+
+install_1password() {
+  local url="https://app-updates.agilebits.com/download/OPM4"
+  install_pkg "1Password 6" "$url"
+}
+
+install_alfred() {
+  local url="https://cachefly.alfredapp.com/Alfred_3.5.1_883.dmg"
+  install_simple_dmg_copy "Alfred 3" "$url"
+}
+
+install_bartender() {
+  local url="https://www.macbartender.com/Demo/Bartender%203.zip"
+  install_simple_zip "Bartender 3" "$url"
+}
+
+install_better_touch_tool() {
+  local url="https://www.boastr.net/releases/BetterTouchTool.zip"
+  install_simple_zip "BetterTouchTool" "$url"
+}
+
+install_dropbox() {
+  local url="https://www.dropbox.com/download?plat=mac"
+  install_dmg_with_installer "Dropbox" "$url" "Dropbox.app"
+}
+
+install_zooom2() {
+  local name="Zooom2"
+  local path="$HOME/Dropbox/Mac Software/Zooom2.app"
+
+  if ! app_installed "$name"; then
+    if [ ! -e "$path" ]; then
+      dotsay "@b@red[[ERROR installing $name - mount and sync Dropbox and try again]]"
+    else
+      cp -r "$path" /Applications
+    fi
+  else
+    already_installed_msg "$name"
+  fi
+}
+
+dotheader "Setting up custom Mac apps"
+
+install_1password
+install_alfred
+install_bartender
+install_better_touch_tool
+install_dropbox
+# Firefox
+# Google Chrome
+# LICEcap
+# Mammon
+# On The Job 3
+# OpenEmu
+# Signal
+# Splice
+# Steam
+# Swinsian
+# VLC
+install_zooom2
