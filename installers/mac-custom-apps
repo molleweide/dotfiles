@@ -224,6 +224,11 @@ install_swinsian() {
   install_simple_zip "Swinsian" "$url"
 }
 
+install_vlc() {
+  local url="http://mirror.os6.org/videolan/vlc/2.2.6/macosx/vlc-2.2.6.dmg"
+  install_simple_dmg_copy "VLC" "$url"
+}
+
 install_zooom2() {
   local name="Zooom2"
   local path="$HOME/Dropbox/Mac Software/Zooom2.app"
@@ -253,8 +258,8 @@ install_mammon
 # On The Job 3
 install_openemu
 install_signal
-# Splice
+install_splice
 # Steam
 install_swinsian
-# VLC
+install_vlc
 install_zooom2
