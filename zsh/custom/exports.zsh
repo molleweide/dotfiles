@@ -8,3 +8,5 @@ export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="$PATH:`yarn global bin`"
 export PATH="$PATH:$HOME/.composer/vendor/bin"
 export PATH="./node_modules/.bin:$PATH"
+
+export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
