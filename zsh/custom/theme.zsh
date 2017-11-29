@@ -14,7 +14,7 @@ git_prompt() {
   ref=$(git symbolic-ref HEAD 2>/dev/null)
 
   if [ ! -z $ref ]; then
-    newref=$(echo $ref | cut -d'/' -f3)
+    newref=$(echo $ref | cut -d'/' -f3,4)
     echo $newref
   fi
 }
