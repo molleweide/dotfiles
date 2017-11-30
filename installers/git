@@ -28,7 +28,7 @@ function setup_git_dotfiles() {
 
 dotheader "Setting up Git..."
 
-install_package "git" "git"
+install_package "git"
 
 setup_user_gitconfig
 setup_git_dotfiles

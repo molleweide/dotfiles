@@ -24,7 +24,11 @@ elif is_linux; then
   apt_install aptitude
 fi
 
-install_package "ack" "ack-grep"
-install_package "sl" "sl"
-install_package "the_silver_searcher" "silversearcher-ag"
-install_package "wget" "wget"
+brew_install ack
+apt_install ack-grep
+
+brew_install the_silver_searcher
+brew_install silversearcher-ag
+
+install_package sl
+install_package wget
