@@ -13,15 +13,18 @@ if is_macos; then
   fi
 
   packages=(
-    ack
     emojify
     reattach-to-user-namespace
-    sl
-    the_silver_searcher
-    wget
   )
 
   dotheader "Setting up Homebrew..."
 
   brew_install_all "${packages[@]}"
+elif is_linux; then
+  apt_install aptitude
 fi
+
+install_package "ack" "ack-grep"
+install_package "sl" "sl"
+install_package "the_silver_searcher" "silversearcher-ag"
+install_package "wget" "wget"
