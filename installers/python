@@ -4,9 +4,11 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 require_installer package-manager
 
-export PYTHON_CONFIGURE_OPTS="--enable-framework"
+is_macos && export PYTHON_CONFIGURE_OPTS="--enable-framework"
+
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-export PYENV_ROOT=/usr/local/var/pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
 
 function load_pyenv() {
   eval "$(pyenv init -)"
@@ -38,10 +40,24 @@ function install_pyenv_virtualenvs() {
   fi
 }
 
+function install_pyenv() {
+  if ! command_exists "pyenv"; then
+    curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
+  fi
+}
+
+function install_pyenv_virtualenv() {
+  local plugin_path="$(pyenv root)/plugins/pyenv-virtualenv"
+
+  if [ ! -d "$plugin_path" ]; then
+    git clone https://github.com/pyenv/pyenv-virtualenv.git "$plugin_path"
+  fi
+}
+
 dotheader "Setting up Python..."
 
-brew_install pyenv
-brew_install pyenv-virtualenv
+install_pyenv
+install_pyenv_virtualenv
 
 load_pyenv
 install_python_versions

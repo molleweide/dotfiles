@@ -1,8 +1,9 @@
-export PYTHON_CONFIGURE_OPTS="--enable-framework"
+[[ "$(uname)" == "Darwin" ]] && export PYTHON_CONFIGURE_OPTS="--enable-framework"
+
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
-# To use Homebrew's directories rather than ~/.pyenv add to your profile:
-export PYENV_ROOT=/usr/local/var/pyenv
+export PYENV_ROOT=~/.pyenv/bin
+export PATH="$PYENV_ROOT:$PATH"
 
 # To enable shims and autocompletion add to your profile:
 if which pyenv > /dev/null; then

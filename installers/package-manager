@@ -27,6 +27,28 @@ fi
 brew_install ack
 apt_install ack-grep
 
+# Apt build
+
+buildtools=(
+  make
+  build-essential
+  libssl-dev
+  zlib1g-dev
+  libbz2-dev
+  libreadline-dev
+  libsqlite3-dev
+  wget
+  curl
+  llvm
+  libncurses5-dev
+  xz-utils
+  tk-dev
+)
+
+for package in "${buildtools[@]}"; do
+  apt_install "$package"
+done
+
 brew_install the_silver_searcher
 brew_install silversearcher-ag
 
