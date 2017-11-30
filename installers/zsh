@@ -4,15 +4,6 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 require_installer package-manager
 
-function fix_brew_permissions() {
-  (stat -f '%Su' /usr/local | grep root) && \
-    echo "Fixing /usr/local permissions..." && \
-    sudo chown -R $(whoami):staff /usr/local && \
-    sudo chmod -R 755 /usr/local/share/zsh/site-functions && \
-    sudo chown -R root:wheel /usr/local/share/zsh/site-functions && \
-    sudo chmod g-w /usr/local/share
-}
-
 function setup_zsh_symlinks() {
   symlink_dotfile zshrc ~/.zshrc
   symlink_dotfile zsh ~/.zsh
@@ -20,7 +11,11 @@ function setup_zsh_symlinks() {
 }
 
 function zsh_binary() {
-  echo /usr/local/bin/zsh
+  if is_linux; then
+    echo /bin/zsh
+  elif is_macos; then
+    echo /usr/local/bin/zsh
+  fi
 }
 
 function update_shell_whitelist() {
@@ -33,32 +28,56 @@ function update_shell_whitelist() {
 
 function chsh_zsh() {
   if [[ "$SHELL" != "$(zsh_binary)" ]]; then
+    dotsay "@b@blue[[Changing shell for $current_user...]]"
+
     local current_user=$USER
     sudo chsh -s $(zsh_binary) $current_user
   fi
 }
 
 function install_fzf() {
+  if [ ! -d ~/.fzf ]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  fi
+
   if [ ! -f $HOME/.fzf.zsh ]; then
-    /usr/local/opt/fzf/install
+    ~/.fzf/install
   fi
 }
 
-packages=(
-  autoenv
-  direnv
-  fasd
-  fzf
-  zsh
-  zsh-completions
-)
+function install_fasd() {
+  if is_linux; then
+    if ! command_exists "fasd"; then
+      sudo add-apt-repository ppa:aacebedo/fasd
+      sudo apt-get update
+    fi
+  fi
+
+  install_package fasd
+}
+
+function setup_zsh_completions_repo() {
+  if ! apt_is_installed "zsh-completions"; then
+    sudo sh -c "echo 'deb http://download.opensuse.org/repositories/shells:/zsh-users:/zsh-completions/xUbuntu_16.04/ /' > /etc/apt/sources.list.d/zsh-completions.list"
+
+    wget -nv https://download.opensuse.org/repositories/shells:zsh-users:zsh-completions/xUbuntu_16.04/Release.key -O /tmp/Release.key
+    sudo apt-key add - < /tmp/Release.key
+
+    sudo apt-get update
+  fi
+}
 
 dotheader "Setting up ZSH..."
 
-brew_install_all "${packages[@]}"
+setup_zsh_completions_repo
 
-# fix_brew_permissions
-setup_zsh_symlinks
+install_package zsh
+install_package zsh-completions
+
+install_package direnv
+install_fasd
 install_fzf
+
+setup_zsh_symlinks
 update_shell_whitelist
 chsh_zsh
