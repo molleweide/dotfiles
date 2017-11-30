@@ -5,6 +5,7 @@ source "${BASH_SOURCE%/*}/shared.sh"
 require_installer package-manager
 
 is_macos && export PYTHON_CONFIGURE_OPTS="--enable-framework"
+is_linux && export PYTHON_CONFIGURE_OPTS="--enable-shared"
 
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PYENV_ROOT="$HOME/.pyenv"

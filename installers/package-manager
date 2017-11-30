@@ -33,6 +33,7 @@ apt_install ack-grep
 
 buildtools=(
   make
+  cmake
   build-essential
   libssl-dev
   zlib1g-dev

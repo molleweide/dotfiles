@@ -1,4 +1,6 @@
 [[ "$(uname)" == "Darwin" ]] && export PYTHON_CONFIGURE_OPTS="--enable-framework"
+[[ "$(uname)" == "Linux" ]] && export PYTHON_CONFIGURE_OPTS="--enable-shared"
+
 
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 

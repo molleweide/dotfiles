@@ -49,6 +49,7 @@ function ensure_plugin_directory() {
 
 function install_neovim_plugins() {
   dotsay "@b@blue[[+ Installing nvim plugins]]"
+  pyenv activate py2neovim
   nvim +PlugInstall +qall
 }
 
