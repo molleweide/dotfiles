@@ -7,9 +7,9 @@ function apt_update() {
 function apt_install() {
   local package=$1
 
-  if dpkg -l "$package" >/dev/null 2>&1; then
+  if dpkg -s "$package" >/dev/null 2>&1; then
     dotsay "+ $package already installed... skipping."
   else
-    sudo apt-get install "$package"
+    sudo apt-get install -y "$package"
   fi
 }
