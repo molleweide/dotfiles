@@ -20,7 +20,7 @@ git_prompt() {
 }
 
 node_prompt() {
-  if ! command -v nvm; then
+  if ! command -v nvm >/dev/null 2>&1; then
     echo ""
     return 1
   fi

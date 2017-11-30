@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+function install_nvm() {
+  if ! command_exists "nvm"; then
+    curl -o- \
+      https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
+
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+
+    nvm install stable
+  fi
+}
+
+install_nvm
