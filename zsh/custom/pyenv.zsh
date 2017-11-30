@@ -2,8 +2,8 @@
 
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
-export PYENV_ROOT=~/.pyenv/bin
-export PATH="$PYENV_ROOT:$PATH"
+export PYENV_ROOT=$HOME/.pyenv
+export PATH="$PYENV_ROOT/bin:$PATH"
 
 # To enable shims and autocompletion add to your profile:
 if which pyenv > /dev/null; then
