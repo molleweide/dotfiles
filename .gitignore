@@ -11,3 +11,4 @@ vim/sessions
 .netrwhist
 bin/subl
 tags
+*.swp
