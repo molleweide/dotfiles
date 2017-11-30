@@ -16,7 +16,9 @@ nvm_auto_switch() {
   [[ "$(nvm_version_path $REAL_VERSION)/bin" != "$NVM_BIN" ]] && nvm use
 }
 
-chpwd_functions+=('nvm_auto_switch')
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+if command -v nvm; then
+  chpwd_functions+=('nvm_auto_switch')
+fi

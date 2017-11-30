@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
 
+function brew_is_tapped() {
+  local tap=$1
+
+  ! is_macos && return 1
+
+  brew tap | grep -q "$tap"
+}
+
+function brew_tap() {
+  local tap=$1
+
+  ! is_macos && return 1
+
+  brew tap "$tap" 
+}
+
 function brew_install() {
   local package=$1
 

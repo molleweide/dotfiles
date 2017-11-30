@@ -20,6 +20,11 @@ git_prompt() {
 }
 
 node_prompt() {
+  if ! command -v nvm; then
+    echo ""
+    return 1
+  fi
+
   local nvmrc=$(nvm_find_nvmrc)
 
   if [ ! -z $nvmrc ]; then
