@@ -50,7 +50,7 @@ for package in "${buildtools[@]}"; do
 done
 
 brew_install the_silver_searcher
-brew_install silversearcher-ag
+apt_install silversearcher-ag
 
 install_package sl
 install_package wget
