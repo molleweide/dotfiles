@@ -14,6 +14,7 @@ function install_tmux_plugins() {
 
 function setup_tmux_config() {
   symlink_dotfile tmux.conf ~/.tmux.conf
+  symlink_dotfile tmux.osx.conf ~/.tmux.osx.conf
   symlink_dotfile tmux ~/.tmux
 
   if [ ! -d ~/.tmux/plugins/tpm ]; then
@@ -26,9 +27,40 @@ function setup_tmuxinator() {
   symlink_dotfile tmuxinator ~/.tmuxinator
 }
 
+function install_tmux_from_source_linux() {
+  ! is_linux && return 1
+
+  packages=(
+    wget
+    tar
+    libevent-dev
+    libncurses-dev
+  )
+
+  for package in "${packages[@]}"; do
+    apt_install $package
+  done
+
+  if command_exists "tmux"; then
+    return 0
+  fi  
+
+  local version="2.4"
+
+  wget https://github.com/tmux/tmux/releases/download/${version}/tmux-${version}.tar.gz && \
+    tar xf tmux-${version}.tar.gz && \
+    cd tmux-$version && \
+    ./configure --prefix=/usr/local && \
+    make && \
+    sudo make install && \
+    cd .. && \
+    rm -fr tmux-${version}
+}
+
 dotheader "Setting up Tmux..."
 
 brew_install tmux
+install_tmux_from_source_linux
 
 setup_tmux_config
 setup_tmuxinator
