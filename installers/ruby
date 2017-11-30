@@ -23,6 +23,9 @@ function install_rvm() {
   if [ ! -e ~/.rvm ]; then
     \curl -L https://get.rvm.io | bash -s -- --ignore-dotfiles
 
+    export PATH="$HOME/.rvm/bin:$PATH"
+    [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
+
     install_global_gem_hooks
     install_latest_ruby
   fi
