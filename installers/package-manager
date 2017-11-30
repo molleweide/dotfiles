@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+if is_macos; then
+  if test ! $(which brew); then
+    echo "Installing homebrew"
+
+    ruby -e "$(curl -fsSL \
+      https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+    brew update
+  fi
+
+  packages=(
+    ack
+    emojify
+    reattach-to-user-namespace
+    sl
+    the_silver_searcher
+    wget
+  )
+
+  dotheader "Setting up Homebrew..."
+
+  brew_install_all "${packages[@]}"
+fi

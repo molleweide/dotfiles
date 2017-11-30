@@ -2,7 +2,7 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-require_installer homebrew
+require_installer package-manager
 
 function configure_ctags() {
   symlink_dotfile ctags ~/.ctags

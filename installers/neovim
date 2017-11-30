@@ -2,7 +2,7 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-require_installer homebrew
+require_installer package-manager
 require_installer fonts
 require_installer ruby
 require_installer python

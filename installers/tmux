@@ -2,7 +2,7 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-require_installer homebrew
+require_installer package-manager
 
 function install_tmux_plugins() {
   local install_script="$HOME/.tmux/plugins/tpm/bin/install_plugins"

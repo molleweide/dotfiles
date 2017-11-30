@@ -2,7 +2,7 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-require_installer homebrew
+require_installer package-manager
 
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1

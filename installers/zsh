@@ -2,7 +2,7 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-require_installer homebrew
+require_installer package-manager
 
 function fix_brew_permissions() {
   (stat -f '%Su' /usr/local | grep root) && \
