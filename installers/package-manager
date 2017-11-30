@@ -21,6 +21,8 @@ if is_macos; then
 
   brew_install_all "${packages[@]}"
 elif is_linux; then
+  dotheader "Setting up Aptitude..."
+
   apt_install aptitude
 fi
 

@@ -57,6 +57,8 @@ function install_fasd() {
 }
 
 function setup_zsh_completions_repo() {
+  ! is_linux && return 1
+
   if ! apt_is_installed "zsh-completions"; then
     sudo sh -c "echo 'deb http://download.opensuse.org/repositories/shells:/zsh-users:/zsh-completions/xUbuntu_16.04/ /' > /etc/apt/sources.list.d/zsh-completions.list"
 
