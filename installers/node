@@ -2,16 +2,44 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
+function source_nvm() {
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+}
+
 function install_nvm() {
-  if ! command_exists "nvm"; then
+  if [ ! -d ~/.nvm ]; then
     curl -o- \
       https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
 
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+    source_nvm
 
     nvm install stable
   fi
 }
 
+function install_yarn_linux() {
+  ! is_linux && return 1
+
+  if ! command_exists "yarn"; then
+    # Force Node 9.x
+    sudo apt-get remove -y nodejs
+    curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+
+    # Add yarn repository
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | \
+      sudo apt-key add -
+
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | \
+      sudo tee /etc/apt/sources.list.d/yarn.list
+
+    apt_update
+    apt_install nodejs
+    apt_install yarn
+  fi
+}
+
 install_nvm
+source_nvm
+brew_install yarn
+install_yarn_linux

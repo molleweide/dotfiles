@@ -19,6 +19,6 @@ nvm_auto_switch() {
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-if command -v nvm; then
+if command -v nvm >/dev/null 2>&1; then
   chpwd_functions+=('nvm_auto_switch')
 fi
