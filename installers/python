@@ -59,6 +59,10 @@ dotheader "Setting up Python..."
 install_pyenv
 install_pyenv_virtualenv
 
+echo
+echo $PATH
+echo
+
 load_pyenv
 install_python_versions
 install_pyenv_virtualenvs
