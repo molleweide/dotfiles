@@ -2,7 +2,12 @@ setopt prompt_subst
 
 rvm_prompt() {
   if [ -f ~/.rvm/bin/rvm-prompt ]; then
-    version=$(~/.rvm/bin/rvm-prompt v)
+    if [ "$_RECENT_RUBY_GEM_HOME" != "$GEM_HOME" ]; then
+      export _RECENT_RUBY_VERSION=$(~/.rvm/bin/rvm-prompt v)
+      export _RECENT_RUBY_GEM_HOME="$GEM_HOME"
+    fi
+
+    local version="$_RECENT_RUBY_VERSION"
 
     if [ ! -z $version ]; then
       echo "[$version]"
@@ -25,14 +30,13 @@ node_prompt() {
     return 1
   fi
 
-  local nvmrc=$(nvm_find_nvmrc)
+  if [ "$_RECENT_NVM_BIN" != "$NVM_BIN" ]; then
+    export _RECENT_NVM_BIN="$NVM_BIN"
+    export _RECENT_NODE_VERSION=$(node -v)
+  fi
 
-  if [ ! -z $nvmrc ]; then
-    version=$((cat $nvmrc 2>/dev/null) || echo "")
-
-    if [ ! -z $version ]; then
-      echo "[$version]"
-    fi
+  if [ ! -z $_RECENT_NODE_VERSION ]; then
+    echo "[$_RECENT_NODE_VERSION]"
   fi 
 }
 
