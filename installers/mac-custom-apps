@@ -179,6 +179,11 @@ if is_macos; then
     install_simple_dmg_copy "Firefox" "$url"
   }
 
+  install_focus() {
+    local url="https://heyfocus.com/releases/Focus-latest.zip"
+    install_simple_zip "Focus" "$url"
+  }
+
   install_google_chrome() {
     local url="https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg"
     install_simple_dmg_copy "Google Chrome" "$url"
@@ -283,6 +288,7 @@ if is_macos; then
   install_better_touch_tool
   install_dropbox
   install_firefox
+  install_focus
   install_google_chrome
   install_licecap
   install_mammon
