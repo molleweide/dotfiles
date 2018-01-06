@@ -13,3 +13,4 @@ require_installer tmux
 require_installer fonts
 require_installer neovim
 require_installer mac-custom-apps
+require_installer backups
