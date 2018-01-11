@@ -7,6 +7,7 @@ alias work="cd ~/code/boundless && tn start boundless"
 alias word="cd ~/code/boundless && tn start wordpress"
 
 alias b="aid begin"
+alias bs="./bin/rspec"
 
 # Simple rsync
 alias srync="rsync -vrazh"

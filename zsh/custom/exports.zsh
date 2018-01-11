@@ -15,3 +15,7 @@ export PATH="./node_modules/.bin:$PATH"
 export PATH="~/.fzf/bin:$PATH"
 
 export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
+
+export RESTIC_REPOSITORY="b2:dbalatero-backup"
+export SYNC_REPO="$RESTIC_REPOSITORY:/Sync"
+export FREEZE_REPO="$RESTIC_REPOSITORY:/Freeze"

@@ -40,6 +40,6 @@ windows:
       layout: tiled
       panes:
         - rails s
-        - tail -f log/test.log
+        - ./bin/spring server
         - ./bin/webpack-dev-server
         - docker-compose up
