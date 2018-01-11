@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+# require_installer package-manager
+
+function install_spacemacs() {
+  if [ ! -d ~/.emacs.d ]; then
+    dotsay "@b@blue[[+ Installing spacemacs...]]"
+
+    local url="https://github.com/syl20bnr/spacemacs/archive/master.zip"
+    local zip_path="/tmp/spacemacs.zip"
+
+    curl -L "$url" -o "$zip_path"
+    unzip -d ~/ "$zip_path"
+    mv -f ~/spacemacs-master ~/.emacs.d
+    rm -fr "$zip_path"
+  else
+    dotsay "+ spacemacs is already installed"
+  fi
+}
+
+function install_emacs() {
+  brew_tap d12frosted/emacs-plus
+  brew_install emacs-plus
+
+  if [ ! -d /Applications/Emacs.app ]; then
+    brew linkapps emacs-plus
+  fi
+}
+
+install_spacemacs
+install_emacs
