@@ -12,5 +12,6 @@ require_installer ruby
 require_installer tmux
 require_installer fonts
 require_installer neovim
+require_installer spacemacs
 require_installer mac-custom-apps
 require_installer backups
