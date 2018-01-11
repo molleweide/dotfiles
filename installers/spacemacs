@@ -2,7 +2,7 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-# require_installer package-manager
+require_installer package-manager
 
 function install_spacemacs() {
   if [ ! -d ~/.emacs.d ]; then
