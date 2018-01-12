@@ -318,6 +318,15 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (define-key evil-motion-state-map (kbd "C-l") #'evil-window-right)
 
   (define-key evil-normal-state-map (kbd ";") (kbd ":"))
+
+  ;; always follow symlinks
+  (setq vc-follow-symlinks t)
+
+  ;; quiet shell warning, start all shell processes in a login shell
+  (setq exec-path-from-shell-arguments '("-l"))
+
+  ;; Magit
+  (setq magit-repository-directories '("~/code/"))
 )
 
 (defun dotspacemacs/user-config ()
