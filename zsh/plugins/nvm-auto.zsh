@@ -11,7 +11,7 @@ nvm_auto_switch() {
 
   read NVM_RC_VERSION < $(nvm_find_nvmrc)
 
-  REAL_VERSION=$(nvm_version $NVM_RC_VERSION)
+  REAL_VERSION=$(nvm current)
 
   [[ "$(nvm_version_path $REAL_VERSION)/bin" != "$NVM_BIN" ]] && nvm use
 }
