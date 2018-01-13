@@ -58,6 +58,8 @@ if is_macos; then
     local installer_path=$3
 
     if ! app_installed "$name"; then
+      dotsay "@blue@b[[+ Installing $name]]"
+
       downloading_msg "$name"
 
       local dmg_path=$(installer_download "$url" "$name.dmg")
@@ -77,6 +79,8 @@ if is_macos; then
     local url=$2
 
     if ! app_installed "$name"; then
+      dotsay "@blue@b[[+ Installing $name]]"
+
       local dmg_path=$(installer_download "$url" "$name.dmg")
       local mount_path=$(mount_dmg "$dmg_path")
       local app_to_copy="$mount_path/$name.app"
@@ -95,6 +99,8 @@ if is_macos; then
     local url=$2
 
     if ! app_installed "$name"; then
+      dotsay "@blue@b[[+ Installing $name]]"
+
       local zip_path=$(installer_download "$url" "$name.zip")
 
       unzip -d /Applications "$zip_path"
@@ -110,6 +116,8 @@ if is_macos; then
     local url=$2
 
     if ! app_installed "$name"; then
+      dotsay "@blue@b[[+ Installing $name]]"
+
       local zip_path=$(installer_download "$url" "$name.zip")
       local tmp_directory=$(mktemp -d -t 'dotfiles')
 
