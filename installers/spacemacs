@@ -31,4 +31,4 @@ function install_emacs() {
 
 install_spacemacs
 install_emacs
-symlink_dotfile spacemacs ~/.spacemacs
+symlink_dotfile spacemacs.d ~/.spacemacs.d
