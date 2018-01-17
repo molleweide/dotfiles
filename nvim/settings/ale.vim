@@ -29,15 +29,3 @@ function! s:ale_string(mode)
 
   return l:no_errors
 endfunction
-
-augroup AleGroup
-  autocmd!
-  autocmd User ALELint call TouchOpenFile()
-augroup END
-
-func! TouchOpenFile()
-  let g:ale_enabled = 0
-  sleep 500m
-  w
-  let g:ale_enabled = 1
-endfunc
