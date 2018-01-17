@@ -8,27 +8,34 @@ function install_spacemacs() {
   if [ ! -d ~/.emacs.d ]; then
     dotsay "@b@blue[[+ Installing spacemacs...]]"
 
-    local url="https://github.com/syl20bnr/spacemacs/archive/master.zip"
-    local zip_path="/tmp/spacemacs.zip"
-
-    curl -L "$url" -o "$zip_path"
-    unzip -d ~/ "$zip_path"
-    mv -f ~/spacemacs-master ~/.emacs.d
-    rm -fr "$zip_path"
+    git clone git@github.com:syl20bnr/spacemacs.git ~/.emacs.d
+    cd ~/.emacs.d && git checkout develop
   else
     dotsay "+ spacemacs is already installed"
   fi
 }
 
 function install_emacs() {
-  brew_tap d12frosted/emacs-plus
-  brew_install emacs-plus
-
   if [ ! -d /Applications/Emacs.app ]; then
-    brew linkapps emacs-plus
+    dotsay "@b@blue[[+ Installing Emacs 26 from HEAD...]]"
+
+    brew_tap d12frosted/emacs-plus
+
+    local formula=$(brew formula emacs-plus)
+    local temp_output="/tmp/emacs-plus.rb"
+
+    cat "$formula" |
+      sed "s/^.*emacs\.git.*$/    url \"https:\/\/github.com\/emacs-mirror\/emacs.git\", branch: \"emacs-26\"/g" > "$temp_output"
+
+    mv "$temp_output" "$formula"
+
+    brew install emacs-plus --HEAD && brew linkapps emacs-plus
+  else
+    dotsay "+ Emacs 26 is already installed"
   fi
 }
 
+brew_install wakatime-cli
 install_spacemacs
 install_emacs
 symlink_dotfile spacemacs.d ~/.spacemacs.d
