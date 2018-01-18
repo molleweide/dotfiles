@@ -37,31 +37,31 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     auto-completion
+     ; auto-completion
      better-defaults
      emacs-lisp
      git
-     github
-     markdown
-     org
+     ; github
+     ; markdown
+     ; org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
-     (ruby :variables
-           ruby-enable-enh-ruby-mode t
-           ruby-version-manager 'rvm
-           ruby-test-runner 'rspec)
-     ruby-on-rails
+     ; (ruby :variables
+     ;       ruby-enable-enh-ruby-mode t
+     ;       ruby-version-manager 'rvm
+     ;       ruby-test-runner 'rspec)
+     ; ruby-on-rails
      syntax-checking
-     version-control
-     aj-javascript
-     clojure
-     (shell :variables
-            shell-default-shell 'multi-term
-            shell-default-term-shell "/usr/local/bin/zsh"
-            shell-default-width 80
-            shell-default-position 'right)
+     ; version-control
+     ; aj-javascript
+     ; clojure
+     ; (shell :variables
+     ;        shell-default-shell 'multi-term
+     ;        shell-default-term-shell "/usr/local/bin/zsh"
+     ;        shell-default-width 80
+     ;        shell-default-position 'right)
    )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -69,8 +69,8 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
    '(
-      ruby-block
-      ruby-hash-syntax
+      ; ruby-block
+      ; ruby-hash-syntax
       solarized-theme
     )
    ;; A list of packages that cannot be updated.
@@ -155,6 +155,9 @@ values."
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
+
+   dotspacemacs-mode-line-theme 'spacemacs
+
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -185,7 +188,7 @@ values."
    dotspacemacs-retain-visual-state-on-shift t
    ;; If non-nil, J and K move lines up and down when in visual mode.
    ;; (default nil)
-   dotspacemacs-visual-line-move-text nil
+   dotspacemacs-visual-line-move-text t
    ;; If non nil, inverse the meaning of `g' in `:substitute' Evil ex-command.
    ;; (default nil)
    dotspacemacs-ex-substitute-global nil
@@ -318,6 +321,14 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  ;; Pull custom out into its own file
+  (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
+  (load custom-file)
+
+  (add-to-list 'load-path (expand-file-name "lisp" dotspacemacs-directory))
+
+  (require 'init-evil)
+
   ;; Fix fonts
   (set-face-attribute 'default nil :family "InconsolataGo NF")
   (set-face-attribute 'default nil :height 180)
@@ -330,6 +341,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (define-key evil-motion-state-map (kbd "C-j") #'evil-window-down)
   (define-key evil-motion-state-map (kbd "C-k") #'evil-window-up)
   (define-key evil-motion-state-map (kbd "C-l") #'evil-window-right)
+
+  ;; OS X doesn't support --dired flag to ls
+  (when (string= system-type "darwin")
+    (setq dired-use-ls-dired nil))
 
   ;; always follow symlinks
   (setq vc-follow-symlinks t)
@@ -358,22 +373,3 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   )
-
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help clojure-snippets clj-refactor edn paredit peg cider-eval-sexp-fu cider seq queue clojure-mode ruby-hash-syntax ruby-block web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js-doc eslintd-fix company-tern dash-functional tern coffee-mode add-node-modules-path magit-gh-pulls github-search github-clone github-browse-file gist gh marshal logito pcache ht projectile-rails inflections feature-mode enh-ruby-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby unfill solarized-theme smeargle rjsx-mode js2-mode orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download mwim mmm-mode markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub with-editor diff-hl company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
- '(rspec-spec-command "./bin/rspec")
- '(rspec-use-rvm t t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
