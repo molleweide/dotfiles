@@ -39,15 +39,21 @@ values."
      helm
      ; auto-completion
      better-defaults
-     emacs-lisp
+     colors
+     emoji
      git
-     ; github
+     html
+     github
      ; markdown
      ; org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
-     ;; spell-checking
+     (shell :variables
+            shell-default-shell 'ansi-term
+            shell-default-height 30
+            shell-default-position 'bottom)
+
+     (spell-checking :variables
+                     spell-checking-enable-by-default nil)
+
      ; (ruby :variables
      ;       ruby-enable-enh-ruby-mode t
      ;       ruby-version-manager 'rvm
@@ -283,7 +289,7 @@ values."
    dotspacemacs-line-numbers t
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
-   dotspacemacs-folding-method 'evil
+   dotspacemacs-folding-method 'origami
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
@@ -328,19 +334,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (add-to-list 'load-path (expand-file-name "lisp" dotspacemacs-directory))
 
   (require 'init-evil)
+  (require 'init-origami)
 
   ;; Fix fonts
   (set-face-attribute 'default nil :family "InconsolataGo NF")
   (set-face-attribute 'default nil :height 180)
-
-  ;; use jk to exit insert mode
-  (setq-default evil-escape-key-sequence "jk")
-
-  ;; vim hjkl
-  (define-key evil-motion-state-map (kbd "C-h") #'evil-window-left)
-  (define-key evil-motion-state-map (kbd "C-j") #'evil-window-down)
-  (define-key evil-motion-state-map (kbd "C-k") #'evil-window-up)
-  (define-key evil-motion-state-map (kbd "C-l") #'evil-window-right)
 
   ;; OS X doesn't support --dired flag to ls
   (when (string= system-type "darwin")
@@ -356,6 +354,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; Magit
   (setq magit-repository-directories '("~/code/"))
 
+  ;; Init magithub manually because it is disabled for now
+  (github/init-magithub)
+
   ;; projectile / helm
   (setq projectile-switch-project-action #'projectile-find-dir)
   (setq projectile-find-dir-includes-top-level t)
@@ -363,6 +364,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq helm-autoresize-mode t)
   (setq helm-apropos-fuzzy-match t)
   (setq helm-M-x-fuzzy-match t) ;; optional fuzzy matching for helm-M-x
+
+  ;; Fix powerline separator colors on mac
+  (setq powerline-image-apple-rgb t)
+
 )
 
 (defun dotspacemacs/user-config ()

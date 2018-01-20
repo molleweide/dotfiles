@@ -25,6 +25,15 @@
   ;; Remove this mapping so C-z can suspend in tty
   (define-key evil-motion-state-map (kbd "C-z") nil)
 
+  ;; use jk to exit insert mode
+  (setq-default evil-escape-key-sequence "jk")
+
+  ;; vim hjkl
+  (define-key evil-motion-state-map (kbd "C-h") #'evil-window-left)
+  (define-key evil-motion-state-map (kbd "C-j") #'evil-window-down)
+  (define-key evil-motion-state-map (kbd "C-k") #'evil-window-up)
+  (define-key evil-motion-state-map (kbd "C-l") #'evil-window-right)
+
   ;; Hide point in company-childframe
   (add-to-list 'evil-buffer-regexps '("^ \\*company-childframe\\*")))
 
