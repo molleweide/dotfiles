@@ -14,8 +14,18 @@
 ;;; Code:
 
 (defconst db-ruby-packages
-  '(ruby-mode
+  '(ruby-block
+    ruby-hash-syntax
+    ruby-mode
     ruby-test-mode))
+
+(defun db-ruby/init-ruby-hash-syntax ()
+  (require 'ruby-hash-syntax))
+
+(defun db-ruby/post-init-ruby-block ()
+  (require 'ruby-block)
+  (setq ruby-block-highlight-toggle 'overlay)
+  (ruby-block-mode t))
 
 (defun db-ruby/post-init-ruby-mode ()
   (add-hook 'ruby-mode-hook #'db-ruby/rubocop-set-flycheck-executable))

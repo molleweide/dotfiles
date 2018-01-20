@@ -45,21 +45,25 @@ values."
      git
      html
      github
-     ; markdown
-     ; org
-     (spell-checking :variables
-                     spell-checking-enable-by-default nil)
+     (markdown :variables markdown-live-preview-engine 'vmd)
+     (org :variables
+          org-enable-github-support t
+          org-enable-reveal-js-support t
+          org-want-todo-bindings t)
+     (spell-checking :variables spell-checking-enable-by-default nil)
      (shell :variables
             shell-default-shell 'multi-term
             shell-default-term-shell "/usr/local/bin/zsh"
             shell-default-width 80
             shell-default-position 'right)
+     db-elixir
+     db-javascript
      db-ruby
      db-term
+     shell-scripts
      syntax-checking
-     ; version-control
-     ; aj-javascript
-     ; clojure
+     (version-control :variables version-control-global-margin t)
+     clojure
    )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -67,9 +71,11 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
    '(
-      ; ruby-block
-      ; ruby-hash-syntax
+      flycheck-popup-tip
+      helpful
+      magithub
       solarized-theme
+      wakatime-mode
     )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -337,10 +343,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (when (string= system-type "darwin")
     (setq dired-use-ls-dired nil))
 
-  ;; always follow symlinks
-  (setq vc-follow-symlinks t)
-  (setq find-file-visit-truename t)
-
   ;; quiet shell warning, start all shell processes in a login shell
   (setq exec-path-from-shell-arguments '("-l"))
 
@@ -349,6 +351,28 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; Init magithub manually because it is disabled for now
   (github/init-magithub)
+
+  ;; flycheck
+  (setq flycheck-display-errors-delay 0.5)
+  (spacemacs/enable-flycheck 'sh-mode)
+
+  (use-package flycheck-popup-tip
+    :defer t
+    :init
+    (progn
+      (setq flycheck-popup-tip-error-prefix "* ")
+      (add-hook 'flycheck-mode-hook 'flycheck-popup-tip-mode)))
+
+  (use-package helpful
+    :defer t
+    :commands
+    (helpful-function helpful-command helpful-macro))
+
+  ;; emojify {{{
+  ;; C-s-SPC (same as macOS)
+  (setq emojify-emoji-styles '(unicode))
+  (global-set-key (kbd "<C-s-268632064>") 'emojify-insert-emoji)
+  ;; }}}
 
   ;; projectile / helm
   (setq projectile-switch-project-action #'projectile-find-dir)
@@ -361,6 +385,28 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; Fix powerline separator colors on mac
   (setq powerline-image-apple-rgb t)
 
+  ;; Random misc
+  (setq
+   ;; Spaceline
+   spaceline-minor-modes-p nil
+
+   ;; File name completion
+   read-file-name-completion-ignore-case t
+   read-buffer-completion-ignore-case t
+
+   ;; Miscellaneous
+   vc-follow-symlinks t
+   require-final-newline t
+   find-file-visit-truename t
+
+   ;; Enable midnight-mode to clean old buffers every day
+   midnight-mode t)
+
+  (defun db/sh-mode ()
+    (setq sh-basic-offset 2
+          sh-indentation 2))
+
+  (add-hook 'sh-mode-hook 'db/sh-mode)
 )
 
 (defun dotspacemacs/user-config ()
