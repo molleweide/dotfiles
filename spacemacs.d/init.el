@@ -41,33 +41,25 @@ values."
      better-defaults
      colors
      emoji
+     (unicode-fonts :variables unicode-fonts-force-multi-color-on-mac t)
      git
      html
      github
      ; markdown
      ; org
-     (shell :variables
-            shell-default-shell 'ansi-term
-            shell-default-height 30
-            shell-default-position 'bottom)
-
      (spell-checking :variables
                      spell-checking-enable-by-default nil)
-
-     ; (ruby :variables
-     ;       ruby-enable-enh-ruby-mode t
-     ;       ruby-version-manager 'rvm
-     ;       ruby-test-runner 'rspec)
-     ; ruby-on-rails
+     (shell :variables
+            shell-default-shell 'multi-term
+            shell-default-term-shell "/usr/local/bin/zsh"
+            shell-default-width 80
+            shell-default-position 'right)
+     db-ruby
+     db-term
      syntax-checking
      ; version-control
      ; aj-javascript
      ; clojure
-     ; (shell :variables
-     ;        shell-default-shell 'multi-term
-     ;        shell-default-term-shell "/usr/local/bin/zsh"
-     ;        shell-default-width 80
-     ;        shell-default-position 'right)
    )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -334,6 +326,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (add-to-list 'load-path (expand-file-name "lisp" dotspacemacs-directory))
 
   (require 'init-evil)
+  (require 'init-html)
   (require 'init-origami)
 
   ;; Fix fonts
