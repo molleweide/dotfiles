@@ -15,6 +15,7 @@
 
 (defconst db-ruby-packages
   '(inf-ruby
+    rspec-mode
     ruby-block
     ruby-hash-syntax
     ruby-mode
@@ -22,6 +23,11 @@
 
 (defun db-ruby/init-inf-ruby ()
   (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+)
+
+(defun db-ruby/post-init-rspec-mode()
+  (eval-after-load 'rspec-mode
+    '(rspec-install-snippets))
 )
 
 (defun db-ruby/init-ruby-hash-syntax ()

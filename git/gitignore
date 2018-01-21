@@ -33,3 +33,8 @@ Session.vim
 .sass-cache
 
 /TODO
+
+# Gtags
+GPATH
+GRTAGS
+GTAGS

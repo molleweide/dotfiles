@@ -37,12 +37,26 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     ; auto-completion
+     (auto-completion :variables
+                      auto-completion-enable-snippets-in-popup nil
+                      auto-completion-enable-sort-by-usage t
+                      auto-completion-return-key-behavior 'complete
+                      auto-completion-tab-key-behavior 'cycle
+                      auto-completion-complete-with-key-sequence '"."
+                      auto-completion-complete-with-key-sequence-delay 0
+                      auto-completion-enable-help-tooltip 'manual
+                      spacemacs-default-company-backends
+                      '(company-capf
+                        company-files
+                        company-dabbrev
+                        (company-dabbrev-code company-keywords)))
      better-defaults
      osx
      dash
+     (gtags :variables gtags-enable-by-default t)
      (colors :variables colors-enable-nyan-cat-progress-bar t)
      emoji
+     games
      (unicode-fonts :variables unicode-fonts-force-multi-color-on-mac t)
      git
      html
@@ -79,6 +93,7 @@ values."
       all-the-icons
       base16-theme
       direnv
+      evil-smartparens
       flycheck-popup-tip
       helpful
       magithub
@@ -443,6 +458,11 @@ you should place your code here."
   (add-hook 'sh-mode-hook 'db/sh-mode)
 
   (global-wakatime-mode)
+
+  (use-package evil-smartparens
+    :ensure t
+    :config
+    (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode))
 
   (use-package base16-theme
     :ensure t
