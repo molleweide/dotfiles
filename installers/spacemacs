@@ -39,6 +39,8 @@ function install_emacs() {
 function install_npm_package() {
   local name=$1
 
+  nvm use system
+
   if command_exists "$name" ; then
     dotsay "+ $name already installed"
   else
@@ -48,9 +50,10 @@ function install_npm_package() {
 }
 
 brew_install wakatime-cli
+brew_install coreutils
 install_spacemacs
 install_emacs
 symlink_dotfile spacemacs.d ~/.spacemacs.d
 
-install_npm_package term
+install_npm_package tern
 install_npm_package vmd

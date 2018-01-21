@@ -39,7 +39,8 @@ values."
      helm
      ; auto-completion
      better-defaults
-     colors
+     osx
+     (colors :variables colors-enable-nyan-cat-progress-bar t)
      emoji
      (unicode-fonts :variables unicode-fonts-force-multi-color-on-mac t)
      git
@@ -52,12 +53,13 @@ values."
           org-want-todo-bindings t)
      (spell-checking :variables spell-checking-enable-by-default nil)
      (shell :variables
-            shell-default-shell 'multi-term
+            shell-default-shell 'ansi-term
             shell-default-term-shell "/usr/local/bin/zsh"
-            shell-default-width 80
+            shell-default-width 30
             shell-default-position 'right)
      db-elixir
      db-javascript
+     db-spaceline
      db-ruby
      db-term
      shell-scripts
@@ -71,10 +73,16 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
    '(
+      add-node-modules-path
+      apropospriate-theme
+      all-the-icons
+      base16-theme
+      direnv
       flycheck-popup-tip
       helpful
       magithub
       solarized-theme
+      spaceline-all-the-icons
       wakatime-mode
     )
    ;; A list of packages that cannot be updated.
@@ -148,7 +156,9 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(solarized-dark
+   dotspacemacs-themes '(apropospriate-dark
+                         apropospriate-light
+                         solarized-dark
                          solarized-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -158,7 +168,7 @@ values."
                                :size 18
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.0)
 
    dotspacemacs-mode-line-theme 'spacemacs
 
@@ -333,15 +343,21 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (require 'init-evil)
   (require 'init-html)
-  (require 'init-origami)
+
+  (setq node-add-modules-path t)
+
+  ;; Fix powerline separator colors on mac
+  (setq powerline-image-apple-rgb t)
+
+  ;; Hide title bar
+  ;; Currently broken on macOS 10.13
+  ;; (add-to-list 'initial-frame-alist '(undecorated . t))
+  (set-frame-parameter nil 'ns-transparent-titlebar t)
+  (set-frame-parameter nil 'ns-appearance 'dark)
 
   ;; Fix fonts
   (set-face-attribute 'default nil :family "InconsolataGo NF")
   (set-face-attribute 'default nil :height 180)
-
-  ;; OS X doesn't support --dired flag to ls
-  (when (string= system-type "darwin")
-    (setq dired-use-ls-dired nil))
 
   ;; quiet shell warning, start all shell processes in a login shell
   (setq exec-path-from-shell-arguments '("-l"))
@@ -353,8 +369,27 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (github/init-magithub)
 
   ;; flycheck
-  (setq flycheck-display-errors-delay 0.5)
+  (setq flycheck-display-errors-delay 0)
   (spacemacs/enable-flycheck 'sh-mode)
+)
+
+(defun dotspacemacs/user-config ()
+  "Configuration function for user code.
+This function is called at the very end of Spacemacs initialization after
+layers configuration.
+This is the place where most of your configurations should be done. Unless it is
+explicitly specified that a variable should be set before a package is loaded,
+you should place your code here."
+  (require 'init-origami)
+
+  (add-hook 'prog-mode-hook 'rainbow-mode)
+
+  ;; OS X doesn't support --dired flag to ls
+  (when (string= system-type "darwin")
+    (setq dired-use-ls-dired nil))
+
+  ;; shell
+  (global-set-key (kbd "s-i") 'spacemacs/default-pop-shell)
 
   (use-package flycheck-popup-tip
     :defer t
@@ -375,15 +410,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; }}}
 
   ;; projectile / helm
-  (setq projectile-switch-project-action #'projectile-find-dir)
+  (setq projectile-switch-project-action #'projectile-find-file)
   (setq projectile-find-dir-includes-top-level t)
 
   (setq helm-autoresize-mode t)
   (setq helm-apropos-fuzzy-match t)
   (setq helm-M-x-fuzzy-match t) ;; optional fuzzy matching for helm-M-x
-
-  ;; Fix powerline separator colors on mac
-  (setq powerline-image-apple-rgb t)
 
   ;; Random misc
   (setq
@@ -407,13 +439,18 @@ before packages are loaded. If you are unsure, you should try in setting them in
           sh-indentation 2))
 
   (add-hook 'sh-mode-hook 'db/sh-mode)
-)
 
-(defun dotspacemacs/user-config ()
-  "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
-This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded,
-you should place your code here."
-  )
+  (global-wakatime-mode)
+
+  (use-package base16-theme
+    :ensure t
+    :config
+    (load-theme 'base16-tomorrow-night t))
+
+  (require 'direnv)
+  (direnv-mode)
+
+  ;; load private settings
+  (when (file-exists-p "~/.emacs-private.el")
+    (load-file "~/.emacs-private.el"))
+)

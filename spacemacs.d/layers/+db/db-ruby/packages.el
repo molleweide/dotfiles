@@ -14,21 +14,29 @@
 ;;; Code:
 
 (defconst db-ruby-packages
-  '(ruby-block
+  '(inf-ruby
+    ruby-block
     ruby-hash-syntax
     ruby-mode
     ruby-test-mode))
 
+(defun db-ruby/init-inf-ruby ()
+  (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+)
+
 (defun db-ruby/init-ruby-hash-syntax ()
-  (require 'ruby-hash-syntax))
+  (require 'ruby-hash-syntax)
+)
 
 (defun db-ruby/post-init-ruby-block ()
   (require 'ruby-block)
   (setq ruby-block-highlight-toggle 'overlay)
-  (ruby-block-mode t))
+  (ruby-block-mode t)
+)
 
 (defun db-ruby/post-init-ruby-mode ()
-  (add-hook 'ruby-mode-hook #'db-ruby/rubocop-set-flycheck-executable))
+  (add-hook 'ruby-mode-hook #'db-ruby/rubocop-set-flycheck-executable)
+)
 
 (defun db-ruby/post-init-ruby-test-mode ()
   ;; Disable screenshot inlining, which slows emacs down and doesn't work
@@ -43,5 +51,6 @@
     (advice-add 'ruby-test-run-at-point :before (lambda (&rest r) (save-buffer)))
     (advice-add 'ruby-test-run :before (lambda (&rest r) (save-buffer))))
 
-  (setq ruby-test-rspec-options '()))
+  (setq ruby-test-rspec-options '())
+)
 ;;; packages.el ends here
