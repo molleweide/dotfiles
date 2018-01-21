@@ -40,6 +40,7 @@ values."
      ; auto-completion
      better-defaults
      osx
+     dash
      (colors :variables colors-enable-nyan-cat-progress-bar t)
      emoji
      (unicode-fonts :variables unicode-fonts-force-multi-color-on-mac t)
