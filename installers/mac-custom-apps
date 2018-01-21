@@ -177,6 +177,11 @@ if is_macos; then
     install_simple_zip "BetterTouchTool" "$url"
   }
 
+  install_dash() {
+    local url="https://sanfrancisco.kapeli.com/downloads/v4/Dash.zip"
+    install_simple_zip "Dash" "$url"
+  }
+
   install_dropbox() {
     local url="https://www.dropbox.com/download?plat=mac"
     install_dmg_with_installer "Dropbox" "$url" "Dropbox.app"
@@ -294,6 +299,7 @@ if is_macos; then
   install_alfred
   install_bartender
   install_better_touch_tool
+  install_dash
   install_dropbox
   install_firefox
   install_focus
