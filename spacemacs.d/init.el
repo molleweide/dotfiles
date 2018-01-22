@@ -429,6 +429,7 @@ you should place your code here."
   ;; projectile / helm
   (setq projectile-switch-project-action #'projectile-find-file)
   (setq projectile-find-dir-includes-top-level t)
+  (setq projectile-enable-caching t)
 
   (setq helm-autoresize-mode t)
   (setq helm-apropos-fuzzy-match t)
