@@ -19,3 +19,5 @@ export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
 export RESTIC_REPOSITORY="b2:dbalatero-backup"
 export SYNC_REPO="$RESTIC_REPOSITORY:/Sync"
 export FREEZE_REPO="$RESTIC_REPOSITORY:/Freeze"
+
+export GTAGSLABEL="ctags"

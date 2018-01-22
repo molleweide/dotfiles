@@ -51,15 +51,15 @@ function install_npm_package() {
 
 brew_install wakatime-cli
 brew_install coreutils
-brew_tap universal-ctags/universal-ctags
-brew_install universal-ctags --HEAD
+brew_install ctags
+rehash
+brew_install global --with-ctags
 
-brew_tap dbalatero/homebrew-emacs
-brew_install dbalatero/homebrew-emacs/global --with-pygments --with-universal-ctags
+install_npm_package tern
+install_npm_package vmd
 
 install_spacemacs
 install_emacs
 symlink_dotfile spacemacs.d ~/.spacemacs.d
 
-install_npm_package tern
-install_npm_package vmd
+ln -sf "$HOME/Library/Application Support/Dash/DocSets" $HOME/.docsets

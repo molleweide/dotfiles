@@ -14,12 +14,22 @@
 ;;; Code:
 
 (defconst db-ruby-packages
-  '(inf-ruby
+  '(ggtags
+    helm-gtags
+    inf-ruby
     rspec-mode
     ruby-block
     ruby-hash-syntax
     ruby-mode
     ruby-test-mode))
+
+(defun db-ruby/post-init-ggtags ()
+  (add-hook 'enh-ruby-mode-local-vars-hook #'spacemacs/ggtags-mode-enable)
+)
+
+(defun db-ruby/post-init-helm-gtags ()
+  (spacemacs/helm-gtags-define-keys-for-mode 'enh-ruby-mode)
+)
 
 (defun db-ruby/init-inf-ruby ()
   (add-hook 'after-init-hook 'inf-ruby-switch-setup)
