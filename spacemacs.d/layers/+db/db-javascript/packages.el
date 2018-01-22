@@ -2,6 +2,8 @@
   '(
     add-node-modules-path
     flycheck
+    ggtags
+    helm-gtags
     prettier-js
     rjsx-mode))
 
@@ -26,6 +28,14 @@
 
 (defun db-javascript/post-init-add-node-modules-path ()
   (add-hook 'rjsx-mode-hook #'add-node-modules-path))
+
+(defun db-javascript/post-init-ggtags ()
+  (add-hook 'rjsx-mode-hook 'spacemacs/ggtags-mode-enable)
+)
+
+(defun db-javascript/post-init-helm-gtags ()
+  (spacemacs/helm-gtags-define-keys-for-mode 'rjsx-mode)
+)
 
 (defun db-javascript/post-init-flycheck ()
   (spacemacs/enable-flycheck 'rjsx-mode))

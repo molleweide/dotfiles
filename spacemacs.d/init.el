@@ -473,6 +473,16 @@ you should place your code here."
   (require 'direnv)
   (direnv-mode)
 
+  (setq spacemacs-default-jump-handlers
+        (remove 'evil-goto-definition spacemacs-default-jump-handlers))
+
+  (defun db/shell-pop-right-side ()
+    (spacemacs/default-pop-shell)
+    (enlarge-window-horizontally (- 100 (window-width)))
+  )
+
+  (spacemacs/set-leader-keys "'" (lambda () (interactive) (db/shell-pop-right-side)))
+
   ;; load private settings
   (when (file-exists-p "~/.emacs-private.el")
     (load-file "~/.emacs-private.el"))
