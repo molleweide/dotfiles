@@ -17,6 +17,7 @@
   '(ggtags
     helm-gtags
     inf-ruby
+    robe
     rspec-mode
     ruby-block
     ruby-hash-syntax
@@ -49,6 +50,11 @@
   (require 'ruby-block)
   (setq ruby-block-highlight-toggle 'overlay)
   (ruby-block-mode t)
+)
+
+(defun db-ruby/post-init-robe ()
+  (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+    (rvm-activate-corresponding-ruby))
 )
 
 (defun db-ruby/post-init-ruby-mode ()

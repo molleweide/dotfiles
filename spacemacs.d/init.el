@@ -104,8 +104,7 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(window-purpose
-                                    spacemacs-purpose-popwin)
+   dotspacemacs-excluded-packages '()
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -486,6 +485,9 @@ you should place your code here."
   (turn-on-fci-mode)
 
   (setq evil-vsplit-window-right t)
+
+  (pupo-mode -1)
+  (purpose-mode -1)
 
   ;; load private settings
   (when (file-exists-p "~/.emacs-private.el")
