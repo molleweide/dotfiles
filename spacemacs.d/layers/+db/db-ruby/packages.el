@@ -36,6 +36,7 @@
 )
 
 (defun db-ruby/post-init-rspec-mode()
+  (setq rspec-autosave-buffer t)
   (eval-after-load 'rspec-mode
     '(rspec-install-snippets))
 )
@@ -52,6 +53,11 @@
 
 (defun db-ruby/post-init-ruby-mode ()
   (add-hook 'ruby-mode-hook #'db-ruby/rubocop-set-flycheck-executable)
+
+  (with-eval-after-load 'ruby-mode
+    (modify-syntax-entry ?_ "w" ruby-mode-syntax-table))
+  (with-eval-after-load 'enh-ruby-mode
+    (modify-syntax-entry ?_ "w" enh-ruby-mode-syntax-table))
 )
 
 (defun db-ruby/post-init-ruby-test-mode ()

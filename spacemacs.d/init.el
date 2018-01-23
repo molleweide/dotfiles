@@ -70,7 +70,7 @@ values."
      (shell :variables
             shell-default-shell 'ansi-term
             shell-default-term-shell "/usr/local/bin/zsh"
-            shell-default-width 30
+            shell-default-width 32
             shell-default-position 'right)
      db-elixir
      db-javascript
@@ -104,7 +104,8 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(window-purpose
+                                    spacemacs-purpose-popwin)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -267,7 +268,7 @@ values."
    dotspacemacs-which-key-position 'bottom
    ;; If non nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
-   ;; nil to boost the loading time. (default t)
+
    dotspacemacs-loading-progress-bar t
    ;; If non nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
@@ -476,12 +477,15 @@ you should place your code here."
   (setq spacemacs-default-jump-handlers
         (remove 'evil-goto-definition spacemacs-default-jump-handlers))
 
-  (defun db/shell-pop-right-side ()
-    (spacemacs/default-pop-shell)
-    (enlarge-window-horizontally (- 100 (window-width)))
-  )
+  (setq split-height-threshold nil)
+  (setq split-width-threshold 0)
 
-  (spacemacs/set-leader-keys "'" (lambda () (interactive) (db/shell-pop-right-side)))
+  (setq scroll-margin 5)
+  (setq scroll-preserve-screen-position 1)
+
+  (turn-on-fci-mode)
+
+  (setq evil-vsplit-window-right t)
 
   ;; load private settings
   (when (file-exists-p "~/.emacs-private.el")
