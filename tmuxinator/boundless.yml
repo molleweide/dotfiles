@@ -31,15 +31,14 @@ pre_window: nvm use && rvm use
 # post: tmux -CC attach -t boundless
 
 windows:
-  - editor:
+  - main:
       layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
       panes:
-        - vim
-        - # empty
+        - ./bin/webpack-dev-server
+        - #
   - server:
       layout: tiled
       panes:
         - rails s
         - ./bin/spring server
-        - ./bin/webpack-dev-server
         - docker-compose up
