@@ -36,6 +36,7 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     yaml
      helm
      (auto-completion :variables
                       auto-completion-enable-snippets-in-popup nil
@@ -488,6 +489,20 @@ you should place your code here."
 
   (pupo-mode -1)
   (purpose-mode -1)
+
+  ;; colorized compilation buffers
+  (define-derived-mode ansi-compilation-mode compilation-mode "ansi compilation"
+    "Compilation mode that understands ansi colors."
+    (require 'ansi-color)
+    (let ((inhibit-read-only 1))
+      (ansi-color-apply-on-region (point-min) (point-max))))
+
+  (defun colorize-compilation (one two)
+    "ansi colorize the compilation buffer."
+    (ansi-compilation-mode)
+    )
+
+  (setq compilation-finish-function 'colorize-compilation)
 
   ;; load private settings
   (when (file-exists-p "~/.emacs-private.el")

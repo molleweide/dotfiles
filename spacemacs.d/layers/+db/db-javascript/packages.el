@@ -4,6 +4,7 @@
     flycheck
     ggtags
     helm-gtags
+    mocha
     prettier-js
     rjsx-mode))
 
@@ -25,6 +26,26 @@
   (advice-add #'js-jsx-indent-line
               :after
               #'db-javascript/js-jsx-indent-line-align-closing-bracket))
+
+(defun db-javascript/init-mocha ()
+  (defun db*--mocha-run (&optional mocha-file test)
+    "Run mocha in a compilation buffer.
+
+If MOCHA-FILE is specified run just that file otherwise run
+MOCHA-PROJECT-TEST-DIRECTORY.
+
+IF TEST is specified run mocha with a grep for just that test."
+    (let ((test-command-to-run (mocha-generate-command nil mocha-file test))
+          (default-directory (mocha-find-project-root))
+          (compilation-buffer-name-function (lambda (_) "" "*mocha tests*")))
+      (compile test-command-to-run 'mocha-compilation-mode)))
+
+  (advice-add 'mocha-run :override 'db*--mocha-run)
+
+  (spacemacs/set-leader-keys-for-major-mode 'rjsx-mode
+    "tt" 'mocha-test-at-point
+    "tb" 'mocha-test-file)
+)
 
 (defun db-javascript/post-init-add-node-modules-path ()
   (add-hook 'rjsx-mode-hook #'add-node-modules-path))
