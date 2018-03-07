@@ -5,3 +5,6 @@ endif
 set background=dark
 
 silent! colorscheme solarized
+
+" Hex color highlighting
+au BufNewFile,BufRead *.css,*.html,*.htm,*.sass,*.scss :ColorHighlight!

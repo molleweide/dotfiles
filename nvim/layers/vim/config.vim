@@ -1,3 +1,7 @@
+" map leader key to spacebar
+nnoremap <Space> <Nop>
+let mapleader = "\<Space>"
+
 " remap ESC to jk
 inoremap jk <esc>
 
