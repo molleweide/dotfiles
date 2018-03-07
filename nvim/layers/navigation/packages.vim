@@ -15,4 +15,4 @@ Plug 'easymotion/vim-easymotion'
 Plug 'ludovicchabant/vim-gutentags'
 
 " sets cwd to project root of the buffer
-Plug 'airblade/vim-rooter'
+" Plug 'airblade/vim-rooter'
