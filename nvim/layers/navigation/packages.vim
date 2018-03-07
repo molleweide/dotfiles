@@ -16,3 +16,6 @@ Plug 'ludovicchabant/vim-gutentags'
 
 " sets cwd to project root of the buffer
 " Plug 'airblade/vim-rooter'
+
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimfiler.vim'

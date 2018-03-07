@@ -83,6 +83,9 @@ for fpath in split(globpath('~/.config/nvim/layers', '**/packages.vim'), '\n')
   exe 'source' fpath
 endfor
 
+" Load this last
+Plug 'ryanoasis/vim-devicons'
+
 call plug#end()
 
 for fpath in split(globpath('~/.config/nvim/layers', '**/config.vim'), '\n')

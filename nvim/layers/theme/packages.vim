@@ -1,6 +1,6 @@
 Plug 'frankier/neovim-colors-solarized-truecolor-only'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
+Plug 'chriskempson/base16-vim'
 
 " Color highlighting for rgb/hex colors
 Plug 'chrisbra/Colorizer'

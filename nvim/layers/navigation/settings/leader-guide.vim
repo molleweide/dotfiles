@@ -1,5 +1,11 @@
 let g:lmap =  {}
 
+let g:lmap.c = {
+  \'name' : 'Commenting',
+  \'s' : [':Commentary<CR>', 'comment a section'],
+  \'l' : [':CommentaryLine<CR>', 'comment a line'],
+  \}
+
 let g:lmap.g = {
   \'name' : 'Git Menu',
   \'s' : ['Gstatus', 'Git Status'],
