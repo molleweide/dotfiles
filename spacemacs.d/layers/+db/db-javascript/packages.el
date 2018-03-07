@@ -23,9 +23,10 @@
     js2-strict-trailing-comma-warning nil
     js2-strict-missing-semi-warning nil)
 
-  (advice-add #'js-jsx-indent-line
-              :after
-              #'db-javascript/js-jsx-indent-line-align-closing-bracket))
+  ;; (advice-add #'js-jsx-indent-line
+  ;;             :after
+  ;;             #'db-javascript/js-jsx-indent-line-align-closing-bracket)
+)
 
 (defun db-javascript/init-mocha ()
   (defun db*--mocha-run (&optional mocha-file test)
@@ -41,6 +42,8 @@ IF TEST is specified run mocha with a grep for just that test."
       (compile test-command-to-run 'mocha-compilation-mode)))
 
   (advice-add 'mocha-run :override 'db*--mocha-run)
+
+  (setq mocha-options "--recursive --colors")
 
   (spacemacs/set-leader-keys-for-major-mode 'rjsx-mode
     "tt" 'mocha-test-at-point

@@ -30,13 +30,15 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(octave
+     php
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      yaml
+     docker
      helm
      (auto-completion :variables
                       auto-completion-enable-snippets-in-popup nil
@@ -82,6 +84,7 @@ values."
      syntax-checking
      (version-control :variables version-control-global-margin t)
      clojure
+     theming
    )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -93,12 +96,12 @@ values."
       apropospriate-theme
       all-the-icons
       base16-theme
+      color-theme-solarized
       direnv
       evil-smartparens
       flycheck-popup-tip
       helpful
       magithub
-      solarized-theme
       spaceline-all-the-icons
       wakatime-mode
     )
@@ -174,9 +177,7 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(apropospriate-dark
-                         apropospriate-light
-                         solarized-dark
-                         solarized-light)
+                         apropospriate-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -459,17 +460,59 @@ you should place your code here."
 
   (add-hook 'sh-mode-hook 'db/sh-mode)
 
+  (setq-default css-indent-offset 2)
+
+  (defun db/web-mode-hook ()
+    "Hooks for Web mode."
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-css-indent-offset 2)
+    (setq web-mode-code-indent-offset 2)
+    (setq web-mode-indent-style 2)
+  )
+
+  (add-hook 'web-mode-hook  'db/web-mode-hook)
+
   (global-wakatime-mode)
 
-  (use-package evil-smartparens
-    :ensure t
-    :config
-    (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode))
+  ;; (use-package evil-smartparens
+  ;;   :ensure t
+  ;;   :config
+  ;;   (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode))
+
+  (remove-hook 'prog-mode-hook #'smartparens-mode #'show-smartparens-mode)
+  (spacemacs/toggle-smartparens-globally-off)
+
+  (add-hook 'smartparens-enabled-hook #'spacemacs/toggle-smartparens-off)
+
+  (eval-after-load 'smartparens
+    '(progn
+       (sp-pair "(" nil :actions :rem)
+       (sp-pair "[" nil :actions :rem)
+       (sp-pair "'" nil :actions :rem)
+       (sp-pair "\"" nil :actions :rem)))
+
+  (add-hook 'shell-mode-hook (lambda () (progn (smartparens-mode 0)
+                                               (show-smartparens-mode 0))))
+
+  (defun db/set-colors ()
+    (defvar my/base16-colors base16-tomorrow-night-colors)
+
+    (custom-set-faces
+     '(company-preview
+       ((t (:foreground (plist-get my/base16-colors :base00)
+            :background (plist-get my/base16-colors :base04)))))
+     '(company-preview-common
+       ((t (:inherit company-preview))))))
+
+
+  (set-terminal-parameter nil 'background-mode 'dark)
+  (set-frame-parameter nil 'background-mode 'dark)
 
   (use-package base16-theme
     :ensure t
     :config
-    (load-theme 'base16-tomorrow-night t))
+    (spacemacs/load-theme 'base16-tomorrow-night)
+    (db/set-colors))
 
   (require 'direnv)
   (direnv-mode)
@@ -503,6 +546,12 @@ you should place your code here."
     )
 
   (setq compilation-finish-function 'colorize-compilation)
+
+  ;; fix crashes??
+  (setq history-length 100)
+  (put 'minibuffer-history 'history-length 50)
+  (put 'evil-ex-history 'history-length 50)
+  (put 'kill-ring 'history-length 25)
 
   ;; load private settings
   (when (file-exists-p "~/.emacs-private.el")

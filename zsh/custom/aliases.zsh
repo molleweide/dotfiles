@@ -1,10 +1,12 @@
 alias vim="nvim"
 
 alias l="ls -al"
-alias tn="rvm default do tmuxinator"
+alias tn="rvm . do tmuxinator"
 alias tk="tmux kill-session"
 alias work="cd ~/code/boundless && tn start boundless"
 alias word="cd ~/code/boundless && tn start wordpress"
+alias mobile="cd ~/code/boundless && tn start mobile"
+alias dbm="rake db:migrate && RAILS_ENV=test rake db:migrate"
 
 alias b="aid begin"
 alias bs="./bin/rspec"
