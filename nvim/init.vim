@@ -40,11 +40,6 @@ let mapleader=","
 set list
 set listchars=tab:▸\ ,trail:ـ,extends:➧,eol:¬
 
-" =============== vim-plug Initialization ===============
-if filereadable(expand("~/.config/nvim/plugins.vim"))
-  source ~/.config/nvim/plugins.vim
-endif
-
 " ================ Turn Off Swap Files ==============
 
 set noswapfile
@@ -85,5 +80,17 @@ set scrolloff=8         "Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
 
-" ================ Custom Settings =================
-source ~/.config/nvim/settings.vim
+
+" =============== vim-plug Initialization ===============
+
+call plug#begin('~/.local/share/nvim/plugged')
+
+for fpath in split(globpath('~/.config/nvim/layers', '**/packages.vim'), '\n')
+  exe 'source' fpath
+endfor
+
+call plug#end()
+
+for fpath in split(globpath('~/.config/nvim/layers', '**/config.vim'), '\n')
+  exe 'source' fpath
+endfor
