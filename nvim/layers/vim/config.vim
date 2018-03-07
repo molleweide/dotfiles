@@ -1,3 +1,6 @@
+" Put contents of unnamed register in OS X clipboard
+set clipboard=unnamed
+
 " map leader key to spacebar
 let mapleader = ","
 
