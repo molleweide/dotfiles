@@ -30,12 +30,6 @@ set hidden
 "turn on syntax highlighting
 syntax on
 
-" change leader to a comma because the backslash is too far away
-" that means all \x commands turn into ,x
-" the mapleader has to be set before vundle starts loading all 
-" the plugins.
-let mapleader=","
-
 " highlight funky characters and whatnot
 set list
 set listchars=tab:▸\ ,trail:ـ,extends:➧,eol:¬

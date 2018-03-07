@@ -12,3 +12,6 @@ autocmd User fugitive
 " fugitive buffers. This prevents this from becomming an issue:
 
 autocmd BufReadPost fugitive://* set bufhidden=delete
+
+Shortcut open git status
+  \ noremap <silent> <Space>gs :Gstatus
