@@ -19,3 +19,5 @@ Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimfiler.vim'
+
+Plug 'danro/rename.vim'

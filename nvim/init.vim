@@ -59,6 +59,8 @@ set softtabstop=2
 set tabstop=2
 set expandtab
 
+set completeopt=menu,preview,noinsert
+
 filetype plugin on
 filetype indent on
 
@@ -74,6 +76,13 @@ set scrolloff=8         "Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
 
+let mapleader=","
+let g:mapleader=","
+
+" =============== python ====================
+
+let g:python_host_prog = $HOME . '/.pyenv/versions/py2neovim/bin/python'
+let g:python3_host_prog = $HOME . '/.pyenv/versions/py3neovim/bin/python'
 
 " =============== vim-plug Initialization ===============
 

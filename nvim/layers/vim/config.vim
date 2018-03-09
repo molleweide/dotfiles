@@ -1,8 +1,9 @@
 " Put contents of unnamed register in OS X clipboard
 set clipboard=unnamed
 
-" map leader key to spacebar
+" map leader key to comma
 let mapleader = ","
+let g:mapleader = ","
 
 " remap ESC to jk
 inoremap jk <esc>
@@ -24,13 +25,6 @@ function! YRRunAfterMaps()
   nnoremap Y   :<C-U>YRYankCount 'y$'<CR>
 endfunction
 
-" Make 0 go to the first character rather than the beginning
-" of the line. When we're programming, we're almost always
-" interested in working with text rather than empty space. If
-" you want the traditional beginning of line, use ^
-nnoremap 0 ^
-nnoremap ^ 0
-
 "Clear current search highlight by double tapping //
 nmap <silent> // :nohlsearch<CR>
 
@@ -42,3 +36,7 @@ nnoremap ; :
 
 " background
 inoremap <C-Z> <Esc><C-Z>
+
+" Use sane regexes.
+nnoremap / /\v
+vnoremap / /\v

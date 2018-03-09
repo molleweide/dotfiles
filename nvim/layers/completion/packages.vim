@@ -1,8 +1,22 @@
-Plug 'roxma/nvim-completion-manager'
-Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
-Plug 'calebeby/ncm-css'
-Plug 'fgrsnau/ncm-otherbuf'
-Plug 'mhartington/nvim-typescript'
+" function! BuildYCM(info)
+"   " info is a dictionary with 3 fields
+"   " - name:   name of the plugin
+"   " - status: 'installed', 'updated', or 'unchanged'
+"   " - force:  set on PlugInstall! or PlugUpdate!
+"   if a:info.status == 'installed' || a:info.force
+"     execute "!" . g:python3_host_prog . " ./install.py"
+"   endif
 
+"   if a:info.status != 'unchanged' || a:info.force
+"     !(cd YouCompleteMe/third_party/ycmd/third_party/tern_runtime && npm install --production)
+"   endif
+" endfunction
+
+" Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+
+" add fenced context for completion (i.e. JS inside an html file, etc)
+Plug 'Shougo/context_filetype.vim'

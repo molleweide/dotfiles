@@ -42,3 +42,8 @@ GTAGS
 .dir-locals.el
 
 .#*
+
+tags.lock
+tags.temp
+tags
+.gutentag

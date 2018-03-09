@@ -5,7 +5,7 @@ source "${BASH_SOURCE%/*}/shared.sh"
 require_installer package-manager
 
 function configure_ctags() {
-  symlink_dotfile ctags ~/.ctags
+  symlink_dotfile ctags.d ~/.ctags.d
 }
 
 dotheader "Setting up devtools..."
