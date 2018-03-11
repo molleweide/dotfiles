@@ -13,6 +13,8 @@ dotheader "Setting up devtools..."
 brew_install chromedriver
 apt_install chromium-chromedriver
 
+brew_install fd
+
 brew_install phantomjs
 apt_install phantomjs
 

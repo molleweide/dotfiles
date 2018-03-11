@@ -59,8 +59,6 @@ set softtabstop=2
 set tabstop=2
 set expandtab
 
-set completeopt=menu,preview,noinsert
-
 filetype plugin on
 filetype indent on
 

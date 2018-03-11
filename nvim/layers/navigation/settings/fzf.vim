@@ -29,6 +29,6 @@ let g:fzf_colors =
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-let fzf_source = '(git ls-files . -co --exclude-standard || ag --hidden --ignore .git --ignore node_modules -g "")'
+let fzf_source = 'fd --type file --follow --hidden --exclude .git --exclude node_modules'
 
 noremap <C-p> :call fzf#vim#files('', { 'source': fzf_source })<CR>

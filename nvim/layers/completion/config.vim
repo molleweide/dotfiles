@@ -1,3 +1,5 @@
+set completeopt=menu,preview
+
 " let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_at_startup = 0
 autocmd InsertEnter * call deoplete#enable()
@@ -42,7 +44,9 @@ function ExpandSnippetOrCarriageReturn()
     if g:ulti_expand_or_jump_res > 0
         return snippet
     else
+      echo "Closing popup"
       call deoplete#close_popup()
+      echo "returning a thing"
       return ""
         " return "\<CR>"
     endif
