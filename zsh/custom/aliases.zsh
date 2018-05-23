@@ -11,10 +11,17 @@ alias dbm="rake db:migrate && RAILS_ENV=test rake db:migrate"
 alias b="aid begin"
 alias bs="./bin/rspec"
 
+alias md="open -a Markoff $@"
+
 # Simple rsync
 alias srync="rsync -vrazh"
 
 alias G="spotify play uri https://open.spotify.com/track/1F9bmLBJ8VpXVadlxjafKM > /dev/null"
+
+pgrefresh() {
+  rm -fr /usr/local/var/postgres/postmaster.pid
+  brew services restart postgresql
+}
 
 ctags_refresh() {
   ctags -R .

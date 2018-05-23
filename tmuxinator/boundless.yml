@@ -43,3 +43,8 @@ windows:
         - ./bin/spring server
         - ./bin/webpack-dev-server
         - docker-compose up
+  - queues:
+      layout: tiled
+      panes:
+        - redis-server
+        - sidekiq

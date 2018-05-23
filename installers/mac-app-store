@@ -45,9 +45,10 @@ if is_macos; then
   mas_install "Fantastical 2" 975937182
   mas_install "GarageBand" 682658836
   mas_install "Logic Pro X" 634148309
+  mas_install "Markoff" 1084713122
   mas_install "Paste 2" 967805235
-  mas_install "Pixelmator" 407963104 
+  mas_install "Pixelmator" 407963104
   mas_install "Slack" 803453959
-  mas_install "Todoist" 585829637 
+  mas_install "Todoist" 585829637
   mas_install "Xcode" 497799835
 fi
