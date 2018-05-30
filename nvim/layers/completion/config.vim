@@ -4,13 +4,13 @@ set completeopt=menu,preview
 let g:deoplete#enable_at_startup = 0
 autocmd InsertEnter * call deoplete#enable()
 
-let g:deoplete#auto_completion_start_length = 2
+let g:deoplete#auto_completion_start_length = 3
 
 " complete file names from the buffer's path
 let g:deoplete#file#enable_buffer_path = 1
 
 " in ms
-let g:deoplete#auto_complete_delay = 20
+let g:deoplete#auto_complete_delay = 75
 let g:deoplete#auto_refresh_delay = 150
 
 " 20mb limit for ctags
