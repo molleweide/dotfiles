@@ -6,6 +6,7 @@ require_installer package-manager
 require_installer fonts
 require_installer ruby
 require_installer python
+require_installer node
 
 function install_neovim_linux() {
   if ! apt_is_installed "neovim"; then
@@ -53,9 +54,14 @@ function install_neovim_plugins() {
   nvim +PlugInstall +qall
 }
 
+function install_tern() {
+  npm install -g tern
+}
+
 dotheader "Setting up Neovim..."
 
 install_neovim
 setup_neovim_config
+install_tern
 ensure_plugin_directory
 install_neovim_plugins

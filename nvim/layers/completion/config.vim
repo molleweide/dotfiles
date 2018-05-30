@@ -25,6 +25,16 @@ let g:deoplete#sources._ = [
   \ 'file',
   \ ]
 
+let g:deoplete#omni#functions = {}
+let g:deoplete#omni#functions.javascript = [
+  \ 'tern#Complete',
+  \ 'jspc#omni'
+\]
+
+let g:deoplete#sources['javascript.jsx'] = ['file', 'tag', 'ternjs']
+let g:tern#command = ['tern']
+let g:tern#arguments = ['--persistent']
+
 call deoplete#custom#set('buffer', 'rank', 130)
 call deoplete#custom#set('tag', 'rank', 120)
 call deoplete#custom#set('member', 'rank', 110)
@@ -34,28 +44,31 @@ call deoplete#custom#set('file', 'rank', 100)
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+
 " select with Enter
 " inoremap <expr> <TAB> pumvisible() ? deoplete#close_popup() : "\<TAB>"
 
-let g:UltiSnipsExpandTrigger = "<nop>"
-let g:ulti_expand_or_jump_res = 0
-function ExpandSnippetOrCarriageReturn()
-    let snippet = UltiSnips#ExpandSnippetOrJump()
-    if g:ulti_expand_or_jump_res > 0
-        return snippet
-    else
-      echo "Closing popup"
-      call deoplete#close_popup()
-      echo "returning a thing"
-      return ""
-        " return "\<CR>"
-    endif
-endfunction
+" let g:UltiSnipsExpandTrigger="<C-j>"
 
-" fix vim-endwise + ultisnips interaction
-let g:endwise_no_mappings = 1
-" inoremap <expr> <CR> pumvisible() ? deoplete#close_popup() : "\<CR>\<C-R>=EndwiseDiscretionary()\<CR>"
-inoremap <expr> <CR> pumvisible() ? "\<C-R>=ExpandSnippetOrCarriageReturn()\<CR>" : "\<CR>\<C-R>=EndwiseDiscretionary()\<CR>"
+" let g:ulti_expand_or_jump_res = 0
+" function ExpandSnippetOrCarriageReturn()
+"     let snippet = UltiSnips#ExpandSnippetOrJump()
+"     if g:ulti_expand_or_jump_res > 0
+"         return snippet
+"     else
+"       echo "Closing popup"
+"       call deoplete#close_popup()
+"       echo "returning a thing"
+"       return ""
+"         " return "\<CR>"
+"     endif
+" endfunction
 
-let g:UltiSnipsJumpForwardTrigger = "<C-j>"
-let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
+" " fix vim-endwise + ultisnips interaction
+" let g:endwise_no_mappings = 1
+" " inoremap <expr> <CR> pumvisible() ? deoplete#close_popup() : "\<CR>\<C-R>=EndwiseDiscretionary()\<CR>"
+" inoremap <expr> <CR> pumvisible() ? "\<C-R>=ExpandSnippetOrCarriageReturn()\<CR>" : "\<CR>\<C-R>=EndwiseDiscretionary()\<CR>"
+
+" let g:UltiSnipsJumpForwardTrigger = "<C-j>"
+" let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
