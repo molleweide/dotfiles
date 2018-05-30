@@ -1,4 +1,4 @@
-set completeopt=menu,preview
+set completeopt=menu,noinsert
 
 " let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_at_startup = 0
@@ -40,14 +40,41 @@ call deoplete#custom#set('tag', 'rank', 120)
 call deoplete#custom#set('member', 'rank', 110)
 call deoplete#custom#set('file', 'rank', 100)
 
-" when completion is visible, map Tab to cycle through choices
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
 let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
-" select with Enter
-" inoremap <expr> <TAB> pumvisible() ? deoplete#close_popup() : "\<TAB>"
+function! HandleTab()
+  if pumvisible()
+    return "\<C-n>"
+  else
+    return "\<Tab>"
+  end
+endfunction
+
+function! HandleShiftTab()
+  if pumvisible()
+    return "\<C-p>"
+  else
+    return "\<S-Tab>"
+  end
+endfunction
+
+" when completion is visible, map Tab to cycle through choices
+inoremap <expr> <Tab> HandleTab()
+inoremap <expr> <S-Tab> HandleShiftTab()
+
+" <CR>: close popup on Enter
+" https://github.com/Shougo/deoplete.nvim/issues/83
+
+function! HandleEnter()
+  if pumvisible()
+    return deoplete#close_popup()
+  else
+    return "\<CR>\<C-R>=EndwiseDiscretionary()\<CR>"
+  endif
+endfunction
+
+let g:endwise_no_mappings = 1
+inoremap <expr> <CR> HandleEnter()
 
 " let g:UltiSnipsExpandTrigger="<C-j>"
 
