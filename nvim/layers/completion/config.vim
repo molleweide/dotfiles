@@ -25,13 +25,6 @@ let g:deoplete#sources._ = [
   \ 'file',
   \ ]
 
-let g:deoplete#omni#functions = {}
-let g:deoplete#omni#functions.javascript = [
-  \ 'jspc#omni'
-\]
-
-let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'tag']
-
 call deoplete#custom#source('ultisnips', 'rank', 150)
 call deoplete#custom#source('buffer', 'rank', 130)
 call deoplete#custom#source('tag', 'rank', 120)
