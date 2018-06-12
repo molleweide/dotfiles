@@ -27,13 +27,10 @@ let g:deoplete#sources._ = [
 
 let g:deoplete#omni#functions = {}
 let g:deoplete#omni#functions.javascript = [
-  \ 'tern#Complete',
   \ 'jspc#omni'
 \]
 
-let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'tag', 'ternjs']
-let g:tern#command = ['tern']
-let g:tern#arguments = ['--persistent']
+let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'tag']
 
 call deoplete#custom#set('ultisnips', 'rank', 150)
 call deoplete#custom#set('buffer', 'rank', 130)
