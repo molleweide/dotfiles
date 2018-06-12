@@ -68,6 +68,7 @@ function! Ulti_ExpandOrEnter()
     return "\<CR>\<C-R>=EndwiseDiscretionary()\<CR>"
   endif
 endfunction
+
 inoremap <return> <C-R>=Ulti_ExpandOrEnter()<CR>
 
 " Enable tabbing and shift-tabbing through list of results
@@ -84,6 +85,7 @@ function! g:SmartTab()
     return ''
   endif
 endfunction
+
 inoremap <silent> <tab> <C-R>=g:SmartTab()<cr>
 snoremap <silent> <tab> <Esc>:call g:SmartTab()<cr>
 
@@ -101,27 +103,3 @@ endfunction
 
 inoremap <silent> <s-tab> <C-R>=g:SmartShiftTab()<cr>
 snoremap <silent> <s-tab> <Esc>:call g:SmartShiftTab()<cr>
-
-" let g:UltiSnipsExpandTrigger="<C-j>"
-
-" let g:ulti_expand_or_jump_res = 0
-" function ExpandSnippetOrCarriageReturn()
-"     let snippet = UltiSnips#ExpandSnippetOrJump()
-"     if g:ulti_expand_or_jump_res > 0
-"         return snippet
-"     else
-"       echo "Closing popup"
-"       call deoplete#close_popup()
-"       echo "returning a thing"
-"       return ""
-"         " return "\<CR>"
-"     endif
-" endfunction
-
-" " fix vim-endwise + ultisnips interaction
-" let g:endwise_no_mappings = 1
-" " inoremap <expr> <CR> pumvisible() ? deoplete#close_popup() : "\<CR>\<C-R>=EndwiseDiscretionary()\<CR>"
-" inoremap <expr> <CR> pumvisible() ? "\<C-R>=ExpandSnippetOrCarriageReturn()\<CR>" : "\<CR>\<C-R>=EndwiseDiscretionary()\<CR>"
-
-" let g:UltiSnipsJumpForwardTrigger = "<C-j>"
-" let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
