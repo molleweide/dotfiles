@@ -17,18 +17,15 @@ let deoplete#tag#cache_limit_size = 20000000
 
 let g:deoplete#sources = {}
 let g:deoplete#sources._ = [
-  \ 'ultisnips',
-  \ 'around',
   \ 'buffer',
   \ 'tag',
   \ 'member',
   \ 'file',
   \ ]
 
-call deoplete#custom#source('ultisnips', 'rank', 150)
-call deoplete#custom#source('buffer', 'rank', 130)
-call deoplete#custom#source('tag', 'rank', 120)
-call deoplete#custom#source('member', 'rank', 110)
+call deoplete#custom#source('buffer', 'rank', 200)
+call deoplete#custom#source('tag', 'rank', 150)
+call deoplete#custom#source('member', 'rank', 120)
 call deoplete#custom#source('file', 'rank', 100)
 
 let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
