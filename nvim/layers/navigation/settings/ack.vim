@@ -3,7 +3,6 @@ if executable('ag')
 endif
 
 cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
 
-cnoreabbrev Ag! Ack!
-cnoreabbrev Ag Ack
+nnoremap <Leader>a :Ack!<Space>
+nnoremap <Leader>A :Ack!<CR>
