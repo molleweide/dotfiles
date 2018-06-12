@@ -32,11 +32,11 @@ let g:deoplete#omni#functions.javascript = [
 
 let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'tag']
 
-call deoplete#custom#set('ultisnips', 'rank', 150)
-call deoplete#custom#set('buffer', 'rank', 130)
-call deoplete#custom#set('tag', 'rank', 120)
-call deoplete#custom#set('member', 'rank', 110)
-call deoplete#custom#set('file', 'rank', 100)
+call deoplete#custom#source('ultisnips', 'rank', 150)
+call deoplete#custom#source('buffer', 'rank', 130)
+call deoplete#custom#source('tag', 'rank', 120)
+call deoplete#custom#source('member', 'rank', 110)
+call deoplete#custom#source('file', 'rank', 100)
 
 let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
