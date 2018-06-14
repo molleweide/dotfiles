@@ -15,3 +15,4 @@ require_installer neovim
 require_installer spacemacs
 require_installer mac-custom-apps
 require_installer backups
+require_installer os-keys
