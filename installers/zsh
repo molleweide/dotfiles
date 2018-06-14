@@ -69,12 +69,17 @@ function setup_zsh_completions_repo() {
   fi
 }
 
+function fix_zsh_completion_permissions() {
+  compaudit | xargs chmod g-w
+}
+
 dotheader "Setting up ZSH..."
 
 setup_zsh_completions_repo
 
 install_package zsh
 install_package zsh-completions
+fix_zsh_completion_permissions
 
 install_package direnv
 install_fasd
