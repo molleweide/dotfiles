@@ -16,6 +16,7 @@ apt_install chromium-chromedriver
 brew_install fd
 
 brew_install phantomjs
+brew_install postgres
 apt_install phantomjs
 
 configure_ctags
