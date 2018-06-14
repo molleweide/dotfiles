@@ -158,8 +158,8 @@ if is_macos; then
   }
 
   install_1password() {
-    local url="https://app-updates.agilebits.com/download/OPM4"
-    install_pkg "1Password 6" "$url"
+    local url="https://app-updates.agilebits.com/download/OPM7"
+    install_pkg "1Password 7" "$url"
   }
 
   install_alfred() {
