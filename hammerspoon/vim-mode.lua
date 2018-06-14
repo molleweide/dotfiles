@@ -1,5 +1,15 @@
+local suppressKeysOtherThenOurs = require('suppress-non-modal-keys')
+
 local vimMode = hs.hotkey.modal.new(nil, nil, 'in vim mode')
 local enterVimMode = hs.hotkey.modal.new({'shift'}, 'J', 'possibly entering')
+
+local commandState
+
+local function resetCommandState()
+  commandState = {
+    operation = nil
+  }
+end
 
 local function dimScreen()
   hs.screen.primaryScreen():setGamma(
@@ -16,31 +26,81 @@ end
 
 enterVimMode:bind({'shift'}, 'K', function() vimMode:enter() end)
 
-function vimMode:entered()
-  hs.alert.show("vim mode")
+vimMode.entered = function(self)
+  -- vimMode._keySuppress = suppressKeysOtherThenOurs(self):start()
+  resetCommandState()
   dimScreen()
   enterVimMode:exit()
 end
 
-function vimMode:exited()
-  hs.notify.new({title="Hammerspoon", informativeText="Exiting vim mode"}):send()
+vimMode.exited = function(self)
+  -- vimMode._keySuppress:stop()
+  -- vimMode._keySuppress = nil
+
   hs.screen.restoreGamma()
 end
 
-local function keyCode(key, modifiers)
-  modifiers = modifiers or {}
-  return function() hs.eventtap.keyStroke(modifiers, key, 0) end
+function deepcopy(orig)
+  local orig_type = type(orig)
+  local copy
+
+  if orig_type == 'table' then
+    copy = {}
+    for orig_key, orig_value in next, orig, nil do
+      copy[deepcopy(orig_key)] = deepcopy(orig_value)
+    end
+    setmetatable(copy, deepcopy(getmetatable(orig)))
+  else -- number, string, boolean, etc
+    copy = orig
+  end
+
+  return copy
 end
 
-vimMode:bind({}, 'h', keyCode('left'), nil, keyCode('left'))
-vimMode:bind({}, 'j', keyCode('down'), nil, keyCode('down'))
-vimMode:bind({}, 'k', keyCode('up'), nil, keyCode('up'))
-vimMode:bind({}, 'l', keyCode('right'), nil, keyCode('right'))
+local function motionModifiers(modifiers)
+  local newModifiers = deepcopy(modifiers or {})
+  local selection = commandState.operation == "delete"
 
-vimMode:bind({}, '0', keyCode('left', {'command'}), nil, keyCode('left', {'command'}))
-vimMode:bind({'shift'}, '4', keyCode('right', {'command'}), nil, keyCode('right', {'command'}))
-vimMode:bind({}, 'b', keyCode('left', {'alt'}), nil, keyCode('left', {'alt'}))
-vimMode:bind({}, 'w', keyCode('right', {'alt'}), nil, keyCode('right', {'alt'}))
+  if selection then
+    table.insert(newModifiers, #newModifiers + 1, 'shift')
+  end
+
+  return newModifiers
+end
+
+local function operation(name)
+  return function()
+    commandState.operation = name
+  end
+end
+
+local function afterMotion()
+  if commandState.operation == 'delete' then
+    hs.eventtap.keyStroke({}, 'delete', 0)
+  end
+end
+
+local function motion(key, modifiers)
+  modifiers = modifiers or {}
+
+  return function()
+    hs.eventtap.keyStroke(motionModifiers(modifiers), key, 0)
+
+    afterMotion()
+    resetCommandState()
+  end
+end
+
+vimMode:bind({}, 'd', operation('delete'), nil, nil)
+vimMode:bind({}, 'h', motion('left'), nil, motion('left'))
+vimMode:bind({}, 'j', motion('down'), nil, motion('down'))
+vimMode:bind({}, 'k', motion('up'), nil, motion('up'))
+vimMode:bind({}, 'l', motion('right'), nil, motion('right'))
+
+vimMode:bind({}, '0', motion('left', {'command'}), nil, motion('left', {'command'}))
+vimMode:bind({'shift'}, '4', motion('right', {'command'}), nil, motion('right', {'command'}))
+vimMode:bind({}, 'b', motion('left', {'alt'}), nil, motion('left', {'alt'}))
+vimMode:bind({}, 'w', motion('right', {'alt'}), nil, motion('right', {'alt'}))
 
 vimMode:bind({}, 'i', function()
   vimMode:exit()
