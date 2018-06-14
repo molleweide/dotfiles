@@ -1921,11 +1921,11 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>887 453 804 620 0 0 3008 1669 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>673 182 796 486 0 0 3008 1692 </string>
+	<string>673 366 918 394 0 0 3008 1669 </string>
 	<key>NSWindow Frame com.apple.typography_panel_InconsolataGoNerdFontCompleteM-Regular</key>
 	<string>572 822 260 46 0 0 3008 1669 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 3008 1692 0 0 3008 1669 </string>
+	<string>0 0 1680 1050 0 0 1680 1027 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -2562,7 +2562,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>InconsolataGoNerdFontCompleteM-Regular 14</string>
+			<string>InconsolataGoNerdFontCompleteM-Regular 16</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
