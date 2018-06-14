@@ -20,9 +20,10 @@ function zsh_binary() {
 
 function update_shell_whitelist() {
   local zshbin=$(zsh_binary)
-  if ! cat /etc/shells | grep -q $zshbin; then 
+  if ! cat /etc/shells | grep -q $zshbin; then
     echo "Adding $zshbin to /etc/shells, please enter your sudo password"
-    sudo echo $zshbin >> /etc/shells
+
+    echo $zshbin | sudo tee -a /etc/shells > /dev/null
   fi
 }
 
@@ -69,17 +70,12 @@ function setup_zsh_completions_repo() {
   fi
 }
 
-function fix_zsh_completion_permissions() {
-  compaudit | xargs chmod g-w
-}
-
 dotheader "Setting up ZSH..."
 
 setup_zsh_completions_repo
 
 install_package zsh
 install_package zsh-completions
-fix_zsh_completion_permissions
 
 install_package direnv
 install_fasd
