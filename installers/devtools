@@ -10,7 +10,7 @@ function configure_ctags() {
 
 dotheader "Setting up devtools..."
 
-brew_install chromedriver
+brew_cask_install chromedriver
 apt_install chromium-chromedriver
 
 brew_install fd

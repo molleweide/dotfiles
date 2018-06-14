@@ -13,7 +13,7 @@ function brew_tap() {
 
   ! is_macos && return 1
 
-  brew tap "$tap" 
+  brew tap "$tap"
 }
 
 function brew_install() {
@@ -25,6 +25,18 @@ function brew_install() {
     dotsay "+ $package already installed... skipping."
   else
     brew install $@
+  fi
+}
+
+function brew_cask_install() {
+  local package=$1
+
+  ! is_macos && return 1
+
+  if brew cask list "$package" > /dev/null 2>&1; then
+    dotsay "+ $package already installed... skipping."
+  else
+    brew cask install $@
   fi
 }
 
