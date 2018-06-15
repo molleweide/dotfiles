@@ -1,5 +1,3 @@
-local suppressKeysOtherThenOurs = require('suppress-non-modal-keys')
-
 local vimMode = hs.hotkey.modal.new(nil, nil, 'in vim mode')
 local enterVimMode = hs.hotkey.modal.new({'shift'}, 'J', 'possibly entering')
 
@@ -7,6 +5,7 @@ local commandState
 
 local function resetCommandState()
   commandState = {
+    visualMode = false,
     operation = nil
   }
 end
@@ -27,16 +26,12 @@ end
 enterVimMode:bind({'shift'}, 'K', function() vimMode:enter() end)
 
 vimMode.entered = function(self)
-  -- vimMode._keySuppress = suppressKeysOtherThenOurs(self):start()
   resetCommandState()
   dimScreen()
   enterVimMode:exit()
 end
 
 vimMode.exited = function(self)
-  -- vimMode._keySuppress:stop()
-  -- vimMode._keySuppress = nil
-
   hs.screen.restoreGamma()
 end
 
@@ -59,7 +54,7 @@ end
 
 local function motionModifiers(modifiers)
   local newModifiers = deepcopy(modifiers or {})
-  local selection = commandState.operation == "delete"
+  local selection = commandState.operation == "delete" or commandState.visualMode
 
   if selection then
     table.insert(newModifiers, #newModifiers + 1, 'shift')
@@ -87,16 +82,26 @@ local function motion(key, modifiers)
     hs.eventtap.keyStroke(motionModifiers(modifiers), key, 0)
 
     afterMotion()
-    resetCommandState()
+
+    local shouldReset = commandState.operation or not commandState.visualMode
+
+    if shouldReset then
+      resetCommandState()
+    end
   end
 end
 
+local function toggleVisualMode()
+  commandState.visualMode = not commandState.visualMode
+end
+
+vimMode:bind({}, 'v', toggleVisualMode, nil, nil)
 vimMode:bind({}, 'd', operation('delete'), nil, nil)
+
 vimMode:bind({}, 'h', motion('left'), nil, motion('left'))
 vimMode:bind({}, 'j', motion('down'), nil, motion('down'))
 vimMode:bind({}, 'k', motion('up'), nil, motion('up'))
 vimMode:bind({}, 'l', motion('right'), nil, motion('right'))
-
 vimMode:bind({}, '0', motion('left', {'command'}), nil, motion('left', {'command'}))
 vimMode:bind({'shift'}, '4', motion('right', {'command'}), nil, motion('right', {'command'}))
 vimMode:bind({}, 'b', motion('left', {'alt'}), nil, motion('left', {'alt'}))
