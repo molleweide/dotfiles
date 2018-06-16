@@ -1,10 +1,10 @@
 # Turbo key repeat
-defaults write -g InitialKeyRepeat -int 15
-defaults write -g KeyRepeat -int 1
-defaults write com.apple.universalaccess slowKey -int 0 # Disable Slow Keys.
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool FALSE # Disable Press-And-Hold for keys.
-defaults write NSGlobalDomain InitialKeyRepeat -int 10 # Set key repeat triggering delay to even shorter.
-defaults write NSGlobalDomain KeyRepeat -int 3 # Set key repeat rate to even faster.
+# defaults write -g InitialKeyRepeat -int 15
+# defaults write -g KeyRepeat -int 1
+# defaults write com.apple.universalaccess slowKey -int 0 # Disable Slow Keys.
+# defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool FALSE # Disable Press-And-Hold for keys.
+# defaults write NSGlobalDomain InitialKeyRepeat -int 10 # Set key repeat triggering delay to even shorter.
+# defaults write NSGlobalDomain KeyRepeat -int 3 # Set key repeat rate to even faster.
 
 # Gratuitously stolen from @mathiasbynens
 # https://github.com/mathiasbynens/dotfiles/blob/master/.osx
