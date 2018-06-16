@@ -175,30 +175,52 @@ local function bindMotion(key, modifiers, complete, direction)
   end)
 end
 
+local function compose(...)
+  local fns = {...}
+
+  return function()
+    for _, fn in ipairs(fns) do
+      fn()
+    end
+  end
+end
+
+local function exitVimMode()
+  vimMode:exit()
+end
+
 local backWordMotion = bindMotion('left', {'alt'}, true, 'back')
 local wordMotion = bindMotion('right', {'alt'})
 local beginningOfLineMotion = bindMotion('left', {'command'})
 local endOfLineMotion = bindMotion('right', {'command'})
 
+local leftMotion = bindMotion('left')
+local rightMotion = bindMotion('right')
+local upMotion = bindMotion('up')
+local downMotion = bindMotion('down')
+
 -- operators
-vimMode:bind({}, 'c', changeOperator, nil, nil)
-vimMode:bind({}, 'd', deleteOperator, nil, nil)
-vimMode:bind({}, 'p', pasteOperator, nil, nil)
-vimMode:bind({}, 'u', undoOperator, nil, nil)
-vimMode:bind({}, 'v', toggleVisualMode, nil, nil)
-vimMode:bind({}, 'y', yankOperator, nil, nil)
+vimMode:bind({}, 'c', changeOperator)
+vimMode:bind({}, 'd', deleteOperator)
+vimMode:bind({}, 'p', pasteOperator)
+vimMode:bind({}, 'u', undoOperator)
+vimMode:bind({}, 'v', toggleVisualMode)
+vimMode:bind({}, 'y', yankOperator)
+
+-- shortcuts
+vimMode:bind({'shift'}, 'a', compose(endOfLineMotion, exitVimMode))
+vimMode:bind({'shift'}, 'c', compose(changeOperator, endOfLineMotion))
+vimMode:bind({'shift'}, 'd', compose(deleteOperator, endOfLineMotion))
 
 -- motions
 -- vimMode:bind({}, 'f', focusedElement, nil, nil)
 vimMode:bind({}, 'b', backWordMotion, nil, backWordMotion)
 vimMode:bind({}, 'w', wordMotion, nil, wordMotion)
-vimMode:bind({}, 'h', bindMotion('left'), nil, bindMotion('left'))
-vimMode:bind({}, 'j', bindMotion('down'), nil, bindMotion('down'))
-vimMode:bind({}, 'k', bindMotion('up'), nil, bindMotion('up'))
-vimMode:bind({}, 'l', bindMotion('right'), nil, bindMotion('right'))
+vimMode:bind({}, 'h', leftMotion, nil, leftMotion)
+vimMode:bind({}, 'j', downMotion, nil, downMotion)
+vimMode:bind({}, 'k', upMotion, nil, upMotion)
+vimMode:bind({}, 'l', rightMotion, nil, rightMotion)
 vimMode:bind({}, '0', beginningOfLineMotion, nil, beginningOfLineMotion)
 vimMode:bind({'shift'}, '4', endOfLineMotion, nil, endOfLineMotion)
 
-vimMode:bind({}, 'i', function()
-  vimMode:exit()
-end)
+vimMode:bind({}, 'i', exitVimMode)
