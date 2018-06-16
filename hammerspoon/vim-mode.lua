@@ -6,6 +6,7 @@ local commandState
 local function resetCommandState()
   commandState = {
     selection = false,
+    visualMode = false,
     operatorFn = nil,
     motionDirection = 'forward'
   }
@@ -72,6 +73,13 @@ local function focusedElement()
   hs.printf("current object %s", element:selectedText())
 end
 
+local function runOperator()
+  if commandState.operatorFn then
+    commandState.operatorFn()
+    resetCommandState()
+  end
+end
+
 local function motion(fn)
   local definition = fn()
 
@@ -80,8 +88,9 @@ local function motion(fn)
     commandState.motionDirection = definition.direction
 
     if definition.complete then
-      if commandState.operatorFn then commandState.operatorFn() end
-      resetCommandState()
+      runOperator()
+
+      if not commandState.visualMode then resetCommandState() end
     end
   end
 end
@@ -91,6 +100,7 @@ local function createMotion(modifiers, key)
 end
 
 local function toggleVisualMode()
+  commandState.visualMode = true
   commandState.selection = not commandState.selection
 end
 
@@ -100,6 +110,8 @@ local function operator(fn)
   return function()
     commandState.selection = definition.selection or false
     commandState.operatorFn = definition.fn
+
+    if commandState.visualMode then runOperator() end
   end
 end
 
@@ -193,11 +205,34 @@ local backWordMotion = bindMotion('left', {'alt'}, true, 'back')
 local wordMotion = bindMotion('right', {'alt'})
 local beginningOfLineMotion = bindMotion('left', {'command'})
 local endOfLineMotion = bindMotion('right', {'command'})
+local endOfTextMotion = bindMotion('down', {'command'})
 
 local leftMotion = bindMotion('left')
 local rightMotion = bindMotion('right')
 local upMotion = bindMotion('up')
 local downMotion = bindMotion('down')
+
+local function inNormalMode(fn)
+  return function()
+    if not commandState.visualMode then fn() end
+  end
+end
+
+local deleteUnderCursor = compose(deleteOperator, inNormalMode(rightMotion))
+local searchAhead = function() sendKeys({'command'}, 'f') end
+
+local newLineBelow = function()
+  sendKeys({'command'}, 'right')
+  exitVimMode()
+  sendKeys({}, 'Return')
+end
+
+local newLineAbove = function()
+  sendKeys({'command'}, 'left')
+  exitVimMode()
+  sendKeys({}, 'Return')
+  sendKeys({}, 'up')
+end
 
 -- operators
 vimMode:bind({}, 'c', changeOperator)
@@ -210,10 +245,14 @@ vimMode:bind({}, 'y', yankOperator)
 -- shortcuts
 vimMode:bind({'shift'}, 'a', compose(endOfLineMotion, exitVimMode))
 vimMode:bind({'shift'}, 'c', compose(changeOperator, endOfLineMotion))
+vimMode:bind({'shift'}, 'i', compose(beginningOfLineMotion, exitVimMode))
 vimMode:bind({'shift'}, 'd', compose(deleteOperator, endOfLineMotion))
+vimMode:bind({}, 's', compose(deleteUnderCursor, exitVimMode))
+vimMode:bind({}, 'x', deleteUnderCursor)
+vimMode:bind({}, 'o', newLineBelow)
+vimMode:bind({'shift'}, 'o', newLineAbove)
 
 -- motions
--- vimMode:bind({}, 'f', focusedElement, nil, nil)
 vimMode:bind({}, 'b', backWordMotion, nil, backWordMotion)
 vimMode:bind({}, 'w', wordMotion, nil, wordMotion)
 vimMode:bind({}, 'h', leftMotion, nil, leftMotion)
@@ -222,5 +261,24 @@ vimMode:bind({}, 'k', upMotion, nil, upMotion)
 vimMode:bind({}, 'l', rightMotion, nil, rightMotion)
 vimMode:bind({}, '0', beginningOfLineMotion, nil, beginningOfLineMotion)
 vimMode:bind({'shift'}, '4', endOfLineMotion, nil, endOfLineMotion)
+vimMode:bind({'shift'}, 'l', endOfLineMotion, nil, endOfLineMotion)
+vimMode:bind({'shift'}, 'g', endOfTextMotion, nil, endOfTextMotion)
 
+-- commands
+vimMode:bind({}, '/', searchAhead)
+
+-- exiting
 vimMode:bind({}, 'i', exitVimMode)
+
+local function disableVimMode(applicationName)
+  hs.window.filter.new(applicationName)
+    :subscribe(hs.window.filter.windowFocused, function()
+      vimMode:exit()
+      enterVimMode:disable()
+    end)
+    :subscribe(hs.window.filter.windowUnfocused, function()
+      enterVimMode:enable()
+    end)
+end
+
+disableVimMode('iTerm2')
