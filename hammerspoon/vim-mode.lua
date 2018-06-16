@@ -5,8 +5,9 @@ local commandState
 
 local function resetCommandState()
   commandState = {
-    visualMode = false,
-    operation = nil
+    selection = false,
+    operatorFn = nil,
+    motionDirection = 'forward'
   }
 end
 
@@ -52,60 +53,151 @@ function deepcopy(orig)
   return copy
 end
 
+local function sendKeys(modifiers, key)
+  hs.eventtap.keyStroke(modifiers or {}, key, 0)
+end
+
 local function motionModifiers(modifiers)
   local newModifiers = deepcopy(modifiers or {})
-  local selection = commandState.operation == "delete" or commandState.visualMode
 
-  if selection then
+  if commandState.selection then
     table.insert(newModifiers, #newModifiers + 1, 'shift')
   end
 
   return newModifiers
 end
 
-local function operation(name)
-  return function()
-    commandState.operation = name
-  end
+local function focusedElement()
+  local element = hs.uielement.focusedElement()
+  hs.printf("current object %s", element:selectedText())
 end
 
-local function afterMotion()
-  if commandState.operation == 'delete' then
-    hs.eventtap.keyStroke({}, 'delete', 0)
-  end
-end
-
-local function motion(key, modifiers)
-  modifiers = modifiers or {}
+local function motion(fn)
+  local definition = fn()
 
   return function()
-    hs.eventtap.keyStroke(motionModifiers(modifiers), key, 0)
+    definition.fn()
+    commandState.motionDirection = definition.direction
 
-    afterMotion()
-
-    local shouldReset = commandState.operation or not commandState.visualMode
-
-    if shouldReset then
+    if definition.complete then
+      if commandState.operatorFn then commandState.operatorFn() end
       resetCommandState()
     end
   end
 end
 
-local function toggleVisualMode()
-  commandState.visualMode = not commandState.visualMode
+local function createMotion(modifiers, key)
+  hs.eventtap.keyStroke(motionModifiers(modifiers), key, 0)
 end
 
-vimMode:bind({}, 'v', toggleVisualMode, nil, nil)
-vimMode:bind({}, 'd', operation('delete'), nil, nil)
+local function toggleVisualMode()
+  commandState.selection = not commandState.selection
+end
 
-vimMode:bind({}, 'h', motion('left'), nil, motion('left'))
-vimMode:bind({}, 'j', motion('down'), nil, motion('down'))
-vimMode:bind({}, 'k', motion('up'), nil, motion('up'))
-vimMode:bind({}, 'l', motion('right'), nil, motion('right'))
-vimMode:bind({}, '0', motion('left', {'command'}), nil, motion('left', {'command'}))
-vimMode:bind({'shift'}, '4', motion('right', {'command'}), nil, motion('right', {'command'}))
-vimMode:bind({}, 'b', motion('left', {'alt'}), nil, motion('left', {'alt'}))
-vimMode:bind({}, 'w', motion('right', {'alt'}), nil, motion('right', {'alt'}))
+local function operator(fn)
+  local definition = fn()
+
+  return function()
+    commandState.selection = definition.selection or false
+    commandState.operatorFn = definition.fn
+  end
+end
+
+local deleteOperator = operator(function()
+  return {
+    selection = true,
+    fn = function() sendKeys({}, 'delete') end
+  }
+end)
+
+local function restoreCursor()
+  if commandState.motionDirection == 'forward' then
+    sendKeys({}, 'left')
+  else
+    sendKeys({}, 'right')
+  end
+end
+
+local yankOperator = operator(function()
+  return {
+    selection = true,
+    fn = function()
+      sendKeys({'cmd'}, 'c')
+      restoreCursor()
+    end
+  }
+end)
+
+local pasteOperator = operator(function()
+  return {
+    selection = false,
+    fn = function()
+      hs.printf("pasting")
+      sendKeys({'cmd'}, 'v')
+    end
+  }
+end)
+
+local undoOperator = operator(function()
+  return {
+    selection = false,
+    fn = function()
+      hs.printf("undo")
+      sendKeys({'cmd'}, 'z')
+      restoreCursor()
+    end
+  }
+end)
+
+local changeOperator = operator(function()
+  return {
+    selection = true,
+    fn = function()
+      sendKeys({}, 'delete')
+      vimMode:exit()
+    end
+  }
+end)
+
+local function bindMotion(key, modifiers, complete, direction)
+  if complete == nil then complete = true end
+  modifiers = modifiers or {}
+  direction = direction or 'forward'
+
+  return motion(function()
+    return {
+      complete = complete,
+      direction = direction,
+      fn = function()
+        createMotion(modifiers, key)
+      end
+    }
+  end)
+end
+
+local backWordMotion = bindMotion('left', {'alt'}, true, 'back')
+local wordMotion = bindMotion('right', {'alt'})
+local beginningOfLineMotion = bindMotion('left', {'command'})
+local endOfLineMotion = bindMotion('right', {'command'})
+
+-- operators
+vimMode:bind({}, 'c', changeOperator, nil, nil)
+vimMode:bind({}, 'd', deleteOperator, nil, nil)
+vimMode:bind({}, 'p', pasteOperator, nil, nil)
+vimMode:bind({}, 'u', undoOperator, nil, nil)
+vimMode:bind({}, 'v', toggleVisualMode, nil, nil)
+vimMode:bind({}, 'y', yankOperator, nil, nil)
+
+-- motions
+-- vimMode:bind({}, 'f', focusedElement, nil, nil)
+vimMode:bind({}, 'b', backWordMotion, nil, backWordMotion)
+vimMode:bind({}, 'w', wordMotion, nil, wordMotion)
+vimMode:bind({}, 'h', bindMotion('left'), nil, bindMotion('left'))
+vimMode:bind({}, 'j', bindMotion('down'), nil, bindMotion('down'))
+vimMode:bind({}, 'k', bindMotion('up'), nil, bindMotion('up'))
+vimMode:bind({}, 'l', bindMotion('right'), nil, bindMotion('right'))
+vimMode:bind({}, '0', beginningOfLineMotion, nil, beginningOfLineMotion)
+vimMode:bind({'shift'}, '4', endOfLineMotion, nil, endOfLineMotion)
 
 vimMode:bind({}, 'i', function()
   vimMode:exit()
