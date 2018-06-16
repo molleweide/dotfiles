@@ -1,7 +1,10 @@
-local vimMode = hs.hotkey.modal.new(nil, nil, 'in vim mode')
 local enterVimMode = hs.hotkey.modal.new({'shift'}, 'J', 'possibly entering')
+local vimMode = hs.hotkey.modal.new(nil, nil, 'in vim mode')
+
+local vimModeEnabled = true
 
 local commandState
+replaceTap = nil
 
 local function resetCommandState()
   commandState = {
@@ -25,11 +28,14 @@ function enterVimMode:entered()
   end)
 end
 
-enterVimMode:bind({'shift'}, 'K', function() vimMode:enter() end)
+enterVimMode:bind({'shift'}, 'K', function()
+  if vimModeEnabled then vimMode:enter() end
+end)
 
 vimMode.entered = function(self)
   resetCommandState()
   dimScreen()
+
   enterVimMode:exit()
 end
 
@@ -234,6 +240,21 @@ local newLineAbove = function()
   sendKeys({}, 'up')
 end
 
+local function replaceMode()
+  replaceTap = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(event)
+    replaceTap:stop()
+
+    sendKeys({'shift'}, 'right')
+    sendKeys({}, hs.keycodes.map[event:getKeyCode()])
+
+    vimMode:enter()
+    return true
+  end)
+
+  vimMode:exit()
+  replaceTap:start()
+end
+
 -- operators
 vimMode:bind({}, 'c', changeOperator)
 vimMode:bind({}, 'd', deleteOperator)
@@ -241,6 +262,8 @@ vimMode:bind({}, 'p', pasteOperator)
 vimMode:bind({}, 'u', undoOperator)
 vimMode:bind({}, 'v', toggleVisualMode)
 vimMode:bind({}, 'y', yankOperator)
+
+vimMode:bind({}, 'r', replaceMode)
 
 -- shortcuts
 vimMode:bind({'shift'}, 'a', compose(endOfLineMotion, exitVimMode))
@@ -270,15 +293,38 @@ vimMode:bind({}, '/', searchAhead)
 -- exiting
 vimMode:bind({}, 'i', exitVimMode)
 
+vimMode:bind({}, 'f', function()
+  local app = hs.application.frontmostApplication()
+  hs.alert.show(app:name())
+  hs.printf('"%s"', app:name())
+end)
+
 local function disableVimMode(applicationName)
   hs.window.filter.new(applicationName)
     :subscribe(hs.window.filter.windowFocused, function()
+      hs.alert.show("showing")
       vimMode:exit()
-      enterVimMode:disable()
+      vimModeEnabled = false
     end)
     :subscribe(hs.window.filter.windowUnfocused, function()
-      enterVimMode:enable()
+      hs.alert.show("hiding")
+      vimModeEnabled = true
     end)
 end
 
-disableVimMode('iTerm2')
+local function disableVimMode(disabledApp)
+  watcher = hs.application.watcher.new(function(applicationName, eventType)
+    if disabledApp ~= applicationName then return end
+
+    if eventType == hs.application.watcher.activated then
+      vimMode:exit()
+      vimModeEnabled = false
+    elseif eventType == hs.application.watcher.deactivated then
+      vimModeEnabled = true
+    end
+  end)
+
+  watcher:start()
+end
+
+disableVimMode("iTerm2")
