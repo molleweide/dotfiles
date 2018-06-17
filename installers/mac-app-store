@@ -33,6 +33,12 @@ if is_macos; then
     fi
   }
 
+  install_xcode() {
+    mas_install "Xcode" 497799835
+    sudo xcodebuild -license accept
+  }
+
+
   dotheader "Setting up Mac App Store..."
 
   brew_install mas
@@ -41,7 +47,6 @@ if is_macos; then
   mas_install "Amphetamine" 937984704
   mas_install "Boom 2" 948176063
   mas_install "Capo 3" 696977615
-  mas_install "Expressions" 913158085
   mas_install "Fantastical 2" 975937182
   mas_install "GarageBand" 682658836
   mas_install "Logic Pro X" 634148309
@@ -49,6 +54,5 @@ if is_macos; then
   mas_install "Paste 2" 967805235
   mas_install "Pixelmator" 407963104
   mas_install "Slack" 803453959
-  mas_install "Todoist" 585829637
-  mas_install "Xcode" 497799835
+  install_xcode
 fi

@@ -15,8 +15,24 @@ apt_install chromium-chromedriver
 
 brew_install fd
 
-brew_install phantomjs
 brew_install postgres
-apt_install phantomjs
 
+apt_install phantomjs
+brew_install phantomjs
+
+brew_install wakatime-cli
+brew_install coreutils
+
+brew_install ctags
+rehash
+brew_install global --with-ctags
 configure_ctags
+
+brew_install the_silver_searcher
+apt_install silversearcher-ag
+
+install_package sl
+install_package wget
+
+brew_install ack
+apt_install ack-grep

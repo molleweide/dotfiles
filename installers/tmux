@@ -43,7 +43,7 @@ function install_tmux_from_source_linux() {
 
   if command_exists "tmux"; then
     return 0
-  fi  
+  fi
 
   local version="2.4"
 
@@ -59,7 +59,9 @@ function install_tmux_from_source_linux() {
 
 dotheader "Setting up Tmux..."
 
+brew_install reattach-to-user-namespace
 brew_install tmux
+
 install_tmux_from_source_linux
 
 setup_tmux_config

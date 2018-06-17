@@ -49,12 +49,6 @@ function install_npm_package() {
   fi
 }
 
-brew_install wakatime-cli
-brew_install coreutils
-brew_install ctags
-rehash
-brew_install global --with-ctags
-
 install_npm_package tern
 install_npm_package vmd
 

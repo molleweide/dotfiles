@@ -12,22 +12,12 @@ if is_macos; then
     brew update
   fi
 
-  packages=(
-    emojify
-    reattach-to-user-namespace
-  )
-
   dotheader "Setting up Homebrew..."
-
-  brew_install_all "${packages[@]}"
 elif is_linux; then
   dotheader "Setting up Aptitude..."
 
   apt_install aptitude
 fi
-
-brew_install ack
-apt_install ack-grep
 
 # Apt build
 
@@ -51,9 +41,3 @@ buildtools=(
 for package in "${buildtools[@]}"; do
   apt_install "$package"
 done
-
-brew_install the_silver_searcher
-apt_install silversearcher-ag
-
-install_package sl
-install_package wget
