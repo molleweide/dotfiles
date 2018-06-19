@@ -62,17 +62,25 @@ VimMode.new = function()
   return self
 end
 
-function VimMode:disable()
-  self.enabled = false
+---------- toggling
+function VimMode:enter()
+  if self.enabled then
+    self.mode:enter()
+
+    self.entered = true
+    self:resetState()
+
+    VimMode.dimScreen()
+  end
 end
 
-function VimMode:resetState()
-  self.commandState = VimMode.buildCommandState()
-end
+function VimMode:exit()
+  self.mode:exit()
 
-function VimMode:enable()
-  self:resetState()
-  self.enabled = true
+  VimMode.restoreDim()
+  self.entered = false
+
+  self:runAfterExitHooks()
 end
 
 function VimMode:disableForApp(disabledApp)
@@ -93,28 +101,38 @@ function VimMode:disableForApp(disabledApp)
   self.watchers[disabledApp] = watcher
 end
 
-function VimMode:enter()
-  if self.enabled then
-    self.mode:enter()
+---------- state
 
-    self.entered = true
-    self:resetState()
-
-    VimMode.dimScreen()
-  end
+function VimMode:isSelection()
+  return not not self.commandState.selection
 end
+
+function VimMode:isVisualMode()
+  return not not self.commandState.visualMode
+end
+
+function VimMode:toggleVisualMode()
+  self.commandState.visualMode = true
+  self.commandState.selection = not self.commandState.selection
+end
+
+function VimMode:disable()
+  self.enabled = false
+end
+
+function VimMode:enable()
+  self:resetState()
+  self.enabled = true
+end
+
+function VimMode:resetState()
+  self.commandState = VimMode.buildCommandState()
+end
+
+---------- hooks
 
 function VimMode:registerAfterExit(fn)
   table.insert(self.afterExitHooks, fn)
-end
-
-function VimMode:exit()
-  self.mode:exit()
-
-  VimMode.restoreDim()
-  self.entered = false
-
-  self:runAfterExitHooks()
 end
 
 function VimMode:runAfterExitHooks()
@@ -122,6 +140,8 @@ function VimMode:runAfterExitHooks()
     fn()
   end
 end
+
+---------- actions
 
 function VimMode:runOperator()
   if self.commandState.operatorFn then
@@ -137,6 +157,8 @@ function VimMode:restoreCursor()
     utils.sendKeys({}, 'right')
   end
 end
+
+---------- key bindings
 
 function VimMode:enableKeySequence(key1, key2, modifiers)
   modifiers = modifiers or {}
@@ -198,19 +220,6 @@ function VimMode:enableKeySequence(key1, key2, modifiers)
   end)
 
   self.sequence.tap:start()
-end
-
-function VimMode:isSelection()
-  return not not self.commandState.selection
-end
-
-function VimMode:isVisualMode()
-  return not not self.commandState.visualMode
-end
-
-function VimMode:toggleVisualMode()
-  self.commandState.visualMode = true
-  self.commandState.selection = not self.commandState.selection
 end
 
 function VimMode:bindHotKeys()
