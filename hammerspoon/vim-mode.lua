@@ -63,7 +63,6 @@ VimMode.new = function()
 end
 
 function VimMode:disable()
-  hs.alert.show('disabling vim')
   self.enabled = false
 end
 
@@ -72,7 +71,6 @@ function VimMode:resetState()
 end
 
 function VimMode:enable()
-  hs.alert.show('enabling vim')
   self:resetState()
   self.enabled = true
 end
@@ -97,15 +95,12 @@ end
 
 function VimMode:enter()
   if self.enabled then
-    hs.alert.show('vim.enter() entering')
     self.mode:enter()
 
     self.entered = true
     self:resetState()
 
     VimMode.dimScreen()
-  else
-    hs.alert.show('skipping')
   end
 end
 
@@ -149,8 +144,11 @@ function VimMode:enableKeySequence(key1, key2, modifiers)
   local waitingForPress = false
   local maxDelay = 200
 
-  self.sequence.tap =
-    hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(event)
+  hs.printf("got this %s", self.sequence)
+
+  self.sequence.tap = hs.eventtap.new(
+    {hs.eventtap.event.types.keyDown},
+    function(event)
       if not self.enabled or self.entered then
         return false
       end
@@ -158,17 +156,13 @@ function VimMode:enableKeySequence(key1, key2, modifiers)
       local hasModifiers = event:getFlags():containExactly(modifiers)
       local keyPressed = hs.keycodes.map[event:getKeyCode()]
 
-      hs.alert.show(keyPressed)
-
       if hasModifiers and keyPressed == key1 then
-        hs.alert.show('waiting')
         self.sequence.waitingForPress = true
 
         hs.timer.doAfter(maxDelay / 1000, function()
           if not self.sequence.waitingForPress then return end
           self.sequence.waitingForPress = false
 
-          hs.alert.show('canceling')
           self.sequence.tap:stop()
 
           utils.sendKeys(modifiers, key1)
@@ -183,7 +177,6 @@ function VimMode:enableKeySequence(key1, key2, modifiers)
         self.sequence.waitingForPress = false
 
         if hasModifiers and keyPressed == key2 then
-          hs.alert.show('entering vim')
           self.sequence.tap:stop()
           self:enter()
 
@@ -197,10 +190,10 @@ function VimMode:enableKeySequence(key1, key2, modifiers)
       end
 
       return false
-    end)
+    end
+  )
 
   self:registerAfterExit(function()
-    hs.alert.show('vim.afterExit')
     self.sequence.tap:start()
   end)
 
@@ -283,7 +276,6 @@ function VimMode:bindHotKeys()
   self.mode:bind({}, 'x', deleteUnderCursor)
   self.mode:bind({}, 'o', newLineBelow)
   self.mode:bind({'shift'}, 'o', newLineAbove)
-  self.mode:bind({'ctrl'}, '8', function() hs.alert.show('hi') end)
 
   ---------- commands
   self.mode:bind({}, '/', searchAhead)
