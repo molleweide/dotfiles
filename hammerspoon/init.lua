@@ -2,8 +2,11 @@ require "config-watch"
 require "window-management"
 require "key-bindings"
 
-vim = require "vim-mode"
-vim.bindKeySequence('j', 'k', {'shift'})
-
+VimMode = require "vim-mode"
+vim = VimMode.new()
+-- vim.bindKeySequence('j', 'k', {'shift'})
 -- vim.disableForApp('iTerm2')
--- hs.hotkey.bind({'ctrl'}, ';', nil, vim.enter)
+
+vim:bindHotKeys()
+
+hs.hotkey.bind({'ctrl'}, ';', nil, function() vim:enter() end)
