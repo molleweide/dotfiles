@@ -17,6 +17,9 @@ setopt hist_ignore_space
 setopt inc_append_history
 setopt share_history # share command history data
 
+# Allow extended matchers like ^file, etc
+set -o EXTENDED_GLOB
+
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 # The following lines were added by compinstall
