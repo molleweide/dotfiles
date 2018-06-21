@@ -7,4 +7,17 @@ require_installer package-manager
 dotheader "Setting up Hammerspoon..."
 brew_cask_install hammerspoon --appdir=/Applications
 
+function install_spoon() {
+  local name=$1
+  local repo=$2
+  local spoon_path=~/.hammerspoon/Spoons/$name.spoon
+
+  if test -e "$spoon_path"; then
+    return
+  fi
+
+  git clone "$repo" "$spoon_path"
+}
+
 symlink_dotfile hammerspoon ~/.hammerspoon
+install_spoon "VimMode" "https://github.com/dbalatero/VimMode.spoon"

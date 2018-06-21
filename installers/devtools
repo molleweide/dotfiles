@@ -41,3 +41,4 @@ brew_install qpdf
 brew_install gnu-tar
 brew_install mysql
 brew_install heroku
+brew_install hub

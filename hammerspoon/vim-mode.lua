@@ -1,8 +1,8 @@
-local bindKeySequence = require('vim-mode/bind-key-sequence')
-local extendedModes = require('./vim-mode/extended-modes')
-local motions = require('./vim-mode/motions')
-local operators = require('./vim-mode/operators')
-local utils = require('vim-mode/utils')
+local bindKeySequence = require('lib/bind-key-sequence')
+local extendedModes = require('./lib/extended-modes')
+local motions = require('./lib/motions')
+local operators = require('./lib/operators')
+local utils = require('lib/utils')
 
 local function compose(...)
   local fns = {...}
@@ -60,6 +60,10 @@ VimMode.new = function()
   self.watchers = {}
 
   return self
+end
+
+function VimMode:init()
+  self:bindModeKeys()
 end
 
 ---------- toggling
@@ -222,7 +226,7 @@ function VimMode:enableKeySequence(key1, key2, modifiers)
   self.sequence.tap:start()
 end
 
-function VimMode:bindHotKeys()
+function VimMode:bindModeKeys()
   local exit = function() self:exit() end
 
   local isNormalMode = function(fn)
