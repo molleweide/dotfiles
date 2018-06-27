@@ -1,0 +1,23 @@
+global !p
+def camelcase(string):
+		words = string.split("_")
+		words = map(lambda word: word.capitalize(), words)
+		return ''.join(words)
+
+def containingFolder(path):
+		words = path.split("/")
+		return words[len(words) - 2]
+
+endglobal
+
+snippet panel "module Form::Panel::(...)::(...)"
+module Form::Panel::`!p snip.rv = camelcase(containingFolder(path))`
+  class `!p snip.rv = camelcase(snip.basename)` < Form::Panel::Base
+	end
+end
+endsnippet
+
+snippet kmodel "class KaseModel::(...) < KaseModel::Base"
+class KaseModel::`!p snip.rv = camelcase(snip.basename)` < KaseModel::Base
+end
+endsnippet
