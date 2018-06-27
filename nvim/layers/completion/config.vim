@@ -5,6 +5,10 @@ let g:deoplete#enable_smart_case = 1
 
 let g:deoplete#auto_completion_start_length = 3
 
+let g:lexima_no_default_rules = 1
+call lexima#set_default_rules()
+call lexima#insmode#map_hook('before', '<CR>', '')
+
 " complete file names from the buffer's path
 let g:deoplete#file#enable_buffer_path = 1
 
@@ -55,7 +59,7 @@ function! Ulti_ExpandOrEnter()
     return deoplete#mappings#close_popup()
   else
     " otherwise, just do an "enter"
-    return "\<CR>\<C-R>=EndwiseDiscretionary()\<CR>"
+    return lexima#expand('<CR>', 'i')
   endif
 endfunction
 
