@@ -12,7 +12,7 @@ endglobal
 
 snippet panel "module Form::Panel::(...)::(...)"
 module Form::Panel::`!p snip.rv = camelcase(containingFolder(path))`
-  class `!p snip.rv = camelcase(snip.basename)` < Form::Panel::Base
+  class `!p snip.rv = camelcase(snip.basename)` < Base
 	end
 end
 endsnippet
