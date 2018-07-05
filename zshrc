@@ -21,6 +21,7 @@ setopt share_history # share command history data
 set -o EXTENDED_GLOB
 
 fpath=(/usr/local/share/zsh-completions $fpath)
+fpath=($HOME/.zsh/functions $fpath)
 
 # The following lines were added by compinstall
 zstyle ':completion:*' completer _complete _ignored

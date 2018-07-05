@@ -70,6 +70,18 @@ function setup_zsh_completions_repo() {
   fi
 }
 
+function install_zsh_prompt() {
+  local prompt_repo=$HOME/.zsh/vendor/spaceship-prompt
+  local install_location=$HOME/.zsh/functions/prompt_spaceship_setup
+
+  if [ ! -d $prompt_repo ]; then
+    git clone https://github.com/denysdovhan/spaceship-prompt.git \
+      $HOME/.zsh/vendor/spaceship-prompt
+  fi
+
+  symlink_dotfile zsh/vendor/spaceship-prompt/spaceship.zsh "$install_location"
+}
+
 dotheader "Setting up ZSH..."
 
 setup_zsh_completions_repo
@@ -82,5 +94,7 @@ install_fasd
 install_fzf
 
 setup_zsh_symlinks
+install_zsh_prompt
+
 update_shell_whitelist
 chsh_zsh
