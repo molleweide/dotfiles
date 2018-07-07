@@ -61,6 +61,7 @@ dotheader "Setting up Tmux..."
 
 brew_install reattach-to-user-namespace
 brew_install tmux
+brew_install urlview
 
 install_tmux_from_source_linux
 
