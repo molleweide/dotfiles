@@ -16,6 +16,7 @@ setopt hist_ignore_dups # ignore duplication command history list
 setopt hist_ignore_space
 setopt inc_append_history
 setopt share_history # share command history data
+setopt extended_glob
 
 # Allow extended matchers like ^file, etc
 set -o EXTENDED_GLOB
