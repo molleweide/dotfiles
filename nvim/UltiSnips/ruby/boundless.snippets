@@ -21,3 +21,13 @@ snippet kmodel "class KaseModel::(...) < KaseModel::Base"
 class KaseModel::`!p snip.rv = camelcase(snip.basename)` < KaseModel::Base
 end
 endsnippet
+
+snippet pspec "scenario 'filling out (...)'"
+scenario "filling out ${1:panel_name}" do
+	fill_out_panel "${2:chapter_name}", "TODO `!p snip.rv = t[1]`" do
+		expect(page).to have_content('${3:content}')
+
+		fill_in '${4:field}', with: '${5:value}'
+	end
+end
+endsnippet
