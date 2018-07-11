@@ -39,7 +39,7 @@ windows:
   - server:
       layout: tiled
       panes:
-        - rails s
+        - ./bin/rails s
         - ./bin/spring server
         - ./bin/webpack-dev-server
         - docker-compose up
