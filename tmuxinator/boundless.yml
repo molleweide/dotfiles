@@ -43,6 +43,10 @@ windows:
         - ./bin/spring server
         - ./bin/webpack-dev-server
         - docker-compose up
+  - logs:
+      layout: tiled
+      panes:
+        - tail -f log/test.log
   - queues:
       layout: tiled
       panes:
