@@ -39,7 +39,7 @@ let deoplete#tag#cache_limit_size = 20000000
 
 let g:deoplete#sources = {}
 
-let g:deoplete#sources.ruby = [
+let g:deoplete#sources._ = [
   \ 'LanguageClient',
   \ 'around',
   \ 'buffer',
