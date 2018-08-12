@@ -17,7 +17,7 @@ let g:lightline = {
       \   'right': [
       \     ['lineinfo'],
       \     ['percent'],
-      \     ['gutentags', 'ale_error', 'ale_warning', 'ale_ok', 'fileformat', 'fileencoding', 'filetype']
+      \     ['ale_error', 'ale_warning', 'ale_ok', 'fileformat', 'fileencoding', 'filetype']
       \   ]
       \ },
       \ 'component_function_visible_condition': {
@@ -29,7 +29,6 @@ let g:lightline = {
       \   'fileformat': 'MyFileformat',
       \   'filetype': 'MyFiletype',
       \   'fileencoding': 'MyFileencoding',
-      \   'gutentags': 'gutentags#statusline',
       \   'mode': 'MyMode',
       \   'readonly': '%{&readonly?"x":""}',
       \ },
