@@ -1,13 +1,31 @@
+""""""" completion menu
 set completeopt=menu,noinsert
 
+""""""" language client
+" js - yarn global add flow-language-server
+" ruby - gem install solargraph
+let g:LanguageClient_serverCommands = {
+  \ 'javascript': ['flow-language-server', '--stdio'],
+  \ 'javascript.jsx': ['flow-language-server', '--stdio'],
+  \ 'ruby': ['solargraph', 'stdio'],
+  \ }
+
+" allow subfolders to act as project root when in a monorepo
+let g:LanguageClient_rootMarkers = ['.projectile', '.root', '.git']
+
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+
+""""""" lexima for auto-parens
+let g:lexima_no_default_rules = 1
+call lexima#set_default_rules()
+call lexima#insmode#map_hook('before', '<CR>', '')
+
+""""""" Deoplete setup
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 
 let g:deoplete#auto_completion_start_length = 3
-
-let g:lexima_no_default_rules = 1
-call lexima#set_default_rules()
-call lexima#insmode#map_hook('before', '<CR>', '')
 
 " complete file names from the buffer's path
 let g:deoplete#file#enable_buffer_path = 1
@@ -20,17 +38,14 @@ let g:deoplete#auto_refresh_delay = 150
 let deoplete#tag#cache_limit_size = 20000000
 
 let g:deoplete#sources = {}
-let g:deoplete#sources._ = [
+
+let g:deoplete#sources.ruby = [
+  \ 'LanguageClient',
+  \ 'around',
   \ 'buffer',
-  \ 'tag',
   \ 'member',
   \ 'file',
   \ ]
-
-call deoplete#custom#source('buffer', 'rank', 200)
-call deoplete#custom#source('tag', 'rank', 150)
-call deoplete#custom#source('member', 'rank', 120)
-call deoplete#custom#source('file', 'rank', 100)
 
 let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 

@@ -15,6 +15,14 @@ let g:lmap.g = {
   \'w' : ['Gwrite',  'Git Write'],
   \}
 
+let g:lmap.l = {
+  \'name': 'Language Client',
+  \'d': [':call LanguageClient#textDocument_definition()', 'Jump to definition'],
+  \'h': [':call LanguageClient#textDocument_hover()', 'Hover'],
+  \'m': [':call LanguageClient_contextMenu()', 'Context menu'],
+  \'r': [':call LanguageClient#textDocument_rename()', 'Rename symbol'],
+  \}
+
 call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
 nnoremap <silent> <Space> :<c-u>LeaderGuide '<Space>'<CR>
 vnoremap <silent> <Space> :<c-u>LeaderGuideVisual '<Space>'<CR>
