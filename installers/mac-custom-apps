@@ -293,9 +293,14 @@ if is_macos; then
     fi
   }
 
+  install_aerial_screensavers() {
+    brew_cask_install aerial
+  }
+
   dotheader "Setting up custom Mac apps"
 
   install_1password
+  install_aerial_screensavers
   install_alfred
   install_bartender
   install_better_touch_tool
