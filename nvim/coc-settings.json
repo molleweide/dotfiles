@@ -1,0 +1,18 @@
+{
+  "suggest.noselect": true,
+  "languageserver": {
+    "flow": {
+      "command": "flow",
+      "args": ["lsp"],
+      "filetypes": ["javascript", "javascriptreact", "javascript.jsx"],
+      "initializationOptions": {},
+      "requireRootPattern": true,
+      "settings": {},
+      "rootPatterns": [".flowconfig"]
+    }
+  },
+  "solargraph.trace.server": "verbose",
+  "solargraph.useBundler": false,
+  "solargraph.symbols": true,
+  "solargraph.definitions": true
+}
