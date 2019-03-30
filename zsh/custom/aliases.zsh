@@ -11,6 +11,7 @@ alias less="less -r"
 
 alias b="aid begin"
 alias bs="./bin/rspec"
+alias bat="open -a 'Adobe Acrobat' $@"
 
 alias md="open -a Markoff $@"
 

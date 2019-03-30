@@ -9,15 +9,6 @@ set encoding=utf-8
 
 " ================ general config ====================
 
-" relative numbers
-set number relativenumber
-
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-augroup END
-
 set backspace=indent,eol,start  "allow backspace in insert mode
 set history=1000                "store lots of :cmdline history
 set showcmd                     "show incomplete cmds down the bottom
@@ -29,6 +20,7 @@ set ruler                       "show ruler
 set undolevels=1000             "undo levels
 set laststatus=2                "fix status bar
 set guifont=Inconsolata-g\ for\ Powerline
+set number
 
 " this makes vim act like all other editors, buffers can
 " exist in the background without being in a window.
