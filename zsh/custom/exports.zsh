@@ -14,6 +14,7 @@ fi
 export PATH="$PATH:$HOME/.composer/vendor/bin"
 export PATH="./node_modules/.bin:$PATH"
 export PATH="~/.fzf/bin:$PATH"
+export PATH="$PATH:$HOME/.config/base16-shell"
 
 export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
 

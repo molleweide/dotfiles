@@ -23,6 +23,11 @@ function setup_tmux_config() {
   fi
 }
 
+function setup_tmux_base16_integration() {
+  symlink_dotfile tmux/tmuxcolors-dbalatero-base16.conf \
+    ~/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf
+}
+
 function setup_tmuxinator() {
   symlink_dotfile tmuxinator ~/.tmuxinator
 }
@@ -67,3 +72,4 @@ install_tmux_from_source_linux
 
 setup_tmux_config
 setup_tmuxinator
+setup_tmux_base16_integration

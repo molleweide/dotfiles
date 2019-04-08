@@ -82,8 +82,18 @@ function install_zsh_prompt() {
   symlink_dotfile zsh/vendor/spaceship-prompt/spaceship.zsh "$install_location"
 }
 
+function install_base16_shell() {
+  local base16_repo=$HOME/.config/base16-shell
+
+  if [ ! -d $base16_repo ]; then
+    echo "Installing base16-shell..."
+    git clone https://github.com/chriskempson/base16-shell.git "$base16_repo"
+  fi
+}
+
 dotheader "Setting up ZSH..."
 
+install_base16_shell
 setup_zsh_completions_repo
 
 install_package zsh
