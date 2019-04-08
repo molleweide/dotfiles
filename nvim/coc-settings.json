@@ -1,5 +1,4 @@
 {
-  "suggest.noselect": true,
   "languageserver": {
     "flow": {
       "command": "flow",
@@ -14,5 +13,7 @@
   "solargraph.trace.server": "verbose",
   "solargraph.useBundler": false,
   "solargraph.symbols": true,
-  "solargraph.definitions": true
+  "solargraph.definitions": true,
+  "suggest.echodocSupport": true,
+  "suggest.noselect": true
 }

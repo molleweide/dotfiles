@@ -2,3 +2,4 @@
 " https://github.com/ervandew/supertab/issues/185
 
 Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
+Plug 'Shougo/echodoc.vim'
