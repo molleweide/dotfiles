@@ -19,6 +19,8 @@ alias md="open -a Markoff $@"
 alias srync="rsync -vrazh"
 
 alias G="spotify play uri https://open.spotify.com/track/1F9bmLBJ8VpXVadlxjafKM > /dev/null"
+alias gd="g d"
+alias gs="g s"
 
 alias sketch="magick $1 \( -clone 0 -negate -blur 0x5 \) -compose colordodge -composite \
 -modulate 100,0,100 -auto-level $2"
