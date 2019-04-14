@@ -51,3 +51,8 @@ windowBind({"ctrl", "alt", "cmd"}, {
   u = wm.cycleLeft,          -- ⌃⌥⌘ + u
   i = wm.cycleRight          -- ⌃⌥⌘ + i
 })
+
+-- lock screen shortcut
+hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'L', function()
+  hs.caffeinate.startScreensaver()
+end)
