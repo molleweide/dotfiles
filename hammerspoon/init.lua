@@ -12,3 +12,5 @@ vim:disableForApp('iTerm')
 vim:disableForApp('iTerm2')
 
 vim:enableKeySequence('j', 'k')
+
+Install = spoon.SpoonInstall
