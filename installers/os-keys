@@ -7,17 +7,27 @@ require_installer package-manager
 dotheader "Setting up Hammerspoon..."
 brew_cask_install hammerspoon --appdir=/Applications
 
-function install_spoon() {
-  local name=$1
-  local repo=$2
-  local spoon_path=~/.hammerspoon/Spoons/$name.spoon
+function setup_vim_mode_spoon_from_local() {
+  local code_dir=$HOME/code
+  local source_dir=$code_dir/VimMode.spoon
+  local symlink_destination=$HOME/.hammerspoon/Spoons/VimMode.spoon
 
-  if test -e "$spoon_path"; then
-    return
+  mkdir -p "$code_dir"
+
+  if [ ! -d $source_dir ]; then
+    dotsay "@blue@b[[+ cloning development copy of VimMode.spoon ]]"
+    git clone https://github.com/dbalatero/VimMode.spoon "$source_dir"
+  else
+    dotsay "+ VimMode.spoon dev copy already checked out"
   fi
 
-  git clone "$repo" "$spoon_path"
+  if [ -f $symlink_destination ]; then
+    dotsay "@blue@b[[+ symlinking development copy of VimMode.spoon ]]"
+    ln -s "$source_dir" "$symlink_destination"
+  else
+    dotsay "+ VimMode.spoon already installed to Hammerspoon"
+  fi
 }
 
 symlink_dotfile hammerspoon ~/.hammerspoon
-install_spoon "VimMode" "https://github.com/dbalatero/VimMode.spoon"
+setup_vim_mode_spoon_from_local
