@@ -3,6 +3,7 @@ hs.loadSpoon("SpoonInstall")
 require "config-watch"
 require "window-management"
 require "key-bindings"
+require "mute-on-sleep"
 
 vim = hs.loadSpoon('VimMode')
 
