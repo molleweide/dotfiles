@@ -21,3 +21,6 @@ set splitbelow
 
 " wildignore
 set wildignore+=node_modules/*,bower_components/*,vendor/bundle/*,tmp/*
+
+" highlight marks dynamically based on vim-gitgutter's status
+let g:SignatureMarkTextHLDynamic = 1
