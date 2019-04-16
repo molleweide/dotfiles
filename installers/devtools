@@ -31,6 +31,9 @@ configure_ctags
 brew_install the_silver_searcher
 apt_install silversearcher-ag
 
+brew_install ripgrep
+apt_install ripgrep
+
 install_package sl
 install_package wget
 
