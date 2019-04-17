@@ -8,6 +8,7 @@ set noshowmode
 " Use tab and shift+tab to navigate forward/back on completion list and
 " snippets
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+let g:coc_snippet_next = '<tab>'
 
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
