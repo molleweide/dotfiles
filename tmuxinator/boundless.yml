@@ -42,7 +42,6 @@ windows:
         - ./bin/rails s
         - ./bin/spring server
         - ./bin/webpack-dev-server
-        - docker-compose up
   - logs:
       layout: tiled
       panes:
