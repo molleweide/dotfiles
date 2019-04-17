@@ -10,10 +10,10 @@
       "rootPatterns": [".flowconfig"]
     }
   },
+  "solargraph.definitions": true,
+  "solargraph.symbols": true,
   "solargraph.trace.server": "verbose",
   "solargraph.useBundler": false,
-  "solargraph.symbols": true,
-  "solargraph.definitions": true,
   "suggest.echodocSupport": true,
   "suggest.noselect": true
 }

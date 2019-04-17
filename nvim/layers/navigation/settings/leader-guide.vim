@@ -8,19 +8,22 @@ let g:lmap.c = {
 
 let g:lmap.g = {
   \'name' : 'Git Menu',
-  \'s' : ['Gstatus', 'Git Status'],
-  \'p' : ['Gpull',   'Git Pull'],
-  \'u' : ['Gpush',   'Git Push'],
   \'c' : ['Gcommit', 'Git Commit'],
+  \'d' : ['Gdiff',   'Git diff'],
+  \'p' : ['Gpull',   'Git Pull'],
+  \'s' : ['Gstatus', 'Git Status'],
+  \'u' : ['Gpush',   'Git Push'],
   \'w' : ['Gwrite',  'Git Write'],
   \}
 
 let g:lmap.l = {
   \'name': 'Language Client',
-  \'d': [':call LanguageClient#textDocument_definition()', 'Jump to definition'],
-  \'h': [':call LanguageClient#textDocument_hover()', 'Hover'],
-  \'m': [':call LanguageClient_contextMenu()', 'Context menu'],
-  \'r': [':call LanguageClient#textDocument_rename()', 'Rename symbol'],
+  \'a': [':execute "normal \<Plug>(coc-fix-current)"', 'Autofix current line'],
+  \'d': [':call CocShowDocumentation()"', 'Show documentation'],
+  \'f': [':execute "normal \<Plug>(coc-format)"', 'Format current buffer'],
+  \'i': [':execute "normal \<Plug>(coc-references)"', 'Jump to references'],
+  \'j': [':execute "normal \<Plug>(coc-definition)"', 'Jump to definition'],
+  \'r': [':execute "normal \<Plug>(coc-rename)"', 'Rename symbol'],
   \}
 
 call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
