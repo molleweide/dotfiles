@@ -52,3 +52,7 @@ inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
+
+" vimwiki
+let g:vimwiki_list = [{'path': '~/.vimwiki/',
+  \ 'syntax': 'markdown', 'ext': '.md'}]
