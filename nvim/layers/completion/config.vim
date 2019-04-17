@@ -25,9 +25,6 @@ autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 " Jump to definition with gd
 nmap <silent> gd <Plug>(coc-definition)
 
-" Use K for show documentation in preview window
-nnoremap <silent> K :call CocShowDocumentation()<CR>
-
 function! g:CocShowDocumentation()
   if &filetype == 'vim'
     execute 'h '.expand('<cword>')
