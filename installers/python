@@ -55,8 +55,15 @@ function install_pyenv_virtualenv() {
   fi
 }
 
+function install_additional_mojave_headers() {
+  sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
+}
+
 dotheader "Setting up Python..."
 
+brew_install readline
+brew_install xz
+install_additional_mojave_headers
 install_pyenv
 install_pyenv_virtualenv
 
