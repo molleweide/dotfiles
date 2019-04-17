@@ -6,6 +6,12 @@ export NVIM_TUI_ENABLE_TRUE_COLOR=1
 export PATH="$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+export PATH="/usr/local/opt/openssl/bin:$PATH"
+
+# OpenSSL
+export LDFLAGS="-L/usr/local/opt/openssl/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl/include"
+export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
 
 if command -v yarn >/dev/null 2>&1; then
   export PATH="$PATH:`yarn global bin`"

@@ -17,9 +17,9 @@ function load_pyenv() {
 }
 
 function install_python_versions() {
-  pyenv install -s 2.7.13
-  pyenv install -s 3.6.2
-  pyenv global 2.7.13
+  pyenv install -s 2.7.16
+  pyenv install -s 3.7.3
+  pyenv global 2.7.16
 }
 
 function install_pyenv_virtualenvs() {
@@ -29,14 +29,16 @@ function install_pyenv_virtualenvs() {
   fi
 
   if ! pyenv virtualenvs | grep -q py2neovim; then
-    pyenv virtualenv 2.7.13 py2neovim
+    pyenv virtualenv 2.7.16 py2neovim
     pyenv activate py2neovim
+    pip install --upgrade pip
     pip install neovim
   fi
 
   if ! pyenv virtualenvs | grep -q py3neovim; then
-    pyenv virtualenv 3.6.2 py3neovim
+    pyenv virtualenv 3.7.3 py3neovim
     pyenv activate py3neovim
+    pip install --upgrade pip
     pip install neovim
   fi
 }
@@ -55,22 +57,25 @@ function install_pyenv_virtualenv() {
   fi
 }
 
-function install_additional_mojave_headers() {
-  sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
+function force_openssl_to_homebrew() {
+  if [ $(which openssl) == "/usr/local/opt/openssl/bin/openssl" ]; then
+    dotsay "+ Already forced OpenSSL to Homebrew's version"
+  else
+    dotsay "+ Installing OpenSSL from Homebrew..."
+    brew_install openssl
+    brew link openssl --force
+  fi
 }
 
 dotheader "Setting up Python..."
 
+force_openssl_to_homebrew
 brew_install readline
 brew_install xz
-install_additional_mojave_headers
+
 install_pyenv
 install_pyenv_virtualenv
-
-echo
-echo $PATH
-echo
-
 load_pyenv
+
 install_python_versions
 install_pyenv_virtualenvs
