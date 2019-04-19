@@ -1,3 +1,8 @@
+" stop kicking me into this mode you fucking apes
+set noexrc
+set noex
+set nosecure
+
 " minimum width
 set winwidth=100
 
