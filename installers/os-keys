@@ -29,5 +29,25 @@ function setup_vim_mode_spoon_from_local() {
   fi
 }
 
-symlink_dotfile hammerspoon ~/.hammerspoon
-setup_vim_mode_spoon_from_local
+function fetch_axuielement_library() {
+  local filename=axuielement-v0.7.1.tar.gz
+  local save_dir=/tmp
+  local url=https://github.com/asmagill/hs._asm.axuielement/raw/master/$filename
+  local destination=~/.hammerspoon/hs/_asm
+
+  if [ ! -d $destination ]; then
+    dotsay "@blue@b[[+ symlinking development copy of VimMode.spoon ]]"
+
+    wget -nv $url -O $save_dir/$filename
+
+    cd $save_dir && tar zxvf $filename
+    mkdir -p ~/.hammerspoon/hs
+    mv $save_dir/hs/_asm $destination
+  else
+    dotsay "+ hs._asm.axuielement already installed... skipping"
+  fi
+}
+
+# symlink_dotfile hammerspoon ~/.hammerspoon
+# setup_vim_mode_spoon_from_local
+fetch_axuielement_library
