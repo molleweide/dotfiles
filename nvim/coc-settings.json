@@ -22,6 +22,7 @@
   },
 
   "solargraph.autoformat": true,
+  "solargraph.checkGemVersion": false,
   "solargraph.completion": true,
   "solargraph.diagnostics": true,
   "solargraph.definitions": true,
