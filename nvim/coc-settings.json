@@ -21,12 +21,6 @@
     }
   },
 
-  "coc.preferences.formatOnSaveFiletypes": ["lua", "ruby"],
-
-  "eslint.autoFixOnSave": true,
-  "eslint.filetypes": ["javascript", "javascriptreact", "javascript.jsx"],
-  "eslint.run": "onSave",
-
   "solargraph.autoformat": true,
   "solargraph.completion": true,
   "solargraph.diagnostics": true,
