@@ -48,6 +48,13 @@ function fetch_axuielement_library() {
   fi
 }
 
-# symlink_dotfile hammerspoon ~/.hammerspoon
-# setup_vim_mode_spoon_from_local
+brew_install lua
+brew_install luarocks
+
+luarocks install --server=http://luarocks.org/dev lua-lsp
+luarocks install luacheck
+luarocks install lcf
+
+symlink_dotfile hammerspoon ~/.hammerspoon
+setup_vim_mode_spoon_from_local
 fetch_axuielement_library

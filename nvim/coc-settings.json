@@ -8,6 +8,10 @@
       "requireRootPattern": true,
       "settings": {},
       "rootPatterns": [".flowconfig"]
+    },
+    "lua": {
+      "command": "lua-lsp",
+      "filetypes": ["lua"]
     }
   },
   "solargraph.definitions": true,
