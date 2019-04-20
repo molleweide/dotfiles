@@ -1,6 +1,6 @@
 {
   "languageserver": {
-     "bash": {
+    "bash": {
       "command": "bash-language-server",
       "args": ["start"],
       "filetypes": ["sh"],
@@ -20,10 +20,16 @@
       "filetypes": ["lua"]
     }
   },
+
+  "eslint.autoFixOnSave": true,
+  "eslint.filetypes": ["javascript", "javascriptreact", "javascript.jsx"],
+  "eslint.run": "onSave",
+
   "solargraph.definitions": true,
   "solargraph.symbols": true,
   "solargraph.trace.server": "verbose",
   "solargraph.useBundler": false,
+
   "suggest.echodocSupport": true,
   "suggest.noselect": true
 }
