@@ -21,14 +21,23 @@
     }
   },
 
+  "coc.preferences.formatOnSaveFiletypes": ["lua", "ruby"],
+
   "eslint.autoFixOnSave": true,
   "eslint.filetypes": ["javascript", "javascriptreact", "javascript.jsx"],
   "eslint.run": "onSave",
 
+  "solargraph.autoformat": true,
+  "solargraph.completion": true,
+  "solargraph.diagnostics": true,
   "solargraph.definitions": true,
+  "solargraph.enable": true,
+  "solargraph.filetypes": ["ruby"],
+  "solargraph.formatting": true,
+  "solargraph.hover": true,
+  "solargraph.rename": true,
   "solargraph.symbols": true,
-  "solargraph.trace.server": "verbose",
-  "solargraph.useBundler": false,
+  "solargraph.useBundler": true,
 
   "suggest.echodocSupport": true,
   "suggest.noselect": true
