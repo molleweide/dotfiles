@@ -38,9 +38,15 @@ function setup_pry() {
   symlink_dotfile irb/aprc ~/.aprc
 }
 
+function install_yard() {
+  gem install yard
+}
+
 dotheader "Setting up Ruby..."
 
+symlink_dotfile gemrc ~/.gemrc
 setup_rvmrc
 setup_pry
 install_rvm
 install_global_gem_hooks
+install_yard
