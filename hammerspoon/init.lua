@@ -8,6 +8,7 @@ require "audio-switcher"
 
 local vim = hs.loadSpoon('VimMode')
 
+vim:disableForApp('Code')
 vim:disableForApp('zoom.us')
 vim:disableForApp('iTerm')
 vim:disableForApp('iTerm2')
