@@ -48,6 +48,8 @@ function fetch_axuielement_library() {
   fi
 }
 
+brew_cask_install 1password-cli
+brew_cask_install tunnelblick
 brew_install lua
 brew_install luarocks
 
