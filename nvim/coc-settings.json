@@ -6,21 +6,13 @@
       "filetypes": ["sh"],
       "ignoredRootPaths": ["~"]
     },
-    "flow": {
-      "command": "flow",
-      "args": ["lsp"],
-      "filetypes": ["javascript", "javascriptreact", "javascript.jsx"],
-      "initializationOptions": {},
-      "requireRootPattern": true,
-      "settings": {},
-      "rootPatterns": [".flowconfig"]
-    },
     "lua": {
       "command": "lua-lsp",
       "filetypes": ["lua"]
     }
   },
 
+  "coc.source.emoji.filetypes": ["markdown", "vimwiki"],
   "solargraph.autoformat": true,
   "solargraph.checkGemVersion": false,
   "solargraph.completion": true,
