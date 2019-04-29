@@ -5,3 +5,4 @@ Plug 'wlemuel/vim-ultisnips-redux'
 
 " Typescript
 Plug 'leafgarland/typescript-vim'
+Plug 'ianks/vim-tsx'
