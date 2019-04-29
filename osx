@@ -257,3 +257,6 @@ echo "OSX Hacks Done. Note that some of these changes require a logout/restart t
 
 # Allow text expansion
 defaults write -g WebAutomaticTextReplacementEnabled -bool true
+
+# Allow AAC codec for Bluetooth headphones
+defaults write bluetoothaudiod "Enable AAC codec" -bool true
