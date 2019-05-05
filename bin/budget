@@ -75,4 +75,6 @@ lines = categories.map do |category|
   ].join(' ')
 end
 
+puts colorize(:light_purple, "Current Budget")
+puts "----------------------------------"
 lines.each { |line| puts line }
