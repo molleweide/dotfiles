@@ -24,7 +24,6 @@ brew_install wakatime-cli
 brew_install coreutils
 
 brew_install ctags
-rehash
 brew_install global --with-ctags
 configure_ctags
 
@@ -46,3 +45,5 @@ brew_install mysql
 brew_install heroku
 brew_install hub
 brew_install redis
+
+heroku plugins:install heroku-repo
