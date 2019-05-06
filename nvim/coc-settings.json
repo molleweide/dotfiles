@@ -12,6 +12,7 @@
     }
   },
 
+  "coc.preferences.previewAutoClose": false,
   "coc.source.emoji.filetypes": ["markdown", "vimwiki"],
   "solargraph.autoformat": true,
   "solargraph.checkGemVersion": false,

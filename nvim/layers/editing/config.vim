@@ -12,6 +12,8 @@ nmap <silent> <leader>g :TestVisit<CR>
 let test#strategy = 'vimux'
 let g:test#preserve_screen = 1
 
+let g:test#javascript#mocha#file_pattern = '\v.*_test\.(js|jsx|ts|tsx)$'
+
 " color column
 set colorcolumn=81
 
