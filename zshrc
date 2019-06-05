@@ -54,4 +54,4 @@ export PATH="$HOME/.rvm/bin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-budget
+# budget

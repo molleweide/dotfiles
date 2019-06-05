@@ -76,10 +76,18 @@ function install_zsh_prompt() {
 
   if [ ! -d $prompt_repo ]; then
     git clone https://github.com/denysdovhan/spaceship-prompt.git \
-      $HOME/.zsh/vendor/spaceship-prompt
+      $prompt_repo
   fi
 
   symlink_dotfile zsh/vendor/spaceship-prompt/spaceship.zsh "$install_location"
+}
+
+function install_zsh_powerlevel10k() {
+  local prompt_repo=$HOME/.zsh/vendor/powerlevel10k
+
+  if [ ! -d $prompt_repo ]; then
+    git clone https://github.com/romkatv/powerlevel10k.git $prompt_repo
+  fi
 }
 
 function install_base16_shell() {
@@ -105,6 +113,7 @@ install_fzf
 
 setup_zsh_symlinks
 install_zsh_prompt
+install_zsh_powerlevel10k
 
 update_shell_whitelist
 chsh_zsh
