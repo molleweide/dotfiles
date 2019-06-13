@@ -9,7 +9,7 @@ function file_is_patched() {
 if ! file_is_patched; then
   echo "+ Patching Slack app..."
 
-  cat << 'EOF' > "$PATCH_FILE"
+  cat << 'EOF' >> "$PATCH_FILE"
 
 // First make sure the wrapper app is loaded
 document.addEventListener("DOMContentLoaded", function() {
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
    let webviews = document.querySelectorAll(".TeamView webview");
 
    // Fetch our CSS in parallel ahead of time
-   const cssPath = 'https://cdn.rawgit.com/widget-/slack-black-theme/master/custom.css';
+   const cssPath = 'https://raw.githubusercontent.com/Nockiro/slack-black-theme/master/custom.css';
    let cssPromise = fetch(cssPath).then(response => response.text());
 
    let customCustomCSS = `
