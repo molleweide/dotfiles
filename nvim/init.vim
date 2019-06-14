@@ -77,6 +77,9 @@ set sidescroll=1
 let mapleader=","
 let g:mapleader=","
 
+" =============== mouse =====================
+set mouse=n
+
 " =============== python ====================
 
 let g:python_host_prog = $HOME . '/.pyenv/versions/py2neovim/bin/python'

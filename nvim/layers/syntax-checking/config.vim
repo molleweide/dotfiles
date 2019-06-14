@@ -25,3 +25,4 @@ let g:ale_fixers = {
 
 let g:ale_sign_error = '●' " Less aggressive than the default '>>'
 let g:ale_sign_warning = '.'
+let g:ale_disable_lsp = 1

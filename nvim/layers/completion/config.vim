@@ -24,6 +24,7 @@ autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " Jump to definition with gd
 nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gh <Plug>(coc-diagnostic-info)
 
 function! g:CocShowDocumentation()
   if &filetype == 'vim'

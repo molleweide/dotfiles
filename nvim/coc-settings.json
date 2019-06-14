@@ -28,5 +28,6 @@
   "solargraph.useBundler": true,
 
   "suggest.echodocSupport": true,
-  "suggest.noselect": true
+  "suggest.noselect": true,
+  "suggest.enablePreview": true
 }
