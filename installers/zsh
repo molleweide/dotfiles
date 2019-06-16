@@ -70,23 +70,12 @@ function setup_zsh_completions_repo() {
   fi
 }
 
-function install_zsh_prompt() {
-  local prompt_repo=$HOME/.zsh/vendor/spaceship-prompt
-  local install_location=$HOME/.zsh/functions/prompt_spaceship_setup
+function install_antigen() {
+  local plugin_file=$HOME/.zsh/vendor/antigen.zsh
 
-  if [ ! -d $prompt_repo ]; then
-    git clone https://github.com/denysdovhan/spaceship-prompt.git \
-      $prompt_repo
-  fi
-
-  symlink_dotfile zsh/vendor/spaceship-prompt/spaceship.zsh "$install_location"
-}
-
-function install_zsh_powerlevel10k() {
-  local prompt_repo=$HOME/.zsh/vendor/powerlevel10k
-
-  if [ ! -d $prompt_repo ]; then
-    git clone https://github.com/romkatv/powerlevel10k.git $prompt_repo
+  if [ ! -f $plugin_file ]; then
+    echo "Installing antigen"
+    curl -L git.io/antigen > "$plugin_file"
   fi
 }
 
@@ -112,8 +101,7 @@ install_fasd
 install_fzf
 
 setup_zsh_symlinks
-install_zsh_prompt
-install_zsh_powerlevel10k
+install_antigen
 
 update_shell_whitelist
 chsh_zsh

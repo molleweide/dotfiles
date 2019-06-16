@@ -1,27 +1,3 @@
-setopt prompt_subst
-
-autoload -U promptinit
-promptinit
-
-# SPACESHIP_PROMPT_ORDER=(
-#   dir           # Current directory section
-#   git           # Git section (git_branch + git_status)
-#   node          # Node.js section
-#   ruby          # Ruby section
-#   elixir        # Elixir section
-#   exec_time     # Execution time
-#   line_sep      # Line break
-#   battery       # Battery level and status
-#   vi_mode       # Vi-mode indicator
-#   jobs          # Background jobs indicator
-#   exit_code     # Exit code section
-#   char          # Prompt character
-# )
-
-# SPACESHIP_NODE_SHOW=true
-
-# prompt spaceship
-
 POWERLEVEL9K_VI_INSERT_MODE_STRING=""
 POWERLEVEL9K_VI_COMMAND_MODE_STRING="[N]"
 POWERLEVEL9K_MODE="nerdfont-complete"
@@ -61,5 +37,3 @@ POWERLEVEL9K_SHORTEN_STRATEGY="truncate_to_last"
 
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{blue}\u256D\u2500%f"
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{blue}\u2570\uf460%f "
-
-source ~/.zsh/vendor/powerlevel10k/powerlevel10k.zsh-theme
