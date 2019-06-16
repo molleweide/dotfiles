@@ -22,6 +22,9 @@ alias G="spotify play uri https://open.spotify.com/track/1F9bmLBJ8VpXVadlxjafKM 
 alias gd="g d"
 alias gs="g s"
 
+# I'm used to autojump 'j' vs fasd 'z'
+alias j=z
+
 alias sketch="magick $1 \( -clone 0 -negate -blur 0x5 \) -compose colordodge -composite \
 -modulate 100,0,100 -auto-level $2"
 
