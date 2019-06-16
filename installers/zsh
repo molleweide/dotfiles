@@ -91,6 +91,7 @@ function install_base16_shell() {
 dotheader "Setting up ZSH..."
 
 brew_install exa
+brew_install neofetch
 install_base16_shell
 setup_zsh_completions_repo
 
