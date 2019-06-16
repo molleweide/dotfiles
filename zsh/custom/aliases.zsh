@@ -18,9 +18,6 @@ alias md="open -a Markoff $@"
 # Simple rsync
 alias srync="rsync -vrazh"
 
-alias gd="g d"
-alias gs="g s"
-
 # I'm used to autojump 'j' vs fasd 'z'
 alias j=z
 
