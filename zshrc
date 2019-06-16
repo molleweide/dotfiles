@@ -44,6 +44,7 @@ antigen bundle robbyrussell/oh-my-zsh plugins/vi-mode
 antigen bundle robbyrussell/oh-my-zsh plugins/zsh_reload
 
 antigen bundle dbalatero/fzf-git
+antigen bundle DarrinTisdale/zsh-aliases-exa
 antigen bundle chriskempson/base16-shell
 antigen bundle wookayin/fzf-fasd
 antigen bundle twang817/zsh-ssh-agent
