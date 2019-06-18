@@ -1,16 +1,21 @@
-# Set up cache dir for oh-my-zsh plugins
+# ======== Cache directory (for oh-my-zsh plugins) =========
 [ ! -d $HOME/.zcustom/cache ] && mkdir -p $HOME/.zcustom/cache
 
 export ZSH="$HOME/.zcustom"
 export ZSH_CACHE_DIR="$ZSH/cache"
 
-# Disable auto title so tmux titles don't get messed up.
+# ======== Random settings ===========
+
+# Disable auto title so tmux window titles don't get messed up.
 export DISABLE_AUTO_TITLE="true"
 
-# Maintain a stack of cd directory traversals
+# Maintain a stack of cd directory traversals for `popd`
 setopt AUTO_PUSHD
 
-# History settings
+# Allow extended matchers like ^file, etc
+set -o EXTENDED_GLOB
+
+# ========= History settings =========
 if [ -z "$HISTFILE" ]; then
   HISTFILE=$HOME/.zsh_history
 fi
@@ -26,11 +31,6 @@ setopt hist_ignore_space
 setopt inc_append_history
 setopt share_history # share command history data
 setopt extended_glob
-
-# Allow extended matchers like ^file, etc
-set -o EXTENDED_GLOB
-
-fpath=(/usr/local/share/zsh-completions $fpath)
 
 # =========== Plugins ============
 source $HOME/.zsh/vendor/antigen.zsh
@@ -71,6 +71,6 @@ do
   source $file
 done
 
-# ======= RVM is a special snowflake ========
+# ======= RVM is a special snowflake and needs to be last ========
 export PATH="$HOME/.rvm/bin:$PATH"
 [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
