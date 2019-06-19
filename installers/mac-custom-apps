@@ -304,6 +304,11 @@ if is_macos; then
     install_simple_dmg_copy "HazeOver" "$url"
   }
 
+  install_hocus_focus() {
+    local url="http://hocusfoc.us/static/releases/hocus-focus-latest.zip"
+    install_simple_zip "Hocus Focus" "$url"
+  }
+
   dotheader "Setting up custom Mac apps"
 
   install_1password
@@ -317,6 +322,7 @@ if is_macos; then
   install_focus
   install_google_chrome
   install_hazeover
+  install_hocus_focus
   install_licecap
   install_mammon
   install_on_the_job
