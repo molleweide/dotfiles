@@ -3,6 +3,8 @@
 source "${BASH_SOURCE%/*}/shared.sh"
 
 if is_macos; then
+  require_installer package-manager
+
   installer_download() {
     local url=$1
     local filename=$2
@@ -297,6 +299,11 @@ if is_macos; then
     brew_cask_install aerial
   }
 
+  install_hazeover() {
+    local url="https://hazeover.com/HazeOver.dmg"
+    install_simple_dmg_copy "HazeOver" "$url"
+  }
+
   dotheader "Setting up custom Mac apps"
 
   install_1password
@@ -309,6 +316,7 @@ if is_macos; then
   install_firefox
   install_focus
   install_google_chrome
+  install_hazeover
   install_licecap
   install_mammon
   install_on_the_job
