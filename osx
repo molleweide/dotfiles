@@ -260,3 +260,6 @@ defaults write -g WebAutomaticTextReplacementEnabled -bool true
 
 # Allow AAC codec for Bluetooth headphones
 defaults write bluetoothaudiod "Enable AAC codec" -bool true
+
+# Remove all desktop icons
+defaults write com.apple.finder CreateDesktop -bool false
