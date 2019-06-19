@@ -12,3 +12,4 @@ vim/sessions
 bin/subl
 tags
 *.swp
+tmux-client*
