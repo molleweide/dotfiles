@@ -22,11 +22,6 @@ inoremap jk <esc>
 nnoremap <silent> vv <C-w>v
 nnoremap <silent> ss <C-w>s
 
-" alias yw to yank the entire word 'yank inner word'
-" even if the cursor is halfway inside the word
-" FIXME: will not properly repeat when you use a dot (tie into repeat.vim)
-nnoremap ,yw yiww
-
 "make Y consistent with C and D
 nnoremap Y y$
 function! YRRunAfterMaps()
