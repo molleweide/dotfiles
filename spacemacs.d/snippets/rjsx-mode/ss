@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: ss
-# key: ss
-# --
-const styles = StyleSheet.create({
-  $0
-})

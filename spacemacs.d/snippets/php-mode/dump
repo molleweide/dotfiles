@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: dump
-# key: dump
-# --
-print '<pre>'; print __FILE__ . '/' . __FUNCTION__ . '():' . __LINE__ . "\n"; print_r($1); print '</pre>'; die;

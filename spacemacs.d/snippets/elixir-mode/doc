@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: doc
-# key: @d
-# --
-@doc """
-$0
-"""
