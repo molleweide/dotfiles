@@ -1,5 +1,6 @@
 function theme_colors() {
-  for code ({000..255}) print -P -- "$code: %F{$code}This is how your text would look like%f"
+  for code ({000..255}) print -P -- \
+    "$code: %F{$code}This is how your text would look like%f"
 }
 
 POWERLEVEL9K_VI_INSERT_MODE_STRING=""
@@ -8,8 +9,20 @@ POWERLEVEL9K_MODE="nerdfont-complete"
 
 POWERLEVEL9K_TIME_FORMAT="\UF43A %D{%I:%M  \UF133  %m.%d.%y}"
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir vcs status vi_mode)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(root_indicator command_execution_time nvm rvm)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+  os_icon
+  dir
+  vcs
+  status
+  vi_mode
+)
+
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
+  root_indicator
+  command_execution_time
+  nvm
+  rvm
+)
 
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
