@@ -7,9 +7,13 @@ fi
 
 # Turbo key repeat
 # Set a blazingly fast keyboard repeat rate.
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false;
-defaults write -g InitialKeyRepeat -int 15; # Anything lower than 15 seems too fast.
-defaults write -g KeyRepeat -int 2; # You can go as low as 1, but that's too darn fast for me.
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
+# Anything lower than 15 seems too fast.
+defaults write -g InitialKeyRepeat -int 15
+
+# You can go as low as 1, but that's too darn fast for me.
+defaults write -g KeyRepeat -int 2
 
 # Gratuitously stolen from @mathiasbynens
 # https://github.com/mathiasbynens/dotfiles/blob/master/.osx
