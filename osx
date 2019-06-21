@@ -262,10 +262,6 @@ defaults write com.google.Chrome.plist AppleEnableSwipeNavigateWithScrolls -bool
 # [ -e "$file" ] && mv -f "$file" "$file.bak"
 # unset file
 
-# Kill affected applications
-for app in Finder Dock Mail Safari iTunes iCal Address\ Book SystemUIServer; do killall "$app" > /dev/null 2>&1; done
-echo "OSX Hacks Done. Note that some of these changes require a logout/restart to take effect."
-
 # Allow text expansion
 defaults write -g WebAutomaticTextReplacementEnabled -bool true
 
@@ -274,3 +270,7 @@ defaults write bluetoothaudiod "Enable AAC codec" -bool true
 
 # Remove all desktop icons
 defaults write com.apple.finder CreateDesktop -bool false
+
+# Kill affected applications
+for app in Finder Dock Mail Safari iTunes iCal Address\ Book SystemUIServer; do killall "$app" > /dev/null 2>&1; done
+echo "OSX Hacks Done. Note that some of these changes require a logout/restart to take effect."
