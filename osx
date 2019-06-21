@@ -1,3 +1,10 @@
+#!/usr/bin/env bash
+
+if [[ "$(uname)" != "Darwin" ]]; then
+  echo "Not on MacOS, exiting..."
+  exit 1
+fi
+
 # Turbo key repeat
 # Set a blazingly fast keyboard repeat rate.
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false;
