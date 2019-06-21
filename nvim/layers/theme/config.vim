@@ -14,7 +14,7 @@ au BufNewFile,BufRead *.css,*.html,*.htm,*.sass,*.scss :ColorHighlight!
 let g:lightline = {
       \ 'colorscheme': 'base16',
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
+      \   'left': [ [ 'mode', 'paste' ], [ 'filename' ] ],
       \   'right': [
       \     ['lineinfo'],
       \     ['percent'],
@@ -89,7 +89,7 @@ function! MyFilename()
         \ &ft == 'unite' ? unite#get_status_string() :
         \ &ft == 'vimshell' ? vimshell#get_status_string() :
         \ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-        \ ('' != fname ? fname : '[No Name]') .
+        \ ('' != fname ? expand('%') : '[No Name]') .
         \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
 
