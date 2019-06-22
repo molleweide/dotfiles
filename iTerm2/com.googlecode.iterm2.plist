@@ -2115,6 +2115,8 @@
 	<true/>
 	<key>MaxVertically</key>
 	<false/>
+	<key>NSFontPanelAttributes</key>
+	<string>1, 1</string>
 	<key>NSNavLastRootDirectory</key>
 	<string>~/.dotfiles/theme/build/themer-iterm</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
@@ -2155,12 +2157,14 @@
 		<key>TB Is Shown</key>
 		<integer>1</integer>
 	</dict>
+	<key>NSWindow Frame NSFontPanel</key>
+	<string>1091 531 840 249 0 0 3360 1867 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>1410 786 620 392 0 0 3440 1440 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>437 463 1016 512 0 0 1920 1057 </string>
+	<string>0 754 918 423 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 3008 1692 0 0 3008 1669 </string>
+	<string>0 0 1920 1200 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>132 76 665 502 0 0 1920 1177 </string>
 	<key>New Bookmarks</key>
@@ -2381,7 +2385,7 @@
 				<real>1</real>
 			</dict>
 			<key>Blend</key>
-			<real>0.30000001192092896</real>
+			<real>0.050000000000000003</real>
 			<key>Blink Allowed</key>
 			<false/>
 			<key>Blinking Cursor</key>
@@ -2389,7 +2393,7 @@
 			<key>Blur</key>
 			<false/>
 			<key>Blur Radius</key>
-			<real>2</real>
+			<real>0.10000000000000001</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -2797,7 +2801,9 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>InconsolataGoNerdFontCompleteM-Regular 16</string>
+			<string>InconsolataGoNerdFontComplete-Regular 18</string>
+			<key>Only The Default BG Color Uses Transparency</key>
+			<true/>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -2952,10 +2958,14 @@
 			<array/>
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
+			<key>Thin Strokes</key>
+			<integer>4</integer>
 			<key>Transparency</key>
 			<real>0.0</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>0</integer>
 			<key>Unicode Version</key>
 			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
@@ -2973,7 +2983,7 @@
 			<key>Use Non-ASCII Font</key>
 			<false/>
 			<key>Vertical Spacing</key>
-			<real>1.1140460278614457</real>
+			<real>1.1233880835843373</real>
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>
@@ -3066,7 +3076,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-04-24T18:28:47Z</date>
+	<date>2019-06-21T22:35:18Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
