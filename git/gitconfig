@@ -131,3 +131,5 @@
   path = .gitconfig.user
 [interactive]
   singlekey = true
+[commit]
+  template = ~/.gitmessage
