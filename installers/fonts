@@ -10,10 +10,17 @@ function setup_linux_font_dir() {
   fi
 }
 
+function install_nerd_font_src() {
+  local nerd_fonts_dir="$(dotfiles_location)/dependencies/patched-nerd-fonts"
+  local font="$nerd_fonts_dir/src/unpatched-fonts/$1"
+
+  install_nerd_font "$font" "$2"
+}
+
 function install_nerd_font() {
   # From iTerm2's plist
   local vertical_spacing=1.1233880835843373
-  local name=$1
+  local font=$1
   local final_name=$2
   local nerd_fonts_dir="$(dotfiles_location)/dependencies/patched-nerd-fonts"
 
@@ -22,8 +29,6 @@ function install_nerd_font() {
   if is_linux; then
     destination=$HOME/.local/share/fonts
   fi
-
-  local font="$nerd_fonts_dir/src/unpatched-fonts/$name"
 
   if [ ! -f "$destination/$final_name" ]; then
     echo
@@ -47,10 +52,11 @@ function install_nerd_font() {
 }
 
 function install_nerd_fonts_repo() {
-  # pip install configparser
   local nerd_fonts_dir="$(dotfiles_location)/dependencies/patched-nerd-fonts"
 
   if [ ! -d $nerd_fonts_dir ]; then
+    pip install configparser
+
     echo "Pulling in patched nerd-fonts..."
 
     mkdir -p $nerd_fonts_dir
@@ -81,21 +87,21 @@ setup_linux_font_dir
 setup_and_patch_fontforge
 install_nerd_fonts_repo
 
-install_nerd_font "InconsolataGo/Regular/InconsolataGo-Regular.ttf" \
+install_nerd_font_src "InconsolataGo/Regular/InconsolataGo-Regular.ttf" \
   "InconsolataGo Nerd Font Complete.ttf"
 
-install_nerd_font "InconsolataGo/Bold/InconsolataGo-Bold.ttf" \
+install_nerd_font_src "InconsolataGo/Bold/InconsolataGo-Bold.ttf" \
   "InconsolataGo Bold Nerd Font Complete.ttf"
 
-install_nerd_font "FantasqueSansMono/Regular/FantasqueSansMono-Regular.ttf" \
+install_nerd_font_src "FantasqueSansMono/Regular/FantasqueSansMono-Regular.ttf" \
   "Fantasque Sans Mono Regular Nerd Font Complete.ttf"
 
-install_nerd_font "FantasqueSansMono/Bold/FantasqueSansMono-Bold.ttf" \
+install_nerd_font_src "FantasqueSansMono/Bold/FantasqueSansMono-Bold.ttf" \
   "Fantasque Sans Mono Bold Nerd Font Complete.ttf"
 
-install_nerd_font "FantasqueSansMono/Italic/FantasqueSansMono-Italic.ttf" \
+install_nerd_font_src "FantasqueSansMono/Italic/FantasqueSansMono-Italic.ttf" \
   "Fantasque Sans Mono Italic Nerd Font Complete.ttf"
 
-install_nerd_font \
+install_nerd_font_src \
   "FantasqueSansMono/Bold-Italic/FantasqueSansMono-BoldItalic.ttf" \
   "Fantasque Sans Mono Bold Italic Nerd Font Complete.ttf"
