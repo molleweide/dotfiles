@@ -2,26 +2,52 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
+require_installer python
+
 function setup_linux_font_dir() {
   if is_linux; then
     mkdir -p ~/.local/share/fonts
   fi
 }
 
-function install_patched_powerline_fonts() {
-  local clone_dir="$(dotfiles_location)/dependencies/fonts"
+function install_nerd_font() {
+  # From iTerm2's plist
+  local vertical_spacing=1.1233880835843373
+  local name=$1
+  local final_name=$2
+  local nerd_fonts_dir="$(dotfiles_location)/dependencies/patched-nerd-fonts"
 
-  if [ ! -d "$clone_dir" ]; then
-    echo "Setting up patched Powerline fonts..."
-    git clone git@github.com:powerline/fonts.git "$clone_dir"
+  local destination=$HOME/Library/Fonts
 
-    $clone_dir/install.sh
+  if is_linux; then
+    destination=$HOME/.local/share/fonts
   fi
 
-  cd $(dotfiles_location)
+  local font="$nerd_fonts_dir/src/unpatched-fonts/$name"
+
+  if [ ! -f "$destination/$final_name" ]; then
+    echo
+    dotsay "@b@blue[[+ Installing $final_name]]"
+    echo
+
+    cd $nerd_fonts_dir && fontforge -script font-patcher \
+      --complete \
+      --adjust-line-height \
+      --progressbars \
+      --outputdir "$destination" \
+      "$font"
+
+    # Reset font cache on Linux
+    if [[ -n $(which fc-cache) ]]; then
+      fc-cache -f "$destination"
+    fi
+  else
+    dotsay "@b@green[[+ Already installed $final_name]]"
+  fi
 }
 
-function install_nerd_fonts() {
+function install_nerd_fonts_repo() {
+  # pip install configparser
   local nerd_fonts_dir="$(dotfiles_location)/dependencies/patched-nerd-fonts"
 
   if [ ! -d $nerd_fonts_dir ]; then
@@ -30,32 +56,30 @@ function install_nerd_fonts() {
     mkdir -p $nerd_fonts_dir
 
     cd $nerd_fonts_dir && \
-      git init && \
-      mkdir -p .git/info && \
-      git remote add origin https://github.com/ryanoasis/nerd-fonts.git && \
-      git config core.sparsecheckout true && \
-      echo "patched-fonts/*" >> .git/info/sparse-checkout && \
-      git pull --depth=1 origin master
+      git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git .
+  fi
+}
 
-    cd $(dotfiles_location)
+function setup_and_patch_fontforge() {
+  brew_install fontforge
 
-    local destination=$HOME/Library/Fonts
+  # Fix "FontForge module is probably not installed"
+  # https://github.com/ryanoasis/nerd-fonts/issues/225
+  mkdir -p ~/Library/Python/2.7/lib/python/site-packages
 
-    if is_linux; then
-      destination=$HOME/.local/share/fonts
-    fi
+  local homebrew_file=$HOME/Library/Python/2.7/lib/python/site-packages/homebrew.pth
 
-    find $nerd_fonts_dir -iname "*.ttf" -exec cp {} "$destination" \;
-
-    # Reset font cache on Linux
-    if [[ -n $(which fc-cache) ]]; then
-      fc-cache -f "$destination"
-    fi
+  if [ ! -f $homebrew_file ]; then
+    echo "+ Patching FontForge"
+    echo 'import site; site.addsitedir("/usr/local/lib/python2.7/site-packages")' >> $homebrew_file
   fi
 }
 
 dotheader "Setting up fonts..."
 
 setup_linux_font_dir
-install_patched_powerline_fonts
-install_nerd_fonts
+setup_and_patch_fontforge
+install_nerd_fonts_repo
+
+install_nerd_font "InconsolataGo/Regular/InconsolataGo-Regular.ttf" "InconsolataGo Nerd Font Complete.ttf"
+install_nerd_font "InconsolataGo/Bold/InconsolataGo-Bold.ttf" "InconsolataGo Bold Nerd Font Complete.ttf"
