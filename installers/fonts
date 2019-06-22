@@ -81,5 +81,21 @@ setup_linux_font_dir
 setup_and_patch_fontforge
 install_nerd_fonts_repo
 
-install_nerd_font "InconsolataGo/Regular/InconsolataGo-Regular.ttf" "InconsolataGo Nerd Font Complete.ttf"
-install_nerd_font "InconsolataGo/Bold/InconsolataGo-Bold.ttf" "InconsolataGo Bold Nerd Font Complete.ttf"
+install_nerd_font "InconsolataGo/Regular/InconsolataGo-Regular.ttf" \
+  "InconsolataGo Nerd Font Complete.ttf"
+
+install_nerd_font "InconsolataGo/Bold/InconsolataGo-Bold.ttf" \
+  "InconsolataGo Bold Nerd Font Complete.ttf"
+
+install_nerd_font "FantasqueSansMono/Regular/FantasqueSansMono-Regular.ttf" \
+  "Fantasque Sans Mono Regular Nerd Font Complete.ttf"
+
+install_nerd_font "FantasqueSansMono/Bold/FantasqueSansMono-Bold.ttf" \
+  "Fantasque Sans Mono Bold Nerd Font Complete.ttf"
+
+install_nerd_font "FantasqueSansMono/Italic/FantasqueSansMono-Italic.ttf" \
+  "Fantasque Sans Mono Italic Nerd Font Complete.ttf"
+
+install_nerd_font \
+  "FantasqueSansMono/Bold-Italic/FantasqueSansMono-BoldItalic.ttf" \
+  "Fantasque Sans Mono Bold Italic Nerd Font Complete.ttf"
