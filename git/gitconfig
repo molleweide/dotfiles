@@ -12,6 +12,11 @@
   old = red
   new = green
 [alias]
+  what-i-did = "!$HOME/.local/bin/git-what-i-did"
+  what-i-did-today = "!$HOME/.local/bin/git-what-i-did --since=\"3AM today\""
+  what-i-did-yesterday = "$HOME/.local/bin/git-what-i-did --since=\"3AM yesterday\" --until=\"3AM today\""
+  what-i-did-this-week = "!$HOME/.local/bin/git-what-i-did --since=\"last Monday 3AM\""
+
   # add
   a = add                           # add
   chunkyadd = add --patch           # stage commits chunk by chunk

@@ -26,10 +26,22 @@ function setup_git_dotfiles() {
   symlink_dotfile git/gitmessage ~/.gitmessage
 }
 
+function setup_git_scripts() {
+  mkdir -p ~/.local/bin
+
+  symlink_dotfile bin/git/git-delete-merged-branches \
+    ~/.local/bin/git-delete-merged-branches
+
+  symlink_dotfile bin/git/git-local-repos ~/.local/bin/git-local-repos
+
+  symlink_dotfile bin/git/git-what-i-did ~/.local/bin/git-what-i-did
+}
+
 dotheader "Setting up Git..."
 
 install_package "git"
 brew_install diff-so-fancy
 
+setup_git_scripts
 setup_user_gitconfig
 setup_git_dotfiles
