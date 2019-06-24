@@ -16,12 +16,23 @@ alias work="cd ~/code/boundless && tn start boundless"
 alias bat="open -a 'Adobe Acrobat' $@"
 alias md="open -a Markoff $@"
 
-pgrefresh() {
+# Git
+function fco() {
+  git checkout $(git branch -a --sort=-committerdate | \
+      cut -c 3- | \
+      sed 's/^remotes\/[^/]*\///' | \
+      sort | \
+      uniq | \
+      grep -v HEAD | \
+      fzf-tmux -d 20)
+}
+
+function pgrefresh() {
   rm -fr /usr/local/var/postgres/postmaster.pid
   brew services restart postgresql
 }
 
-sslcert() {
+function sslcert() {
   echo | \
     openssl s_client -showcerts -servername $1 -connect $1:443 2>/dev/null | \
     openssl x509 -inform pem -noout -text
