@@ -73,7 +73,7 @@ function install_bash_language_server() {
 function install_coc_plugins() {
   gem install solargraph
   nvim +"CocInstall coc-json coc-solargraph \
-    coc-css coc-html coc-syntax coc-snippets coc-tsserver"
+    coc-css coc-html coc-syntax coc-snippets coc-tsserver coc-emmet"
 }
 
 dotheader "Setting up Neovim..."
