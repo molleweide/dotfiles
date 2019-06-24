@@ -17,7 +17,6 @@ RESULT=$(
     REPO=$(basename "$git_directory")
 
     git \
-      -c color.ui=always \
       --git-dir "$git_directory/.git" \
       --no-pager \
       log \
@@ -27,7 +26,7 @@ RESULT=$(
       --date=format:'%Y-%m-%d %H:%M:%S' \
       --format="[%Cblue%ad%Creset] %Cgreen$REPO%Creset %s (%Cred%h%Creset)"
 
-  done <<< "$(git local-repos)" | sort -r
+  done <<< "$(git local-repos)" | sort -r | grep -v "Initial commit"
 )
 
 # Display the result in less if it's long enough
