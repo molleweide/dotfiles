@@ -209,22 +209,6 @@ if is_macos; then
     install_simple_dmg_copy "LICEcap" "$url"
   }
 
-  install_mammon() {
-    local name="Mammon"
-
-    if ! app_installed "$name"; then
-      local url=$(
-        curl -L --silent "https://teamfox.co/mammon" | \
-          grep -Eo '(http|https)://[^"]+latest.zip[^"]*' | \
-          sed -E -e 's/dl=0/dl=1/g'
-      )
-
-      install_inception_zip "Mammon" "$url"
-    else
-      already_installed_msg "$name"
-    fi
-  }
-
   install_on_the_job() {
     local url="http://stuntsoftware.com/downloads/OnTheJob.zip"
     install_simple_zip "On The Job" "$url"
@@ -318,7 +302,6 @@ if is_macos; then
   install_google_chrome
   install_hazeover
   install_licecap
-  install_mammon
   install_on_the_job
   setup_on_the_job_dropbox_sync
   install_openemu
