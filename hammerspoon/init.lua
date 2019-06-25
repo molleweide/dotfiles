@@ -5,6 +5,7 @@ require "window-management"
 require "key-bindings"
 require "mute-on-sleep"
 require "audio-switcher"
+require "favorites"
 
 local vim = hs.loadSpoon('VimMode')
 
