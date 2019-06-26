@@ -1,0 +1,56 @@
+---
+# this is the default configuration file for the "Cani" RubyGem.
+# it contains some options to control what is shown, when new data
+# is fetched, where it should be fetched from.
+# documentation: https://github.com/sidofc/cani
+# rubygems: https://rubygems.org/gems/cani
+
+# the "expire" key defines the interval at which new data is
+# fetched from "source". It's value is passed in as seconds
+# default value: 86400 # => 1 day
+expire: 86400
+
+# the "source" key is used to fetch the data required for
+# this command to work.
+source: https://raw.githubusercontent.com/Fyrd/caniuse/master/data.json
+
+# navigating means reopening the previously open window when going back by pressing <escape>
+# or opening the next menu by selecting an entry in fzf with <enter>
+# there are two different navigation modes:
+#   * 'always'  - always navigate back to the previous menu, exit only at root menu with <escape>
+#   * 'forward' - only allow navigating forward and backwards upto the menu that cani was initially open
+navigate: always
+
+# the notes property defines how notes should be displayed
+# there are two different modes:
+#   * 'all'      - show all notes, regardless of relevance
+#   * 'relevant' - show only relevant (visible in an era) notes
+notes: relevant
+
+# the "versions" key defines how many versions of support
+# will be shown in the "use" command
+# e.g. `-ie +edge` becomes `--ie ++edge` when this is set to 2, etc...
+versions: 1
+
+# the "browsers" key defines which browsers are shown
+# in the "use" command
+browsers:
+  - ie
+  - edge
+  - chrome
+  - firefox
+  - safari
+  - ios_saf
+  - opera
+  - android
+  - bb
+  # - op_mini
+  # - op_mob
+  # - and_chr
+  # - and_ff
+  # - ie_mob
+  # - and_uc
+  # - samsung
+  # - and_qq
+  # - baidu
+  # - kaios

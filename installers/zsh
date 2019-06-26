@@ -3,6 +3,7 @@
 source "${BASH_SOURCE%/*}/shared.sh"
 
 require_installer package-manager
+require_installer ruby
 
 function setup_zsh_symlinks() {
   symlink_dotfile zshrc ~/.zshrc
@@ -88,6 +89,15 @@ function install_base16_shell() {
   fi
 }
 
+function install_cani() {
+  if ! command_exists cani; then
+    rvm default do gem install cani
+  fi
+
+  mkdir -p ~/.config
+  symlink_dotfile config/cani ~/.config/cani
+}
+
 dotheader "Setting up ZSH..."
 
 brew_install exa
@@ -107,3 +117,4 @@ install_antigen
 
 update_shell_whitelist
 chsh_zsh
+install_cani

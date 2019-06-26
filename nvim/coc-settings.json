@@ -25,7 +25,7 @@
   "solargraph.hover": true,
   "solargraph.rename": true,
   "solargraph.symbols": true,
-  "solargraph.useBundler": true,
+  "solargraph.useBundler": false,
 
   "suggest.echodocSupport": true,
   "suggest.noselect": true,

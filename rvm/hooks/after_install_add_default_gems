@@ -2,9 +2,10 @@
 
 rvm $rvm_ruby_string do rvm gemset create global
 
-rvm $rvm_ruby_string@global do gem install --no-ri --no-rdoc \
+rvm $rvm_ruby_string@global do gem install \
   awesome_print \
   bundler \
+  cani \
   hirb \
   neovim \
   pry \
