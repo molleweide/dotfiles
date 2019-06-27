@@ -53,6 +53,10 @@ brew_cask_install tunnelblick
 brew_install lua
 brew_install luarocks
 
+brew_cask_install karabiner-elements
+mkdir -p ~/.config/karabiner
+symlink_dotfile karabiner.json ~/.config/karabiner/karabiner.json
+
 luarocks install --server=http://luarocks.org/dev lua-lsp
 luarocks install luacheck
 luarocks install lcf
