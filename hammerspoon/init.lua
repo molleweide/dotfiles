@@ -8,8 +8,9 @@ require "mute-on-sleep"
 require "audio-switcher"
 require "favorites"
 require "quick-switch"
+require "slack"
 
-local vim = hs.loadSpoon('VimMode')
+vim = hs.loadSpoon('VimMode')
 
 vim:disableForApp('Code')
 vim:disableForApp('zoom.us')
