@@ -54,8 +54,7 @@ brew_install lua
 brew_install luarocks
 
 brew_cask_install karabiner-elements
-mkdir -p ~/.config/karabiner
-symlink_dotfile karabiner.json ~/.config/karabiner/karabiner.json
+symlink_dotfile karabiner ~/.config/karabiner
 
 luarocks install --server=http://luarocks.org/dev lua-lsp
 luarocks install luacheck

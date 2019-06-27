@@ -1,11 +1,13 @@
 hs.loadSpoon("SpoonInstall")
 
+require "common"
 require "config-watch"
 require "window-management"
 require "key-bindings"
 require "mute-on-sleep"
 require "audio-switcher"
 require "favorites"
+require "quick-switch"
 
 local vim = hs.loadSpoon('VimMode')
 

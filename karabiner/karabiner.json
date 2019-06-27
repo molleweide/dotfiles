@@ -108,7 +108,7 @@
             ]
           },
           {
-            "description": "Change caps to ctrl. (esc if left alone)",
+            "description": "Change caps to ctrl. (enter if left alone)",
             "manipulators": [
               {
                 "from": {
@@ -126,7 +126,7 @@
                 ],
                 "to_if_alone": [
                   {
-                    "key_code": "enter"
+                    "key_code": "return_or_enter"
                   }
                 ],
                 "type": "basic"
