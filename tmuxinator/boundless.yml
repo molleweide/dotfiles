@@ -37,11 +37,11 @@ windows:
         - vim
         - #
   - server:
-      layout: tiled
+      layout: 9c0c,212x53,0,0{106x53,0,0,7,105x53,107,0[105x6,107,0,12,105x46,107,7,13]}
       panes:
-        - ./bin/rails s
-        - ./bin/spring server
         - ./bin/webpack-dev-server
+        - ./bin/spring server
+        - ./bin/rails s
   - logs:
       layout: tiled
       panes:
