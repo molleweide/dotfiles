@@ -5,6 +5,8 @@
 " text
 set noshowmode
 
+let $NVIM_COC_LOG_LEVEL = 'debug'
+
 " Use tab and shift+tab to navigate forward/back on completion list and
 " snippets
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
