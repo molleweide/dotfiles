@@ -78,6 +78,9 @@
   sp = !git sync && git please
   sync = !git fetch origin && git rebase -i origin/master
 
+  # respond to PR feedback
+  respond = !git commit --amend --no-edit && git push --force-with-lease
+
   # reset
   unstage = reset HEAD              # remove files from index (tracking)
   uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
