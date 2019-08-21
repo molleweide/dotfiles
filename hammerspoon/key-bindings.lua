@@ -56,3 +56,6 @@ windowBind({"ctrl", "alt", "cmd"}, {
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'L', function()
   hs.caffeinate.startScreensaver()
 end)
+
+-- Spotify play/pause
+hs.hotkey.bind(hyper, 'space', hs.spotify.playpause)
