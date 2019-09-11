@@ -9,6 +9,7 @@ require "audio-switcher"
 require "favorites"
 require "quick-switch"
 require "slack"
+require "pairing-mode"
 
 vim = hs.loadSpoon('VimMode')
 
