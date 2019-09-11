@@ -48,6 +48,8 @@ function fetch_axuielement_library() {
   fi
 }
 
+symlink_dotfile bin/dnd-toggle ~/.local/bin/dnd-toggle
+
 brew_cask_install 1password-cli
 brew_cask_install tunnelblick
 brew_install lua
