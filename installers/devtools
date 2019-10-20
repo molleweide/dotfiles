@@ -16,7 +16,6 @@ brew_install postgres
 apt_install phantomjs
 brew_install phantomjs
 
-brew_install wakatime-cli
 brew_install coreutils
 
 brew_install the_silver_searcher
