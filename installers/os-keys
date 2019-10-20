@@ -21,7 +21,7 @@ function setup_vim_mode_spoon_from_local() {
     dotsay "+ VimMode.spoon dev copy already checked out"
   fi
 
-  if [ -f $symlink_destination ]; then
+  if [ ! -f $symlink_destination ]; then
     dotsay "@blue@b[[+ symlinking development copy of VimMode.spoon ]]"
     ln -s "$source_dir" "$symlink_destination"
   else
