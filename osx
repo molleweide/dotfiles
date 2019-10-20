@@ -89,6 +89,11 @@ defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 # defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
 # defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
 
+# Tracking Speed
+# 0: Slow
+# 3: Fast
+defaults write NSGlobalDomain com.apple.trackpad.scaling -float 3
+
 # Require password immediately after sleep or screen saver begins
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
@@ -182,6 +187,9 @@ defaults write com.apple.dock no-glass -bool true
 
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
+
+# Move Dock to the left (can be 'left', 'right', 'bottom')
+defaults write com.apple.dock 'orientation' -string 'left'
 
 # # Make Dock icons of hidden applications translucent
 # defaults write com.apple.dock showhidden -bool true
