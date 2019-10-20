@@ -424,6 +424,17 @@ clone_dotfiles_repo() {
   fi
 }
 
+run_osx_script() {
+  if [[ $(uname) == "Darwin" ]]; then
+    print_header "Applying OS X tweaks..."
+    
+    $HOME/.dotfiles/osx
+
+    echo
+    print_success "OSX tweaks applied"
+  fi 
+}
+
 main() {
   bootstrap_xcode
   setup_ssh_keys

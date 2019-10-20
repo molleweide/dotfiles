@@ -4,10 +4,8 @@ dotfiles
 Installation
 ------------
 ```
-git clone git@github.com:dbalatero/dotfiles.git ~/.dotfiles
+bash <(curl -s https://raw.githubusercontent.com/dbalatero/dotfiles/master/bootstrap)
 
-# OS X tweaks (optional)
-./osx
-
+cd ~/.dotfiles
 ./setup
 ```
