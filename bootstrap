@@ -440,6 +440,7 @@ main() {
   setup_ssh_keys
   setup_hostname
   clone_dotfiles_repo
+  run_osx_script
 }
 
 main
