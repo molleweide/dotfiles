@@ -33,12 +33,6 @@ if is_macos; then
     fi
   }
 
-  install_xcode() {
-    mas_install "Xcode" 497799835
-    sudo xcodebuild -license accept
-  }
-
-
   dotheader "Setting up Mac App Store..."
 
   brew_install mas
@@ -55,5 +49,4 @@ if is_macos; then
   mas_install "Pixelmator" 407963104
   mas_install "Slack" 803453959
   mas_install "Timeout" 402592703
-  install_xcode
 fi
