@@ -165,7 +165,7 @@ if is_macos; then
   }
 
   install_alfred() {
-    local url="https://cachefly.alfredapp.com/Alfred_3.5.1_883.dmg"
+    local url="https://cachefly.alfredapp.com/Alfred_3.8.4_968.dmg"
     install_simple_dmg_copy "Alfred 3" "$url"
   }
 
@@ -260,7 +260,7 @@ if is_macos; then
   }
 
   install_vlc() {
-    local url="https://mirror.sfo12.us.leaseweb.net/videolan/vlc/3.0.3/macosx/vlc-3.0.3.dmg"
+    local url="https://mirrors.syringanetworks.net/videolan/vlc/3.0.8/macosx/vlc-3.0.8.dmg"
     install_simple_dmg_copy "VLC" "$url"
   }
 
