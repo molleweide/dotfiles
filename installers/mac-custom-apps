@@ -96,6 +96,22 @@ if is_macos; then
     fi
   }
 
+  install_zip_installer() {
+    local name=$1
+    local installer=$2
+    local url=$3
+
+    if ! app_installed "$name"; then
+      dotsay "@blue@b[[+ Installing $name]]"
+
+      local zip_path=$(installer_download "$url" "$name.zip")
+      unzip -d /tmp "$zip_path"
+      open "/tmp/$installer"
+    else
+      already_installed_msg "$name"
+    fi
+  }
+
   install_simple_zip() {
     local name=$1
     local url=$2
@@ -249,6 +265,12 @@ if is_macos; then
     install_dmg_with_installer "Splice" "$url" "Splice Installer.app"
   }
 
+  install_spotify() {
+    local url="https://download.scdn.co/SpotifyInstaller.zip"
+
+    install_zip_installer "Spotify" "Install Spotify.app" "$url"
+  }
+
   install_steam() {
     local url="https://steamcdn-a.akamaihd.net/client/installer/steam.dmg"
     install_simple_dmg_copy "Steam" "$url"
@@ -307,6 +329,7 @@ if is_macos; then
   install_openemu
   install_signal
   install_splice
+  install_spotify
   install_steam
   install_swinsian
   install_vlc
