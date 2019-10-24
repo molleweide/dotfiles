@@ -91,15 +91,6 @@ function install_base16_shell() {
   ln -sf /Users/dbalatero/.antigen/bundles/chriskempson/base16-shell/scripts/base16-oceanicnext.sh ~/.base16_theme
 }
 
-function install_cani() {
-  if ! command_exists cani; then
-    rvm default do gem install cani
-  fi
-
-  mkdir -p ~/.config
-  symlink_dotfile config/cani ~/.config/cani
-}
-
 dotheader "Setting up ZSH..."
 
 brew_install exa
@@ -119,4 +110,3 @@ install_antigen
 
 update_shell_whitelist
 chsh_zsh
-install_cani
