@@ -256,8 +256,8 @@ if is_macos; then
   }
 
   install_signal() {
-    local url="https://updates.signal.org/desktop/Signal-mac-1.0.39.zip"
-    install_simple_zip "Signal" "$url"
+    local url="https://updates.signal.org/desktop/signal-desktop-mac-1.27.4.dmg"
+    install_simple_dmg_copy "Signal" "$url"
   }
 
   install_splice() {
