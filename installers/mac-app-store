@@ -50,4 +50,5 @@ if is_macos; then
   mas_install "Pixelmator" 407963104
   mas_install "Slack" 803453959
   mas_install "Timeout" 402592703
+  mas_install "The Unarchiver" 425424353
 fi
