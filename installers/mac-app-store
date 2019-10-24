@@ -39,6 +39,7 @@ if is_macos; then
   mas_ensure_signed_in
 
   mas_install "Amphetamine" 937984704
+  mas_install "Blackmagic Disk Speed Test" 425264550
   mas_install "Boom 2" 948176063
   mas_install "Capo 3" 696977615
   mas_install "Fantastical 2" 975937182
