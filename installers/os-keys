@@ -21,7 +21,7 @@ function setup_vim_mode_spoon_from_local() {
     dotsay "+ VimMode.spoon dev copy already checked out"
   fi
 
-  if [ ! -f $symlink_destination ]; then
+  if [ ! -d $symlink_destination ]; then
     dotsay "@blue@b[[+ symlinking development copy of VimMode.spoon ]]"
     ln -s "$source_dir" "$symlink_destination"
   else
@@ -36,7 +36,7 @@ function fetch_axuielement_library() {
   local destination=~/.hammerspoon/hs/_asm
 
   if [ ! -d $destination ]; then
-    dotsay "@blue@b[[+ symlinking development copy of VimMode.spoon ]]"
+    dotsay "@blue@b[[+ symlinking axuielement library ]]"
 
     wget -nv $url -O $save_dir/$filename
 
@@ -45,6 +45,21 @@ function fetch_axuielement_library() {
     mv $save_dir/hs/_asm $destination
   else
     dotsay "+ hs._asm.axuielement already installed... skipping"
+  fi
+}
+
+function setup_spoon_install() {
+  local url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
+  local destination=/tmp/SpoonInstall.spoon.zip
+  local spoons_dir=$HOME/.hammerspoon/Spoons
+
+  if [ ! -d "$spoons_dir/SpoonInstall.spoon" ]; then
+    dotsay "@blue@b[[+ installing SpoonInstall.spoon ]]"
+
+    wget -nv $url -O $destination
+    unzip -d $spoons_dir $destination
+  else
+    dotsay "+ SpoonInstall.spoon already setup"
   fi
 }
 
@@ -63,5 +78,6 @@ luarocks install luacheck
 luarocks install lcf
 
 symlink_dotfile hammerspoon ~/.hammerspoon
+setup_spoon_install
 setup_vim_mode_spoon_from_local
 fetch_axuielement_library
