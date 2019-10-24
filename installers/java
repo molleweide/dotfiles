@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+brew_cask_install java
