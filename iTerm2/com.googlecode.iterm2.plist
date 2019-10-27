@@ -23,7 +23,7 @@
 	<key>AutoHideTmuxClientSession</key>
 	<false/>
 	<key>BadgeRightMargin</key>
-	<integer>0</integer>
+	<integer>10</integer>
 	<key>CGFontRenderingFontSmoothingDisabled</key>
 	<false/>
 	<key>CheckTestRelease</key>
@@ -3848,7 +3848,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>7175DA13-0942-4DBB-8F64-AAE062496173</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>16</integer>
+	<integer>17</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -4665,6 +4665,10 @@
 	<key>SwitchWindowModifier</key>
 	<integer>6</integer>
 	<key>TabViewType</key>
+	<integer>0</integer>
+	<key>TerminalMargin</key>
+	<integer>5</integer>
+	<key>TerminalVMargin</key>
 	<integer>0</integer>
 	<key>ThreeFingerEmulates</key>
 	<false/>
