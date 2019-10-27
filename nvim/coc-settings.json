@@ -19,8 +19,6 @@
   "solargraph.completion": true,
   "solargraph.diagnostics": true,
   "solargraph.definitions": true,
-  "solargraph.enable": true,
-  "solargraph.filetypes": ["ruby"],
   "solargraph.formatting": true,
   "solargraph.hover": true,
   "solargraph.rename": true,

@@ -45,6 +45,7 @@ function install_yard() {
 dotheader "Setting up Ruby..."
 
 symlink_dotfile gemrc ~/.gemrc
+symlink_dotfile bin/rubocop-daemon-wrapper ~/.local/bin/rubocop-daemon-wrapper
 setup_rvmrc
 setup_pry
 install_rvm
