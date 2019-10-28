@@ -41,7 +41,7 @@ BATTERY_PERCENTAGE=$(run_script tmux-battery battery_percentage)
 if [[ "$BATTERY_PERCENTAGE" == "" ]]; then
   BATTERY=""
 else
-  BATTERY=" #[fg=colour241,bg=colour236,nobold,noitalics,nounderscore]$SEPE#[fg=colour252,bg=colour236,nobold,noitalics,nounderscore] $BATTERY_ICON $BATTERY_PERCENTAGE%"
+  BATTERY=" #[fg=colour241,bg=colour236,nobold,noitalics,nounderscore]$SEPE#[fg=colour252,bg=colour236,nobold,noitalics,nounderscore] $BATTERY_ICON $BATTERY_PERCENTAGE"
 fi
 
 echo "$MPD $DATE $TIME$BATTERY $UNAME " | sed 's/ *$/ /g'
