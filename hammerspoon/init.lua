@@ -14,6 +14,10 @@ require "experimental"
 
 vim = hs.loadSpoon('VimMode')
 
+vim:shouldDimScreenInNormalMode(false)
+vim:shouldShowAlertInNormalMode(true)
+vim:setAlertFont("InconsolataGo Bold Nerd Font Complete")
+
 vim:disableForApp('Code')
 vim:disableForApp('zoom.us')
 vim:disableForApp('iTerm')
