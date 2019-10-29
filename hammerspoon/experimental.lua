@@ -3,17 +3,67 @@ local ax = require("hs._asm.axuielement")
 inspect = hs.inspect.inspect
 
 function getCurrentSelection()
-   local elem=hs.uielement.focusedElement()
-   local sel=nil
+   local elem = hs.uielement.focusedElement()
+   local sel = nil
+
    if elem then
-      sel=elem:selectedText()
+     sel = elem:selectedText()
    end
+
+   -- fallback to copy
    if (not sel) or (sel == "") then
-      hs.eventtap.keyStroke({"cmd"}, "c")
-      hs.timer.usleep(20000)
-      sel=hs.pasteboard.getContents()
+     hs.eventtap.keyStroke({"cmd"}, "c")
+     hs.timer.usleep(20000)
+     sel = hs.pasteboard.getContents()
    end
+
    return (sel or "")
+end
+
+function getCurrentSelectionFromClipboard(callbackFn)
+  local startTimeNs = hs.timer.absoluteTime()
+  local initialCount = hs.pasteboard.changeCount()
+  local pasteboardTimer
+  local timeoutTimer
+
+  -- the clipboard has updated with a new value once the count changes
+  local clipboardHasUpdated = function()
+    return initialCount ~= hs.pasteboard.changeCount()
+  end
+
+  -- wait for the pasteboard to increment its count, indicating that
+  -- the async copy to clipboard is done
+  local waitTimeSecs = 10 / 1000 -- 10ms
+
+  -- fire copy
+  hs.eventtap.keyStroke({"cmd"}, "c")
+
+  pasteboardTimer = hs.timer.waitUntil(
+    clipboardHasUpdated,
+    function()
+      if timeoutTimer and timeoutTimer:running() then timeoutTimer:stop() end
+
+      local endTimeNs = hs.timer.absoluteTime()
+      local diffMs = (endTimeNs - startTimeNs) / 1000000
+
+      logger.i("Got contents in millseconds: ", diffMs)
+
+      -- call our callback with the pasteboard contents
+      callbackFn(hs.pasteboard.getContents())
+    end,
+    waitTimeSecs
+  )
+
+  -- how long are we willing to wait for the clipboard before
+  -- timing out and aborting?
+  local maxWaitTimeSecs = 500 / 1000 -- 500ms
+
+  hs.timer.doAfter(maxWaitTimeSecs, function()
+    if pasteboardTimer:running() then
+      pasteboardTimer:stop()
+      callbackFn(nil)
+    end
+  end)
 end
 
 function getForwardContents()
@@ -77,10 +127,17 @@ hs.hotkey.bind(hyper, 'a', function()
   getSelectedTextRange()
 end)
 
+hs.hotkey.bind(hyper, 'b', function()
+  getCurrentSelectionFromClipboard(function(selection)
+    logger.i("Got selection from copy:", selection)
+  end)
+end)
+
 function printAXNotifications(ae, o)
   processChildren = function(child)
     failureCount = 0
     failures = ""
+
     for i, notification in pairs(ax.observer.notifications) do
       local status, err = pcall(function() o:addWatcher(child, notification) end)
       if not status then
@@ -92,6 +149,7 @@ function printAXNotifications(ae, o)
         end
       end
     end
+
     if failureCount == 0 then
       print(string.format("All notifications available for: %s", child))
     else
