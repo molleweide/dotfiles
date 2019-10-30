@@ -9,19 +9,13 @@ local hk = require "hs.hotkey"
 --   @key {string} hotkey
 --   @value {function} callback function
 local function windowBind(hyper, keyFuncTable)
-  for key,fn in pairs(keyFuncTable) do
+  for key, fn in pairs(keyFuncTable) do
     hk.bind(hyper, key, fn)
   end
 end
 
--- * Move window to screen
-windowBind({"ctrl", "alt"}, {
-  left = wm.throwLeft,
-  right = wm.throwRight
-})
-
 -- * Set Window Position on screen
-windowBind({"ctrl", "alt", "cmd"}, {
+windowBind(super, {
   m = wm.maximizeWindow,    -- ⌃⌥⌘ + M
   c = wm.centerOnScreen,    -- ⌃⌥⌘ + C
   left = wm.leftHalf,       -- ⌃⌥⌘ + ←
@@ -30,32 +24,12 @@ windowBind({"ctrl", "alt", "cmd"}, {
   down = wm.bottomHalf      -- ⌃⌥⌘ + ↓
 })
 
--- * Set Window Position on screen
-windowBind({"ctrl", "alt", "shift"}, {
-  left = wm.rightToLeft,      -- ⌃⌥⇧ + ←
-  right = wm.rightToRight,    -- ⌃⌥⇧ + →
-  up = wm.bottomUp,           -- ⌃⌥⇧ + ↑
-  down = wm.bottomDown        -- ⌃⌥⇧ + ↓
-})
-
--- * Set Window Position on screen
-windowBind({"alt", "cmd", "shift"}, {
-  left = wm.leftToLeft,      -- ⌥⌘⇧ + ←
-  right = wm.leftToRight,    -- ⌥⌘⇧ + →
-  up = wm.topUp,             -- ⌥⌘⇧ + ↑
-  down = wm.topDown          -- ⌥⌘⇧ + ↓
-})
-
--- * Windows-like cycle
-windowBind({"ctrl", "alt", "cmd"}, {
-  u = wm.cycleLeft,          -- ⌃⌥⌘ + u
-  i = wm.cycleRight          -- ⌃⌥⌘ + i
-})
-
 -- lock screen shortcut
 hs.hotkey.bind({'ctrl', 'alt', 'cmd'}, 'L', function()
   hs.caffeinate.startScreensaver()
 end)
 
--- Spotify play/pause
+-- Spotify next/prev/play/pause
+hs.hotkey.bind(hyper, 'left', hs.spotify.previous)
+hs.hotkey.bind(hyper, 'right', hs.spotify.next)
 hs.hotkey.bind(hyper, 'space', hs.spotify.playpause)
