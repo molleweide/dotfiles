@@ -78,6 +78,7 @@ function getSelectedTextRange()
   -- for now force manual accessibility on
   local axApp = ax.applicationElement(hs.application.frontmostApplication())
   axApp:setAttributeValue('AXManualAccessibility', true)
+  axApp:setAttributeValue('AXEnhancedUserInterface', true)
 
   local systemElement = ax.systemWideElement()
   local currentElement = systemElement:attributeValue("AXFocusedUIElement")
