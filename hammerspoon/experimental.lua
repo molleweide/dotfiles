@@ -1,3 +1,16 @@
+-- bootstrap vim2
+local Vim2 = require("Vim2.init")
+vim2 = Vim2:new()
+
+hs.hotkey.bind(hyper, 'h', function()
+  hs.application.launchOrFocus("Hammerspoon")
+  hs.reload()
+end)
+
+hs.hotkey.bind(hyper, 'v', function()
+  vim2:spikeWordDelete()
+end)
+
 local logger = hs.logger.new('explore', 'debug')
 local ax = require("hs._asm.axuielement")
 inspect = hs.inspect.inspect
@@ -78,7 +91,7 @@ function getSelectedTextRange()
   -- for now force manual accessibility on
   local axApp = ax.applicationElement(hs.application.frontmostApplication())
   axApp:setAttributeValue('AXManualAccessibility', true)
-  axApp:setAttributeValue('AXEnhancedUserInterface', true)
+  -- axApp:setAttributeValue('AXEnhancedUserInterface', true)
 
   local systemElement = ax.systemWideElement()
   local currentElement = systemElement:attributeValue("AXFocusedUIElement")
@@ -87,6 +100,14 @@ function getSelectedTextRange()
   if role == "AXTextField" or role == "AXTextArea" then
     logger.i("Currently in text field")
     logger.i(inspect(currentElement:parameterizedAttributeNames()))
+    logger.i("action names:")
+    logger.i(inspect(currentElement:actionNames()))
+    logger.i("dynamic methods:")
+    logger.i(inspect(currentElement:dynamicMethods(true)))
+    logger.i("range:")
+    logger.i(inspect(currentElement:selectedTextRange()))
+    logger.i("Position: ", inspect(currentElement:position()))
+    logger.i("Selected text: ", inspect(currentElement:selectedText()))
 
     local text = currentElement:attributeValue("AXValue")
     local textLength = currentElement:attributeValue("AXNumberOfCharacters")
