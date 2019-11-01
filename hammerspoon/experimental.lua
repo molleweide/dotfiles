@@ -8,7 +8,7 @@ hs.hotkey.bind(hyper, 'h', function()
 end)
 
 hs.hotkey.bind(hyper, 'v', function()
-  vim2:spikeWordDelete()
+  vim2:enter()
 end)
 
 local logger = hs.logger.new('explore', 'debug')
@@ -100,6 +100,8 @@ function getSelectedTextRange()
   if role == "AXTextField" or role == "AXTextArea" then
     logger.i("Currently in text field")
     logger.i(inspect(currentElement:parameterizedAttributeNames()))
+    logger.i("attributes:")
+    logger.i(inspect(currentElement:attributeNames()))
     logger.i("action names:")
     logger.i(inspect(currentElement:actionNames()))
     logger.i("dynamic methods:")
