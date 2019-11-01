@@ -111,6 +111,11 @@ function getSelectedTextRange()
     logger.i("Position: ", inspect(currentElement:position()))
     logger.i("Selected text: ", inspect(currentElement:selectedText()))
 
+    local lineNum = currentElement:insertionPointLineNumber()
+    logger.i("Insertion point line: ", lineNum)
+    local lineRange = currentElement:rangeForLineWithParameter(lineNum)
+    logger.i("Insertion point content: ", inspect(lineRange))
+
     local text = currentElement:attributeValue("AXValue")
     local textLength = currentElement:attributeValue("AXNumberOfCharacters")
     local range = currentElement:attributeValue("AXSelectedTextRange")
