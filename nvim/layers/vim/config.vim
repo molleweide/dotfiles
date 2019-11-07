@@ -56,7 +56,3 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 " vimwiki
 let g:vimwiki_list = [{'path': '~/.vimwiki/',
   \ 'syntax': 'markdown', 'ext': '.md'}]
-
-" add an alias expansion for vertical help
-call CmdAlias('vh', 'vertical h')
-
