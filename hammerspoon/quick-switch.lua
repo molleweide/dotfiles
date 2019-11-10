@@ -1,5 +1,6 @@
 -- Quick app switch bindings
 quickSwitchBindings = {
+  {hyper, '1', '/Applications/1Password 7.app'},
   {hyper, 'c', '/Applications/Google Chrome.app'},
   {hyper, 'i', '/Applications/iTerm.app'},
   {hyper, 'l', '/Applications/Slack.app'},
