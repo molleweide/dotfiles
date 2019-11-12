@@ -12,6 +12,7 @@
     }
   },
 
+  "coc.preferences.diagnostic.displayByAle": true,
   "coc.preferences.previewAutoClose": false,
   "coc.source.emoji.filetypes": ["markdown", "vimwiki"],
   "solargraph.autoformat": true,
@@ -24,6 +25,8 @@
   "solargraph.rename": true,
   "solargraph.symbols": true,
   "solargraph.useBundler": false,
+
+  "tsserver.log": "verbose",
 
   "suggest.echodocSupport": true,
   "suggest.noselect": true,
