@@ -56,3 +56,14 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 " vimwiki
 let g:vimwiki_list = [{'path': '~/.vimwiki/',
   \ 'syntax': 'markdown', 'ext': '.md'}]
+
+" load aliases
+if exists('s:loaded_vimafter')
+  silent doautocmd VimAfter VimEnter *
+else
+  let s:loaded_vimafter = 1
+  augroup VimAfter
+    autocmd!
+    autocmd VimEnter * source ~/.config/nvim/aliases.vim
+  augroup END
+endif
