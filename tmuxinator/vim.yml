@@ -1,0 +1,19 @@
+# ~/.tmuxinator/vim.yml
+
+name: vim
+root: ~/code/Vim2
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+pre_window: nvm use && rvm use
+
+windows:
+  - main:
+      layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
+      panes:
+        - vim
+        - #
+  - dotfiles:
+      layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
+      panes:
+        - cd ~/.dotfiles && vim
+        - cd ~/.dotfiles
