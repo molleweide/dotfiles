@@ -1,3 +1,5 @@
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
 # ======== Cache directory (for oh-my-zsh plugins) =========
 [ ! -d $HOME/.zcustom/cache ] && mkdir -p $HOME/.zcustom/cache
 
