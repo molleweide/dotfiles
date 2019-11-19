@@ -268,12 +268,16 @@ set_xcode_developer_directory() {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 bootstrap_xcode() {
-  print_header "Installing Xcode..."
+  if [ -f ~/.config/dotfiles/no-xcode ]; then
+    print_header "Skipping Xcode, no-xcode enabled"
+  else
+    print_header "Installing Xcode..."
 
-  install_xcode_command_line_tools
-  install_xcode
-  set_xcode_developer_directory
-  agree_with_xcode_licence
+    install_xcode_command_line_tools
+    install_xcode
+    set_xcode_developer_directory
+    agree_with_xcode_licence
+  fi
 }
 
 # ssh - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
