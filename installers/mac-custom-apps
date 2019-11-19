@@ -3,7 +3,7 @@
 source "${BASH_SOURCE%/*}/shared.sh"
 
 if is_macos; then
-  if [ -f ~/.config/dotfiles/no-mac-apps ]; then
+  if dotfiles_config_set "no-mac-apps"; then
     dotsay "@b@blue[[Skipping Mac app store, no-mac-apps set]]"
   else
     require_installer package-manager
