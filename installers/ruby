@@ -4,6 +4,14 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 require_installer package-manager
 
+function use_rbenv() {
+  dotfiles_config_set "rbenv"
+}
+
+function use_rvm() {
+  ! use_rbenv
+}
+
 function setup_rvmrc() {
   symlink_dotfile rvmrc ~/.rvmrc
 }
@@ -42,12 +50,21 @@ function install_yard() {
   gem install yard
 }
 
+function bootstrap_rvm() {
+  if use_rvm; then
+    setup_rvmrc
+    install_rvm
+    install_global_gem_hooks
+    install_yard
+  else
+    dotsay "@b@yellow[[Skipping RVM, we aren't using it]]"
+  fi
+}
+
 dotheader "Setting up Ruby..."
 
 symlink_dotfile gemrc ~/.gemrc
 symlink_dotfile bin/rubocop-daemon-wrapper ~/.local/bin/rubocop-daemon-wrapper
-setup_rvmrc
 setup_pry
-install_rvm
-install_global_gem_hooks
-install_yard
+
+bootstrap_rvm
