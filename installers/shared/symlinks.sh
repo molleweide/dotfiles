@@ -17,6 +17,7 @@ function symlink_dotfile() {
 
   if [ ! -e $destination ]; then
     echo "Symlinking $full_file_path -> $destination"
+    mkdir -p "$(dirname $destination)"
     ln -s $full_file_path $destination
   fi
 }
