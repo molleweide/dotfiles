@@ -52,6 +52,7 @@ function install_yard() {
 
 function bootstrap_rvm() {
   if use_rvm; then
+    dotsay "@b@blue[[Installing RVM...]]"
     setup_rvmrc
     install_rvm
     install_global_gem_hooks
@@ -71,11 +72,23 @@ function install_rbenv_default_gems() {
       $(rbenv root)/plugins/rbenv-default-gems
   fi
 
-  symlink_dotfile rvm/gemsets/global.gems $(rbenv root)/default-gems
+  local default_gem_file=rvm/gemsets/global.gems
+  local default_gem_file_destination=$(rbenv root)/default-gems
+
+  if [ ! -f "$default_gem_file_destination" ]; then
+    echo "+ Doing one-time install of default gems"
+
+    while read -r name; do
+      gem install "$name"
+    done < $default_gem_file
+  fi
+
+  symlink_dotfile $default_gem_file $(rbenv root)/default-gems
 }
 
 function bootstrap_rbenv() {
   if use_rbenv; then
+    dotsay "@b@blue[[Installing rbenv extras...]]"
     install_rbenv_default_gems
   else
     dotsay "@b@yellow[[Skipping rbenv, we aren't using it]]"
