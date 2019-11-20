@@ -65,8 +65,6 @@ function setup_spoon_install() {
 
 symlink_dotfile bin/dnd-toggle ~/.local/bin/dnd-toggle
 
-brew_cask_install 1password-cli
-brew_cask_install tunnelblick
 brew_install lua
 brew_install luarocks
 
