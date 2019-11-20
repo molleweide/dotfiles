@@ -83,25 +83,30 @@ function setup_and_patch_fontforge() {
 
 dotheader "Setting up fonts..."
 
-setup_linux_font_dir
-setup_and_patch_fontforge
-install_nerd_fonts_repo
+if is_linux; then
+  setup_linux_font_dir
+  setup_and_patch_fontforge
+  install_nerd_fonts_repo
 
-install_nerd_font_src "InconsolataGo/Regular/InconsolataGo-Regular.ttf" \
-  "InconsolataGo Nerd Font Complete.ttf"
+  install_nerd_font_src "InconsolataGo/Regular/InconsolataGo-Regular.ttf" \
+    "InconsolataGo Nerd Font Complete.ttf"
 
-install_nerd_font_src "InconsolataGo/Bold/InconsolataGo-Bold.ttf" \
-  "InconsolataGo Bold Nerd Font Complete.ttf"
+  install_nerd_font_src "InconsolataGo/Bold/InconsolataGo-Bold.ttf" \
+    "InconsolataGo Bold Nerd Font Complete.ttf"
 
-install_nerd_font_src "FantasqueSansMono/Regular/FantasqueSansMono-Regular.ttf" \
-  "Fantasque Sans Mono Regular Nerd Font Complete.ttf"
+  install_nerd_font_src "FantasqueSansMono/Regular/FantasqueSansMono-Regular.ttf" \
+    "Fantasque Sans Mono Regular Nerd Font Complete.ttf"
 
-install_nerd_font_src "FantasqueSansMono/Bold/FantasqueSansMono-Bold.ttf" \
-  "Fantasque Sans Mono Bold Nerd Font Complete.ttf"
+  install_nerd_font_src "FantasqueSansMono/Bold/FantasqueSansMono-Bold.ttf" \
+    "Fantasque Sans Mono Bold Nerd Font Complete.ttf"
 
-install_nerd_font_src "FantasqueSansMono/Italic/FantasqueSansMono-Italic.ttf" \
-  "Fantasque Sans Mono Italic Nerd Font Complete.ttf"
+  install_nerd_font_src "FantasqueSansMono/Italic/FantasqueSansMono-Italic.ttf" \
+    "Fantasque Sans Mono Italic Nerd Font Complete.ttf"
 
-install_nerd_font_src \
-  "FantasqueSansMono/Bold-Italic/FantasqueSansMono-BoldItalic.ttf" \
-  "Fantasque Sans Mono Bold Italic Nerd Font Complete.ttf"
+  install_nerd_font_src \
+    "FantasqueSansMono/Bold-Italic/FantasqueSansMono-BoldItalic.ttf" \
+    "Fantasque Sans Mono Bold Italic Nerd Font Complete.ttf"
+else
+  # disabling for now
+  # brew_cask_install homebrew/cask-fonts/font-inconsolatago-nerd-font
+fi
