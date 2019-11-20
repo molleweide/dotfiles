@@ -7,3 +7,5 @@ Plug 'sheerun/vim-polyglot'
 
 " Color highlighting for rgb/hex colors
 Plug 'chrisbra/Colorizer'
+
+Plug 'RRethy/vim-illuminate'
