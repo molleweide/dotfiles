@@ -63,7 +63,9 @@ function install_vim_node_rpc() {
 }
 
 function install_ruby_neovim() {
-  rvm default do gem install neovim
+  if use_rvm; then
+    rvm default do gem install neovim
+  fi
 }
 
 function install_bash_language_server() {

@@ -3,3 +3,11 @@ function dotfiles_config_set() {
 
   [ -f ~/.config/dotfiles/$key ]
 }
+
+function use_rbenv() {
+  dotfiles_config_set "rbenv"
+}
+
+function use_rvm() {
+  ! use_rbenv
+}

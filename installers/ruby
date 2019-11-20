@@ -4,14 +4,6 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 require_installer package-manager
 
-function use_rbenv() {
-  dotfiles_config_set "rbenv"
-}
-
-function use_rvm() {
-  ! use_rbenv
-}
-
 function setup_rvmrc() {
   symlink_dotfile rvmrc ~/.rvmrc
 }

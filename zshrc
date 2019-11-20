@@ -1,5 +1,3 @@
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
 # ======== Cache directory (for oh-my-zsh plugins) =========
 [ ! -d $HOME/.zcustom/cache ] && mkdir -p $HOME/.zcustom/cache
 
@@ -78,3 +76,5 @@ if [ ! -f ~/.config/dotfiles/rbenv ]; then
   export PATH="$HOME/.rvm/bin:$PATH"
   [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
 fi
+
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
