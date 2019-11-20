@@ -74,5 +74,7 @@ do
 done
 
 # ======= RVM is a special snowflake and needs to be last ========
-export PATH="$HOME/.rvm/bin:$PATH"
-[ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
+if [ ! -f ~/.config/dotfiles/rbenv ]; then
+  export PATH="$HOME/.rvm/bin:$PATH"
+  [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
+fi
