@@ -61,6 +61,27 @@ function bootstrap_rvm() {
   fi
 }
 
+function install_rbenv_default_gems() {
+  local destination=$(rbenv root)/plugins/rbenv-default-gems
+
+  if [ ! -d "$destination" ]; then
+    dotsay "+ Installing rbenv-default-gems plugin..."
+
+    git clone https://github.com/rbenv/rbenv-default-gems.git \
+      $(rbenv root)/plugins/rbenv-default-gems
+  fi
+
+  symlink_dotfile rvm/gemsets/global.gems $(rbenv root)/default-gems
+}
+
+function bootstrap_rbenv() {
+  if use_rbenv; then
+    install_rbenv_default_gems
+  else
+    dotsay "@b@yellow[[Skipping rbenv, we aren't using it]]"
+  fi
+}
+
 dotheader "Setting up Ruby..."
 
 symlink_dotfile gemrc ~/.gemrc
@@ -68,3 +89,4 @@ symlink_dotfile bin/rubocop-daemon-wrapper ~/.local/bin/rubocop-daemon-wrapper
 setup_pry
 
 bootstrap_rvm
+bootstrap_rbenv
