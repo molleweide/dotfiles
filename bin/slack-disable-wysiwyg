@@ -43,34 +43,48 @@ echo "🚀 Patching $JS_FILE with code..."
 cat << EOF | sudo tee -a "$JS_FILE" > /dev/null
 
 $HEADER
-const disableWysiwygEditor = (_ => {
-  const redux = slackDebug[slackDebug.activeTeamId].redux;
+(() => {
+  const disableWysiwygEditor = (redux => () => {
+    const {
+      wysiwyg_composer,
+      wysiwyg_composer_ios,
+      wysiwyg_composer_webapp,
+      ...payload
+    } = redux.getState().experiments;
 
-  const {
-    wysiwyg_composer,
-    wysiwyg_composer_ios,
-    wysiwyg_composer_webapp,
-    ...payload
-  } = redux.getState().experiments;
+    redux.dispatch(
+      {
+        type: '[19] Bulk add experiment assignments to redux',
+        payload
+      }
+    );
+  });
 
-  redux.dispatch(
-    {
-      type: '[19] Bulk add experiment assignments to redux',
-      payload
+  let currentTeamId = null;
+  const seenTeams = {};
+
+  setInterval(() => {
+    if (!window.slackDebug) return;
+
+    const { activeTeamId } = window.slackDebug;
+    const newId = activeTeamId && activeTeamId !== currentTeamId
+
+    if (newId && slackDebug[activeTeamId] && slackDebug[activeTeamId].redux) {
+      currentTeamId = activeTeamId;
+      const needsPatching = !seenTeams[activeTeamId];
+
+      if (needsPatching) {
+        const team = slackDebug[activeTeamId];
+
+        if (team.redux) {
+          setTimeout(disableWysiwygEditor(team.redux), 5000);
+          seenTeams[activeTeamId] = true;
+        }
+      }
     }
-  );
-});
-
-const disableInterval = setInterval(() => {
-  const isLoaded = window.slackDebug &&
-    window.slackDebug[window.slackDebug.activeTeamId] &&
-    window.slackDebug[window.slackDebug.activeTeamId].redux;
-
-  if (isLoaded) {
-    clearInterval(disableInterval);
-    setTimeout(disableWysiwygEditor, 5000);
-  }
-}, 50);
+  }, 50);
+})();
+// END patch
 EOF
 
 echo "✅ done"
