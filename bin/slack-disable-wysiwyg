@@ -44,7 +44,7 @@ cat << EOF | sudo tee -a "$JS_FILE" > /dev/null
 
 $HEADER
 (() => {
-  const disableWysiwygEditor = (redux => () => {
+  const disableWysiwygEditor = redux => {
     const {
       wysiwyg_composer,
       wysiwyg_composer_ios,
@@ -58,7 +58,7 @@ $HEADER
         payload
       }
     );
-  });
+  };
 
   let currentTeamId = null;
   const seenTeams = {};
@@ -74,12 +74,19 @@ $HEADER
       const needsPatching = !seenTeams[activeTeamId];
 
       if (needsPatching) {
-        const team = slackDebug[activeTeamId];
+        seenTeams[activeTeamId] = true;
 
-        if (team.redux) {
-          setTimeout(disableWysiwygEditor(team.redux), 5000);
-          seenTeams[activeTeamId] = true;
-        }
+        const checkInterval = setInterval(() => {
+          const team = slackDebug[activeTeamId];
+          const wysiwygLoaded = Boolean(
+            document.querySelector('[data-qa="texty_composer_button"]')
+          );
+
+          if (team.redux && wysiwygLoaded) {
+            disableWysiwygEditor(team.redux);
+            clearInterval(checkInterval);
+          }
+        });
       }
     }
   }, 50);
