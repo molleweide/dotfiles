@@ -68,7 +68,7 @@ const disableInterval = setInterval(() => {
 
   if (isLoaded) {
     clearInterval(disableInterval);
-    setTimeout(disableWysiwygEditor, 2000);
+    setTimeout(disableWysiwygEditor, 5000);
   }
 }, 50);
 EOF
