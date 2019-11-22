@@ -39,6 +39,8 @@ if grep -q "$HEADER" "$JS_FILE" >/dev/null; then
 fi
 
 echo "🚀 Patching $JS_FILE with code..."
+echo " ==> requires sudo to patch this file"
+echo " ==> please audit this script if you have concerns"
 
 cat << EOF | sudo tee -a "$JS_FILE" > /dev/null
 
