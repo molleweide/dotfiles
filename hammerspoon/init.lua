@@ -11,6 +11,7 @@ require "quick-switch"
 require "slack"
 require "pairing-mode"
 require "experimental"
+require "contextual-modal"
 
 vim = hs.loadSpoon('VimMode')
 

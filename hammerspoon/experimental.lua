@@ -259,3 +259,85 @@ end)
 
 -- registerApplicationWatcher(hs.application.frontmostApplication())
 -- appWatcher:start()
+
+local BufferedModalKeyHandler = {}
+
+function BufferedModalKeyHandler:new()
+  local handler = {
+    activeModalName = nil,
+    eventBuffer = {},
+    modals = {},
+  }
+
+  setmetatable(handler, self)
+  self.__index = self
+
+  handler.tap = hs.eventtap.new(
+    { hs.eventtap.event.types.keyDown },
+    function(event)
+      handler:queueEvent(event)
+      return false
+    end
+  )
+
+  return handler
+end
+
+function BufferedModalKeyHandler:queueEvent(event)
+  table.insert(self.eventBuffer, event)
+end
+
+function BufferedModalKeyHandler:createModal(name)
+  if not self.modals[name] then
+    self.modals[name] = hs.hotkey.modal.new()
+  end
+
+  return self.modals[name]
+end
+
+function BufferedModalKeyHandler:getCurrentModal()
+  return self.modals[self.activeModalName]
+end
+
+function BufferedModalKeyHandler:setCurrentModal(name)
+  self.activeModalName = name
+
+  return self
+end
+
+function BufferedModalKeyHandler:enterModal(name)
+  if self.activeModalName then
+    self:getCurrentModal():exit()
+  else
+    self.tap:start()
+  end
+
+  self:setCurrentModal(name)
+  self:getCurrentModal():enter()
+end
+
+function BufferedModalKeyHandler:exit()
+  self:getCurrentModal():exit()
+  self:setCurrentModal(nil)
+  self.tap:stop()
+
+  return self
+end
+
+myHandler = BufferedModalKeyHandler:new()
+myHandler
+  :createModal('test')
+  :bind({}, 'g', function() vimLogger.i('hit g') end)
+
+local test = { context = 'none' }
+myModal = hs.hotkey.modal.new({'cmd','shift'}, 'y', 'in here')
+
+myModal:bind({}, 'd', function()
+  vimLogger.i("pressed d, context = " .. inspect(test.context))
+  test.context = 'operatorPendin'
+end)
+
+myModal:bind({}, 'w', function()
+  vimLogger.i("pressed w, context = " .. test.context)
+  test.context = nil
+end)
