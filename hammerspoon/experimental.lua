@@ -93,6 +93,25 @@ function getForwardContents()
   logger.i(contents)
 end
 
+function setFieldValue()
+  local systemElement = ax.systemWideElement()
+  local currentElement = systemElement:attributeValue("AXFocusedUIElement")
+
+  -- currentElement:setValue("hahhaahaha")
+
+  local value = "from pasteboard"
+  hs.pasteboard.setContents(value)
+
+  -- local systemElement = ax.systemWideElement()
+  -- local currentElement = systemElement:attributeValue("AXFocusedUIElement")
+
+  -- local length = currentElement:numberOfCharacters()
+  -- currentElement:setSelectedTextRange({ location = 0, length = length })
+  -- currentElement:setSelectedText("from pasteboard")
+end
+
+hs.hotkey.bind(hyper, 'r', setFieldValue)
+
 function getSelectedTextRange()
   -- for now force manual accessibility on
   local axApp = ax.applicationElement(hs.application.frontmostApplication())
@@ -157,15 +176,62 @@ function hasCurrentSelection()
   return isEnabled
 end
 
+function drawBoxAbove(xPos, yPos)
+  local width = 125
+  local height = 25
+
+  local nudge = 3
+  local x = xPos - nudge
+  local y = yPos - height - nudge
+
+  local canvas = hs.canvas.new{ w = width, h = height, x = x, y = y }
+
+  canvas:appendElements(
+    {
+      type = 'rectangle',
+      action = 'fill',
+      roundedRectRadii = { xRadius = 2, yRadius = 2 },
+      fillColor = {
+        red = 4 / 255,
+        green = 135 / 255,
+        blue = 250 / 255,
+        alpha = 0.95,
+      },
+      strokeColor = { white = 1.0 },
+      strokeWidth = 3.0,
+      frame = { x = "0%", y = "0%", h = "100%", w = "100%", },
+      withShadow = true
+    },
+    {
+      type = 'text',
+      action = 'fill',
+      frame = {
+        x = "5%", y = "10%", h = "100%", w = "95%"
+      },
+      text = hs.styledtext.new(
+        "NORMAL",
+        {
+          font = { name = "Courier New Bold", size = 14 },
+          color = { white = 1.0 }
+        }
+      )
+    }
+  )
+
+  canvas:show()
+end
+
+hs.hotkey.bind(hyper, 'b', function()
+  local systemElement = ax.systemWideElement()
+  local currentElement = systemElement:attributeValue("AXFocusedUIElement")
+  local position = currentElement:position()
+
+  drawBoxAbove(position.x, position.y)
+end)
+
 hs.hotkey.bind(hyper, 'a', function()
   -- logger.i("Selection enabled", hasCurrentSelection())
   getSelectedTextRange()
-end)
-
-hs.hotkey.bind(hyper, 'b', function()
-  getCurrentSelectionFromClipboard(function(selection)
-    logger.i("Got selection from copy:", selection)
-  end)
 end)
 
 function printAXNotifications(ae, o)
@@ -259,85 +325,3 @@ end)
 
 -- registerApplicationWatcher(hs.application.frontmostApplication())
 -- appWatcher:start()
-
-local BufferedModalKeyHandler = {}
-
-function BufferedModalKeyHandler:new()
-  local handler = {
-    activeModalName = nil,
-    eventBuffer = {},
-    modals = {},
-  }
-
-  setmetatable(handler, self)
-  self.__index = self
-
-  handler.tap = hs.eventtap.new(
-    { hs.eventtap.event.types.keyDown },
-    function(event)
-      handler:queueEvent(event)
-      return false
-    end
-  )
-
-  return handler
-end
-
-function BufferedModalKeyHandler:queueEvent(event)
-  table.insert(self.eventBuffer, event)
-end
-
-function BufferedModalKeyHandler:createModal(name)
-  if not self.modals[name] then
-    self.modals[name] = hs.hotkey.modal.new()
-  end
-
-  return self.modals[name]
-end
-
-function BufferedModalKeyHandler:getCurrentModal()
-  return self.modals[self.activeModalName]
-end
-
-function BufferedModalKeyHandler:setCurrentModal(name)
-  self.activeModalName = name
-
-  return self
-end
-
-function BufferedModalKeyHandler:enterModal(name)
-  if self.activeModalName then
-    self:getCurrentModal():exit()
-  else
-    self.tap:start()
-  end
-
-  self:setCurrentModal(name)
-  self:getCurrentModal():enter()
-end
-
-function BufferedModalKeyHandler:exit()
-  self:getCurrentModal():exit()
-  self:setCurrentModal(nil)
-  self.tap:stop()
-
-  return self
-end
-
-myHandler = BufferedModalKeyHandler:new()
-myHandler
-  :createModal('test')
-  :bind({}, 'g', function() vimLogger.i('hit g') end)
-
-local test = { context = 'none' }
-myModal = hs.hotkey.modal.new({'cmd','shift'}, 'y', 'in here')
-
-myModal:bind({}, 'd', function()
-  vimLogger.i("pressed d, context = " .. inspect(test.context))
-  test.context = 'operatorPendin'
-end)
-
-myModal:bind({}, 'w', function()
-  vimLogger.i("pressed w, context = " .. test.context)
-  test.context = nil
-end)
