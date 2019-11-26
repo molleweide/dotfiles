@@ -19,10 +19,10 @@ if is_macos; then
       local app_id=$2
 
       if ! mas list | grep -q $app_id; then
-	dotsay "@b@yellow[[+ installing $name]]"
-	mas install $app_id
+        dotsay "@b@yellow[[+ installing $name]]"
+        mas install $app_id
       else
-	dotsay "+ $name already installed"
+        dotsay "+ $name already installed"
       fi
     }
 
