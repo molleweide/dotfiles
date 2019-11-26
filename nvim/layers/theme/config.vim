@@ -12,39 +12,42 @@ endif
 au BufNewFile,BufRead *.css,*.html,*.htm,*.sass,*.scss :ColorHighlight!
 
 let g:lightline = {
-      \ 'colorscheme': 'base16',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'filename' ] ],
-      \   'right': [
-      \     ['lineinfo'],
-      \     ['percent'],
-      \     ['ale_error', 'ale_warning', 'ale_ok', 'fileformat', 'fileencoding', 'filetype']
-      \   ]
-      \ },
-      \ 'component_function_visible_condition': {
-      \   'mode': 1,
-      \ },
-      \ 'component_function': {
-      \   'filename': 'MyFilename',
-      \   'fileformat': 'MyFileformat',
-      \   'filetype': 'MyFiletype',
-      \   'fileencoding': 'MyFileencoding',
-      \   'mode': 'MyMode',
-      \   'readonly': '%{&readonly?"x":""}',
-      \ },
-      \ 'component_expand': {
-      \   'ale_error':   'ale#ale_error',
-      \   'ale_warning': 'ale#ale_warning',
-      \   'ale_ok':      'ale#ale_ok',
-      \ },
-      \ 'component_type': {
-      \   'ale_error':   'error',
-      \   'ale_warning': 'warning',
-      \   'ale_ok':      'ok',
-      \ },
-      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
-      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
-      \ }
+  \ 'colorscheme': 'base16',
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ], [ 'filename' ] ],
+  \   'right': [
+  \     ['lineinfo'],
+  \     ['indicator'],
+  \     ['ale_error', 'ale_warning', 'ale_ok', 'fileformat', 'fileencoding', 'filetype']
+  \   ]
+  \ },
+  \ 'component': {
+  \   'indicator': '%{LineNoIndicator()}',
+  \ },
+  \ 'component_function_visible_condition': {
+  \   'mode': 1,
+  \ },
+  \ 'component_function': {
+  \   'filename': 'MyFilename',
+  \   'fileformat': 'MyFileformat',
+  \   'filetype': 'MyFiletype',
+  \   'fileencoding': 'MyFileencoding',
+  \   'mode': 'MyMode',
+  \   'readonly': '%{&readonly?"x":""}',
+  \ },
+  \ 'component_expand': {
+  \   'ale_error':   'ale#ale_error',
+  \   'ale_warning': 'ale#ale_warning',
+  \   'ale_ok':      'ale#ale_ok',
+  \ },
+  \ 'component_type': {
+  \   'ale_error':   'error',
+  \   'ale_warning': 'warning',
+  \   'ale_ok':      'ok',
+  \ },
+  \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+  \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
+  \ }
 
 augroup LightLineOnALE
   autocmd!

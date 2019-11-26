@@ -9,3 +9,4 @@ Plug 'sheerun/vim-polyglot'
 Plug 'chrisbra/Colorizer'
 
 Plug 'RRethy/vim-illuminate'
+Plug 'drzel/vim-line-no-indicator'
