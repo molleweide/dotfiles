@@ -31,6 +31,19 @@ local function emojiBomb()
   slackEmojiReact('avocado')
 end
 
+local function openSlackReminder()
+  hs.application.launchOrFocus("Slack")
+
+  hs.timer.doAfter(0.3, function()
+    focusSlackMessageBox()
+
+    hs.timer.doAfter(0.3, function()
+      hs.eventtap.keyStrokes("/remind me at ")
+    end)
+  end)
+end
+
 hs.hotkey.bind(hyper, 'e', emojiBomb)
+hs.hotkey.bind(hyper, 'r', openSlackReminder)
 hs.hotkey.bind(hyper, 'f', focusSlackMessageBox)
 hs.hotkey.bind(hyper, 't', jumpToSlackThread)
