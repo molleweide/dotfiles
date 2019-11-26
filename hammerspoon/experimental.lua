@@ -110,7 +110,7 @@ function setFieldValue()
   -- currentElement:setSelectedText("from pasteboard")
 end
 
-hs.hotkey.bind(hyper, 'r', setFieldValue)
+-- hs.hotkey.bind(hyper, 'r', setFieldValue)
 
 function getSelectedTextRange()
   -- for now force manual accessibility on
