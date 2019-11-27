@@ -51,8 +51,23 @@ function install_after_cd_nvm_hook_to_rvm() {
   fi
 }
 
-install_nvm
-source_nvm
+function install_nodenv() {
+  brew_install nodenv
+  brew upgrade node-build
+
+  nodenv init
+  nodenv install 8.11.3
+  nodenv install 10.16.0
+  nodenv global 10.16.0
+}
+
+if use_nvm; then
+  install_nvm
+  source_nvm
+  install_after_cd_nvm_hook_to_rvm
+else
+  install_nodenv
+fi
+
 brew_install yarn
 install_yarn_linux
-install_after_cd_nvm_hook_to_rvm
