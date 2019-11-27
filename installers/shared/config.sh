@@ -11,3 +11,11 @@ function use_rbenv() {
 function use_rvm() {
   ! use_rbenv
 }
+
+function use_nodenv() {
+  dotfiles_config_set "no-nvm"
+}
+
+function use_nvm() {
+  ! use_nodenv
+}
