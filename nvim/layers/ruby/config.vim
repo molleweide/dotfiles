@@ -6,4 +6,4 @@ let g:rails_projections = {
       \   }
       \ }
 
-let g:ruby_host_prog = 'rvm default do neovim-ruby-host'
+let g:ruby_host_prog = 'neovim-ruby-host'
