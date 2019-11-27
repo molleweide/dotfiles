@@ -8,7 +8,7 @@ alias sketch="magick $1 \( -clone 0 -negate -blur 0x5 \) \
   -compose colordodge -composite -modulate 100,0,100 -auto-level $2"
 alias srync="rsync -vrazh"
 alias tk="tmux kill-session"
-alias tn="rvm . do tmuxinator"
+alias tn="tmuxinator"
 alias vim="nvim"
 alias work="cd ~/code/boundless && tn start boundless"
 

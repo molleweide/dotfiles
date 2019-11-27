@@ -37,9 +37,17 @@ source $HOME/.zsh/vendor/antigen.zsh
 
 antigen bundle robbyrussell/oh-my-zsh plugins/fasd
 antigen bundle robbyrussell/oh-my-zsh plugins/git
-antigen bundle robbyrussell/oh-my-zsh plugins/nvm
+
+if [ ! -f ~/.config/dotfiles/no-nvm ]; then
+  antigen bundle robbyrussell/oh-my-zsh plugins/nvm
+fi
+
 antigen bundle robbyrussell/oh-my-zsh plugins/pyenv
-antigen bundle robbyrussell/oh-my-zsh plugins/rvm
+
+if [ ! -f ~/.config/dotfiles/rbenv ]; then
+  antigen bundle robbyrussell/oh-my-zsh plugins/rvm
+fi
+
 antigen bundle robbyrussell/oh-my-zsh plugins/vi-mode
 antigen bundle robbyrussell/oh-my-zsh plugins/zsh_reload
 

@@ -20,9 +20,15 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
   root_indicator
   command_execution_time
-  nvm
-  rvm
 )
+
+if [ ! -f ~/.config/dotfiles/no-nvm ]; then
+  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS+=(nvm)
+fi
+
+if [ ! -f ~/.config/dotfiles/rbenv ]; then
+  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS+=(rvm)
+fi
 
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
