@@ -1,7 +1,7 @@
 " ALE config
 let g:ale_lint_on_save = 1
 let g:ale_fix_on_save = 1
-let g:ale_ruby_rubocop_options = '--display-cop-names --rails'
+let g:ale_ruby_rubocop_options = '--display-cop-names'
 
 let g:ale_javascript_eslint_executable = 'eslint_d'
 let g:ale_javascript_eslint_options = ''
