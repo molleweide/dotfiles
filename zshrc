@@ -40,8 +40,6 @@ antigen bundle robbyrussell/oh-my-zsh plugins/git
 
 if [ ! -f ~/.config/dotfiles/no-nvm ]; then
   antigen bundle robbyrussell/oh-my-zsh plugins/nvm
-else
-  antigen bundle mattberther/zsh-nodenv
 fi
 
 antigen bundle robbyrussell/oh-my-zsh plugins/pyenv
