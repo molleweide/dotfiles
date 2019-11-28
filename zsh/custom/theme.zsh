@@ -24,10 +24,14 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
 
 if [ ! -f ~/.config/dotfiles/no-nvm ]; then
   POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS+=(nvm)
+else
+  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS+=(nodenv)
 fi
 
 if [ ! -f ~/.config/dotfiles/rbenv ]; then
   POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS+=(rvm)
+else
+  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS+=(rbenv)
 fi
 
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
