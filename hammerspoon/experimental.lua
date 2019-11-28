@@ -1,25 +1,5 @@
--- bootstrap vim2
-local Vim2 = require("Vim2.init")
-local vim2 = Vim2:new()
-
-hs.hotkey.bind(hyper, 'h', function()
-  hs.application.launchOrFocus("Hammerspoon")
-  hs.reload()
-end)
-
-hs.hotkey.bind(hyper, 'v', function()
-  vim2:enter()
-end)
-
-vim2
-  :enableKeySequence('8', '9')
-  :disableForApp('Code')
-  :disableForApp('zoom.us')
-  :setAlertFont("InconsolataGo Bold Nerd Font Complete")
-
 local logger = hs.logger.new('explore', 'debug')
 local ax = require("hs._asm.axuielement")
-inspect = hs.inspect.inspect
 
 function getCurrentSelection()
    local elem = hs.uielement.focusedElement()

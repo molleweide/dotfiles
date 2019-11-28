@@ -1,5 +1,9 @@
 hs.loadSpoon("SpoonInstall")
 
+inspect = hs.inspect.inspect
+
+local Vim2 = require("Vim2.init")
+
 require "common"
 require "config-watch"
 require "window-management"
@@ -13,15 +17,16 @@ require "pairing-mode"
 require "experimental"
 require "contextual-modal"
 
-vim = hs.loadSpoon('VimMode')
+-- bootstrap vim2
+vim2 = Vim2:new()
 
-vim:shouldDimScreenInNormalMode(false)
-vim:shouldShowAlertInNormalMode(true)
-vim:setAlertFont("InconsolataGo Bold Nerd Font Complete")
-
-vim:disableForApp('Code')
-vim:disableForApp('zoom.us')
-vim:disableForApp('iTerm')
-vim:disableForApp('iTerm2')
-
-vim:enableKeySequence('j', 'k')
+vim2
+  :disableForApp('Code')
+  :disableForApp('zoom.us')
+  :disableForApp('iTerm')
+  :disableForApp('iTerm2')
+  :disableForApp('Terminal')
+  :shouldDimScreenInNormalMode(false)
+  :shouldShowAlertInNormalMode(true)
+  :setAlertFont("InconsolataGo Bold Nerd Font Complete")
+  :enterWithSequence('jk')

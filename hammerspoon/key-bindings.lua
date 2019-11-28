@@ -33,3 +33,9 @@ end)
 hs.hotkey.bind(hyper, 'left', hs.spotify.previous)
 hs.hotkey.bind(hyper, 'right', hs.spotify.next)
 hs.hotkey.bind(hyper, 'space', hs.spotify.playpause)
+
+-- reload Hammerspoon
+hs.hotkey.bind(hyper, 'h', function()
+  hs.application.launchOrFocus("Hammerspoon")
+  hs.reload()
+end)
