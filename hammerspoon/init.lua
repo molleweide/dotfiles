@@ -2,7 +2,7 @@ hs.loadSpoon("SpoonInstall")
 
 inspect = hs.inspect.inspect
 
-local Vim2 = require("Vim2.init")
+local Vim2 = hs.loadSpoon("VimMode")
 
 require "common"
 require "config-watch"
