@@ -2,7 +2,7 @@ hs.loadSpoon("SpoonInstall")
 
 inspect = hs.inspect.inspect
 
-local Vim2 = hs.loadSpoon("VimMode")
+local VimMode = hs.loadSpoon("VimMode")
 
 require "common"
 require "config-watch"
@@ -17,16 +17,38 @@ require "pairing-mode"
 require "experimental"
 require "contextual-modal"
 
--- bootstrap vim2
-vim2 = Vim2:new()
+local vim = VimMode:new()
 
-vim2
+-- Configure apps you do *not* want Vim mode enabled in
+-- For example, you don't want this plugin overriding your control of Terminal
+-- vim
+vim
   :disableForApp('Code')
   :disableForApp('zoom.us')
   :disableForApp('iTerm')
   :disableForApp('iTerm2')
   :disableForApp('Terminal')
-  :shouldDimScreenInNormalMode(false)
-  :shouldShowAlertInNormalMode(true)
-  :setAlertFont("InconsolataGo Bold Nerd Font Complete")
-  :enterWithSequence('jk')
+
+-- If you want the screen to dim (a la Flux) when you enter normal mode
+-- flip this to true.
+vim:shouldDimScreenInNormalMode(false)
+
+-- If you want to show an on-screen alert when you enter normal mode, set
+-- this to true
+vim:shouldShowAlertInNormalMode(true)
+
+vim:setAlertFont("InconsolataGo Bold Nerd Font Complete")
+
+-- Enter normal mode by typing a key sequence
+vim:enterWithSequence('jk')
+-- if you want to bind a single key to entering vim, remove the
+-- :enterWithSequence('jk') line above and uncomment the bindHotKeys line
+-- below:
+--
+-- To customize the hot key you want, see the mods and key parameters at:
+--   https://www.hammerspoon.org/docs/hs.hotkey.html#bind
+--
+-- vim:bindHotKeys({ enter = { {'ctrl'}, ';' } })
+--------------------------------
+-- END VIM CONFIG
+--------------------------------
