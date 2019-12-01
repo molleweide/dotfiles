@@ -1,7 +1,7 @@
 # ~/.tmuxinator/vim.yml
 
 name: vim
-root: ~/code/Vim2
+root: ~/code/VimMode.spoon
 
 windows:
   - main:
