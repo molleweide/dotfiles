@@ -17,7 +17,7 @@ require "pairing-mode"
 require "experimental"
 require "contextual-modal"
 
-local vim = VimMode:new()
+vim = VimMode:new()
 
 -- Configure apps you do *not* want Vim mode enabled in
 -- For example, you don't want this plugin overriding your control of Terminal
