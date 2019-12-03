@@ -81,6 +81,8 @@
   # respond to PR feedback
   respond = !git commit --amend --no-edit && git push --force-with-lease
 
+  upstream = !git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)
+
   # reset
   unstage = reset HEAD              # remove files from index (tracking)
   uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
