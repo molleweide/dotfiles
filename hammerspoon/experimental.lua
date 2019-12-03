@@ -125,12 +125,37 @@ function getSelectedTextRange()
     local textLength = currentElement:attributeValue("AXNumberOfCharacters")
     local range = currentElement:attributeValue("AXSelectedTextRange")
 
+    local attempt = {
+      'subrole',
+      'editableAncestor',
+      'dOMClassList',
+      'dOMIdentifier',
+      'description',
+      'roleDescription',
+    }
+
+    for _, fnName in pairs(attempt) do
+      if currentElement[fnName] then
+        logger.i(fnName .. " = " .. inspect(currentElement[fnName](currentElement)))
+      end
+    end
+
     logger.i("range = " .. inspect(range))
     logger.i("len = " .. textLength)
-    logger.i("Text is " .. text)
+    logger.i("Text is " .. string.sub(text, 1, 100))
+
+    logger.i(inspect(currentElement:allAttributeValues()))
   else
     logger.i("Role = " .. role)
   end
+end
+
+function getChromeUrl()
+  local script = "tell application \"Google Chrome\"\n" ..
+    "  get URL of active tab of first window\n" ..
+    "end tell"
+
+  return hs.osascript.applescript(script)
 end
 
 function hasCurrentSelection()
