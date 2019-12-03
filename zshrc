@@ -35,7 +35,6 @@ setopt extended_glob
 # =========== Plugins ============
 source $HOME/.zsh/vendor/antigen.zsh
 
-antigen bundle robbyrussell/oh-my-zsh plugins/fasd
 antigen bundle robbyrussell/oh-my-zsh plugins/git
 
 if [ ! -f ~/.config/dotfiles/no-nvm ]; then
@@ -68,6 +67,7 @@ antigen apply
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 eval "$(direnv hook zsh)"
+eval "$(fasd --init auto)"
 
 # =========== Custom settings ================
 
