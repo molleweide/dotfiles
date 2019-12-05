@@ -21,6 +21,6 @@ local favoritesChooser = hs.chooser.new(handleFavorites)
 favoritesChooser:choices(favorites)
 favoritesChooser:width(20)
 
-hs.hotkey.bind({ 'cmd', 'ctrl', 'shift' }, 'k', function()
+hs.hotkey.bind(super, 'k', function()
   favoritesChooser:show()
 end)
