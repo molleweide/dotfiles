@@ -23,6 +23,7 @@ vim = VimMode:new()
 -- For example, you don't want this plugin overriding your control of Terminal
 -- vim
 vim
+  :disableForApp('Visual Studio Code')
   :disableForApp('Code')
   :disableForApp('zoom.us')
   :disableForApp('iTerm')
