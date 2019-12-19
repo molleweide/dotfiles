@@ -93,8 +93,6 @@ for fpath in split(globpath('~/.config/nvim/layers', '**/packages.vim'), '\n')
   exe 'source' fpath
 endfor
 
-call stripe#RegisterPlugins()
-
 " Load this last
 Plug 'ryanoasis/vim-devicons'
 
