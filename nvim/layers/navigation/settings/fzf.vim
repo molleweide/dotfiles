@@ -1,13 +1,3 @@
-" This is the default extra key bindings
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
-
-" Default fzf layout down / up / left / right
-let g:fzf_layout = { 'down': '~40%' }
-let g:fzf_sink = 'e'
-
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
@@ -23,12 +13,25 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-" Enable per-command history.
-" CTRL-N and CTRL-P will be automatically bound to next-history and
-" previous-history instead of down and up. If you don't like the change,
-" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
-let g:fzf_history_dir = '~/.local/share/fzf-history'
+if !exists('g:stripe')
+  " This is the default extra key bindings
+  let g:fzf_action = {
+    \ 'ctrl-t': 'tab split',
+    \ 'ctrl-x': 'split',
+    \ 'ctrl-v': 'vsplit' }
 
-let fzf_source = 'rg --files'
+  " Default fzf layout down / up / left / right
+  let g:fzf_layout = { 'down': '~40%' }
+  let g:fzf_sink = 'e'
 
-noremap <C-p> :call fzf#vim#files('', { 'source': fzf_source })<CR>
+
+  " Enable per-command history.
+  " CTRL-N and CTRL-P will be automatically bound to next-history and
+  " previous-history instead of down and up. If you don't like the change,
+  " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
+  let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+  let fzf_source = 'rg --files'
+
+  noremap <C-p> :call fzf#vim#files('', { 'source': fzf_source })<CR>
+endif

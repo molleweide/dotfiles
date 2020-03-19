@@ -1,5 +1,6 @@
 # Shell aliases
-alias b="aid begin"
+alias b="work begin"
+alias v="work review"
 alias dbm="rake db:migrate && RAILS_ENV=test rake db:migrate"
 alias l="ls -al"
 alias j=z # I'm used to autojump 'j' vs fasd 'z'
@@ -10,7 +11,7 @@ alias srync="rsync -vrazh"
 alias tk="tmux kill-session"
 alias tn="tmuxinator"
 alias vim="nvim"
-alias work="cd ~/code/boundless && tn start boundless"
+alias 6="exec zsh"
 
 # OS X apps
 alias bat="open -a 'Adobe Acrobat' $@"

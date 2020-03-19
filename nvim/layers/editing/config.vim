@@ -3,16 +3,21 @@ map J <Plug>(expand_region_expand)
 map K <Plug>(expand_region_shrink)
 
 " vim-test
-nmap <silent> <leader>T :TestNearest<CR>
-nmap <silent> <leader>t :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
-nmap <silent> <leader>l :TestLast<CR>
-nmap <silent> <leader>g :TestVisit<CR>
+if !exists('g:stripe')
+  nmap <silent> <leader>T :TestNearest<CR>
+  nmap <silent> <leader>t :TestFile<CR>
+  nmap <silent> <leader>a :TestSuite<CR>
+  nmap <silent> <leader>l :TestLast<CR>
+  nmap <silent> <leader>g :TestVisit<CR>
 
-let test#strategy = 'vimux'
-let g:test#preserve_screen = 1
+  let test#strategy = 'vimux'
+  let g:test#preserve_screen = 1
+  let g:test#javascript#mocha#file_pattern = '\v.*_test\.(js|jsx|ts|tsx)$'
+endif
 
-let g:test#javascript#mocha#file_pattern = '\v.*_test\.(js|jsx|ts|tsx)$'
+let test#enabled_runners = ["ruby#rspec"]
+let test#custom_runners = {}
+let test#custom_runners['ruby'] = ['rspec']
 
 " color column
 set colorcolumn=81

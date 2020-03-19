@@ -1,6 +1,5 @@
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-bundler'
-Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'keith/rspec.vim'
 Plug 'joker1007/vim-ruby-heredoc-syntax'
