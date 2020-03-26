@@ -16,6 +16,7 @@ require "slack"
 require "pairing-mode"
 require "experimental"
 require "contextual-modal"
+require "headphones"
 
 vim = VimMode:new()
 

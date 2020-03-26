@@ -68,6 +68,9 @@ symlink_dotfile bin/dnd-toggle ~/.local/bin/dnd-toggle
 brew_install lua
 brew_install luarocks
 
+# bluetooth
+brew_install blueutil
+
 brew_cask_install karabiner-elements
 symlink_dotfile karabiner ~/.config/karabiner
 
