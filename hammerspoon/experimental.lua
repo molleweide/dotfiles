@@ -92,15 +92,7 @@ end
 
 -- hs.hotkey.bind(hyper, 'r', setFieldValue)
 
-function getSelectedTextRange()
-  -- for now force manual accessibility on
-  local app = hs.application.frontmostApplication()
-  local axApp = ax.applicationElement(app)
-  axApp:setAttributeValue('AXManualAccessibility', true)
-  -- axApp:setAttributeValue('AXEnhancedUserInterface', true)
-
-  local systemElement = ax.systemWideElement()
-  local currentElement = systemElement:attributeValue("AXFocusedUIElement")
+function debugElement(currentElement)
   local role = currentElement:attributeValue("AXRole")
 
   logger.i("in app: " .. app:name())
@@ -151,6 +143,29 @@ function getSelectedTextRange()
   else
     logger.i("Role = " .. role)
   end
+end
+
+function debugField(currentElement, fieldName)
+  local field = currentElement:attributeValue(fieldName)
+
+  if field then
+    logger.i("\n=====================================\ndebugging field " .. fieldName .. "\n=================================================")
+    debugElement(field)
+  end
+end
+
+function getSelectedTextRange()
+  -- for now force manual accessibility on
+  local axApp = ax.applicationElement(hs.application.frontmostApplication())
+  axApp:setAttributeValue('AXManualAccessibility', true)
+  -- axApp:setAttributeValue('AXEnhancedUserInterface', true)
+
+  local systemElement = ax.systemWideElement()
+  local currentElement = systemElement:attributeValue("AXFocusedUIElement")
+
+  debugElement(currentElement)
+  debugField(currentElement, 'AXFocusableAncestor')
+  debugField(currentElement, 'AXEditableAncestor')
 end
 
 function getChromeUrl()
