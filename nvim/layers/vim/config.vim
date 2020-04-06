@@ -29,7 +29,7 @@ function! YRRunAfterMaps()
 endfunction
 
 "Clear current search highlight by double tapping //
-nmap <silent> // :nohlsearch<CR>
+" nmap <silent> // :nohlsearch<CR>
 
 "(v)im (r)eload
 nmap <silent> ,vr :so %<CR>

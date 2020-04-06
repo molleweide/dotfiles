@@ -1,9 +1,10 @@
 function! FlipBindingPry()
-  if getline('.') =~? '^\s*binding\.pry\s*$'
+  if getline('.') =~? "^\s*require 'pry'; binding\.pry\s*$"
     normal dd
   else
-    normal obinding.pry
+    normal orequire 'pry'; binding.pry
   endif
+
   write
 endfunction
 
