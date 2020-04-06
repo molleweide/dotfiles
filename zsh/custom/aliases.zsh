@@ -1,6 +1,5 @@
 # Shell aliases
-alias b="work begin"
-alias v="work review"
+alias m="git checkout master"
 alias dbm="rake db:migrate && RAILS_ENV=test rake db:migrate"
 alias l="ls -al"
 alias j=z # I'm used to autojump 'j' vs fasd 'z'
