@@ -68,6 +68,20 @@ function install_ruby_neovim() {
   fi
 }
 
+function install_rust() {
+  if ! command_exists "cargo" ; then
+    brew_install rustup
+    rustup-init -y
+    source $HOME/.cargo/env
+  fi
+}
+
+function install_proximity_sort() {
+  if ! command_exists "proximity-sort" ; then
+    cargo install --force proximity-sort
+  fi
+}
+
 function install_bash_language_server() {
   npm install -g bash-language-server
 }
@@ -89,3 +103,5 @@ install_vim_node_rpc
 ensure_plugin_directory
 install_neovim_plugins
 install_coc_plugins
+install_rust
+install_proximity_sort

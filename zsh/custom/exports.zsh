@@ -31,6 +31,9 @@ export PATH="./node_modules/.bin:$PATH"
 export PATH="~/.fzf/bin:$PATH"
 export PATH="$PATH:$HOME/.config/base16-shell"
 
+# Cargo
+[ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
+
 # Python
 [[ "$(uname)" == "Darwin" ]] && export PYTHON_CONFIGURE_OPTS="--enable-framework"
 [[ "$(uname)" == "Linux" ]] && export PYTHON_CONFIGURE_OPTS="--enable-shared"

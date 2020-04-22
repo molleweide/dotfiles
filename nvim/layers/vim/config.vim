@@ -28,8 +28,8 @@ function! YRRunAfterMaps()
   nnoremap Y   :<C-U>YRYankCount 'y$'<CR>
 endfunction
 
-"Clear current search highlight by double tapping //
-" nmap <silent> // :nohlsearch<CR>
+"Clear current search highlight by hitting g + /
+nmap <silent> g/ :nohlsearch<CR>
 
 "(v)im (r)eload
 nmap <silent> ,vr :so %<CR>
