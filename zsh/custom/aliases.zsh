@@ -41,3 +41,10 @@ function sslcert() {
 function cheat() {
   curl cht.sh/$1
 }
+
+function opendir() {
+  local file="$1"
+  local dir=$(dirname "$file")
+
+  open "$dir"
+}
