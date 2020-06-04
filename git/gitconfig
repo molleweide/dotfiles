@@ -1,31 +1,22 @@
-# set your user tokens as environment variables, such as ~/.secrets
-# See the README for examples.
 [color]
   ui = true
+
 [color "branch"]
   current = yellow reverse
   local = yellow
   remote = green
+
 [color "diff"]
   meta = yellow bold
   frag = magenta bold
   old = red
   new = green
-[alias]
-  what-i-did = "!$HOME/.local/bin/git-what-i-did"
-  what-i-did-today = "!$HOME/.local/bin/git-what-i-did --since=\"3AM today\""
-  what-i-did-yesterday = "$HOME/.local/bin/git-what-i-did --since=\"3AM yesterday\" --until=\"3AM today\""
-  what-i-did-this-week = "!$HOME/.local/bin/git-what-i-did --since=\"last Monday 3AM\""
 
+[alias]
   # add
   a = add                           # add
-  chunkyadd = add --patch           # stage commits chunk by chunk
 
-  # via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
-  snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
-  snapshots = !git stash list --grep snapshot
-
-  #via http://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
+  # via http://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
   recent-branches = !git for-each-ref --count=5 --sort=-committerdate refs/heads/ --format='%(refname:short)'
 
   # branch
@@ -35,8 +26,7 @@
   c = commit -m                     # commit with message
   ca = commit -am                   # commit all with message
   ci = commit                       # commit
-  amend = commit --amend            # ammend your last commit
-  ammend = commit --amend           # ammend your last commit
+  amend = commit --amend            # amend your last commit
 
   # checkout
   co = checkout                     # checkout
@@ -51,9 +41,6 @@
   dc = diff --cached                # diff staged changes
   last = diff HEAD^                 # diff last committed change
 
-  # fixit
-  fixit = !git commit --amend --no-edit && git please
-
   # log
   l = log --graph --date=short
   changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
@@ -66,7 +53,7 @@
 
   # push
   ps = push -u                         # push
-  please = push --force-with-lease
+  please = push -u --force-with-lease
 
   # rebase
   rc = rebase --continue            # continue rebase
@@ -78,19 +65,17 @@
   # fetch a remote branch
   rbranch = !git fetch origin $1:$1 && git checkout $1
 
-  sp = !git sync && git please
+  # interactive sync your current branch with master
   sync = !git fetch origin && git rebase -i origin/master
 
   # respond to PR feedback
   respond = !git commit --amend --no-edit && git push --force-with-lease
 
+  # fix your branch when it's missing upstream
   upstream = !git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)
 
   # reset
   unstage = reset HEAD              # remove files from index (tracking)
-  uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
-  filelog = log -u                  # show changes to a file
-  mt = mergetool                    # fire up the merge tool
 
   # stash
   ss = stash                        # stash changes
@@ -106,51 +91,63 @@
   # tag
   t = tag -n                        # show tags with <n> lines of each tag message
 
-  # svn helpers
-  svnr = svn rebase
-  svnd = svn dcommit
-  svnl = svn log --oneline --show-commit
 [format]
   pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
+
 [mergetool]
   prompt = false
+
 [merge]
   summary = true
   verbosity = 1
   tool = mvimdiff
+
 [apply]
   whitespace = nowarn
+
 [branch]
   autosetupmerge = true
+
 [push]
   # 'git push' will push the current branch to its tracking branch
   # the usual default is to push all branches
   default = current
+
 [pull]
+  # fast-forwards only
   ff = only
+
 [core]
   autocrlf = false
   editor = nvim
   excludesfile = ~/.gitignore
   pager = diff-so-fancy | less --tabs=4 -RFX
+
 [advice]
   statusHints = false
+
 [diff]
   # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
   # instead of a/b/c/d as prefixes for patches
   mnemonicprefix = true
   algorithm = patience
+
 [rerere]
   # Remember my merges
   # http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/
   enabled = true
+
 [include]
+  # includes these files in your home directory
   path = .gitconfig.user
   path = .gitconfig.private
+
 [interactive]
   singlekey = true
+
 [commit]
   template = ~/.gitmessage
+
 [filter "lfs"]
 	process = git-lfs filter-process
 	required = true
