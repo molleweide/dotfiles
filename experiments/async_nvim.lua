@@ -5,6 +5,12 @@ local logger = {
   i = log.info
 }
 
+local modeMap = {
+  n = "normal",
+  i = "insert",
+  v = "visual"
+}
+
 local ChildProcessStream = require('nvim.child_process_stream')
 local Session = require('nvim.session')
 
@@ -19,47 +25,44 @@ local nvim = Session.new(ChildProcessStream.spawn({
   '/usr/local/bin/nvim', '-u', 'NONE', '--embed', '--headless'
 }))
 
--- create a scratch buffer in vim
-local _, scratchBuffer = nvim:request('nvim_create_buf', false, true)
-nvim:request("nvim_win_set_buf", 0, scratchBuffer)
+-- -- create a scratch buffer in vim
+-- local _, scratchBuffer = nvim:request('nvim_create_buf', false, true)
+-- nvim:request("nvim_win_set_buf", 0, scratchBuffer)
 
-logger.i("setting buffer to: " .. inspect(lines))
+-- logger.i("setting buffer to: " .. inspect(lines))
 
--- set the buffer lines
-nvim:request(
-  "nvim_buf_set_lines",
-  scratchBuffer,
-  0,
-  -1,
-  true,
-  lines
-)
+-- -- set the buffer lines
+-- nvim:request(
+--   "nvim_buf_set_lines",
+--   scratchBuffer,
+--   0,
+--   -1,
+--   true,
+--   lines
+-- )
 
--- print out lines before edit
-local ok, updatedLines = nvim:request("nvim_buf_get_lines", scratchBuffer, 0, -1, true)
+-- -- subscribe to events
+-- nvim:request("nvim_buf_attach", scratchBuffer, false, {})
 
-logger.i("before dw")
-logger.i(inspect(updatedLines))
+-- -- put the cursor at line 1, column 0
+-- nvim:request("nvim_win_set_cursor", 0, {1, 0})
 
--- put the cursor at line 1, column 0
-nvim:request("nvim_win_set_cursor", 0, {1, 0})
+local function onInit()
+  logger.i("Starting listener, onInit():")
+  -- nvim:notify("nvim_feedkeys", "dw", "n", false)
+  nvim:notify('nvim_eval', '1')
 
--- subscribe to events
-nvim:request("nvim_buf_attach", scratchBuffer, false, {})
+  logger.i("Fed keys")
+  nvim:stop()
+end
 
-local modeMap = {
-  n = "normal",
-  i = "insert",
-  v = "visual"
-}
-
-nvim:request("nvim_feedkeys", "vw", "n", false)
-_, result = nvim:request("nvim_get_mode")
-logger.i("  mode: " .. inspect(result))
-
-nvim:request("nvim_feedkeys", "dw", "n", false)
+local function handleRequest(...)
+  logger.i("Got request: " .. inspect(...))
+end
 
 local function handleNotification(message)
+  logger.i("what")
+
   local type = message[1]
   local eventType = message[2]
   local args = message[3]
@@ -89,13 +92,13 @@ local function handleNotification(message)
   end
 end
 
-local message = nvim:next_message(5)
-while message do
-  handleNotification(message)
-  message = nvim:next_message(5)
-end
+nvim:run(handleRequest, nil, onInit)
 
-local _, updatedLines = nvim:request("nvim_buf_get_lines", scratchBuffer, 0, -1, true)
+-- nvim:request("nvim_feedkeys", "vw", "n", false)
+-- _, result = nvim:request("nvim_get_mode")
+-- logger.i("  mode: " .. inspect(result))
 
-logger.i("after dw")
-logger.i(inspect(updatedLines))
+-- nvim:request("nvim_feedkeys", "dw", "n", false)
+
+logger.i("sleeping")
+os.execute("sleep 20")

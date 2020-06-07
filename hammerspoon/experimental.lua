@@ -94,13 +94,16 @@ end
 
 function getSelectedTextRange()
   -- for now force manual accessibility on
-  local axApp = ax.applicationElement(hs.application.frontmostApplication())
+  local app = hs.application.frontmostApplication()
+  local axApp = ax.applicationElement(app)
   axApp:setAttributeValue('AXManualAccessibility', true)
   -- axApp:setAttributeValue('AXEnhancedUserInterface', true)
 
   local systemElement = ax.systemWideElement()
   local currentElement = systemElement:attributeValue("AXFocusedUIElement")
   local role = currentElement:attributeValue("AXRole")
+
+  logger.i("in app: " .. app:name())
 
   if role == "AXTextField" or role == "AXTextArea" then
     logger.i("Currently in text field")
