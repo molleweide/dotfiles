@@ -3,19 +3,22 @@
 -- -----------------------------------------------------------------------
   -- Comment out this following line if you wish to see animations
 local windowMeta = {}
-window = require "hs.window"
+local window = require "hs.window"
 hs.window.animationDuration = 0
-grid = require "hs.grid"
+
+local grid = require "hs.grid"
 grid.setMargins('0, 0')
 
-module = {}
+local module = {}
 
 -- Set screen watcher, in case you connect a new monitor, or unplug a monitor
 screens = {}
 screenArr = {}
+
 local screenwatcher = hs.screen.watcher.new(function()
   screens = hs.screen.allScreens()
 end)
+
 screenwatcher:start()
 
 -- Construct list of screens
