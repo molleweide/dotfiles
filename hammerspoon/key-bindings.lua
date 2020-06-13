@@ -39,3 +39,24 @@ hs.hotkey.bind(hyper, 'h', function()
   hs.application.launchOrFocus("Hammerspoon")
   hs.reload()
 end)
+
+local function popoutChromeTab()
+  hs.application.launchOrFocus('/Applications/Google Chrome.app')
+
+  local chrome = hs.appfinder.appFromName("Google Chrome")
+  local moveTab = {'Tab', 'Move Tab to New Window'}
+
+  chrome:selectMenuItem(moveTab)
+end
+
+-- popout the current chrome tab and view 50-50 side by side
+hs.hotkey.bind(super, '/', function()
+  -- Move current window to the left half
+  wm.leftHalf()
+
+  hs.timer.doAfter(250 / 1000, function()
+    -- Pop out the current tab and move it to the right
+    popoutChromeTab()
+    wm.rightHalf()
+  end)
+end)
