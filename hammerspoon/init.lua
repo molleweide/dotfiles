@@ -28,6 +28,7 @@ vim
   :disableForApp('Visual Studio Code')
   :disableForApp('Code')
   :disableForApp('zoom.us')
+  :disableForApp('Alacritty')
   :disableForApp('iTerm')
   :disableForApp('iTerm2')
   :disableForApp('Terminal')
