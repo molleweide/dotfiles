@@ -6,3 +6,6 @@ require_installer package-manager
 
 symlink_dotfile alacritty.yml ~/.alacritty.yml
 brew_cask_install alacritty
+
+# get fucking bent, Catalina
+xattr -r -d com.apple.quarantine /Applications/Alacritty.app
