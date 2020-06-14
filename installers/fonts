@@ -109,4 +109,5 @@ if is_linux; then
 else
   # disabling for now
   brew_cask_install homebrew/cask-fonts/font-inconsolatago-nerd-font
+  brew_cask_install epk/epk/font-sf-mono-nerd-font
 fi
