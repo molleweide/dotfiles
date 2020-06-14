@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+if is_macos; then
+  require_installer package-manager
+
+  brew_tap koekeishiya/formulae
+  brew_install yabai
+
+  symlink_dotfile yabairc ~/.yabairc
+fi
