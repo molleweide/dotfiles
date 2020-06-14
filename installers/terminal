@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+require_installer package-manager
+
+symlink_dotfile alacritty.yml ~/.alacritty.yml
+brew_cask_install alacritty
