@@ -54,7 +54,7 @@ hs.hotkey.bind(super, '/', function()
   -- Move current window to the left half
   wm.leftHalf()
 
-  hs.timer.doAfter(250 / 1000, function()
+  hs.timer.doAfter(100 / 1000, function()
     -- Pop out the current tab and move it to the right
     popoutChromeTab()
     wm.rightHalf()
