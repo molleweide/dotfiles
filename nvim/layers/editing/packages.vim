@@ -16,3 +16,6 @@ Plug 'milkypostman/vim-togglelist'
 Plug 'kshenoy/vim-signature'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'mattn/emmet-vim'
+
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
