@@ -318,6 +318,11 @@ defaults write com.apple.dock springboard-show-duration -float 0
 # dialog boxes
 defaults write NSGlobalDomain NSWindowResizeTime .001
 
+# Disable font smoothing
+# https://tonsky.me/blog/monitors
+defaults -currentHost delete -globalDomain AppleFontSmoothing
+defaults write -g CGFontRenderingFontSmoothingDisabled -bool YES
+
 # Kill affected applications
 for app in Finder Dock Mail Safari iTunes iCal Address\ Book SystemUIServer; do killall "$app" > /dev/null 2>&1; done
 echo "OSX Hacks Done. Note that some of these changes require a logout/restart to take effect."
