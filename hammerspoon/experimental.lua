@@ -252,7 +252,7 @@ hs.hotkey.bind(hyper, 'b', function()
   drawBoxAbove(position.x, position.y)
 end)
 
-hs.hotkey.bind(hyper, 'a', function()
+hs.hotkey.bind(hyper, '5', function()
   -- logger.i("Selection enabled", hasCurrentSelection())
   getSelectedTextRange()
 end)

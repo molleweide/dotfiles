@@ -8,5 +8,12 @@ if is_macos; then
   brew_tap koekeishiya/formulae
   brew_install yabai
 
+  brew_tap koekeishiya/formulae
+  brew_install skhd
+
+  brew services start skhd
+  brew services start yabai
+
+  symlink_dotfile skhdrc ~/.skhdrc
   symlink_dotfile yabairc ~/.yabairc
 fi
