@@ -244,7 +244,7 @@ function drawBoxAbove(xPos, yPos)
   canvas:show()
 end
 
-hs.hotkey.bind(hyper, 'b', function()
+hs.hotkey.bind(hyper, '0', function()
   local systemElement = ax.systemWideElement()
   local currentElement = systemElement:attributeValue("AXFocusedUIElement")
   local position = currentElement:position()

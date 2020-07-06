@@ -1,15 +1,20 @@
 -- Sony WH-1000XM3
-local headphoneDeviceId = "ac-88-fd-ee-5b-37"
+local headphoneDeviceId = "cc-98-8b-63-f1-2e"
 
 local function run(cmd)
-  hs.osascript.applescript(string.format('do shell script "%s"', cmd))
+  local result, success = hs.execute(cmd)
+  result = string.gsub(result, "\n$", "")
+
+  return result, success
 end
 
 local function disconnectHeadphones()
-  local cmd = "/usr/local/bin/blueutil --disconnect " .. headphoneDeviceId
+  hs.timer.doAfter(0, function()
+    local cmd = "/usr/local/bin/blueutil --disconnect " .. headphoneDeviceId
 
-  run(cmd)
-  hs.alert("Disconnected headphones")
+    run(cmd)
+    hs.alert("Disconnected headphones")
+  end)
 end
 
 local function connectHeadphones()
@@ -21,17 +26,17 @@ local function connectHeadphones()
   end)
 end
 
-local function handleCaffeinateEvent(eventType)
-  if eventType == hs.caffeinate.watcher.screensDidLock then
+local function areHeadphonesConnected()
+  local result = run("/usr/local/bin/blueutil --is-connected " .. headphoneDeviceId)
+  return result == "1"
+end
+
+local function toggleHeadphones()
+  if areHeadphonesConnected() then
     disconnectHeadphones()
-  elseif eventType == hs.caffeinate.watcher.screensDidUnlock then
+  else
     connectHeadphones()
   end
 end
 
--- this is blocking the UI
-
--- local watcher = hs.caffeinate.watcher.new(handleCaffeinateEvent)
--- watcher:start()
-
--- hs.hotkey.bind(hyper, 'w', connectHeadphones)
+hs.hotkey.bind(hyper, 'b', toggleHeadphones)
