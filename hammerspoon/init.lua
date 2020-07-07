@@ -18,6 +18,7 @@ require "experimental"
 require "contextual-modal"
 require "headphones"
 require "vim3"
+require "spotify"
 
 local vim = VimMode:new()
 
