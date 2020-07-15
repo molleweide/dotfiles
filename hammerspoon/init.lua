@@ -19,6 +19,7 @@ require "contextual-modal"
 require "headphones"
 require "vim3"
 require "spotify"
+require "github"
 
 local vim = VimMode:new()
 
@@ -33,6 +34,7 @@ vim
   :disableForApp('iTerm')
   :disableForApp('iTerm2')
   :disableForApp('Terminal')
+  :disableForApp('Tuple')
 
 -- If you want the screen to dim (a la Flux) when you enter normal mode
 -- flip this to true.
