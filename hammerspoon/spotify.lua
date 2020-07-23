@@ -7,4 +7,4 @@ local function openRemoteSpotify()
   end)
 end
 
-hs.hotkey.bind(hyper, '1', openRemoteSpotify)
+hs.hotkey.bind(hyper, '6', openRemoteSpotify)
