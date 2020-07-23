@@ -122,6 +122,7 @@
   editor = nvim
   excludesfile = ~/.gitignore
   pager = diff-so-fancy | less --tabs=4 -RFX
+	commitGraph = true
 
 [advice]
   statusHints = false
@@ -153,3 +154,5 @@
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
+[gc]
+	writecommitGraph = true
