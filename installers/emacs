@@ -25,7 +25,14 @@ function install_doom_dependencies() {
   brew_install shellcheck
 }
 
+function install_xterm_24bit_term_info() {
+  if [ ! -d ~/.terminfo ]; then
+    tic -x -o ~/.terminfo "$(dotfiles_location)/terminfo/terminfo-24bit.src"
+  fi
+}
+
 symlink_dotfile doom.d ~/.doom.d
+install_xterm_24bit_term_info
 install_doom_dependencies
 install_emacs
 install_doom_emacs
