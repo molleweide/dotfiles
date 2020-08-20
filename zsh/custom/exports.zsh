@@ -31,6 +31,9 @@ export PATH="./node_modules/.bin:$PATH"
 export PATH="~/.fzf/bin:$PATH"
 export PATH="$PATH:$HOME/.config/base16-shell"
 
+export DOOMDIR=$HOME/.doom.d
+export PATH="$PATH:$HOME/.emacs.d/bin"
+
 # Cargo
 [ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
 
