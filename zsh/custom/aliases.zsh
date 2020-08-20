@@ -9,6 +9,7 @@ alias sketch="magick $1 \( -clone 0 -negate -blur 0x5 \) \
 alias srync="rsync -vrazh"
 alias tk="tmux kill-session"
 alias tn="tmuxinator"
+alias emacs="emacs -nw"
 alias vim="nvim"
 alias 6="exec zsh"
 
