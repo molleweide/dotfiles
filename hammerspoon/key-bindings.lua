@@ -50,7 +50,7 @@ local function popoutChromeTab()
 end
 
 -- popout the current chrome tab and view 50-50 side by side
-hs.hotkey.bind(super, '/', function()
+hs.hotkey.bind(super, ']', function()
   -- Move current window to the left half
   wm.leftHalf()
 
