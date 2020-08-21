@@ -48,3 +48,6 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
+
+;; ctrl + hjkl navigation between panes and across emacs/tmux borders
+(package! tmux-pane)
