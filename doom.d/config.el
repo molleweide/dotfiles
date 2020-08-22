@@ -64,3 +64,8 @@
 
 ;; split horizontal windows below
 (setq evil-split-window-below t)
+
+;; system clipboard
+(use-package! xclip
+  :config
+  (xclip-mode 1))

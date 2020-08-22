@@ -51,3 +51,6 @@
 
 ;; ctrl + hjkl navigation between panes and across emacs/tmux borders
 (package! tmux-pane)
+
+;; system clipboard
+(package! xclip)
