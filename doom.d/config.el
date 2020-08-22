@@ -58,8 +58,10 @@
   (tmux-pane-mode))
 
 ;; ripgrep
-(after! counsel
-  (setq counsel-fzf-cmd "rg --files --color=never --hidden | fzf -f \"%s\""))
+;; (after! counsel
+;;   (setq counsel-fzf-cmd "rg --files --color=never --hidden | fzf -f \"%s\""))
+
+
 
 ;; make indexing faster
 (after! projectile (setq projectile-indexing-method 'alien))
