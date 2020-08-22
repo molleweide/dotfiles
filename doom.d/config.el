@@ -53,7 +53,14 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; Allow
+;; Allow moving between panes with C-hjkl
 (use-package! tmux-pane
   :config
   (tmux-pane-mode))
+
+;; Split hot keys
+;; (map! :n "v v" 'split-window-right
+;;      :n "s s" 'split-window-below)
+
+;; split horizontal windows below
+(setq evil-split-window-below t)
