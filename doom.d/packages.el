@@ -49,6 +49,9 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
+;; swapping between multi-line and single-line
+(package! multi-line)
+
 ;; ctrl + hjkl navigation between panes and across emacs/tmux borders
 (package! tmux-pane)
 
