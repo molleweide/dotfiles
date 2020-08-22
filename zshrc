@@ -59,6 +59,7 @@ antigen bundle wookayin/fzf-fasd
 antigen bundle twang817/zsh-ssh-agent
 antigen bundle zsh-users/zsh-completions
 antigen bundle zdharma/fast-syntax-highlighting
+antigen bundle hlissner/zsh-autopair
 
 antigen theme romkatv/powerlevel10k
 
