@@ -35,7 +35,6 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
-
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -62,10 +61,33 @@
 ;; (map! :n "v v" 'split-window-right
 ;;      :n "s s" 'split-window-below)
 
+(map! :n "s" nil)
+(map! :prefix "s"
+      :n "s" 'split-window-below
+      :n "v" 'split-window-right)
+
+;; spacebar menu delay
+(setq which-key-idle-delay 0.001)
+
 ;; split horizontal windows below
 (setq evil-split-window-below t)
+
+;; always split vertically
+(setq split-width-threshold nil)
 
 ;; system clipboard
 (use-package! xclip
   :config
   (xclip-mode 1))
+
+;; ctrl p
+(map! :g "C-p" #'+ivy/projectile-find-file)
+
+;; All projectile, all the time.
+(setq doom-modeline-lsp t)
+(setq doom-modeline-major-mode-color-icon t)
+(setq doom-modeline-persp-name t)
+(setq doom-modeline-project-detection 'projectile)
+
+;; Enable emoji!
+(set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji"))
