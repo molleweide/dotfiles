@@ -25,7 +25,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-oceanic-next)
+(setq doom-theme 'doom-one)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -56,6 +56,16 @@
 (use-package! tmux-pane
   :config
   (tmux-pane-mode))
+
+;; ripgrep
+(after! counsel
+  (setq counsel-fzf-cmd "rg --files --color=never --hidden | fzf -f \"%s\""))
+
+;; make indexing faster
+(after! projectile (setq projectile-indexing-method 'alien))
+
+;; go back, vim style
+(map! :nvi "C-6" #'pop-global-mark)
 
 ;; Split hot keys
 ;; (map! :n "v v" 'split-window-right
@@ -94,3 +104,30 @@
 
 ;; Enable emoji!
 (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji"))
+
+;; modeline
+(defun doom-modeline-conditional-buffer-encoding ()
+  "We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case"
+  (setq-local doom-modeline-buffer-encoding
+              (unless (or (eq buffer-file-coding-system 'utf-8-unix)
+                          (eq buffer-file-coding-system 'utf-8)))))
+
+(add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
+
+;; company
+(after! company
+  (setq company-idle-delay 0.5
+        company-minimum-prefix-length 2)
+  (setq company-show-numbers t)
+
+(add-hook 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
+
+(setq-default history-length 1000)
+(setq-default prescient-history-length 1000)
+
+;; show ANSI color codes in plain text
+(after! text-mode
+  (add-hook! 'text-mode-hook
+    ;; Apply ANSI color codes
+    (with-silent-modifications
+      (ansi-color-apply-on-region (point-min) (point-max)))))

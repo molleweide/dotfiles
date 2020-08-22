@@ -49,11 +49,7 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
-;; swapping between multi-line and single-line
-(package! multi-line)
-
-;; ctrl + hjkl navigation between panes and across emacs/tmux borders
-(package! tmux-pane)
-
-;; system clipboard
-(package! xclip)
+(package! multi-line) ;; swapping between multi-line and single-line
+(package! tmux-pane) ;; ctrl-hjkl pane movement w/ tmux support
+(package! vimrc-mode) ;; hahhaahaha
+(package! xclip) ;; system clipboard
