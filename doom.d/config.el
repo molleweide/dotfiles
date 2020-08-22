@@ -66,6 +66,9 @@
       :n "s" 'split-window-below
       :n "v" 'split-window-right)
 
+;; always push force with lease
+(setq magit-push-arguments '("--force-with-lease"))
+
 ;; spacebar menu delay
 (setq which-key-idle-delay 0.001)
 
