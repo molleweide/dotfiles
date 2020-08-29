@@ -92,6 +92,41 @@ end
 
 -- hs.hotkey.bind(hyper, 'r', setFieldValue)
 
+function getCursorPositionManually()
+  local startTime = hs.timer.absoluteTime()
+  local systemElement = ax.systemWideElement()
+  local currentElement = systemElement:attributeValue("AXFocusedUIElement")
+
+  local startValue = currentElement:attributeValue('AXValue')
+  hs.eventtap.keyStroke({}, 'delete', 0)
+
+  local deletedValue = nil
+
+  local predicate = function()
+    deletedValue = currentElement:attributeValue('AXValue')
+    return deletedValue ~= startValue
+  end
+
+  hs.timer.waitUntil(predicate, function()
+    hs.eventtap.keyStroke({'cmd'}, 'z', 0)
+
+    local endTime = hs.timer.absoluteTime()
+
+    local diffNs = endTime - startTime
+    local diffMs = diffNs / 1000000
+
+    logger.i('first value:')
+    logger.i(inspect(startValue))
+
+    logger.i('second value:')
+    logger.i(inspect(deletedValue))
+
+    logger.i("took: " .. diffMs .. "ms")
+  end)
+end
+
+hs.hotkey.bind(hyper, '2', getCursorPositionManually)
+
 function debugElement(currentElement)
   local role = currentElement:attributeValue("AXRole")
 
