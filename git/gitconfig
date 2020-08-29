@@ -53,6 +53,7 @@
 
   # push
   ps = push -u                         # push
+  p = push -u --force-with-lease
   please = push -u --force-with-lease
 
   # rebase
