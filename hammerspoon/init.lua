@@ -16,7 +16,12 @@ require "pairing-mode"
 require "experimental"
 require "contextual-modal"
 require "headphones"
-require "vim3"
+
+-- only do vim3 dev on my desktop
+if hs.host.localizedName() == "sorny" then
+  require "vim3"
+end
+
 require "spotify"
 require "github"
 
