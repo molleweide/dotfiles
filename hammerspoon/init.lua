@@ -31,14 +31,14 @@ local vim = VimMode:new()
 -- For example, you don't want this plugin overriding your control of Terminal
 -- vim
 vim
-  :disableForApp('Visual Studio Code')
-  :disableForApp('Code')
-  :disableForApp('zoom.us')
   :disableForApp('Alacritty')
-  :disableForApp('iTerm')
-  :disableForApp('iTerm2')
+  :disableForApp('Code')
   :disableForApp('Terminal')
   :disableForApp('Tuple')
+  :disableForApp('Visual Studio Code')
+  :disableForApp('iTerm')
+  :disableForApp('iTerm2')
+  :disableForApp('zoom.us')
 
 -- If you want the screen to dim (a la Flux) when you enter normal mode
 -- flip this to true.
