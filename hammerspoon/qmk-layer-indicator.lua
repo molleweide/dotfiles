@@ -137,13 +137,29 @@ end)
 
 --------------- watcher
 
+local function delayRender()
+  hs.timer.doAfter(10 / 1000, function()
+    layerIndicator:render()
+  end)
+end
+
 -- fix alt tabbing from games not rendering correctly
 local watcher = hs.application.watcher.new(function(applicationName, eventType)
   if eventType == hs.application.watcher.activated then
-    hs.timer.doAfter(10 / 1000, function()
-      layerIndicator:render()
-    end)
+    delayRender()
   end
 end)
 
 watcher:start()
+
+local caffeineEvents = {}
+caffeineEvents[hs.caffeinate.watcher.systemDidWake] = true
+caffeineEvents[hs.caffeinate.watcher.screensDidUnlock] = true
+caffeineEvents[hs.caffeinate.watcher.screensDidWake] = true
+
+-- fix sleep
+local sleepWatcher = hs.caffeinate.watcher.new(function(eventType)
+  if caffeineEvents[eventType] then
+    delayRender()
+  end
+end)
