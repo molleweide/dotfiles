@@ -111,7 +111,7 @@ function LayerIndicator:show()
   self.canvas:show()
 
   -- show it above the Menu Bar
-  self.canvas:level("_MaximumWindowLevelKey")
+  self.canvas:level("overlay")
 end
 
 function LayerIndicator:getFrame()
@@ -134,3 +134,16 @@ end)
 hs.hotkey.bind({}, 'f18', function()
   layerIndicator:setLayer(layers.default)
 end)
+
+--------------- watcher
+
+-- fix alt tabbing from games not rendering correctly
+local watcher = hs.application.watcher.new(function(applicationName, eventType)
+  if eventType == hs.application.watcher.activated then
+    hs.timer.doAfter(10 / 1000, function()
+      layerIndicator:render()
+    end)
+  end
+end)
+
+watcher:start()
