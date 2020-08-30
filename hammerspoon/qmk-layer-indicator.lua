@@ -158,12 +158,12 @@ end
 
 --------------- bindings
 
-local layerIndicator = LayerIndicator:new(layers.default)
+local indicator = LayerIndicator:new(layers.default)
 
 hs.hotkey.bind({}, 'f17', function()
-  layerIndicator:setLayer(layers.raise)
+  indicator:setLayer(layers.raise)
 end)
 
 hs.hotkey.bind({}, 'f18', function()
-  layerIndicator:setLayer(layers.default)
+  indicator:setLayer(layers.default)
 end)
