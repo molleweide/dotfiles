@@ -24,6 +24,7 @@ end
 
 require "spotify"
 require "github"
+require "qmk-layer-indicator"
 
 local vim = VimMode:new()
 
