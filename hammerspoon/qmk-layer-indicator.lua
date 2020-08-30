@@ -12,7 +12,7 @@ end
 -- see http://colorsafe.co for combos
 local layers = {
   default = {
-    name = "default",
+    name = "qwerty",
     background = rgba(187, 187, 187),
     foreground = rgba(46, 52, 59),
   },
