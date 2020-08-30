@@ -52,7 +52,7 @@ function LayerIndicator:new(defaultLayer)
       type = 'rectangle',
       action = 'fill',
       roundedRectRadii = { xRadius = 4, yRadius = 4 },
-      fillColor = rgba(0, 0, 0),
+      fillColor = { red = 0, green = 0, blue = 0, alpha = 1.0 },
       frame = { x = "0%", y = "0%", h = "100%", w = "100%", },
     },
     elementIndexBox
@@ -72,8 +72,38 @@ function LayerIndicator:new(defaultLayer)
 
   indicator:render()
   indicator:show()
+  indicator:startWatchers()
 
   return indicator
+end
+
+function LayerIndicator:startWatchers()
+  local delayRender = function()
+    hs.timer.doAfter(10 / 1000, function()
+      layerIndicator:render()
+    end)
+  end
+
+  -- fix alt tabbing from fullscreen games/etc not re-rendering correctly
+  local watcher = hs.application.watcher.new(function(applicationName, eventType)
+    if eventType == hs.application.watcher.activated then
+      delayRender()
+    end
+  end)
+
+  watcher:start()
+
+  -- fix render on sleep/wake/etc
+  local caffeineEvents = {}
+  caffeineEvents[hs.caffeinate.watcher.systemDidWake] = true
+  caffeineEvents[hs.caffeinate.watcher.screensDidUnlock] = true
+  caffeineEvents[hs.caffeinate.watcher.screensDidWake] = true
+
+  local sleepWatcher = hs.caffeinate.watcher.new(function(eventType)
+    if caffeineEvents[eventType] then
+      delayRender()
+    end
+  end)
 end
 
 function LayerIndicator:render()
@@ -98,8 +128,11 @@ function LayerIndicator:render()
 
   -- position
   local frame = self:getFrame()
-  local width = frame.w
-  local x = (width / 2) - (defaultWidth / 2)
+  local frameWidth = frame.w
+
+  -- put the indicator in the middle of the screen
+  local x = (frameWidth / 2) - (defaultWidth / 2)
+  local y = 3 -- hardcode, you can change this
 
   canvas:topLeft({
     x = x,
@@ -133,33 +166,4 @@ end)
 
 hs.hotkey.bind({}, 'f18', function()
   layerIndicator:setLayer(layers.default)
-end)
-
---------------- watcher
-
-local function delayRender()
-  hs.timer.doAfter(10 / 1000, function()
-    layerIndicator:render()
-  end)
-end
-
--- fix alt tabbing from games not rendering correctly
-local watcher = hs.application.watcher.new(function(applicationName, eventType)
-  if eventType == hs.application.watcher.activated then
-    delayRender()
-  end
-end)
-
-watcher:start()
-
-local caffeineEvents = {}
-caffeineEvents[hs.caffeinate.watcher.systemDidWake] = true
-caffeineEvents[hs.caffeinate.watcher.screensDidUnlock] = true
-caffeineEvents[hs.caffeinate.watcher.screensDidWake] = true
-
--- fix sleep
-local sleepWatcher = hs.caffeinate.watcher.new(function(eventType)
-  if caffeineEvents[eventType] then
-    delayRender()
-  end
 end)
