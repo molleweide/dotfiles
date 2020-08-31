@@ -130,9 +130,7 @@ hs.hotkey.bind(hyper, '2', getCursorPositionManually)
 function debugElement(currentElement)
   local role = currentElement:attributeValue("AXRole")
 
-  logger.i("in app: " .. app:name())
-
-  if role == "AXTextField" or role == "AXTextArea" then
+  if role == "AXTextField" or role == "AXTextArea" or role == "AXComboBox" then
     logger.i("Currently in text field")
     logger.i(inspect(currentElement:parameterizedAttributeNames()))
     logger.i("attributes:")
@@ -154,6 +152,8 @@ function debugElement(currentElement)
     local text = currentElement:attributeValue("AXValue")
     local textLength = currentElement:attributeValue("AXNumberOfCharacters")
     local range = currentElement:attributeValue("AXSelectedTextRange")
+
+    logger.i("Children:" .. inspect(currentElement:attributeValue('AXChildren')))
 
     local attempt = {
       'subrole',
@@ -179,6 +179,24 @@ function debugElement(currentElement)
     logger.i("Role = " .. role)
   end
 end
+
+hs.hotkey.bind(super, 'd', function()
+  local systemElement = ax.systemWideElement()
+  local currentElement = systemElement:attributeValue("AXFocusedUIElement")
+
+  debugElement(currentElement)
+
+  ancestorFn = currentElement['editableAncestor']
+
+  if ancestorFn then
+    logger.i("============================ ancestor\n")
+    -- debugElement(ancestorFn(currentElement))
+    local ancestor = currentElement:attributeValue('AXFocusableAncestor')
+    debugElement(ancestor)
+
+    ancestor:replaceRangeWithTextWithParameter("123")
+  end
+end)
 
 function debugField(currentElement, fieldName)
   local field = currentElement:attributeValue(fieldName)
@@ -357,7 +375,7 @@ function registerApplicationWatcher(app)
     :callback(function(...) print(hs.inspect(table.pack(...), { newline = " ", indent = "" })) end)
     :addWatcher(element, "AXFocusedUIElementChanged")
 
-  -- printAXNotifications(element, observer)
+  printAXNotifications(element, observer)
 
   observer:start()
 
