@@ -228,6 +228,11 @@ if is_macos; then
       install_simple_dmg_copy "LICEcap" "$url"
     }
 
+    install_lunar() {
+      local url="https://lunar.fyi/download/latest"
+      install_simple_dmg_copy Lunar "$url"
+    }
+
     install_on_the_job() {
       local url="http://stuntsoftware.com/downloads/OnTheJob.zip"
       install_simple_zip "On The Job" "$url"
