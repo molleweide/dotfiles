@@ -63,19 +63,19 @@ if is_macos; then
       local installer_path=$3
 
       if ! app_installed "$name"; then
-	dotsay "@blue@b[[+ Installing $name]]"
+        dotsay "@blue@b[[+ Installing $name]]"
 
-	downloading_msg "$name"
+        downloading_msg "$name"
 
-	local dmg_path=$(installer_download "$url" "$name.dmg")
-	local mount_path=$(mount_dmg "$dmg_path")
+        local dmg_path=$(installer_download "$url" "$name.dmg")
+        local mount_path=$(mount_dmg "$dmg_path")
 
-	run_program_and_wait "$mount_path/$installer_path"
+        run_program_and_wait "$mount_path/$installer_path"
 
-	unmount_dmg "$mount_path"
-	rm -fr $dmg_path
+        unmount_dmg "$mount_path"
+        rm -fr $dmg_path
       else
-	already_installed_msg "$name"
+        already_installed_msg "$name"
       fi
     }
 
@@ -84,18 +84,18 @@ if is_macos; then
       local url=$2
 
       if ! app_installed "$name"; then
-	dotsay "@blue@b[[+ Installing $name]]"
+        dotsay "@blue@b[[+ Installing $name]]"
 
-	local dmg_path=$(installer_download "$url" "$name.dmg")
-	local mount_path=$(mount_dmg "$dmg_path")
-	local app_to_copy="$mount_path/$name.app"
+        local dmg_path=$(installer_download "$url" "$name.dmg")
+        local mount_path=$(mount_dmg "$dmg_path")
+        local app_to_copy="$mount_path/$name.app"
 
-	cp -r "$app_to_copy" /Applications
+        cp -r "$app_to_copy" /Applications
 
-	unmount_dmg "$mount_path"
-	rm -fr $dmg_path
+        unmount_dmg "$mount_path"
+        rm -fr $dmg_path
       else
-	already_installed_msg "$name"
+        already_installed_msg "$name"
       fi
     }
 
@@ -105,13 +105,13 @@ if is_macos; then
       local url=$3
 
       if ! app_installed "$name"; then
-	dotsay "@blue@b[[+ Installing $name]]"
+        dotsay "@blue@b[[+ Installing $name]]"
 
-	local zip_path=$(installer_download "$url" "$name.zip")
-	unzip -d /tmp "$zip_path"
-	open "/tmp/$installer"
+        local zip_path=$(installer_download "$url" "$name.zip")
+        unzip -d /tmp "$zip_path"
+        open "/tmp/$installer"
       else
-	already_installed_msg "$name"
+        already_installed_msg "$name"
       fi
     }
 
@@ -120,15 +120,15 @@ if is_macos; then
       local url=$2
 
       if ! app_installed "$name"; then
-	dotsay "@blue@b[[+ Installing $name]]"
+        dotsay "@blue@b[[+ Installing $name]]"
 
-	local zip_path=$(installer_download "$url" "$name.zip")
+        local zip_path=$(installer_download "$url" "$name.zip")
 
-	unzip -d /Applications "$zip_path"
+        unzip -d /Applications "$zip_path"
 
-	rm -fr $zip_path
+        rm -fr $zip_path
       else
-	already_installed_msg "$name"
+        already_installed_msg "$name"
       fi
     }
 
@@ -137,30 +137,30 @@ if is_macos; then
       local url=$2
 
       if ! app_installed "$name"; then
-	dotsay "@blue@b[[+ Installing $name]]"
+        dotsay "@blue@b[[+ Installing $name]]"
 
-	local zip_path=$(installer_download "$url" "$name.zip")
-	local tmp_directory=$(mktemp -d -t 'dotfiles')
+        local zip_path=$(installer_download "$url" "$name.zip")
+        local tmp_directory=$(mktemp -d -t 'dotfiles')
 
-	unzip -d "$tmp_directory" "$zip_path" >/dev/null
+        unzip -d "$tmp_directory" "$zip_path" >/dev/null
 
-	dmg_path=$(
-	  find -E "$tmp_directory" \
-	    -not -path '*/\.*' \
-	    -iregex "\/[[:alpha:][:digit:]]+.*\.dmg$"
-	)
+        dmg_path=$(
+        find -E "$tmp_directory" \
+          -not -path '*/\.*' \
+          -iregex "\/[[:alpha:][:digit:]]+.*\.dmg$"
+        )
 
-	local mount_path=$(mount_dmg "$dmg_path")
-	local app_to_copy="$mount_path/$name.app"
+        local mount_path=$(mount_dmg "$dmg_path")
+        local app_to_copy="$mount_path/$name.app"
 
-	cp -r "$app_to_copy" /Applications
+        cp -r "$app_to_copy" /Applications
 
-	unmount_dmg "$mount_path"
+        unmount_dmg "$mount_path"
 
-	rm -fr $zip_path
-	rm -fr $tmp_directory
+        rm -fr $zip_path
+        rm -fr $tmp_directory
       else
-	already_installed_msg "$name"
+        already_installed_msg "$name"
       fi
     }
 
@@ -169,12 +169,12 @@ if is_macos; then
       local url=$2
 
       if ! app_installed "$name"; then
-	local pkg_path=$(installer_download "$url" "$name.pkg")
+        local pkg_path=$(installer_download "$url" "$name.pkg")
 
-	run_installer_pkg "$pkg_path"
-	rm -fr $pkg_path
+        run_installer_pkg "$pkg_path"
+        rm -fr $pkg_path
       else
-	already_installed_msg "$name"
+        already_installed_msg "$name"
       fi
     }
 
@@ -238,18 +238,18 @@ if is_macos; then
       local support_dir="$HOME/Library/Application Support/On The Job 3"
 
       if [ ! -d $HOME/Dropbox ]; then
-	dotsay "@b@red[[ERROR Dropbox needs to be setup to finish configuring On The Job]]"
-	return 1
+        dotsay "@b@red[[ERROR Dropbox needs to be setup to finish configuring On The Job]]"
+        return 1
       fi
 
       if [ ! -d "$synced_dir" ]; then
-	dotsay "@b@red[[ERROR the OTJ Dropbox dir needs to be synced to finish configuring On The Job]]"
-	return 1
+        dotsay "@b@red[[ERROR the OTJ Dropbox dir needs to be synced to finish configuring On The Job]]"
+        return 1
       fi
 
       if [[ ! -L "$support_dir" ]]; then
-	dotsay "@b@blue[[Synced On the Job with Dropbox]]"
-	ln -sf "$synced_dir" "$support_dir"
+        dotsay "@b@blue[[Synced On the Job with Dropbox]]"
+        ln -sf "$synced_dir" "$support_dir"
       fi
     }
 
@@ -294,13 +294,13 @@ if is_macos; then
       local path="$HOME/Dropbox/Mac Software/Zooom2.app"
 
       if ! app_installed "$name"; then
-	if [ ! -e "$path" ]; then
-	  dotsay "@b@red[[ERROR installing $name at $path - mount and sync Dropbox and try again]]"
-	else
-	  cp -r "$path" /Applications
-	fi
+        if [ ! -e "$path" ]; then
+          dotsay "@b@red[[ERROR installing $name at $path - mount and sync Dropbox and try again]]"
+        else
+          cp -r "$path" /Applications
+        fi
       else
-	already_installed_msg "$name"
+        already_installed_msg "$name"
       fi
     }
 
