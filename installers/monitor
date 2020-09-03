@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+DDCCTL_DIR="$HOME/.ddcctl"
+
+function is_amd_gpu() {
+  system_profiler SPDisplaysDataType | grep -q AMD
+}
+
+function install_ddcctl() {
+  if [ ! -d "$DDCCTL_DIR" ]; then
+    dotsay "@b@blue[[+ Cloning ddcctl]]"
+
+    git clone https://github.com/kfix/ddcctl.git "$DDCCTL_DIR"
+  fi
+}
+
+function compile_ddcctl() {
+  if is_amd_gpu ; then
+    dotsay "@b@blue[[+ Compiling ddcctl for AMD]]"
+    echo
+
+    cd "$DDCCTL_DIR" && make amd
+  fi
+}
+
+function symlink_ddcctl() {
+  ln -sf "$DDCCTL_DIR/ddcctl" "$HOME/.local/bin/ddcctl"
+}
+
+install_ddcctl
+compile_ddcctl
+symlink_ddcctl
+
+# -i 15 for display
