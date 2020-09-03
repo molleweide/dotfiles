@@ -34,7 +34,9 @@ local elementIndexText = 2
 
 function LayerIndicator:new(defaultLayer)
   local indicator = {
-    layer = defaultLayer
+    layer = defaultLayer,
+    appWatcher = nil,
+    caffeineWatcher = nil
   }
 
   setmetatable(indicator, self)
@@ -80,18 +82,18 @@ end
 function LayerIndicator:startWatchers()
   local delayRender = function()
     hs.timer.doAfter(10 / 1000, function()
-      layerIndicator:render()
+      self:render()
     end)
   end
 
   -- fix alt tabbing from fullscreen games/etc not re-rendering correctly
-  local watcher = hs.application.watcher.new(function(applicationName, eventType)
+  self.appWatcher = hs.application.watcher.new(function(applicationName, eventType)
     if eventType == hs.application.watcher.activated then
       delayRender()
     end
   end)
 
-  watcher:start()
+  self.appWatcher:start()
 
   -- fix render on sleep/wake/etc
   local caffeineEvents = {}
@@ -99,11 +101,13 @@ function LayerIndicator:startWatchers()
   caffeineEvents[hs.caffeinate.watcher.screensDidUnlock] = true
   caffeineEvents[hs.caffeinate.watcher.screensDidWake] = true
 
-  local sleepWatcher = hs.caffeinate.watcher.new(function(eventType)
+  self.caffeineWatcher = hs.caffeinate.watcher.new(function(eventType)
     if caffeineEvents[eventType] then
       delayRender()
     end
   end)
+
+  self.caffeineWatcher:start()
 end
 
 function LayerIndicator:render()
