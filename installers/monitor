@@ -5,7 +5,7 @@ source "${BASH_SOURCE%/*}/shared.sh"
 DDCCTL_DIR="$HOME/.ddcctl"
 
 function is_amd_gpu() {
-  system_profiler SPDisplaysDataType | grep -q AMD
+  system_profiler SPDisplaysDataType | grep -q -E "(AMD|Radeon)"
 }
 
 function install_ddcctl() {
@@ -32,5 +32,3 @@ function symlink_ddcctl() {
 install_ddcctl
 compile_ddcctl
 symlink_ddcctl
-
-# -i 15 for display

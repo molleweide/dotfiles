@@ -16,6 +16,7 @@ require "pairing-mode"
 require "experimental"
 require "contextual-modal"
 require "headphones"
+require "monitor-switching"
 
 -- only do vim3 dev on my desktop
 if hs.host.localizedName() == "sorny" then
