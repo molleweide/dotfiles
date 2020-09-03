@@ -4,7 +4,6 @@ quickSwitchBindings = {
   {hyper, 'a', '/Applications/Slack.app'},
   {hyper, 'c', '/Applications/Google Chrome.app'},
   {hyper, 'i', '/Applications/Signal.app'},
-  {hyper, 'm', '/Applications/Messages.app'},
   {hyper, 's', '/Applications/Spotify.app'},
   {hyper, 't', '/Applications/Alacritty.app'}
 }
