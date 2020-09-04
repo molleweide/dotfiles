@@ -162,12 +162,24 @@ end
 
 --------------- bindings
 
+local lowTom = hs.sound.getByFile(os.getenv('HOME') .. "/.dotfiles/sounds/808-tom-low.wav")
+local highTom = hs.sound.getByFile(os.getenv('HOME') .. "/.dotfiles/sounds/808-tom-high.wav")
+
+lowTom:volume(0.3)
+highTom:volume(0.3)
+
 local indicator = LayerIndicator:new(layers.default)
 
 hs.hotkey.bind({}, 'f17', function()
   indicator:setLayer(layers.raise)
+
+  highTom:currentTime(0)
+  highTom:play()
 end)
 
 hs.hotkey.bind({}, 'f18', function()
   indicator:setLayer(layers.default)
+
+  lowTom:currentTime(0)
+  lowTom:play()
 end)
