@@ -1,6 +1,21 @@
 local logger = hs.logger.new('explore', 'debug')
 local ax = require("hs._asm.axuielement")
 
+local function withMeasurement(name, fn)
+  local logger = hs.logger.new('timer', 'debug')
+
+  local startTime = hs.timer.absoluteTime()
+
+  fn()
+
+  local endTime = hs.timer.absoluteTime()
+
+  local diffNs = endTime - startTime
+  local diffMs = diffNs / 1000000
+
+  logger.i(name .. "took: " .. diffMs .. "ms")
+end
+
 function getCurrentSelection()
    local elem = hs.uielement.focusedElement()
    local sel = nil
@@ -19,7 +34,116 @@ function getCurrentSelection()
    return (sel or "")
 end
 
-function getCurrentSelectionFromClipboard(callbackFn)
+function getCurrentPositionAsync(callbackFn)
+  local logger = hs.logger.new('timer', 'debug')
+  local startTimeNs = hs.timer.absoluteTime()
+
+  local reportCallback = function(position)
+    local endTimeNs = hs.timer.absoluteTime()
+    local diffMs = (endTimeNs - startTimeNs) / 1000000
+
+    logger.i("Got position in millseconds: " .. position, diffMs)
+
+    callbackFn(position)
+  end
+
+  local systemElement = ax.systemWideElement()
+  local currentElement = systemElement:attributeValue("AXFocusedUIElement")
+  local initialValue = currentElement:attributeValue('AXValue')
+
+  -- If empty, we know we can return early with 0
+  if initialValue == "" then return reportCallback(0) end
+
+  local currentValue = initialValue
+
+  local valueChanged = function()
+    currentValue = currentElement:attributeValue('AXValue')
+    return currentValue ~= initialValue
+  end
+
+  -- check every 0.2ms for a value change
+  local waitInterval = 0.2 / 1000
+
+  local changeTimer = hs.timer.waitUntil(
+    valueChanged,
+    function()
+      local position = string.len(currentValue)
+      reportCallback(position)
+
+      withMeasurement("restore value", function()
+        -- restore the value
+        hs.eventtap.keyStroke({"cmd"}, "z", 0)
+        hs.eventtap.keyStroke({}, "left", 0)
+      end)
+    end,
+    waitInterval
+  )
+
+  -- how long are we willing to wait for the value before
+  -- timing out and aborting?
+  local maxWaitTimeSecs = 50 / 1000 -- 500ms
+
+  hs.timer.doAfter(maxWaitTimeSecs, function()
+    if changeTimer:running() then
+      changeTimer:stop()
+      callbackFn(string.len(initialValue))
+    end
+  end)
+
+  -- kick it off
+  hs.eventtap.keyStroke({'cmd', 'shift'}, "down", 0)
+
+  -- fire delete after 2ms
+  hs.timer.doAfter(5 / 1000, function()
+    hs.eventtap.keyStroke({}, "forwarddelete", 0)
+  end)
+end
+
+hs.hotkey.bind(super, 'u', function()
+  getCurrentPositionAsync(function(position)
+    logger.i("Got position " .. inspect(position))
+  end)
+end)
+
+hs.hotkey.bind(super, '9', function()
+  local startTimeNs = hs.timer.absoluteTime()
+  local initialCount = hs.pasteboard.changeCount()
+  local pasteboardTimer
+  local timeoutTimer
+
+  -- the clipboard has updated with a new value once the count changes
+  local clipboardHasUpdated = function()
+    return initialCount ~= hs.pasteboard.changeCount()
+  end
+
+  -- wait for the pasteboard to increment its count, indicating that
+  -- the async copy to clipboard is done
+  local waitInterval = 10 / 1000 -- 10ms
+
+  -- select to the left
+  hs.eventtap.keyStroke({"cmd", "shift"}, "left", 0)
+
+  -- fire copy after 10ms
+  hs.timer.doAfter(10 / 1000, function()
+    hs.eventtap.keyStroke({"cmd"}, "c", 0)
+  end)
+
+  pasteboardTimer = hs.timer.waitUntil(
+    clipboardHasUpdated,
+    function()
+      local contents = hs.pasteboard.getContents()
+
+      local endTimeNs = hs.timer.absoluteTime()
+      local diffMs = (endTimeNs - startTimeNs) / 1000000
+
+      logger.i("Got contents in millseconds: " .. contents, diffMs)
+      logger.i("Cursor position: " .. string.len(contents))
+    end,
+    waitInterval
+  )
+end)
+
+hs.hotkey.bind(super, '8', function()
   local startTimeNs = hs.timer.absoluteTime()
   local initialCount = hs.pasteboard.changeCount()
   local pasteboardTimer
@@ -63,7 +187,7 @@ function getCurrentSelectionFromClipboard(callbackFn)
       callbackFn(nil)
     end
   end)
-end
+end)
 
 function getForwardContents()
   hs.eventtap.keyStroke({'cmd', 'shift'}, 'down', 0)
@@ -91,6 +215,27 @@ function setFieldValue()
 end
 
 -- hs.hotkey.bind(hyper, 'r', setFieldValue)
+
+-- hs.hotkey.bind(super, 'u', function()
+--   local systemElement = ax.systemWideElement()
+--   local currentElement = systemElement:attributeValue("AXFocusedUIElement")
+
+--   withMeasurement('retrieving value', function()
+--     currentElement:attributeValue('AXValue')
+--   end)
+
+--   withMeasurement('retrieving position', function()
+--     currentElement:attributeValue('AXSelectedTextRange')
+--   end)
+
+--   withMeasurement('setting value', function()
+--     currentElement:setValue('blah')
+--   end)
+
+--   withMeasurement('setting position', function()
+--     currentElement:setSelectedTextRange({ location = 0, length = 3 })
+--   end)
+-- end)
 
 function getCursorPositionManually()
   local startTime = hs.timer.absoluteTime()
