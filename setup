@@ -21,3 +21,4 @@ require_installer audio
 require_installer personal
 require_installer java
 require_installer monitor
+require_installer chat
