@@ -29,6 +29,16 @@ require "qmk-layer-indicator"
 
 local vim = VimMode:new()
 
+hs.chooser.globalCallback = function(chooser, eventName)
+  hs.chooser._defaultGlobalCallback(chooser, eventName)
+
+  if eventName == "willOpen" then
+    vim:disable()
+  else
+    vim:enable()
+  end
+end
+
 -- Configure apps you do *not* want Vim mode enabled in
 -- For example, you don't want this plugin overriding your control of Terminal
 -- vim
