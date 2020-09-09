@@ -243,18 +243,18 @@ end
 --   @value {function} callback function
 local function windowBind(hyper, keyFuncTable)
   for key, fn in pairs(keyFuncTable) do
-    hk.bind(hyper, key, fn)
+    hs.hotkey.bind(hyper, key, fn)
   end
 end
 
 -- * Set Window Position on screen
 windowBind(super, {
-  m = wm.maximizeWindow,    -- ⌃⌥⌘ + M
-  c = wm.centerOnScreen,    -- ⌃⌥⌘ + C
-  left = wm.leftHalf,       -- ⌃⌥⌘ + ←
-  right = wm.rightHalf,     -- ⌃⌥⌘ + →
-  up = wm.topHalf,          -- ⌃⌥⌘ + ↑
-  down = wm.bottomHalf      -- ⌃⌥⌘ + ↓
+  m = module.maximizeWindow,    -- ⌃⌥⌘ + M
+  c = module.centerOnScreen,    -- ⌃⌥⌘ + C
+  left = module.leftHalf,       -- ⌃⌥⌘ + ←
+  right = module.rightHalf,     -- ⌃⌥⌘ + →
+  up = module.topHalf,          -- ⌃⌥⌘ + ↑
+  down = module.bottomHalf      -- ⌃⌥⌘ + ↓
 })
 
 return module
