@@ -1,5 +1,5 @@
--- Sony WH-1000XM3
-local headphoneDeviceId = "cc-98-8b-63-f1-2e"
+-- Sony WH-1000XM4
+local headphoneDeviceId = "94-db-56-47-6a-86"
 
 local function run(cmd)
   local result, success = hs.execute(cmd)
