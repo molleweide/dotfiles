@@ -19,8 +19,8 @@ Desktop.ini
 # Tags      taken from: https://github.com/github/gitignore/blob/master/Global/Tags.gitignore
 # ----------------------------------------------------------------------------------------------
 # Ignore tags created by etags and ctags
-TAGS
-tags
+/TAGS
+/tags
 
 # Vim       taken from: https://github.com/github/gitignore/blob/master/Global/vim.gitignore
 # ----------------------------------------------------------------------------------------------
@@ -35,19 +35,19 @@ Session.vim
 /TODO
 
 # Gtags
-GPATH
-GRTAGS
-GTAGS
+/GPATH
+/GRTAGS
+/GTAGS
 
 .dir-locals.el
 
 .#*
 
-tags.lock
-tags.temp
-tags
+/tags.lock
+/tags.temp
+/tags
 .gutentag
-tags.files
+/tags.files
 
 .tern-project
 .projectroot
