@@ -21,6 +21,7 @@ function setup_user_gitconfig() {
 }
 
 function setup_git_dotfiles() {
+  symlink_dotfile git/gitattributes ~/.gitattributes
   symlink_dotfile git/gitconfig ~/.gitconfig
   symlink_dotfile git/gitignore ~/.gitignore
   symlink_dotfile git/gitmessage ~/.gitmessage

@@ -119,6 +119,7 @@
   ff = only
 
 [core]
+  attributesfile = ~/.gitattributes
   autocrlf = false
   editor = nvim
   excludesfile = ~/.gitignore
