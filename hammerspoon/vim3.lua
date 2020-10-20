@@ -1,4 +1,4 @@
-local ax = require("hs._asm.axuielement")
+local ax = require("hs.axuielement")
 local table = require("table")
 
 local logger = hs.logger.new('vim3', 'debug')

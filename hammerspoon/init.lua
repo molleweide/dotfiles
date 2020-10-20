@@ -20,7 +20,7 @@ require "monitor-switching"
 
 -- only do vim3 dev on my desktop
 if hs.host.localizedName() == "sorny" then
-  require "vim3"
+  -- require "vim3"
 end
 
 require "spotify"

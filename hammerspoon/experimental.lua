@@ -1,5 +1,5 @@
 local logger = hs.logger.new('explore', 'debug')
-local ax = require("hs._asm.axuielement")
+local ax = require("hs.axuielement")
 
 local function withMeasurement(name, fn)
   local logger = hs.logger.new('timer', 'debug')
