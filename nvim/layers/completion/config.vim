@@ -1,10 +1,6 @@
 " debugger enable
 " let g:coc_node_args = ['--nolazy', '--inspect-brk=6045']
 
-" configure noshowmode so echodoc.vim isn't overwritten by the -- INSERT --
-" text
-set noshowmode
-
 let $NVIM_COC_LOG_LEVEL = 'debug'
 
 if !exists('g:stripe')
