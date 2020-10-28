@@ -10,3 +10,5 @@ Plug 'chrisbra/Colorizer'
 
 Plug 'RRethy/vim-illuminate'
 Plug 'drzel/vim-line-no-indicator'
+
+Plug 'nvim-treesitter/nvim-treesitter'

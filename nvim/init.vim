@@ -101,3 +101,8 @@ call plug#end()
 for fpath in split(globpath('~/.config/nvim/layers', '**/config.vim'), '\n')
   exe 'source' fpath
 endfor
+
+" Load any Lua configs
+for fpath in split(globpath('~/.config/nvim/layers', '**/config.lua'), '\n')
+  exe 'luafile' fpath
+endfor
