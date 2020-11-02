@@ -279,51 +279,133 @@ function debugElement(currentElement)
     logger.i("Currently in text field")
     logger.i(inspect(currentElement:parameterizedAttributeNames()))
     logger.i("attributes:")
-    logger.i(inspect(currentElement:attributeNames()))
+    logger.i("-----------")
+
+    local attributes = currentElement:allAttributeValues()
+
+    local names = {}
+    for name in pairs(attributes) do table.insert(names, name) end
+    table.sort(names)
+
+    for _, name in ipairs(names) do
+      logger.i("  " .. name .. ": " .. inspect(attributes[name]))
+    end
+
     logger.i("action names:")
-    logger.i(inspect(currentElement:actionNames()))
-    logger.i("dynamic methods:")
-    logger.i(inspect(currentElement:dynamicMethods(true)))
-    logger.i("range:")
-    logger.i(inspect(currentElement:selectedTextRange()))
-    logger.i("Position: ", inspect(currentElement:position()))
-    logger.i("Selected text: ", inspect(currentElement:selectedText()))
+    local names = currentElement:actionNames()
+    logger.i(inspect(names))
+    logger.i("action descriptions:")
+    logger.i("--------------------")
 
-    local lineNum = currentElement:insertionPointLineNumber()
-    logger.i("Insertion point line: ", lineNum)
-    local lineRange = currentElement:rangeForLineWithParameter(lineNum)
-    logger.i("Insertion point content: ", inspect(lineRange))
+    for _, name in ipairs(names) do
+      logger.i("  " .. name .. ": " .. currentElement:actionDescription(name))
+    end
 
-    local text = currentElement:attributeValue("AXValue")
-    local textLength = currentElement:attributeValue("AXNumberOfCharacters")
-    local range = currentElement:attributeValue("AXSelectedTextRange")
+    logger.i("\n")
 
     logger.i("Children:" .. inspect(currentElement:attributeValue('AXChildren')))
 
-    local attempt = {
-      'subrole',
-      'editableAncestor',
-      'dOMClassList',
-      'dOMIdentifier',
-      'description',
-      'roleDescription',
-    }
-
-    for _, fnName in pairs(attempt) do
-      if currentElement[fnName] then
-        logger.i(fnName .. " = " .. inspect(currentElement[fnName](currentElement)))
-      end
-    end
-
-    logger.i("range = " .. inspect(range))
-    logger.i("len = " .. textLength)
-    logger.i("Text is " .. string.sub(text, 1, 100))
-
-    logger.i(inspect(currentElement:allAttributeValues()))
+    -- local attempt = {
+    --   'subrole',
+    --   'editableAncestor',
+    --   'dOMClassList',
+    --   'dOMIdentifier',
+    --   'description',
+    --   'roleDescription',
+    -- }
   else
     logger.i("Role = " .. role)
   end
 end
+
+currentAxElement = function()
+  local systemElement = ax.systemWideElement()
+  return systemElement:attributeValue("AXFocusedUIElement")
+end
+
+intervalTimer = nil
+
+hs.hotkey.bind(super, 'e', function()
+  -- draw a black rectangle in the bounding box with 20% opacity
+  local canvas = hs.canvas.new({ x = 0, y = 0, h = 1, w = 1 })
+
+  canvas:level('overlay')
+
+  -- block caret
+  canvas:insertElement(
+    {
+      type = 'rectangle',
+      action = 'fill',
+      fillColor = { red = 0, green = 0, blue = 0, alpha = 0.2 },
+      frame = { x = "0%", y = "0%", h = "100%", w = "100%", },
+      withShadow = false
+    },
+    1
+  )
+
+  -- cursor disabler
+  local cursorDisableCanvas = hs.canvas.new({ x = 0, y = 0, h = 1, w = 1 })
+
+  cursorDisableCanvas:insertElement(
+    {
+      type = 'rectangle',
+      action = 'fill',
+      fillColor = { red = 255, green = 0, blue = 0, alpha = 1 },
+      frame = { x = "0%", y = "0%", h = "100%", w = "100%", },
+      withShadow = false
+    },
+    1
+  )
+
+  local repositionCursor = function()
+    local currentElement = currentAxElement()
+
+    -- Get the background color
+    local screenshotOfTextInput = hs.screen.mainScreen():snapshot(currentElement:attributeValue("AXFrame"))
+    local color = screenshotOfTextInput:colorAt({ x = 10, y = 10 })
+
+    -- Get the current selection
+    local range = currentElement:attributeValue("AXSelectedTextRange")
+
+    -- Last visible char
+    local visibleRange = currentElement:attributeValue("AXVisibleCharacterRange")
+    local lastVisibleIndex = visibleRange.length + visibleRange.location
+
+    if range.location == lastVisibleIndex then
+      -- hide the caret if we're at the end of the text box
+      canvas:hide()
+      cursorDisableCanvas:hide()
+    else
+      -- Get the range for the next character after the blinking cursor
+      local caretRange = {
+        location = range.location,
+        length = 1,
+      }
+
+      -- get the { h, w, x, y } bounding box for the next character's range
+      local bounds = currentElement:parameterizedAttributeValue("AXBoundsForRange", caretRange)
+
+      -- move the position and resize
+      canvas:topLeft({ x = bounds.x, y = bounds.y })
+      canvas:size({ h = bounds.h, w = bounds.w })
+
+      -- show if not shown
+      canvas:show()
+
+      -- disable the cursor
+      cursorDisableCanvas:topLeft({ x = bounds.x - 1, y = bounds.y })
+      cursorDisableCanvas:size({ h = bounds.h, w = 2 })
+      cursorDisableCanvas:elementAttribute(1, 'fillColor', color)
+
+      cursorDisableCanvas:show()
+    end
+  end
+
+  repositionCursor()
+
+  refresh = 1 / 60 -- 60fps
+  intervalTimer = hs.timer.doEvery(refresh, repositionCursor)
+end)
 
 hs.hotkey.bind(super, 'd', function()
   local systemElement = ax.systemWideElement()
