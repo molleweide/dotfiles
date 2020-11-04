@@ -18,7 +18,7 @@ let g:lightline = {
   \   'right': [
   \     ['lineinfo'],
   \     ['indicator'],
-  \     ['ale_error', 'ale_warning', 'ale_ok', 'fileformat', 'fileencoding', 'filetype']
+  \     ['ale_error', 'ale_warning', 'ale_ok', 'fileformat', 'fileencoding', 'filetype', 'cocstatus']
   \   ]
   \ },
   \ 'component': {
@@ -28,6 +28,7 @@ let g:lightline = {
   \   'mode': 1,
   \ },
   \ 'component_function': {
+  \   'cocstatus': 'coc#status',
   \   'filename': 'MyFilename',
   \   'fileformat': 'MyFileformat',
   \   'filetype': 'MyFiletype',

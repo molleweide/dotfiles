@@ -13,25 +13,38 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-if !exists('g:stripe')
-  " This is the default extra key bindings
-  let g:fzf_action = {
-    \ 'ctrl-t': 'tab split',
-    \ 'ctrl-x': 'split',
-    \ 'ctrl-v': 'vsplit' }
+" This is the default extra key bindings
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
 
-  " Default fzf layout down / up / left / right
-  let g:fzf_layout = { 'down': '~40%' }
-  let g:fzf_sink = 'e'
+let g:fzf_sink = 'e'
+
+" floating window
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.5, 'highlight': 'Comment' } }
+
+" Enable per-command history.
+" CTRL-N and CTRL-P will be automatically bound to next-history and
+" previous-history instead of down and up. If you don't like the change,
+" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+function! g:FzfFilesSource()
+  let l:base = fnamemodify(expand('%'), ':h:.:S')
+  let l:proximity_sort_path = $HOME . '/.cargo/bin/proximity-sort'
+
+  if base == '.'
+    return 'rg --files'
+  else
+    return printf('rg --files | %s %s', l:proximity_sort_path, expand('%'))
+  endif
+endfunction
 
 
-  " Enable per-command history.
-  " CTRL-N and CTRL-P will be automatically bound to next-history and
-  " previous-history instead of down and up. If you don't like the change,
-  " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
-  let g:fzf_history_dir = '~/.local/share/fzf-history'
+let g:fzf_preview_cmd = g:plug_home . "/fzf.vim/bin/preview.sh {}"
 
-  let fzf_source = 'rg --files'
-
-  noremap <C-p> :call fzf#vim#files('', { 'source': fzf_source })<CR>
-endif
+noremap <C-p> :call fzf#vim#files('', { 'source': g:FzfFilesSource(),
+      \ 'options': [
+      \   '--tiebreak=index', '--preview', g:fzf_preview_cmd
+      \  ]})<CR>

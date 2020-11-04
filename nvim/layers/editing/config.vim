@@ -3,16 +3,28 @@ map J <Plug>(expand_region_expand)
 map K <Plug>(expand_region_shrink)
 
 " vim-test
-if !exists('g:stripe')
-  nmap <silent> <leader>T :TestNearest<CR>
-  nmap <silent> <leader>t :TestFile<CR>
-  nmap <silent> <leader>a :TestSuite<CR>
-  nmap <silent> <leader>l :TestLast<CR>
-  nmap <silent> <leader>g :TestVisit<CR>
+nmap <silent> <leader>T :TestNearest<CR>
+nmap <silent> <leader>t :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>l :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
 
+let g:test#preserve_screen = 1
+let test#neovim#term_position = "vert"
+let test#vim#term_position = "vert"
+
+let g:test#javascript#mocha#file_pattern = '\v.*_test\.(js|jsx|ts|tsx)$'
+
+if exists('$TMUX')
+  " Use tmux to kick off tests if we are in tmux currently
   let test#strategy = 'vimux'
-  let g:test#preserve_screen = 1
-  let g:test#javascript#mocha#file_pattern = '\v.*_test\.(js|jsx|ts|tsx)$'
+else
+  " Fallback to using terminal split
+  if has('nvim')
+    let test#strategy = "neovim"
+  else
+    let test#strategy = "vimterminal"
+  endif
 endif
 
 let test#enabled_runners = ["ruby#rspec"]
