@@ -52,6 +52,8 @@ vim
   :disableForApp('iTerm2')
   :disableForApp('zoom.us')
 
+vim:enableBetaFeature('block_cursor_overlay')
+
 -- If you want the screen to dim (a la Flux) when you enter normal mode
 -- flip this to true.
 vim:shouldDimScreenInNormalMode(false)

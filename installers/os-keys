@@ -74,6 +74,9 @@ brew_install blueutil
 brew_cask_install karabiner-elements
 symlink_dotfile karabiner ~/.config/karabiner
 
+luarocks install loop
+luarocks install dkjson
+luarocks install inspect
 luarocks install --server=http://luarocks.org/dev lua-lsp
 luarocks install luacheck
 luarocks install lcf
