@@ -14,7 +14,6 @@ alias vim="nvim"
 alias 6="exec zsh"
 
 # OS X apps
-alias bat="open -a 'Adobe Acrobat' $@"
 alias md="open -a Markoff $@"
 
 # Git
