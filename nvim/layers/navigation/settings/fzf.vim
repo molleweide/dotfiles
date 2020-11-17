@@ -46,6 +46,8 @@ endfunction
 
 let g:fzf_preview_cmd = g:plug_home . "/fzf.vim/bin/preview.sh {}"
 
+noremap <C-b> :Buffers<CR>
+
 noremap <C-p> :call fzf#vim#files('', { 'source': g:FzfFilesSource(),
       \ 'options': [
       \   '--tiebreak=index', '--preview', g:fzf_preview_cmd
