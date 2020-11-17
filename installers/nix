@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+require_installer package-manager
+
+# Uninstall instructions:
+# ------------------------------------------------------------------
+# | This installer will create a volume for the nix store and        |
+# | configure it to mount at /nix.  Follow these steps to uninstall. |
+# ------------------------------------------------------------------
+# 1. Remove the entry from fstab using 'sudo vifs'
+# 2. Destroy the data volume using 'diskutil apfs deleteVolume'
+# 3. Remove the 'nix' line from /etc/synthetic.conf or the file
+
+function install_nixos() {
+  if [ ! -d "$HOME/.nix-profile"]; then
+    dotsay "@blue@b[[+ Installing Nix to /nix]]"
+
+    sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
+
+  fi
+}
+
+function install_home_manager() {
+  nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+  nix-channel --update
+
+  nix-shell '<home-manager>' -A install
+  home-manager build
+  home-manager switch
+}
+
+dotheader "Setting up NixOS..."
+
+symlink_dotfile nixpkgs ~/.config/nixpkgs
+install_nixos
+install_home_manager
