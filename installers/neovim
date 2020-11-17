@@ -97,21 +97,21 @@ function install_coc_plugins() {
 function install_bat() {
   brew_install bat
 
-  mkdir -p ~/.config/bat/conifg
+  mkdir -p ~/.config/bat
   symlink_dotfile bat/config ~/.config/bat/config
 }
 
 dotheader "Setting up Neovim..."
 
-# install_bash_language_server
-# install_ruby_neovim
-# install_neovim
-# setup_neovim_config
-# install_tern
-# install_vim_node_rpc
-# ensure_plugin_directory
-# install_neovim_plugins
-# install_coc_plugins
-# install_rust
-# install_proximity_sort
+install_bash_language_server
+install_ruby_neovim
+install_neovim
+setup_neovim_config
+install_tern
+install_vim_node_rpc
+ensure_plugin_directory
+install_neovim_plugins
+install_coc_plugins
+install_rust
+install_proximity_sort
 install_bat
