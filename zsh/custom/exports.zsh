@@ -28,7 +28,6 @@ export PATH="/usr/local/opt/openssl/bin:$PATH"
 
 export PATH="$PATH:$HOME/.composer/vendor/bin"
 export PATH="./node_modules/.bin:$PATH"
-export PATH="~/.fzf/bin:$PATH"
 export PATH="$PATH:$HOME/.config/base16-shell"
 
 export DOOMDIR=$HOME/.doom.d
