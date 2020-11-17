@@ -117,3 +117,6 @@ endfunction
 
 let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
+
+" barbar
+nnoremap <silent> <C-s> :BufferPick<CR>
