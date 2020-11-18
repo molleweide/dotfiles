@@ -11,7 +11,6 @@ hs.hotkey.bind(hyper, 'm', function()
     inputNumber = 27
   end
 
-  binary = os.getenv("HOME") .. "/.ddcctl/ddcctl"
-
+  binary = os.getenv("HOME") .. "/.nix-profile/bin/ddcctl"
   hs.execute(binary .. " -d 1 -i " .. inputNumber)
 end)
