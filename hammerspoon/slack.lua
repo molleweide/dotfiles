@@ -14,5 +14,4 @@ local function openSlackReminder()
   end)
 end
 
-hs.hotkey.bind(hyper, 'f', focusSlackMessageBox)
-hs.hotkey.bind(hyper, 'r', openSlackReminder)
+hyperSwitcher:bind('r'):toFunction("Slack /remind", openSlackReminder)

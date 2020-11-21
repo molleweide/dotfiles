@@ -12,7 +12,7 @@ hs.hotkey.bind(hyper, 'right', hs.spotify.next)
 hs.hotkey.bind(hyper, 'space', hs.spotify.playpause)
 
 -- reload Hammerspoon
-hs.hotkey.bind(hyper, 'h', function()
+hyperSwitcher:bind('h'):toFunction('Reload Hammerspoon', function()
   hs.application.launchOrFocus("Hammerspoon")
   hs.reload()
 end)

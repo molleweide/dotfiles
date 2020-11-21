@@ -39,4 +39,4 @@ local function toggleHeadphones()
   end
 end
 
-hs.hotkey.bind(hyper, 'b', toggleHeadphones)
+hyperSwitcher:bind('b'):toFunction("Toggle 🎧", toggleHeadphones)

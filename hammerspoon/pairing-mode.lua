@@ -4,7 +4,7 @@ local function enableDoNotDisturb()
   hs.execute("killall NotificationCenter")
 end
 
-hs.hotkey.bind(hyper, 'p', function()
+local function enablePairingMode()
   enableDoNotDisturb()
 
   -- close embarrassing personal apps
@@ -12,4 +12,6 @@ hs.hotkey.bind(hyper, 'p', function()
   hs.execute("killall Messages")
 
   hs.alert("Entering pairing mode")
-end)
+end
+
+hyperSwitcher:bind('p'):toFunction("Enable pairing mode", enablePairingMode)

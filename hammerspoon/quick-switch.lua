@@ -229,24 +229,6 @@ end -- 2 global things remain: 'Object' and 'newclass'
 
 --------------------------------------------------------------------
 
-
-
--- Quick app switch bindings
--- quickSwitchBindings = {
---   {hyper, '1', '/Applications/1Password 7.app'},
---   {hyper, 'a', '/Applications/Slack.app'},
---   {hyper, 'c', '/Applications/Google Chrome.app'},
---   {hyper, 'i', '/Applications/Signal.app'},
---   {hyper, 's', '/Applications/Spotify.app'},
---   {hyper, 't', '/Applications/Alacritty.app'}
--- }
-
--- for i, mapping in ipairs(quickSwitchBindings) do
---   hs.hotkey.bind(mapping[1], mapping[2], function()
---     hs.application.launchOrFocus(mapping[3])
---   end)
--- end
-
 local function onModifierHold(modifiers, timeoutMs, onHold, onRelease)
   local state = {
     held = false,
@@ -298,17 +280,18 @@ local function onModifierHold(modifiers, timeoutMs, onHold, onRelease)
   return state
 end
 
-local onHold = function()
-  vimLogger.i("held hyper")
+--------------------------
+
+local function rgba(r, g, b, a)
+  a = a or 1.0
+
+  return {
+    red = r / 255,
+    green = g / 255,
+    blue = b / 255,
+    alpha = a
+  }
 end
-
-local onRelease = function()
-  vimLogger.i("release hyper")
-end
-
-tap = onModifierHold(hyper, 100, onHold, onRelease)
-
-----------------------------------------------------------------
 
 local KeyBinding = newclass("KeyBinding")
 
@@ -322,12 +305,29 @@ end
 local ApplicationBinding = KeyBinding:subclass("ApplicationBinding")
 
 function ApplicationBinding:init(applicationPath)
-  self.super:init(applicationPath)
+  local parts = hs.fnutils.split(applicationPath, "/")
+  local name = parts[#parts]
+
+  local nameParts = hs.fnutils.split(name, ".", nil, true)
+  local basename = nameParts[1]
+
+  self.super:init(basename)
   self.applicationPath = applicationPath
 end
 
 function ApplicationBinding:launch()
   hs.application.launchOrFocus(self.applicationPath)
+end
+
+local FunctionBinding = KeyBinding:subclass('FunctionBinding')
+
+function FunctionBinding:init(name, fn)
+  self.super:init(name)
+  self.fn = fn
+end
+
+function FunctionBinding:launch()
+  self.fn()
 end
 
 ----------------------------------------------------------------
@@ -337,31 +337,208 @@ local HyperSwitcher = newclass("HyperSwitcher")
 function HyperSwitcher:init(hyperMods)
   self.hyperMods = hyperMods
   self.bindings = {}
+  self.overlay = nil
+end
+
+function HyperSwitcher:showOverlay()
+  self:_buildOverlay()
+  self.overlay:show()
+end
+
+function HyperSwitcher:hideOverlay()
+  self:_buildOverlay()
+  self.overlay:hide()
 end
 
 function HyperSwitcher:bind(key)
   return {
     toApplication = function(_, applicationName)
-      self:_bind(key, ApplicationBinding:new(applicationName))
+      return self:_bind(key, ApplicationBinding:new(applicationName))
+    end,
+    toFunction = function(_, name, fn)
+      return self:_bind(key, FunctionBinding:new(name, fn))
     end
   }
 end
 
+function HyperSwitcher:_buildOverlay()
+  if self.overlay then return end
+
+  local layerIndexes = {
+    background = 1,
+    keyIndex = 2,
+  }
+
+  table.sort(self.bindings, function(a, b)
+    return a.key < b.key
+  end)
+
+  -- how much padding around the edges
+  local containerPadding = 25
+
+  local itemsPerColumn = 5
+  local itemHeight = 25
+  local itemBottomMargin = 10
+  local itemContainer = itemHeight + itemBottomMargin
+
+  local columnWidth = 275
+  local columnCount = math.ceil(#self.bindings / itemsPerColumn)
+
+  local defaultWidth = (containerPadding * 2) + (columnCount * columnWidth)
+  local defaultHeight = (containerPadding * 2) + (itemsPerColumn * itemContainer) - itemBottomMargin
+
+  self.overlay = hs.canvas.new{
+    w = defaultWidth,
+    h = defaultHeight,
+    x = 100,
+    y = 100,
+  }
+
+  -- show in center
+  local frame = hs.screen.mainScreen():frame()
+
+  self.overlay:level("overlay")
+  self.overlay:topLeft({
+    x = (frame.w / 2) - (defaultWidth / 2),
+    y = (frame.h / 2) - (defaultHeight / 2),
+  })
+
+  -- render the background rectangle
+  self.overlay:insertElement(
+    {
+      type = 'rectangle',
+      action = 'fill',
+      roundedRectRadii = { xRadius = 10, yRadius = 10 },
+      fillColor = rgba(24, 135, 250, 1),
+      strokeColor = { white = 1.0 },
+      strokeWidth = 3.0,
+      frame = { x = "0%", y = "0%", h = "100%", w = "100%", },
+    },
+    layerIndexes.background
+  )
+
+  local currentLayerIndex = layerIndexes.keyIndex
+
+  for index, entry in pairs(self.bindings) do
+    local zeroIndex = index - 1
+
+    local keySize = 25
+    local keyRightMargin = 10
+
+    local columnIndex = math.floor(zeroIndex / itemsPerColumn)
+
+    local startX = containerPadding + (columnIndex * columnWidth)
+    local startY = containerPadding + ((zeroIndex % itemsPerColumn) * itemContainer)
+
+    self.overlay:insertElement(
+      {
+        type = 'rectangle',
+        action = 'fill',
+        roundedRectRadii = { xRadius = 5, yRadius = 5 },
+        fillColor = rgba(255, 255, 255, 1.0),
+        frame = {
+          x = startX,
+          y = startY,
+          w = keySize,
+          h = keySize,
+        },
+        withShadow = true,
+        shadow = {
+          blurRadius = 5.0,
+          color = { alpha = 1/3 },
+          offset = { h = -2.0, w = 2.0 },
+        }
+      },
+      currentLayerIndex
+    )
+
+    currentLayerIndex = currentLayerIndex + 1
+
+    self.overlay:insertElement(
+      {
+        type = 'text',
+        text = entry.key,
+        action = 'fill',
+        frame = {
+          x = startX,
+          y = startY + 3,
+          h = keySize,
+          w = keySize,
+        },
+        textAlignment = "center",
+        textColor = rgba(38, 38, 38, 1.0),
+        textFont = "Helvetica Bold",
+        textSize = 14,
+      },
+      currentLayerIndex
+    )
+
+    currentLayerIndex = currentLayerIndex + 1
+
+    self.overlay:insertElement(
+      {
+        type = 'text',
+        text = hs.styledtext.new(
+          entry.binding.name,
+          {
+            font = { name = "Helvetica Neue", size = 16 },
+            color = rgba(255, 255, 255, 1.0),
+            kerning = 1.2,
+            shadow = {
+              blurRadius = 10,
+            }
+          }
+        ),
+        action = 'fill',
+        frame = {
+          x = startX + keySize + keyRightMargin,
+          y = startY,
+          h = keySize,
+          w = 300,
+        },
+      },
+      currentLayerIndex
+    )
+
+    currentLayerIndex = currentLayerIndex + 1
+  end
+end
+
 function HyperSwitcher:_bind(key, binding)
-  self.bindings[key] = binding
+  table.insert(self.bindings, {
+    key = key,
+    binding = binding
+  })
 
   hs.hotkey.bind(self.hyperMods, key, function()
     binding:launch()
   end)
+
+  self.overlay = nil
+
+  return self
 end
 
 ----------------------------------------------------------------
 
 hyperSwitcher = HyperSwitcher:new(hyper)
 
-hyperSwitcher:bind('1'):toApplication('/Applications/1Password 7.app')
-hyperSwitcher:bind('a'):toApplication('/Applications/Slack.app')
-hyperSwitcher:bind('c'):toApplication('/Applications/Google Chrome.app')
-hyperSwitcher:bind('i'):toApplication('/Applications/Signal.app')
-hyperSwitcher:bind('s'):toApplication('/Applications/Spotify.app')
-hyperSwitcher:bind('t'):toApplication('/Applications/Alacritty.app')
+hyperSwitcher
+  :bind('1'):toApplication('/Applications/1Password 7.app')
+  :bind('a'):toApplication('/Applications/Slack.app')
+  :bind('c'):toApplication('/Applications/Google Chrome.app')
+  :bind('i'):toApplication('/Applications/Signal.app')
+  :bind('s'):toApplication('/Applications/Spotify.app')
+  :bind('t'):toApplication('/Applications/Alacritty.app')
+
+local onHold = function()
+  hyperSwitcher:showOverlay()
+end
+
+local onRelease = function()
+  hyperSwitcher:hideOverlay()
+end
+
+hyperTap = onModifierHold(hyper, 100, onHold, onRelease)
+
+----------------------------------------------------------------

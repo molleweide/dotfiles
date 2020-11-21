@@ -1,4 +1,4 @@
-hs.hotkey.bind(hyper, 'm', function()
+local function switchMonitor()
   -- DP1 is 15
   -- USB-C is 27
   --
@@ -13,4 +13,6 @@ hs.hotkey.bind(hyper, 'm', function()
 
   binary = os.getenv("HOME") .. "/.nix-profile/bin/ddcctl"
   hs.execute(binary .. " -d 1 -i " .. inputNumber)
-end)
+end
+
+hyperSwitcher:bind('m'):toFunction("Switch monitor input", switchMonitor)

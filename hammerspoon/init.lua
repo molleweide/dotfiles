@@ -5,12 +5,12 @@ inspect = hs.inspect.inspect
 local VimMode = hs.loadSpoon("VimMode")
 
 require "common"
+require "quick-switch"
 require "config-watch"
 require "window-management"
 require "key-bindings"
 require "mute-on-sleep"
 require "audio-switcher"
-require "quick-switch"
 require "slack"
 require "pairing-mode"
 require "experimental"
