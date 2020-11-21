@@ -39,4 +39,4 @@ local function toggleHeadphones()
   end
 end
 
-hyperSwitcher:bind('b'):toFunction("Toggle 🎧", toggleHeadphones)
+hyperSwitcher:bind('b'):toFunction("Toggle 🎧 connection", toggleHeadphones)
