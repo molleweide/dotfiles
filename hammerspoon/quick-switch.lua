@@ -340,15 +340,15 @@ function HyperSwitcher:init(hyperMods)
   self.overlay = nil
 end
 
-function HyperSwitcher:bind(key, bindKey)
-  bindKey = bindKey or key
+function HyperSwitcher:bind(displayedKey, bindKey)
+  bindKey = bindKey or displayedKey
 
   return {
     toApplication = function(_, applicationName)
-      return self:_bind(key, bindKey, ApplicationBinding:new(applicationName))
+      return self:_bind(displayedKey, bindKey, ApplicationBinding:new(applicationName))
     end,
     toFunction = function(_, name, fn)
-      return self:_bind(key, bindKey, FunctionBinding:new(name, fn))
+      return self:_bind(displayedKey, bindKey, FunctionBinding:new(name, fn))
     end
   }
 end
