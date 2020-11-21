@@ -542,6 +542,6 @@ local onRelease = function()
   hyperSwitcher:hideOverlay()
 end
 
-hyperTap = onModifierHold(hyper, 100, onHold, onRelease)
+hyperTap = onModifierHold(hyper, 250, onHold, onRelease)
 
 ----------------------------------------------------------------
