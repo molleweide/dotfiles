@@ -340,6 +340,35 @@ function HyperSwitcher:init(hyperMods)
   self.overlay = nil
 end
 
+function HyperSwitcher:bind(key, bindKey)
+  bindKey = bindKey or key
+
+  return {
+    toApplication = function(_, applicationName)
+      return self:_bind(key, bindKey, ApplicationBinding:new(applicationName))
+    end,
+    toFunction = function(_, name, fn)
+      return self:_bind(key, bindKey, FunctionBinding:new(name, fn))
+    end
+  }
+end
+
+function HyperSwitcher:_bind(key, bindKey, binding)
+  table.insert(self.bindings, {
+    key = key,
+    bindKey = bindKey,
+    binding = binding
+  })
+
+  hs.hotkey.bind(self.hyperMods, bindKey, function()
+    binding:launch()
+  end)
+
+  self.overlay = nil
+
+  return self
+end
+
 function HyperSwitcher:showOverlay()
   self:_buildOverlay()
   self.overlay:show()
@@ -348,17 +377,6 @@ end
 function HyperSwitcher:hideOverlay()
   self:_buildOverlay()
   self.overlay:hide()
-end
-
-function HyperSwitcher:bind(key)
-  return {
-    toApplication = function(_, applicationName)
-      return self:_bind(key, ApplicationBinding:new(applicationName))
-    end,
-    toFunction = function(_, name, fn)
-      return self:_bind(key, FunctionBinding:new(name, fn))
-    end
-  }
 end
 
 function HyperSwitcher:_buildOverlay()
@@ -376,7 +394,7 @@ function HyperSwitcher:_buildOverlay()
   -- how much padding around the edges
   local containerPadding = 25
 
-  local itemsPerColumn = 5
+  local itemsPerColumn = 6
   local itemHeight = 25
   local itemBottomMargin = 10
   local itemContainer = itemHeight + itemBottomMargin
@@ -502,21 +520,6 @@ function HyperSwitcher:_buildOverlay()
 
     currentLayerIndex = currentLayerIndex + 1
   end
-end
-
-function HyperSwitcher:_bind(key, binding)
-  table.insert(self.bindings, {
-    key = key,
-    binding = binding
-  })
-
-  hs.hotkey.bind(self.hyperMods, key, function()
-    binding:launch()
-  end)
-
-  self.overlay = nil
-
-  return self
 end
 
 ----------------------------------------------------------------

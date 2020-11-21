@@ -7,4 +7,4 @@ local function openRemoteSpotify()
   end)
 end
 
-hs.hotkey.bind(hyper, '6', openRemoteSpotify)
+hyperSwitcher:bind('6'):toFunction("Open Spotify on desktop", openRemoteSpotify)
