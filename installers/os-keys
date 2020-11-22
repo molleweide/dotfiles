@@ -17,13 +17,13 @@ function setup_development_spoon_from_git_repo() {
 
   if [ ! -d $source_dir ]; then
     dotsay "@blue@b[[+ cloning development copy of $name.spoon ]]"
-    git clone https://github.com/dbalatero/VimMode.spoon "$source_dir"
+    git clone https://github.com/dbalatero/$name.spoon "$source_dir"
   else
     dotsay "+ $name.spoon dev copy already checked out"
   fi
 
   if [ ! -d $symlink_destination ]; then
-    dotsay "@blue@b[[+ symlinking development copy of VimMode.spoon ]]"
+    dotsay "@blue@b[[+ symlinking development copy of $name.spoon ]]"
     ln -s "$source_dir" "$symlink_destination"
   else
     dotsay "+ $name.spoon already installed to Hammerspoon"
