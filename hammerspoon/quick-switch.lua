@@ -371,12 +371,12 @@ end
 
 function HyperSwitcher:showOverlay()
   self:_buildOverlay()
-  self.overlay:show()
+  self.overlay:show(150 / 1000)
 end
 
 function HyperSwitcher:hideOverlay()
   self:_buildOverlay()
-  self.overlay:hide()
+  self.overlay:hide(150 / 1000)
 end
 
 function HyperSwitcher:_buildOverlay()
