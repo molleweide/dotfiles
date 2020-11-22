@@ -14,4 +14,4 @@ local function enablePairingMode()
   hs.alert("Entering pairing mode")
 end
 
-hyperSwitcher:bind('p'):toFunction("Enable pairing mode", enablePairingMode)
+hyperKey:bind('p'):toFunction("Enable pairing mode", enablePairingMode)

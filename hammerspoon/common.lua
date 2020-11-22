@@ -1,5 +1,10 @@
+local HyperKey = hs.loadSpoon("HyperKey")
+
 hyper = {'ctrl', 'alt', 'cmd', 'shift'}
 super = {'ctrl', 'alt', 'cmd'}
+
+hyperKey = HyperKey:new(hyper)
+superKey = HyperKey:new(super)
 
 function p(variable)
   print(hs.inspect.inspect(variable))

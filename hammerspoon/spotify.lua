@@ -7,4 +7,4 @@ local function openRemoteSpotify()
   end)
 end
 
-hyperSwitcher:bind('6'):toFunction("Open Spotify on desktop", openRemoteSpotify)
+hyperKey:bind('6'):toFunction("Open Spotify on desktop", openRemoteSpotify)

@@ -1,5 +1,3 @@
-hs.loadSpoon("SpoonInstall")
-
 inspect = hs.inspect.inspect
 
 local VimMode = hs.loadSpoon("VimMode")

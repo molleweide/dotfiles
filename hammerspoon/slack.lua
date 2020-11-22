@@ -14,4 +14,4 @@ local function openSlackReminder()
   end)
 end
 
-hyperSwitcher:bind('r'):toFunction("Slack /remind", openSlackReminder)
+hyperKey:bind('r'):toFunction("Slack /remind", openSlackReminder)

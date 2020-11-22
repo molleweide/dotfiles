@@ -247,14 +247,12 @@ local function windowBind(hyper, keyFuncTable)
   end
 end
 
--- * Set Window Position on screen
-windowBind(super, {
-  m = module.maximizeWindow,    -- ⌃⌥⌘ + M
-  c = module.centerOnScreen,    -- ⌃⌥⌘ + C
-  left = module.leftHalf,       -- ⌃⌥⌘ + ←
-  right = module.rightHalf,     -- ⌃⌥⌘ + →
-  up = module.topHalf,          -- ⌃⌥⌘ + ↑
-  down = module.bottomHalf      -- ⌃⌥⌘ + ↓
-})
+superKey
+  :bind('c'):toFunction('Center window', module.centerOnScreen)
+  :bind('m'):toFunction('Maximize window', module.maximizeWindow)
+  :bind('←', 'left'):toFunction('Send window left', module.leftHalf)
+  :bind('→', 'right'):toFunction('Send window right', module.rightHalf)
+  :bind('↑', 'up'):toFunction('Send window top', module.topHalf)
+  :bind('↓', 'down'):toFunction('Send window bottom', module.bottomHalf)
 
 return module

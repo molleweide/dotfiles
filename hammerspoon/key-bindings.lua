@@ -2,19 +2,17 @@ local wm = require('window-management')
 local hk = require "hs.hotkey"
 
 -- lock screen shortcut
-hs.hotkey.bind(super, 'L', function()
-  hs.caffeinate.startScreensaver()
-end)
+superKey:bind('L'):toFunction("Lock screen", hs.caffeinate.startScreensaver)
 
 -- Spotify next/prev/play/pause
 hs.hotkey.bind(hyper, 'space', hs.spotify.playpause)
 
-hyperSwitcher:bind('←', 'left'):toFunction("Previous song", hs.spotify.previous)
-hyperSwitcher:bind('→', 'right'):toFunction("Next song", hs.spotify.next)
-hyperSwitcher:bind('_', 'space'):toFunction("Play/pause", hs.spotify.playpause)
+hyperKey:bind('←', 'left'):toFunction("Previous song", hs.spotify.previous)
+hyperKey:bind('→', 'right'):toFunction("Next song", hs.spotify.next)
+hyperKey:bind('_', 'space'):toFunction("Play/pause", hs.spotify.playpause)
 
 -- reload Hammerspoon
-hyperSwitcher:bind('h'):toFunction('Reload Hammerspoon', function()
+hyperKey:bind('h'):toFunction('Reload Hammerspoon', function()
   hs.application.launchOrFocus("Hammerspoon")
   hs.reload()
 end)
@@ -29,7 +27,7 @@ local function popoutChromeTab()
 end
 
 -- popout the current chrome tab and view 50-50 side by side
-hs.hotkey.bind(super, ']', function()
+superKey:bind(']'):toFunction("Chrome tab 50-50", function()
   -- Move current window to the left half
   wm.leftHalf()
 
