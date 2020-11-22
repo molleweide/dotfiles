@@ -7,44 +7,26 @@ require_installer package-manager
 dotheader "Setting up Hammerspoon..."
 brew_cask_install hammerspoon --appdir=/Applications
 
-function setup_vim_mode_spoon_from_local() {
+function setup_development_spoon_from_git_repo() {
+  local name=$1
   local code_dir=$HOME/code
-  local source_dir=$code_dir/VimMode.spoon
-  local symlink_destination=$HOME/.hammerspoon/Spoons/VimMode.spoon
+  local source_dir=$code_dir/$name.spoon
+  local symlink_destination=$HOME/.hammerspoon/Spoons/$name.spoon
 
   mkdir -p "$code_dir"
 
   if [ ! -d $source_dir ]; then
-    dotsay "@blue@b[[+ cloning development copy of VimMode.spoon ]]"
+    dotsay "@blue@b[[+ cloning development copy of $name.spoon ]]"
     git clone https://github.com/dbalatero/VimMode.spoon "$source_dir"
   else
-    dotsay "+ VimMode.spoon dev copy already checked out"
+    dotsay "+ $name.spoon dev copy already checked out"
   fi
 
   if [ ! -d $symlink_destination ]; then
     dotsay "@blue@b[[+ symlinking development copy of VimMode.spoon ]]"
     ln -s "$source_dir" "$symlink_destination"
   else
-    dotsay "+ VimMode.spoon already installed to Hammerspoon"
-  fi
-}
-
-function fetch_axuielement_library() {
-  local filename=axuielement-v0.7.1.tar.gz
-  local save_dir=/tmp
-  local url=https://github.com/asmagill/hs._asm.axuielement/raw/master/$filename
-  local destination=~/.hammerspoon/hs/_asm
-
-  if [ ! -d $destination ]; then
-    dotsay "@blue@b[[+ symlinking axuielement library ]]"
-
-    wget -nv $url -O $save_dir/$filename
-
-    cd $save_dir && tar zxvf $filename
-    mkdir -p ~/.hammerspoon/hs
-    mv $save_dir/hs/_asm $destination
-  else
-    dotsay "+ hs._asm.axuielement already installed... skipping"
+    dotsay "+ $name.spoon already installed to Hammerspoon"
   fi
 }
 
@@ -83,5 +65,5 @@ luarocks install lcf
 
 symlink_dotfile hammerspoon ~/.hammerspoon
 setup_spoon_install
-setup_vim_mode_spoon_from_local
-fetch_axuielement_library
+setup_development_spoon_from_git_repo HyperKey
+setup_development_spoon_from_git_repo VimMode
