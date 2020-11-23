@@ -105,7 +105,6 @@ module.leftHalf = function ()
   local this = windowMeta.new()
   local cell = Cell(0, 0, 0.5 * this.screenGrid.w, this.screenGrid.h)
   grid.set(this.window, cell, this.screen)
-  this.window.setShadows(true)
 end
 
 module.rightHalf = function ()
@@ -250,9 +249,9 @@ end
 superKey
   :bind('c'):toFunction('Center window', module.centerOnScreen)
   :bind('m'):toFunction('Maximize window', module.maximizeWindow)
-  :bind('←', 'left'):toFunction('Send window left', module.leftHalf)
-  :bind('→', 'right'):toFunction('Send window right', module.rightHalf)
-  :bind('↑', 'up'):toFunction('Send window top', module.topHalf)
-  :bind('↓', 'down'):toFunction('Send window bottom', module.bottomHalf)
+  :bind('h'):toFunction('Send window left', module.leftHalf)
+  :bind('l'):toFunction('Send window right', module.rightHalf)
+  :bind('k'):toFunction('Send window top', module.topHalf)
+  :bind('j'):toFunction('Send window bottom', module.bottomHalf)
 
 return module
