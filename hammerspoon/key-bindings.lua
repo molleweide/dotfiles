@@ -1,12 +1,9 @@
 local wm = require('window-management')
-local hk = require "hs.hotkey"
 
 -- lock screen shortcut
 superKey:bind('s'):toFunction("Lock screen", hs.caffeinate.startScreensaver)
 
 -- Spotify next/prev/play/pause
-hs.hotkey.bind(hyper, 'space', hs.spotify.playpause)
-
 hyperKey:bind('←', 'left'):toFunction("Previous song", hs.spotify.previous)
 hyperKey:bind('→', 'right'):toFunction("Next song", hs.spotify.next)
 hyperKey:bind('_', 'space'):toFunction("Play/pause", hs.spotify.playpause)
