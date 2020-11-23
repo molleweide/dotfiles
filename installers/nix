@@ -14,11 +14,12 @@ require_installer package-manager
 # 3. Remove the 'nix' line from /etc/synthetic.conf or the file
 
 function install_nixos() {
-  if [ ! -d "$HOME/.nix-profile"]; then
+  if [ ! -d "$HOME/.nix-profile" ]; then
     dotsay "@blue@b[[+ Installing Nix to /nix]]"
 
     sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
 
+    source $HOME/.nix-profile/etc/profile.d/nix.sh
   fi
 }
 
