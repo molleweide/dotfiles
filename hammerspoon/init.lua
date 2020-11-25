@@ -3,6 +3,7 @@ inspect = hs.inspect.inspect
 local VimMode = hs.loadSpoon("VimMode")
 
 require "common"
+require "nytimes"
 require "quick-switch"
 require "config-watch"
 require "window-management"
