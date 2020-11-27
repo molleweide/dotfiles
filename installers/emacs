@@ -9,7 +9,7 @@ function install_emacs() {
     brew_tap d12frosted/emacs-plus
   fi
 
-  brew_install emacs-plus --with-jansson
+  brew_install emacs-plus
   ln -sf /usr/local/opt/emacs-plus/Emacs.app /Applications/Emacs.app
 }
 
