@@ -63,43 +63,10 @@
   :config
   (tmux-pane-mode))
 
-;; /Users/dbalatero/.fzf/bin/fzf --history
-;; /Users/dbalatero/.local/share/fzf-history/files
-;; --color=bg+:#343D46,bg:#1B2B34,spinner:#FAC863,hl:#65737E,fg:#C0C5CE,header:#65737E,info:#FAC863,pointer:#EC5f67,marker:#C594C5,fg+:#C0C5CE,prompt:#C594C5,hl+:#EC5f67
-;; -m --prompt ~/.emacs.d/ --tiebreak=index --expect=ctrl-v,ctrl-x,ctrl-t
-;; --no-height
+(load! "+fzf")
 
 (map! :leader
       :desc "FZF file search" "SPC" #'fzf-projectile)
-
-(defvar fzf/args
-  (concat
-    "--history "
-    (getenv "HOME")
-    "/.local/share/fzf-history/files "
-    "-m --tiebreak=index --expect=ctrl-v,ctrl-x,ctrl-t --no-height"))
-
-(define-minor-mode fzf-mode
-  "Minor mode for the FZF buffer"
-  :init-value nil
-  :lighter " FZF"
-  :keymap (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "C-c") 'term-interrupt-subjob)
-              map))
-
-(map! :mode fzf-mode :i "ESC" 'term-interrupt-subjob)
-
-(defun dotfiles/fzf-override-start-args (original-fn &rest args)
-  (message "called with args %S" args)
-  (apply original-fn args)
-
-  ;; set the FZF buffer to fzf-mode so we can hook ctrl+c
-  (set-buffer "*fzf*")
-  (fzf-mode)
-  ;; (term-line-mode)
-)
-
-(advice-add 'fzf/start :around #'dotfiles/fzf-override-start-args)
 
 ;; ripgrep
 ;; (after! counsel
