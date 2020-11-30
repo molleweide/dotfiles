@@ -14,7 +14,7 @@
 
   "coc.preferences.diagnostic.displayByAle": true,
   "coc.preferences.previewAutoClose": false,
-  "coc.source.emoji.filetypes": ["markdown", "vimwiki"],
+  "coc.source.emoji.filetypes": ["markdown"],
   "solargraph.autoformat": true,
   "solargraph.checkGemVersion": false,
   "solargraph.completion": true,
