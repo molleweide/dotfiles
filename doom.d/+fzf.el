@@ -27,27 +27,24 @@
   :type 'string
   :group 'fzf)
 
-(define-minor-mode fzf-mode
-  "Minor mode for the FZF buffer"
-  :init-value nil
-  :lighter " FZF mode"
-  :keymap (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "<escape>") 'term-kill-subjob)
-            (define-key map (kbd "C-c") 'term-kill-subjob)
-            (define-key map (kbd "C-x") 'term-sent-raw)
-            (define-key map (kbd "C-8") 'describe-key)
-            map))
-
 (evil-set-initial-state 'fzf-mode 'emacs)
 (add-to-list 'evil-emacs-state-modes 'fzf-mode)
 
-;; https://oremacs.com/2014/12/31/keymap-arms-race/
-(defun fzf/raise-minor-mode (mode)
-  "Make MODE the first on `minor-mode-map-alist'."
-  (let ((x (assq mode minor-mode-map-alist)))
-      (when x
-        (setq minor-mode-map-alist
-              (cons x (delq mode minor-mode-map-alist))))))
+(defvar fzf-mode-map
+  (let ((map (make-sparse-keymap)))
+    ;; override the parent term-mode keymap and remove all of its bindings.
+    ;; (set-keymap-parent map (make-sparse-keymap))
+
+    ;; bind only the keys we need
+    (define-key map (kbd "<escape>") 'term-kill-subjob)
+    (define-key map (kbd "C-c") 'term-kill-subjob)
+    (define-key map (kbd "C-s") 'term-sent-raw)
+    (define-key map (kbd "C-v") 'term-sent-raw)
+    map))
+
+(define-derived-mode fzf-mode
+  term-mode "FZF"
+  "Major mode for FZF finder.")
 
 (defun fzf/after-term-handle-exit (process-name msg)
   (let* ((text (buffer-substring-no-properties (point-min) (point-max)))
@@ -59,6 +56,10 @@
          (key-press (car (last (butlast lines 2)))))
     (kill-buffer "*fzf*")
     (jump-to-register :fzf-windows)
+
+    (when (equal key-press "ctrl-s")
+      (split-window-below)
+      (windmove-down))
 
     (when (equal key-press "ctrl-v")
       (split-window-right)
@@ -82,30 +83,20 @@
          (min-height (min fzf/window-height (/ (window-height) 2)))
          (window-height (if fzf/position-bottom (- min-height) min-height))
          (window-system-args (when window-system " --no-height --margin=1,0"))
-         (kb-args " --expect=ctrl-v,ctrl-x")
+         (kb-args " --expect=ctrl-v,ctrl-s")
          (fzf-args (concat fzf/args window-system-args kb-args))
          (sh-cmd (concat fzf/executable " " fzf-args)))
     (with-current-buffer buf
-      (evil-local-mode -1)
+      ;; (evil-local-mode -1)
       (setq default-directory directory))
     (split-window-vertically window-height)
     (when fzf/position-bottom (other-window 1))
     (make-term "fzf" "sh" nil "-c" sh-cmd)
     (switch-to-buffer buf)
-    ;; (progn
-    ;;   (evil-local-set-key 'normal (kbd "<escape>") 'term-kill-subjob)
-    ;;   (evil-local-set-key 'normal (kbd "C-c") 'term-kill-subjob)
-    ;;   (evil-local-set-key 'normal (kbd "C-x") 'term-send-raw)
-    ;;   (evil-local-set-key 'insert (kbd "<escape>") 'term-kill-subjob)
-    ;;   (evil-local-set-key 'insert (kbd "C-c") 'term-kill-subjob)
-      ;; (evil-local-set-key 'insert (kbd "C-x") 'term-send-raw))
     (linum-mode 0)
     (visual-line-mode 0)
     (fzf-mode)
     (turn-off-evil-mode)
-    ;; (fzf/raise-minor-mode fzf-mode)
-
-    ;; (local-set-key (kbd "C-x") 'term-send-raw)
 
     ;; disable various settings known to cause artifacts, see #1 for more details
     (setq-local scroll-margin 0)
