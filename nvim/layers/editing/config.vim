@@ -27,9 +27,11 @@ else
   endif
 endif
 
-let test#enabled_runners = ["ruby#rspec"]
+let test#enabled_runners = ["lua#busted", "ruby#rspec"]
+
 let test#custom_runners = {}
 let test#custom_runners['ruby'] = ['rspec']
+let test#custom_runners['lua'] = ['busted']
 
 " color column
 set colorcolumn=81
