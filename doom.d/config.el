@@ -64,6 +64,7 @@
   (tmux-pane-mode))
 
 (load! "+fzf")
+(setq fzf/files-source "ripgrep")
 
 (map! :leader
       :desc "FZF file search" "SPC" #'fzf-projectile)
