@@ -157,7 +157,7 @@
   (cond ((equal "find" fzf/files-source)
                 "find . -path '*/\.*' -prune -o -type f -print -o -type l -print | sed 's:^..::'")
                 ((equal "ripgrep" fzf/files-source)
-                "rg --files --hidden --ignore")
+                "rg --files --hidden --ignore --glob '!{node_modules/*,.git/*}'")
                 ((equal "git" fzf/files-source)
                 "git ls-files")
                 ((equal "custom" fzf/files-source)
