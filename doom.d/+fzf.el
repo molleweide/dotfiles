@@ -98,7 +98,7 @@
 
 (defun fzf/current-relative-file (directory)
   (let* ((current-file (buffer-file-name)))
-    (if (and (print current-file) (file-exists-p current-file))
+    (if (and current-file (file-exists-p current-file))
         (string-remove-prefix directory (buffer-file-name))
       nil)))
 
@@ -107,7 +107,7 @@
          (relative-dir (if current-file (file-name-directory current-file) nil))
          (in-project-root (or (equal "" relative-dir) (not relative-dir)))
          (proximity-sort-command-available (file-executable-p fzf/proximity-sort-executable)))
-    (if (and (print current-file) (not in-project-root) (print proximity-sort-command-available))
+    (if (and current-file (not in-project-root) proximity-sort-command-available)
         (concat fzf/proximity-sort-executable " " current-file)
       nil)))
 
@@ -165,12 +165,9 @@
                 (t nil)))
 
 (defun fzf/git-files ()
-  (let ((process-environment
-         (cons (concat "FZF_DEFAULT_COMMAND=git ls-files")
-               process-environment))
-        (path (locate-dominating-file default-directory ".git")))
+  (let ((path (locate-dominating-file default-directory ".git")))
     (if path
-        (fzf/start path)
+        (fzf/start path "git ls-files")
       (user-error "Not inside a Git repository"))))
 
 (defun fzf/vcs (match)
