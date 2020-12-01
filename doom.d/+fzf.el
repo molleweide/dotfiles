@@ -67,6 +67,21 @@
   term-mode "FZF"
   "Major mode for FZF finder.")
 
+(defun fzf/current-relative-file (directory)
+  (let* ((current-file (buffer-file-name)))
+    (if (and current-file (file-exists-p current-file))
+        (string-remove-prefix directory (buffer-file-name))
+      nil)))
+
+(defun fzf/proximity-sort-command (directory)
+  (let* ((current-file (fzf/current-relative-file directory))
+         (relative-dir (if current-file (file-name-directory current-file) nil))
+         (in-project-root (or (equal "" relative-dir) (not relative-dir)))
+         (proximity-sort-command-available (file-executable-p fzf/proximity-sort-executable)))
+    (if (and current-file (not in-project-root) proximity-sort-command-available)
+        (concat fzf/proximity-sort-executable " " current-file)
+      nil)))
+
 (defun fzf/after-term-handle-exit (process-name msg)
   (let* ((text (buffer-substring-no-properties (point-min) (point-max)))
          (lines (split-string text "\n" t "\s*>\s+"))
@@ -92,33 +107,19 @@
     (when linenumber
       (goto-char (point-min))
       (forward-line (- (string-to-number linenumber) 1))
-      (back-to-indentation)))
+      (back-to-indentation))
 
-  (advice-remove 'term-handle-exit #'fzf/after-term-handle-exit))
-
-(defun fzf/current-relative-file (directory)
-  (let* ((current-file (buffer-file-name)))
-    (if (and current-file (file-exists-p current-file))
-        (string-remove-prefix directory (buffer-file-name))
-      nil)))
-
-(defun fzf/proximity-sort-command (directory)
-  (let* ((current-file (fzf/current-relative-file directory))
-         (relative-dir (if current-file (file-name-directory current-file) nil))
-         (in-project-root (or (equal "" relative-dir) (not relative-dir)))
-         (proximity-sort-command-available (file-executable-p fzf/proximity-sort-executable)))
-    (if (and current-file (not in-project-root) proximity-sort-command-available)
-        (concat fzf/proximity-sort-executable " " current-file)
-      nil)))
+  (advice-remove 'term-handle-exit #'fzf/after-term-handle-exit)))
 
 (defun fzf/start (directory &optional cmd-stream)
   ;; kill any orphaned buffers
-  ;; (when (get-buffer "*fzf*")
-    ;; (kill-buffer "*fzf*"))
+  (when (get-buffer "*fzf*")
+    (kill-buffer "*fzf*"))
 
   (require 'term)
   (window-configuration-to-register :fzf-windows)
   (advice-add 'term-handle-exit :after #'fzf/after-term-handle-exit)
+
   (let* ((buf (get-buffer-create "*fzf*"))
          (min-height (min fzf/window-height (/ (window-height) 2)))
          (window-height (if fzf/position-bottom (- min-height) min-height))
