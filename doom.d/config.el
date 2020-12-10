@@ -105,6 +105,10 @@
   :config
   (xclip-mode 1))
 
+(use-package! editorconfig
+  :config
+  (editorconfig-mode 1))
+
 ;; ctrl p
 (map! :g "C-p" #'+ivy/projectile-find-file)
 

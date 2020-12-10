@@ -54,3 +54,4 @@
 (package! tmux-pane) ;; ctrl-hjkl pane movement w/ tmux support
 (package! vimrc-mode) ;; hahhaahaha
 (package! xclip) ;; system clipboard
+(package! editorconfig)
