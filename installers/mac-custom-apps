@@ -320,27 +320,27 @@ if is_macos; then
 
     dotheader "Setting up custom Mac apps"
 
-    install_1password
-    install_aerial_screensavers
-    install_alfred
-    install_bartender
-    install_better_touch_tool
-    install_dash
-    install_dropbox
+    # install_1password
+    # install_aerial_screensavers
+    # install_alfred
+    # install_bartender
+    # install_better_touch_tool
+    # install_dash
+    # install_dropbox
     install_firefox
-    install_focus
-    install_google_chrome
-    install_hazeover
+    # install_focus
+    # install_google_chrome
+    # install_hazeover
     install_licecap
-    install_on_the_job
-    setup_on_the_job_dropbox_sync
-    install_openemu
+    # install_on_the_job
+    # setup_on_the_job_dropbox_sync
+    # install_openemu
     install_signal
-    install_splice
-    install_spotify
-    install_steam
-    install_swinsian
+    # install_splice
+    # install_spotify
+    # install_steam
+    # install_swinsian
     install_vlc
-    install_zooom2
+    # install_zooom2
   fi
 fi
