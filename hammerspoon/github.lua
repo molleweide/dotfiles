@@ -36,3 +36,10 @@ local function getRichLinkToCurrentChromeTab()
 end
 
 hyperKey:bind('g'):toFunction("Copy a link to current tab", getRichLinkToCurrentChromeTab)
+
+local function mergebotSubmit()
+  hs.eventtap.keyStrokes("MERGEBOT_SUBMIT")
+  hs.eventtap.keyStroke({'cmd'}, 'return')
+end
+
+hyperKey:bind('u'):toFunction("Mergebot submit", mergebotSubmit)
