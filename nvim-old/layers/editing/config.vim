@@ -1,7 +1,3 @@
-" expand visual region
-map J <Plug>(expand_region_expand)
-map K <Plug>(expand_region_shrink)
-
 " vim-test
 nmap <silent> <leader>T :TestNearest<CR>
 nmap <silent> <leader>t :TestFile<CR>
@@ -32,13 +28,6 @@ let test#enabled_runners = ["lua#busted", "ruby#rspec"]
 let test#custom_runners = {}
 let test#custom_runners['ruby'] = ['rspec']
 let test#custom_runners['lua'] = ['busted']
-
-" color column
-set colorcolumn=81
-
-" Open splits to the right or below; more natural than the default
-set splitright
-set splitbelow
 
 " wildignore
 set wildignore+=node_modules/*,bower_components/*,vendor/bundle/*,tmp/*
