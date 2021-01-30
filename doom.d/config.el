@@ -63,7 +63,6 @@
   :config
   (tmux-pane-mode))
 
-(load! "+fzf")
 (setq fzf/files-source "ripgrep")
 
 (map! :leader
