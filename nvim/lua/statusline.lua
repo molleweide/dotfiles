@@ -31,6 +31,38 @@ local function file_readonly()
   return ''
 end
 
+local function lsp_status(status)
+  shorter_stat = ''
+
+  for match in string.gmatch(status, "[^%s]+")  do
+    err_warn = string.find(match, "^[WE]%d+", 0)
+
+    if not err_warn then
+      shorter_stat = shorter_stat .. ' ' .. match
+    end
+  end
+
+  return shorter_stat
+end
+
+local function get_coc_lsp()
+  local status = vim.fn['coc#status']()
+
+  if not status or status == '' then
+    return ''
+  end
+
+  return lsp_status(status)
+end
+
+function get_diagnostic_info()
+  if vim.fn.exists('*coc#rpc#start_server') == 1 then
+    return get_coc_lsp()
+  end
+
+  return ''
+end
+
 function string:split(delimiter)
   local result = { }
   local from  = 1
@@ -180,14 +212,6 @@ gls.left[5] = {
   }
 }
 
-gls.left[6] = {
-  CocStatus = {
-    provider = CocStatus,
-    highlight = {colors.green,colors.bg},
-    icon = '  🗱'
-  }
-}
-
 -- Right side
 gls.right[1] = {
   DiagnosticError = {
@@ -218,6 +242,14 @@ gls.right[3] = {
 }
 
 gls.right[4] = {
+  CocStatus = {
+    provider = get_diagnostic_info,
+    highlight = {colors.green,colors.bg},
+    icon = '  🗱'
+  }
+}
+
+gls.right[5] = {
   FileFormat = {
     provider = function() return vim.bo.filetype end,
     highlight = { colors.fg,colors.section_bg },
@@ -225,7 +257,7 @@ gls.right[4] = {
     separator_highlight = {colors.fg, colors.section_bg},
   }
 }
-gls.right[5] = {
+gls.right[6] = {
   FileIcon = {
     provider = 'FileIcon',
     condition = buffer_not_empty,
@@ -235,7 +267,7 @@ gls.right[5] = {
   },
 }
 
-gls.right[6] = {
+gls.right[7] = {
   ScrollBar = {
     provider = function()
       return vim.api.nvim_eval('LineNoIndicator()')

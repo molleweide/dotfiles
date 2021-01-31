@@ -170,6 +170,13 @@ vnoremap <Up> <Nop>
 " wildignore
 set wildignore+=node_modules/*,bower_components/*,vendor/bundle/*,tmp/*
 
+" function to source a file if it exists
+function! SourceIfExists(file)
+  if filereadable(expand(a:file))
+    exe 'source' a:file
+  endif
+endfunction
+
 " =============== Cursor shapes =====================
 
 " TODO this doesn't work in neovim
@@ -252,6 +259,9 @@ Plug 'tpope/vim-rhubarb'        " enable GHE/Github links with :Gbrowse
 
 " Vimscript
 Plug 'tpope/vim-scriptease'
+
+" Load private Stripe overlay packages
+call SourceIfExists('~/.config/nvim/layers/private/packages.vim')
 
 call plug#end()
 
@@ -525,3 +535,8 @@ require('nvim-treesitter.configs').setup {
   textobjects = { enable = true },
 }
 LUA
+
+" ================= Stripe =====================
+
+" Load Stripe-specific private config
+call SourceIfExists('~/.config/nvim/layers/private/config.vim')
