@@ -1,15 +1,8 @@
 " color scheme
-if has("termguicolors")
-  set termguicolors
-endif
-
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   source ~/.vimrc_background
 endif
-
-" Hex color highlighting
-au BufNewFile,BufRead *.css,*.html,*.htm,*.sass,*.scss :ColorHighlight!
 
 let g:lightline = {
   \ 'colorscheme': 'base16',
@@ -114,9 +107,3 @@ function! MyMode()
         \ &ft == 'vimshell' ? 'VimShell' :
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
-
-let g:vimfiler_force_overwrite_statusline = 0
-let g:vimshell_force_overwrite_statusline = 0
-
-" barbar
-nnoremap <silent> <C-s> :BufferPick<CR>

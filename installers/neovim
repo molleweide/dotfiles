@@ -86,14 +86,6 @@ function install_bash_language_server() {
   npm install -g bash-language-server
 }
 
-function install_coc_plugins() {
-  gem install solargraph
-
-  nvim \
-    +"CocInstall coc-json coc-solargraph coc-css coc-html coc-syntax coc-snippets coc-tsserver coc-emmet coc-github-users" \
-    +qall
-}
-
 function install_bat() {
   brew_install bat
 
@@ -111,7 +103,6 @@ install_tern
 install_vim_node_rpc
 ensure_plugin_directory
 install_neovim_plugins
-install_coc_plugins
 install_rust
 install_proximity_sort
 install_bat

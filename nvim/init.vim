@@ -1,3 +1,7 @@
+" TODO
+" - statusline
+" - ultisnips?
+
 " use vim settings, rather then vi settings (much better!).
 " this must be first, because it changes other options as a side effect.
 set nocompatible
@@ -199,17 +203,19 @@ Plug 'danro/rename.vim'
 Plug 'Shougo/vimfiler.vim'
 Plug 'Shougo/unite.vim'
 
-" Languages
-Plug 'tbastos/vim-lua'
-Plug 'derekwyatt/vim-scala'
-
 " LSP
 Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
+
+Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-github-users', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
 
 " Ruby
 Plug 'keith/rspec.vim'                    " better RSpec syntax highlighting
 Plug 'jgdavey/vim-blockle'                " toggle block styles with ,b
 Plug 'tpope/vim-rake'                     " allow for alternate files
+Plug 'vim-ruby/vim-ruby'                  " indentation, etc
 Plug 'joker1007/vim-ruby-heredoc-syntax'  " fenced syntax colors in heredocs
 Plug 'ecomba/vim-ruby-refactoring'        " extract vars, methods, etc
 
@@ -220,9 +226,11 @@ Plug 'w0rp/ale'
 Plug 'janko-m/vim-test'
 
 " Theming
-Plug 'glepnir/galaxyline.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
-Plug 'mhartington/oceanic-next'
+Plug 'chrisbra/Colorizer'            " show hex colors in CSS/HTML files
+Plug 'glepnir/galaxyline.nvim'       " fast Lua statusline
+Plug 'kyazdani42/nvim-web-devicons'  " fancy icons
+Plug 'mhartington/oceanic-next'      " color scheme
+Plug 'RRethy/vim-illuminate'         " highlight duplicate words
 
 " Tmux
 Plug 'christoomey/vim-tmux-navigator'
@@ -259,8 +267,11 @@ hi LineNr guibg=NONE ctermbg=NONE
 hi SignColumn guibg=NONE ctermbg=NONE
 hi EndOfBuffer guibg=NONE ctermbg=NONE
 
+" setup galaxyline
 call luaeval('require("statusline")')
 
+" highlight hex colors in these file types
+au BufNewFile,BufRead *.css,*.html,*.htm,*.sass,*.scss :ColorHighlight!
 
 " =============== Tmux =========================
 
@@ -272,8 +283,10 @@ let g:tmux_resizer_no_mappings = 0
 
 
 " ============== File browser =================
-
+"
+let g:vimfiler_force_overwrite_statusline = 0
 let g:vimfiler_as_default_explorer = 1
+let g:vimshell_force_overwrite_statusline = 0
 
 call vimfiler#custom#profile('default', 'context', {
   \ 'safe': 0
@@ -390,8 +403,8 @@ let g:SignatureMarkTextHLDynamic = 1
 
 " =============== version control ================
 
-" Every time you open a git object using fugitive it creates a new buffer. 
-" This means that your buffer listing can quickly become swamped with 
+" Every time you open a git object using fugitive it creates a new buffer.
+" This means that your buffer listing can quickly become swamped with
 " fugitive buffers. This prevents this from becomming an issue:
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
