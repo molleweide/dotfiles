@@ -232,6 +232,7 @@ Plug 'glepnir/galaxyline.nvim'       " fast Lua statusline
 Plug 'kyazdani42/nvim-web-devicons'  " fancy icons
 Plug 'mhartington/oceanic-next'      " color scheme
 Plug 'RRethy/vim-illuminate'         " highlight duplicate words
+Plug 'drzel/vim-line-no-indicator'   " nice scroll indicator
 
 " Tmux
 Plug 'christoomey/vim-tmux-navigator'
