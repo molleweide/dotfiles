@@ -464,6 +464,9 @@ nmap <silent> gy <Plug>(coc-type-definition)
 " Apply AutoFix to problem on the current line.
 nmap <silent> gf <Plug>(coc-fix-current)
 
+" Show parameter hints as you type
+autocmd User CocJumpPlaceholder call
+  \ CocActionAsync(‘showSignatureHelp’)
 
 " =================== ALE ========================
 
