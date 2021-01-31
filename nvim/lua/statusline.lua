@@ -5,30 +5,6 @@ local function file_readonly()
   return ''
 end
 
-local function lsp_status(status)
-  local shorter_stat = ''
-
-  for match in string.gmatch(status, "[^%s]+")  do
-    local err_warn = string.find(match, "^[WE]%d+", 0)
-
-    if not err_warn then
-      shorter_stat = shorter_stat .. ' ' .. match
-    end
-  end
-
-  return shorter_stat
-end
-
-local function get_coc_lsp()
-  local status = vim.fn['coc#status']()
-
-  if not status or status == '' then
-    return ''
-  end
-
-  return lsp_status(status)
-end
-
 local function get_diagnostic_info()
   if vim.fn.exists('*coc#rpc#start_server') == 1 then
     return vim.g.coc_status or ''
@@ -274,7 +250,6 @@ require('nvim-web-devicons').setup()
 
 local gl = require('galaxyline')
 local fileinfo = require('galaxyline.provider_fileinfo')
-local buffer = require('galaxyline.provider_buffer')
 local gls = gl.section
 
 -- Global Color Defenitions
@@ -546,8 +521,8 @@ addPart(gls.short_line_left, {
 addPart(gls.short_line_left, {
   SFileName = {
     provider = function ()
-      local fileinfo = require('galaxyline.provider_fileinfo')
       local fname = fileinfo.get_current_file_name()
+
       for _,v in ipairs(gl.short_line_list) do
         if v == vim.bo.filetype then
           return ''

@@ -106,6 +106,12 @@ set mouse=n
 let g:python_host_prog = $HOME . '/.pyenv/versions/py2neovim/bin/python'
 let g:python3_host_prog = $HOME . '/.pyenv/versions/py3neovim/bin/python'
 
+" =============== node.js ===================
+
+let g:latest_node_path = $HOME . '/.nodenv/versions/15.7.0/bin/node'
+let g:node_host_prog = g:latest_node_path
+let g:coc_node_path = g:latest_node_path
+
 " ================ Editing ==========================
 
 " color column
@@ -185,7 +191,7 @@ let &t_SR = "\<esc>[3 q" " underline cursor for replace mode
 
 " ================ Plugins ==========================
 
-call plug#begin('~/.config/nvim/plugins')
+call plug#begin('~/.local/nvim/plugins')
 
 " Core
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
