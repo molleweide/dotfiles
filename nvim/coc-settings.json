@@ -1,0 +1,16 @@
+
+{
+  "languageserver": {
+    "bash": {
+      "command": "bash-language-server",
+      "args": ["start"],
+      "filetypes": ["sh"],
+      "ignoredRootPaths": ["~"]
+    }
+  },
+  "coc.preferences.previewAutoClose": false,
+  "diagnostic.displayByAle": false,
+  "suggest.echodocSupport": true,
+  "suggest.noselect": true,
+  "suggest.enablePreview": true
+}

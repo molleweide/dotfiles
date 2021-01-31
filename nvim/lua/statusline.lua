@@ -6,10 +6,10 @@ local function file_readonly()
 end
 
 local function lsp_status(status)
-  shorter_stat = ''
+  local shorter_stat = ''
 
   for match in string.gmatch(status, "[^%s]+")  do
-    err_warn = string.find(match, "^[WE]%d+", 0)
+    local err_warn = string.find(match, "^[WE]%d+", 0)
 
     if not err_warn then
       shorter_stat = shorter_stat .. ' ' .. match
@@ -29,9 +29,9 @@ local function get_coc_lsp()
   return lsp_status(status)
 end
 
-function get_diagnostic_info()
+local function get_diagnostic_info()
   if vim.fn.exists('*coc#rpc#start_server') == 1 then
-    return get_coc_lsp()
+    return vim.g.coc_status or ''
   end
 
   return ''
@@ -274,6 +274,7 @@ require('nvim-web-devicons').setup()
 
 local gl = require('galaxyline')
 local fileinfo = require('galaxyline.provider_fileinfo')
+local buffer = require('galaxyline.provider_buffer')
 local gls = gl.section
 
 -- Global Color Defenitions
@@ -296,26 +297,26 @@ local colors = {
 -- Mappings
 
 local modes = {
-    [ "n" ] = {colors.purple, "Normal", ""},
-    [ "i" ] = {colors.green, "Insert", ""},
-    [ "v" ] = {colors.pink, "Visual", ""},
-    [ "" ] = {colors.pink, "Visual Block", ""},
-    [ "V" ] = {colors.pink, "Visual Line", ""},
-    [ "c" ] = {colors.orange, "Command", ""},
-    [ "no" ] = {colors.purple, "MODE", ""},
-    [ "s" ] = {colors.orange, "MODE", ""},
-    [ "S" ] = {colors.orange, "MODE", ""},
-    [ "" ] = {colors.orange, "MODE", ""},
-    [ "ic" ] = {colors.yellow, "MODE", ""},
-    [ "R" ] = {colors.purple, "MODE", ""},
-    [ "Rv" ] = {colors.purple, "MODE", ""},
-    [ "cv" ] = {colors.red, "MODE", ""},
-    [ "ce" ] = {colors.red, "MODE", ""},
-    [ "r" ] = {colors.cyan, "MODE", ""},
-    [ "rm" ] = {colors.cyan, "MODE", ""},
-    [ "r?" ] = {colors.cyan, "MODE", ""},
-    [ "!" ] = {colors.red, "MODE", ""},
-    [ "t" ] = {colors.red, "MODE", ""},
+  [ "n" ] = {colors.purple, "Normal", ""},
+  [ "i" ] = {colors.green, "Insert", ""},
+  [ "v" ] = {colors.pink, "Visual", ""},
+  [ "" ] = {colors.pink, "Visual Block", ""},
+  [ "V" ] = {colors.pink, "Visual Line", ""},
+  [ "c" ] = {colors.orange, "Command", ""},
+  [ "no" ] = {colors.purple, "MODE", ""},
+  [ "s" ] = {colors.orange, "MODE", ""},
+  [ "S" ] = {colors.orange, "MODE", ""},
+  [ "" ] = {colors.orange, "MODE", ""},
+  [ "ic" ] = {colors.yellow, "MODE", ""},
+  [ "R" ] = {colors.purple, "MODE", ""},
+  [ "Rv" ] = {colors.purple, "MODE", ""},
+  [ "cv" ] = {colors.red, "MODE", ""},
+  [ "ce" ] = {colors.red, "MODE", ""},
+  [ "r" ] = {colors.cyan, "MODE", ""},
+  [ "rm" ] = {colors.cyan, "MODE", ""},
+  [ "r?" ] = {colors.cyan, "MODE", ""},
+  [ "!" ] = {colors.red, "MODE", ""},
+  [ "t" ] = {colors.red, "MODE", ""},
 }
 
 -- Helper functions
@@ -371,7 +372,6 @@ addPart(gls.left, {
       local mode = vim.fn.mode()
       local mode_color = modes[mode][1]
       local mode_string = modes[mode][2]
-      local mode_icon = modes[mode][3]
 
       vim.api.nvim_command('hi GalaxyViMode guifg=' .. mode_color .. ' guibg=' .. colors.background .. ' gui=bold')
 
@@ -381,13 +381,13 @@ addPart(gls.left, {
 })
 
 addPart(gls.left, {
-    FileSize = {
-        provider = 'FileSize',
-        condition = buffer_not_empty,
-        highlight = {colors.foreground, colors.background},
-        separator = ' ',
-        separator_highlight = {'NONE', colors.background},
-    }
+  FileSize = {
+    provider = 'FileSize',
+    condition = buffer_not_empty,
+    highlight = {colors.foreground, colors.background},
+    separator = ' ',
+    separator_highlight = {'NONE', colors.background},
+  }
 })
 
 addPart(gls.left, {
@@ -402,43 +402,52 @@ addPart(gls.left, {
 })
 
 addPart(gls.left,{
-    FileIcon = {
-        provider = 'FileIcon',
-        condition = buffer_not_empty,
-        highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color,colors.background},
+  FileIcon = {
+    provider = 'FileIcon',
+    condition = buffer_not_empty,
+    highlight = {
+      require('galaxyline.provider_fileinfo').get_file_icon_color,
+      colors.background,
     },
+  },
 })
 
 addPart(gls.left, {
-    FileName = {
-        provider = get_current_file_path ,
-        condition = buffer_not_empty,
-        highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.background, 'bold'}
-    }
+  FileName = {
+    provider = get_current_file_path ,
+    condition = buffer_not_empty,
+    highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.background, 'bold'}
+  }
 })
 
 addPart(gls.left, {
-    DiagnosticError = {
-        provider = 'DiagnosticError',
-        icon = '  ',
-        highlight = {colors.red,colors.background}
-    }
+  DiagnosticError = {
+    provider = 'DiagnosticError',
+    icon = '  ',
+    highlight = {colors.red,colors.background},
+    separator = ' ',
+    separator_highlight = {'NONE', colors.background},
+  }
 })
 
 addPart(gls.left, {
-    DiagnosticWarn = {
-        provider = 'DiagnosticWarn',
-        icon = '  ',
-        highlight = {colors.yellow,colors.background},
-    }
+  DiagnosticWarn = {
+    provider = 'DiagnosticWarn',
+    icon = '  ',
+    highlight = {colors.yellow,colors.background},
+    separator = ' ',
+    separator_highlight = {'NONE', colors.background},
+  }
 })
 
 addPart(gls.left, {
-    DiagnosticHint = {
-        provider = 'DiagnosticHint',
-        icon = '  ',
-        highlight = {colors.cyan,colors.background},
-    }
+  DiagnosticHint = {
+    provider = 'DiagnosticHint',
+    icon = '  ',
+    highlight = {colors.cyan,colors.background},
+    separator = ' ',
+    separator_highlight = {'NONE', colors.background},
+  }
 })
 
 -- Right Section
@@ -446,120 +455,126 @@ addPart(gls.left, {
 addPart(gls.right, {
   CocStatus = {
     provider = get_diagnostic_info,
-    highlight = {colors.green,colors.bg},
+    highlight = {colors.green, colors.background},
     icon = '  🗱'
   }
 })
 
 addPart(gls.right, {
-    FileEncode = {
-        provider = downcase(fileinfo.get_file_encode),
-        separator = ' ',
-        separator_highlight = {'NONE',colors.background},
-        highlight = {colors.offsetGray, colors.background, 'bold'}
-    }
+  FileEncode = {
+    provider = downcase(fileinfo.get_file_encode),
+    separator = ' ',
+    separator_highlight = {'NONE',colors.background},
+    highlight = {colors.offsetGray, colors.background, 'bold'}
+  }
 })
 
 addPart(gls.right, {
-    FileFormat = {
-        provider = downcase(fileinfo.get_file_format),
-        separator = ' ',
-        separator_highlight = {'NONE',colors.background},
-        highlight = {colors.offsetGray, colors.background, 'bold'}
-    }
+  FileFormat = {
+    provider = downcase(fileinfo.get_file_format),
+    separator = ' ',
+    separator_highlight = {'NONE',colors.background},
+    highlight = {colors.offsetGray, colors.background, 'bold'}
+  }
 })
 
 addPart(gls.right, {
-    GitIcon = {
-        provider = function() return '  ' end,
-        condition = require('galaxyline.provider_vcs').check_git_workspace,
-        separator = ' ',
-        separator_highlight = {'NONE',colors.background},
-        highlight = {colors.purple,colors.background,'bold'},
-    }
+  GitIcon = {
+    provider = function() return '  ' end,
+    condition = require('galaxyline.provider_vcs').check_git_workspace,
+    separator = ' ',
+    separator_highlight = {'NONE',colors.background},
+    highlight = {colors.purple,colors.background,'bold'},
+  }
 })
 
 addPart(gls.right, {
-    GitBranch = {
-        provider = 'GitBranch',
-        condition = require('galaxyline.provider_vcs').check_git_workspace,
-        highlight = {colors.purple,colors.background,'bold'},
-    }
+  GitBranch = {
+    provider = 'GitBranch',
+    condition = require('galaxyline.provider_vcs').check_git_workspace,
+    highlight = {colors.purple,colors.background,'bold'},
+  }
 })
 
 addPart(gls.right, {
-    DiffAdd = {
-        provider = 'DiffAdd',
-        condition = checkwidth,
-        separator = ' ',
-        separator_highlight = {'NONE',colors.background},
-        icon = '  ',
-        highlight = {colors.green,colors.background},
-    }
+  DiffAdd = {
+    provider = 'DiffAdd',
+    condition = checkwidth,
+    separator = ' ',
+    separator_highlight = {'NONE',colors.background},
+    icon = '  ',
+    highlight = {colors.green,colors.background},
+  }
 })
 
 addPart(gls.right, {
-    DiffModified = {
-        provider = 'DiffModified',
-        condition = checkwidth,
-        icon = ' 柳',
-        highlight = {colors.orange,colors.background},
-    }
+  DiffModified = {
+    provider = 'DiffModified',
+    condition = checkwidth,
+    icon = ' 柳',
+    highlight = {colors.orange,colors.background},
+  }
 })
 
 addPart(gls.right, {
-    DiffRemove = {
-        provider = 'DiffRemove',
-        condition = checkwidth,
-        icon = '  ',
-        highlight = {colors.red,colors.background},
-    }
+  DiffRemove = {
+    provider = 'DiffRemove',
+    condition = checkwidth,
+    icon = '  ',
+    highlight = {colors.red,colors.background},
+  }
 })
 
 
 -- Short Left Section
 
 addPart(gls.short_line_left, {
-    BufferType = {
-        provider = 'FileTypeName',
-        separator = ' ',
-        separator_highlight = {'NONE',colors.background},
-        highlight = {colors.blue,colors.background,'bold'}
-    }
+  Spacer = {
+    provider = function() return ' ' end,
+    highlight = {colors.white, colors.background, 'bold'},
+  }
 })
 
+addPart(gls.short_line_left, {
+  FileIconShort = {
+    provider = 'FileIcon',
+    condition = buffer_not_empty,
+    highlight = {colors.white, colors.background},
+  },
+})
 
 addPart(gls.short_line_left, {
-    SFileName = {
-        provider = function ()
-            local fileinfo = require('galaxyline.provider_fileinfo')
-            local fname = fileinfo.get_current_file_name()
-            for _,v in ipairs(gl.short_line_list) do
-                if v == vim.bo.filetype then
-                    return ''
-                end
-            end
-            return fname
-        end,
-        condition = buffer_not_empty,
-        highlight = {colors.white,colors.background,'bold'}
-    }
+  SFileName = {
+    provider = function ()
+      local fileinfo = require('galaxyline.provider_fileinfo')
+      local fname = fileinfo.get_current_file_name()
+      for _,v in ipairs(gl.short_line_list) do
+        if v == vim.bo.filetype then
+          return ''
+        end
+      end
+
+      return fname
+    end,
+    condition = buffer_not_empty,
+    highlight = {colors.white,colors.background,'bold'}
+  }
 })
 
 -- Short Right Section
 
 addPart(gls.short_line_right, {
-    BufferIcon = {
-        provider= 'BufferIcon',
-        highlight = {colors.foreground,colors.background}
-    }
+  BufferIcon = {
+    provider= 'BufferIcon',
+    highlight = {colors.foreground,colors.background}
+  }
 })
 
 
 addPart(gls.left, {
-    DiagnosticInfo = {
-        provider = 'DiagnosticInfo',
-        icon = '  ',
-        highlight = {colors.blue,colors.background},
-    }
+  DiagnosticInfo = {
+    provider = 'DiagnosticInfo',
+    icon = '  ',
+    highlight = {colors.blue,colors.background},
+  }
 })
