@@ -1,5 +1,4 @@
 " TODO
-" - statusline
 " - ultisnips?
 
 " use vim settings, rather then vi settings (much better!).
