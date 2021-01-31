@@ -238,9 +238,17 @@ Plug 'janko-m/vim-test'
 Plug 'chrisbra/Colorizer'            " show hex colors in CSS/HTML files
 Plug 'glepnir/galaxyline.nvim'       " fast Lua statusline
 Plug 'kyazdani42/nvim-web-devicons'  " fancy icons
-Plug 'mhartington/oceanic-next'      " color scheme
 Plug 'RRethy/vim-illuminate'         " highlight duplicate words
 Plug 'drzel/vim-line-no-indicator'   " nice scroll indicator
+
+" color schemes
+Plug 'tjdevries/colorbuddy.vim'
+Plug 'bkegley/gloombuddy'
+
+Plug 'NieTiger/halcyon-neovim'
+Plug 'christianchiarulli/nvcode-color-schemes.vim'
+Plug 'mhartington/oceanic-next'
+Plug 'joshdick/onedark.vim'
 
 " Tmux
 Plug 'christoomey/vim-tmux-navigator'
@@ -270,9 +278,9 @@ call plug#end()
 " ================ Theme ========================
 
 set termguicolors
-let g:oceanic_next_terminal_bold = 1
-let g:oceanic_next_terminal_italic = 1
-colorscheme OceanicNext
+" let g:oceanic_next_terminal_bold = 1
+" let g:oceanic_next_terminal_italic = 1
+colorscheme palenight
 
 " enable transparent terminal bg
 hi Normal guibg=NONE ctermbg=NONE
