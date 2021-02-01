@@ -33,6 +33,12 @@ function string:split(delimiter)
   return result
 end
 
+-- Lua patterns are bullshit and there's no plain text gsub, you have to escape
+-- them.
+local function literalize(str)
+  return str:gsub("[%(%)%.%%%+%-%*%?%[%]%^%$]", function(c) return "%" .. c end)
+end
+
 local get_current_file_path = function()
   local file = vim.fn.expand('%:t')
   local path = vim.fn.expand('%:p:h')
@@ -47,11 +53,11 @@ local get_current_file_path = function()
     local del_table = string.split(git_dir, "/")
     local len = table.maxn(del_table)
 
+    -- remove the .git directory from the path.
     del_table[len] = nil
-    del_table[len - 1] = nil
 
     local del_str = table.concat(del_table, "/") .. "/"
-    path = string.gsub(path, del_str, "")
+    path = string.gsub(path, literalize(del_str), "")
   end
 
   if vim.fn.empty(file) == 1 then return '' end
