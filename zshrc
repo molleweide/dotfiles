@@ -88,4 +88,6 @@ if [ ! -f ~/.config/dotfiles/rbenv ]; then
   [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
 fi
 
+eval "$(nodenv init -)"
+
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local

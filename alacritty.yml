@@ -1,5 +1,5 @@
 env:
-  TERM: xterm-256color
+  TERM: alacritty
 
 window:
   # Allow terminal applications to change Alacritty's window title.
@@ -62,6 +62,10 @@ font:
     # The `style` can be specified to pick a specific face.
     style: Regular
 
+  bold:
+    family: InconsolataGo Nerd Font
+    style: Bold
+
   # Point size
   size: 18.0
 
@@ -95,75 +99,47 @@ font:
   use_thin_strokes: true
 
 # If `true`, bold text is drawn using the bright color variants.
-draw_bold_text_with_bright_colors: false
+draw_bold_text_with_bright_colors: true
 
-# Colors (Tomorrow Night Bright)
+# Colors (moonfly)
 colors:
   # Default colors
   primary:
-    background: '#000000'
-    foreground: '#eaeaea'
-
-    # Bright and dim foreground colors
-    #
-    # The dimmed foreground color is calculated automatically if it is not present.
-    # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
-    # is `false`, the normal foreground color will be used.
-    dim_foreground: '#9a9a9a'
-    bright_foreground: '#ffffff'
+    background:        '#080808'
+    foreground:        '#b2b2b2'
+    bright_foreground: '#eeeeee'
 
   # Cursor colors
-  #
-  # Colors which should be used to draw the terminal cursor. If these are unset,
-  # the cursor color will be the inverse of the cell color.
   cursor:
-    text: '#000000'
-    cursor: '#ffffff'
+    text:   '#080808'
+    cursor: '#9e9e9e'
 
   # Selection colors
-  #
-  # Colors which should be used to draw the selection area. If selection
-  # background is unset, selection color will be the inverse of the cell colors.
-  # If only text is unset the cell text color will remain the same.
   selection:
-    text: '#eaeaea'
-    background: '#404040'
+    text:       '#080808'
+    background: '#b2ceee'
 
   # Normal colors
   normal:
-    black:   '#000000'
-    red:     '#d54e53'
-    green:   '#b9ca4a'
-    yellow:  '#e6c547'
-    blue:    '#7aa6da'
-    magenta: '#c397d8'
-    cyan:    '#70c0ba'
-    white:   '#eaeaea'
+    black:   '#373c40'
+    red:     '#ff5454'
+    green:   '#8cc85f'
+    yellow:  '#e3c78a'
+    blue:    '#80a0ff'
+    magenta: '#d183e8'
+    cyan:    '#79dac8'
+    white:   '#a1aab8'
 
   # Bright colors
   bright:
-    black:   '#666666'
-    red:     '#ff3334'
-    green:   '#9ec400'
-    yellow:  '#e7c547'
-    blue:    '#7aa6da'
-    magenta: '#b77ee0'
-    cyan:    '#54ced6'
-    white:   '#ffffff'
-
-  # Dim colors
-  #
-  # If the dim colors are not set, they will be calculated automatically based
-  # on the `normal` colors.
-  dim:
-    black:   '#000000'
-    red:     '#8c3336'
-    green:   '#7a8530'
-    yellow:  '#97822e'
-    blue:    '#506d8f'
-    magenta: '#80638e'
-    cyan:    '#497e7a'
-    white:   '#9a9a9a'
+    black:   '#7c8f8f'
+    red:     '#ff5189'
+    green:   '#36c692'
+    yellow:  '#bfbf97'
+    blue:    '#78c2ff'
+    magenta: '#ae81ff'
+    cyan:    '#85dc85'
+    white:   '#e2637f'
 
 # Visual Bell
 #

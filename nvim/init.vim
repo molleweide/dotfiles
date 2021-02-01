@@ -255,6 +255,8 @@ Plug 'NieTiger/halcyon-neovim'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 Plug 'mhartington/oceanic-next'
 Plug 'joshdick/onedark.vim'
+Plug 'haishanh/night-owl.vim'
+Plug 'bluz71/vim-nightfly-guicolors'
 
 " Tmux
 Plug 'christoomey/vim-tmux-navigator'
@@ -286,7 +288,7 @@ call plug#end()
 set termguicolors
 " let g:oceanic_next_terminal_bold = 1
 " let g:oceanic_next_terminal_italic = 1
-colorscheme palenight
+colorscheme nightfly
 
 " enable transparent terminal bg
 hi Normal guibg=NONE ctermbg=NONE
