@@ -491,6 +491,9 @@ nmap <silent> gy <Plug>(coc-type-definition)
 " Apply AutoFix to problem on the current line.
 nmap <silent> gf <Plug>(coc-fix-current)
 
+nmap <silent> <Leader>ej <Plug>(coc-diagnostic-next-error)
+nmap <silent> <Leader>ek <Plug>(coc-diagnostic-prev-error)
+
 " Show parameter hints as you type
 autocmd User CocJumpPlaceholder call
   \ CocActionAsync(‘showSignatureHelp’)

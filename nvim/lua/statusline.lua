@@ -1,3 +1,10 @@
+require('nvim-web-devicons').setup()
+
+local gl = require('galaxyline')
+local fileinfo = require('galaxyline.provider_fileinfo')
+local vcs = require('galaxyline.provider_vcs')
+local gls = gl.section
+
 local function file_readonly()
   if vim.bo.filetype == 'help' then return '' end
   if vim.bo.readonly == true then return " " end
@@ -29,7 +36,7 @@ end
 local get_current_file_path = function()
   local file = vim.fn.expand('%:t')
   local path = vim.fn.expand('%:p:h')
-  local git_dir = require('galaxyline.provider_vcs').get_git_dir(path)
+  local git_dir = vcs.get_git_dir(path)
   local home = os.getenv("HOME")
 
   if git_dir == nil and string.match(path, home) then
@@ -84,12 +91,6 @@ local moonflyColors = {
     white = "#e2637f",
   },
 }
-
-require('nvim-web-devicons').setup()
-
-local gl = require('galaxyline')
-local fileinfo = require('galaxyline.provider_fileinfo')
-local gls = gl.section
 
 -- Global Color Defenitions
 
@@ -176,6 +177,17 @@ end
 
 local function addPart(section, entry)
   table.insert(section, entry)
+end
+
+local function getShortGitBranch()
+  local branch = vcs.get_git_branch()
+  local parts = branch:split("/")
+
+  -- If the branch is like dbalatero/BLAH-1234/foo
+  -- strip it to just be "foo"
+  local lastSection = parts[table.maxn(parts)]
+
+  return lastSection
 end
 
 -- Left Section
@@ -301,7 +313,7 @@ addPart(gls.right, {
 addPart(gls.right, {
   GitIcon = {
     provider = function() return '  ' end,
-    condition = require('galaxyline.provider_vcs').check_git_workspace,
+    condition = vcs.check_git_workspace,
     separator = ' ',
     separator_highlight = {'NONE',colors.background},
     highlight = {colors.purple,colors.background,'bold'},
@@ -310,8 +322,8 @@ addPart(gls.right, {
 
 addPart(gls.right, {
   GitBranch = {
-    provider = 'GitBranch',
-    condition = require('galaxyline.provider_vcs').check_git_workspace,
+    provider = getShortGitBranch,
+    condition = vcs.check_git_workspace,
     highlight = {colors.purple,colors.background,'bold'},
   }
 })
