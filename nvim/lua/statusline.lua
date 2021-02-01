@@ -245,6 +245,28 @@ end
 -- -- Force manual load so that nvim boots with a status line
 -- gl.load_galaxyline()
 
+local moonflyColors = {
+  -- normal colors
+  black = "#373c40",
+  red = "#ff5454",
+  green = "#8cc85f",
+  yellow = "#e3c78a",
+  blue = "#80a0ff",
+  purple = "#d183e8",
+  cyan = "#79dac8",
+  white = "#de935f",  -- more orange
+
+  bright = {
+    black = "#f09479",
+    red = "#ff5189",
+    green = "#36c692",
+    yellow = "#bfbf97",
+    blue = "#78c2ff",
+    purple = "#ae81ff",
+    cyan = "#85dc85",
+    white = "#e2637f",
+  },
+}
 
 require('nvim-web-devicons').setup()
 
@@ -381,7 +403,8 @@ addPart(gls.left,{
     provider = 'FileIcon',
     condition = buffer_not_empty,
     highlight = {
-      require('galaxyline.provider_fileinfo').get_file_icon_color,
+      -- require('galaxyline.provider_fileinfo').get_file_icon_color,
+      colors.foreground,
       colors.background,
     },
   },
@@ -391,7 +414,12 @@ addPart(gls.left, {
   FileName = {
     provider = get_current_file_path ,
     condition = buffer_not_empty,
-    highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.background, 'bold'}
+    highlight = {
+      -- require('galaxyline.provider_fileinfo').get_file_icon_color,
+      moonflyColors.bright.blue,
+      colors.background,
+      'bold',
+    }
   }
 })
 
@@ -399,7 +427,7 @@ addPart(gls.left, {
   DiagnosticError = {
     provider = 'DiagnosticError',
     icon = '  ',
-    highlight = {colors.red,colors.background},
+    highlight = {colors.red, colors.background},
     separator = ' ',
     separator_highlight = {'NONE', colors.background},
   }
