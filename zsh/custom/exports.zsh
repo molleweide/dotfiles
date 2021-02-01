@@ -6,8 +6,7 @@ export LC_CTYPE=en_US.UTF-8
 export DEVELOPMENT_DIRECTORY="$HOME/code"
 
 # FZF
-export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden \
---exclude .git --exclude node_modules --color=always'
+export FZF_DEFAULT_COMMAND="rg --files --color always --hidden --glob '!{node_modules/*,.git/*}'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="--ansi"
 
