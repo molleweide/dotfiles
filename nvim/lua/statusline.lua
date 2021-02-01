@@ -185,16 +185,16 @@ local function addPart(section, entry)
   table.insert(section, entry)
 end
 
-local function getShortGitBranch()
-  local branch = vcs.get_git_branch()
-  local parts = branch:split("/")
+-- local function getShortGitBranch()
+--   local branch = vcs.get_git_branch()
+--   local parts = branch:split("/")
 
-  -- If the branch is like dbalatero/BLAH-1234/foo
-  -- strip it to just be "foo"
-  local lastSection = parts[table.maxn(parts)]
+--   -- If the branch is like dbalatero/BLAH-1234/foo
+--   -- strip it to just be "foo"
+--   local lastSection = parts[table.maxn(parts)]
 
-  return lastSection
-end
+--   return lastSection
+-- end
 
 -- Left Section
 
