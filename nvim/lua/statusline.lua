@@ -326,13 +326,13 @@ addPart(gls.right, {
   }
 })
 
-addPart(gls.right, {
-  GitBranch = {
-    provider = getShortGitBranch,
-    condition = vcs.check_git_workspace,
-    highlight = {colors.purple,colors.background,'bold'},
-  }
-})
+-- addPart(gls.right, {
+--   GitBranch = {
+--     provider = getShortGitBranch,
+--     condition = vcs.check_git_workspace,
+--     highlight = {colors.purple,colors.background,'bold'},
+--   }
+-- })
 
 addPart(gls.right, {
   DiffAdd = {
