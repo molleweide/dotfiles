@@ -207,6 +207,7 @@ Plug 'romgrk/nvim-treesitter-context' " show function context as you scroll
 Plug 'AndrewRadev/splitjoin.vim'      " split/join single line/multiline
 Plug 'AndrewRadev/switch.vim'         " switch syntaxes around with `gs`
 Plug 'tpope/vim-commentary'           " comment with `gcc`
+Plug 'romainl/vim-cool'               " disable highlights automatically on cursor move
 Plug 'easymotion/vim-easymotion'      " ,,w and ,,b to jump to objects
 Plug 'tpope/vim-projectionist'        " alternate files with :AV/:AS
 Plug 'kshenoy/vim-signature'          " show marks in the gutter
