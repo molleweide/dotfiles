@@ -1,6 +1,10 @@
 " TODO
 " - ultisnips?
 
+" reload this file if it changes
+autocmd BufWritePost init.vim source %
+autocmd BufWritePost ~/.dotfiles/nvim/*.lua source ~/.config/nvim/init.vim
+
 " use vim settings, rather then vi settings (much better!).
 " this must be first, because it changes other options as a side effect.
 set nocompatible
