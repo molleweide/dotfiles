@@ -1,10 +1,6 @@
 " TODO
 " - ultisnips?
 
-" reload this file if it changes
-autocmd BufWritePost init.vim source %
-autocmd BufWritePost ~/.dotfiles/nvim/*.lua source ~/.config/nvim/init.vim
-
 " use vim settings, rather then vi settings (much better!).
 " this must be first, because it changes other options as a side effect.
 set nocompatible
@@ -228,7 +224,6 @@ Plug 'cb372/coc-github-users', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'josa42/coc-lua', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
 
 " Ruby
@@ -238,6 +233,13 @@ Plug 'tpope/vim-rake'                     " allow for alternate files
 Plug 'vim-ruby/vim-ruby'                  " indentation, etc
 Plug 'joker1007/vim-ruby-heredoc-syntax'  " fenced syntax colors in heredocs
 Plug 'ecomba/vim-ruby-refactoring'        " extract vars, methods, etc
+
+" Snippets
+" Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'SirVer/ultisnips'
+" Plug 'epilande/vim-es2015-snippets'
+" Plug 'joaohkfaria/vim-jest-snippets'
+" Plug 'epilande/vim-react-snippets'
 
 " Syntax checking
 Plug 'w0rp/ale'
@@ -443,6 +445,7 @@ let g:SignatureMarkTextHLDynamic = 1
 " fugitive buffers. This prevents this from becomming an issue:
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
+vnoremap <leader>g :GBrowse!<CR>
 
 " ==================== LSP ======================
 
@@ -454,8 +457,6 @@ let $NVIM_COC_LOG_LEVEL = 'debug'
 " Use tab and shift+tab to navigate forward/back on completion list and
 " snippets
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-let g:coc_snippet_next = '<tab>'
-
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " make <cr> select the first completion item and confirm completion when no
