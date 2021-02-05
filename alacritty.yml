@@ -57,17 +57,21 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: InconsolataGo Nerd Font
+    family: JetBrainsMono Nerd Font
 
     # The `style` can be specified to pick a specific face.
     style: Regular
 
+  italic:
+    family: JetBrainsMono Nerd Font
+    style: Italic
+
   bold:
-    family: InconsolataGo Nerd Font
+    family: JetBrainsMono Nerd Font
     style: Bold
 
   # Point size
-  size: 18.0
+  size: 16.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
