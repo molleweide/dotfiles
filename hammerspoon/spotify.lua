@@ -8,3 +8,4 @@ local function openRemoteSpotify()
 end
 
 hyperKey:bind('6'):toFunction("Open Spotify on desktop", openRemoteSpotify)
+

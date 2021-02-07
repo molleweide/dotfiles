@@ -1,6 +1,3 @@
-" TODO
-" - ultisnips?
-
 " use vim settings, rather then vi settings (much better!).
 " this must be first, because it changes other options as a side effect.
 set nocompatible
@@ -196,6 +193,8 @@ call plug#begin('~/.local/nvim/plugins')
 " Core
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'Konfekt/vim-alias'
+Plug 'nanotee/nvim-lua-guide'
+Plug 'liuchengxu/vim-which-key'
 
 " Editing
 Plug 'rhysd/clever-f.vim'             " hit `f` to repeat search
@@ -217,14 +216,15 @@ Plug 'Shougo/vimfiler.vim'
 Plug 'Shougo/unite.vim'
 
 " LSP
-Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
+Plug 'neovim/nvim-lspconfig'             " out of the box LSP configs for common langs
+Plug 'glepnir/lspsaga.nvim'              " code action plugin
+Plug 'nvim-lua/lsp-status.nvim'          " provides statusline information for LSP
+Plug 'hrsh7th/nvim-compe'                " completion engine
+Plug 'onsails/lspkind-nvim'              " add vscode-style icons to completion menu
+Plug 'nathunsmitty/nvim-ale-diagnostic'  " route lsp diagnostics to ALE
 
-Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
-Plug 'cb372/coc-github-users', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'josa42/coc-lua', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
+" Markdown
+Plug 'npxbr/glow.nvim', {'do': ':GlowInstall'}  " markdown preview with :Glow
 
 " Ruby
 Plug 'keith/rspec.vim'                    " better RSpec syntax highlighting
@@ -235,11 +235,9 @@ Plug 'joker1007/vim-ruby-heredoc-syntax'  " fenced syntax colors in heredocs
 Plug 'ecomba/vim-ruby-refactoring'        " extract vars, methods, etc
 
 " Snippets
-" Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'SirVer/ultisnips'
-" Plug 'epilande/vim-es2015-snippets'
-" Plug 'joaohkfaria/vim-jest-snippets'
-" Plug 'epilande/vim-react-snippets'
+Plug 'norcalli/snippets.nvim'
+Plug 'SirVer/UltiSnips'
+Plug 'honza/vim-snippets'
 
 " Syntax checking
 Plug 'w0rp/ale'
@@ -303,9 +301,6 @@ hi Normal guibg=NONE ctermbg=NONE
 hi LineNr guibg=NONE ctermbg=NONE
 hi SignColumn guibg=NONE ctermbg=NONE
 hi EndOfBuffer guibg=NONE ctermbg=NONE
-
-" setup galaxyline
-call luaeval('require("statusline")')
 
 " highlight hex colors in these file types
 au BufNewFile,BufRead *.css,*.html,*.htm,*.sass,*.scss :ColorHighlight!
@@ -447,65 +442,35 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 
 vnoremap <leader>g :GBrowse!<CR>
 
+nnoremap <space>gb :Gblame<CR>
+nnoremap <space>gs :Gstatus<CR>
+
+" Map git-messenger
+let g:git_messenger_no_default_mappings = v:true
+nmap <space>gm <Plug>(git-messenger)
+
 " ==================== LSP ======================
 
-" debugger enable
-" let g:coc_node_args = ['--nolazy', '--inspect-brk=6045']
+set completeopt=menu,menuone,noselect
 
-let $NVIM_COC_LOG_LEVEL = 'debug'
+call luaeval('require("lspservers")')
 
-" Use tab and shift+tab to navigate forward/back on completion list and
-" snippets
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" nnoremap <silent> gh :Lspsaga lsp_finder<CR>
+" nnoremap <silent>K :Lspsaga hover_doc<CR>
 
-" make <cr> select the first completion item and confirm completion when no
-" items have selected:
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+nnoremap <silent><space>la :Lspsaga code_action<CR>
+vnoremap <silent><leader>ca :<C-U>Lspsaga range_code_action<CR>
 
-" Close preview window when completion is done.
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+nnoremap <silent> <space>l0  <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> <space>ld  <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <space>lh  <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <space>lD  <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <space>ln  <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> <space>lr  <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> <space>lt  <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> <space>lw  <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 
-function! g:CocShowDocumentation()
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocActionAsync('doHover')
-  endif
-endfunction
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" don't give |ins-completion-menu| messages in the message buffer
-set shortmess+=c
-
-" Better display for messages
-set cmdheight=2
-
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
-
-nmap <silent> gh :call CocShowDocumentation()<CR>
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <silent> gy <Plug>(coc-type-definition)
-
-" Apply AutoFix to problem on the current line.
-nmap <silent> gf <Plug>(coc-fix-current)
-
-nmap <silent> <Leader>ej <Plug>(coc-diagnostic-next-error)
-nmap <silent> <Leader>ek <Plug>(coc-diagnostic-prev-error)
-
-" Show parameter hints as you type
-autocmd User CocJumpPlaceholder call
-  \ CocActionAsync(‘showSignatureHelp’)
-
-" =================== ALE ========================
+" =================== ALE =======================
 
 " ALE config
 let g:ale_javascript_eslint_executable = 'eslint_d'
@@ -537,6 +502,8 @@ let g:ale_fixers = {
 let g:ale_sign_error = '●' " Less aggressive than the default '>>'
 let g:ale_sign_warning = '.'
 let g:ale_disable_lsp = 1
+let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_prefix = "      "
 
 " =================== Ruby =====================
 
@@ -563,7 +530,20 @@ require('nvim-treesitter.configs').setup {
 }
 LUA
 
-" ================= Stripe =====================
+" ================== status line ================
+call luaeval('require("statusline")')
+
+" ================== snippets ==================
+
+" inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+
+let g:UltiSnipsExpandTrigger = "<nop>"
+call luaeval('require("custom_snippets")')
+
+" ================= which key ==================
+call luaeval('require("which-key")')
+
+" ================= Stripe ======================
 
 " Load Stripe-specific private config
 call SourceIfExists('~/.config/nvim/layers/private/config.vim')
