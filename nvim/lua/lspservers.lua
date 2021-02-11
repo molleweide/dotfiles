@@ -1,5 +1,4 @@
 local lspconfig = require('lspconfig')
-local configs = require('lspconfig/configs')
 local util = require('lspconfig/util')
 local lsp_status = require('lsp-status')
 local compe = require('compe')
