@@ -57,10 +57,6 @@ do
     return result['selected'] >= 0
   end
 
-  _G.expand_ultisnip_or_compe_confirm = function()
-    return vim.fn['compe#confirm']("\n")
-  end
-
   -- Use (s-)tab to:
   --- move to prev/next item in completion menuone
   --- jump to prev/next snippet's placeholder
@@ -108,9 +104,6 @@ do
 
       return t "<cmd>call UltiSnips#ExpandSnippet()<CR>"
     else
-      -- return [[ <C-R>=compe#confirm('<CR>')<CR> ]]
-      -- return t "<cmd>lua return expand_ultisnip_or_compe_confirm()<CR>"
-      -- return "<C-R>=(g:UltiSnips_Expandable() > 0 ? '' : compe#confirm('<CR>')fdsa)<CR>"
       return vim.fn['compe#confirm']("\n")
     end
   end
