@@ -53,7 +53,6 @@ do
 
   local isAutocompleteSelected = function()
     local result = vim.fn.complete_info({'selected'})
-    print("Result: " .. vim.inspect(result))
     return result['selected'] >= 0
   end
 
