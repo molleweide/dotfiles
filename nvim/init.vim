@@ -505,6 +505,9 @@ let g:ale_disable_lsp = 1
 let g:ale_virtualtext_cursor = 1
 let g:ale_virtualtext_prefix = "      "
 
+nnoremap <silent> gj :ALENext<cr>
+nnoremap <silent> gk :ALEPrevious<cr>
+
 " =================== Ruby =====================
 
 function! FlipBindingPry()
