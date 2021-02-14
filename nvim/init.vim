@@ -109,6 +109,17 @@ let g:latest_node_path = $HOME . '/.nodenv/versions/15.7.0/bin/node'
 let g:node_host_prog = g:latest_node_path
 let g:coc_node_path = g:latest_node_path
 
+" ============== yank ======================
+
+" highlights yanked text for a little extra visual feedback
+" so we don't need to rely on visual mode as much, try yip or y4y
+augroup highlight_yank
+  if has("nvim-0.5")
+    autocmd!
+    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
+  endif
+augroup END
+
 " ================ Editing ==========================
 
 " color column
