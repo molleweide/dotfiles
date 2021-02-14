@@ -40,6 +40,7 @@ vim.g.which_key_space = {
     ['d'] = 'jump-to-definition',
     ['D'] = 'jump-to-implementation',
     ['h'] = 'hover-documentation',
+    ['i'] = 'info-status',
     ['r'] = 'show-references',
     ['t'] = 'jump-to-type-definition',
     ['w'] = 'list-workspace-document-symbols',

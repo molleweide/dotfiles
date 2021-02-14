@@ -249,7 +249,11 @@ Plug 'ecomba/vim-ruby-refactoring'        " extract vars, methods, etc
 " Snippets
 Plug 'norcalli/snippets.nvim'
 Plug 'SirVer/UltiSnips'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+
 Plug 'honza/vim-snippets'
+Plug 'craigmac/vim-vsnip-snippets'
 
 " Syntax checking
 Plug 'w0rp/ale'
@@ -475,6 +479,7 @@ vnoremap <silent><leader>ca :<C-U>Lspsaga range_code_action<CR>
 
 nnoremap <silent> <space>l0  <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> <space>ld  <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <space>li  :LspInfo<CR>
 nnoremap <silent> <space>lh  <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <space>lD  <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> <space>ln  <cmd>lua vim.lsp.buf.rename()<CR>

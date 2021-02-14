@@ -60,7 +60,7 @@ compe.setup({
     path = true,
     buffer = true,
     calc = false,
-    vsnip = false,
+    vsnip = true,
     nvim_lsp = true,
     nvim_lua = true,
     spell = true,
@@ -93,6 +93,8 @@ do
       return "<cmd>lua return require('snippets').expand_or_advance(1)<CR>"
     elseif vim.api.nvim_eval([[ UltiSnips#CanJumpForwards() ]]) == 1 then
       return t "<cmd>call UltiSnips#JumpForwards()<CR>"
+    elseif vim.fn.call("vsnip#jumpable", {1}) == 1 then
+      return t "<Plug>(vsnip-jump-next)"
     else
       return t "<Tab>"
     end
@@ -101,10 +103,10 @@ do
   _G.s_tab_complete = function()
     if vim.fn.pumvisible() == 1 then
       return t "<C-p>"
-    -- elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
-    --   return t "<Plug>(vsnip-jump-prev)"
     elseif vim.api.nvim_eval([[ UltiSnips#CanJumpBackwards() ]]) == 1 then
       return t "<cmd>call UltiSnips#JumpBackwards()<CR>"
+    elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
+      return t "<Plug>(vsnip-jump-prev)"
     else
       return t "<S-Tab>"
     end
@@ -127,6 +129,8 @@ do
       end
 
       return t "<cmd>call UltiSnips#ExpandSnippet()<CR>"
+    elseif vim.api.nvim_eval([[ vsnip#expandable() ]]) == 1 then
+      return t "<Plug>(vsnip-expand)"
     else
       return vim.fn['compe#confirm']("\n")
     end
