@@ -204,8 +204,9 @@ call plug#begin('~/.local/nvim/plugins')
 " Core
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'Konfekt/vim-alias'
-Plug 'nanotee/nvim-lua-guide'
-Plug 'liuchengxu/vim-which-key'
+Plug 'nanotee/nvim-lua-guide'         " additional help under :h nvim-lua-guide
+Plug 'liuchengxu/vim-which-key'       " context menu when hitting leader key(s)
+Plug 'kevinhwang91/nvim-bqf'          " better quickfix
 
 " Editing
 Plug 'rhysd/clever-f.vim'             " hit `f` to repeat search
