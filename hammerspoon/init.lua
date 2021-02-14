@@ -82,3 +82,8 @@ vim:enterWithSequence('jk', 100)
 -- END VIM CONFIG
 --------------------------------
 --
+
+hyperKey:bind('2'):toFunction(
+  'Test accessibility',
+  VimMode.utils.debug.testAccessibilityField
+)
