@@ -36,7 +36,7 @@ function brew_cask_install() {
   if brew cask list "$package" > /dev/null 2>&1; then
     dotsay "+ $package already installed... skipping."
   else
-    brew cask install $@
+    brew install --cask $@
   fi
 }
 
