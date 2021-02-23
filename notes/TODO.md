@@ -4,10 +4,14 @@
     rm old symlinks
 
 - vim
-    ranger ,r
     aliases commands to key-bindings files
+    <leader>Kt    eg. Keybindings -> tmux
     
 - custom apps
     vimac
 - iterm
     import plist
+
+
+how does balateros git scripts work
+symlink local repos/what i did???

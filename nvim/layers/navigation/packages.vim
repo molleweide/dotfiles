@@ -18,3 +18,8 @@ Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimfiler.vim'
 
 Plug 'danro/rename.vim'
+
+" File browser
+" Bundle 'octref/RootIgnore'
+Plug 'rbgrouleff/bclose.vim'        " Ranger dependency
+Plug 'francoiscabrol/ranger.vim'

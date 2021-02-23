@@ -30,7 +30,7 @@ brew_install ack
 apt_install ack-grep
 
 brew_install gnu-tar
-brew_install heroku
+brew_install heroku/brew/heroku
 brew_install hub
 brew_install redis
 
