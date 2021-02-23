@@ -21,6 +21,7 @@ set undolevels=1000             "undo levels
 set laststatus=2                "fix status bar
 set guifont=Inconsolata-g\ for\ Powerline
 set number
+set relativenumber
 
 " this makes vim act like all other editors, buffers can
 " exist in the background without being in a window.
