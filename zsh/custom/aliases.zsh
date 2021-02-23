@@ -1,4 +1,6 @@
 # Shell aliases
+alias k="clear"
+alias r="ranger"
 alias m="git checkout master"
 alias dbm="rake db:migrate && RAILS_ENV=test rake db:migrate"
 alias l="ls -al"
