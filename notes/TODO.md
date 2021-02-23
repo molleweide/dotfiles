@@ -8,6 +8,7 @@ i am really happy that
 look at tmux
     which plugins are used?
 
+installer/tmux add tmuxinator
 
 use regular fn keys
 
