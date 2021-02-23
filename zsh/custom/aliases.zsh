@@ -12,7 +12,7 @@ alias srync="rsync -vrazh"
 alias tk="tmux kill-session"
 alias tn="tmuxinator"
 alias emacs="TERM=xterm-24bit emacs -nw"
-alias vim="nvim"
+alias v="nvim"
 alias 6="exec zsh"
 
 # OS X apps
