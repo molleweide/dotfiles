@@ -1,0 +1,113 @@
+# todo
+
+# where to put REAPER map?
+#   clone my reaper
+#   cask install Reaper
+#   - https://formulae.brew.sh/cask/reaper#default
+#   - https://github.com/Homebrew/homebrew-cask/blob/master/Casks/reaper.rb
+#   - https://github.com/Homebrew/homebrew-cask/blob/master/USAGE.md
+#     read options about choosing install dir
+#   - https://stackoverflow.com/questions/23484883/changing-homebrew-cask-installation-directories
+
+
+
+# create reaper temp file directories
+# for peaks and backups
+
+
+
+# TODO
+#
+#   create function get reaper install dir
+#   check if reaper + brew get reaper version
+#   if current version exists then don't install
+install_dir=~/REAPER/app/reaper
+
+
+projects_dir=~/REAPER/projects
+tmp_dir=~/REAPER/tmp
+backups_dir=~/REAPER/backups
+
+
+# function get_current_reaper_version() {
+#
+# TODO
+#
+# # how can i use regex here
+#
+# # if first line contains version_regex
+# # assign to variable
+# # check if dir name = version_regex exists
+# # create install new
+#
+# # brew info --cask reaper | grep -q <findstr>
+# # look at output > find version number
+# # append to reaper install dir
+# }
+
+
+
+function install_reaper_linux() {
+  echo "reaper linux install not done yet."
+}
+
+
+function install_reaper_mac() {
+  tmp_dir=~/temp_dir
+  read -r -p "Do you want to install Reaper DAW to $install_dir? [y|N] " response
+
+  if [[ $response =~ (y|yes|Y) ]]; then
+    if [ ! -d $install_dir ]; then
+
+      mkdir -p $install_dir
+
+      # TODO
+      #
+      # how can i append version number to $install_dir
+      #   and also rename the .app file
+      #
+      #   - check version
+      #   - append to app name
+      #   - append to dir name
+      brew cask install reaper --appdir=$install_dir --force
+
+      git clone --recurse-submodules https://github.com/molleweide/reaper-app-config.git $tmp_dir
+
+      mv $tmp_dir/.git $install_dir/.git
+
+      rm -r $tmp_dir # be careful
+
+      pushd $install_dir > /dev/null 2>&1 # make $PWD = homedir
+
+      echo "inside: $PWD ; now we reset to get all files back."
+      git reset --hard HEAD
+
+      popd > /dev/null 2>&1
+
+
+      echo "we're back: $PWD"
+
+      ok
+    else
+      # ok ">>> Reaper is already installed it seems!!!"
+    fi
+  fi
+
+  # if ! brew_is_tapped "neovim/neovim"; then
+  #   brew_tap neovim/neovim
+  # fi
+
+  # brew_install neovim --HEAD
+}
+
+function install_reaper() {
+  if is_macos; then
+    install_reaper_mac
+  else
+    install_reaper_linux
+  fi
+}
+
+
+# get_current_reaper_version
+# install_reaper

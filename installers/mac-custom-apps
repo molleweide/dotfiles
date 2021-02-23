@@ -228,6 +228,10 @@ if is_macos; then
       install_simple_dmg_copy "LICEcap" "$url"
     }
 
+    # install_limelight() {
+    #   # TODO https://github.com/koekeishiya/limelight
+    # }
+
     install_lunar() {
       local url="https://lunar.fyi/download/latest"
       install_simple_dmg_copy Lunar "$url"
@@ -289,6 +293,10 @@ if is_macos; then
       install_simple_zip "Swinsian" "$url"
     }
 
+    # install_vimac() {
+    #   # TODO
+    # }
+
     install_vlc() {
       local url="https://mirrors.syringanetworks.net/videolan/vlc/3.0.8/macosx/vlc-3.0.8.dmg"
       install_simple_dmg_copy "VLC" "$url"
@@ -332,6 +340,7 @@ if is_macos; then
     # install_google_chrome
     # install_hazeover
     install_licecap
+    # install_limelight
     # install_on_the_job
     # setup_on_the_job_dropbox_sync
     # install_openemu
@@ -341,6 +350,7 @@ if is_macos; then
     # install_spotify
     # install_steam
     # install_swinsian
+    # install_vimac
     install_vlc
     # install_zooom2
   fi
