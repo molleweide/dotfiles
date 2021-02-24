@@ -1,4 +1,5 @@
 # Shell aliases
+alias rzsh="source ~/.zshrc"
 alias k="clear"
 alias r="ranger"
 alias m="git checkout master"
@@ -12,6 +13,7 @@ alias srync="rsync -vrazh"
 alias tk="tmux kill-session"
 alias tn="tmuxinator"
 alias emacs="TERM=xterm-24bit emacs -nw"
+alias vim="nvim"
 alias v="nvim"
 alias 6="exec zsh"
 
@@ -49,4 +51,9 @@ function opendir() {
   local dir=$(dirname "$file")
 
   open "$dir"
+}
+
+function krbcp() {
+  make
+  cp public/json/molleweide.json ~/.config/karabiner/assets/complex_modifications
 }

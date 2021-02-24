@@ -1,4 +1,8 @@
-# todo
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+# TODO
 
 # where to put REAPER map?
 #   clone my reaper
@@ -9,95 +13,54 @@
 #     read options about choosing install dir
 #   - https://stackoverflow.com/questions/23484883/changing-homebrew-cask-installation-directories
 
+REAPER_DIR=~/REAPER
 
-
-# create reaper temp file directories
-# for peaks and backups
-
-
-
-# TODO
-#
-#   create function get reaper install dir
-#   check if reaper + brew get reaper version
-#   if current version exists then don't install
-install_dir=~/REAPER/app/reaper
-
-
-projects_dir=~/REAPER/projects
-tmp_dir=~/REAPER/tmp
-backups_dir=~/REAPER/backups
-
-
-# function get_current_reaper_version() {
-#
-# TODO
-#
-# # how can i use regex here
-#
-# # if first line contains version_regex
-# # assign to variable
-# # check if dir name = version_regex exists
-# # create install new
-#
-# # brew info --cask reaper | grep -q <findstr>
-# # look at output > find version number
-# # append to reaper install dir
-# }
-
-
+function get_current_reaper_version() {
+  rppv=$(brew info reaper | head -n 1)
+  if [[ $rppv =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
+    rppv=${BASH_REMATCH[0]}
+  else
+    echo "Something is wrong with checking reaper version" >&2
+    rppv="ERROR" # should use bool!!
+  fi
+  echo  "reaper-$rppv"
+}
 
 function install_reaper_linux() {
   echo "reaper linux install not done yet."
 }
 
-
 function install_reaper_mac() {
   tmp_dir=~/temp_dir
-  read -r -p "Do you want to install Reaper DAW to $install_dir? [y|N] " response
+  read -r -p "Do you want to install portable Cockos Reaper to $REAPER_DIR/app? [y|N] " response
 
   if [[ $response =~ (y|yes|Y) ]]; then
-    if [ ! -d $install_dir ]; then
+    rpp_latest=$(get_current_reaper_version)
+    REAPER_INSTALL_DIR="$REAPER_DIR/app/$rpp_latest"
+    if [ ! -d $REAPER_INSTALL_DIR ]; then
+      echo "This $REAPER_INSTALL_DIR does not exist"
 
-      mkdir -p $install_dir
+      mkdir -p $REAPER_INSTALL_DIR
 
-      # TODO
-      #
-      # how can i append version number to $install_dir
-      #   and also rename the .app file
-      #
-      #   - check version
-      #   - append to app name
-      #   - append to dir name
-      brew cask install reaper --appdir=$install_dir --force
+      # # install reaper to target dir
+      # brew cask install reaper --appdir=$install_dir --force
 
-      git clone --recurse-submodules https://github.com/molleweide/reaper-app-config.git $tmp_dir
+      # # clone git to tmp dir and move it to reaper
+      # # install dir manually
+      # git clone --recurse-submodules https://github.com/molleweide/reaper-app-config.git $tmp_dir
+      # mv $tmp_dir/.git $install_dir/.git
+      # rm -r $tmp_dir # be careful
 
-      mv $tmp_dir/.git $install_dir/.git
+      # # navigate to reaper install dir and restore git
+      # pushd $install_dir > /dev/null 2>&1
+      # echo "inside: $PWD ; now we reset to get all files back."
+      # git reset --hard HEAD
+      # popd > /dev/null 2>&1
 
-      rm -r $tmp_dir # be careful
-
-      pushd $install_dir > /dev/null 2>&1 # make $PWD = homedir
-
-      echo "inside: $PWD ; now we reset to get all files back."
-      git reset --hard HEAD
-
-      popd > /dev/null 2>&1
-
-
-      echo "we're back: $PWD"
-
-      ok
     else
-      # ok ">>> Reaper is already installed it seems!!!"
+      dotsay ">>> Latest version of reaper is installed to $REAPER_INSTALL_DIR"
     fi
   fi
-
-  # if ! brew_is_tapped "neovim/neovim"; then
-  #   brew_tap neovim/neovim
-  # fi
-
-  # brew_install neovim --HEAD
 }
 
 function install_reaper() {
@@ -108,6 +71,4 @@ function install_reaper() {
   fi
 }
 
-
-# get_current_reaper_version
-# install_reaper
+install_reaper
