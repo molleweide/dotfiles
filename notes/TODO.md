@@ -1,5 +1,11 @@
 # BALATERO MOLLEWEIDE TODO
 
+
+1. create bindings shortcuts
+2. add colemak
+
+
+
 # REAPER
 post reaper script to reaper forums later
 

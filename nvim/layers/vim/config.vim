@@ -81,3 +81,12 @@ vnoremap <Down> <Nop>
 vnoremap <Left> <Nop>
 vnoremap <Right> <Nop>
 vnoremap <Up> <Nop>
+
+"key(b)indings
+nmap <silent> ,bv :e ~/.dotfiles/nvim/layers/vim/config.vim<CR>
+nmap <silent> ,bt :e ~/.dotfiles/tmux.conf<CR>
+nmap <silent> ,bzz :e ~/.dotfiles/zshrc<CR>
+nmap <silent> ,bza :e ~/.dotfiles/zsh/custom/aliases.zsh<CR>
+nmap <silent> ,bze :e ~/.dotfiles/zsh/custom/exports.zsh<CR>
+nmap <silent> ,by :e ~/.dotfiles/yabairc<CR>
+nmap <silent> ,bs :e ~/.dotfiles/skhdrc<CR>
