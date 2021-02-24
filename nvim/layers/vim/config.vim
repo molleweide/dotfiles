@@ -14,7 +14,8 @@ let mapleader = ","
 let g:mapleader = ","
 
 " remap ESC to jk
-inoremap jk <esc>
+" `om` works better witm colemak insert mode
+inoremap om <esc>
 
 " Create window splits easier. The default
 " way is Ctrl-w,v and Ctrl-w,s. I remap
@@ -92,3 +93,8 @@ nmap <silent> ,bza :e ~/.dotfiles/zsh/custom/aliases.zsh<CR>
 nmap <silent> ,bze :e ~/.dotfiles/zsh/custom/exports.zsh<CR>
 nmap <silent> ,by :e ~/.dotfiles/yabairc<CR>
 nmap <silent> ,bs :e ~/.dotfiles/skhdrc<CR>
+
+" colemak layout insert mode
+set keymap=INSERT_COLEMAK
+set iminsert=1
+set imsearch=0

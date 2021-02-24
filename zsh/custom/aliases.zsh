@@ -1,5 +1,5 @@
 # Shell aliases
-alias rzsh="source ~/.zshrc"
+# alias rzsh="source ~/.zshrc"
 alias k="clear"
 alias r="ranger"
 alias m="git checkout master"
@@ -54,6 +54,8 @@ function opendir() {
 }
 
 function krbcp() {
+  # this works but if can take a while before the settings update.
+  # force update by deselecting and then selecting the mod again.
   make
   cp public/json/molleweide.json ~/.config/karabiner/assets/complex_modifications
 }

@@ -1,17 +1,6 @@
 # BALATERO MOLLEWEIDE TODO
 
 
-1. create bindings shortcuts
-2. add colemak
-
-
-
-# REAPER
-post reaper script to reaper forums later
-
-# LAYOUT
-add colemak layout
-
 # EDITING
 vim > indent file command
 vim > go back command ctrl o???

@@ -22,3 +22,7 @@ krmcp = function run below
 
 how do I make layers w karabiner??
 hold down space bar enter move layer?
+
+
+use regular fn keys
+
