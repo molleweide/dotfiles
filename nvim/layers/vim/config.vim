@@ -83,6 +83,8 @@ vnoremap <Right> <Nop>
 vnoremap <Up> <Nop>
 
 "key(b)indings
+nmap <silent> ,bnr :e ~/.dotfiles/notes/RNDM.md<CR>
+nmap <silent> ,bnt :e ~/.dotfiles/notes/TODO.md<CR>
 nmap <silent> ,bv :e ~/.dotfiles/nvim/layers/vim/config.vim<CR>
 nmap <silent> ,bt :e ~/.dotfiles/tmux.conf<CR>
 nmap <silent> ,bzz :e ~/.dotfiles/zshrc<CR>
