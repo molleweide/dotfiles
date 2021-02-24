@@ -2,16 +2,16 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-# TODO
+# links
 
-# where to put REAPER map?
-#   clone my reaper
-#   cask install Reaper
-#   - https://formulae.brew.sh/cask/reaper#default
-#   - https://github.com/Homebrew/homebrew-cask/blob/master/Casks/reaper.rb
 #   - https://github.com/Homebrew/homebrew-cask/blob/master/USAGE.md
-#     read options about choosing install dir
 #   - https://stackoverflow.com/questions/23484883/changing-homebrew-cask-installation-directories
+
+# todo
+#
+#   - append -current to reaper app name latest
+#     also remove current from prev
+
 
 REAPER_DIR=~/REAPER
 
@@ -26,41 +26,56 @@ function get_current_reaper_version() {
   echo  "reaper-$rppv"
 }
 
+function setup_necessary_dirs(){
+    if [ ! -d $REAPER_DIR/projects ]; then
+      mkdir -p $REAPER_DIR/projects
+    fi
+    if [ ! -d $REAPER_DIR/tmp ]; then
+      mkdir -p $REAPER_DIR/tmp
+    fi
+    if [ ! -d $REAPER_DIR/backup ]; then
+      mkdir -p $REAPER_DIR/backup
+    fi
+}
+
 function install_reaper_linux() {
   echo "reaper linux install not done yet."
 }
 
-function install_reaper_mac() {
-  tmp_dir=~/temp_dir
-  read -r -p "Do you want to install portable Cockos Reaper to $REAPER_DIR/app? [y|N] " response
+function mac_installer() {
+  tmp_dir=$REAPER_DIR/git_clone_helper
+  mkdir -p $1
 
+  # install reaper to target dir
+  brew cask install reaper --appdir=$1 --force
+
+  # clone git to tmp dir and move it to reaper
+  # install dir manually
+  git clone --recurse-submodules https://github.com/molleweide/reaper-app-config.git $tmp_dir
+  mv $tmp_dir/.git $1/.git
+  rm -r $tmp_dir # be careful
+
+  # navigate to reaper install dir and restore git
+  pushd $1 > /dev/null 2>&1
+  echo "inside: $PWD ; now we git reset to get all files back."
+  git reset --hard HEAD
+  popd > /dev/null 2>&1
+}
+
+function install_reaper_mac() {
+  read -r -p "Do you want to install portable Cockos Reaper to $REAPER_DIR/app? [y|N] " response
   if [[ $response =~ (y|yes|Y) ]]; then
     rpp_latest=$(get_current_reaper_version)
     REAPER_INSTALL_DIR="$REAPER_DIR/app/$rpp_latest"
     if [ ! -d $REAPER_INSTALL_DIR ]; then
-      echo "This $REAPER_INSTALL_DIR does not exist"
-
-      mkdir -p $REAPER_INSTALL_DIR
-
-      # # install reaper to target dir
-      # brew cask install reaper --appdir=$install_dir --force
-
-      # # clone git to tmp dir and move it to reaper
-      # # install dir manually
-      # git clone --recurse-submodules https://github.com/molleweide/reaper-app-config.git $tmp_dir
-      # mv $tmp_dir/.git $install_dir/.git
-      # rm -r $tmp_dir # be careful
-
-      # # navigate to reaper install dir and restore git
-      # pushd $install_dir > /dev/null 2>&1
-      # echo "inside: $PWD ; now we reset to get all files back."
-      # git reset --hard HEAD
-      # popd > /dev/null 2>&1
-
+      dotsay "Installing latest version to $REAPER_INSTALL_DIR"
+      mac_installer $REAPER_INSTALL_DIR
     else
       dotsay ">>> Latest version of reaper is installed to $REAPER_INSTALL_DIR"
     fi
   fi
+
+  setup_necessary_dirs
 }
 
 function install_reaper() {

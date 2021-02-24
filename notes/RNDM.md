@@ -1,4 +1,6 @@
 # RNDM
 
-in this file we are going to make sure that things are working that
-way and this is something that will never be good
+now this is starting to become quite awesome. the next step is to finalize
+the reaper install and then add colemak.
+
+
