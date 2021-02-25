@@ -47,22 +47,30 @@ function mac_installer() {
   $(mv $1/$original "$1/$2.app")
 
   # 2. clone git to tmp dir and move it to reaper
+  # TODO stack running sudmodules in script not working???
   # --recurse-submodules # doesn't seem to be working now?! it did before...
   git clone https://github.com/molleweide/reaper-app-config.git $tmp_dir
   mv $tmp_dir/.git $1/.git
   rm -r $tmp_dir # be careful
 
-  # 3. navigate to reaper install dir and restore git
+  # 3. NAVIGATE TO (pushd/popd) REAPER INSTALL DIR AND RESTORE GIT
   pushd $1 > /dev/null 2>&1
   echo "inside: $PWD ; now we git reset to get all files back."
 
-  # TODO
-  # checkout my prefered branch here
+  # :: RPP CONFIGS  ::
+  # checkout my prefered CONFIG branch here
   git checkout laptopMain
   git reset --hard HEAD
   git submodule update --init --recursive
 
-  # TODO pushd into rk and checkout `molleweide`
+  # :: GIT SUBMODULES ::
+  #
+  # 1. SCRIPTS
+
+  # 2. JSFX
+
+  # 3. theme
+
 
 
 

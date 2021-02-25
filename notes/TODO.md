@@ -1,25 +1,29 @@
 # BALATERO MOLLEWEIDE TODO
 
+1. layers
+ hold down l/r gui:tab::space:backspace
+    >>> implement layers
 
-# EDITING
-vim > indent file command
-vim > go back command ctrl o???
+2. insert C-h >> backspace
+
+3. karabiner is not responding fast enough 
+    with dual keys
+
 
 # TMUX
-installer/tmux add tmuxinator to installer???
+installer/tmux add tmuxinator to installer?????
 
 
 - install /code dir
 
 # VIM
-aliases commands to key-bindings files
-<leader>Kt    eg. Keybindings -> tmux
-    
+
+# custom apps
     vimac
     limelight
-    reaper
 
-    iterm > import plist
+# iterm 
+    how to import settings????
 
 
 how does balateros git scripts work
