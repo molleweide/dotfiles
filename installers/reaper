@@ -2,18 +2,6 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-# links
-
-#   - https://github.com/Homebrew/homebrew-cask/blob/master/USAGE.md
-#   - https://stackoverflow.com/questions/23484883/changing-homebrew-cask-installation-directories
-
-
-
-# TODO
-
-# why aren't sudmodules being installed??
-
-
 REAPER_DIR=~/REAPER
 
 function get_current_reaper_version() {
@@ -70,11 +58,13 @@ function mac_installer() {
 
   # TODO
   # checkout my prefered branch here
-  # gco laptopMain
-
-
+  git checkout laptopMain
   git reset --hard HEAD
   git submodule update --init --recursive
+
+  # TODO pushd into rk and checkout `molleweide`
+
+
 
   popd > /dev/null 2>&1
 }

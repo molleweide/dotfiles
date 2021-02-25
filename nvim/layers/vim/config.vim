@@ -14,10 +14,8 @@ let mapleader = ","
 let g:mapleader = ","
 
 " remap ESC to jk
-" `om` works better witm colemak insert mode
-" !! would it be possible to use <space><space> here???
-inoremap om <esc>
-inoremap <space><space> <esc>
+" works well w/qwerty and colemak
+inoremap zm <esc>
 
 " Create window splits easier. The default
 " way is Ctrl-w,v and Ctrl-w,s. I remap
