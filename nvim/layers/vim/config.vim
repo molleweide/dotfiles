@@ -83,16 +83,17 @@ vnoremap <Left> <Nop>
 vnoremap <Right> <Nop>
 vnoremap <Up> <Nop>
 
-"key(b)indings
-nmap <silent> ,bnr :e ~/.dotfiles/notes/RNDM.md<CR>
-nmap <silent> ,bnt :e ~/.dotfiles/notes/TODO.md<CR>
-nmap <silent> ,bv :e ~/.dotfiles/nvim/layers/vim/config.vim<CR>
-nmap <silent> ,bt :e ~/.dotfiles/tmux.conf<CR>
-nmap <silent> ,bzz :e ~/.dotfiles/zshrc<CR>
-nmap <silent> ,bza :e ~/.dotfiles/zsh/custom/aliases.zsh<CR>
-nmap <silent> ,bze :e ~/.dotfiles/zsh/custom/exports.zsh<CR>
-nmap <silent> ,by :e ~/.dotfiles/yabairc<CR>
-nmap <silent> ,bs :e ~/.dotfiles/skhdrc<CR>
+"(k)eybindings
+nmap <silent> ,knr :e ~/.dotfiles/notes/RNDM.md<CR>
+nmap <silent> ,knt :e ~/.dotfiles/notes/TODO.md<CR>
+nmap <silent> ,kv :e ~/.dotfiles/nvim/layers/vim/config.vim<CR>
+nmap <silent> ,kt :e ~/.dotfiles/tmux.conf<CR>
+nmap <silent> ,kzz :e ~/.dotfiles/zshrc<CR>
+nmap <silent> ,kza :e ~/.dotfiles/zsh/custom/aliases.zsh<CR>
+nmap <silent> ,kze :e ~/.dotfiles/zsh/custom/exports.zsh<CR>
+nmap <silent> ,ky :e ~/.dotfiles/yabairc<CR>
+nmap <silent> ,ks :e ~/.dotfiles/skhdrc<CR>
+nmap <silent> ,kr :e ~/.dotfiles/installers/reaper<CR>
 
 " colemak layout insert mode
 set keymap=INSERT_COLEMAK
