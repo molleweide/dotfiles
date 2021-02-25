@@ -1,6 +1,8 @@
 # Shell aliases
 # alias rzsh="source ~/.zshrc"
 alias k="clear"
+alias mm="man man"
+alias drs="dirs -v"
 alias r="ranger"
 alias m="git checkout master"
 alias dbm="rake db:migrate && RAILS_ENV=test rake db:migrate"

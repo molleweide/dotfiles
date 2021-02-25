@@ -66,15 +66,20 @@ function mac_installer() {
   # :: GIT SUBMODULES ::
   #
   # 1. SCRIPTS
+  cd Scripts/reaper-keys
+  git checkout molleweide
+  cd ../..
 
   # 2. JSFX
+  cd Effects/molleweide
+  git checkout molleweide
+  cd ../..
 
   # 3. theme
 
 
-
-
   popd > /dev/null 2>&1
+  dotsay "after popd: $PWD"
 }
 
 # are user if they want to install reaper

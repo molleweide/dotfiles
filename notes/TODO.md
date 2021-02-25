@@ -9,6 +9,11 @@
 3. karabiner is not responding fast enough 
     with dual keys
 
+4. i need to learn how to switch color themes.
+    1. preserve balateros theme
+    2. add dracula
+    3. create pitch-black theme for very dark place
+
 
 # TMUX
 installer/tmux add tmuxinator to installer?????
