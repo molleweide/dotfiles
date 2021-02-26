@@ -158,3 +158,5 @@
 	smudge = git-lfs smudge -- %f
 [gc]
 	writecommitGraph = true
+[init]
+	defaultBranch = molleweide
