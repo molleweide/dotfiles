@@ -15,6 +15,8 @@ export FZF_DEFAULT_OPTS="--ansi"
 export EDITOR=nvim
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
+
+
 # OpenSSL
 export LDFLAGS="-L/usr/local/opt/openssl/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl/include"

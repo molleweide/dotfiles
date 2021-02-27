@@ -19,6 +19,12 @@ alias vim="nvim"
 alias v="nvim"
 alias 6="exec zsh"
 
+
+# karabiner path
+alias kcli="/Library/Application\ Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli"
+
+
+
 # OS X apps
 alias md="open -a Markoff $@"
 

@@ -94,8 +94,9 @@ nmap <silent> ,kze :e ~/.dotfiles/zsh/custom/exports.zsh<CR>
 nmap <silent> ,ky :e ~/.dotfiles/yabairc<CR>
 nmap <silent> ,ks :e ~/.dotfiles/skhdrc<CR>
 nmap <silent> ,kr :e ~/.dotfiles/installers/reaper<CR>
-" add command to oh my zsh
 nmap <silent> ,kr :e ~/.dotfiles/installers/reaper<CR>
+" add command to oh my zsh
+nmap <silent> ,knr :e ~/.dotfiles/notes/reaper.md<CR>
 
 " colemak layout insert mode
 set keymap=INSERT_COLEMAK

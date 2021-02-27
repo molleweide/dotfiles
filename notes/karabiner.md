@@ -1,5 +1,29 @@
 # KARABINER
 
+# cli 
+https://karabiner-elements.pqrs.org/docs/manual/misc/command-line-interface/
+add to path
+
+
+# LAPTOP LAYERS
+karabiner layers
+    1. molleweide modrows
+    2. standard layout
+    3. turn off all keys.
+        only keep layer turn on button
+    4. midi keys.
+       - turn off modrows
+       - RK enter virtual midi layer
+
+# qmk-lib.rb
+create a func lib where I implement all the functions
+I know from qmk. This could be a really nice addition two
+karabiner.
+
+
+
+============================================
+
 create function to run these two commands
 in zsh easilly
 
