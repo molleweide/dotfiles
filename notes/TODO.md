@@ -1,15 +1,15 @@
 # BALATERO MOLLEWEIDE TODO
 
-1. layers
- hold down l/r gui:tab::space:backspace
-    >>> implement layers
+1. karabiner github issue
+2. install nightly
+3. move over all of my old configs
+4. add all my `/code` personal projs
+    add karabiner KE_Complx installer to dotfiles
 
-2. insert C-h >> backspace
-
-3. karabiner is not responding fast enough 
+    
+4. karabiner is not responding fast enough 
     with dual keys
-
-4. i need to learn how to switch color themes.
+5. i need to learn how to switch color themes.
     1. preserve balateros theme
     2. add dracula
     3. create pitch-black theme for very dark place
