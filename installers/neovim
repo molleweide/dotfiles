@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# todo
+#
+#   brew install luajit --HEAD
+
 source "${BASH_SOURCE%/*}/shared.sh"
 
 require_installer package-manager

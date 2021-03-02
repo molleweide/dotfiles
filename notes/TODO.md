@@ -1,12 +1,16 @@
 # BALATERO MOLLEWEIDE TODO
 
-1. karabiner github issue
-2. install nightly
-3. move over all of my old configs
-4. add all my `/code` personal projs
+1. move over all of my old configs
+
+2. ask layers question on reddit
+
+- rpp
+    add new midi fn to syntax
+    test vkb
+
+3. add all my `/code` personal projs
     add karabiner KE_Complx installer to dotfiles
 
-    
 4. karabiner is not responding fast enough 
     with dual keys
 5. i need to learn how to switch color themes.

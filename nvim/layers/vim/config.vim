@@ -102,3 +102,100 @@ nmap <silent> ,knr :e ~/.dotfiles/notes/reaper.md<CR>
 set keymap=INSERT_COLEMAK
 set iminsert=1
 set imsearch=0
+
+" re-indent file
+map <leader>i mzgg=G`z<CR>
+
+" Tab through buffers
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprev<CR>
+
+" Close buffer
+nmap <leader>x :bd<CR>
+
+
+" TODO
+"
+"   option-space to go down
+"   optio-shift-space go up
+"
+" "   <Space> - PageDown
+" "   -       - PageUp
+" noremap <Space> <PageDown>
+" noremap - <PageUp>
+
+" " Easier copy/paste
+" vnoremap p "_dP
+" nmap <leader>y <Plug>SystemCopy
+" xmap <leader>y <Plug>SystemCopy
+" nmap <leader>p <Plug>SystemPaste
+" nmap <leader>yy <Plug>SystemCopyLine
+" tnoremap <Esc> <C-\><C-n>
+
+" Delete current visual selection and dump in black hole buffer before pasting
+" Used when you want to paste over something without it getting copied to
+" Vim's default buffer
+vnoremap <leader>p "_dP
+
+" https://vim.fandom.com/wiki/Search_and_replace_in_multiple_buffers
+"   vim fandom > search and replace function.
+"   <leader>h - Find and replace
+"   <leader>/ - Claer highlighted search terms while preserving history
+map <leader>hh :%s///<left><left>
+map <leader>hH :%s/\<\>//<left><left><left><left>
+map <leader>hc :%s/\[\]/\\cite{}/gc<left><left><left><left><left><left><left><left><left><left><left><left><left><left>
+map <leader>hf :%s/\[
+" nmap <silent> <leader>, :nohlsearch<CR>
+
+" quicker save
+nnoremap <leader>c :w<CR>
+
+" space on control L
+inoremap <C-l> <Space>
+cnoremap <C-l> <Space>
+
+"""""""""""""""""""""""""""
+" https://stackoverflow.com/questions/7501092/can-i-map-alt-key-in-vim
+" use the above to map Alt-keys
+" maybe use normal mode for movint splits around?
+" nnoremap ˙
+" nnoremap ∆
+" nnoremap ˚
+" nnoremap ¬
+
+inoremap ˙ <Left>
+" inoremap ∆
+" inoremap ˚
+inoremap ¬ <Right>
+
+" vnoremap ˙
+" vnoremap ∆
+" vnoremap ˚
+" vnoremap ¬
+
+cnoremap ˙ <Left>
+" cnoremap ∆
+" cnoremap ˚
+cnoremap ¬ <Right>
+"""""""""""""""""""""""""""
+
+" create custom command to close help
+:command! H :helpc
+
+" convert inner word to CAPITAL letters
+nnoremap <leader>u viwUe
+nnoremap <leader>U viwue
+
+" " Move vertically by visual line
+" nnoremap j gj
+" nnoremap k gk
+" vnoremap j gj
+" vnoremap k gk
+" nnoremap gj j
+" nnoremap gk k
+
+
+" " === Emmet === "
+" " let g:user_emmet_expandabbr_key = '<C-e>,'
+" let g:user_emmet_expandabbr_key = '<C-e>,'
+
