@@ -1,19 +1,23 @@
 # BALATERO MOLLEWEIDE TODO
 
-1. move over all of my old configs
+# cont. move over all of my old configs
 
-2. ask layers question on reddit
+which branch to pull? eel 
 
-- rpp
+# ask layers question on reddit
+
+# rpp
     add new midi fn to syntax
     test vkb
+    create pr
 
-3. add all my `/code` personal projs
+# add all my `/code` personal projs
     add karabiner KE_Complx installer to dotfiles
 
-4. karabiner is not responding fast enough 
+# karabiner is not responding fast enough 
     with dual keys
-5. i need to learn how to switch color themes.
+
+# i need to learn how to switch color themes.
     1. preserve balateros theme
     2. add dracula
     3. create pitch-black theme for very dark place

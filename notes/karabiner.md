@@ -3,7 +3,7 @@
 # cli 
 https://karabiner-elements.pqrs.org/docs/manual/misc/command-line-interface/
 add to path
-
+ 
 
 # LAPTOP LAYERS
 karabiner layers

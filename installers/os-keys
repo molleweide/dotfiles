@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+# TODO
+#
+#   add KE_Complx so that this part is done.
+#   create a tmuxinator session that makes this
+#   dev really simple and easy.
+#
+#   fork spoon and hyperkey
+
 source "${BASH_SOURCE%/*}/shared.sh"
 
 require_installer package-manager
@@ -40,6 +48,24 @@ function setup_spoon_install() {
 
     wget -nv $url -O $destination
     unzip -d $spoons_dir $destination
+  else
+    dotsay "+ SpoonInstall.spoon already setup"
+  fi
+}
+
+function setup_karabiner_dev() {
+  local name=$1
+  local code_dir=$HOME/code
+  local source_dir=$code_dir/$name.spoon
+  local symlink_destination=$HOME/.hammerspoon/Spoons/$name.spoon
+  local url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
+  local destination=/tmp/SpoonInstall.spoon.zip
+  local spoons_dir=$HOME/.hammerspoon/Spoons
+
+  if [ ! -d "$spoons_dir/SpoonInstall.spoon" ]; then
+    dotsay "@blue@b[[+ installing SpoonInstall.spoon ]]"
+    # wget -nv $url -O $destination
+    # unzip -d $spoons_dir $destination
   else
     dotsay "+ SpoonInstall.spoon already setup"
   fi
