@@ -4,6 +4,10 @@
 
 which branch to pull? eel 
 
+# installer
+
+curl molleweide
+
 # ask layers question on reddit
 
 # rpp
@@ -11,8 +15,8 @@ which branch to pull? eel
     test vkb
     create pr
 
-# add all my `/code` personal projs
-    add karabiner KE_Complx installer to dotfiles
+# os keys 
+add karabiner KE_Complx installer to dotfiles
 
 # karabiner is not responding fast enough 
     with dual keys
@@ -25,14 +29,9 @@ which branch to pull? eel
 # clone all personal projects
 https://stackoverflow.com/questions/19576742/how-to-clone-all-repos-at-once-from-github
 
-
 # TMUX
 installer/tmux add tmuxinator to installer?????
-
-
-- install /code dir
-
-# VIM
+were is it insalled wtf?!
 
 # custom apps
     vimac
@@ -41,14 +40,9 @@ installer/tmux add tmuxinator to installer?????
 # iterm 
     how to import settings????
 
-
 how does balateros git scripts work
 symlink local repos/what i did???
 
+# fonts
 how would i manage and switch btw mult nerd fonts.
 can i symlink iterm prefs?? > create this in installer/terminal
-
-why is Lua 5.4 not found?
-
-# stable.vim / nightly.vim
-https://dev.to/creativenull/installing-neovim-nightly-alongside-stable-10d0
