@@ -1,7 +1,7 @@
-# /Users/hjalmarjakobsson/.tmuxinator/rpp.yml
+# /Users/hjalmarjakobsson/.tmuxinator/keys.yml
 
-name: rpp
-root: ~/REAPER
+name: keys
+root: ~/code/keyboards
 
 # Optional tmux socket
 # socket_name: foo
@@ -45,15 +45,11 @@ root: ~/REAPER
 # attach: false
 
 windows:
-  - rk:
-      root: ~/REAPER/app/reaper-6.23.0/Scripts/reaper-keys
+  - karab:
+      root: ~/code/keyboards/KE
       panes:
         - vim
-  - jsfx:
-      root: ~/REAPER/app/reaper-6.23.0/Effects/molleweide
-      panes:
-        - vim
-  - theme:
-      root: ~/REAPER/app/reaper-6.23.0/ColorThemes
+  - ez:
+      root: ~/code/keyboards/..
       panes:
         - vim

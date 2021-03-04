@@ -20,6 +20,7 @@ reaper
 reaper-keys
 reaper-jsfx
     rename this project.
+reaper-theme
 
 # rpp cmd util
 

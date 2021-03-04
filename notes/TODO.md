@@ -1,19 +1,37 @@
 # BALATERO MOLLEWEIDE TODO
 
-# cont. move over all of my old configs
+# rpp
 
-which branch to pull? eel 
+    merge master into molleweide
+
+    check out master 
+     gco my files
+
+# vim
+
+eel syntax use
+
+plugins
+
+
+# tmuxinator
+
+wp tfab
+pm
+
+# ranger
+
+create installer / symlink configs
 
 # installer
 
 curl molleweide
 
-# ask layers question on reddit
+qmk
 
-# rpp
-    add new midi fn to syntax
-    test vkb
-    create pr
+karabiner complex
+
+# ask layers question on reddit
 
 # os keys 
 add karabiner KE_Complx installer to dotfiles
@@ -46,3 +64,8 @@ symlink local repos/what i did???
 # fonts
 how would i manage and switch btw mult nerd fonts.
 can i symlink iterm prefs?? > create this in installer/terminal
+
+# chat
+
+build signal messenger
+build telegram?
