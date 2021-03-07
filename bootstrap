@@ -404,7 +404,7 @@ clone_dotfiles_repo() {
   if [[ -d ~/.dotfiles ]]; then
     print_success "dotfiles repo already cloned to ~/.dotfiles"
   else
-    git clone git@github.com:molleweide/dotfiles-dbalatero.git ~/.dotfiles
+    git clone git@github.com:molleweide/dotfiles.git ~/.dotfiles
     print_success "cloned dotfile repo"
 
     echo "Now you can run: cd ~/.dotfiles && ./setup"

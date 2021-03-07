@@ -15,6 +15,7 @@ rename all my own master branches to molleweide so that
 I always have a distinct name from fork masters or develop
 branches. this makes things easier to manage i think.
 
+windows installer
 
 reaper
 reaper-keys

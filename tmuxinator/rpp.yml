@@ -45,6 +45,10 @@ root: ~/REAPER
 # attach: false
 
 windows:
+  - REAPER:
+      root: ~/REAPER
+      panes:
+        - vim
   - rk:
       root: ~/REAPER/app/reaper-6.23.0/Scripts/reaper-keys
       panes:

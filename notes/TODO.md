@@ -1,16 +1,12 @@
 # BALATERO MOLLEWEIDE TODO
 
-# rpp
+fix thumb keys on qmk
+fix rk on laptop main
 
-    merge master into molleweide
-
-    check out master 
-     gco my files
 
 # vim
 
 eel syntax use
-
 plugins
 
 
@@ -37,12 +33,12 @@ karabiner complex
 add karabiner KE_Complx installer to dotfiles
 
 # karabiner is not responding fast enough 
-    with dual keys
+with dual keys
 
 # i need to learn how to switch color themes.
-    1. preserve balateros theme
-    2. add dracula
-    3. create pitch-black theme for very dark place
+1. preserve balateros theme
+2. add dracula
+3. create pitch-black theme for very dark place
 
 # clone all personal projects
 https://stackoverflow.com/questions/19576742/how-to-clone-all-repos-at-once-from-github
@@ -52,11 +48,11 @@ installer/tmux add tmuxinator to installer?????
 were is it insalled wtf?!
 
 # custom apps
-    vimac
-    limelight
+vimac
+limelight
 
 # iterm 
-    how to import settings????
+how to import settings????
 
 how does balateros git scripts work
 symlink local repos/what i did???
