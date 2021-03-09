@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-#!/usr/bin/env bash
-
-# TODO
-#
-# install my keys master repo
-
 source "${BASH_SOURCE%/*}/shared.sh"
 
 

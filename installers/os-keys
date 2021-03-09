@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# TODO
-#
-# install my keys master repo
-
 source "${BASH_SOURCE%/*}/shared.sh"
 
 require_installer package-manager
@@ -49,24 +45,6 @@ function setup_spoon_install() {
   fi
 }
 
-function setup_karabiner_dev() {
-  local name=$1
-  local code_dir=$HOME/code
-  local source_dir=$code_dir/$name.spoon
-  local symlink_destination=$HOME/.hammerspoon/Spoons/$name.spoon
-  local url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
-  local destination=/tmp/SpoonInstall.spoon.zip
-  local spoons_dir=$HOME/.hammerspoon/Spoons
-
-  if [ ! -d "$spoons_dir/SpoonInstall.spoon" ]; then
-    dotsay "@blue@b[[+ installing SpoonInstall.spoon ]]"
-    # wget -nv $url -O $destination
-    # unzip -d $spoons_dir $destination
-  else
-    dotsay "+ SpoonInstall.spoon already setup"
-  fi
-}
-
 symlink_dotfile bin/dnd-toggle ~/.local/bin/dnd-toggle
 
 brew_install lua
@@ -87,8 +65,5 @@ luarocks install lcf
 
 symlink_dotfile hammerspoon ~/.hammerspoon
 setup_spoon_install
-
-# setup dev projects
-
 setup_development_spoon_from_git_repo HyperKey
 setup_development_spoon_from_git_repo VimMode

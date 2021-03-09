@@ -2,17 +2,9 @@
 
 pull balatero!!
 
-set key repeat rate !!! to same as in old dotfiles
-    compare balatero macos w old macos
-
 # install personal projects
-<!-- keys -->
-<!-- vim -->
-kth
-    thesis
-apps
-    pitch-machine
-wordpress
+
+wp
     tfab
 
 
