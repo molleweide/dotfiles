@@ -2,13 +2,8 @@
 
 pull balatero!!
 
-# vim
-- create installer
-
-# keys
-add hyperkey
-create installer
-
+set key repeat rate !!! to same as in old dotfiles
+    compare balatero macos w old macos
 
 # install personal projects
 <!-- keys -->
