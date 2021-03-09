@@ -3,14 +3,16 @@
 pull balatero!!
 
 # vim_anywhere
-    tn proj 
-        fork all
-            neovim
-            vimspoon
-            vimium
-            vimac
+- fork all
+    neovim
+    vimspoon
+    vimium
+    vimac
+- tn
+- create installer
 
-# finish keys repo
+# keys
+create installer
 
 
 # is this necessary?
