@@ -2,9 +2,7 @@
 
 pull balatero!!
 
-# install personal projects
-
-wp
+# wp
     tfab
 
 
@@ -18,30 +16,11 @@ https://stackoverflow.com/questions/1365541/how-to-move-files-from-one-git-repo-
 https://stackoverflow.com/questions/21205297/splitting-out-a-sub-directory-in-a-git-repo-into-its-own-repo?noredirect=1&lq=1
 https://stackoverflow.com/questions/30325758/git-conversion-of-a-subdirectory-to-a-submodule
 
-# msc_thesis
-split hja/bergh
-
-# tmuxinator
-
-wp tfab
-pm
-
 # ranger
 
 create installer / symlink configs
 
-# installer
-
-curl molleweide
-
-qmk
-
-karabiner complex
-
 # ask layers question on reddit
-
-# os keys 
-add karabiner KE_Complx installer to dotfiles
 
 # karabiner is not responding fast enough 
 with dual keys
