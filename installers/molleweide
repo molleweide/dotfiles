@@ -9,17 +9,16 @@ dotheader "Setting up Hammerspoon..."
 function install_personal_master_repos() {
   local name=$1
   local code_dir=$HOME/code
-  local source_dir=$code_dir/$name.spoon
-  local symlink_destination=$HOME/.hammerspoon/Spoons/$name.spoon
+  local source_dir=$code_dir/$name
 
   mkdir -p "$code_dir"
 
   if [ ! -d $source_dir ]; then
-    dotsay "+ $name.spoon dev copy already checked out"
+    dotsay "+ cloning $source_dir"
     # dotsay "@blue@b[[+ cloning development copy of $name.spoon ]]"
-    # git clone https://github.com/dbalatero/$name.spoon "$source_dir"
+    git clone https://github.com/molleweide/$name.git "$source_dir"
   else
-    dotsay "+ $name.spoon dev copy already checked out"
+    dotsay "+ $source_dir already exists"
   fi
 
 }
