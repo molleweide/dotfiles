@@ -63,3 +63,7 @@ windows:
         - cd ~/code/keys/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && vim
         - cd ~/code/keys/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && gulp
         -
+  - hyper:
+      root: ~/code/keys/HyperKey.spoon
+      panes:
+        -

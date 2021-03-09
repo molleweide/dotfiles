@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+#!/usr/bin/env bash
+
+# TODO
+#
+# install my keys master repo
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+
+dotheader "Setting up Hammerspoon..."
+
+
+function install_personal_master_repos() {
+  local name=$1
+  local code_dir=$HOME/code
+  local source_dir=$code_dir/$name.spoon
+  local symlink_destination=$HOME/.hammerspoon/Spoons/$name.spoon
+
+  mkdir -p "$code_dir"
+
+  if [ ! -d $source_dir ]; then
+    dotsay "+ $name.spoon dev copy already checked out"
+    # dotsay "@blue@b[[+ cloning development copy of $name.spoon ]]"
+    # git clone https://github.com/dbalatero/$name.spoon "$source_dir"
+  else
+    dotsay "+ $name.spoon dev copy already checked out"
+  fi
+
+}
+
+install_personal_master_repos keys
+install_personal_master_repos vim
+install_personal_master_repos kth
+install_personal_master_repos apps
+install_personal_master_repos wp

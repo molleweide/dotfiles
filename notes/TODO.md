@@ -2,13 +2,13 @@
 
 pull balatero!!
 
-
-
 # vim
 - create installer
 
 # keys
+add hyperkey
 create installer
+
 
 # install personal projects
 <!-- keys -->
