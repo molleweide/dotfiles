@@ -2,30 +2,23 @@
 
 pull balatero!!
 
+
+
 # vim_anywhere
 - fork all
     neovim
     vimspoon
     vimium
     vimac
-- tn
+
 - create installer
 
 # keys
+
 create installer
 
-
-# is this necessary?
-
-if laptop use `laptop_qmk`
-if qmk present use `base_remapping`
-
-
-# vim
-
-eel syntax use
-plugins
-
+# msc_thesis
+split hja/bergh
 
 # tmuxinator
 

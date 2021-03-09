@@ -3,12 +3,6 @@
 name: vim
 root: ~/code/vim
 
-# neovim
-# vimspoon
-# vimium
-# vimac
-
-
 windows:
   - v:
       layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
@@ -20,3 +14,20 @@ windows:
       panes:
         - cd ~/.dotfiles && vim
         - cd ~/.dotfiles
+  - nvim
+      layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
+      panes:
+        -
+  - vspoon
+      layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
+      panes:
+        -
+        -
+  - vimium
+      layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
+      panes:
+        -
+  - vimac
+      layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
+      panes:
+        -
