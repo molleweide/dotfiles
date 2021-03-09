@@ -10,6 +10,17 @@ pull balatero!!
 # keys
 create installer
 
+# install personal projects
+<!-- keys -->
+<!-- vim -->
+kth
+    thesis
+apps
+    pitch-machine
+wordpress
+    tfab
+
+
 # convert subdir into git module
 https://gist.github.com/amomin/b0df11ac4607f15203ac
 https://x3ro.de/integrating-a-submodule-into-the-parent-repository/
@@ -56,7 +67,7 @@ with dual keys
 # clone all personal projects
 https://stackoverflow.com/questions/19576742/how-to-clone-all-repos-at-once-from-github
 
-# TMUX
+# TMUX ???
 installer/tmux add tmuxinator to installer?????
 were is it insalled wtf?!
 

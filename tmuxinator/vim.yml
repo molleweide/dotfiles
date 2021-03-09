@@ -14,20 +14,24 @@ windows:
       panes:
         - cd ~/.dotfiles && vim
         - cd ~/.dotfiles
-  - nvim
-      layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
+  - nvim:
+      root: ~/code/vim/neovim
       panes:
         -
-  - vspoon
-      layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
+  - vspoon:
+      root: ~/code/vim/VimMode.spoon
       panes:
         -
         -
-  - vimium
-      layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
+  - vimium:
+      root: ~/code/vim/vimium
       panes:
         -
-  - vimac
-      layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
+  - vimac:
+      root: ~/code/vim/vimac
+      panes:
+        -
+  - fire:
+      root: ~/code/vim/firenvim
       panes:
         -
