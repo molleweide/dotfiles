@@ -1,7 +1,22 @@
 # BALATERO MOLLEWEIDE TODO
 
-fix thumb keys on qmk
-fix rk on laptop main
+pull balatero!!
+
+# vim_anywhere
+    tn proj 
+        fork all
+            neovim
+            vimspoon
+            vimium
+            vimac
+
+# finish keys repo
+
+
+# is this necessary?
+
+if laptop use `laptop_qmk`
+if qmk present use `base_remapping`
 
 
 # vim

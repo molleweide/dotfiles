@@ -1,7 +1,7 @@
 # /Users/hjalmarjakobsson/.tmuxinator/keys.yml
 
 name: keys
-root: ~/code/keyboards
+root: ~/code/keys
 
 # Optional tmux socket
 # socket_name: foo
@@ -45,11 +45,21 @@ root: ~/code/keyboards
 # attach: false
 
 windows:
+  - keys:
+      panes:
+        -
+  - KEcmplx:
+      root: ~/code/keys/KE-complex_modifications
+      panes:
+        -
   - karab:
-      root: ~/code/keyboards/KE
+      root: ~/code/keys/Karabiner-Elements
       panes:
-        - vim
-  - ez:
-      root: ~/code/keyboards/..
+        -
+  - qmk:
+      root: ~/code/keys/qmk_firmware
+      layout: main-vertical
       panes:
-        - vim
+        - cd ~/code/keys/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && vim
+        - cd ~/code/keys/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && gulp
+        -

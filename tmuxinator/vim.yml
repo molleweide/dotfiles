@@ -1,7 +1,14 @@
 # ~/.tmuxinator/vim.yml
 
 name: vim
-root: ~/code/VimMode.spoon
+root: ~/code/vim_anywhere
+# root: ~/code/VimMode.spoon
+
+# neovim
+# vimspoon
+# vimium
+# vimac
+
 
 windows:
   - main:
