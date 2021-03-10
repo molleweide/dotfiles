@@ -3,7 +3,7 @@
 source "${BASH_SOURCE%/*}/shared.sh"
 
 
-dotheader "Setting up Hammerspoon..."
+dotheader "Setting up personal projects..."
 
 
 function install_personal_master_repos() {
@@ -15,7 +15,6 @@ function install_personal_master_repos() {
 
   if [ ! -d $source_dir ]; then
     dotsay "+ cloning $source_dir"
-    # dotsay "@blue@b[[+ cloning development copy of $name.spoon ]]"
     git clone https://github.com/molleweide/$name.git "$source_dir"
   else
     dotsay "+ $source_dir already exists"
