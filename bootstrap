@@ -349,6 +349,7 @@ set_github_ssh_key() {
 }
 
 test_ssh_connection() {
+  print_header "Testing SSH connection.."
   while true; do
     ssh -T git@github.com &> /dev/null
     [ $? -eq 1 ] && break
