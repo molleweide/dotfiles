@@ -22,5 +22,4 @@ cmd + ctrl + alt + shift - return : yabai -m window --toggle zoom-fullscreen
 
 # send window to monitor and follow focus
 cmd + ctrl + alt + shift - i : yabai -m window --display next; yabai -m display --focus next
-cmd + ctrl + alt + shift - u : yabai -m window --display prev; yabai -m display --focus prev
-# cmd + ctrl + alt + shift - u : yabai -m window --display 1; yabai -m display --focus 1
+cmd + ctrl + alt + shift - u : yabai -m window --display 1; yabai -m display --focus 1

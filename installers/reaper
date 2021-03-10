@@ -100,7 +100,7 @@ function mac_installer() {
   cd ../..
 
   # 3. theme
-  cd ColorTheme
+  cd ColorThemes
   git checkout molleweide
   cd ..
 
