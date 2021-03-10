@@ -2,6 +2,15 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
+# list version numbers
+#   parse version and split it up into variables
+#   so that I can check if there is a branch for latest version already created.
+#   else
+#     checkout previous version
+#       create new-version branch
+#       install modules
+#       if branch did not exist push it to origin
+
 REAPER_DIR=~/REAPER
 
 function get_current_reaper_version() {
@@ -61,9 +70,17 @@ function mac_installer() {
 
   # :: RPP CONFIGS  ::
   # checkout my prefered CONFIG branch here
-  git checkout laptopMain
+  # git checkout laptopMain
+  git checkout mb2v623
   git reset --hard HEAD
   git submodule update --init --recursive
+
+  # checkout branch for current/latest version
+  # https://stackoverflow.com/questions/8223906/how-to-check-if-remote-branch-exists-on-a-given-remote-repository
+  # https://gist.github.com/tennisonchan/e00212e3ed5498060c50d390233a3e1f
+  # if not exist create
+  # else enter
+
 
   # :: GIT SUBMODULES ::
   #

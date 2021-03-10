@@ -1,5 +1,17 @@
 # REAPER
 
+- checkout previous version branch
+    
+    how can i do this? 
+
+- create new branch > new version
+
+- install submodules
+
+
+
+
+
 # links
 https://forum.cockos.com/forumdisplay.php?f=26
 https://forum.cockos.com/showthread.php?p=2410927#post2410927

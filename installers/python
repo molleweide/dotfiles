@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# pyenv error on laptop main.
+#
+#   build fail
+#
+# https://stackoverflow.com/questions/50036091/pyenv-zlib-error-on-macos
+#
+
 source "${BASH_SOURCE%/*}/shared.sh"
 
 require_installer package-manager
