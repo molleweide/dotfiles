@@ -1,3 +1,7 @@
+# ======== Debug ===========
+
+# GITSTATUS_LOG_LEVEL=DEBUG
+
 # ======== Cache directory (for oh-my-zsh plugins) =========
 [ ! -d $HOME/.zcustom/cache ] && mkdir -p $HOME/.zcustom/cache
 

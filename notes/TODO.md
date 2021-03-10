@@ -3,7 +3,6 @@
 pull balatero!!
 
 
-apps repo dir not created
 
 # wp
     tfab
