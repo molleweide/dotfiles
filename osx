@@ -13,7 +13,7 @@ defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 defaults write -g InitialKeyRepeat -int 30
 
 # You can go as low as 1, but that's too darn fast for me.
-defaults write -g KeyRepeat -int 20
+defaults write -g KeyRepeat -int 30
 
 # Gratuitously stolen from @mathiasbynens
 # https://github.com/mathiasbynens/dotfiles/blob/master/.osx
