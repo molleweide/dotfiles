@@ -2,19 +2,11 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-# list version numbers
-#   parse version and split it up into variables
-#   so that I can check if there is a branch for latest version already created.
-#   else
-#     checkout previous version
-#       create new-version branch
-#       install modules
-#       if branch did not exist push it to origin
-
 REAPER_DIR=~/REAPER
 
 function get_current_reaper_version() {
 
+  # get first line of brew command
   rppv=$(brew info reaper | head -n 1)
 
   if [[ $rppv =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
@@ -30,15 +22,15 @@ function get_current_reaper_version() {
 
 
 function setup_necessary_dirs(){
-    if [ ! -d $REAPER_DIR/projects ]; then
-      mkdir -p $REAPER_DIR/projects
-    fi
-    if [ ! -d $REAPER_DIR/tmp ]; then
-      mkdir -p $REAPER_DIR/tmp
-    fi
-    if [ ! -d $REAPER_DIR/backup ]; then
-      mkdir -p $REAPER_DIR/backup
-    fi
+  if [ ! -d $REAPER_DIR/projects ]; then
+    mkdir -p $REAPER_DIR/projects
+  fi
+  if [ ! -d $REAPER_DIR/tmp ]; then
+    mkdir -p $REAPER_DIR/tmp
+  fi
+  if [ ! -d $REAPER_DIR/backup ]; then
+    mkdir -p $REAPER_DIR/backup
+  fi
 }
 
 
@@ -112,6 +104,38 @@ function install_reaper_mac() {
     rpp_latest=$(get_current_reaper_version)
     REAPER_INSTALL_DIR="$REAPER_DIR/app/$rpp_latest"
 
+    # test start: ::::::::::::::::::::::::::
+
+    # split version into
+    #   major/minor/fix
+
+    major=$(echo $rpp_latest | cut -c8-8)
+    minor=$(echo $rpp_latest | cut -c10-11)
+    patch=$(echo $rpp_latest | cut -c13-14)
+
+
+    dotsay "major $major minor $minor patch $patch"
+
+
+    # print list of remotes
+
+
+
+    # if latest branch exists
+    #   git checkout latest
+    # else
+    #   if latest minus 1 exist until finds
+    #   git checkout latest minus 1
+
+
+
+    #   create branch latest
+
+
+    #   git push
+
+    # test ends ::::::::::::::::::::::::::
+
     if [ ! -d $REAPER_INSTALL_DIR ]; then
 
       dotsay "Installing latest version to $REAPER_INSTALL_DIR"
@@ -122,9 +146,9 @@ function install_reaper_mac() {
       dotsay ">>> Latest version of reaper is installed to $REAPER_INSTALL_DIR"
 
     fi
-  fi
+fi
 
-  setup_necessary_dirs
+setup_necessary_dirs
 }
 
 function install_reaper() {
