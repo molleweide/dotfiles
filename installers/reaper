@@ -64,14 +64,16 @@ function mac_installer() {
   # checkout my prefered CONFIG branch here
   # git checkout laptopMain
   git checkout mb2v623
+
+  # add my new branch logic here <<<<<<<
+
+
   git reset --hard HEAD
   git submodule update --init --recursive
 
-  # checkout branch for current/latest version
-  # https://stackoverflow.com/questions/8223906/how-to-check-if-remote-branch-exists-on-a-given-remote-repository
-  # https://gist.github.com/tennisonchan/e00212e3ed5498060c50d390233a3e1f
-  # if not exist create
-  # else enter
+
+
+
 
 
   # :: GIT SUBMODULES ::
@@ -105,27 +107,29 @@ function install_reaper_mac() {
     REAPER_INSTALL_DIR="$REAPER_DIR/app/$rpp_latest"
 
     # test start: ::::::::::::::::::::::::::
-
-    # split version into
-    #   major/minor/fix
-
     major=$(echo $rpp_latest | cut -c8-8)
     minor=$(echo $rpp_latest | cut -c10-11)
     patch=$(echo $rpp_latest | cut -c13-14)
 
+    latest_branch_name="v$major.$minor.$patch"
 
-    dotsay "major $major minor $minor patch $patch"
+    latest_exist=$(git ls-remote --heads git@github.com:molleweide/reaper-app-config.git $latest_branch_name)
+
+    if [[ $latest_exist == *"$latest_branch_name"* ]]; then
+      dotsay "repo exists"
+      # git checkout latest branch
+    else
+      # reverse while
+      # find most recent branch
+      # checkout
+      # create new branch for new reaper version
+      minor_prev=$(($minor-1))
+      dotsay "Previous version is: $minor_prev"
+    fi
+
+    #   else
 
 
-    # print list of remotes
-
-
-
-    # if latest branch exists
-    #   git checkout latest
-    # else
-    #   if latest minus 1 exist until finds
-    #   git checkout latest minus 1
 
 
 
