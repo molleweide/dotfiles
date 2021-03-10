@@ -58,23 +58,34 @@ function mac_installer() {
 
   # 3. NAVIGATE TO (pushd/popd) REAPER INSTALL DIR AND RESTORE GIT
   pushd $1 > /dev/null 2>&1
-  echo "inside: $PWD ; now we git reset to get all files back."
 
   # :: RPP CONFIGS  ::
-  # checkout my prefered CONFIG branch here
-  # git checkout laptopMain
-  git checkout mb2v623
+  major=$(echo $2 | cut -c8-8)
+  minor=$(echo $2 | cut -c10-11)
+  patch=$(echo $2 | cut -c13-14)
+  latest_branch_name="v$major.$minor.$patch"
+  # latest_branch_name="arstststttt" # force else
+  latest_exist=$(git ls-remote --heads git@github.com:molleweide/reaper-app-config.git $latest_branch_name)
+  if [[ $latest_exist == *"$latest_branch_name"* ]]; then
+    dotsay "latest version repo exists"
+    git checkout $latest_branch_name
+    git reset --hard HEAD
+  else
+    for ((i = 1 ; i < 6 ; i++)); do
+      most_recent="v$major.$(($minor-$i)).$patch"
+      most_recent_exists=$(git ls-remote --heads git@github.com:molleweide/reaper-app-config.git $most_recent)
+      if [[ $most_recent_exists == *"$most_recent"* ]]; then
+        break
+      fi
+    done
+    dotsay "Most recent existing version: $most_recent"
+    git checkout $most_recent
+    git reset --hard HEAD
+    git checkout -b $latest_branch_name
+    # git push
+  fi
 
-  # add my new branch logic here <<<<<<<
-
-
-  git reset --hard HEAD
   git submodule update --init --recursive
-
-
-
-
-
 
   # :: GIT SUBMODULES ::
   #
@@ -89,10 +100,11 @@ function mac_installer() {
   cd ../..
 
   # 3. theme
-
+  cd ColorTheme
+  git checkout molleweide
+  cd ..
 
   popd > /dev/null 2>&1
-  dotsay "after popd: $PWD"
 }
 
 # are user if they want to install reaper
@@ -106,39 +118,6 @@ function install_reaper_mac() {
     rpp_latest=$(get_current_reaper_version)
     REAPER_INSTALL_DIR="$REAPER_DIR/app/$rpp_latest"
 
-    # test start: ::::::::::::::::::::::::::
-    major=$(echo $rpp_latest | cut -c8-8)
-    minor=$(echo $rpp_latest | cut -c10-11)
-    patch=$(echo $rpp_latest | cut -c13-14)
-
-    latest_branch_name="v$major.$minor.$patch"
-
-    latest_exist=$(git ls-remote --heads git@github.com:molleweide/reaper-app-config.git $latest_branch_name)
-
-    if [[ $latest_exist == *"$latest_branch_name"* ]]; then
-      dotsay "repo exists"
-      # git checkout latest branch
-    else
-      # reverse while
-      # find most recent branch
-      # checkout
-      # create new branch for new reaper version
-      minor_prev=$(($minor-1))
-      dotsay "Previous version is: $minor_prev"
-    fi
-
-    #   else
-
-
-
-
-
-    #   create branch latest
-
-
-    #   git push
-
-    # test ends ::::::::::::::::::::::::::
 
     if [ ! -d $REAPER_INSTALL_DIR ]; then
 
@@ -150,9 +129,9 @@ function install_reaper_mac() {
       dotsay ">>> Latest version of reaper is installed to $REAPER_INSTALL_DIR"
 
     fi
-fi
+  fi
 
-setup_necessary_dirs
+  setup_necessary_dirs
 }
 
 function install_reaper() {
