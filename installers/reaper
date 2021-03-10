@@ -14,6 +14,8 @@ function get_current_reaper_version() {
     echo "Something is wrong with checking reaper version" >&2
     rppv="ERROR" # should use bool!!
   fi
+
+  # return results
   echo  "reaper-$rppv"
 }
 

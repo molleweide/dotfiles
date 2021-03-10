@@ -23,4 +23,4 @@ require_installer java
 require_installer monitor
 require_installer chat
 require_installer molleweide
-# require_installer reaper
+require_installer reaper
