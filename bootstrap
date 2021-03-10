@@ -432,4 +432,6 @@ main() {
 }
 
 main
-
+# setup_hostname
+# clone_dotfiles_repo
+# run_osx_script

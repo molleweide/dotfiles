@@ -3,6 +3,8 @@
 
 export ZSH="$HOME/.zcustom"
 export ZSH_CACHE_DIR="$ZSH/cache"
+export GEM_HOME="$HOME/.gem"
+
 
 # ======== Random settings ===========
 
