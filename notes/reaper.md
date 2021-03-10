@@ -1,17 +1,5 @@
 # REAPER
 
-# INSTALLER
-- checkout previous version branch
-
-    how can i do this? 
-
-- create new branch > new version
-
-- install submodules
-
-
-# TODO
-
 test on main laptop
 
 mv projects to ~/REAPER/projects/
