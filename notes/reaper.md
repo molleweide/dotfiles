@@ -1,5 +1,13 @@
 # REAPER
 
+test on main laptop
+
+mv projects to ~/REAPER/projects/
+
+
+rename molleweide -> reaper-jsfx
+
+
 # links
 https://forum.cockos.com/forumdisplay.php?f=26
 https://forum.cockos.com/showthread.php?p=2410927#post2410927
