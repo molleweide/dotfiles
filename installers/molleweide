@@ -16,6 +16,9 @@ function install_personal_master_repos() {
   if [ ! -d $source_dir ]; then
     dotsay "+ cloning $source_dir"
     git clone https://github.com/molleweide/$name.git "$source_dir"
+    pushd $source_dir
+    git submodule update --init --recursive
+    popd
   else
     dotsay "+ $source_dir already exists"
   fi
