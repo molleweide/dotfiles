@@ -30,6 +30,10 @@ https://github.com/nvim-treesitter/nvim-treesitter/issues/994
 
 treesitter workaround: https://github.com/neovim/neovim/issues/14044#issuecomment-790242256
 
+First try
+
+`:TSInstallFromGrammar all`
+
 Workaround for homebrew users:
 
 1. Uninstall tree-sitter@0.19.1 ignoring neovim dependency.
