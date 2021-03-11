@@ -7,7 +7,7 @@
 
 export ZSH="$HOME/.zcustom"
 export ZSH_CACHE_DIR="$ZSH/cache"
-export GEM_HOME="$HOME/.gem"
+export GEM_HOME="$HOME/.gem" # prevent permission err on main laptop
 
 
 # ======== Random settings ===========

@@ -1,12 +1,9 @@
 # BALATERO MOLLEWEIDE TODO
 
-# walk through nvim configs
-move my old to new file
+pull balatero!!
 
-
-
-# default branches
 set default branches on github >> molleweide
+
 
 # wp
     tfab

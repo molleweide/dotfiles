@@ -12,8 +12,17 @@
 
 # build guide
 
+<<<<<<< HEAD
 build guide : https://github.com/neovim/neovim/wiki/Building-Neovim
 
+=======
+
+
+build guide : https://github.com/neovim/neovim/wiki/Building-Neovim
+
+
+
+>>>>>>> origin/molleweide
 read treesitter : https://github.com/nvim-treesitter/nvim-treesitter
 
 # pre reqs
@@ -47,4 +56,3 @@ Workaround for homebrew users:
 
 4. And, for now, pin the tree-sitter version to 0.18.3.
 `brew pin tree-sitter`
-
