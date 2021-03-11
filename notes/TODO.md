@@ -1,9 +1,35 @@
 # BALATERO MOLLEWEIDE TODO
 
-# walk through nvim configs
-move my old to new file
+sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
 
 
+#config.l
+
+clang: error: Failed to determine realpath of '/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk' (errno=No such file or directory)
+clang: error: sh -c '/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -sdk /Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -find clang 2> /dev/null' failed with exit code 16384: (null) (errno=No such file or directory)
+clang: error: unable to find utility "clang", not a developer tool or in PATH
+
+configure:3998: error: in `/var/folders/zs/h7jjx7ss05bbkf7kp0lxvkgc0000gn/T/python-build.20210311191151.21303/Python-3.7.3':
+configure:4000: error: C compiler cannot create executables
+ 
+ /var/folders/zs/h7jjx7ss05bbkf7kp0lxvkgc0000gn/T/python-build.20210311191151.21303 ~/.dotfiles
+/var/folders/zs/h7jjx7ss05bbkf7kp0lxvkgc0000gn/T/python-build.20210311191151.21303/Python-3.7.3 /var/folders/zs/h7jjx7ss05bbkf7kp0lxvkgc0000gn/T/python-build.20210311191151.21303 ~/.dotfiles
+checking build system type... x86_64-apple-darwin18.7.0
+checking host system type... x86_64-apple-darwin18.7.0
+checking for python3.7... no
+checking for python3... python3
+checking for --enable-universalsdk... no
+checking for --with-universal-archs... no
+checking MACHDEP... checking for --without-gcc... no
+checking for --with-icc... no
+checking for gcc... clang
+checking whether the C compiler works... no
+configure: error: in `/var/folders/zs/h7jjx7ss05bbkf7kp0lxvkgc0000g/T/python-build.20210311191151.21303/Python-3.7.3':
+configure: error: C compiler cannot create executables
+See `config.log' for more details
+make: error: Failed to determine realpath of '/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk' (errno=No such file or directory)
+make: error: sh -c '/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -sdk /Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -find make 2> /dev/null' failed with exit code 16384: (null) (errno=No such file or directory)
+make: error: unable to find utility "make", not a developer tool or in PATH
 
 # default branches
 set default branches on github >> molleweide
