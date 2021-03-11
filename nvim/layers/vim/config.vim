@@ -87,6 +87,7 @@ vnoremap <Up> <Nop>
 nmap <silent> ,knr :e ~/.dotfiles/notes/RNDM.md<CR>
 nmap <silent> ,knt :e ~/.dotfiles/notes/TODO.md<CR>
 nmap <silent> ,kv :e ~/.dotfiles/nvim/layers/vim/config.vim<CR>
+nmap <silent> ,kV :e ~/.dotfiles/notes/build-nvim.md<CR>
 nmap <silent> ,kt :e ~/.dotfiles/tmux.conf<CR>
 nmap <silent> ,kzz :e ~/.dotfiles/zshrc<CR>
 nmap <silent> ,kza :e ~/.dotfiles/zsh/custom/aliases.zsh<CR>

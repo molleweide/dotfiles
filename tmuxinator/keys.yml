@@ -61,7 +61,7 @@ windows:
       layout: main-vertical
       panes:
         - cd ~/code/keys/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && vim
-        - cd ~/code/keys/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && gulp
+        - cd ~/code/keys/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo
         -
   - hyper:
       root: ~/code/keys/HyperKey.spoon

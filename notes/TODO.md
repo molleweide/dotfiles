@@ -1,11 +1,14 @@
 # BALATERO MOLLEWEIDE TODO
 
+pull balatero!!
+
+set default branches on github >> molleweide
+
 1. fix vim errors on main mac
     - write !
 2. reinstall everything
     remove as much as possible first
 
-pull balatero!!
 
 # wp
     tfab
