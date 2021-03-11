@@ -191,6 +191,9 @@ function! SourceIfExists(file)
   endif
 endfunction
 
+" Load Stripe-specific private config
+call SourceIfExists('~/.config/nvim/layers/molleweide/config.vim')
+
 " =============== Cursor shapes =====================
 
 " TODO this doesn't work in neovim

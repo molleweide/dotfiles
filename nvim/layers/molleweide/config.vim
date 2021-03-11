@@ -1,13 +1,18 @@
+" " map leader key to comma
+" let mapleader = ","
+" let g:mapleader = ","
+
 " remap ESC to jk
 " works well w/qwerty and colemak
 inoremap zm <esc>
 
 "(v)im (r)eload
 nmap <silent> ,vr :so %<CR>
+
 "(k)eybindings
 nmap <silent> ,knr :e ~/.dotfiles/notes/RNDM.md<CR>
 nmap <silent> ,knt :e ~/.dotfiles/notes/TODO.md<CR>
-nmap <silent> ,kv :e ~/.dotfiles/nvim/layers/vim/config.vim<CR>
+nmap <silent> ,kv :e ~/.dotfiles/nvim/layers/molleweide/config.vim<CR>
 nmap <silent> ,kV :e ~/.dotfiles/notes/build-nvim.md<CR>
 nmap <silent> ,kt :e ~/.dotfiles/tmux.conf<CR>
 nmap <silent> ,kzz :e ~/.dotfiles/zshrc<CR>
