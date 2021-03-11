@@ -53,6 +53,11 @@ vim
 
 vim:enableBetaFeature('block_cursor_overlay')
 
+vim:enableBetaFeature('fallback_only_urls')
+vim:setFallbackOnlyUrlPatterns({
+  "docs.google.com",
+})
+
 -- If you want the screen to dim (a la Flux) when you enter normal mode
 -- flip this to true.
 vim:shouldDimScreenInNormalMode(false)
@@ -77,3 +82,8 @@ vim:enterWithSequence('jk', 200)
 -- END VIM CONFIG
 --------------------------------
 --
+
+hyperKey:bind('2'):toFunction(
+  'Test accessibility',
+  VimMode.utils.debug.testAccessibilityField
+)

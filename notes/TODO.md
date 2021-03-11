@@ -1,14 +1,12 @@
 # BALATERO MOLLEWEIDE TODO
 
-pull balatero!!
+# walk through nvim configs
+move my old to new file
 
+
+
+# default branches
 set default branches on github >> molleweide
-
-1. fix vim errors on main mac
-    - write !
-2. reinstall everything
-    remove as much as possible first
-
 
 # wp
     tfab
