@@ -1,8 +1,11 @@
 # BALATERO MOLLEWEIDE TODO
 
+1. fix vim errors on main mac
+    - write !
+2. reinstall everything
+    remove as much as possible first
+
 pull balatero!!
-
-
 
 # wp
     tfab
@@ -31,9 +34,6 @@ with dual keys
 1. preserve balateros theme
 2. add dracula
 3. create pitch-black theme for very dark place
-
-# clone all personal projects
-https://stackoverflow.com/questions/19576742/how-to-clone-all-repos-at-once-from-github
 
 # TMUX ???
 installer/tmux add tmuxinator to installer?????
