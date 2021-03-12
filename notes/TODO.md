@@ -1,6 +1,6 @@
 # BALATERO MOLLEWEIDE TODO
 
-this is great because now i can start to work shit out on my main laptop.
+
 
 
 #pyenv

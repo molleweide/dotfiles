@@ -47,7 +47,7 @@ set winwidth=100
 set clipboard=unnamed
 
 " remap ESC to jk
-inoremap jk <esc>
+" inoremap jk <esc>
 
 "Clear current search highlight by hitting g + /
 nmap <silent> g/ :nohlsearch<CR>
