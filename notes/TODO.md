@@ -1,35 +1,28 @@
 # BALATERO MOLLEWEIDE TODO
 
-sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
+this is great because now i can start to work shit out on my main laptop.
 
 
-#config.l
+#pyenv
 
-clang: error: Failed to determine realpath of '/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk' (errno=No such file or directory)
-clang: error: sh -c '/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -sdk /Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -find clang 2> /dev/null' failed with exit code 16384: (null) (errno=No such file or directory)
-clang: error: unable to find utility "clang", not a developer tool or in PATH
+https://github.com/pyenv/pyenv/issues/1746
+https://github.com/pyenv/pyenv/issues/1643
+https://github.com/pyenv/pyenv/issues/1764
+https://stackoverflow.com/questions/50036091/pyenv-zlib-error-on-macos
+https://koji-kanao.medium.com/install-python-3-8-0-via-pyenv-on-bigsur-b4246987a548
 
-configure:3998: error: in `/var/folders/zs/h7jjx7ss05bbkf7kp0lxvkgc0000gn/T/python-build.20210311191151.21303/Python-3.7.3':
-configure:4000: error: C compiler cannot create executables
- 
- /var/folders/zs/h7jjx7ss05bbkf7kp0lxvkgc0000gn/T/python-build.20210311191151.21303 ~/.dotfiles
-/var/folders/zs/h7jjx7ss05bbkf7kp0lxvkgc0000gn/T/python-build.20210311191151.21303/Python-3.7.3 /var/folders/zs/h7jjx7ss05bbkf7kp0lxvkgc0000gn/T/python-build.20210311191151.21303 ~/.dotfiles
-checking build system type... x86_64-apple-darwin18.7.0
-checking host system type... x86_64-apple-darwin18.7.0
-checking for python3.7... no
-checking for python3... python3
-checking for --enable-universalsdk... no
-checking for --with-universal-archs... no
-checking MACHDEP... checking for --without-gcc... no
-checking for --with-icc... no
-checking for gcc... clang
-checking whether the C compiler works... no
-configure: error: in `/var/folders/zs/h7jjx7ss05bbkf7kp0lxvkgc0000g/T/python-build.20210311191151.21303/Python-3.7.3':
-configure: error: C compiler cannot create executables
-See `config.log' for more details
-make: error: Failed to determine realpath of '/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk' (errno=No such file or directory)
-make: error: sh -c '/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -sdk /Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -find make 2> /dev/null' failed with exit code 16384: (null) (errno=No such file or directory)
-make: error: unable to find utility "make", not a developer tool or in PATH
+
+- $ `CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install 3.8.6`
+
+- @xpe I noticed you used -L in your CFLAGS, when I believe it should be -I. This led me to realize that I didn't even need to modify CFLAGS to make things work.
+This worked for me on macOS Big Sur 11.1 and Homebrew for python 3.7, 3.8, and 3.9:
+`brew install pyenv bzip2
+LDFLAGS="\                      
+-L$(brew --prefix zlib)/lib \
+-L$(brew --prefix bzip2)/lib \
+" pyenv install 3.9.0`
+
+- 
 
 # default branches
 set default branches on github >> molleweide
@@ -84,3 +77,7 @@ can i symlink iterm prefs?? > create this in installer/terminal
 
 build signal messenger
 build telegram?
+0
+
+# brwbisur
+https://brew.sh/2020/12/01/homebrew-2.6.0/
