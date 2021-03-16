@@ -5,6 +5,7 @@ function! FlipBindingPry()
     normal orequire 'pry'; binding.pry
   endif
 
+  require 'pry'; binding.pry
   write
 endfunction
 

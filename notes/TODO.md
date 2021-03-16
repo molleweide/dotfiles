@@ -1,8 +1,18 @@
 # BALATERO MOLLEWEIDE TODO
 
-pull balatero!!
+arst add some more shit
 
-set default branches on github >> molleweide
+okay so now this thing is getting really good but
+i am still having problems that are quite serious.
+this is important because it will make it easier for my parents
+t maww
+
+
+# automate ke complex.
+
+# fork nightly theme
+
+# set default branches on github >> molleweide
 
 
 # wp
@@ -55,3 +65,11 @@ can i symlink iterm prefs?? > create this in installer/terminal
 
 build signal messenger
 build telegram?
+
+# add to installrs
+
+- brew install xcodegen
+    auto generate xcode from commandline.
+        don't need to go into xcode. omg?!
+
+

@@ -37,6 +37,7 @@ nmap <silent> ,vr :so %<CR>
 
 " remap : to ;
 nnoremap ; :
+nnoremap : ;
 
 " background
 inoremap <C-Z> <Esc><C-Z>

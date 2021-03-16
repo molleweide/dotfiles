@@ -22,7 +22,7 @@ alias 6="exec zsh"
 
 
 # karabiner path
-alias kcli="/Library/Application\ Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli"
+alias karb="/Library/Application\ Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli"
 
 
 
