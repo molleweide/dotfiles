@@ -12,17 +12,8 @@
 
 # build guide
 
-<<<<<<< HEAD
 build guide : https://github.com/neovim/neovim/wiki/Building-Neovim
 
-=======
-
-
-build guide : https://github.com/neovim/neovim/wiki/Building-Neovim
-
-
-
->>>>>>> origin/molleweide
 read treesitter : https://github.com/nvim-treesitter/nvim-treesitter
 
 # pre reqs

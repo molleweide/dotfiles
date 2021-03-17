@@ -1,11 +1,18 @@
 # BALATERO MOLLEWEIDE TODO
 
-arst add some more shit
+i wonder what would happen if i made a color theme for reaper 
+that was based on nightly so that i get a pretty recked
+look when i am coding it.
 
-okay so now this thing is getting really good but
-i am still having problems that are quite serious.
-this is important because it will make it easier for my parents
-t maww
+this is very nice. i don't understand why karabiner isn't 
+building properly on my macs. i have to fix this later because
+my reflexes get to fucked up when i use super layers on qmk.
+which are so mech better. but i doesn't work with regular 
+laptops.
+
+this is pretty cool. the thing is that the terminal now lookr
+as if you are working in a professional ide with even better
+features since we are working so close to the terminal.
 
 
 # automate ke complex.
@@ -68,8 +75,8 @@ build telegram?
 
 # add to installrs
 
-- brew install xcodegen
+- `brew install xcodegen`
     auto generate xcode from commandline.
         don't need to go into xcode. omg?!
 
-
+- color man pages `brew install most`
