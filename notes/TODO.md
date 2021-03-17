@@ -1,26 +1,13 @@
 # BALATERO MOLLEWEIDE TODO
 
-- read `man yabai`
-- read `man most`
-
-
-ubersicht
-ubersicht yabai
-
-
-- interesting guy
-https://github.com/AdamWagner
-
 # automate ke complex.
 
 # fork nightly theme
 
 # set default branches on github >> molleweide
 
-
 # wp
     tfab
-
 
 # convert subdir into git module
 https://gist.github.com/amomin/b0df11ac4607f15203ac
@@ -32,9 +19,6 @@ https://stackoverflow.com/questions/1365541/how-to-move-files-from-one-git-repo-
 https://stackoverflow.com/questions/21205297/splitting-out-a-sub-directory-in-a-git-repo-into-its-own-repo?noredirect=1&lq=1
 https://stackoverflow.com/questions/30325758/git-conversion-of-a-subdirectory-to-a-submodule
 
-# ranger
-
-create installer / symlink configs
 
 # ask layers question on reddit
 
@@ -49,9 +33,6 @@ with dual keys
 # TMUX ???
 installer/tmux add tmuxinator to installer?????
 were is it insalled wtf?!
-
-# iterm 
-how to import settings????
 
 how does balateros git scripts work
 symlink local repos/what i did???

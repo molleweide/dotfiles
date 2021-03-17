@@ -1,0 +1,32 @@
+[filter "media"]
+  clean = git-media-clean %f
+  smudge = git-media-smudge %f
+[user]
+  name = molleweide
+  email = hjalmar.jakobsson@telia.com
+[github]
+  # https://github.com/blog/180-local-github-config
+  user = mollweide
+[core]
+  editor = nvim
+  excludesfile = /Users/hjalmarjakobsson/.gitignore
+[filter "lfs"]
+  smudge = git-lfs smudge %f
+  required = true
+  clean = git-lfs clean %f
+[credential]
+  helper = store
+[color]
+  ui = true
+[push]
+  default = current
+[alias]
+  co = checkout
+  br = branch
+  ci = commit
+  st = status
+  unstage = reset HEAD --
+  last = log -1 HEAD
+  lg = log --oneline --decorate --graph --all
+[credentials]
+  helper = store
