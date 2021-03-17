@@ -1,19 +1,15 @@
 # BALATERO MOLLEWEIDE TODO
 
-i wonder what would happen if i made a color theme for reaper 
-that was based on nightly so that i get a pretty recked
-look when i am coding it.
+- read `man yabai`
+- read `man most`
 
-this is very nice. i don't understand why karabiner isn't 
-building properly on my macs. i have to fix this later because
-my reflexes get to fucked up when i use super layers on qmk.
-which are so mech better. but i doesn't work with regular 
-laptops.
 
-this is pretty cool. the thing is that the terminal now lookr
-as if you are working in a professional ide with even better
-features since we are working so close to the terminal.
+ubersicht
+ubersicht yabai
 
+
+- interesting guy
+https://github.com/AdamWagner
 
 # automate ke complex.
 
@@ -54,10 +50,6 @@ with dual keys
 installer/tmux add tmuxinator to installer?????
 were is it insalled wtf?!
 
-# custom apps
-vimac
-limelight
-
 # iterm 
 how to import settings????
 
@@ -72,11 +64,3 @@ can i symlink iterm prefs?? > create this in installer/terminal
 
 build signal messenger
 build telegram?
-
-# add to installrs
-
-- `brew install xcodegen`
-    auto generate xcode from commandline.
-        don't need to go into xcode. omg?!
-
-- color man pages `brew install most`

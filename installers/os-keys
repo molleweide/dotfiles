@@ -2,6 +2,14 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
+# KEYS
+#
+# rename this file to just keys.
+# also install and setup all keys and keybinding related
+# stuff
+
+
+
 require_installer package-manager
 
 dotheader "Setting up Hammerspoon..."

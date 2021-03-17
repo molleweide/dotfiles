@@ -2,6 +2,33 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
+# TILING AND WINDOW MANAGEMENT
+
+# - create github project where i add
+#     yabai, limelight, and stackline
+
+# - brew install jq
+#     used primarily with yabai and limelight
+
+# - limelight
+#     needs to be built from source with make
+#     add start code to yabairc
+#     .config/limelight/limelightrc
+
+# - yabai uberbar
+#     https://github.com/AdamWagner/yabai-uberbar
+
+
+# - https://github.com/AdamWagner/stackline
+#     stackline
+#     this is very interesting because this teaches me how i can
+#     manage projects
+
+# ubersicht
+# ubersicht yabai
+# http://tracesof.net/uebersicht-widgets/
+
+
 if is_macos; then
   require_installer package-manager
 
@@ -11,9 +38,13 @@ if is_macos; then
   brew_tap koekeishiya/formulae
   brew_install skhd
 
+  # uebersicht yabai
+
   brew services start skhd
   brew services start yabai
 
   symlink_dotfile skhdrc ~/.skhdrc
   symlink_dotfile yabairc ~/.yabairc
 fi
+
+

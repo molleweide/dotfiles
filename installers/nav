@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+if is_macos; then
+  require_installer package-manager
+
+  # - ranger
+  #     vim check!!!
+  #     symlink config
+  #     brew install
+fi
