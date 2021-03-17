@@ -20,9 +20,6 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 
 # - https://github.com/AdamWagner/stackline
-#     stackline
-#     this is very interesting because this teaches me how i can
-#     manage projects
 
 # ubersicht
 # ubersicht yabai
