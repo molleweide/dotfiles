@@ -3,27 +3,30 @@
 source "${BASH_SOURCE%/*}/shared.sh"
 
 # TILING AND WINDOW MANAGEMENT
+# https://www.notion.so/Yabai-8da3b829872d432fac43181b7ff628fc
+# - prereq?? brew install jq
 
-# - create github project where i add
-#     yabai, limelight, and stackline
+function install_limelight() {
+  local url="https://github.com/koekeishiya/limelight.git"
+  local dest=$HOME/code/limelight
 
-# - brew install jq
-#     used primarily with yabai and limelight
+  git clone $url $destination
+  pushd $dest> /dev/null 2>&1
+  make
+  popd $dest> /dev/null 2>&1
 
-# - limelight
-#     needs to be built from source with make
-#     add start code to yabairc
-#     .config/limelight/limelightrc
+  # custom link from outside dots
+  ln -s $dest/bin/limelight /usr/local/bin/limelight
+  symlink_dotfile limelight ~/.config/limelight
+}
 
-# - yabai uberbar
-#     https://github.com/AdamWagner/yabai-uberbar
+# https://github.com/AdamWagner/stackline
+function install_stackline() {
+  local url="https://github.com/AdamWagner/stackline.git"
 
-
-# - https://github.com/AdamWagner/stackline
-
-# ubersicht
-# ubersicht yabai
-# http://tracesof.net/uebersicht-widgets/
+  # actually it seems i only have to clone the
+  # projct and symlink. easy
+}
 
 
 if is_macos; then
@@ -35,7 +38,12 @@ if is_macos; then
   brew_tap koekeishiya/formulae
   brew_install skhd
 
+  # fork and look into he code myself
+  install_limelight
+
   # uebersicht yabai
+
+  # stackline
 
   brew services start skhd
   brew services start yabai

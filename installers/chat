@@ -2,6 +2,11 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
+# CHAT
+
+# build signal messenger
+# build telegram?
+
 require_installer package-manager
 
 brew_install irssi
