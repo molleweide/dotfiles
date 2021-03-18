@@ -3,8 +3,10 @@
 source "${BASH_SOURCE%/*}/shared.sh"
 
 # TILING AND WINDOW MANAGEMENT
-# https://www.notion.so/Yabai-8da3b829872d432fac43181b7ff628fc
-# - prereq?? brew install jq
+
+
+# - prereq brew install jq
+
 
 function install_limelight() {
   local url="https://github.com/koekeishiya/limelight.git"
@@ -12,6 +14,8 @@ function install_limelight() {
 
   git clone $url $destination
   pushd $dest> /dev/null 2>&1
+
+  # before make check if already built...
   make
   popd $dest> /dev/null 2>&1
 
@@ -22,15 +26,18 @@ function install_limelight() {
 
 # https://github.com/AdamWagner/stackline
 function install_stackline() {
-  local url="https://github.com/AdamWagner/stackline.git"
-
-  # actually it seems i only have to clone the
-  # projct and symlink. easy
+  local url="https://github.com/molleweide/stackline.git"
+  local dest=$HOME/code/stackline
+  local symdest=$HOME/.hammerspoon/stackline
+  git clone $url $dest
+  ln -s $dest $symdest
 }
 
 
 if is_macos; then
   require_installer package-manager
+
+  brew_install jq
 
   brew_tap koekeishiya/formulae
   brew_install yabai
@@ -39,11 +46,12 @@ if is_macos; then
   brew_install skhd
 
   # fork and look into he code myself
+  #   -> rm borders completely
   install_limelight
 
   # uebersicht yabai
 
-  # stackline
+  install_stackline
 
   brew services start skhd
   brew services start yabai

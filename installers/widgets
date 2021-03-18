@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+# function install_ubersicht() {
+#   local url="https://github.com/molleweide/vimac.git"
+#   local dest=$HOME/code/vimac
+#   git clone $url $destination
+#   pushd $dest> /dev/null 2>&1
+#   popd $dest> /dev/null 2>&1
+# }
+
+
+function uber_widget() {
+  WIDGET_DIR="$HOME/Library/Application Support/Übersicht/widgets/$2.widget"
+  git clone https://github.com/$1/$2.git "$WIDGET_DIR"
+}
+
+
+
+
+if is_macos; then
+  require_installer package-manager
+
+  brew_install ubersicht
+
+  uber_widget AdamWagner yabai-uberbar
+  uber_widget felixhageloh weather-widget
+fi
