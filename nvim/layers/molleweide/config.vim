@@ -9,7 +9,6 @@ inoremap zm <esc>
 "(v)im (r)eload
 nmap <silent> ,vr :so %<CR>
 
-<<<<<<< HEAD:nvim/layers/vim/config.vim
 " remap : to ;
 nnoremap ; :
 nnoremap : ;
@@ -59,8 +58,6 @@ vnoremap <Left> <Nop>
 vnoremap <Right> <Nop>
 vnoremap <Up> <Nop>
 
-=======
->>>>>>> origin/mollw_prepull_upstream:nvim/layers/molleweide/config.vim
 "(k)eybindings
 nmap <silent> ,knr :e ~/.dotfiles/notes/RNDM.md<CR>
 nmap <silent> ,knt :e ~/.dotfiles/notes/TODO.md<CR>
