@@ -11,7 +11,7 @@ if is_macos; then
 fi
 
 symlink_dotfile alacritty.yml ~/.alacritty.yml
-symlink_dotfile .mostrc ~/.mostrc
+symlink_dotfile mostrc ~/.mostrc
 
 # get fucking bent, Catalina
 xattr -r -d com.apple.quarantine /Applications/Alacritty.app

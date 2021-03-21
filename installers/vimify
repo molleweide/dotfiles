@@ -2,10 +2,12 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
+# BROWSING / NAV
+
 function install_vimac() {
   local url="https://github.com/molleweide/vimac.git"
   local dest=$HOME/code/vimac
-  git clone $url $destination
+  git clone $url $dest
   pushd $dest> /dev/null 2>&1
   # https://github.com/molleweide/vimac
   # pod install
@@ -15,9 +17,14 @@ function install_vimac() {
 }
 
 
+code_dir=$HOME/code
+
 if is_macos; then
   require_installer package-manager
 
   install_vimac
+
+  # vimium
+  # git clone https://github.com/molleweide/vimium.git $code_dir/vimium
 fi
 

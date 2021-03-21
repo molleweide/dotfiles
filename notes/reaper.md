@@ -1,5 +1,9 @@
 # REAPER
 
+- vim walter syntax
+    create vim plugin
+        reaper daw syntax / jsfx / walter/ more?
+
 - fx only TRACK fn params
     search n repl w/ack?!
 

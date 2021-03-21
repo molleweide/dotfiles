@@ -5,8 +5,8 @@ source "${BASH_SOURCE%/*}/installers/shared.sh"
 require_installer package-manager
 require_installer terminal
 require_installer nav
-require_installer ui
 require_installer tiling
+require_installer widgets
 require_installer mac-app-store
 require_installer mac-custom-apps
 require_installer git

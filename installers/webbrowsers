@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+# web browsers
+
+# https://github.com/fanglingsu/vimb
+# https://github.com/qutebrowser/qutebrowser
+# https://github.com/atlas-engineer/nyxt
+# https://github.com/Jelmerro/Vieb
+# https://github.com/alexherbo2/krabby
+# https://github.com/brookhong/Surfingkeys
+
+# https://www.youtube.com/watch?v=AZERfhHo8w4
+
+function install_from_git_to_code() {
+  local user=$1
+  local name=$2
+  local code_dir=$HOME/code
+  local dest=$code_dir/$name
+
+  mkdir -p "$code_dir"
+
+  if [ ! -d $dest ]; then
+    dotsay "+ cloning $dest"
+    git clone https://github.com/$user/$name.git $dest
+  else
+    dotsay "+ $dest already exists"
+  fi
+
+}
+
+
+if is_macos; then
+  require_installer package-manager
+
+  # CONSUMER BROWSERS
+
+  # firefox
+  # brew_install brave
+
+  install_from_git_to_code molleweide vimium
+
+
+
+  # ONLY KEYS BROWSERS
+
+  # qutebrowser
+
+
+
+fi

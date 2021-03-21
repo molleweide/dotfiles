@@ -1,25 +1,14 @@
 # BALATERO MOLLEWEIDE TODO
 
+mirror Less commands to my Morerc
 
+update tmuxinator projects.
+
+read through yabay man pages >> how unstack?
+
+build karabiner
 build Vimac
 build ubersicht
-install yabai ubersicht
-
-
-
-
-
-e. get my body to work properly
-2. use reaper on laptop main
-3. only install projects into code/
-    don't subdir?!
-4. update all to big sur
-
-# how to name computers?
-alpha/beta/gamma/delta/epsi
-
-but i shouldn't have to do this, or???
-
 
 # automate ke complex.
 
@@ -51,3 +40,6 @@ were is it insalled wtf?!
 
 how does balateros git scripts work
 symlink local repos/what i did???
+
+# qt browser
+

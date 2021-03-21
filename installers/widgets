@@ -2,22 +2,34 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-# function install_ubersicht() {
-#   local url="https://github.com/molleweide/vimac.git"
-#   local dest=$HOME/code/vimac
-#   git clone $url $destination
-#   pushd $dest> /dev/null 2>&1
-#   popd $dest> /dev/null 2>&1
-# }
+# WIDGETS
 
+# links to funny ui projects
+
+# https://github.com/Mortennn/Dozer
+# https://github.com/exelban/stats
+# https://github.com/matryer/xbar
+
+# https://github.com/chrisshiplet/btcbar
+
+# https://github.com/igorkulman/ChangeMenuBarColor
 
 function uber_widget() {
-  WIDGET_DIR="$HOME/Library/Application Support/Übersicht/widgets/$2.widget"
-  git clone https://github.com/$1/$2.git "$WIDGET_DIR"
+  local user=$1
+  local name=$2
+  local url="https://github.com/$user/$name.git"
+  local prefix="ubersicht"
+  local full_name=$prefix-$name.widget
+  local dest=$HOME/code/$full_name
+  # not working form me
+  WIDGET_DIR="$HOME/Library/Application Support/Übersicht/widgets/$full_name"
+
+  if [ ! -d $dest ]; then
+    git clone $url $dest
+  fi
+
+  ln -s $dest "$HOME/Library/Application Support/Übersicht/widgets/$full_name"
 }
-
-
-
 
 if is_macos; then
   require_installer package-manager
@@ -26,4 +38,9 @@ if is_macos; then
 
   uber_widget AdamWagner yabai-uberbar
   uber_widget felixhageloh weather-widget
+  uber_widget molleweide bar
+  # https://github.com/blaadje/fancyBar#readme
+  # https://github.com/apierz/nerdbar.widget
+  # https://github.com/Jean-Tinland/simple-bar
+  # https://github.com/kkga/nibar
 fi

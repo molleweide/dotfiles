@@ -1,14 +1,13 @@
 # RNDM
 
+this might make ome of the files supr small but that is better
+than having big files with less related stuff.
 
-so now we are back into he comfy world of colemak again your mother
-is waiting for us and we are now going to proced with he operation my dear
-,vm
+just make stuff as small as possible and things will become 
+better and better. then you don't have to think so much.
 
-as soon as I can now I should implement the keyboard virtual keyboard.
-It is going to be super interesting to do this.
-
-if i put all functions in a library then i will beable
-to create and manage layouts super easy.
+things take care of themselves kind of
 
 
+i think hat this could be smart because it allows for quite
+relaxed refactoring of everything all the time
