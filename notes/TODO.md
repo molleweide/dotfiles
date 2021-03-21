@@ -1,7 +1,22 @@
 # BALATERO MOLLEWEIDE TODO
 
+# WEMUX
+
+now i understand how wemux works kind of but it is still not there.
+
+i don't know how to manage all of this tho. but at least i am getting it
+to run now. which means that some day in the future it will be working.
+
+if you don't know how to do this then you should just read a little bit and chill
+
+so this is how you can work with big monitors and tmux. i really like this becaus
+with a window manager like yabai all of the nice parts about tiling windors
+is available to you on macos.
 
 
+# 100 essential linux commands
+
+https://linuxhint.com/100_essential_linux_commands/
 
 #pyenv
 
@@ -10,19 +25,6 @@ https://github.com/pyenv/pyenv/issues/1643
 https://github.com/pyenv/pyenv/issues/1764
 https://stackoverflow.com/questions/50036091/pyenv-zlib-error-on-macos
 https://koji-kanao.medium.com/install-python-3-8-0-via-pyenv-on-bigsur-b4246987a548
-
-
-- $ `CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install 3.8.6`
-
-- @xpe I noticed you used -L in your CFLAGS, when I believe it should be -I. This led me to realize that I didn't even need to modify CFLAGS to make things work.
-This worked for me on macOS Big Sur 11.1 and Homebrew for python 3.7, 3.8, and 3.9:
-`brew install pyenv bzip2
-LDFLAGS="\                      
--L$(brew --prefix zlib)/lib \
--L$(brew --prefix bzip2)/lib \
-" pyenv install 3.9.0`
-
-- 
 
 # default branches
 set default branches on github >> molleweide

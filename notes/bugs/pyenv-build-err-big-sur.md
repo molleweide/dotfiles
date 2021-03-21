@@ -12,3 +12,16 @@ pyenv install --patch x.x.x < (curl -sSL https://github.com/python/cpython/commi
 taken from this thread
 pyenv/pyenv#1643 (comment)
 and it solved my problems
+
+
+
+
+
+#pyenv
+
+https://github.com/pyenv/pyenv/issues/1746
+https://github.com/pyenv/pyenv/issues/1643
+https://github.com/pyenv/pyenv/issues/1764
+https://stackoverflow.com/questions/50036091/pyenv-zlib-error-on-macos
+https://koji-kanao.medium.com/install-python-3-8-0-via-pyenv-on-bigsur-b4246987a548
+
