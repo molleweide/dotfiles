@@ -1,40 +1,15 @@
-" stop kicking me into this mode you fucking apes
-set noexrc
-set noex
-set nosecure
-
-" minimum width
-set winwidth=100
-
-" Put contents of unnamed register in OS X clipboard
-set clipboard=unnamed
-
-" map leader key to comma
-let mapleader = ","
-let g:mapleader = ","
+" " map leader key to comma
+" let mapleader = ","
+" let g:mapleader = ","
 
 " remap ESC to jk
 " works well w/qwerty and colemak
 inoremap zm <esc>
 
-" Create window splits easier. The default
-" way is Ctrl-w,v and Ctrl-w,s. I remap
-" this to vv and ss
-nnoremap <silent> vv <C-w>v
-nnoremap <silent> ss <C-w>s
-
-"make Y consistent with C and D
-nnoremap Y y$
-function! YRRunAfterMaps()
-  nnoremap Y   :<C-U>YRYankCount 'y$'<CR>
-endfunction
-
-"Clear current search highlight by hitting g + /
-nmap <silent> g/ :nohlsearch<CR>
-
 "(v)im (r)eload
 nmap <silent> ,vr :so %<CR>
 
+<<<<<<< HEAD:nvim/layers/vim/config.vim
 " remap : to ;
 nnoremap ; :
 nnoremap : ;
@@ -84,10 +59,12 @@ vnoremap <Left> <Nop>
 vnoremap <Right> <Nop>
 vnoremap <Up> <Nop>
 
+=======
+>>>>>>> origin/mollw_prepull_upstream:nvim/layers/molleweide/config.vim
 "(k)eybindings
 nmap <silent> ,knr :e ~/.dotfiles/notes/RNDM.md<CR>
 nmap <silent> ,knt :e ~/.dotfiles/notes/TODO.md<CR>
-nmap <silent> ,kv :e ~/.dotfiles/nvim/layers/vim/config.vim<CR>
+nmap <silent> ,kv :e ~/.dotfiles/nvim/layers/molleweide/config.vim<CR>
 nmap <silent> ,kV :e ~/.dotfiles/notes/build-nvim.md<CR>
 nmap <silent> ,kt :e ~/.dotfiles/tmux.conf<CR>
 nmap <silent> ,kzz :e ~/.dotfiles/zshrc<CR>

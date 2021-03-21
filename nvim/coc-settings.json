@@ -1,3 +1,4 @@
+
 {
   "languageserver": {
     "bash": {
@@ -5,30 +6,17 @@
       "args": ["start"],
       "filetypes": ["sh"],
       "ignoredRootPaths": ["~"]
-    },
-    "lua": {
-      "command": "lua-lsp",
-      "filetypes": ["lua"]
     }
   },
-
-  "coc.preferences.diagnostic.displayByAle": true,
   "coc.preferences.previewAutoClose": false,
-  "coc.source.emoji.filetypes": ["markdown"],
-  "solargraph.autoformat": true,
-  "solargraph.checkGemVersion": false,
-  "solargraph.completion": true,
-  "solargraph.diagnostics": true,
-  "solargraph.definitions": true,
-  "solargraph.formatting": true,
-  "solargraph.hover": true,
-  "solargraph.rename": true,
-  "solargraph.symbols": true,
-  "solargraph.useBundler": false,
-
-  "tsserver.log": "verbose",
-
+  "diagnostic.displayByAle": false,
   "suggest.echodocSupport": true,
   "suggest.noselect": true,
-  "suggest.enablePreview": true
+  "suggest.enablePreview": true,
+  "Lua.diagnostics.globals": ["vim"],
+  "Lua.workspace.library": {
+    "/usr/share/nvim/runtime/lua": true,
+    "/usr/share/nvim/runtime/lua/vim": true,
+    "/usr/share/nvim/runtime/lua/vim/lsp": true,
+  }
 }

@@ -7,6 +7,11 @@
 # https://stackoverflow.com/questions/50036091/pyenv-zlib-error-on-macos
 #
 
+# this solved the problem on my main laptop
+# https://github.com/pyenv/pyenv/issues/1643#issuecomment-776155586
+
+
+
 source "${BASH_SOURCE%/*}/shared.sh"
 
 require_installer package-manager
@@ -84,5 +89,5 @@ install_pyenv
 install_pyenv_virtualenv
 load_pyenv
 
-install_python_versions
+# install_python_versions
 install_pyenv_virtualenvs

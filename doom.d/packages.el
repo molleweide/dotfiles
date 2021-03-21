@@ -49,9 +49,9 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
-;(package! fzf) ;; fzf file finding fun for the family
 (package! multi-line) ;; swapping between multi-line and single-line
 (package! tmux-pane) ;; ctrl-hjkl pane movement w/ tmux support
 (package! vimrc-mode) ;; hahhaahaha
 (package! xclip) ;; system clipboard
 (package! editorconfig)
+(package! fzf :recipe (:host github :repo "dbalatero/fzf.el" :files ("*.el")))

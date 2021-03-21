@@ -6,10 +6,13 @@ export LC_CTYPE=en_US.UTF-8
 export DEVELOPMENT_DIRECTORY="$HOME/code"
 
 # FZF
-export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden \
---exclude .git --exclude node_modules --color=always'
+export FZF_DEFAULT_COMMAND="rg --files --color always --hidden --glob '!{node_modules/*,.git/*}'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="--ansi"
+
+#trmina
+
+export TERM=xterm-256color
 
 # Editor
 export EDITOR=nvim
@@ -56,3 +59,12 @@ export FREEZE_REPO="$RESTIC_REPOSITORY:/Freeze"
 if command -v yarn >/dev/null 2>&1; then
   export PATH="$PATH:`yarn global bin`"
 fi
+
+# pynbuidfaid
+# export CFLAGS="-I$(brew --prefix openssl)/include -I$(xcrun --show-sdk-path)/usr/include" LDFLAGS="-L$(brew --prefix openssl)/lib"
+
+# export LDFLAGS="-L/usr/local/opt/zlib/lib"
+# export CPPFLAGS="-I/usr/local/opt/zlib/include"
+# export PKG_CONFIG_PATH="/usr/local/opt/zlib/lib/pkgconfig"
+# export SDKROOT=${XCODE_ROOT}/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk \
+# MACOSX_DEPLOYMENT_TARGET=10.14

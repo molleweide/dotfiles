@@ -108,9 +108,11 @@ if is_linux; then
     "Fantasque Sans Mono Bold Italic Nerd Font Complete.ttf"
 else
   # disabling for now
-  # brew_cask_install homebrew/cask-fonts/font-inconsolatago-nerd-font
-
   # You only need to do this once!
   brew_tap homebrew/cask-fonts # if ! brew_is_tapped "neovim/neovim"; then
   brew_install font-inconsolata-go-nerd-font
+  # upstream master start
+  # brew_cask_install homebrew/cask-fonts/font-inconsolatago-nerd-font
+  brew_install font-jetbrains-mono-nerd-font
+  # upstream master end
 fi

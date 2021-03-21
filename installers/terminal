@@ -10,6 +10,20 @@ if is_macos; then
   brew_install most # man page colorized
 fi
 
+function install_terminfo() {
+  if ! command_exists "alacritty"; then
+    git clone https://github.com/alacritty/alacritty.git /tmp/alacritty
+    cd /tmp/alacritty
+
+    dotsay "@b@blue[[+ Installing Alacritty terminfo]]"
+    sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
+
+    cd $HOME
+    rm -fr /tmp/alacritty
+  fi
+}
+
+install_terminfo
 symlink_dotfile alacritty.yml ~/.alacritty.yml
 symlink_dotfile mostrc ~/.mostrc
 

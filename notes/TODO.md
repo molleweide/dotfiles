@@ -1,5 +1,6 @@
 # BALATERO MOLLEWEIDE TODO
 
+<<<<<<< HEAD
 mirror Less commands to my Morerc
 
 put computr to sleep command.
@@ -17,6 +18,36 @@ build ubersicht
 # fork nightly theme
 
 # set default branches on github >> molleweide
+=======
+# WEMUX
+
+now i understand how wemux works kind of but it is still not there.
+
+i don't know how to manage all of this tho. but at least i am getting it
+to run now. which means that some day in the future it will be working.
+
+if you don't know how to do this then you should just read a little bit and chill
+
+so this is how you can work with big monitors and tmux. i really like this becaus
+with a window manager like yabai all of the nice parts about tiling windors
+is available to you on macos.
+
+
+# 100 essential linux commands
+
+https://linuxhint.com/100_essential_linux_commands/
+
+#pyenv
+
+https://github.com/pyenv/pyenv/issues/1746
+https://github.com/pyenv/pyenv/issues/1643
+https://github.com/pyenv/pyenv/issues/1764
+https://stackoverflow.com/questions/50036091/pyenv-zlib-error-on-macos
+https://koji-kanao.medium.com/install-python-3-8-0-via-pyenv-on-bigsur-b4246987a548
+
+# default branches
+set default branches on github >> molleweide
+>>>>>>> origin/mollw_prepull_upstream
 
 # wp
     tfab
@@ -45,3 +76,12 @@ symlink local repos/what i did???
 
 # qt browser
 
+<<<<<<< HEAD
+=======
+build signal messenger
+build telegram?
+0
+
+# brwbisur
+https://brew.sh/2020/12/01/homebrew-2.6.0/
+>>>>>>> origin/mollw_prepull_upstream
