@@ -2,6 +2,8 @@
 
 mirror Less commands to my Morerc
 
+put computr to sleep command.
+
 update tmuxinator projects.
 
 read through yabay man pages >> how unstack?
