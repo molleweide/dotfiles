@@ -1,6 +1,5 @@
 # BALATERO MOLLEWEIDE TODO
 
-<<<<<<< HEAD
 mirror Less commands to my Morerc
 
 put computr to sleep command.
@@ -18,7 +17,7 @@ build ubersicht
 # fork nightly theme
 
 # set default branches on github >> molleweide
-=======
+
 # WEMUX
 
 now i understand how wemux works kind of but it is still not there.
@@ -76,12 +75,8 @@ symlink local repos/what i did???
 
 # qt browser
 
-<<<<<<< HEAD
-=======
 build signal messenger
 build telegram?
-0
 
 # brwbisur
 https://brew.sh/2020/12/01/homebrew-2.6.0/
->>>>>>> origin/mollw_prepull_upstream

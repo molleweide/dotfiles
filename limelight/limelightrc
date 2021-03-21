@@ -2,12 +2,17 @@
 
 # orange: 0xFFFF5217
 # yellow: 0xFFf7de43
+# red:    0xFFfc514e
+# blue:   0xFF82aaff
+# red br: 0xFFff5874
+# green:  0xFFa1cd5e
+#
 # https://github.com/bluz71/vim-nightfly-guicolors
 
 limelight -m config width 3
 # limelight -m config radius 10
 limelight -m config placement exterior
-limelight -m config active_color 0xFFae81ff
+limelight -m config active_color 0xFFfc514e
 limelight -m config normal_color 0x00FFFFFF
 
 echo "limelight configuration loaded.."
