@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+# WIDGETS
+
+# links to funny ui projects
+
+# https://github.com/Mortennn/Dozer
+# https://github.com/exelban/stats
+# https://github.com/matryer/xbar
+
+# https://github.com/chrisshiplet/btcbar
+
+# https://github.com/igorkulman/ChangeMenuBarColor
+
+function uber_widget() {
+  local user=$1
+  local name=$2
+  local url="https://github.com/$user/$name.git"
+  local prefix="ubersicht"
+  local full_name=$prefix-$name.widget
+  local dest=$HOME/code/$full_name
+  # not working form me
+  WIDGET_DIR="$HOME/Library/Application Support/Übersicht/widgets/$full_name"
+
+  if [ ! -d $dest ]; then
+    git clone $url $dest
+  fi
+
+  ln -s $dest "$HOME/Library/Application Support/Übersicht/widgets/$full_name"
+}
+
+if is_macos; then
+  require_installer package-manager
+
+  brew_install ubersicht
+
+  uber_widget AdamWagner yabai-uberbar
+  uber_widget felixhageloh weather-widget
+  uber_widget molleweide bar
+  # https://github.com/blaadje/fancyBar#readme
+  # https://github.com/apierz/nerdbar.widget
+  # https://github.com/Jean-Tinland/simple-bar
+  # https://github.com/kkga/nibar
+fi

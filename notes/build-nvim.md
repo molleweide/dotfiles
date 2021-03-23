@@ -1,5 +1,11 @@
 # BUILD NVIM
 
+now i am testing using colemak with this new setup that i am usingon
+the main laptop. this shouldn't be a issue at al right. it works on the
+big one and so it should also work on the old one. theonly problem
+on he main laptop was that treesitter was not working and this seems
+to b a standard issue whch everyone seems to have sold
+
 # questions
 
 - FIRST

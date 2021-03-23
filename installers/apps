@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+# MY APPS
+
+dotheader "Setting up personal projects..."
+
+
+# mv to shared
+function install_from_github() {
+  local user=$1
+  local name=$2
+  local code_dir=$HOME/code
+  local dest=$code_dir/$name
+
+  mkdir -p "$code_dir"
+
+  if [ ! -d $dest ]; then
+    dotsay "+ cloning $dest"
+    git clone https://github.com/$user/$name.git $dest
+  else
+    dotsay "+ $dest already exists"
+  fi
+
+}
+
+install_from_github molleweide pitch-machine

@@ -4,13 +4,15 @@ source "${BASH_SOURCE%/*}/installers/shared.sh"
 
 require_installer package-manager
 require_installer terminal
+require_installer nav
 require_installer tiling
-require_installer mac-app-store # remove unknown
-require_installer mac-custom-apps # remove unknown
+require_installer widgets
+require_installer mac-app-store
+require_installer mac-custom-apps
 require_installer git
 require_installer devtools
 require_installer zsh
-require_installer python # pyenv build fail
+require_installer python
 require_installer ruby
 require_installer tmux
 require_installer fonts
@@ -22,5 +24,5 @@ require_installer personal
 require_installer java
 require_installer monitor
 require_installer chat
-require_installer molleweide
+# require_installer molleweide # install personal forks
 require_installer reaper

@@ -1,0 +1,18 @@
+# http://wiki.octave.org/.octaverc
+# https://wiki.octave.org/Octave_for_macOS
+
+    # edit mode async # make spawned processes run in background
+    # EDITOR('gvim > /dev/tty 2>&1 < /dev/tty %s') # use gvim as the default editor
+    # more off # scroll screen output automatically
+    # history_control ("ignoredups"); # ignore duplicates in command history
+    # crash_dumps_octave_core(0); # never dump octave-core
+    # sigterm_dumps_octave_core(0);
+    # sighup_dumps_octave_core(0);
+    # set(0,'defaultfigurecolormap',gray(256)); # set colormap to gray(256)
+    # suppress_verbose_help_message(1); # use concise form for help
+    # page_screen_output(0); # write text to screen without buffering
+    # warning("off","Octave:divide-by-zero"); # disable unwanted warning messages
+    # warning("off","Octave:possible-matlab-short-circuit-operator");
+
+setenv('GNUTERM','qt')
+graphics_toolkit("gnuplot")

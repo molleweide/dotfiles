@@ -2,7 +2,13 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-require_installer package-manager
+# TERMINAL
+
+if is_macos; then
+  require_installer package-manager
+  brew_cask_install alacritty
+  brew_install most # man page colorized
+fi
 
 function install_terminfo() {
   if ! command_exists "alacritty"; then
@@ -19,7 +25,8 @@ function install_terminfo() {
 
 install_terminfo
 symlink_dotfile alacritty.yml ~/.alacritty.yml
-brew_cask_install alacritty
+symlink_dotfile mostrc ~/.mostrc
 
 # get fucking bent, Catalina
 xattr -r -d com.apple.quarantine /Applications/Alacritty.app
+

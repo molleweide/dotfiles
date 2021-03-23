@@ -2,6 +2,7 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
+# dont use this file
 
 dotheader "Setting up personal projects..."
 
@@ -25,8 +26,8 @@ function install_personal_master_repos() {
 
 }
 
-install_personal_master_repos keys
-install_personal_master_repos vim
-install_personal_master_repos kth
-install_personal_master_repos apps
-install_personal_master_repos wp
+# install_personal_master_repos keys
+# install_personal_master_repos vim
+# install_personal_master_repos kth
+# install_personal_master_repos apps
+# install_personal_master_repos wp

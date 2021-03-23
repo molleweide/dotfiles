@@ -350,7 +350,7 @@ call vimfiler#custom#profile('default', 'context', {
 " buffer's file
 nnoremap - :VimFilerBufferDir<CR>
 
-map <leader>r :Ranger<CR>
+nnoremap <leader>r :Ranger<CR>
 
 
 

@@ -49,21 +49,21 @@ windows:
       panes:
         -
   - KEcmplx:
-      root: ~/code/keys/KE-complex_modifications
+      root: ~/code/KE-complex_modifications
       panes:
         -
   - karab:
-      root: ~/code/keys/Karabiner-Elements
+      root: ~/code/Karabiner-Elements
       panes:
         -
   - qmk:
-      root: ~/code/keys/qmk_firmware
+      root: ~/code/qmk_firmware
       layout: main-vertical
       panes:
-        - cd ~/code/keys/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && vim
-        - cd ~/code/keys/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo
+        - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && vim
+        - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo
         -
   - hyper:
-      root: ~/code/keys/HyperKey.spoon
+      root: ~/code/HyperKey.spoon
       panes:
         -

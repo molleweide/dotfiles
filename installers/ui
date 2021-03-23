@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+if is_macos; then
+  require_installer package-manager
+
+  # uebersicht ui widgets
+  # https://github.com/felixhageloh/uebersicht
+fi

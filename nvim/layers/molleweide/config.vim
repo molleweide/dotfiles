@@ -9,6 +9,55 @@ inoremap zm <esc>
 "(v)im (r)eload
 nmap <silent> ,vr :so %<CR>
 
+" remap : to ;
+nnoremap ; :
+nnoremap : ;
+
+" background
+inoremap <C-Z> <Esc><C-Z>
+
+" Use sane regexes.
+nnoremap / /\v
+vnoremap / /\v
+
+" Mappings to move lines
+" alt+j/k to move up/down
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
+" load aliases
+if exists('s:loaded_vimafter')
+  silent doautocmd VimAfter VimEnter *
+else
+  let s:loaded_vimafter = 1
+  augroup VimAfter
+    autocmd!
+    autocmd VimEnter * source ~/.config/nvim/aliases.vim
+  augroup END
+endif
+
+" Remove arrow keys in Insert Mode
+inoremap <Down> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
+inoremap <Up> <Nop>
+
+" Remove arrow keys in Normal Mode
+nnoremap <Down> <Nop>
+nnoremap <Left> <Nop>
+nnoremap <Right> <Nop>
+nnoremap <Up> <Nop>
+
+" Remove arrow keys in Visual Mode
+vnoremap <Down> <Nop>
+vnoremap <Left> <Nop>
+vnoremap <Right> <Nop>
+vnoremap <Up> <Nop>
+
 "(k)eybindings
 nmap <silent> ,knr :e ~/.dotfiles/notes/RNDM.md<CR>
 nmap <silent> ,knt :e ~/.dotfiles/notes/TODO.md<CR>

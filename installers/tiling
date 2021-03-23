@@ -2,8 +2,42 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
+# TILING AND WINDOW MANAGEMENT
+
+
+# - prereq brew install jq
+
+
+function install_limelight() {
+  local url="https://github.com/koekeishiya/limelight.git"
+  local dest=$HOME/code/limelight
+
+  git clone $url $destination
+  pushd $dest> /dev/null 2>&1
+
+  # before make check if already built...
+  make
+  popd $dest> /dev/null 2>&1
+
+  # custom link from outside dots
+  ln -s $dest/bin/limelight /usr/local/bin/limelight
+  symlink_dotfile limelight ~/.config/limelight
+}
+
+# https://github.com/AdamWagner/stackline
+function install_stackline() {
+  local url="https://github.com/molleweide/stackline.git"
+  local dest=$HOME/code/stackline
+  local symdest=$HOME/.hammerspoon/stackline
+  git clone $url $dest
+  ln -s $dest $symdest
+}
+
+
 if is_macos; then
   require_installer package-manager
+
+  brew_install jq
 
   brew_tap koekeishiya/formulae
   brew_install yabai
@@ -11,9 +45,19 @@ if is_macos; then
   brew_tap koekeishiya/formulae
   brew_install skhd
 
+  # fork and look into he code myself
+  #   -> rm borders completely
+  install_limelight
+
+  # uebersicht yabai
+
+  install_stackline
+
   brew services start skhd
   brew services start yabai
 
   symlink_dotfile skhdrc ~/.skhdrc
   symlink_dotfile yabairc ~/.yabairc
 fi
+
+

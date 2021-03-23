@@ -1,12 +1,20 @@
 # KARABINER
 
+# karabiner build from source
+
+create two test clones
+
+depth 1
+recursive all
+
+
 # LAPTOP LAYERS
 karabiner layers
-    1. molleweide modrows
-    2. standard layout
-    3. turn off all keys.
-        only keep layer turn on button
-    4. midi keys.
+1. molleweide modrows
+2. standard layout
+3. turn off all keys.
+only keep layer turn on button
+4. midi keys.
        - turn off modrows
        - RK enter virtual midi layer
 
@@ -28,15 +36,15 @@ wait, that is how it always work
 krmcp = function run below
 
 
-    ```shell
-    # compile json
-    make
-    ```
+```shell
+# compile json
+make
+```
 
-    ```shell
-    move file to karabiner config
-    cp public/json/your_awesome_configuration.json ~/.config/karabiner/assets/complex_modifications
-    ```
+```shell
+move file to karabiner config
+cp public/json/your_awesome_configuration.json ~/.config/karabiner/assets/complex_modifications
+```
 
 
 how do I make layers w karabiner??
