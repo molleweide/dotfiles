@@ -1,5 +1,12 @@
 # BALATERO MOLLEWEIDE TODO
 
+luckily neovim fully works om my main mac.
+
+
+# change tmux color > fit with better w/ nightfly
+
+
+
 # WEMUX
 
 now i understand how wemux works kind of but it is still not there.
@@ -13,18 +20,14 @@ so this is how you can work with big monitors and tmux. i really like this becau
 with a window manager like yabai all of the nice parts about tiling windors
 is available to you on macos.
 
+this is just such a beautiful terminal editor. i really like this.
+,
+
 
 # 100 essential linux commands
 
 https://linuxhint.com/100_essential_linux_commands/
 
-#pyenv
-
-https://github.com/pyenv/pyenv/issues/1746
-https://github.com/pyenv/pyenv/issues/1643
-https://github.com/pyenv/pyenv/issues/1764
-https://stackoverflow.com/questions/50036091/pyenv-zlib-error-on-macos
-https://koji-kanao.medium.com/install-python-3-8-0-via-pyenv-on-bigsur-b4246987a548
 
 # default branches
 set default branches on github >> molleweide
