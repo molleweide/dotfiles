@@ -30,6 +30,10 @@ function install_from_git_to_code() {
 
 }
 
+function install_nyxt_macos() {
+  mkdir -p ~/common-lisp
+  git clone https://github.com/atlas-engineer/nyxt ~/common-lisp/nyxt
+}
 
 if is_macos; then
   require_installer package-manager
@@ -46,6 +50,7 @@ if is_macos; then
   # ONLY KEYS BROWSERS
 
   # qutebrowser
+  install_nyxt_macos
 
 
 

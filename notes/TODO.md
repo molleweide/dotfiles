@@ -1,16 +1,52 @@
 # BALATERO MOLLEWEIDE TODO
 
-mirror Less commands to my Morerc
+move my custom vim configs over to init.vim
 
+
+am i using luajit head now??!!
+
+- add reaper cli to path
+
+
+git clone reaper docs to reaper ~/REAPER
+
+# browsers
+- git clone vieb browser
+- cask install qutebrowser.
+- test vim vixen firefox
+- install nyxt `macports`??
+    https://guide.macports.org/
+
+# vim.spoon tridactyl conflict.
+using trydactyl not working with vim.spoom
+it changes modes always if you pressaccidentally 
+jk or v
+
+# test vim-vixen firefox
+
+
+mirror Less commands to my Morerc
 put computr to sleep command.
 
 update tmuxinator projects.
 
 read through yabay man pages >> how unstack?
 
+```osx
+tell application "System Events"
+    set the picture path of current user to alias "//"
+    # set picture to POSIX file "///"
+end tell
+```
+# yabai mode
+
+add to vimspoon
+-> yabai mode
+
+# BUILD 
+
+build neovim
 build karabiner
-build Vimac
-build ubersicht
 
 # automate ke complex.
 
@@ -19,20 +55,6 @@ build ubersicht
 # set default branches on github >> molleweide
 
 # WEMUX
-
-now i understand how wemux works kind of but it is still not there.
-
-i don't know how to manage all of this tho. but at least i am getting it
-to run now. which means that some day in the future it will be working.
-
-if you don't know how to do this then you should just read a little bit and chill
-
-so this is how you can work with big monitors and tmux. i really like this becaus
-with a window manager like yabai all of the nice parts about tiling windors
-is available to you on macos.
-
-
-# 100 essential linux commands
 
 https://linuxhint.com/100_essential_linux_commands/
 
@@ -46,7 +68,6 @@ https://koji-kanao.medium.com/install-python-3-8-0-via-pyenv-on-bigsur-b4246987a
 
 # default branches
 set default branches on github >> molleweide
->>>>>>> origin/mollw_prepull_upstream
 
 # wp
     tfab
@@ -61,22 +82,18 @@ https://stackoverflow.com/questions/1365541/how-to-move-files-from-one-git-repo-
 https://stackoverflow.com/questions/21205297/splitting-out-a-sub-directory-in-a-git-repo-into-its-own-repo?noredirect=1&lq=1
 https://stackoverflow.com/questions/30325758/git-conversion-of-a-subdirectory-to-a-submodule
 
-# i need to learn how to switch color themes.
-1. preserve balateros theme
-2. add dracula
-3. create pitch-black theme for very dark place
-
-# TMUX ???
-installer/tmux add tmuxinator to installer?????
-were is it insalled wtf?!
-
-how does balateros git scripts work
-symlink local repos/what i did???
-
-# qt browser
-
-build signal messenger
-build telegram?
 
 # brwbisur
 https://brew.sh/2020/12/01/homebrew-2.6.0/
+
+# browser vim
+
+https://github.com/search?o=desc&q=vim+web+browser&s=stars&type=Repositories
+tridactyl, vim-vixen, webkitten
+
+
+# HASKELL LUA
+
+i should try to use haskell in reaper somehow. it would
+be fun to try to bind it in and create he most insane 
+reaper live app environment ever.

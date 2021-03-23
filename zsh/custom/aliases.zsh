@@ -19,6 +19,7 @@ alias tn="tmuxinator"
 alias emacs="TERM=xterm-24bit emacs -nw"
 alias vim="nvim"
 alias v="nvim"
+alias vv="~/code/neovim/build/bin/nvim"
 alias 6="exec zsh"
 
 

@@ -16,6 +16,7 @@ export TERM=xterm-256color
 
 # Editor
 export EDITOR=nvim
+# export EDITOR="$HOME/code/neovim/build/bin/nvim"
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 # Color man pages

@@ -15,23 +15,23 @@ windows:
         - cd ~/.dotfiles && vim
         - cd ~/.dotfiles
   - nvim:
-      root: ~/code/vim/neovim
+      root: ~/code/neovim
       panes:
         -
   - vspoon:
-      root: ~/code/vim/VimMode.spoon
+      root: ~/code/VimMode.spoon
       panes:
         -
         -
   - vimium:
-      root: ~/code/vim/vimium
+      root: ~/code/vimium
       panes:
         -
   - vimac:
-      root: ~/code/vim/vimac
+      root: ~/code/vimac
       panes:
         -
   - fire:
-      root: ~/code/vim/firenvim
+      root: ~/code/firenvim
       panes:
         -
