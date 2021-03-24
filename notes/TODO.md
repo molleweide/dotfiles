@@ -1,9 +1,23 @@
 # BALATERO MOLLEWEIDE TODO
 
+- tn start rpp623. so that i can work easy
+    on this computer
+
+- move vkb to def/global.lua
+
+- test vkb on 2nd laptop
+
+
+
 move my custom vim configs over to init.vim
 
-
 am i using luajit head now??!!
+
+dude this is pretty fucking cool actually. and
+
+i wonder how fast neovim can get if you fucking do his
+fast as fuck which s he whole idea of this shit in reaper
+motherfucker yeah bitch suck my cock ya man
 
 - add reaper cli to path
 
