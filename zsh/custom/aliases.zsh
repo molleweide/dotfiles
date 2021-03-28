@@ -136,3 +136,7 @@ fgr() {
 
 ## FZF FUNCTIONS ## OLD END ##
 
+
+slp() {
+  osascript -e 'tell application "Finder" to sleep'
+}

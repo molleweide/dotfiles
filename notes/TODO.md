@@ -1,26 +1,40 @@
 # BALATERO MOLLEWEIDE TODO
 
-- tn start rpp623. so that i can work easy
-    on this computer
+- hyper >> hide current application.
 
-- move vkb to def/global.lua
+- how can I refresh rule on change
+    karabiner cli > add/removi complex rules?
 
-- test vkb on 2nd laptop
+# WORKOUT
+
+- supplements
+    buy creatine / bcaa/eac
+    proteine powder
+
+# QUESTIONS
+
+- neovim
+    how do I do <M-bindigs> on macOS???
+
+- stack/reddit
+    how do I switch to these small yes/no prompts
+    modals. is there a key command to switch to these
+    or can you reach them via yabai somehow????
+
+- stack/reddit
+    turn off app-tips / disable all but
+    only allow from calendar!!
 
 
-
-move my custom vim configs over to init.vim
+- qmk > add new keys for midi note numbers
+        instead of pitch names. easier to
+        manage when building midi plugins
+        and syncing layouts with other midi
+        controllers.
 
 am i using luajit head now??!!
 
-dude this is pretty fucking cool actually. and
-
-i wonder how fast neovim can get if you fucking do his
-fast as fuck which s he whole idea of this shit in reaper
-motherfucker yeah bitch suck my cock ya man
-
 - add reaper cli to path
-
 
 git clone reaper docs to reaper ~/REAPER
 
@@ -35,15 +49,9 @@ git clone reaper docs to reaper ~/REAPER
 using trydactyl not working with vim.spoom
 it changes modes always if you pressaccidentally 
 jk or v
-
 # test vim-vixen firefox
 
-
 mirror Less commands to my Morerc
-put computr to sleep command.
-
-update tmuxinator projects.
-
 read through yabay man pages >> how unstack?
 
 ```osx
@@ -58,17 +66,11 @@ add to vimspoon
 -> yabai mode
 
 # BUILD 
-
-build neovim
 build karabiner
-
-# automate ke complex.
 
 # fork nightly theme
 
 # set default branches on github >> molleweide
-
-# WEMUX
 
 https://linuxhint.com/100_essential_linux_commands/
 
@@ -97,17 +99,9 @@ https://stackoverflow.com/questions/21205297/splitting-out-a-sub-directory-in-a-
 https://stackoverflow.com/questions/30325758/git-conversion-of-a-subdirectory-to-a-submodule
 
 
-# brwbisur
-https://brew.sh/2020/12/01/homebrew-2.6.0/
-
 # browser vim
 
 https://github.com/search?o=desc&q=vim+web+browser&s=stars&type=Repositories
 tridactyl, vim-vixen, webkitten
 
-
-# HASKELL LUA
-
-i should try to use haskell in reaper somehow. it would
-be fun to try to bind it in and create he most insane 
-reaper live app environment ever.
+# wemux split monitor rogue mode

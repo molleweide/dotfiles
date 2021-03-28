@@ -45,6 +45,11 @@ root: ~/REAPER
 # attach: false
 
 windows:
+  - dot:
+      layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
+      panes:
+        - cd ~/.dotfiles && vim
+        - cd ~/.dotfiles
   - rpp:
       root: ~/REAPER
       panes:
