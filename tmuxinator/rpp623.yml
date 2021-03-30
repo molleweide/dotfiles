@@ -59,7 +59,7 @@ windows:
       panes:
         - vim
   - js:
-      root: ~/REAPER/app/reaper-6.23.0/Effects/molleweide
+      root: ~/REAPER/app/reaper-6.23.0/Effects/reaper-jsfx
       panes:
         - vim
   - th:

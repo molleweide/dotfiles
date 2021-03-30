@@ -1,36 +1,55 @@
 # BALATERO MOLLEWEIDE TODO
 
-- hyper >> hide current application.
+# WEB BROWSER
+    - git clone vieb browser
+    - cask install qutebrowser.
+    - test vim vixen firefox
+    - install nyxt `macports`??
+    https://guide.macports.org/
 
-- how can I refresh rule on change
-    karabiner cli > add/removi complex rules?
+    I have to build web extensions from source!!!
+        - vimium
+        - video speed controller
+        - color modes / invert / dark /light
 
-# WORKOUT
+#  HYPERKEY.SPOON
+    `where put keys. outer thumb keys? upperLeft§ / upperRightBackspace`
+    hide current application
+    switch karabiner layout.
+    add yabai commands?
 
-- supplements
-    buy creatine / bcaa/eac
-    proteine powder
+# VIM.SPOON
+
+- prevent turn on when not in text field
+    finder?
+    webbrowser
+    reaper vkb
+
+# KARABINER 
+    cli refresh/remove complex rules
+        goal -> gulp automatic build flow
+
+4. show hidden files in dialog boxes / os modals?
+
+5. open on start up
+        alacritty > config?
+        karabiner > config?
+        hammerspoon > init.lua
+
+# VIMAC
+
+- doesn't show in top bar in latest version (mojave)
+- is it to use .config/vimac?
+- 
 
 # QUESTIONS
-
-- neovim
-    how do I do <M-bindigs> on macOS???
-
-- stack/reddit
-    how do I switch to these small yes/no prompts
-    modals. is there a key command to switch to these
-    or can you reach them via yabai somehow????
 
 - stack/reddit
     turn off app-tips / disable all but
     only allow from calendar!!
 
-
-- qmk > add new keys for midi note numbers
-        instead of pitch names. easier to
-        manage when building midi plugins
-        and syncing layouts with other midi
-        controllers.
+-----------
+-----------
 
 am i using luajit head now??!!
 
@@ -38,20 +57,10 @@ am i using luajit head now??!!
 
 git clone reaper docs to reaper ~/REAPER
 
-# browsers
-- git clone vieb browser
-- cask install qutebrowser.
-- test vim vixen firefox
-- install nyxt `macports`??
-    https://guide.macports.org/
-
-# vim.spoon tridactyl conflict.
-using trydactyl not working with vim.spoom
-it changes modes always if you pressaccidentally 
-jk or v
 # test vim-vixen firefox
 
 mirror Less commands to my Morerc
+
 read through yabay man pages >> how unstack?
 
 ```osx
@@ -68,12 +77,6 @@ add to vimspoon
 # BUILD 
 build karabiner
 
-# fork nightly theme
-
-# set default branches on github >> molleweide
-
-https://linuxhint.com/100_essential_linux_commands/
-
 #pyenv
 
 https://github.com/pyenv/pyenv/issues/1746
@@ -81,12 +84,6 @@ https://github.com/pyenv/pyenv/issues/1643
 https://github.com/pyenv/pyenv/issues/1764
 https://stackoverflow.com/questions/50036091/pyenv-zlib-error-on-macos
 https://koji-kanao.medium.com/install-python-3-8-0-via-pyenv-on-bigsur-b4246987a548
-
-# default branches
-set default branches on github >> molleweide
-
-# wp
-    tfab
 
 # convert subdir into git module
 https://gist.github.com/amomin/b0df11ac4607f15203ac
@@ -97,7 +94,6 @@ https://stackoverflow.com/questions/12514197/convert-a-git-folder-to-a-submodule
 https://stackoverflow.com/questions/1365541/how-to-move-files-from-one-git-repo-to-another-not-a-clone-preserving-history?noredirect=1&lq=1
 https://stackoverflow.com/questions/21205297/splitting-out-a-sub-directory-in-a-git-repo-into-its-own-repo?noredirect=1&lq=1
 https://stackoverflow.com/questions/30325758/git-conversion-of-a-subdirectory-to-a-submodule
-
 
 # browser vim
 
