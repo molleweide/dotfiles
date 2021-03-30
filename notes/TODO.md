@@ -1,5 +1,9 @@
 # BALATERO MOLLEWEIDE TODO
 
+# QMK
+
+- installer script > os keys
+
 # WEB BROWSER
     - git clone vieb browser
     - cask install qutebrowser.
@@ -28,6 +32,10 @@
 # KARABINER 
     cli refresh/remove complex rules
         goal -> gulp automatic build flow
+        otherwise it still takes quite a lot of time 
+        to test small nuances of karabiner. or at least
+        the process could be much faster which would
+        be nice.
 
 4. show hidden files in dialog boxes / os modals?
 

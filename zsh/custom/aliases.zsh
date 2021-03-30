@@ -21,6 +21,7 @@ alias vim="nvim"
 alias v="nvim"
 alias vv="~/code/neovim/build/bin/nvim"
 alias 6="exec zsh"
+alias tfl="teensy_loader_cli -mmcu=atmega32u4 -w ergodox_ez_myergo.hex"
 
 
 # karabiner path
