@@ -1,14 +1,11 @@
 # RNDM
 
-now i will b able to handle configs of computer,
-reaper and music. neovim configs and pretty much anything.
 
-this is fucking great.
 
-and if i start using more and more versions
 
-of vim i will be able to bulletproof working
-versions always and make sure that stuff always
-wors. he most importat thing is to jus read ad do more and
-more. hen you start to put together nicer ad nicer mental
-models.
+now this is going to be so much fun but the most important thing in the end is
+to. so now i am going to do this shit but i don't think this is something
+that we would like but now i am not sure how to do this shit.
+
+but this type of problemsolving is a lot of fun i hing that there should
+have been a space at that place.

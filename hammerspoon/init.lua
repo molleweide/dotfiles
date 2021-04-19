@@ -49,6 +49,7 @@ vim
   :disableForApp('Visual Studio Code')
   :disableForApp('iTerm')
   :disableForApp('iTerm2')
+  :disableForApp('VirtualBoxVM')
   :disableForApp('zoom.us')
 
 vim:enableBetaFeature('block_cursor_overlay')

@@ -1,5 +1,8 @@
 # REAPER
 
+turn off updates!!
+turn of other messages?
+
 - vim walter syntax
     create vim plugin
         reaper daw syntax / jsfx / walter/ more?

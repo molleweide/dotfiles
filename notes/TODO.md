@@ -1,26 +1,52 @@
 # BALATERO MOLLEWEIDE TODO
 
+the most important thing todo now is to get linux
+up and running. today i am going to instll ubuntu
+on my macos and then buy a new one that is as powerful
+as possible. and then start using arch linux on
+macos. i know that macos is super powerful and then
+i can sell it later ad make shit work.
+
+- gpg
+- ssh
+- ios 14 > lbry
+
+
+libreoffice
+
+testing dotfiles https://seds.nl/posts/automating-and-testing-dotfiles/
+
+- check out lukes list of stuff.
+https://odysee.com/@Luke:7/setting-up-a-website-and-email-server-in:f
+
+
+ssh > manage servers.
+gpg macos > neomutt
+bitwarden
+
+
+# tsartttssrtrrsts
+
+- create khanacademy account
+
+cronjobs on macos
+
+
+
+
+
+
+use personal vimium extension!!
+
+# BUILD 
+build karabiner
+build vimac
+
 # QMK
 
 - installer script > os keys
 
-# WEB BROWSER
-    - git clone vieb browser
-    - cask install qutebrowser.
-    - test vim vixen firefox
-    - install nyxt `macports`??
-    https://guide.macports.org/
 
-    I have to build web extensions from source!!!
-        - vimium
-        - video speed controller
-        - color modes / invert / dark /light
-
-#  HYPERKEY.SPOON
-    `where put keys. outer thumb keys? upperLeft§ / upperRightBackspace`
-    hide current application
-    switch karabiner layout.
-    add yabai commands?
 
 # VIM.SPOON
 
@@ -28,6 +54,8 @@
     finder?
     webbrowser
     reaper vkb
+
+    ask balatero for this. git issue
 
 # KARABINER 
     cli refresh/remove complex rules
@@ -39,10 +67,12 @@
 
 4. show hidden files in dialog boxes / os modals?
 
-5. open on start up
-        alacritty > config?
-        karabiner > config?
-        hammerspoon > init.lua
+# OPEN ON START UP
+    alacritty > config?
+    karabiner > config?
+    hammerspoon > init.lua
+    syncthing 
+
 
 # VIMAC
 
@@ -81,9 +111,6 @@ end tell
 
 add to vimspoon
 -> yabai mode
-
-# BUILD 
-build karabiner
 
 #pyenv
 
