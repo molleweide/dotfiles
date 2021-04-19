@@ -39,6 +39,7 @@ function chsh_zsh() {
 
 function install_fzf() {
   brew_install fzf
+  # apt_install fzf # ???
 
   if [ ! -f $HOME/.fzf.zsh ]; then
     $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
@@ -86,14 +87,20 @@ function install_base16_shell() {
     git clone https://github.com/chriskempson/base16-shell.git "$base16_repo"
   fi
 
-  ln -sf /Users/dbalatero/.antigen/bundles/chriskempson/base16-shell/scripts/base16-oceanicnext.sh ~/.base16_theme
+  ln -sf $HOME/.antigen/bundles/chriskempson/base16-shell/scripts/base16-oceanicnext.sh ~/.base16_theme
 }
 
 dotheader "Setting up ZSH..."
 
 brew_install exa
+apt_install exa
+
+
 brew_install neofetch
+apt_install neofetch
+
 install_base16_shell
+
 setup_zsh_completions_repo
 
 install_package zsh
