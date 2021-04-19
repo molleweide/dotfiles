@@ -55,14 +55,16 @@ function setup_spoon_install() {
 
 symlink_dotfile bin/dnd-toggle ~/.local/bin/dnd-toggle
 
-brew_install lua
-brew_install luarocks
+# brew_install lua
+install_package lua
+install_package luarocks
 
-# bluetooth
-brew_install blueutil
+if is_macos; then
+  brew_install blueutil
 
-brew_cask_install karabiner-elements
-symlink_dotfile karabiner ~/.config/karabiner
+  brew_cask_install karabiner-elements
+  symlink_dotfile karabiner ~/.config/karabiner
+fi
 
 luarocks install loop
 luarocks install dkjson
@@ -71,7 +73,11 @@ luarocks install --server=http://luarocks.org/dev lua-lsp
 luarocks install luacheck
 luarocks install lcf
 
-symlink_dotfile hammerspoon ~/.hammerspoon
-setup_spoon_install
-setup_development_spoon_from_git_repo HyperKey
-setup_development_spoon_from_git_repo VimMode
+replace # ??
+
+if is_macos; then
+  symlink_dotfile hammerspoon ~/.hammerspoon
+  setup_spoon_install
+  setup_development_spoon_from_git_repo HyperKey
+  setup_development_spoon_from_git_repo VimMode
+fi

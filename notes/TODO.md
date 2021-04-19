@@ -12,17 +12,10 @@ work
 
 # PREPARE FOR LINUX
 
-add linux installers for all brew commands
-window manager linux?
-os key > kmonad
-
-how to handle mac-app installers???
-rm eg. garageband / logic
-
- >>> look at lukes dotfiles
-
- - not installing atm
-    `alacritty, winmanager, python, fonts`
+- pyenv not installing
+- tmuxinator not working
+- os key > kmonad
+- rm eg. garageband / logic
 
 # OTHER
 
