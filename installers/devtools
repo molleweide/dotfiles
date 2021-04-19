@@ -15,7 +15,7 @@ brew_install fd
 apt_install fd-find
 
 brew_install postgres
-apt_install postgres
+apt_install postgresql
 
 # comes with linux??
 brew_install coreutils
