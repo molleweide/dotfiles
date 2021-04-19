@@ -9,13 +9,17 @@ dotheader "Setting up devtools..."
 brew_cask_install chromedriver
 apt_install chromium-chromedriver
 
-brew_cask_install alacritty
+# brew_cask_install alacritty
 
 brew_install fd
+apt_install fd
 
 brew_install postgres
+apt_install postgres
 
+# comes with linux??
 brew_install coreutils
+apt_install coreutils
 
 brew_install the_silver_searcher
 apt_install silversearcher-ag
