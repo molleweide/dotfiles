@@ -12,7 +12,7 @@ apt_install chromium-chromedriver
 # brew_cask_install alacritty
 
 brew_install fd
-apt_install fd
+apt_install fd-find
 
 brew_install postgres
 apt_install postgres

@@ -1,4 +1,6 @@
 # BALATERO MOLLEWEIDE TODO
+ 
+ ssssssss
 
 don't optimize shit. just make it work by adding
 the real instllers so that it works everywhere.
