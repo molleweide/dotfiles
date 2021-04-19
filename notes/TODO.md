@@ -1,31 +1,35 @@
 # BALATERO MOLLEWEIDE TODO
 
-the most important thing todo now is to get linux
-up and running. today i am going to instll ubuntu
-on my macos and then buy a new one that is as powerful
-as possible. and then start using arch linux on
-macos. i know that macos is super powerful and then
-i can sell it later ad make shit work.
+don't optimize shit. just make it work by adding
+the real instllers so that it works everywhere.
+yeah dude. and then i will be able to move on.
+it is stupid to optimize for something thti don't
+know how it works actually at the core. instead
+just walk through each istaller one by one and make shit
+work
+
+# PREPARE FOR LINUX
+
+add linux installers for all brew commands
+window manager linux?
+os key > kmonad
+
+ >>> look at lukes dotfiles
+
+ - not installing atm
+    `alacritty, winmanager, python, fonts`
+
+# OTHER
 
 - gpg
 - ssh
 - ios 14 > lbry
 
-
 libreoffice
-
-testing dotfiles https://seds.nl/posts/automating-and-testing-dotfiles/
 
 - check out lukes list of stuff.
 https://odysee.com/@Luke:7/setting-up-a-website-and-email-server-in:f
-
-
-ssh > manage servers.
-gpg macos > neomutt
 bitwarden
-
-
-# tsartttssrtrrsts
 
 - create khanacademy account
 

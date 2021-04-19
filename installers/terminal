@@ -4,11 +4,16 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 # TERMINAL
 
+require_installer package-manager
+
 if is_macos; then
-  require_installer package-manager
   brew_cask_install alacritty
   brew_install most # man page colorized
+elif is_linux; then
+  sudo add-apt-repository ppa:aslatter/ppa
+  sudo apt install alacritty
 fi
+
 
 function install_terminfo() {
   if ! command_exists "alacritty"; then
