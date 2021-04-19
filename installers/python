@@ -92,5 +92,5 @@ install_pyenv
 install_pyenv_virtualenv
 load_pyenv
 
-# install_python_versions
+install_python_versions
 install_pyenv_virtualenvs
