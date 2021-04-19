@@ -79,7 +79,13 @@ function install_ruby_neovim() {
 
 function install_rust() {
   if ! command_exists "cargo" ; then
-    brew_install rustup
+
+    if is_macos; then
+      brew_install rustup
+    elif is_linux; then
+      curl https://sh.rustup.rs -sSf | sh
+    fi
+
     rustup-init -y
     source $HOME/.cargo/env
   fi
