@@ -14,6 +14,9 @@ add linux installers for all brew commands
 window manager linux?
 os key > kmonad
 
+how to handle mac-app installers???
+rm eg. garageband / logic
+
  >>> look at lukes dotfiles
 
  - not installing atm
