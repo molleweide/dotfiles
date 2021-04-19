@@ -58,6 +58,9 @@ if is_macos; then
 
   symlink_dotfile skhdrc ~/.skhdrc
   symlink_dotfile yabairc ~/.yabairc
-fi
 
+elif is_linux; then
+  apt_install dwm
+
+fi
 

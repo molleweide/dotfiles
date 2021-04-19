@@ -10,8 +10,12 @@ if is_macos; then
   brew_cask_install alacritty
   brew_install most # man page colorized
 elif is_linux; then
+
+  # is this only for ubuntu??
   sudo add-apt-repository ppa:aslatter/ppa
-  sudo apt install alacritty
+
+  apt_install alacritty
+  apt_install most
 fi
 
 
