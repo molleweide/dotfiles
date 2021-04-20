@@ -93,7 +93,7 @@ if is_linux; then
   # KMONAD
   # https://averagelinuxuser.com/install-aur-manually-helpers/
   # why is it that if i do sudo it gets cloned into root/code
-  local source_dir=$HOME/code/kmonad
+  source_dir=$HOME/code/kmonad
   git clone https://aur.archlinux.org/kmonad-bin.git $source_dir
   pushd $source_dir > /dev/null 2>&1
   dotsay ">>>>>> $PWD"
