@@ -1,11 +1,10 @@
 # BALATERO MOLLEWEIDE TODO
 
-- kmonad
-    watch aur video
+- kmonad test layers
 - dualboot
-- linux if installed skip..
 - dwm
 - nyxt
+- linux if installed skip..
 
 # PREPARE FOR LINUX
 

@@ -54,8 +54,22 @@ function setup_spoon_install() {
 }
 
 function setup_development_kmonad_from_git_repo() {
-  git clone --recursive https://github.com/david-janssen/kmonad.git $HOME/code/kmonad
-  stack build --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
+
+
+  # need to symlink to usr/bin
+  # https://github.com/david-janssen/kmonad/issues/185
+  # ..or pass build flag to stack
+  # https://stackoverflow.com/questions/51352885/how-do-you-set-the-executable-output-location-for-a-haskell-project-built-with-s
+
+
+
+  source_dir=$HOME/code/kmonad
+  git clone --recursive https://github.com/david-janssen/kmonad.git $source_dir
+  pushd $source_dir > /dev/null 2>&1
+  stack build \
+    --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include \
+    --local-bin-path=/usr/local/bin/kmonad
+  popd > /dev/null 2>&1
 }
 
 symlink_dotfile bin/dnd-toggle ~/.local/bin/dnd-toggle
@@ -85,18 +99,20 @@ if is_macos; then
   setup_spoon_install
   setup_development_spoon_from_git_repo HyperKey
   setup_development_spoon_from_git_repo VimMode
-  setup_development_kmonad_from_git_repo
+
+  # I have to check if it exists so i don't overwrite...
+  # setup_development_kmonad_from_git_repo
 fi
 
 if is_linux; then
 
   # KMONAD
   # https://averagelinuxuser.com/install-aur-manually-helpers/
-  # why is it that if i do sudo it gets cloned into root/code
+  # this process can also be taken care of by a aur helper
   source_dir=$HOME/code/kmonad
   git clone https://aur.archlinux.org/kmonad-bin.git $source_dir
   pushd $source_dir > /dev/null 2>&1
-  dotsay ">>>>>> $PWD"
+  # dotsay ">>>>>> $PWD"
   makepkg -si
   popd > /dev/null 2>&1
 
