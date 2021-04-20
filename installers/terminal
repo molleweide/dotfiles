@@ -14,6 +14,10 @@ elif is_linux; then
   # is this only for ubuntu??
   sudo add-apt-repository ppa:aslatter/ppa
 
+  # install instructions
+  # https://github.com/alacritty/alacritty/blob/master/INSTALL.md
+  # it is a bit messy to build alacritty
+
   apt_install alacritty
   apt_install most
 fi

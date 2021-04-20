@@ -69,7 +69,7 @@ function apt_install() {
 
   if [ $OS = "EndeavourOS" ]; then
     echo "!!"
-    INSTALL_COMMAND="sudo pacman -s"
+    INSTALL_COMMAND="sudo pacman -S"
   fi
 
   echo "cmd str: $INSTALL_COMMAND"

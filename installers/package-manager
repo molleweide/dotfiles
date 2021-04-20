@@ -16,6 +16,10 @@ if is_macos; then
 elif is_linux; then
   dotheader "Setting up Aptitude..."
 
+
+
+
+  # todo \ depending on os pacman,apt,etc...
   apt_install aptitude
 fi
 
