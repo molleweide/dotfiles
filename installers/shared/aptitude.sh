@@ -67,7 +67,7 @@ function apt_install() {
   # which package
   # check if string "no $pname in "
 
-  if [[ $OS == *"EndeavourOS"* ]]; then
+  if [ $OS = "EndeavourOS" ]; then
     $INSTALL_COMMAND="sudo pacman -s"
   fi
 
