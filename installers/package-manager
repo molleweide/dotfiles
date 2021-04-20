@@ -23,7 +23,10 @@ elif is_linux; then
   apt_install aptitude
 fi
 
+
+# linux build
 # Apt build
+# /etc/makepkg.conf >>> MAKEFLAGS="-j$(nproc)" # parallell compiling
 
 buildtools=(
   base-devel

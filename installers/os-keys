@@ -89,7 +89,6 @@ if is_macos; then
 fi
 
 if is_linux; then
-
-  # arch aur install
   # https://averagelinuxuser.com/install-aur-manually-helpers/
+  git clone https://aur.archlinux.org/kmonad-bin.git $HOME/code/kmonad
 fi
