@@ -60,14 +60,17 @@ function apt_install() {
   echo "OS: $OS | VERSION: $VER"
 
 
+  INSTALL_COMMAND="sudo apt-get install -y"
 
   # check if package exists
 
   # which package
   # check if string "no $pname in "
 
+  if [[ $OS == "EndeavourOS" ]]; then
+    $INSTALL_COMMAND="sudo pacman -s"
+  fi
 
-  INSTALL_COMMAND="sudo apt-get install -y"
 
   # ubuntu / debian
   # dpkg -s sudo
