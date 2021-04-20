@@ -96,7 +96,8 @@ if is_linux; then
   local source_dir=$HOME/code/kmonad
   git clone https://aur.archlinux.org/kmonad-bin.git $source_dir
   pushd $source_dir > /dev/null 2>&1
-    makepkg -si
+  dotsay ">>>>>> $PWD"
+  makepkg -si
   popd > /dev/null 2>&1
 
 fi
