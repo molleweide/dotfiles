@@ -82,6 +82,6 @@ function apt_install() {
   if apt_is_installed "$package"; then
     dotsay "+ $package already installed... skipping."
   else
-    $INSTALL_COMMAND "$package"
+    $("$INSTALL_COMMAND $package")
   fi
 }
