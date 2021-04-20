@@ -1,21 +1,18 @@
 # BALATERO MOLLEWEIDE TODO
- 
- ssssssss
 
-don't optimize shit. just make it work by adding
-the real instllers so that it works everywhere.
-yeah dude. and then i will be able to move on.
-it is stupid to optimize for something thti don't
-know how it works actually at the core. instead
-just walk through each istaller one by one and make shit
-work
+- endeavour install dotfiles
+    + linux install kmonad
+- dualboot ubuntu
 
 # PREPARE FOR LINUX
 
 - pyenv not installing
 - tmuxinator not working
-- os key > kmonad
+- kmonad
 - rm eg. garageband / logic
+- reaper
+
+https://github.com/RichiH/vcsh
 
 # OTHER
 
@@ -32,8 +29,6 @@ bitwarden
 - create khanacademy account
 
 cronjobs on macos
-
-
 
 
 

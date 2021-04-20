@@ -2,6 +2,13 @@
 
 `sudo apt install virtualbox-guest-utils virtualbox-guest-dkms -y`
 
+
+- check pack manager
+    https://unix.stackexchange.com/questions/46081/identifying-the-system-package-manager
+    https://unix.stackexchange.com/questions/6345/how-can-i-get-distribution-name-and-version-number-in-a-simple-shell-script
+
+    apt_install >> check if arch >> use pacman
+
 - arch gnome
 - turn off vimspoon VirtualBoxVM
 - test run dotfiles.
