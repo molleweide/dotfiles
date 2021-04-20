@@ -60,9 +60,25 @@ function apt_install() {
   echo "OS: $OS | VERSION: $VER"
 
 
+
+  # check if package exists
+
+  # which package
+  # check if string "no $pname in "
+
+
+  INSTALL_COMMAND="sudo apt-get install -y"
+
+  # ubuntu / debian
+  # dpkg -s sudo
+
+  # red hat / fedora / suse / centos
+  # rpm -qa | grep {package-name}
+
+
   if apt_is_installed "$package"; then
     dotsay "+ $package already installed... skipping."
   else
-    sudo apt-get install -y "$package"
+    $INSTALL_COMMAND "$package"
   fi
 }
