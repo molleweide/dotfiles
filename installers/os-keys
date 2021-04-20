@@ -53,6 +53,11 @@ function setup_spoon_install() {
   fi
 }
 
+function setup_development_kmonad_from_git_repo() {
+  git clone --recursive https://github.com/david-janssen/kmonad.git $HOME/code/kmonad
+  stack build --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
+}
+
 symlink_dotfile bin/dnd-toggle ~/.local/bin/dnd-toggle
 
 # brew_install lua
@@ -80,4 +85,11 @@ if is_macos; then
   setup_spoon_install
   setup_development_spoon_from_git_repo HyperKey
   setup_development_spoon_from_git_repo VimMode
+  setup_development_kmonad_from_git_repo
+fi
+
+if is_linux; then
+
+  # arch aur install
+  # https://averagelinuxuser.com/install-aur-manually-helpers/
 fi

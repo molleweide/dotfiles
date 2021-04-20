@@ -26,6 +26,7 @@ fi
 # Apt build
 
 buildtools=(
+  base-devel
   make
   cmake
   build-essential

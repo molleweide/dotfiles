@@ -1,21 +1,20 @@
 # VIRTUALBOX NOTES
 
+## COMMANDS
+
 `sudo apt install virtualbox-guest-utils virtualbox-guest-dkms -y`
 
-- disable ask if install Y/n
+## TODO
 
+- check out other dotfiles
+    in order to install
+    https://shibumi.dev/posts/how-i-install-arch-linux/
 
-- turn off vimspoon VirtualBoxVM ??
-    not working really
+- create issue
+    turn off vimspoon VirtualBoxVM ??
 
-gnome
-opensuse
-redhat
-centos
-debian
-elementary
-cinamon
-mint
+- kmonad
+
 
 
 # DUALBOOT

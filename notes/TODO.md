@@ -1,8 +1,10 @@
 # BALATERO MOLLEWEIDE TODO
 
-- endeavour install dotfiles
-    + linux install kmonad
-- dualboot ubuntu
+- kmonad
+    watch aur video
+- dualboot
+- dwm
+- nyxt
 
 # PREPARE FOR LINUX
 
@@ -133,3 +135,11 @@ https://github.com/search?o=desc&q=vim+web+browser&s=stars&type=Repositories
 tridactyl, vim-vixen, webkitten
 
 # wemux split monitor rogue mode
+
+
+
+
+
+
+chmod x+u to change permision allow run new file
+
