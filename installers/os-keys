@@ -90,5 +90,5 @@ fi
 
 if is_linux; then
   # https://averagelinuxuser.com/install-aur-manually-helpers/
-  git clone https://aur.archlinux.org/kmonad-bin.git $HOME/code/kmonad
+  git clone https://aur.archlinux.org/kmonad-bin.git ~/code/kmonad
 fi

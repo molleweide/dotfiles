@@ -3,6 +3,7 @@
 - kmonad
     watch aur video
 - dualboot
+- linux if installed skip..
 - dwm
 - nyxt
 
