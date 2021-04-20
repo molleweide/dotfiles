@@ -57,7 +57,7 @@ function apt_install() {
   fi
 
 
-  echo "OS: $OS | VERSION: $VER"
+  # echo "OS: $OS | VERSION: $VER"
 
 
   INSTALL_COMMAND="sudo apt-get install -y"
@@ -68,11 +68,11 @@ function apt_install() {
   # check if string "no $pname in "
 
   if [ $OS = "EndeavourOS" ]; then
-    echo "!!"
+    # echo "!!"
     INSTALL_COMMAND="sudo pacman -S"
   fi
 
-  echo "cmd str: $INSTALL_COMMAND"
+  # echo "cmd str: $INSTALL_COMMAND"
 
 
   # ubuntu / debian
@@ -87,6 +87,6 @@ function apt_install() {
   else
     # $("$INSTALL_COMMAND $package")
     # sudo apt-geb install -y $package
-    sudo pacman -S $package
+    sudo pacman -S $package --noconfirm
   fi
 }

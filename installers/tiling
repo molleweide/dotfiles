@@ -60,6 +60,9 @@ if is_macos; then
   symlink_dotfile yabairc ~/.yabairc
 
 elif is_linux; then
+
+  # need to watch video luke smith how install?
+
   apt_install dwm
 
 fi
