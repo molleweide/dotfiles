@@ -1,6 +1,6 @@
 # BALATERO MOLLEWEIDE TODO
 
-- kmonad test?????
+- kmonad
 - dwm
 - nyxt
 - dualboot

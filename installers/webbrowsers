@@ -50,11 +50,17 @@ if is_linux; then
 
   # https://averagelinuxuser.com/install-aur-manually-helpers/
   source_dir=$HOME/code/nyxt
-  git clone https://aur.archlinux.org/nyxt.git $source_dir
+  nyxt_git="https://aur.archlinux.org/nyxt.git"
+
+  git clone $nyxt_git $source_dir
+
   pushd $source_dir > /dev/null 2>&1
-  # dotsay ">>>>>> $PWD"
   makepkg -si
   popd > /dev/null 2>&1
 
 fi
 
+  # local nvim_clone_location=$HOME/code/neovim
+  # local nvim_gith="https://github.com/neovim/neovim.git"
+  # mkdir -p $nvim_clone_location
+  # git clone $nvim_gith $nvim_clone_location
