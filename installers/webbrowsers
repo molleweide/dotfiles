@@ -35,6 +35,29 @@ function install_nyxt_macos() {
   git clone https://github.com/atlas-engineer/nyxt ~/common-lisp/nyxt
 }
 
+function install_aur_libfixposix() {
+  install_path=$HOME/code/libfixposix
+  git_src="https://aur.archlinux.org/libfixposix.git"
+
+  git clone $git_src $install_path
+
+  pushd $install_path > /dev/null 2>&1
+  makepkg -si
+  popd > /dev/null 2>&1
+}
+
+function install_aur_nyxt() {
+  install_path=$HOME/code/nyxt
+  git_src="https://aur.archlinux.org/nyxt.git"
+
+  git clone $git_src $install_path
+
+  pushd $install_path > /dev/null 2>&1
+  makepkg -si
+  popd > /dev/null 2>&1
+}
+
+
 if is_macos; then
   require_installer package-manager
   # CONSUMER BROWSERS
@@ -48,19 +71,13 @@ fi
 
 if is_linux; then
 
+  # NYXT
+
+  ## NYXT DEPENENCIES i move to package-manager??
   # https://averagelinuxuser.com/install-aur-manually-helpers/
-  source_dir=$HOME/code/nyxt
-  nyxt_git="https://aur.archlinux.org/nyxt.git"
 
-  git clone $nyxt_git $source_dir
+  install_aur_libfixposix
 
-  pushd $source_dir > /dev/null 2>&1
-  makepkg -si
-  popd > /dev/null 2>&1
+  install_aur_nyxt
 
 fi
-
-  # local nvim_clone_location=$HOME/code/neovim
-  # local nvim_gith="https://github.com/neovim/neovim.git"
-  # mkdir -p $nvim_clone_location
-  # git clone $nvim_gith $nvim_clone_location
