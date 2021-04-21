@@ -1,10 +1,20 @@
 # BALATERO MOLLEWEIDE TODO
 
+linux shutdown command-U ??!!!!
+
+- hs log VrtualboxvM
 - kmonad
 - dwm
-- nyxt
+- if arch > aur helper
+- nyxt > tut/manual
+    tn add
+    neovim install vlime
+        https://github.com/vlime/vlime
+    sandbox https://github.com/atlas-engineer/nyxt/blob/master/documents/README.org
 - dualboot
 - linux if installed skip..
+
+
 
 # PREPARE FOR LINUX
 

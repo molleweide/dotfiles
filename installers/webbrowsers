@@ -71,13 +71,9 @@ fi
 
 if is_linux; then
 
-  # NYXT
-
-  ## NYXT DEPENENCIES i move to package-manager??
+  # https://aur.archlinux.org/packages/?O=0&SeB=nd&K=nyxt&outdated=&SB=n&SO=a&PP=50&do_Search=Go
+  # https://github.com/atlas-engineer/nyxt/blob/master/documents/README.org
   # https://averagelinuxuser.com/install-aur-manually-helpers/
-
   install_aur_libfixposix
-
   install_aur_nyxt
-
 fi
