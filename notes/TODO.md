@@ -1,9 +1,9 @@
 # BALATERO MOLLEWEIDE TODO
 
-- kmonad test layers
-- dualboot
+- kmonad test?????
 - dwm
 - nyxt
+- dualboot
 - linux if installed skip..
 
 # PREPARE FOR LINUX

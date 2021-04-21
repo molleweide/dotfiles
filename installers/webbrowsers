@@ -37,21 +37,24 @@ function install_nyxt_macos() {
 
 if is_macos; then
   require_installer package-manager
-
   # CONSUMER BROWSERS
-
   # firefox
   # brew_install brave
-
   install_from_git_to_code molleweide vimium
-
-
-
   # ONLY KEYS BROWSERS
-
   # qutebrowser
   install_nyxt_macos
+fi
 
+if is_linux; then
 
+  # https://averagelinuxuser.com/install-aur-manually-helpers/
+  source_dir=$HOME/code/nyxt
+  git clone https://aur.archlinux.org/nyxt.git $source_dir
+  pushd $source_dir > /dev/null 2>&1
+  # dotsay ">>>>>> $PWD"
+  makepkg -si
+  popd > /dev/null 2>&1
 
 fi
+

@@ -50,6 +50,10 @@ windows:
       panes:
         - cd ~/.dotfiles && vim
         - cd ~/.dotfiles
+  - kmon:
+      root: ~/code/kmonad
+      panes:
+        -
   - KEcmplx:
       root: ~/code/KE-complex_modifications
       panes:
