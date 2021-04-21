@@ -2,7 +2,6 @@
 
 linux shutdown command-U ??!!!!
 
-- hs log VrtualboxvM
 - kmonad
 - dwm
 - if arch > aur helper
