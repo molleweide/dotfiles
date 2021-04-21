@@ -36,8 +36,8 @@ function install_nyxt_macos() {
 }
 
 function install_aur_libfixposix() {
-  install_path=$HOME/code/libfixposix
-  git_src="https://aur.archlinux.org/libfixposix.git"
+  local install_path=$HOME/code/libfixposix
+  local git_src="https://aur.archlinux.org/libfixposix.git"
 
   git clone $git_src $install_path
 
@@ -47,8 +47,8 @@ function install_aur_libfixposix() {
 }
 
 function install_aur_nyxt() {
-  install_path=$HOME/code/nyxt
-  git_src="https://aur.archlinux.org/nyxt.git"
+  local install_path=$HOME/code/nyxt
+  local git_src="https://aur.archlinux.org/nyxt.git"
 
   git clone $git_src $install_path
 
