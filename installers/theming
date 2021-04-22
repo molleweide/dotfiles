@@ -2,6 +2,11 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
+# https://apple.stackexchange.com/questions/75081/automatically-change-os-x-desktop-background-for-all-desktops-monitors
+# https://stackoverflow.com/questions/5550895/shell-script-changing-desktop-wallpaper
+# https://www.howtogeek.com/258461/how-to-use-a-screensaver-as-your-background-on-os-x/
+# https://stackoverflow.com/questions/431205/how-can-i-programmatically-change-the-background-in-mac-os-x
+
 require_installer package-manager
 
 WALLPAPER="$(dotfiles_location)/wallpaper/wallpaper.jpg"

@@ -1,7 +1,12 @@
 # HAMMERSPOON
 
-#  HYPERKEY.SPOON
-    `where put keys. outer thumb keys? upperLeft§ / upperRightBackspace`
-    hide current application
-    switch karabiner layout.
-    add yabai commands?
+## HYPERKEY.SPOON
+
+- hide current application
+    get away from using regula cmd-H
+
+- more yabai commands?
+
+- karabiner
+    toggle on/off
+    switch layout

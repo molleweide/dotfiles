@@ -2,6 +2,18 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
+# mv to shared install_aur <package>
+function install_aur_yay() {
+  # https://github.com/Jguer/yay
+  local install_path=$HOME/code/yay
+  local git_src="https://aur.archlinux.org/yay.git"
+  git clone $git_src $install_path
+  pushd $install_path > /dev/null 2>&1
+  makepkg -si
+  popd > /dev/null 2>&1
+}
+
+
 if is_macos; then
   if test ! $(which brew); then
     echo "Installing homebrew"
@@ -16,11 +28,13 @@ if is_macos; then
 elif is_linux; then
   dotheader "Setting up Aptitude..."
 
-
-
-
   # todo \ depending on os pacman,apt,etc...
   apt_install aptitude
+
+  # if os=arch
+  # yay aur helper
+  # install_aur_yay
+
 fi
 
 

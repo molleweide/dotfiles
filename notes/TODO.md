@@ -1,25 +1,16 @@
 # BALATERO MOLLEWEIDE TODO
 
-linux shutdown command-U ??!!!!
+arch: https://www.youtube.com/results?search_query=arch+linux+virtualbox
 
-- kmonad
-- dwm
-- if arch > aur helper
-- nyxt > tut/manual
-    tn add
-    neovim install vlime
-        https://github.com/vlime/vlime
+- disable > linux shutdown command-U ??!!!!
+
+- dwm > run script on linux
+- nyxt
+    vim lisp https://github.com/vlime/vlime
     sandbox https://github.com/atlas-engineer/nyxt/blob/master/documents/README.org
 - dualboot
 - linux if installed skip..
 
-
-
-# PREPARE FOR LINUX
-
-- pyenv not installing
-- tmuxinator not working
-- kmonad
 - rm eg. garageband / logic
 - reaper
 
@@ -148,7 +139,13 @@ tridactyl, vim-vixen, webkitten
 
 
 
-
+# SET PERMISSIONS INSTALLER/
 
 chmod x+u to change permision allow run new file
 
+# THEME / WALLP
+
+https://apple.stackexchange.com/questions/75081/automatically-change-os-x-desktop-background-for-all-desktops-monitors
+https://stackoverflow.com/questions/5550895/shell-script-changing-desktop-wallpaper
+https://www.howtogeek.com/258461/how-to-use-a-screensaver-as-your-background-on-os-x/
+https://stackoverflow.com/questions/431205/how-can-i-programmatically-change-the-background-in-mac-os-x
