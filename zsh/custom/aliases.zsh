@@ -27,7 +27,7 @@ alias tfl="teensy_loader_cli -mmcu=atmega32u4 -w ergodox_ez_myergo.hex"
 # karabiner path
 alias karb="/Library/Application\ Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli"
 alias krb="open -a /Applications/Karabiner-Elements.app"
-alias kmo="sudo ~/.dotfiles/kmonad/launchd.sh"
+alias kmo="sudo ~/.dotfiles/kmonad/start_kmonad.sh"
 
 
 
