@@ -15,6 +15,7 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
 "(k)eybindings
+
 nnoremap <silent> <Leader>knr :e ~/.dotfiles/notes/RNDM.md<CR>
 nnoremap <silent> <Leader>knt :e ~/.dotfiles/notes/TODO.md<CR>
 nnoremap <silent> <Leader>kv :e ~/.dotfiles/nvim/layers/molleweide/config.vim<CR>
@@ -27,8 +28,9 @@ nnoremap <silent> <Leader>ky :e ~/.dotfiles/yabairc<CR>
 nnoremap <silent> <Leader>ks :e ~/.dotfiles/skhdrc<CR>
 nnoremap <silent> <Leader>kr :e ~/.dotfiles/installers/reaper<CR>
 nnoremap <silent> <Leader>kr :e ~/.dotfiles/installers/reaper<CR>
-" add command to oh my zsh
-nmap <silent> <Leader>knr :e ~/.dotfiles/notes/reaper.md<CR>
+nnoremap <silent> <Leader>knr :e ~/.dotfiles/notes/reaper.md<CR>
+nnoremap <silent> <Leader>kg :view ~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/git/git.plugin.zsh<CR>
+
 
 " colemak layout insert mode
 set keymap=INSERT_COLEMAK

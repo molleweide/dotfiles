@@ -4,15 +4,17 @@ arch: https://www.youtube.com/results?search_query=arch+linux+virtualbox
 
 - disable > linux shutdown command-U ??!!!!
 
-- dwm > run script on linux
+- dwm > follow luke video
+- vim https://github.com/vlime/vlime#quickstart
 - nyxt
-    vim lisp https://github.com/vlime/vlime
     sandbox https://github.com/atlas-engineer/nyxt/blob/master/documents/README.org
 - dualboot
 - linux if installed skip..
 
 - rm eg. garageband / logic
 - reaper
+- haskell
+    https://github.com/search?q=vim+haskell&type=Repositories
 
 https://github.com/RichiH/vcsh
 

@@ -1,0 +1,11 @@
+[Unit]
+Description=Kmonad keyboard remapper
+Documentation=https://github.com/david-janssen/kmonad
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/kmonad /home/tanner/thinkpad.kbd
+Restart=always
+
+[Install]
+WantedBy=default.target
