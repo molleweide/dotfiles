@@ -54,21 +54,12 @@ function setup_spoon_install() {
 }
 
 function setup_development_kmonad_from_git_repo() {
-
-
-  # need to symlink to usr/bin
-  # https://github.com/david-janssen/kmonad/issues/185
-  # ..or pass build flag to stack
-  # https://stackoverflow.com/questions/51352885/how-do-you-set-the-executable-output-location-for-a-haskell-project-built-with-s
-
-
-
   source_dir=$HOME/code/kmonad
-  git clone --recursive https://github.com/david-janssen/kmonad.git $source_dir
+  git clone --recursive https://github.com/molleweide/kmonad.git $source_dir
   pushd $source_dir > /dev/null 2>&1
   stack build \
-    --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include \
-    --local-bin-path=/usr/local/bin/kmonad
+    --local-bin-path=/usr/local/bin/kmonad \
+    # --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
   popd > /dev/null 2>&1
 }
 
@@ -100,7 +91,7 @@ if is_macos; then
   setup_development_spoon_from_git_repo HyperKey
   setup_development_spoon_from_git_repo VimMode
 
-  # I have to check if it exists so i don't overwrite...
+  # >>> I have to check if it exists so i don't overwrite...
   # setup_development_kmonad_from_git_repo
 fi
 

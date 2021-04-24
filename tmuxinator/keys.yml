@@ -52,7 +52,9 @@ windows:
         - cd ~/.dotfiles
   - kmon:
       root: ~/code/kmonad
+      layout: main-vertical
       panes:
+        -
         -
   - KEcmplx:
       root: ~/code/KE-complex_modifications
