@@ -4,27 +4,52 @@
   fallthrough true
 )
 
+#| --------------------------------------------------------------------------
+
+;; TODO
+
+- create symbols layer
+- add thumb tab / enter
+- fork
+  + dotfiles script > where karabiner is installed??
+      `fn install kmonad() {}`
+  + molleweide branch / create add my own keymap to the list of keymaps.
+  + gulp flow
+    copy npm from KEcomplex
+- tmuxinator
+  create project under keys.yaml
+
+  -------------------------------------------------------------------------- |#
+
+
 (defsrc
   esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
   caps a    s    d    f    g    h    j    k    l    ;    '    ret
-  lsft z    x    c    v    b    n    m    ,    .    /    rsft up
+  grv  z    x    c    v    b    n    m    ,    .    /    rsft up
   fn   lctl lalt lmet           spc            rmet ralt left down rght
 )
 
 (defalias
   fn (around (layer-toggle function) fn)
   off (layer-switch off)
-  a (tap-next-release a lmet)
-  s (tap-next-release s lalt)
-  d (tap-next-release d lctl)
-  f (tap-next-release f @fn)
-  j (tap-next-release j @fn)
-  k (tap-next-release k rctl)
-  l (tap-next-release l ralt)
-  ; (tap-next-release ; rmet)
-  spc (tap-next-release spc lsft)
+
+  ;; HOMEROW
+  a (tap-next-release a lctl)
+  s (tap-next-release s lsft)
+  d (tap-next-release d lalt)
+  f (tap-next-release f lmet)
+  j (tap-next-release j rmet)
+  k (tap-next-release k ralt)
+  l (tap-next-release l rsft)
+  ; (tap-next-release ; rctl)
+
+  ;; THUMBS
+  spc (tap-next-release spc @fn)
+
+  ;; mv up below homerow
+  sym (layer-toggle symbols)
   num (layer-toggle numbers)
 )
 
