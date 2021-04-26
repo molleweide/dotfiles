@@ -1,5 +1,16 @@
 # REAPER
 
+## installer
+
+1. move over my rpp623 and rpp625 to main mac.
+2. test some new installs. with my script.
+3. work on my second mac. 
+    get a feel for reaper as of right now.
+        only open source synths. vst
+4. test routings.
+
+## hmmm
+
 turn off updates!!
 turn of other messages?
 

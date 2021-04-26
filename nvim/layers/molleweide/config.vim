@@ -17,7 +17,7 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 "(k)eybindings
 
 nnoremap <silent> <Leader>ki :e ~/.dotfiles/nvim/init.vim<CR>
-nnoremap <silent> <Leader>knr :e ~/.dotfiles/notes/RNDM.md<CR>
+nnoremap <silent> <Leader>knR :e ~/.dotfiles/notes/RNDM.md<CR>
 nnoremap <silent> <Leader>knt :e ~/.dotfiles/notes/TODO.md<CR>
 nnoremap <silent> <Leader>kv :e ~/.dotfiles/nvim/layers/molleweide/config.vim<CR>
 nnoremap <silent> <Leader>kV :e ~/.dotfiles/notes/build-nvim.md<CR>

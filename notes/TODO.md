@@ -1,10 +1,8 @@
 # BALATERO MOLLEWEIDE TODO
 
-arch: https://www.youtube.com/results?search_query=arch+linux+virtualbox
 
 - disable > linux shutdown command-U ??!!!!
 
-- dwm > follow luke video
 - vim https://github.com/vlime/vlime#quickstart
 - nyxt
     sandbox https://github.com/atlas-engineer/nyxt/blob/master/documents/README.org
@@ -21,9 +19,10 @@ https://github.com/RichiH/vcsh
 
 - gpg
 - ssh
-- ios 14 > lbry
 
 libreoffice
+
+lenode
 
 - check out lukes list of stuff.
 https://odysee.com/@Luke:7/setting-up-a-website-and-email-server-in:f
@@ -31,37 +30,9 @@ bitwarden
 
 - create khanacademy account
 
-cronjobs on macos
 
 
 use personal vimium extension!!
-
-# BUILD 
-build karabiner
-build vimac
-
-# QMK
-
-- installer script > os keys
-
-
-
-# VIM.SPOON
-
-- prevent turn on when not in text field
-    finder?
-    webbrowser
-    reaper vkb
-
-    ask balatero for this. git issue
-
-# KARABINER 
-    cli refresh/remove complex rules
-        goal -> gulp automatic build flow
-        otherwise it still takes quite a lot of time 
-        to test small nuances of karabiner. or at least
-        the process could be much faster which would
-        be nice.
 
 4. show hidden files in dialog boxes / os modals?
 
@@ -134,9 +105,6 @@ https://github.com/search?o=desc&q=vim+web+browser&s=stars&type=Repositories
 tridactyl, vim-vixen, webkitten
 
 # wemux split monitor rogue mode
-
-
-
 
 # SET PERMISSIONS INSTALLER/
 
