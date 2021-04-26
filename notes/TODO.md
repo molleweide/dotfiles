@@ -13,8 +13,7 @@ arch: https://www.youtube.com/results?search_query=arch+linux+virtualbox
 
 - rm eg. garageband / logic
 - reaper
-- haskell
-    https://github.com/search?q=vim+haskell&type=Repositories
+- haskell https://github.com/search?q=vim+haskell&type=Repositories
 
 https://github.com/RichiH/vcsh
 

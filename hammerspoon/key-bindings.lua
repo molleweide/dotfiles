@@ -2,6 +2,7 @@ local wm = require('window-management')
 
 -- lock screen shortcut
 superKey:bind('s'):toFunction("Lock screen", hs.caffeinate.startScreensaver)
+superKey:bind('n'):toFunction("Sleep", hs.caffeinate.systemSleep)
 
 -- Spotify next/prev/play/pause
 hyperKey:bind('←', 'left'):toFunction("Previous song", hs.spotify.previous)
