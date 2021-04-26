@@ -31,7 +31,8 @@ nnoremap <silent> <Leader>kr :e ~/.dotfiles/installers/reaper<CR>
 nnoremap <silent> <Leader>kr :e ~/.dotfiles/installers/reaper<CR>
 nnoremap <silent> <Leader>knr :e ~/.dotfiles/notes/reaper.md<CR>
 nnoremap <silent> <Leader>kg :view ~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/git/git.plugin.zsh<CR>
-nnoremap <silent> <Leader>km :view ~/code/kmonad/keymap/tutorial.kbd<CR>
+nnoremap <silent> <Leader>km :e ~/code/kmonad/keymap/user/molleweide/mbp.kbd<CR>
+nnoremap <silent> <Leader>kM :view ~/code/kmonad/keymap/tutorial.kbd<CR>
 
 
 " colemak layout insert mode

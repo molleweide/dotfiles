@@ -34,8 +34,6 @@ bitwarden
 cronjobs on macos
 
 
-
-
 use personal vimium extension!!
 
 # BUILD 
