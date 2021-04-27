@@ -10,7 +10,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>/Users/tannerhoelzel/git/dotfiles/launchd.sh</string>
+        <string>/Users/hjalmarjakobsson/.dotfiles/kmonad/launchd.sh</string>
     </array>
     <key>RunAtLoad</key>
     <true />
