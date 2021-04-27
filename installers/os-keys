@@ -59,7 +59,7 @@ function setup_development_kmonad_from_git_repo() {
   pushd $source_dir > /dev/null 2>&1
   stack build \
     --local-bin-path=/usr/local/bin/kmonad \
-    # --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
+    --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
   popd > /dev/null 2>&1
 }
 
@@ -72,8 +72,8 @@ install_package luarocks
 if is_macos; then
   brew_install blueutil
 
-  brew_cask_install karabiner-elements
-  symlink_dotfile karabiner ~/.config/karabiner
+  # brew_cask_install karabiner-elements
+  # symlink_dotfile karabiner ~/.config/karabiner
 fi
 
 luarocks install loop

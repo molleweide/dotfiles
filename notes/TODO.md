@@ -1,7 +1,15 @@
 # BALATERO MOLLEWEIDE TODO
 
-- launchdaemons
-    if macos > s
+- create command >> stop launch daemon kmonad
+
+    ```
+    # -w flag permanently remove the plist to the Launch Daemon
+    sudo launchctl unload -w /Library/LaunchDaemons/com.startup.plist    #You can stop the launchctl process by
+    #sudo launchctl stop /Library/LaunchDaemons/com.startup.plist
+    #You can start the launchctl process by
+    #sudo launchctl start -w /Library/LaunchDaemons/com.startup.plist
+    https://gist.github.com/fahim0173/f91e24e490acd7c32ad80bae12e8c227
+    ```
 
 - install more terminals.
 

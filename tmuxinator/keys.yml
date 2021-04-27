@@ -51,6 +51,7 @@ windows:
         - cd ~/.dotfiles && vim
         - cd ~/.dotfiles
   - split:
+      layout: main-vertical
       panes:
         - cd ~/code/kmonad/keymap/user/molleweide && vim
         - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && vim
