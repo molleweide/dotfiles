@@ -31,9 +31,16 @@ nnoremap <silent> <Leader>kr :e ~/.dotfiles/installers/reaper<CR>
 nnoremap <silent> <Leader>kr :e ~/.dotfiles/installers/reaper<CR>
 nnoremap <silent> <Leader>knr :e ~/.dotfiles/notes/reaper.md<CR>
 nnoremap <silent> <Leader>kg :view ~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/git/git.plugin.zsh<CR>
-nnoremap <silent> <Leader>km :e ~/code/kmonad/keymap/user/molleweide/mbp.kbd<CR>
-nnoremap <silent> <Leader>kM :view ~/code/kmonad/keymap/tutorial.kbd<CR>
 
+" =============== aliases: keys  ====================
+
+nnoremap <silent> <Leader>kM :view ~/code/kmonad/keymap/tutorial.kbd<CR>
+nnoremap <silent> <Leader>kk :e ~/.dotfiles/tmuxinator/keys.yml<CR>
+nnoremap <silent> <Leader>km :e ~/code/kmonad/keymap/user/molleweide/mbp.kbd<CR>
+nnoremap <silent> <Leader>kqb :e ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo/layers/base.h<CR>
+
+
+"
 
 " colemak layout insert mode
 set keymap=INSERT_COLEMAK

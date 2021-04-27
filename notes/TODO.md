@@ -1,5 +1,14 @@
 # BALATERO MOLLEWEIDE TODO
 
+- https://github.com/david-janssen/kmonad/issues/105
+
+- qmk > test > create aliases for layers and toggles
+    does this work??? then this would make thins much
+    easier. 
+
+- qmk create space layer
+
+- install more terminals.
 
 - disable > linux shutdown command-U ??!!!!
 
