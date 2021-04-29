@@ -27,9 +27,6 @@ nnoremap <silent> <Leader>kza :e ~/.dotfiles/zsh/custom/aliases.zsh<CR>
 nnoremap <silent> <Leader>kze :e ~/.dotfiles/zsh/custom/exports.zsh<CR>
 nnoremap <silent> <Leader>ky :e ~/.dotfiles/yabairc<CR>
 nnoremap <silent> <Leader>ks :e ~/.dotfiles/skhdrc<CR>
-nnoremap <silent> <Leader>kr :e ~/.dotfiles/installers/reaper<CR>
-nnoremap <silent> <Leader>kr :e ~/.dotfiles/installers/reaper<CR>
-nnoremap <silent> <Leader>knr :e ~/.dotfiles/notes/reaper.md<CR>
 nnoremap <silent> <Leader>kg :view ~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/git/git.plugin.zsh<CR>
 
 " =============== aliases: keys  ====================
@@ -39,6 +36,14 @@ nnoremap <silent> <Leader>kk :e ~/.dotfiles/tmuxinator/keys.yml<CR>
 nnoremap <silent> <Leader>km :e ~/code/kmonad/keymap/user/molleweide/mbp.kbd<CR>
 nnoremap <silent> <Leader>kqb :e ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo/layers/base.h<CR>
 
+" =============== aliases: reaper  ====================
+
+nnoremap <silent> <Leader>knr :e ~/.dotfiles/notes/reaper.md<CR>
+nnoremap <silent> <Leader>krr :e ~/.dotfiles/installers/reaper<CR>
+
+nnoremap <silent> <Leader>Rg :e ~/REAPER/app/reaper-6.23.0/Scripts/reaper-keys/definitions/defaults/global.lua<CR>
+nnoremap <silent> <Leader>Ra :e ~/REAPER/app/reaper-6.23.0/Scripts/reaper-keys/definitions/defaults/main.lua<CR>
+nnoremap <silent> <Leader>Rm :e ~/REAPER/app/reaper-6.23.0/Scripts/reaper-keys/definitions/defaults/midi.lua<CR>
 
 "
 

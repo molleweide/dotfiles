@@ -1,21 +1,13 @@
 # BALATERO MOLLEWEIDE TODO
 
-- create command >> stop launch daemon kmonad
-
-    ```
-    # -w flag permanently remove the plist to the Launch Daemon
-    sudo launchctl unload -w /Library/LaunchDaemons/com.startup.plist    #You can stop the launchctl process by
-    #sudo launchctl stop /Library/LaunchDaemons/com.startup.plist
-    #You can start the launchctl process by
-    #sudo launchctl start -w /Library/LaunchDaemons/com.startup.plist
-    https://gist.github.com/fahim0173/f91e24e490acd7c32ad80bae12e8c227
-    ```
-
-- install more terminals.
+- kmonad
+    make sure i can get back to base always
 
 - disable > linux shutdown command-U ??!!!!
 
 - vim https://github.com/vlime/vlime#quickstart
+
+    vim-rhubarb / neogit / git cli !!!
 - nyxt
     sandbox https://github.com/atlas-engineer/nyxt/blob/master/documents/README.org
 - dualboot

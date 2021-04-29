@@ -1,5 +1,9 @@
 # REAPER
 
+i should test whether it is possible to use the app
+icon as symlinked. that would be interesting for security
+reasons.
+
 ## installer
 
 1. move over my rpp623 and rpp625 to main mac.

@@ -50,6 +50,12 @@ windows:
       panes:
         - cd ~/.dotfiles && vim
         - cd ~/.dotfiles
+  - quad:
+      panes:
+        - cd ~/code/kmonad/keymap/user/molleweide && vim
+        - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && vim
+        - cd ~/code/kmonad
+        - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo
   - split:
       layout: main-vertical
       panes:

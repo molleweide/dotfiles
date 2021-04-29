@@ -1,19 +1,28 @@
 # RNDM
 
-i have to get strong enough now tht i can work without problems and this
-is only training. i have to work out as much as possible in this manner.
+i just don't like to be told what do to. let me make up
+my own mind and go fuck yourself.
 
-this is pretty fucking and so i don't want to.
-and so now i just need to get as strong as i can so that i can
-do the first thing that is in the fumblefucker.
+dude det is really nice it is probably impossible to get a layout that
+iy4s a hundred percent perfect but if you learn this one you'll be able to do
+it really fucking well like a reall master and then be able to do it really fucking fast.
 
-hopefully 55 of them wil go out now that the 64 is out 
-of the match. 60% of the x is the first y which you can give
-up quite fast which is something that you might know.
+the story is one time i finally fought back. i broke the years of abuse and then blood 
+was everywhere. she told me that she wanted me to beat her up a lot like a fucking monster bitch.
 
-this is so fucking annoying. but i do believe that this is strongly connected
-to my lunges being to tight. i have to get better at this shit.
+dude this is going to be the fuking best thing that we have ever done dude.
 
-it will be hard but somehow i am going to fucking fix this. 
+this is one of the best things ever. onec you can build one then you can pretty much
+do any of them and get people and eyes on the shit this is where the magic is sarting to happen.
+because now you can write faster than ever. this is an amazing program. you should totally
+try out mine. my layout file is only one full page and it allows you to reach pretty much any
+characters or symbols from within 5 by 3. and then you can add on top of this or mirror it
+on any other ortholinear keyboard. this is nice because if ri know i can use my lpatop as base
+then i can be sure that my layout will always work under any circumstances. this is pretty amazing.
+it is the fastest framework that i have ever used man. this is just fucking insane dude.
 
-this is probably going to be the best software for music ever created.
+and having this ability to pull davids stuff is really nice.
+
+this is pretty fucking insane. this is the fastest thing that i have ever used
+because this allows you to reach any characters that you'd use in any situation 
+without ever having to lift your hands.
