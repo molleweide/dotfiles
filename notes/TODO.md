@@ -1,8 +1,5 @@
 # BALATERO MOLLEWEIDE TODO
 
-- kmonad
-    make sure i can get back to base always
-
 - disable > linux shutdown command-U ??!!!!
 
 - vim https://github.com/vlime/vlime#quickstart
@@ -16,6 +13,8 @@
 - rm eg. garageband / logic
 - reaper
 - haskell https://github.com/search?q=vim+haskell&type=Repositories
+
+- virtualbox windows
 
 https://github.com/RichiH/vcsh
 
