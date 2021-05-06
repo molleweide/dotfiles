@@ -1,5 +1,10 @@
 # BALATERO MOLLEWEIDE TODO
 
+- QMK
+    + rename myergo dir to molleweide
+    + fix thumb keys to work with kmonad
+    + spoon show base/mouse/midi layer
+
 - disable > linux shutdown command-U ??!!!!
 
 - vim https://github.com/vlime/vlime#quickstart
