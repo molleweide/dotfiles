@@ -1,17 +1,26 @@
 # BALATERO MOLLEWEIDE TODO
 
-<<<<<<< HEAD
-luckily neovim fully works om my main mac.
+now we are going to do this shit like a real mother fucker
+which is how you really want it if you work fast as fuck.
+
+dude this is really nice actually and you can write so fucking 
+fast on this la8out if you just practice a little bit evdery dcay.
+
+this is pretty fucking nice. you can write so fucking 
+fast on the ez keyboard that it os not even funny.
+it feels like water and it is impossible to describle the feeling really.
+characters just pour out of your fingers
+
+this is pretty fucking nice. you can write so fucking 
+fast on the ez keyboard that it os not even funny.
+it feels like water and it is impossible to describle the feeling really.
+characters just pour out of your fingers
 
 
-# change tmux color > fit with better w/ nightfly
+or could it be that you cannot open
+reaper with configs from a previous version??
 
-
-
-# WEMUX
-=======
 move my custom vim configs over to init.vim
-
 
 am i using luajit head now??!!
 
@@ -49,7 +58,6 @@ tell application "System Events"
 end tell
 ```
 # yabai mode
->>>>>>> origin/pullMainIntoSecond2021Mars
 
 add to vimspoon
 -> yabai mode
@@ -65,9 +73,7 @@ build karabiner
 this is just such a beautiful terminal editor. i really like this.
 ,
 
-=======
 # fork nightly theme
->>>>>>> origin/pullMainIntoSecond2021Mars
 
 # set default branches on github >> molleweide
 
