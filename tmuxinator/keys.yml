@@ -45,16 +45,28 @@ root: ~/code/keys
 # attach: false
 
 windows:
-  - keys:
+  - dot:
+      layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
+      panes:
+        - cd ~/.dotfiles && vim
+        - cd ~/.dotfiles
+  - quad:
+      panes:
+        - cd ~/code/kmonad/keymap/user/molleweide && vim
+        - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && vim
+        - cd ~/code/kmonad
+        - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo
+  - split:
+      layout: main-vertical
+      panes:
+        - cd ~/code/kmonad/keymap/user/molleweide && vim
+        - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && vim
+  - kmon:
+      root: ~/code/kmonad
+      layout: main-vertical
       panes:
         -
-  - KEcmplx:
-      root: ~/code/KE-complex_modifications
-      panes:
         -
-  - karab:
-      root: ~/code/Karabiner-Elements
-      panes:
         -
   - qmk:
       root: ~/code/qmk_firmware
@@ -63,7 +75,16 @@ windows:
         - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && vim
         - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo
         -
-  - hyper:
+  - KEclx:
+      root: ~/code/KE-complex_modifications
+      panes:
+        -
+        -
+  - karb:
+      root: ~/code/Karabiner-Elements
+      panes:
+        -
+  - hypr:
       root: ~/code/HyperKey.spoon
       panes:
         -

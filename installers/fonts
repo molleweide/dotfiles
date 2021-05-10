@@ -68,6 +68,7 @@ function install_nerd_fonts_repo() {
 
 function setup_and_patch_fontforge() {
   brew_install fontforge
+  apt_install fontforge
 
   # Fix "FontForge module is probably not installed"
   # https://github.com/ryanoasis/nerd-fonts/issues/225

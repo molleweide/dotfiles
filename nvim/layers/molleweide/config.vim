@@ -1,24 +1,9 @@
-" " map leader key to comma
-" let mapleader = ","
-" let g:mapleader = ","
-
 " remap ESC to jk
 " works well w/qwerty and colemak
 inoremap zm <esc>
 
 "(v)im (r)eload
 nmap <silent> ,vr :so %<CR>
-
-" remap : to ;
-nnoremap ; :
-nnoremap : ;
-
-" background
-inoremap <C-Z> <Esc><C-Z>
-
-" Use sane regexes.
-nnoremap / /\v
-vnoremap / /\v
 
 " Mappings to move lines
 " alt+j/k to move up/down
@@ -29,50 +14,38 @@ inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
-" load aliases
-if exists('s:loaded_vimafter')
-  silent doautocmd VimAfter VimEnter *
-else
-  let s:loaded_vimafter = 1
-  augroup VimAfter
-    autocmd!
-    autocmd VimEnter * source ~/.config/nvim/aliases.vim
-  augroup END
-endif
-
-" Remove arrow keys in Insert Mode
-inoremap <Down> <Nop>
-inoremap <Left> <Nop>
-inoremap <Right> <Nop>
-inoremap <Up> <Nop>
-
-" Remove arrow keys in Normal Mode
-nnoremap <Down> <Nop>
-nnoremap <Left> <Nop>
-nnoremap <Right> <Nop>
-nnoremap <Up> <Nop>
-
-" Remove arrow keys in Visual Mode
-vnoremap <Down> <Nop>
-vnoremap <Left> <Nop>
-vnoremap <Right> <Nop>
-vnoremap <Up> <Nop>
-
 "(k)eybindings
-nmap <silent> ,knr :e ~/.dotfiles/notes/RNDM.md<CR>
-nmap <silent> ,knt :e ~/.dotfiles/notes/TODO.md<CR>
-nmap <silent> ,kv :e ~/.dotfiles/nvim/layers/molleweide/config.vim<CR>
-nmap <silent> ,kV :e ~/.dotfiles/notes/build-nvim.md<CR>
-nmap <silent> ,kt :e ~/.dotfiles/tmux.conf<CR>
-nmap <silent> ,kzz :e ~/.dotfiles/zshrc<CR>
-nmap <silent> ,kza :e ~/.dotfiles/zsh/custom/aliases.zsh<CR>
-nmap <silent> ,kze :e ~/.dotfiles/zsh/custom/exports.zsh<CR>
-nmap <silent> ,ky :e ~/.dotfiles/yabairc<CR>
-nmap <silent> ,ks :e ~/.dotfiles/skhdrc<CR>
-nmap <silent> ,kr :e ~/.dotfiles/installers/reaper<CR>
-nmap <silent> ,kr :e ~/.dotfiles/installers/reaper<CR>
-" add command to oh my zsh
-nmap <silent> ,knr :e ~/.dotfiles/notes/reaper.md<CR>
+
+nnoremap <silent> <Leader>ki :e ~/.dotfiles/nvim/init.vim<CR>
+nnoremap <silent> <Leader>knR :e ~/.dotfiles/notes/RNDM.md<CR>
+nnoremap <silent> <Leader>knt :e ~/.dotfiles/notes/TODO.md<CR>
+nnoremap <silent> <Leader>kv :e ~/.dotfiles/nvim/layers/molleweide/config.vim<CR>
+nnoremap <silent> <Leader>kV :e ~/.dotfiles/notes/build-nvim.md<CR>
+nnoremap <silent> <Leader>kt :e ~/.dotfiles/tmux.conf<CR>
+nnoremap <silent> <Leader>kzz :e ~/.dotfiles/zshrc<CR>
+nnoremap <silent> <Leader>kza :e ~/.dotfiles/zsh/custom/aliases.zsh<CR>
+nnoremap <silent> <Leader>kze :e ~/.dotfiles/zsh/custom/exports.zsh<CR>
+nnoremap <silent> <Leader>ky :e ~/.dotfiles/yabairc<CR>
+nnoremap <silent> <Leader>ks :e ~/.dotfiles/skhdrc<CR>
+nnoremap <silent> <Leader>kg :view ~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/git/git.plugin.zsh<CR>
+
+" =============== aliases: keys  ====================
+
+nnoremap <silent> <Leader>kM :view ~/code/kmonad/keymap/tutorial.kbd<CR>
+nnoremap <silent> <Leader>kk :e ~/.dotfiles/tmuxinator/keys.yml<CR>
+nnoremap <silent> <Leader>km :e ~/code/kmonad/keymap/user/molleweide/mbp.kbd<CR>
+nnoremap <silent> <Leader>kqb :e ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo/layers/base.h<CR>
+
+" =============== aliases: reaper  ====================
+
+nnoremap <silent> <Leader>knr :e ~/.dotfiles/notes/reaper.md<CR>
+nnoremap <silent> <Leader>krr :e ~/.dotfiles/installers/reaper<CR>
+
+nnoremap <silent> <Leader>Rg :e ~/REAPER/app/reaper-6.23.0/Scripts/reaper-keys/definitions/defaults/global.lua<CR>
+nnoremap <silent> <Leader>Ra :e ~/REAPER/app/reaper-6.23.0/Scripts/reaper-keys/definitions/defaults/main.lua<CR>
+nnoremap <silent> <Leader>Rm :e ~/REAPER/app/reaper-6.23.0/Scripts/reaper-keys/definitions/defaults/midi.lua<CR>
+
+"
 
 " colemak layout insert mode
 set keymap=INSERT_COLEMAK
@@ -92,11 +65,6 @@ nmap <leader>x :bd<CR>
 
 " TODO
 "
-"   option-space to go down
-"   optio-shift-space go up
-"
-" "   <Space> - PageDown
-" "   -       - PageUp
 " noremap <Space> <PageDown>
 " noremap - <PageUp>
 
@@ -113,47 +81,12 @@ nmap <leader>x :bd<CR>
 " Vim's default buffer
 vnoremap <leader>p "_dP
 
-" https://vim.fandom.com/wiki/Search_and_replace_in_multiple_buffers
-"   vim fandom > search and replace function.
-"   <leader>h - Find and replace
-"   <leader>/ - Claer highlighted search terms while preserving history
-map <leader>hh :%s///<left><left>
-map <leader>hH :%s/\<\>//<left><left><left><left>
-map <leader>hc :%s/\[\]/\\cite{}/gc<left><left><left><left><left><left><left><left><left><left><left><left><left><left>
-map <leader>hf :%s/\[
-" nmap <silent> <leader>, :nohlsearch<CR>
-
 " quicker save
 nnoremap <leader>c :w<CR>
 
 " space on control L
 inoremap <C-l> <Space>
 cnoremap <C-l> <Space>
-
-"""""""""""""""""""""""""""
-" https://stackoverflow.com/questions/7501092/can-i-map-alt-key-in-vim
-" use the above to map Alt-keys
-" maybe use normal mode for movint splits around?
-" nnoremap ˙
-" nnoremap ∆
-" nnoremap ˚
-" nnoremap ¬
-
-inoremap ˙ <Left>
-" inoremap ∆
-" inoremap ˚
-inoremap ¬ <Right>
-
-" vnoremap ˙
-" vnoremap ∆
-" vnoremap ˚
-" vnoremap ¬
-
-cnoremap ˙ <Left>
-" cnoremap ∆
-" cnoremap ˚
-cnoremap ¬ <Right>
-"""""""""""""""""""""""""""
 
 " create custom command to close help
 :command! H :helpc

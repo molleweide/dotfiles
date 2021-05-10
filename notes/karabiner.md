@@ -7,6 +7,14 @@ create two test clones
 depth 1
 recursive all
 
+## ??
+    cli refresh/remove complex rules
+        goal -> gulp automatic build flow
+        otherwise it still takes quite a lot of time 
+        to test small nuances of karabiner. or at least
+        the process could be much faster which would
+        be nice.
+
 
 # LAPTOP LAYERS
 karabiner layers

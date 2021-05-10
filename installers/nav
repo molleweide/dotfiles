@@ -2,9 +2,14 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-if is_macos; then
-  require_installer package-manager
+require_installer package-manager
 
+if is_macos; then
   brew_install ranger
-  symlink_dotfile ranger ~/.config/ranger
+
+elif is_linux; then
+  apt_install ranger
 fi
+
+symlink_dotfile ranger ~/.config/ranger
+

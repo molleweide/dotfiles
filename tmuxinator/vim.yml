@@ -4,11 +4,6 @@ name: vim
 root: ~/code/vim
 
 windows:
-  - v:
-      layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
-      panes:
-        - vim
-        - #
   - dot:
       layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
       panes:

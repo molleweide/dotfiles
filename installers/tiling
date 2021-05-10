@@ -58,6 +58,14 @@ if is_macos; then
 
   symlink_dotfile skhdrc ~/.skhdrc
   symlink_dotfile yabairc ~/.yabairc
-fi
 
+elif is_linux; then
+
+  source_dir=$HOME/code/dwm
+  git clone https://github.com/LukeSmithxyz/dwm $source_dir
+  pushd $source_dir > /dev/null 2>&1
+  sudo make install
+  popd > /dev/null 2>&1
+
+fi
 

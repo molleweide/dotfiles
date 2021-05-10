@@ -82,12 +82,15 @@ function force_openssl_to_homebrew() {
 dotheader "Setting up Python..."
 
 force_openssl_to_homebrew
+
 brew_install readline
+apt_install readline
+
 brew_install xz
 
 install_pyenv
 install_pyenv_virtualenv
 load_pyenv
 
-# install_python_versions
+install_python_versions
 install_pyenv_virtualenvs

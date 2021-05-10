@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+# LAUNCH DAEMONS
+
+if is_macos; then
+  # require_installer package-manager
+  # symlink_dotfile kmonad/local.kmonad.plist Library/LaunchDaemons
+  symlink_dotfile kmonad/local.kmonad.plist /Library/LaunchDaemons/local.kmonad.plist
+  # ln -s ~/.dotfiles/kmonad/local.kmonad.plist /Library/LaunchDaemons/local.kmonad.plist
+
+# elif is_linux; then
+fi
+

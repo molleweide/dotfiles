@@ -35,23 +35,45 @@ function install_nyxt_macos() {
   git clone https://github.com/atlas-engineer/nyxt ~/common-lisp/nyxt
 }
 
+function install_aur_libfixposix() {
+  local install_path=$HOME/code/libfixposix
+  local git_src="https://aur.archlinux.org/libfixposix.git"
+
+  git clone $git_src $install_path
+
+  pushd $install_path > /dev/null 2>&1
+  makepkg -si
+  popd > /dev/null 2>&1
+}
+
+function install_aur_nyxt() {
+  local install_path=$HOME/code/nyxt
+  local git_src="https://aur.archlinux.org/nyxt.git"
+
+  git clone $git_src $install_path
+
+  pushd $install_path > /dev/null 2>&1
+  makepkg -si
+  popd > /dev/null 2>&1
+}
+
+
 if is_macos; then
   require_installer package-manager
-
   # CONSUMER BROWSERS
-
   # firefox
   # brew_install brave
-
   install_from_git_to_code molleweide vimium
-
-
-
   # ONLY KEYS BROWSERS
-
   # qutebrowser
   install_nyxt_macos
+fi
 
+if is_linux; then
 
-
+  # https://aur.archlinux.org/packages/?O=0&SeB=nd&K=nyxt&outdated=&SB=n&SO=a&PP=50&do_Search=Go
+  # https://github.com/atlas-engineer/nyxt/blob/master/documents/README.org
+  # https://averagelinuxuser.com/install-aur-manually-helpers/
+  install_aur_libfixposix
+  install_aur_nyxt
 fi

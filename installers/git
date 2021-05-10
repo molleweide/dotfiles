@@ -38,10 +38,15 @@ function setup_git_scripts() {
   symlink_dotfile bin/git/git-what-i-did ~/.local/bin/git-what-i-did
 }
 
+function install_fancy_diffs() {
+  npm install -g diff-so-fancy
+}
+
+
 dotheader "Setting up Git..."
 
 install_package "git"
-brew_install diff-so-fancy
+install_fancy_diffs
 
 setup_git_scripts
 setup_user_gitconfig

@@ -424,11 +424,18 @@ run_osx_script() {
 }
 
 main() {
-  bootstrap_xcode
+  if is_macos; then
+    bootstrap_xcode
+  fi
+
   setup_ssh_keys
   setup_hostname
   clone_dotfiles_repo
-  run_osx_script
+
+  if is_macos; then
+    run_osx_script
+  fi
+
 }
 
 main

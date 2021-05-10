@@ -29,6 +29,13 @@ function setup_tmux_base16_integration() {
 }
 
 function setup_tmuxinator() {
+
+  if is_macos; then
+    brew_install tmuxinator
+  elif is_linux; then
+    gem install tmuxinator
+  fi
+
   symlink_dotfile tmuxinator ~/.tmuxinator
 }
 

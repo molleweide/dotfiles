@@ -1,6 +1,6 @@
 # /Users/hjalmarjakobsson/.tmuxinator/rpp.yml
 
-name: rpp
+name: rpp623
 root: ~/REAPER
 
 # Optional tmux socket
@@ -45,7 +45,12 @@ root: ~/REAPER
 # attach: false
 
 windows:
-  - REAPER:
+  - dot:
+      layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
+      panes:
+        - cd ~/.dotfiles && vim
+        - cd ~/.dotfiles
+  - rpp:
       root: ~/REAPER
       panes:
         - vim
@@ -53,11 +58,11 @@ windows:
       root: ~/REAPER/app/reaper-6.23.0/Scripts/reaper-keys
       panes:
         - vim
-  - jsfx:
-      root: ~/REAPER/app/reaper-6.23.0/Effects/molleweide
+  - js:
+      root: ~/REAPER/app/reaper-6.23.0/Effects/reaper-jsfx
       panes:
         - vim
-  - theme:
+  - th:
       root: ~/REAPER/app/reaper-6.23.0/ColorThemes
       panes:
         - vim
