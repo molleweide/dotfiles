@@ -23,10 +23,15 @@ alias vv="~/code/neovim/build/bin/nvim"
 alias 6="exec zsh"
 alias tfl="teensy_loader_cli -mmcu=atmega32u4 -w ergodox_ez_molleweide.hex"
 
+# KARABINER
 alias karb="/Library/Application\ Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli"
 alias krb="open -a /Applications/Karabiner-Elements.app"
 
-alias kmo="sudo ~/.dotfiles/kmonad/launchd.sh"
+# KMONAD
+alias kmolap="sudo ~/.dotfiles/kmonad/launchd_kmo_macbookpro.sh"
+alias kmolapT="kmonad ~/code/kmonad/keymap/user/molleweide/mbp.kbd -l debug"
+alias kmoez="sudo ~/.dotfiles/kmonad/launchd_kmo_ergo_ez.sh"
+alias kmoezT="kmonad ~/code/kmonad/keymap/user/molleweide/ez.kbd -l debug"
 
 
 

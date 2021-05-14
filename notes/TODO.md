@@ -1,5 +1,9 @@
 # BALATERO MOLLEWEIDE TODO
 
+- test ez w/ kmo
+
+- kmo bug > ctrl symblo not working from second-hold-layer, eg. vim toggle alt file
+
 - qmk spoon show base/mouse/midi layer
 
 - disable > linux shutdown command-U ??!!!!
