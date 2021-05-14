@@ -108,3 +108,7 @@ nnoremap <leader>U viwue
 " " let g:user_emmet_expandabbr_key = '<C-e>,'
 " let g:user_emmet_expandabbr_key = '<C-e>,'
 
+set noruler
+set cursorline " highlight cursor line and column
+set cursorcolumn
+

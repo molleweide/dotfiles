@@ -21,7 +21,7 @@ alias vim="nvim"
 alias v="nvim"
 alias vv="~/code/neovim/build/bin/nvim"
 alias 6="exec zsh"
-alias tfl="teensy_loader_cli -mmcu=atmega32u4 -w ergodox_ez_myergo.hex"
+alias tfl="teensy_loader_cli -mmcu=atmega32u4 -w ergodox_ez_molleweide.hex"
 
 alias karb="/Library/Application\ Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli"
 alias krb="open -a /Applications/Karabiner-Elements.app"
