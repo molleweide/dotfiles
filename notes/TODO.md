@@ -89,6 +89,24 @@ end tell
 add to vimspoon
 -> yabai mode
 
+# BUILD 
+
+build neovim
+build karabiner
+
+# automate ke complex.
+
+this is just such a beautiful terminal editor. i really like this.
+,
+
+# fork nightly theme
+
+# set default branches on github >> molleweide
+
+# WEMUX
+
+https://linuxhint.com/100_essential_linux_commands/
+
 #pyenv
 
 https://github.com/pyenv/pyenv/issues/1746
