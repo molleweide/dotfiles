@@ -2,6 +2,8 @@
 
 - laptop main kmonad > big sur install
 
+- pull balatero
+
 - disable > linux shutdown command-U ??!!!!
 
 - vim https://github.com/vlime/vlime#quickstart
