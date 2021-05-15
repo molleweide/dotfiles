@@ -1,5 +1,6 @@
 # BALATERO MOLLEWEIDE TODO
 
+<<<<<<< HEAD
 now we are going to do this shit like a real mother fucker
 which is how you really want it if you work fast as fuck.
 
@@ -22,6 +23,11 @@ reaper with configs from a previous version??
 
 move my custom vim configs over to init.vim
 - qmk spoon show base/mouse/midi layer
+=======
+- laptop main kmonad > big sur install
+
+- pull balatero
+>>>>>>> moll_B_a
 
 - disable > linux shutdown command-U ??!!!!
 
@@ -39,7 +45,10 @@ move my custom vim configs over to init.vim
 
 - virtualbox windows
 
-https://github.com/RichiH/vcsh
+- https://github.com/RichiH/vcsh
+
+- qmk spoon show base/mouse/midi layer
+
 
 # OTHER
 

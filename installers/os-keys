@@ -4,11 +4,14 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 # KEYS
 #
-# rename this file to just keys.
-# also install and setup all keys and keybinding related
-# stuff
-
-
+#
+# TODO
+#
+# - kmonad kext/dext
+#     check macos version >> install
+#     https://github.com/kmonad/kmonad/blob/master/doc/installation.md#macos
+#
+#
 
 require_installer package-manager
 
@@ -53,13 +56,25 @@ function setup_spoon_install() {
   fi
 }
 
+# add `_on_macos` to fn name
 function setup_development_kmonad_from_git_repo() {
   source_dir=$HOME/code/kmonad
   git clone --recursive https://github.com/molleweide/kmonad.git $source_dir
   pushd $source_dir > /dev/null 2>&1
+
+  # macos kext
   stack build \
+    --flag kmonad:kext \
     --local-bin-path=/usr/local/bin/kmonad \
     --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
+
+  # macos dext
+  # check dext version w/
+  #     `defaults read /Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/Info.plist CFBundleVersion`
+  # stack build \
+  #   --flag kmonad:dext \
+  #   --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+
   popd > /dev/null 2>&1
 }
 
