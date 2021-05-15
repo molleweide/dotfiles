@@ -1,10 +1,6 @@
 # RNDM
 
-i need to figure out what to have in the middle of my keyboard.
-make some comparisons between the keyboards. since these
-are not the ones that I need to use. I don't want to use them
-so I should't put stuff on them because that will just keep them around in my
-muscle memory. fuck'em their fucking out now.
+dude now i have the same on both platforms and all of my muscle reflexes
+are quite identical this is actually quite insane dude
 
-
-
+and now write something on the next line for the goodness of our hearts my nigga

@@ -1,33 +1,6 @@
-# BALATERO MOLLEWEIDE TODO
-
-<<<<<<< HEAD
-now we are going to do this shit like a real mother fucker
-which is how you really want it if you work fast as fuck.
-
-dude this is really nice actually and you can write so fucking 
-fast on this la8out if you just practice a little bit evdery dcay.
-
-this is pretty fucking nice. you can write so fucking 
-fast on the ez keyboard that it os not even funny.
-it feels like water and it is impossible to describle the feeling really.
-characters just pour out of your fingers
-
-this is pretty fucking nice. you can write so fucking 
-fast on the ez keyboard that it os not even funny.
-it feels like water and it is impossible to describle the feeling really.
-characters just pour out of your fingers
-
-
-or could it be that you cannot open
-reaper with configs from a previous version??
-
-move my custom vim configs over to init.vim
-- qmk spoon show base/mouse/midi layer
-=======
-- laptop main kmonad > big sur install
+# BALATRO MOLLEWEIDE TODO
 
 - pull balatero
->>>>>>> moll_B_a
 
 - disable > linux shutdown command-U ??!!!!
 
@@ -116,7 +89,6 @@ end tell
 add to vimspoon
 -> yabai mode
 
-<<<<<<< HEAD
 # BUILD 
 
 build neovim
