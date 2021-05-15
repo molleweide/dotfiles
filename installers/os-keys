@@ -63,17 +63,18 @@ function setup_development_kmonad_from_git_repo() {
   pushd $source_dir > /dev/null 2>&1
 
   # macos kext
-  stack build \
-    --flag kmonad:kext \
-    --local-bin-path=/usr/local/bin/kmonad \
-    --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
+  # stack build \
+  #   --flag kmonad:kext \
+  #   --local-bin-path=/usr/local/bin/kmonad \
+  #   --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
 
   # macos dext
   # check dext version w/
   #     `defaults read /Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/Info.plist CFBundleVersion`
-  # stack build \
-  #   --flag kmonad:dext \
-  #   --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+  stack build \
+    --flag kmonad:dext \
+    --local-bin-path=/usr/local/bin/kmonad \
+    --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
 
   popd > /dev/null 2>&1
 }
