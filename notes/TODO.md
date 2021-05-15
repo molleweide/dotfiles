@@ -1,7 +1,5 @@
 # BALATERO MOLLEWEIDE TODO
 
-- laptop main kmonad > big sur install
-
 - pull balatero
 
 - disable > linux shutdown command-U ??!!!!
