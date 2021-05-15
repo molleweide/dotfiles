@@ -4,11 +4,14 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 # KEYS
 #
-# rename this file to just keys.
-# also install and setup all keys and keybinding related
-# stuff
-
-
+#
+# TODO
+#
+# - kmonad kext/dext
+#     check macos version >> install
+#     https://github.com/kmonad/kmonad/blob/master/doc/installation.md#macos
+#
+#
 
 require_installer package-manager
 

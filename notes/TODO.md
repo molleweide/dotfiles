@@ -1,10 +1,6 @@
 # BALATERO MOLLEWEIDE TODO
 
-- test ez w/ kmo
-
-- kmo bug > ctrl symblo not working from second-hold-layer, eg. vim toggle alt file
-
-- qmk spoon show base/mouse/midi layer
+- laptop main kmonad > big sur install
 
 - disable > linux shutdown command-U ??!!!!
 
@@ -22,7 +18,10 @@
 
 - virtualbox windows
 
-https://github.com/RichiH/vcsh
+- https://github.com/RichiH/vcsh
+
+- qmk spoon show base/mouse/midi layer
+
 
 # OTHER
 
