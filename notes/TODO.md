@@ -2,10 +2,8 @@
 
 - nvim faq https://github.com/neovim/neovim/wiki/FAQ#why-embed-lua-instead-of-x
 
-- nvim plugin build
-    https://dev.to/christalib/how-i-wrote-my-first-neovim-plugin-357h
-    https://www.2n.pl/blog/how-to-write-neovim-plugins-in-lua
-    https://sbulav.github.io/vim/neovim-writing-lua-plugins/
+- https://github.com/neovim/nvimdev.nvim
+- https://github.com/tweekmonster/helpful.vim
 
 
 - pull balatero

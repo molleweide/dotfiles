@@ -1,8 +1,7 @@
 # RNDM
 
-now i just have to get out of this fucking. but what is going 
-to happen when this happens. i am almost scarred at how large the
-change could be potentially. this is a bit crazy actually.
+but also it is not like I should get the nobel prize for it so
+it makes sense that other people are using it as well.
 
-this could become something that is insane. and i know that
-the music production from now on will be quite insane.
+so now how is this going to be you motherfucker this is going to
+be so fucking nice mother fucker fucker fucker

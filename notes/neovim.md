@@ -1,8 +1,18 @@
 # NEOVIM
 
+- https://github.com/neovim/nvimdev.nvim
+- https://github.com/tweekmonster/helpful.vim
 
 
-## hmmm
+- nvim faq https://github.com/neovim/neovim/wiki/FAQ#why-embed-lua-instead-of-x
+
+## PLUGIN DEV
+
+1. do this !! https://www.2n.pl/blog/how-to-write-neovim-plugins-in-lua
+2. cont. read https://learnvimscriptthehardway.stevelosh.com/chapters/43.html
+https://sbulav.github.io/vim/neovim-writing-lua-plugins/
+https://dev.to/christalib/how-i-wrote-my-first-neovim-plugin-357h
+
 
 ## USE MULTIPLE NVIM
 
@@ -21,7 +31,7 @@ to b a standard issue whch everyone seems to have sold
 ## questions
 
 - FIRST
-  look at balatero.  what does his commit msgs look like
+    look at balatero.  what does his commit msgs look like
 
 - how do I start using nvim after building it.
     this is the first time I build neovim.
