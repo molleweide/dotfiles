@@ -1,11 +1,5 @@
 # BALATERO MOLLEWEIDE TODO
 
-- nvim faq https://github.com/neovim/neovim/wiki/FAQ#why-embed-lua-instead-of-x
-
-- https://github.com/neovim/nvimdev.nvim
-- https://github.com/tweekmonster/helpful.vim
-
-
 - pull balatero
 
 - kmonad vim syntax

@@ -88,12 +88,26 @@ nnoremap <leader>c :w<CR>
 inoremap <C-l> <Space>
 cnoremap <C-l> <Space>
 
-" create custom command to close help
-:command! H :helpc
-
 " convert inner word to CAPITAL letters
 nnoremap <leader>u viwUe
 nnoremap <leader>U viwue
+
+" =============== Plugin Test ===============
+" test plugin `Whid`
+nnoremap <leader>W :Whid<CR>
+
+
+" =============== help ====================
+
+" create custom command to close help
+:command! H :helpc
+
+" help for word under cursor
+"   how can I move this to which key?
+nnoremap <leader>H "zyiw:h <C-r>z<CR>
+
+" =============== other ====================
+
 
 " " Move vertically by visual line
 " nnoremap j gj
