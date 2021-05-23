@@ -1,10 +1,17 @@
 # BALATERO MOLLEWEIDE TODO
 
+current vim learn ==>> `use replace 'r' and substitute 's'`
+
+- sao nu skao jag baora skriva klaort uppsatsen ock
+  inte goera naogot dumt jaevla fiffel. and then
+  do it like that
+
+- boa skor
 - pull balatero
 
-- kmonad vim syntax
-
 - xmonad window manager on linux
+
+- watch tj neovim plugin dev stream
 
 - disable > linux shutdown command-U ??!!!!
 

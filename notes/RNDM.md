@@ -1,14 +1,26 @@
 # RNDM
 
-but also it is not like I should get the nobel prize for it so
-it makes sense that other people are using it as well.
+this is fucking awesome guys. i am going to meet up with them
+later which is something that you cannot really do efficiently
+if you sing along.
 
-so now how is this going to be you motherfucker this is going to
-be so fucking nice mother fucker fucker fucker
+det haer ska bli sao nice att fixa fucking kuk fittan observera att
+det inte aer naogot som ha vill goera med mig. sao det aer ju inte 
+som att vi skelle se det.
+ 
+ so d sthis is not so strange actually
+ but you can do this which is somethNg that is not he correct 
+ thing to do.
 
-this is really fucking nice with this I'll be able to do the stretch perfectly.
-Because this is not. But you most definitely get it with running.
-when you reach forward with your leg your contract your quads to extend your leg
-and the hamstrings pull backwards so that you don't rip your legs of tight.
+ and this is sthe same thing that i would like to do on the regular
+ mac so that one cana actually fix it. but i am definitely not there
+ yet but now some days i am really feeling like i am about to solve
+ this which is great. imma make her wait a bit so that she builds
+ up more emmotions. this is fucking nice baby. but the thing 
+ is that the world is like a freaking collective that is.
+ jag ska knulla honom fram ock baklaenges vilket aer naogot
+ som man kan goera ungerfaer lika snabbs som den firsta
+ ettan som du gjorde up det med
 
-skibbedy flurpy ganaztako mannilla baracka naptiko fumelli brikonema katta.
+ how is this layout now that i have been using it for a while.
+ well this is quite nice.

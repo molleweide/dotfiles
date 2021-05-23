@@ -4,6 +4,7 @@ inoremap zm <esc>
 
 "(v)im (r)eload
 nmap <silent> ,vr :so %<CR>
+" nmap <silent> ,vr :source $MYVIMRC<CR>
 
 " Mappings to move lines
 " alt+j/k to move up/down
