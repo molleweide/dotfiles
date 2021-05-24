@@ -1,10 +1,6 @@
 # BALATERO MOLLEWEIDE TODO
 
-current vim learn ==>> `use replace 'r' and substitute 's'`
-
-- sao nu skao jag baora skriva klaort uppsatsen ock
-  inte goera naogot dumt jaevla fiffel. and then
-  do it like that
+watch >> https://www.youtube.com/watch?v=apyV4v7x33o&list=PLep05UYkc6wSgBFseCsRBSQQ1Fmf3eRa8&index=1
 
 - boa skor
 - pull balatero

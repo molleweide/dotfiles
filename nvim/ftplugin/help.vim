@@ -2,11 +2,14 @@
 
 if has('autocmd')
   function! ILikeHelpToTheRight()
+
+    set relativenumber number
+
     if !exists('w:help_is_moved') || w:help_is_moved != "right"
       wincmd L
-      set relativenumber number
       let w:help_is_moved = "right"
     endif
+
   endfunction
 
   augroup HelpPages

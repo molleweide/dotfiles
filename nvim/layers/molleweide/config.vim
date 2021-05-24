@@ -15,6 +15,10 @@ inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
+" ================ Editing ==========================
+nnoremap <silent> <Leader>, <C-^>
+
+
 "(k)eybindings
 
 nnoremap <silent> <Leader>ki :e ~/.dotfiles/nvim/init.vim<CR>
