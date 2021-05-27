@@ -2,12 +2,11 @@
 
 watch >> https://www.youtube.com/watch?v=apyV4v7x33o&list=PLep05UYkc6wSgBFseCsRBSQQ1Fmf3eRa8&index=1
 
+
 - boa skor
 - pull balatero
 
 - xmonad window manager on linux
-
-- watch tj neovim plugin dev stream
 
 - disable > linux shutdown command-U ??!!!!
 
@@ -29,6 +28,9 @@ watch >> https://www.youtube.com/watch?v=apyV4v7x33o&list=PLep05UYkc6wSgBFseCsRB
 
 - qmk spoon show base/mouse/midi layer
 
+- vim create custom operator
+    https://neovim.discourse.group/t/cf-change-backw-how-can-i-include-start-character/532
+    https://stackoverflow.com/questions/8994276/how-to-define-a-new-vim-operator-with-a-parameter
 
 # OTHER
 

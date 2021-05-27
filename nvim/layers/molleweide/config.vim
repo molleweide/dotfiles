@@ -3,8 +3,8 @@
 inoremap zm <esc>
 
 "(v)im (r)eload
-nmap <silent> ,vr :so %<CR>
-" nmap <silent> ,vr :source $MYVIMRC<CR>
+" nmap <silent> ,vr :so %<CR>
+nmap <silent> ,vr :source $MYVIMRC<CR>
 
 " Mappings to move lines
 " alt+j/k to move up/down
@@ -16,10 +16,12 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " ================ Editing ==========================
-nnoremap <silent> <Leader>, <C-^>
+nnoremap <leader>,h <Esc>:call ToggleHardMode()<CR>
+nnoremap <silent> <Leader>,a <C-^>
 
 
-"(k)eybindings
+
+" ================ Aliases ==========================
 
 nnoremap <silent> <Leader>ki :e ~/.dotfiles/nvim/init.vim<CR>
 nnoremap <silent> <Leader>knR :e ~/.dotfiles/notes/RNDM.md<CR>

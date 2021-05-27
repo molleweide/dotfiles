@@ -1,5 +1,3 @@
-" vim help file configs
-
 if has('autocmd')
   function! ILikeHelpToTheRight()
 
@@ -13,8 +11,6 @@ if has('autocmd')
   endfunction
 
   augroup HelpPages
-    " autocmd FileType help nested call ILikeHelpToTheRight()
-    " autocmd BufRead,BufEnter */doc/* :set relativenumber number
     autocmd BufRead,BufEnter */doc/* nested call ILikeHelpToTheRight()
   augroup END
 endif

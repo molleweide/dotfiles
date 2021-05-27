@@ -9,89 +9,24 @@ set encoding=utf-8
 
 " ================ general config ====================
 
-set backspace=indent,eol,start  "allow backspace in insert mode
-set history=1000                "store lots of :cmdline history
-set showcmd                     "show incomplete cmds down the bottom
-set showmode                    "show current mode down the bottom
-set gcr=a:blinkon0              "disable cursor blink
-set visualbell                  "no sounds
-set autoread                    "reload files changed outside vim
-set ruler                       "show ruler
-set undolevels=1000             "undo levels
-set laststatus=2                "fix status bar
-set guifont=Inconsolata-g\ for\ Powerline
-set number
-set relativenumber
-
-" this makes vim act like all other editors, buffers can
-" exist in the background without being in a window.
-" http://items.sjbach.com/319/configuring-vim-right
-set hidden
-
-"turn on syntax highlighting
-syntax on
-
-" highlight funky characters and whatnot
-set list
-set listchars=tab:▸\ ,trail:ـ,extends:➧,eol:¬
-
-" stop kicking me into this mode you fucking apes
-set noexrc
-set noex
-set nosecure
-
-" minimum width
-set winwidth=100
-
-" Put contents of unnamed register in OS X clipboard
-set clipboard=unnamed
-
-" remap ESC to jk
-" inoremap jk <esc>
-
 "Clear current search highlight by hitting g + /
 nmap <silent> g/ :nohlsearch<CR>
 
 
 " ================ Turn Off Swap Files ==============
 
-set noswapfile
 set nobackup
 set nowb
 
 " ================ Persistent Undo ==================
 " Keep undo history across sessions, by storing in file.
 
-if has('persistent_undo')
-  "silent !mkdir ~/.vim/backups > /dev/null 2>&1
-  set undodir=~/.vim/backups
-  set undofile
-endif
-
 " ================ Indentation ======================
-
-set autoindent
-set smartindent
-set smarttab
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
-set expandtab
-
-filetype plugin on
-filetype indent on
-
-" Display tabs and trailing spaces visually
-set list listchars=tab:\ \ ,trail:·
 
 set nowrap       " Don't wrap lines
 set linebreak    " Wrap lines at convenient points
 
 " ================ Scrolling ========================
-
-set scrolloff=8         "Start scrolling when we're 8 lines away from margins
-set sidescrolloff=15
-set sidescroll=1
 
 let mapleader=","
 let g:mapleader=","
@@ -123,67 +58,6 @@ augroup END
 
 " ================ Editing ==========================
 
-" color column
-set colorcolumn=81
-
-" Open splits to the right or below; more natural than the default
-set splitright
-set splitbelow
-
-" Create window splits easier. The default
-" way is Ctrl-w,v and Ctrl-w,s. I remap
-" this to vv and ss
-nnoremap <silent> vv <C-w>v
-nnoremap <silent> ss <C-w>s
-
-"make Y consistent with C and D
-nnoremap Y y$
-function! YRRunAfterMaps()
-  nnoremap Y   :<C-U>YRYankCount 'y$'<CR>
-endfunction
-
-" remap : to ;
-nnoremap ; :
-
-" background out of insert mode
-inoremap <C-Z> <Esc><C-Z>
-
-" Use sane regexes.
-nnoremap / /\v
-vnoremap / /\v
-
-" Load aliases for :vh -> :vertical h
-if exists('s:loaded_vimafter')
-  silent doautocmd VimAfter VimEnter *
-else
-  let s:loaded_vimafter = 1
-  augroup VimAfter
-    autocmd!
-    autocmd VimEnter * source ~/.config/nvim/aliases.vim
-  augroup END
-endif
-
-" Remove arrow keys in Insert Mode
-inoremap <Down> <Nop>
-inoremap <Left> <Nop>
-inoremap <Right> <Nop>
-inoremap <Up> <Nop>
-
-" Remove arrow keys in Normal Mode
-nnoremap <Down> <Nop>
-nnoremap <Left> <Nop>
-nnoremap <Right> <Nop>
-nnoremap <Up> <Nop>
-
-" Remove arrow keys in Visual Mode
-vnoremap <Down> <Nop>
-vnoremap <Left> <Nop>
-vnoremap <Right> <Nop>
-vnoremap <Up> <Nop>
-
-" wildignore
-set wildignore+=node_modules/*,bower_components/*,vendor/bundle/*,tmp/*
-
 " function to source a file if it exists
 function! SourceIfExists(file)
   if filereadable(expand(a:file))
@@ -200,105 +74,6 @@ let &t_SR = "\<esc>[3 q" " underline cursor for replace mode
 
 " ================ Plugins ==========================
 
-call plug#begin('~/.local/nvim/plugins')
-
-" Core
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'Konfekt/vim-alias'
-Plug 'nanotee/nvim-lua-guide'         " additional help under :h nvim-lua-guide
-Plug 'liuchengxu/vim-which-key'       " context menu when hitting leader key(s)
-Plug 'kevinhwang91/nvim-bqf'          " better quickfix
-
-" Editing
-Plug 'rhysd/clever-f.vim'             " hit `f` to repeat search
-Plug 'romgrk/nvim-treesitter-context' " show function context as you scroll
-Plug 'AndrewRadev/splitjoin.vim'      " split/join single line/multiline
-Plug 'AndrewRadev/switch.vim'         " switch syntaxes around with `gs`
-Plug 'tpope/vim-commentary'           " comment with `gcc`
-Plug 'romainl/vim-cool'               " disable highlights automatically on cursor move
-Plug 'easymotion/vim-easymotion'      " ,,w and ,,b to jump to objects
-Plug 'tpope/vim-projectionist'        " alternate files with :AV/:AS
-Plug 'kshenoy/vim-signature'          " show marks in the gutter
-Plug 'itspriddle/vim-stripper'        " strip whitespace on save
-Plug 'tpope/vim-surround'             " cs`' to change `` to '', etc
-Plug 'milkypostman/vim-togglelist'    " <leader>q to toggle quickfix
-
-" Files
-Plug 'danro/rename.vim'
-Plug 'Shougo/vimfiler.vim'
-Plug 'Shougo/unite.vim'
-Plug 'rbgrouleff/bclose.vim'        " Ranger dependency
-Plug 'francoiscabrol/ranger.vim'
-
-" LSP
-Plug 'neovim/nvim-lspconfig'             " out of the box LSP configs for common langs
-Plug 'glepnir/lspsaga.nvim'              " code action plugin
-Plug 'nvim-lua/lsp-status.nvim'          " provides statusline information for LSP
-Plug 'hrsh7th/nvim-compe'                " completion engine
-Plug 'onsails/lspkind-nvim'              " add vscode-style icons to completion menu
-Plug 'nathunsmitty/nvim-ale-diagnostic'  " route lsp diagnostics to ALE
-
-" Markdown
-Plug 'npxbr/glow.nvim', {'do': ':GlowInstall'}  " markdown preview with :Glow
-
-" Ruby
-Plug 'keith/rspec.vim'                    " better RSpec syntax highlighting
-Plug 'jgdavey/vim-blockle'                " toggle block styles with ,b
-Plug 'tpope/vim-rake'                     " allow for alternate files
-Plug 'vim-ruby/vim-ruby'                  " indentation, etc
-Plug 'joker1007/vim-ruby-heredoc-syntax'  " fenced syntax colors in heredocs
-Plug 'ecomba/vim-ruby-refactoring'        " extract vars, methods, etc
-
-" Snippets
-Plug 'norcalli/snippets.nvim'
-Plug 'SirVer/UltiSnips'
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
-
-Plug 'honza/vim-snippets'
-Plug 'craigmac/vim-vsnip-snippets'
-
-" Syntax checking
-Plug 'w0rp/ale'
-
-" Tests
-Plug 'janko-m/vim-test'
-
-" Theming
-Plug 'chrisbra/Colorizer'            " show hex colors in CSS/HTML files
-Plug 'glepnir/galaxyline.nvim'       " fast Lua statusline
-Plug 'kyazdani42/nvim-web-devicons'  " fancy icons
-Plug 'RRethy/vim-illuminate'         " highlight duplicate words
-Plug 'drzel/vim-line-no-indicator'   " nice scroll indicator
-Plug 'sheerun/vim-polyglot'
-
-" color schemes
-Plug 'tjdevries/colorbuddy.vim'
-Plug 'bkegley/gloombuddy'
-
-Plug 'NieTiger/halcyon-neovim'
-Plug 'christianchiarulli/nvcode-color-schemes.vim'
-Plug 'mhartington/oceanic-next'
-Plug 'joshdick/onedark.vim'
-Plug 'haishanh/night-owl.vim'
-Plug 'bluz71/vim-nightfly-guicolors'
-
-" Tmux
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'melonmanchan/vim-tmux-resizer'
-Plug 'benmills/vimux'
-
-" Grep + load
-Plug 'mileszs/ack.vim'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-
-" Version control
-Plug 'rhysd/git-messenger.vim'  " show commit popup with <leader>gm
-Plug 'tpope/vim-fugitive'       " the git plugin
-Plug 'airblade/vim-gitgutter'   " show changed line marks in gutter
-Plug 'tpope/vim-rhubarb'        " enable GHE/Github links with :Gbrowse
-
 " Vimscript
 Plug 'tpope/vim-scriptease'
 
@@ -310,25 +85,10 @@ call plug#end()
 
 " ================ Theme ========================
 
-set termguicolors
-" let g:oceanic_next_terminal_bold = 1
-" let g:oceanic_next_terminal_italic = 1
-colorscheme nightfly
-
-" enable transparent terminal bg
-hi Normal guibg=NONE ctermbg=NONE
-hi LineNr guibg=NONE ctermbg=NONE
-hi SignColumn guibg=NONE ctermbg=NONE
-hi EndOfBuffer guibg=NONE ctermbg=NONE
-
 " highlight hex colors in these file types
 au BufNewFile,BufRead *.css,*.html,*.htm,*.sass,*.scss :ColorHighlight!
 
 " =============== Tmux =========================
-
-" set our shell to be bash for fast tmux switching times
-" see: https://github.com/christoomey/vim-tmux-navigator/issues/72
-set shell=/bin/bash\ --norc\ -i
 
 let g:tmux_resizer_no_mappings = 0
 

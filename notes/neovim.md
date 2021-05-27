@@ -6,6 +6,12 @@
 
 - nvim faq https://github.com/neovim/neovim/wiki/FAQ#why-embed-lua-instead-of-x
 
+# PLUGINS
+
+## NEW PLUGINS
+
+https://github.com/mhinz/vim-startify
+
 ## PLUGIN DEV
 
 1. do this !! https://www.2n.pl/blog/how-to-write-neovim-plugins-in-lua
@@ -49,8 +55,16 @@ read treesitter : https://github.com/nvim-treesitter/nvim-treesitter
 - installer/neovim/
     add preqeq install func
 
+## COLOR SCHEMES
 
-## bugs
+modify nightfly -> rainforest sunset. orange and green colors.
+        something that really sticks out so that it feels crazy
+
+- rainforest
+- atlantis underwater >> colorscheme inspired by freddy fish game
+
+
+## BUGS
 
 abi version mismatch 
 
