@@ -1,9 +1,19 @@
 # BALATERO MOLLEWEIDE TODO
 
+
+
 watch >> https://www.youtube.com/watch?v=apyV4v7x33o&list=PLep05UYkc6wSgBFseCsRBSQQ1Fmf3eRa8&index=1
 
+- zoom https://intra.kth.se/en/it/kth-videoconferencing/zoom/ladda-ned-och-instal/ladda-ner-zoom-klienten-1.879007
+
+- pm > branches
+    molleweide
+    thesis
+
+- scnvim
 
 - boa skor
+
 - pull balatero
 
 - xmonad window manager on linux
@@ -31,6 +41,8 @@ watch >> https://www.youtube.com/watch?v=apyV4v7x33o&list=PLep05UYkc6wSgBFseCsRB
 - vim create custom operator
     https://neovim.discourse.group/t/cf-change-backw-how-can-i-include-start-character/532
     https://stackoverflow.com/questions/8994276/how-to-define-a-new-vim-operator-with-a-parameter
+
+# vim
 
 # OTHER
 

@@ -109,6 +109,8 @@ nnoremap <leader>W :Whid<CR>
 " create custom command to close help
 :command! H :helpc
 
+
+
 " help for word under cursor
 "   how can I move this to which key?
 nnoremap <leader>H "zyiw:h <C-r>z<CR>
