@@ -1,3 +1,9 @@
+" molleweide personal bindings
+"
+" - rebind Q >> to ???
+"    i can always reach ex mode by `gQ`
+
+
 " remap ESC to jk
 " works well w/qwerty and colemak
 inoremap zm <esc>
@@ -89,7 +95,7 @@ nmap <leader>x :bd<CR>
 vnoremap <leader>p "_dP
 
 " quicker save
-nnoremap <leader>c :w<CR>
+nnoremap <leader>cc :w<CR>
 
 " space on control L
 inoremap <C-l> <Space>
@@ -134,4 +140,10 @@ nnoremap <leader>H "zyiw:h <C-r>z<CR>
 set noruler
 set cursorline " highlight cursor line and column
 set cursorcolumn
+
+
+
+" ======== test ========
+nmap <leader>cn <Plug>CyclistNext
+nmap <leader>cp <Plug>CyclistPrev
 

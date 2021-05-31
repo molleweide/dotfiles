@@ -222,6 +222,7 @@ Plug 'kshenoy/vim-signature'          " show marks in the gutter
 Plug 'itspriddle/vim-stripper'        " strip whitespace on save
 Plug 'tpope/vim-surround'             " cs`' to change `` to '', etc
 Plug 'milkypostman/vim-togglelist'    " <leader>q to toggle quickfix
+Plug 'tjdevries/cyclist.vim'    " <leader>q to toggle quickfix
 
 " Files
 Plug 'danro/rename.vim'

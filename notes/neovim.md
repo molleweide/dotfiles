@@ -1,5 +1,7 @@
 # NEOVIM
 
+- create custom operator https://stackoverflow.com/questions/8994276/how-to-define-a-new-vim-operator-with-a-parameter
+
 - https://github.com/neovim/nvimdev.nvim
 - https://github.com/tweekmonster/helpful.vim
 

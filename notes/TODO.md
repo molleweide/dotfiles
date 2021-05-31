@@ -1,6 +1,13 @@
 # BALATERO MOLLEWEIDE TODO
 
+manual install 
+    https://github.com/tjdevries/cyclist.vim
 
+mac batteri https://duckduckgo.com/?q=mac+byta+batteri+stockholm&ia=web
+
+google word under cursor
+    https://github.com/papanikge/vim-voogle
+    https://github.com/rajasegar/vim-search-web
 
 watch >> https://www.youtube.com/watch?v=apyV4v7x33o&list=PLep05UYkc6wSgBFseCsRBSQQ1Fmf3eRa8&index=1
 
@@ -19,6 +26,8 @@ watch >> https://www.youtube.com/watch?v=apyV4v7x33o&list=PLep05UYkc6wSgBFseCsRB
 - xmonad window manager on linux
 
 - disable > linux shutdown command-U ??!!!!
+
+- netrw plugin
 
 - vim https://github.com/vlime/vlime#quickstart
 
