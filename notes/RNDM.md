@@ -1,25 +1,24 @@
 # RNDM
 
-# WILLYS AXFOOD E-LEARNING
 
-support >> 077 125 02 50
-
-
-## USER MESSAGES
-
-Undefined Label: label.YourCourseIsOverdue
-
-Du slutförde utbildningen 2015-06-08.
-
-## DEVELOPER ERROR MESSAGE (only for programmers...)
-
-`Ett applikationsfel inträffade. Försök igen.  Om du har fler frågor eller
-problem med felet, ange detaljer för felet nedan till din supportgrupp.
-
-Error message = while trying to invoke the method java.lang.Long.longValue() of
-a null object returned from
-com.successfactors.lms.usercourse.client.common.dto.UserCourseActionParamsDTO.getRevisionDate()
-Ticket No = 2991106 ErrorFingerprint
-[exceptionRootCauseTag=864dc352b4d3bee65dad82e6ab8ec57a01384157,
-exceptionStackTraceTag=a461f57871bc62acfaaa4f3f19880089d36b672a] Timestamp =
-2021-05-31T10:04:21.851+0000 `
+this is going to be so nice now that i understand
+that the deepest wave in the body is the rotating 
+of the hip and so doing that on the floor is the thing
+that you want to do the most you can all of the 21:34and 
+and so the next time we are going to 
+i am going to try to find everything that has to do
+with reaper and then use it code shit in reaer so that
+i can really learn how to do some serious fucking midi
+key shit. but now initially this will mean that I have
+to make beats with the programming of the keys which
+will be interesting but the more i do it the better 
+it is going o become which is just magical. i am going
+to bring some seriously fucking good shit into this so 
+that i can do some crazy fucking midi programming and stuf
+in reaper. it is just a controller but i reprogram all
+of the kys so i don't want any midi processing
+ to occure on he keyboard since i am using everything
+in the end. this is some seriosly fucing fast shit thati
+am going to do and when i have the tru ability to do this
+i am going to do some seriousluy fucking good shit
+on my github account.

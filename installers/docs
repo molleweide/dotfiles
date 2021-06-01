@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+# Documents etc.
+#
+# todo
+#   - pandoc
+#     https://github.com/jgm/pandoc/blob/master/INSTALL.md
+
+require_installer package-manager
+
+if is_macos; then
+  brew install pandoc
+  # additional stuff
+  # brew install librsvg python homebrew/cask/basictex
+
+# elif is_linux; then
+fi

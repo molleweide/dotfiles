@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+# Spreadsheets
+#
+# todo
+#   - sc-im
+
+require_installer package-manager
+
+if is_macos; then
+    brew tap nickolasburr/pfa
+    brew install sc-im
+# elif is_linux; then
+    # build sc-im
+    #   https://github.com/andmarti1424/sc-im
+fi

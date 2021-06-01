@@ -273,7 +273,7 @@ Plug 'RRethy/vim-illuminate'         " highlight duplicate words
 Plug 'drzel/vim-line-no-indicator'   " nice scroll indicator
 Plug 'sheerun/vim-polyglot'
 
-" color schemes
+" Color Schemes
 Plug 'tjdevries/colorbuddy.vim'
 Plug 'bkegley/gloombuddy'
 
@@ -303,12 +303,16 @@ Plug 'tpope/vim-rhubarb'        " enable GHE/Github links with :Gbrowse
 " Vimscript
 Plug 'tpope/vim-scriptease'
 
-" MISC
-"   not sure how to structer yet
+" Tabular data
+Plug 'godlygeek/tabular'
+Plug 'vim-scripts/excel.vim'
+Plug 'kjnh10/ExcelLikeVim'
+
+" Misc
 Plug 'mhinz/vim-startify'            " custom startup display
 Plug 'davidgranstrom/scnvim', { 'do': {-> scnvim#install() } } " supercollider front end
 Plug 'tjdevries/train.nvim'          " vim motion practice game
-
+Plug 'rajasegar/vim-search-web'
 
 " Load private Stripe overlay packages
 call SourceIfExists('~/.config/nvim/layers/private/packages.vim')

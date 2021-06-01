@@ -1,7 +1,7 @@
 # KMONAD
 
 
-
+- add colemak layer
 
 - kmo add (just look at other keymaps..)
     dashboard/media
@@ -11,18 +11,16 @@
     >> other layers. a bit hacky maybe but
     >> it is nice to jus get all layers working
 
-
-
-not getting the launch agent to work properly.
-
-## syntax highlighting n stuff
-
-https://github.com/david-janssen/kmonad/issues/69
-
-symlink plist into /Library/LaunchDaemons
+- make more layers just for fun.
 
 ## mouse keys !!!
 
 this would be super important actually as to make
 sure that one can really stay on the keys without any
 interuptions whatsoever.
+
+## SUBLAYOUTS
+
+how can I implement sublayouts that make use of different
+src maps but reuse the same actual definition layer files
+so that I can keep everything in one place.

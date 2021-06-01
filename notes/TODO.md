@@ -1,7 +1,11 @@
 # BALATERO MOLLEWEIDE TODO
 
-manual install 
-    https://github.com/tjdevries/cyclist.vim
+- install my personal projects to ~/code
+
+- use lua boilerplate to create local plugin ~/code/plugin.nvim 
+    https://github.com/molleweide/neovim-lua-plugin-boilerplate
+    <!-- using .naming on folders is actually good because it makes things more -->
+    <!-- clear -->
 
 mac batteri https://duckduckgo.com/?q=mac+byta+batteri+stockholm&ia=web
 
@@ -16,8 +20,6 @@ watch >> https://www.youtube.com/watch?v=apyV4v7x33o&list=PLep05UYkc6wSgBFseCsRB
 - pm > branches
     molleweide
     thesis
-
-- scnvim
 
 - boa skor
 
