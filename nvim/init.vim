@@ -303,6 +303,13 @@ Plug 'tpope/vim-rhubarb'        " enable GHE/Github links with :Gbrowse
 " Vimscript
 Plug 'tpope/vim-scriptease'
 
+" MISC
+"   not sure how to structer yet
+Plug 'mhinz/vim-startify'            " custom startup display
+Plug 'davidgranstrom/scnvim', { 'do': {-> scnvim#install() } } " supercollider front end
+Plug 'tjdevries/train.nvim'          " vim motion practice game
+
+
 " Load private Stripe overlay packages
 call SourceIfExists('~/.config/nvim/layers/private/packages.vim')
 

@@ -21,9 +21,18 @@ inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
-" ================ Editing ==========================
-nnoremap <leader>,h <Esc>:call ToggleHardMode()<CR>
-nnoremap <silent> <Leader>,a <C-^>
+" ================ Kmonad workarounds ==========================
+
+" nnoremap <silent> <Leader>1 <C-!>
+" nnoremap <silent> <Leader>2 <C-@>
+" nnoremap <silent> <Leader>3 <C-#>
+" nnoremap <silent> <Leader>4 <C-$>
+" nnoremap <silent> <Leader>5 <C-%>
+nnoremap <silent> <Leader>6 <C-^>
+" nnoremap <silent> <Leader>7 <C-&>
+" nnoremap <silent> <Leader>8 <C-*>
+" nnoremap <silent> <Leader>9 <C-(>
+" nnoremap <silent> <Leader>0 <C-)>
 
 
 
@@ -66,11 +75,13 @@ set iminsert=1
 set imsearch=0
 
 " re-indent file
-map <leader>i mzgg=G`z<CR>
+map <leader>,i mzgg=G`z<CR>
 
-" Tab through buffers
+" =============== Tab through butters ===============
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprev<CR>
+" restore jump forwards command that is tied to <Tab>
+nnoremap <Leader>i <C-i>
 
 " Close buffer
 nmap <leader>x :bd<CR>
@@ -141,9 +152,28 @@ set noruler
 set cursorline " highlight cursor line and column
 set cursorcolumn
 
-
-
-" ======== test ========
+" ======== cyclist | listchars ========
 nmap <leader>cn <Plug>CyclistNext
 nmap <leader>cp <Plug>CyclistPrev
+
+call cyclist#add_listchar_option_set('limited', {
+        \ 'eol': '↲',
+        \ 'tab': '» ',
+        \ 'trail': '·',
+        \ 'extends': '<',
+        \ 'precedes': '>',
+        \ 'conceal': '┊',
+        \ 'nbsp': '␣',
+        \ })
+
+call cyclist#add_listchar_option_set('busy', {
+        \ 'eol': '↲',
+        \ 'tab': '»·',
+        \ 'space': '␣',
+        \ 'trail': '-',
+        \ 'extends': '☛',
+        \ 'precedes': '☚',
+        \ 'conceal': '┊',
+        \ 'nbsp': '☠',
+        \ })
 
