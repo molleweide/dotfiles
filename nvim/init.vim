@@ -250,6 +250,11 @@ Plug 'vim-ruby/vim-ruby'                  " indentation, etc
 Plug 'joker1007/vim-ruby-heredoc-syntax'  " fenced syntax colors in heredocs
 Plug 'ecomba/vim-ruby-refactoring'        " extract vars, methods, etc
 
+" Lisp
+Plug 'vlime/vlime', {'rtp': 'vim/'}       " sbcl --load <your bundle dir>/vlime/lisp/start-vlime.lisp
+Plug 'lisp-mirror/quicklisp.nvim'
+Plug 'tami5/lispdocs.nvim'
+
 " Snippets
 Plug 'norcalli/snippets.nvim'
 Plug 'SirVer/UltiSnips'

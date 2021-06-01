@@ -1,6 +1,5 @@
 # RNDM
 
-
 this is going to be so nice now that i understand
 that the deepest wave in the body is the rotating 
 of the hip and so doing that on the floor is the thing
