@@ -24,3 +24,7 @@ interuptions whatsoever.
 how can I implement sublayouts that make use of different
 src maps but reuse the same actual definition layer files
 so that I can keep everything in one place.
+
+## MIDI
+
+implement midi device??

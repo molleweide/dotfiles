@@ -1,6 +1,6 @@
 # BALATERO MOLLEWEIDE TODO
 
-- install my personal projects to ~/code
+- i;nstall my personal projects to ~/code
 
 - use lua boilerplate to create local plugin ~/code/plugin.nvim 
     https://github.com/molleweide/neovim-lua-plugin-boilerplate
@@ -11,6 +11,8 @@ mac batteri https://duckduckgo.com/?q=mac+byta+batteri+stockholm&ia=web
 
 watch >> https://www.youtube.com/watch?v=apyV4v7x33o&list=PLep05UYkc6wSgBFseCsRBSQQ1Fmf3eRa8&index=1
 
+- encrypt/decrypt single file with gpg
+
 - zoom https://intra.kth.se/en/it/kth-videoconferencing/zoom/ladda-ned-och-instal/ladda-ner-zoom-klienten-1.879007
 
 - export browser bookmarks
@@ -19,6 +21,7 @@ watch >> https://www.youtube.com/watch?v=apyV4v7x33o&list=PLep05UYkc6wSgBFseCsRB
 - pm > branches
     molleweide
     thesis
+    ssh into server.
 
 - boa skor
 
@@ -29,8 +32,6 @@ watch >> https://www.youtube.com/watch?v=apyV4v7x33o&list=PLep05UYkc6wSgBFseCsRB
 - disable > linux shutdown command-U ??!!!!
 
 - netrw plugin
-
-- vim https://github.com/vlime/vlime#quickstart
 
     vim-rhubarb / neogit / git cli !!!
 - nyxt
@@ -165,7 +166,7 @@ tridactyl, vim-vixen, webkitten
 
 # SET PERMISSIONS INSTALLER/
 
-chmod x+u to change permision allow run new file
+chmod u+x to change permision allow run new file
 
 # THEME / WALLP
 
