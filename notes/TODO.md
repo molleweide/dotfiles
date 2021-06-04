@@ -1,26 +1,31 @@
 # BALATERO MOLLEWEIDE TODO
 
-- neomutt installer script.
 
-- i;nstall my personal projects to ~/code
+- neomutt mpop telia mail w/gpg
+
+- install my personal projects to ~/code
 
 - use lua boilerplate to create local plugin ~/code/plugin.nvim 
     https://github.com/molleweide/neovim-lua-plugin-boilerplate
     <!-- using .naming on folders is actually good because it makes things more -->
     <!-- clear -->
 
-mac batteri https://duckduckgo.com/?q=mac+byta+batteri+stockholm&ia=web
+- mac batteri https://duckduckgo.com/?q=mac+byta+batteri+stockholm&ia=web
+
+    https://support.apple.com/repair
+
+    https://macpatric.com/products/dags-for-nytt-batteribyte
+    https://ifixinj.com/nj/stockholm/
+    https://www.macreparation.se/butik/
+    https://www.lagaiphonestockholm.nu/tjanster/
+    https://www.datorreparation.se/macreparation
+
 
 - browser terminal themes.
     https://chrome.google.com/webstore/detail/devtools-theme-gruvbox-da/njcgdakjdifgccdgnoiphpnihcfopcmj
 
-- zathura pdf viewer 
+- macports >>> zathura pdf viewer 
     https://ports.macports.org/port/zathura/summary
-
-- scnvim lecture 
-    https://www.youtube.com/watch?v=PJdyTTZERYs
-
-- encrypt/decrypt single file with gpg
 
 - zoom 
     https://intra.kth.se/en/it/kth-videoconferencing/zoom/ladda-ned-och-instal/ladda-ner-zoom-klienten-1.879007
