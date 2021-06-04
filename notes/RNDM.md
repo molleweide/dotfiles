@@ -1,8 +1,7 @@
 # RNDM
 
-this is pretty fucking cool dude because his is something that is sng 
-to make it so that we can write faster than the lightning industri
-skaodespelare maongsidig action scherriff naogon typ av ansvarstagare
-i sin hemstad mongolisk buddhist. rysk medborgare samma aor som han
-blev serbisk medborgare. putin aer ocksao intresserad av dessa typer av
-kampsport.
+we need scape goats whe need to find who's to blame if
+you confirm if china confirmed that it came from the lab
+and it is not gonna change in the security protocols
+or were still gonna beef up the security just because it is
+required

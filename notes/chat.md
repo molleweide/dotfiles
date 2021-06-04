@@ -1,13 +1,28 @@
 # CHAT
 
+# TMUXINATOR 
+
+`tn start chat`
+
 # TERMINAL UI
 
 - vim chat https://github.com/throughnothing/vimchat
 
+- sms
+    https://github.com/aarnhub/python-sms-sender
+
+- imessage
+    https://github.com/CamHenlin/imessageclient
+    https://github.com/linjunpop/imessage
+    https://github.com/chrisfsampaio/imsg
+
 - signal 
-    https://github.com/derricw/siggo
-    https://github.com/boxdot/gurk-rs
-    https://github.com/isamert/scli
+
+    java    https://github.com/AsamK/signal-cli
+    go      https://github.com/derricw/siggo
+    rust    https://github.com/boxdot/gurk-rs
+    python  https://github.com/isamert/scli
+    python  https://github.com/jwoglom/signal-curses
 
 - telegram https://github.com/paul-nameless/tg
 
