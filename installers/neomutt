@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+# NEOMUTT
+
+function install_muttwizard() {
+  local gith="https://github.com"
+  local proj="LukeSmithxyz/mutt-wizard"
+  local dest=$HOME/code/mutt-wizard
+
+  git clone $gith/$proj $dest
+
+  pushd $dest> /dev/null 2>&1
+  sudo make install
+  popd $dest> /dev/null 2>&1
+}
+
+if is_macos; then
+  require_installer package-manager
+
+
+  brew install neomutt curl isync msmtp pass
+  install_muttwizard
+fi
+

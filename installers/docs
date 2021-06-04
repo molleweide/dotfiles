@@ -7,6 +7,10 @@ source "${BASH_SOURCE%/*}/shared.sh"
 # todo
 #   - pandoc
 #     https://github.com/jgm/pandoc/blob/master/INSTALL.md
+#
+#   - zathura
+#     https://ports.macports.org/port/zathura/summary
+
 
 require_installer package-manager
 

@@ -1,5 +1,7 @@
 # BALATERO MOLLEWEIDE TODO
 
+- neomutt installer script.
+
 - i;nstall my personal projects to ~/code
 
 - use lua boilerplate to create local plugin ~/code/plugin.nvim 
@@ -9,11 +11,19 @@
 
 mac batteri https://duckduckgo.com/?q=mac+byta+batteri+stockholm&ia=web
 
-watch >> https://www.youtube.com/watch?v=apyV4v7x33o&list=PLep05UYkc6wSgBFseCsRBSQQ1Fmf3eRa8&index=1
+- browser terminal themes.
+    https://chrome.google.com/webstore/detail/devtools-theme-gruvbox-da/njcgdakjdifgccdgnoiphpnihcfopcmj
+
+- zathura pdf viewer 
+    https://ports.macports.org/port/zathura/summary
+
+- scnvim lecture 
+    https://www.youtube.com/watch?v=PJdyTTZERYs
 
 - encrypt/decrypt single file with gpg
 
-- zoom https://intra.kth.se/en/it/kth-videoconferencing/zoom/ladda-ned-och-instal/ladda-ner-zoom-klienten-1.879007
+- zoom 
+    https://intra.kth.se/en/it/kth-videoconferencing/zoom/ladda-ned-och-instal/ladda-ner-zoom-klienten-1.879007
 
 - export browser bookmarks
     https://support.brave.com/hc/en-us/articles/360019782291-How-do-I-import-or-export-browsing-data-

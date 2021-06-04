@@ -10,6 +10,15 @@ https://github.com/tj/commander.js/
 https://roelofjanelsinga.com/articles/building-cli-applications-with-go/
 https://dzone.com/articles/how-to-create-a-cli-in-go-in-few-minutes
 
+# fast nav
+
+https://www.redhat.com/sysadmin/cli-speedup
+https://askubuntu.com/questions/45521/how-to-navigate-long-commands-faster
+https://ostechnix.com/use-pushd-popd-dirs-commands-faster-cli-navigation/
+
+
+https://github.com/mrdogebro/quicknav
+
 # ruby
 
 https://www.rubyguides.com/2018/12/ruby-argv/
