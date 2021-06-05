@@ -1,5 +1,10 @@
 # BALATERO MOLLEWEIDE TODO
 
+- dotfiles >> windows/macos/linux
+    great installer script that checks for each os
+
+- wtf https://github.com/andsens/homeshick
+
 - cheat.sh
 
 - keepass vs bitwarden https://www.youtube.com/results?search_query=password+management+bitwarden+vs
