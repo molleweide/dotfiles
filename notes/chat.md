@@ -10,11 +10,15 @@
 
 - sms
     https://github.com/aarnhub/python-sms-sender
+    https://github.com/mtdevss/terminal-text
 
 - imessage
     https://github.com/CamHenlin/imessageclient
     https://github.com/linjunpop/imessage
     https://github.com/chrisfsampaio/imsg
+
+- whatsapp
+    https://github.com/zvovov/whatsapp-web
 
 - signal 
 

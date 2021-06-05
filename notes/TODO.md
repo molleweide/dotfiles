@@ -1,8 +1,8 @@
 # BALATERO MOLLEWEIDE TODO
 
-- keepass vs bitwarden https://www.youtube.com/results?search_query=password+management+bitwarden+vs
+- cheat.sh
 
-- vim chat https://github.com/throughnothing/vimchat
+- keepass vs bitwarden https://www.youtube.com/results?search_query=password+management+bitwarden+vs
 
 - neomutt mpop telia mail w/gpg
 
