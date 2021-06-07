@@ -2,20 +2,42 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-# Spreadsheets
+# SPREADSHEETS
+
+function install_and_build_scim() {
+    local install_path=$HOME/code/sc-im
+    local git_src="https://github.com/andmarti1424/sc-im"
+
+    if [ ! -d $install_path ]; then
+        git clone $git_src $install_path
+        pushd $install_path > /dev/null 2>&1
+        make -C src install # Edit src/Makefile according to your system and needs
+        popd > /dev/null 2>&1
+    else
+        dotsay "+ $install_path already exists"
+    fi
+}
 
 require_installer package-manager
 
 if is_macos; then
-    brew tap nickolasburr/pfa
-    brew install sc-im
-    # Important !!:
-    # Please keep your config file in ~/.config/sc-im/scimrc, and not in
-    # ~/.scimrc, nor .config/scimrc
 
+    # sc-im dependencies for building.
+    #
+    # libxlsxreader (not brew)
+    #     https://github.com/AsperaGmbH/xlsx-reader
+    brew install ncurses gnuplot libxml2 libzip
+    # install_and_build_scim
+
+
+    # basic brew install | eg. no gnuplot...
+    # brew tap nickolasburr/pfa
+    # brew install sc-im
+
+    symlink_dotfile scimrc ~/.config/sc-im/scimrc
 
     # configs
-# elif is_linux; then
+    # elif is_linux; then
     # build sc-im
     #   https://github.com/andmarti1424/sc-im
 fi
