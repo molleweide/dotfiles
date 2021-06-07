@@ -9,6 +9,10 @@ require_installer package-manager
 if is_macos; then
     brew tap nickolasburr/pfa
     brew install sc-im
+    # Important !!:
+    # Please keep your config file in ~/.config/sc-im/scimrc, and not in
+    # ~/.scimrc, nor .config/scimrc
+
 
     # configs
 # elif is_linux; then
