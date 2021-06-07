@@ -1,5 +1,16 @@
 # email
 
+## STRATEGY
+
+1. how do i log into telia web mail??
+    + who pays for the mail service?
+    + how did you guys create those for us?
+2. telia pop neomutt
+3. get proton mail imap
+4. redirect telia mail to proton mail.
+
+## LEARING
+
 - ssh
     https://odysee.com/@jeremysITlab:0/free-ccna-ssh-day-42-ccna-200-301:9
 

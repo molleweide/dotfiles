@@ -22,8 +22,9 @@ require_installer package-manager
 
 if is_macos; then
 
+    # https://github.com/andmarti1424/sc-im
+
     # sc-im dependencies for building.
-    #
     # libxlsxreader (not brew)
     #     https://github.com/AsperaGmbH/xlsx-reader
     brew install ncurses gnuplot libxml2 libzip

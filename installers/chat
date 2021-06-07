@@ -4,16 +4,30 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 # CHAT
 
-# build signal messenger
-# build telegram?
-
 require_installer package-manager
 
-brew_install irssi
-symlink_dotfile irssi ~/.irssi
+function install_imessageclient() {
+    local install_path=$HOME/code/imessageclient
+    local git_src="https://github.com/CamHenlin/imessageclient.git"
+
+    if [ ! -d $install_path ]; then
+        git clone $git_src $install_path
+        pushd $install_path > /dev/null 2>&1
+        npm install
+        popd > /dev/null 2>&1
+    else
+        dotsay "+ $install_path already exists"
+    fi
+}
 
 cargo install --git https://github.com/boxdot/gurk-rs
 
-brew tap paul-nameless/homebrew-repo
-brew install tg
+if is_macos; then
+    brew_install irssi
+    brew tap paul-nameless/homebrew-repo
+    brew install tg
+    install_imessageclient
+    # elif is_linux; then
+fi
 
+symlink_dotfile irssi ~/.irssi

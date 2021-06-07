@@ -8,40 +8,50 @@
 
 - vim chat https://github.com/throughnothing/vimchat
 
-- sms
+## SMS
+
+    https://nowsms.com/sending-sms-from-command-line
+    https://github.com/tohenk/node-sms-terminal
     https://github.com/sdushantha/tmpsms
     https://github.com/aarnhub/python-sms-sender
     https://github.com/mtdevss/terminal-text
 
-- imessage
+## IMESSAGE
     js      https://github.com/CamHenlin/imessageclient
     rust    https://github.com/linjunpop/imessage
     ruby    https://github.com/chrisfsampaio/imsg
 
-- whatsapp
+## DISCORD
+
+    https://github.com/atlx/discord-term
+
+## SLACK
+
+    https://github.com/erroneousboat/slack-term
+
+## WHATSAPP
     https://github.com/zvovov/whatsapp-web
 
-- signal 
+## SIGNAL 
 
-    java    https://github.com/AsamK/signal-cli
-    go      https://github.com/derricw/siggo
-    rust    https://github.com/boxdot/gurk-rs
-    python  https://github.com/isamert/scli
-    python  https://github.com/jwoglom/signal-curses
+    java            https://github.com/AsamK/signal-cli
+    go              https://github.com/derricw/siggo
+    rust    good    https://github.com/boxdot/gurk-rs       
+    python          https://github.com/isamert/scli
+    python          https://github.com/jwoglom/signal-curses
 
-- telegram https://github.com/paul-nameless/tg
+## TELEGRAM https://github.com/paul-nameless/tg
 
-- facebook https://github.com/Alex-Rose/fb-messenger-cli
+## FACEBOOK https://github.com/Alex-Rose/fb-messenger-cli
 
-- instagram cli https://github.com/mathdroid/igdm-cli
+## INSTAGRAM CLI https://github.com/mathdroid/igdm-cli
 
-# other
+## OTHER
 
 https://techlog360.com/open-source-messenger-voip-android-apps/
 
 - matrix
     https://github.com/matrix-org
-
 
 --------------------------------
 

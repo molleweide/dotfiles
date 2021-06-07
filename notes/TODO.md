@@ -1,10 +1,21 @@
 # BALATERO MOLLEWEIDE TODO
 
-- sym scimrc
+- irc!!!!
+    https://www.youtube.com/results?search_query=irssi
+
+- traeffa ARIEL och TANI
+
+- start watching RSD
+
+https://www.youtube.com/results?search_query=neovim+snippets
+https://www.youtube.com/watch?v=ejOF_N8Hd04
+
+http://vimcasts.org/episodes/meet-ultisnips/
 
 spotlight shortcuts https://support.apple.com/guide/mac-help/spotlight-keyboard-shortcuts-mh26783/mac
 
 - dotfiles >> windows/macos/linux
+    https://github.com/ch99q/dotfiles
     great installer script that checks for each os
 
 - wtf https://github.com/andsens/homeshick
@@ -30,7 +41,6 @@ spotlight shortcuts https://support.apple.com/guide/mac-help/spotlight-keyboard-
     https://www.lagaiphonestockholm.nu/tjanster/
     https://www.datorreparation.se/macreparation
 
-
 - browser terminal themes.
     https://chrome.google.com/webstore/detail/devtools-theme-gruvbox-da/njcgdakjdifgccdgnoiphpnihcfopcmj
 
@@ -40,9 +50,6 @@ spotlight shortcuts https://support.apple.com/guide/mac-help/spotlight-keyboard-
 
 - zoom 
     https://intra.kth.se/en/it/kth-videoconferencing/zoom/ladda-ned-och-instal/ladda-ner-zoom-klienten-1.879007
-
-- export browser bookmarks
-    https://support.brave.com/hc/en-us/articles/360019782291-How-do-I-import-or-export-browsing-data-
 
 - pm > branches
     molleweide
@@ -60,14 +67,10 @@ spotlight shortcuts https://support.apple.com/guide/mac-help/spotlight-keyboard-
 - netrw plugin
 
     vim-rhubarb / neogit / git cli !!!
-- nyxt
-    sandbox https://github.com/atlas-engineer/nyxt/blob/master/documents/README.org
 - dualboot
 - linux if installed skip..
 
 - rm eg. garageband / logic
-- reaper
-- haskell https://github.com/search?q=vim+haskell&type=Repositories
 
 - virtualbox windows
 
@@ -79,15 +82,11 @@ spotlight shortcuts https://support.apple.com/guide/mac-help/spotlight-keyboard-
     https://neovim.discourse.group/t/cf-change-backw-how-can-i-include-start-character/532
     https://stackoverflow.com/questions/8994276/how-to-define-a-new-vim-operator-with-a-parameter
 
-# vim
-
 # OTHER
 
 - gpg
 - ssh
-
 libreoffice
-
 lenode
 
 - check out lukes list of stuff.
@@ -96,11 +95,10 @@ bitwarden
 
 - create khanacademy account
 
-
-
 use personal vimium extension!!
 
 4. show hidden files in dialog boxes / os modals?
+    <cmd-.>
 
 # OPEN ON START UP
     alacritty > config?
@@ -108,31 +106,14 @@ use personal vimium extension!!
     hammerspoon > init.lua
     syncthing 
 
-
 # VIMAC
 
 - doesn't show in top bar in latest version (mojave)
 - is it to use .config/vimac?
-- 
-
-# QUESTIONS
-
-- stack/reddit
-    turn off app-tips / disable all but
-    only allow from calendar!!
-
------------
------------
-
-am i using luajit head now??!!
 
 - add reaper cli to path
 
 git clone reaper docs to reaper ~/REAPER
-
-# test vim-vixen firefox
-
-mirror Less commands to my Morerc
 
 read through yabay man pages >> how unstack?
 
@@ -142,8 +123,6 @@ tell application "System Events"
     # set picture to POSIX file "///"
 end tell
 ```
-
-# WEMUX
 
 https://linuxhint.com/100_essential_linux_commands/
 
@@ -167,3 +146,12 @@ https://apple.stackexchange.com/questions/75081/automatically-change-os-x-deskto
 https://stackoverflow.com/questions/5550895/shell-script-changing-desktop-wallpaper
 https://www.howtogeek.com/258461/how-to-use-a-screensaver-as-your-background-on-os-x/
 https://stackoverflow.com/questions/431205/how-can-i-programmatically-change-the-background-in-mac-os-x
+
+- nyxt
+    sandbox https://github.com/atlas-engineer/nyxt/blob/master/documents/README.org
+
+# QUESTIONS
+
+- stack/reddit
+    turn off app-tips / disable all but
+    only allow from calendar!!
