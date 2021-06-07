@@ -1,5 +1,9 @@
 # BALATERO MOLLEWEIDE TODO
 
+- sym scimrc
+
+spotlight shortcuts https://support.apple.com/guide/mac-help/spotlight-keyboard-shortcuts-mh26783/mac
+
 - dotfiles >> windows/macos/linux
     great installer script that checks for each os
 
@@ -10,8 +14,6 @@
 - keepass vs bitwarden https://www.youtube.com/results?search_query=password+management+bitwarden+vs
 
 - neomutt mpop telia mail w/gpg
-
-- install my personal projects to ~/code
 
 - use lua boilerplate to create local plugin ~/code/plugin.nvim 
     https://github.com/molleweide/neovim-lua-plugin-boilerplate
@@ -34,6 +36,7 @@
 
 - macports >>> zathura pdf viewer 
     https://ports.macports.org/port/zathura/summary
+    https://github.com/zegervdv/homebrew-zathura
 
 - zoom 
     https://intra.kth.se/en/it/kth-videoconferencing/zoom/ladda-ned-och-instal/ladda-ner-zoom-klienten-1.879007
@@ -139,36 +142,10 @@ tell application "System Events"
     # set picture to POSIX file "///"
 end tell
 ```
-# yabai mode
-
-add to vimspoon
--> yabai mode
-
-# BUILD 
-
-build neovim
-build karabiner
-
-# automate ke complex.
-
-this is just such a beautiful terminal editor. i really like this.
-,
-
-# fork nightly theme
-
-# set default branches on github >> molleweide
 
 # WEMUX
 
 https://linuxhint.com/100_essential_linux_commands/
-
-#pyenv
-
-https://github.com/pyenv/pyenv/issues/1746
-https://github.com/pyenv/pyenv/issues/1643
-https://github.com/pyenv/pyenv/issues/1764
-https://stackoverflow.com/questions/50036091/pyenv-zlib-error-on-macos
-https://koji-kanao.medium.com/install-python-3-8-0-via-pyenv-on-bigsur-b4246987a548
 
 # convert subdir into git module
 https://gist.github.com/amomin/b0df11ac4607f15203ac
@@ -179,13 +156,6 @@ https://stackoverflow.com/questions/12514197/convert-a-git-folder-to-a-submodule
 https://stackoverflow.com/questions/1365541/how-to-move-files-from-one-git-repo-to-another-not-a-clone-preserving-history?noredirect=1&lq=1
 https://stackoverflow.com/questions/21205297/splitting-out-a-sub-directory-in-a-git-repo-into-its-own-repo?noredirect=1&lq=1
 https://stackoverflow.com/questions/30325758/git-conversion-of-a-subdirectory-to-a-submodule
-
-# browser vim
-
-https://github.com/search?o=desc&q=vim+web+browser&s=stars&type=Repositories
-tridactyl, vim-vixen, webkitten
-
-# wemux split monitor rogue mode
 
 # SET PERMISSIONS INSTALLER/
 

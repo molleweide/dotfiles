@@ -107,6 +107,7 @@ vnoremap <leader>p "_dP
 
 " quicker save
 nnoremap <leader>cc :w<CR>
+nnoremap <leader>, :w<CR>
 
 " space on control L
 inoremap <C-l> <Space>

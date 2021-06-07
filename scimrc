@@ -1,0 +1,14 @@
+" Recalculate values automatically
+set autocalc=1
+
+" Enable half-page scrolling
+half_page_scroll
+
+" Ignore case while searching using '/'
+set ignorecase
+
+" Do not move cursor after entering data in a cell
+set newline_action = 0
+
+" Do not overlap if cell contents is wider than the cell
+set overlap=0

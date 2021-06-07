@@ -1,5 +1,8 @@
 # excel vim
 
+- scimrc use vimscript syntax
+
+
 vim excel
 https://github.com/andmarti1424/sc-im
 https://github.com/godlygeek/tabular

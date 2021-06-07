@@ -1,6 +1,8 @@
 # Shell aliases
 # alias rzsh="source ~/.zshrc"
 alias k="clear"
+alias scm="sc-im"
+alias sg="gurk"
 alias mm="man man"
 alias drs="dirs -v"
 alias r="ranger"

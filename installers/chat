@@ -11,3 +11,9 @@ require_installer package-manager
 
 brew_install irssi
 symlink_dotfile irssi ~/.irssi
+
+cargo install --git https://github.com/boxdot/gurk-rs
+
+brew tap paul-nameless/homebrew-repo
+brew install tg
+

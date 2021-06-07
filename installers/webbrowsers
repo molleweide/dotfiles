@@ -31,8 +31,12 @@ function install_from_git_to_code() {
 }
 
 function install_nyxt_macos() {
-  mkdir -p ~/common-lisp
-  git clone https://github.com/atlas-engineer/nyxt ~/common-lisp/nyxt
+  if [ ! -d ~/common-lisp ]; then
+    mkdir -p ~/common-lisp
+    git clone https://github.com/atlas-engineer/nyxt ~/common-lisp/nyxt
+  else
+    dotsay "+ ~/common-lisp already exists"
+  fi
 }
 
 function install_aur_libfixposix() {
@@ -66,6 +70,7 @@ if is_macos; then
   install_from_git_to_code molleweide vimium
   # ONLY KEYS BROWSERS
   # qutebrowser
+  brew install -- cask qutebrowser
   install_nyxt_macos
 fi
 
