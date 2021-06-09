@@ -19,8 +19,6 @@
 
 ## BRAVE
 
-try surfingkeys
-
 - export settings
     https://www.reddit.com/r/brave_browser/comments/i751xr/how_to_backup_brave/
     https://www.reddit.com/r/brave_browser/comments/coscxv/full_brave_backup/
@@ -35,4 +33,6 @@ try surfingkeys
     https://www.techwalla.com/articles/how-to-transfer-all-firefox-settings-and-add-ons-to-a-new-computer
 
 
-│
+## firenvim
+
+https://github.com/glacambre/firenvim#building-a-firenvim-specific-config│

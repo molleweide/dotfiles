@@ -48,6 +48,7 @@ vim
   :disableForApp('Tuple')
   :disableForApp('Visual Studio Code')
   :disableForApp('iTerm')
+  :disableForApp('iTerm')
   :disableForApp('iTerm2')
   :disableForApp('VirtualBox VM')
   :disableForApp('zoom.us')
@@ -70,7 +71,7 @@ vim:shouldShowAlertInNormalMode(true)
 vim:setAlertFont("InconsolataGo Bold Nerd Font Complete")
 
 -- Enter normal mode by typing a key sequence
-vim:enterWithSequence('jk', 200)
+vim:enterWithSequence('zm', 200)
 -- if you want to bind a single key to entering vim, remove the
 -- :enterWithSequence('jk') line above and uncomment the bindHotKeys line
 -- below:

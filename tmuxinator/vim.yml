@@ -18,8 +18,8 @@ windows:
       panes:
         -
         -
-  - vimium:
-      root: ~/code/vimium
+  - surf:
+      root: ~/code/Surfingkeys
       panes:
         -
   - vimac:

@@ -164,28 +164,21 @@ setkey eob G
 
 % unsetkey    s
 % setkey      "up"        s
-%
 % unsetkey    t
 % setkey      "down"      t
-%
 % unsetkey    g
 % setkey      "bob"       gg
-%
 % unsetkey    G
 % setkey      "eob"       G
-%
 % unsetkey    i
 % setkey      "page_left" i
-%
 % unsetkey    e
 % setkey      "page_right"    e
 %
-%
-% % Solarized color scheme
-% %color normal gray brightblack
-% color status blue black
-% %color underline green brightblack
-% %color overstrike red brightblack
+%color normal gray brightblack
+color status blue black
+%color underline green brightblack
+%color overstrike red brightblack
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
