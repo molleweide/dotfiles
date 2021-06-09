@@ -10,10 +10,15 @@ https://riseup.net/en/security/message-security/openpgp/best-practices
 https://www.linuxbabe.com/security/a-practical-guide-to-gpg-part-1-generate-your-keypair
 https://medium.com/@acparas/gpg-quickstart-guide-d01f005ca99
 https://github.com/bfrg/gpg-guide
+https://opensource.com/article/19/4/gpg-subkeys-ssh-manage
 
 ## neomutt
 
 https://www.youtube.com/watch?v=2jMInHnpNfQ
+
+
+
+
 
 # cerd macos guide https://cerb.ai/guides/mail/gpg-setup-on-mac/
 

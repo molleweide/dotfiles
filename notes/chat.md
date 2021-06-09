@@ -1,5 +1,16 @@
 # CHAT
 
+## WINNER
+
+>> https://github.com/paul-nameless/tg
+
+you can edit messages with vim here.
+
+refactor into a generalized messaging client.
+
+>> use both telegram or signal
+
+
 # TMUXINATOR 
 
 `tn start chat`
@@ -18,8 +29,9 @@
 
 ## IMESSAGE
     js      https://github.com/CamHenlin/imessageclient
-    rust    https://github.com/linjunpop/imessage
-    ruby    https://github.com/chrisfsampaio/imsg
+
+        need to fork imessagemodule and understand
+        why it freezes on send message.
 
 ## DISCORD
 
@@ -41,6 +53,8 @@
     python          https://github.com/jwoglom/signal-curses
 
 ## TELEGRAM https://github.com/paul-nameless/tg
+
+    
 
 ## FACEBOOK https://github.com/Alex-Rose/fb-messenger-cli
 

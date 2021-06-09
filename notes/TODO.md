@@ -1,5 +1,46 @@
 # BALATERO MOLLEWEIDE TODO
 
+- fix folds
+    
+    why aren't folds working?!
+
+- articles on gpg management
+    https://dev.to/setevoy/linux-gpg-keys-the-pass-passwords-manager-and-passwords-import-from-the-keepass-database-1j8f
+    https://www.cloudsavvyit.com/8817/how-to-use-pass-a-command-line-password-manager-for-linux-systems/
+    https://pvera.net/posts/secure-passwords-pass-pgp
+    https://gist.github.com/flbuddymooreiv/a4f24da7e0c3552942ff
+    https://medium.com/@tomferon/sharing-passwords-with-git-gpg-and-pass-628c2db2a9de
+
+- SURFINGKEYS
+
+    disable vim.spoon in browsers if surfingkeys with ace works
+
+    firenvim
+
+    fork >> improve caret cursor
+    fix: 
+        1. only show thick cursor if start == end
+        2. remove/make transparen the cursor when
+            selecting a chunk of text so it is easy
+            to see which text is actually being selected
+            or yanked.
+
+- https://www.reddit.com/r/unixporn/comments/fiydpp/dwm_mac_functional_dwm_dmenu_st_setup_on_macos/
+
+-   gpg pass passmenu dmenu pass-otp dmenu-mac pam-gmupg 
+    qtpass (gui)
+
+- tg
+    pyenv > switch python version
+    locally to project??
+
+- wtf terminal daw https://github.com/ocdy1001/termdaw
+
+https://www.conventionalcommits.org/en/v1.0.0/
+
+- password management gpg
+    >>> great search phrase for youtube.
+
 - irc!!!!
     https://www.youtube.com/results?search_query=irssi
 
@@ -155,3 +196,6 @@ https://stackoverflow.com/questions/431205/how-can-i-programmatically-change-the
 - stack/reddit
     turn off app-tips / disable all but
     only allow from calendar!!
+
+- how do I navigate dropdown faster 
+    ie. ctrl n/p
