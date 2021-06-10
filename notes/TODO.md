@@ -1,6 +1,13 @@
 # BALATERO MOLLEWEIDE TODO
 
+
+
 - surfingkeys
+
+    need `zt` command for reading with caret mode
+
+    how scroll embedded code fences
+
     make web-search-vim mirror surfingkeys
     commands so that you can have the same
     default bindings
