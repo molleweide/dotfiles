@@ -1,14 +1,7 @@
 # CHAT
 
-## WINNER
+https://github.com/wireapp
 
->> https://github.com/paul-nameless/tg
-
-you can edit messages with vim here.
-
-refactor into a generalized messaging client.
-
->> use both telegram or signal
 
 
 # TMUXINATOR 

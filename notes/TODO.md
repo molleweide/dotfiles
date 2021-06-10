@@ -1,5 +1,10 @@
 # BALATERO MOLLEWEIDE TODO
 
+- surfingkeys
+    make web-search-vim mirror surfingkeys
+    commands so that you can have the same
+    default bindings
+
 - gpg
     create my master key
         how store??
