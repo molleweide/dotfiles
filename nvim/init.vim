@@ -582,6 +582,7 @@ call luaeval('require("statusline")')
 " inoremap <silent><expr> <CR>      compe#confirm('<CR>')
 
 let g:UltiSnipsExpandTrigger = "<nop>"
+let g:UltiSnipsEditSplit = "vertical"
 call luaeval('require("custom_snippets")')
 
 " ================= which key ==================
