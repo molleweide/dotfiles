@@ -67,7 +67,11 @@ if is_macos; then
   # CONSUMER BROWSERS
   # firefox
   # brew_install brave
-  install_from_git_to_code molleweide vimium
+
+  # surfingkeys is much better than vimium
+  # install_from_git_to_code molleweide vimium
+  install_from_git_to_code molleweide Surfingkeys
+
   # ONLY KEYS BROWSERS
   # qutebrowser
   brew install -- cask qutebrowser

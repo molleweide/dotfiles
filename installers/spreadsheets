@@ -28,7 +28,7 @@ if is_macos; then
     # libxlsxreader (not brew)
     #     https://github.com/AsperaGmbH/xlsx-reader
     brew install ncurses gnuplot libxml2 libzip
-    # install_and_build_scim
+    install_and_build_scim
 
 
     # basic brew install | eg. no gnuplot...

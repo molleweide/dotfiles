@@ -596,5 +596,3 @@ call SourceIfExists('~/.config/nvim/layers/private/config.vim')
 
 " Load molleweide configs
 call SourceIfExists('~/.config/nvim/layers/molleweide/config.vim')
-
-

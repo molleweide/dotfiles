@@ -39,10 +39,11 @@ nnoremap <silent> <Leader>6 <C-^>
 " ================ Aliases ==========================
 
 nnoremap <silent> <Leader>ki :e ~/.dotfiles/nvim/init.vim<CR>
-nnoremap <silent> <Leader>knR :e ~/.dotfiles/notes/RNDM.md<CR>
-nnoremap <silent> <Leader>knt :e ~/.dotfiles/notes/TODO.md<CR>
+nnoremap <silent> <Leader>knR :e ~/notes/RNDM.md<CR>
+nnoremap <silent> <Leader>knt :e ~/notes/TODO.md<CR>
+nnoremap <silent> <Leader>knf :e ~/notes/tfab.md<CR>
 nnoremap <silent> <Leader>kv :e ~/.dotfiles/nvim/layers/molleweide/config.vim<CR>
-nnoremap <silent> <Leader>kV :e ~/.dotfiles/notes/build-nvim.md<CR>
+nnoremap <silent> <Leader>kV :e ~/notes/build-nvim.md<CR>
 nnoremap <silent> <Leader>kt :e ~/.dotfiles/tmux.conf<CR>
 nnoremap <silent> <Leader>kzz :e ~/.dotfiles/zshrc<CR>
 nnoremap <silent> <Leader>kza :e ~/.dotfiles/zsh/custom/aliases.zsh<CR>
@@ -60,7 +61,7 @@ nnoremap <silent> <Leader>kqb :e ~/code/qmk_firmware/keyboards/ergodox_ez/keymap
 
 " =============== aliases: reaper  ====================
 
-nnoremap <silent> <Leader>knr :e ~/.dotfiles/notes/reaper.md<CR>
+nnoremap <silent> <Leader>knr :e ~/notes/reaper.md<CR>
 nnoremap <silent> <Leader>krr :e ~/.dotfiles/installers/reaper<CR>
 
 nnoremap <silent> <Leader>Rg :e ~/REAPER/app/reaper-6.23.0/Scripts/reaper-keys/definitions/defaults/global.lua<CR>
@@ -107,7 +108,8 @@ vnoremap <leader>p "_dP
 
 " quicker save
 nnoremap <leader>cc :w<CR>
-nnoremap <leader>, :w<CR>
+nnoremap <leader>. :w<CR>
+nnoremap cx :w<CR>
 
 " space on control L
 inoremap <C-l> <Space>
@@ -177,4 +179,8 @@ call cyclist#add_listchar_option_set('busy', {
         \ 'conceal': '┊',
         \ 'nbsp': '☠',
         \ })
+
+
+" ======== snippets  ========
+nnoremap <leader>S :Snippets<CR>
 

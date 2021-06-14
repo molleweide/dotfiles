@@ -50,17 +50,20 @@ windows:
       panes:
         - cd ~/.dotfiles && vim
         - cd ~/.dotfiles
-  - quad:
+  - notes:
       panes:
-        - cd ~/code/kmonad/keymap/user/molleweide && vim
-        - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && vim
-        - cd ~/code/kmonad
-        - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo
-  - split:
-      layout: main-vertical
-      panes:
-        - cd ~/code/kmonad/keymap/user/molleweide && vim
-        - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && vim
+        - cd ~/notes && vim
+  # - quad:
+  #     panes:
+  #       - cd ~/code/kmonad/keymap/user/molleweide && vim
+  #       - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && vim
+  #       - cd ~/code/kmonad
+  #       - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo
+  # - split:
+  #     layout: main-vertical
+  #     panes:
+  #       - cd ~/code/kmonad/keymap/user/molleweide && vim
+  #       - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && vim
   - kmon:
       root: ~/code/kmonad
       layout: main-vertical
@@ -75,15 +78,15 @@ windows:
         - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo && vim
         - cd ~/code/qmk_firmware/keyboards/ergodox_ez/keymaps/myergo
         -
-  - KEclx:
-      root: ~/code/KE-complex_modifications
-      panes:
-        -
-        -
-  - karb:
-      root: ~/code/Karabiner-Elements
-      panes:
-        -
+  # - KEclx:
+  #     root: ~/code/KE-complex_modifications
+  #     panes:
+  #       -
+  #       -
+  # - karb:
+  #     root: ~/code/Karabiner-Elements
+  #     panes:
+  #       -
   - hypr:
       root: ~/code/HyperKey.spoon
       panes:

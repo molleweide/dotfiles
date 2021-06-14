@@ -321,6 +321,10 @@ if is_macos; then
       brew_cask_install aerial
     }
 
+    install_docker() {
+      brew install --cask docker
+    }
+
     install_hazeover() {
       local url="https://hazeover.com/HazeOver.dmg"
       install_simple_dmg_copy "HazeOver" "$url"
@@ -334,7 +338,8 @@ if is_macos; then
     # install_bartender
     # install_better_touch_tool
     # install_dash
-    # install_dropbox
+    install_docker
+    install_dropbox
     install_firefox
     # install_focus
     # install_google_chrome

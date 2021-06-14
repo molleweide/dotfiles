@@ -25,6 +25,13 @@ alias vv="~/code/neovim/build/bin/nvim"
 alias 6="exec zsh"
 alias tfl="teensy_loader_cli -mmcu=atmega32u4 -w ergodox_ez_molleweide.hex"
 
+# DOCKER
+alias dk="docker"
+alias dkc="docker-compose"
+alias dkwp="docker-compose run --rm wpcli"
+
+
+
 # KARABINER
 alias karb="/Library/Application\ Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli"
 alias krb="open -a /Applications/Karabiner-Elements.app"
