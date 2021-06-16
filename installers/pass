@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+require_installer package-manager
+
+# PASS MANAGEMENT
+#
+# install pass and utilities
+#
+# PROGRAMS
+#
+# UNIX
+#     gpg
+#     pass passmenu
+#     pass-otp
+#     pam-gmupg (??)
+#     qtpass (gui)
+#
+# MACOS
+#     pinentry-mac
+#     dmenu-mac
+#
+# LINUX
+#     dmenu
+#
+# IOS
+#     passforios
+
+
+if is_macos; then
+
+  # BOTH MACOS AND LINUS
+  brew_install gpg
+  brew_install pass passmenu
+  brew_install pass-otp
+  brew_install pam-gmupg
+  brew_install qtpass
+
+  # ONLY MACOS
+  brew_install pinentry-mac
+  brew_install dmenu-mac # this should be moved !!
+
+elif is_linux; then
+
+  # BOTH MACOS AND LINUS
+  apt_install gpg
+  apt_install pass passmenu
+  apt_install pass-otp
+  apt_install pam-gmupg
+  apt_install qtpass
+
+  # ONLY LINUX
+  dmenu # this should be moved !!!
+
+
+fi
+
+# ONE OR THE OTHER..
+
+if is_macos; then
+  brew_cask_install alacritty
+  brew_install
+elif is_linux; then
+  apt_install
+  apt_install
+fi
+
