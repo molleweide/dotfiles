@@ -184,4 +184,3 @@ call cyclist#add_listchar_option_set('busy', {
 " ======== snippets  ========
 nnoremap <leader>S :Snippets<CR>
 nnoremap <leader>E :UltiSnipsEdit<CR>
-

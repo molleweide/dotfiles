@@ -593,7 +593,8 @@ call luaeval('require("which-key")')
 " Load Stripe-specific private config
 call SourceIfExists('~/.config/nvim/layers/private/config.vim')
 
-" ================= Private ======================
+" ================= molleweide ======================
 
 " Load molleweide configs
 call SourceIfExists('~/.config/nvim/layers/molleweide/config.vim')
+" call SourceIfExists('~/.config/nvim/layers/no-plugins.vim')
