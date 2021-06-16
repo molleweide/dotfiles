@@ -61,11 +61,7 @@ if command -v yarn >/dev/null 2>&1; then
   export PATH="$PATH:`yarn global bin`"
 fi
 
-# pynbuidfaid
-# export CFLAGS="-I$(brew --prefix openssl)/include -I$(xcrun --show-sdk-path)/usr/include" LDFLAGS="-L$(brew --prefix openssl)/lib"
-
-# export LDFLAGS="-L/usr/local/opt/zlib/lib"
-# export CPPFLAGS="-I/usr/local/opt/zlib/include"
-# export PKG_CONFIG_PATH="/usr/local/opt/zlib/lib/pkgconfig"
-# export SDKROOT=${XCODE_ROOT}/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk \
-# MACOSX_DEPLOYMENT_TARGET=10.14
+## Vim style ^W del word backwards
+autoload -U select-word-style
+select-word-style bash
+export WORDCHARS='.-'
