@@ -88,6 +88,17 @@ do
   source $file
 done
 
+# =========== Vim settings ================
+
+## Vim style ^W del word backwards
+# https://stackoverflow.com/questions/444951/zsh-stop-backward-kill-word-on-directory-delimiter/11200998#11200998
+#
+# Another option is to set WORDCHARS (non-alphanumeric chars treated as part of a word) to something that doesn't include /.
+#
+# You can also tweak this if you'd prefer ^w to break on dot, underscore, etc. In ~/.zshrc I have:
+
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
 # ======= RVM is a special snowflake and needs to be last ========
 if [ ! -f ~/.config/dotfiles/rbenv ]; then
   export PATH="$HOME/.rvm/bin:$PATH"
