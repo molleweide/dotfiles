@@ -319,6 +319,7 @@ Plug 'davidgranstrom/scnvim', { 'do': {-> scnvim#install() } } " supercollider f
 Plug 'tjdevries/train.nvim'          " vim motion practice game
 Plug 'rajasegar/vim-search-web'
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+Plug 'KabbAmine/vCoolor.vim'
 
 " Load private Stripe overlay packages
 call SourceIfExists('~/.config/nvim/layers/private/packages.vim')
