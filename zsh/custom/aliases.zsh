@@ -3,6 +3,7 @@
 alias k="clear"
 alias scm="sc-im"
 alias sg="gurk"
+alias nt="neomutt"
 alias mm="man man"
 alias drs="dirs -v"
 alias r="ranger"
@@ -41,6 +42,13 @@ alias kmolap="sudo ~/.dotfiles/kmonad/launchd_kmo_macbookpro.sh"
 alias kmolapT="kmonad ~/code/kmonad/keymap/user/molleweide/mbp.kbd -l debug"
 alias kmoez="sudo ~/.dotfiles/kmonad/launchd_kmo_ergo_ez.sh"
 alias kmoezT="kmonad ~/code/kmonad/keymap/user/molleweide/ez.kbd -l debug"
+
+# GPG
+alias gpglk="gpg --list-keys"
+alias gpglkp="gpg --list-public-keys"
+alias gpglks="gpg --list-secret-keys"
+alias gpge="gpg --edit-keys"
+
 
 
 
