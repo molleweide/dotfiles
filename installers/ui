@@ -7,4 +7,6 @@ if is_macos; then
 
   # uebersicht ui widgets
   # https://github.com/felixhageloh/uebersicht
+
+  symlink_dotfile bin/custom_launcher ~/.local/bin/custom_launcher
 fi

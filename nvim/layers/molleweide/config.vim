@@ -3,6 +3,7 @@
 " - rebind Q >> to ???
 "    i can always reach ex mode by `gQ`
 
+set path+=**
 
 " remap ESC to jk
 " works well w/qwerty and colemak

@@ -29,6 +29,10 @@ yabai -m config left_padding                 6
 yabai -m config right_padding                6
 yabai -m config window_gap                   6
 
+# configure to work with custom launcher under .local/bin
+yabai -m rule --add title='bin_custom_launcher' manage=off sticky=on layer=above border=off
+
+
 # kill any existing limelight process if one exists, before we launch a new one
 killall limelight &> /dev/null
 limelight &> /dev/null &
