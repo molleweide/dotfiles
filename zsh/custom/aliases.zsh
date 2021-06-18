@@ -1,37 +1,51 @@
 # Shell aliases
 # alias rzsh="source ~/.zshrc"
+
+# SHELL
+alias 6="exec zsh"
 alias k="clear"
-alias scm="sc-im"
-alias sg="gurk"
-alias nt="neomutt"
 alias mm="man man"
 alias drs="dirs -v"
 alias r="ranger"
-alias gcfls="git conflict"
-alias M="git checkout master"
-alias m="git checkout molleweide"
-alias dbm="rake db:migrate && RAILS_ENV=test rake db:migrate"
 alias l="ls -al"
+
+
+alias dbm="rake db:migrate && RAILS_ENV=test rake db:migrate"
 alias j=z # I'm used to autojump 'j' vs fasd 'z'
 alias less="less -r"
 alias sketch="magick $1 \( -clone 0 -negate -blur 0x5 \) \
   -compose colordodge -composite -modulate 100,0,100 -auto-level $2"
 alias srync="rsync -vrazh"
+alias emacs="TERM=xterm-24bit emacs -nw"
+alias scm="sc-im"
+
+# tmux
 alias tk="tmux kill-session"
 alias tn="tmuxinator"
-alias emacs="TERM=xterm-24bit emacs -nw"
+
+
+# VIM
 alias vim="nvim"
 alias v="nvim"
 alias vv="~/code/neovim/build/bin/nvim"
-alias 6="exec zsh"
+
+# GIT
+alias gcfls="git conflict"
+alias M="git checkout master"
+alias m="git checkout molleweide"
+
+# CHAT
+alias sg="gurk" # signal
+alias nt="neomutt" # email
+# tg for telegram
+
+# QMK
 alias tfl="teensy_loader_cli -mmcu=atmega32u4 -w ergodox_ez_molleweide.hex"
 
 # DOCKER
 alias dk="docker"
 alias dkc="docker-compose"
 alias dkwp="docker-compose run --rm wpcli"
-
-
 
 # KARABINER
 alias karb="/Library/Application\ Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli"

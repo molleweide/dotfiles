@@ -1,5 +1,8 @@
 inspect = hs.inspect.inspect
 
+local vimouse = require('vimouse')
+vimouse('cmd', 'm')
+
 local VimMode = hs.loadSpoon("VimMode")
 
 require "common"

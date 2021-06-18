@@ -4,6 +4,7 @@
 "    i can always reach ex mode by `gQ`
 
 set path+=**
+set wildmenu
 
 " remap ESC to jk
 " works well w/qwerty and colemak

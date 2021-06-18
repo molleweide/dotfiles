@@ -3,21 +3,16 @@
 source "${BASH_SOURCE%/*}/shared.sh"
 
 # KEYS
-#
-#
-# TODO
-#
-# - kmonad kext/dext
-#     check macos version >> install
-#     https://github.com/kmonad/kmonad/blob/master/doc/installation.md#macos
-#
-#
 
 require_installer package-manager
 
 dotheader "Setting up Hammerspoon..."
 brew_cask_install hammerspoon --appdir=/Applications
 
+
+# modify function
+#   $1 = git user
+#   $2 = repo name
 function setup_development_spoon_from_git_repo() {
   local name=$1
   local code_dir=$HOME/code
@@ -104,6 +99,9 @@ replace # ??
 if is_macos; then
   symlink_dotfile hammerspoon ~/.hammerspoon
   setup_spoon_install
+
+  # refactor function so that i pass the git username first >> balatero VimMode
+  #   so that i can install other spoons here
   setup_development_spoon_from_git_repo HyperKey
   setup_development_spoon_from_git_repo VimMode
 
