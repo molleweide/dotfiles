@@ -1,3 +1,4 @@
+----- ORIGINAL INSTRUCTIONS --------------------------------------------
 -- Save to ~/.hammerspoon
 -- In ~/.hammerspoon/init.lua:
 --    local vimouse = require('vimouse')
@@ -17,10 +18,18 @@
 -- up the scrolling.
 --
 -- Press <esc> or the configured toggle key to end Vi Mouse mode.
+--
+----- MOLLEWEIDE TODO --------------------------------------------
+--
+--  1. log
+--
+--  move pointer on enter so that it doesn't dissapear
 
 return function(tmod, tkey)
   -- local overlay = nil
+
   local log = hs.logger.new('vimouse', 'debug')
+
   local tap = nil
   local orig_coords = nil
   local dragging = false
@@ -52,23 +61,27 @@ return function(tmod, tkey)
   end
 
   tap = hs.eventtap.new({eventTypes.keyDown, eventTypes.keyUp}, function(event)
+
     local code = event:getKeyCode()
     local flags = event:getFlags()
     local repeating = event:getProperty(eventPropTypes.keyboardEventAutorepeat)
     local coords = hs.mouse.getAbsolutePosition()
 
+    -- ALLOW WINDOW CYCLE
     if (code == keycodes.tab or code == keycodes['`']) and flags.cmd then
       -- Window cycling
       return false
     end
 
+    -- MOUSE PRESS EVENTS -------------------------------
     if code == keycodes.space then
+
       -- Mouse clicking
       if repeating ~= 0 then
         return true
       end
 
-      local btn = 'left'
+      local btn = 'left' -- rename
       if flags.ctrl then
         btn = 'right'
       end
@@ -78,9 +91,11 @@ return function(tmod, tkey)
         mousepress = 1
       end
 
+      -- KEYPRESS ----------------------------------------
       if event:getType() == eventTypes.keyUp then
         dragging = false
         postEvent(eventTypes[btn..'MouseUp'], coords, flags, mousepress)
+
       elseif event:getType() == eventTypes.keyDown then
         dragging = true
         if now - mousedown_time <= 0.3 then
@@ -93,6 +108,8 @@ return function(tmod, tkey)
       end
 
       orig_coords = coords
+
+      -- move keys ---------------------------------------------
     elseif event:getType() == eventTypes.keyDown then
       local mul = 0
       local step = 20
@@ -115,15 +132,16 @@ return function(tmod, tkey)
       end
 
       if flags.alt then
-        step = 5
+        step = 4
       end
 
       if flags.shift then
-        mul = 5
+        mul = 15
       else
         mul = 1
       end
 
+      -- EXIT MOUSE MODE
       if is_tapkey or code == keycodes['escape'] then
         if dragging then
           postEvent(eventTypes.leftMouseUp, coords, flags, 0)
@@ -135,6 +153,10 @@ return function(tmod, tkey)
         tap:stop()
         hs.mouse.setAbsolutePosition(orig_coords)
         return true
+
+      ------ PREPARE MOVES -------------------------------------------
+
+        -- PREPARE SCROLL
       elseif (code == keycodes['y'] or code == keycodes['e']) and flags.ctrl then
         if repeating ~= 0 then
           scrolling = scrolling + 1
@@ -148,7 +170,11 @@ return function(tmod, tkey)
         else
           scroll_y_delta = math.floor(1 * scroll_mul)
         end
+
+        -- DEBUGGING
         log.d("Scrolling", scrolling, '-', scroll_y_delta)
+
+        -- PREPARE POINTER VARIABLE
       elseif code == keycodes['h'] then
         x_delta = step * mul * -1
       elseif code == keycodes['l'] then
@@ -159,10 +185,14 @@ return function(tmod, tkey)
         y_delta = step * mul * -1
       end
 
+      ------ EXECUTE -------------------------------------------
+
+      -- EXECUTE SCROLL
       if scroll_y_delta ~= 0 then
         hs.eventtap.event.newScrollEvent({0, scroll_y_delta}, flags, 'line'):post()
       end
 
+      -- EXECUTE POINTER MOVE
       if x_delta or y_delta then
         coords.x = coords.x + x_delta
         coords.y = coords.y + y_delta
@@ -175,9 +205,10 @@ return function(tmod, tkey)
       end
     end
     return true
-  end)
+  end) -- tap ends
 
   hs.hotkey.bind(tmod, tkey, nil, function(event)
+
     local screen = hs.mouse.getCurrentScreen()
     local frame = screen:fullFrame()
 
@@ -191,4 +222,5 @@ return function(tmod, tkey)
     orig_coords = hs.mouse.getAbsolutePosition()
     tap:start()
   end)
+
 end
