@@ -22,6 +22,7 @@ set laststatus=2                "fix status bar
 set guifont=Inconsolata-g\ for\ Powerline
 set number
 set relativenumber
+set foldmethod=indent
 
 " this makes vim act like all other editors, buffers can
 " exist in the background without being in a window.
@@ -239,7 +240,11 @@ Plug 'hrsh7th/nvim-compe'                " completion engine
 Plug 'onsails/lspkind-nvim'              " add vscode-style icons to completion menu
 Plug 'nathunsmitty/nvim-ale-diagnostic'  " route lsp diagnostics to ALE
 
+" Json
+Plug 'elzr/vim-json'
+
 " Markdown
+Plug 'plasticboy/vim-markdown'
 Plug 'npxbr/glow.nvim', {'do': ':GlowInstall'}  " markdown preview with :Glow
 
 " Ruby
@@ -250,10 +255,20 @@ Plug 'vim-ruby/vim-ruby'                  " indentation, etc
 Plug 'joker1007/vim-ruby-heredoc-syntax'  " fenced syntax colors in heredocs
 Plug 'ecomba/vim-ruby-refactoring'        " extract vars, methods, etc
 
+" Haskell
+" https://github.com/neovimhaskell/nvim-hs
+" https://github.com/neovimhaskell/haskell-vim
+" https://github.com/eagletmt/neco-ghc
+" https://github.com/alx741/yesod.vim
+
 " Lisp
 Plug 'vlime/vlime', {'rtp': 'vim/'}       " sbcl --load <your bundle dir>/vlime/lisp/start-vlime.lisp
 Plug 'lisp-mirror/quicklisp.nvim'
 Plug 'tami5/lispdocs.nvim'
+
+" Pandoc
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " Snippets
 Plug 'norcalli/snippets.nvim'
@@ -320,6 +335,8 @@ Plug 'tjdevries/train.nvim'          " vim motion practice game
 Plug 'rajasegar/vim-search-web'
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'KabbAmine/vCoolor.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 
 " Load private Stripe overlay packages
 call SourceIfExists('~/.config/nvim/layers/private/packages.vim')

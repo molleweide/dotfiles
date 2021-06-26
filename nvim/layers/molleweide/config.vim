@@ -6,6 +6,15 @@
 set path+=**
 set wildmenu
 
+" Replace ex mode with gq
+nnoremap Q gq
+nnoremap Qp vipgq<esc>
+
+
+" !!!!!!!!!! very nice
+" Replace all is aliased to S.
+	nnoremap <leader>R :%s//g<Left><Left>
+
 " remap ESC to jk
 " works well w/qwerty and colemak
 inoremap zm <esc>
@@ -66,9 +75,9 @@ nnoremap <silent> <Leader>kqb :e ~/code/qmk_firmware/keyboards/ergodox_ez/keymap
 nnoremap <silent> <Leader>knr :e ~/notes/reaper.md<CR>
 nnoremap <silent> <Leader>krr :e ~/.dotfiles/installers/reaper<CR>
 
-nnoremap <silent> <Leader>Rg :e ~/REAPER/app/reaper-6.23.0/Scripts/reaper-keys/definitions/defaults/global.lua<CR>
-nnoremap <silent> <Leader>Ra :e ~/REAPER/app/reaper-6.23.0/Scripts/reaper-keys/definitions/defaults/main.lua<CR>
-nnoremap <silent> <Leader>Rm :e ~/REAPER/app/reaper-6.23.0/Scripts/reaper-keys/definitions/defaults/midi.lua<CR>
+" nnoremap <silent> <Leader>Rg :e ~/REAPER/app/reaper-6.23.0/Scripts/reaper-keys/definitions/defaults/global.lua<CR>
+" nnoremap <silent> <Leader>Ra :e ~/REAPER/app/reaper-6.23.0/Scripts/reaper-keys/definitions/defaults/main.lua<CR>
+" nnoremap <silent> <Leader>Rm :e ~/REAPER/app/reaper-6.23.0/Scripts/reaper-keys/definitions/defaults/midi.lua<CR>
 
 "
 
@@ -162,27 +171,48 @@ nmap <leader>cn <Plug>CyclistNext
 nmap <leader>cp <Plug>CyclistPrev
 
 call cyclist#add_listchar_option_set('limited', {
-        \ 'eol': '↲',
-        \ 'tab': '» ',
-        \ 'trail': '·',
-        \ 'extends': '<',
-        \ 'precedes': '>',
-        \ 'conceal': '┊',
-        \ 'nbsp': '␣',
-        \ })
+      \ 'eol': '↲',
+      \ 'tab': '» ',
+      \ 'trail': '·',
+      \ 'extends': '<',
+      \ 'precedes': '>',
+      \ 'conceal': '┊',
+      \ 'nbsp': '␣',
+      \ })
 
 call cyclist#add_listchar_option_set('busy', {
-        \ 'eol': '↲',
-        \ 'tab': '»·',
-        \ 'space': '␣',
-        \ 'trail': '-',
-        \ 'extends': '☛',
-        \ 'precedes': '☚',
-        \ 'conceal': '┊',
-        \ 'nbsp': '☠',
-        \ })
+      \ 'eol': '↲',
+      \ 'tab': '»·',
+      \ 'space': '␣',
+      \ 'trail': '-',
+      \ 'extends': '☛',
+      \ 'precedes': '☚',
+      \ 'conceal': '┊',
+      \ 'nbsp': '☠',
+      \ })
 
 
 " ======== snippets  ========
 nnoremap <leader>S :Snippets<CR>
 nnoremap <leader>E :UltiSnipsEdit<CR>
+
+" ============ Markdown writing ============
+
+" let g:quickfix_is_open = 0
+" function! QuickfixToggle()
+"     if g:quickfix_is_open
+"         cclose
+"         let g:quickfix_is_open = 0
+"         execute g:quickfix_return_to_window . "wincmd w"
+"     else
+"         let g:quickfix_return_to_window = winnr()
+"         copen
+"         let g:quickfix_is_open = 1
+"     endif
+" endfunction
+nnoremap S :Goyo<CR>
+nnoremap dh :set wrap linebreak<CR>
+nnoremap dl :set wrap! linebreak!<CR>
+
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
