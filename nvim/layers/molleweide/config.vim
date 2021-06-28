@@ -23,6 +23,10 @@ inoremap zm <esc>
 " nmap <silent> ,vr :so %<CR>
 nmap <silent> <leader>vr :source $MYVIMRC<CR>
 
+" Man pages
+nmap <leader>m :Man<space>
+
+
 " Mappings to move lines
 " alt+j/k to move up/down
 nnoremap <A-j> :m .+1<CR>==
