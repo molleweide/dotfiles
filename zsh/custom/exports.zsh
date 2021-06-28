@@ -22,7 +22,8 @@ export NVIM_TUI_ENABLE_TRUE_COLOR=1
 # Color man pages
 export PAGER="most"
 
-
+# View man pages in vim
+export PATH="$PATH:$HOME/.local/nvim/plugins/vim-superman/bin"
 
 # OpenSSL
 export LDFLAGS="-L/usr/local/opt/openssl/lib"

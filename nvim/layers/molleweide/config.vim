@@ -214,5 +214,5 @@ nnoremap S :Goyo<CR>
 nnoremap dh :set wrap linebreak<CR>
 nnoremap dl :set wrap! linebreak!<CR>
 
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
+" autocmd! User GoyoEnter Limelight
+" autocmd! User GoyoLeave Limelight!

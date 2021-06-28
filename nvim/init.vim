@@ -337,6 +337,7 @@ Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'KabbAmine/vCoolor.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'jez/vim-superman'
 
 " Load private Stripe overlay packages
 call SourceIfExists('~/.config/nvim/layers/private/packages.vim')
