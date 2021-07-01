@@ -1,7 +1,4 @@
 " molleweide personal bindings
-"
-" - rebind Q >> to ???
-"    i can always reach ex mode by `gQ`
 
 set path+=**
 set wildmenu
@@ -10,10 +7,8 @@ set wildmenu
 nnoremap Q gq
 nnoremap Qp vipgq<esc>
 
-
-" !!!!!!!!!! very nice
 " Replace all is aliased to S.
-	nnoremap <leader>R :%s//g<Left><Left>
+noremap <leader>RA :%s//g<Left><Left>
 
 " remap ESC to jk
 " works well w/qwerty and colemak
@@ -110,10 +105,10 @@ nmap <leader>x :bd<CR>
 
 " " Easier copy/paste
 " vnoremap p "_dP
-" nmap <leader>y <Plug>SystemCopy
-" xmap <leader>y <Plug>SystemCopy
-" nmap <leader>p <Plug>SystemPaste
-" nmap <leader>yy <Plug>SystemCopyLine
+" nmap <leader>y <g>SystemCopy
+" xmap <leader>y <g>SystemCopy
+" nmap <leader>p <g>SystemPaste
+" nmap <leader>yy <g>SystemCopyLine
 " tnoremap <Esc> <C-\><C-n>
 
 " Delete current visual selection and dump in black hole buffer before pasting
@@ -134,7 +129,7 @@ cnoremap <C-l> <Space>
 nnoremap <leader>u viwUe
 nnoremap <leader>U viwue
 
-" =============== Plugin Test ===============
+" =============== gin Test ===============
 " test plugin `Whid`
 nnoremap <leader>W :Whid<CR>
 
@@ -148,7 +143,8 @@ nnoremap <leader>W :Whid<CR>
 
 " help for word under cursor
 "   how can I move this to which key?
-nnoremap <leader>H "zyiw:h <C-r>z<CR>
+nnoremap <leader>hh "zyiw:h <C-r>z<CR>
+nnoremap <leader>H "zyiW:h <C-r>z<CR>
 
 " =============== other ====================
 
@@ -171,8 +167,8 @@ set cursorline " highlight cursor line and column
 set cursorcolumn
 
 " ======== cyclist | listchars ========
-nmap <leader>cn <Plug>CyclistNext
-nmap <leader>cp <Plug>CyclistPrev
+nmap <leader>cn <g>CyclistNext
+nmap <leader>cp <g>CyclistPrev
 
 call cyclist#add_listchar_option_set('limited', {
       \ 'eol': '↲',
@@ -220,3 +216,38 @@ nnoremap dl :set wrap! linebreak!<CR>
 
 " autocmd! User GoyoEnter Limelight
 " autocmd! User GoyoLeave Limelight!
+
+
+" ============ line operations  ============
+
+" run current line through shell
+nnoremap <leader>Zs !!$SHELL <CR>
+
+" run current line in commandline
+nnoremap <leader>Zl yy:@" <CR>
+
+" read file
+" :r file               to after cursor
+" :$r                   to end of buffer
+" :0r                   to end of buffer
+" :{x}r                 to after line x
+" :/pattern/r file      to after pattern
+nnoremap <leader>Rf :r<space>
+nnoremap <leader>Re :$r<space>
+nnoremap <leader>Rb :0r<space>
+nnoremap <leader>Rl :r <Left><Left>
+nnoremap <leader>Rp ://r <Left><Left><Left>
+
+nnoremap <leader>RS :%&g<cr>
+
+
+" sudo write
+nnoremap <leader>ZZ :w !sudo tee %
+
+
+"                _  __
+"   __ _ ___  __| |/ _|
+"  / _` / __|/ _` | |_
+" | (_| \__ \ (_| |  _|
+"  \__,_|___/\__,_|_|
+"
