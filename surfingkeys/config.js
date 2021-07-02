@@ -1,13 +1,9 @@
-// an example to create a new mapping `ctrl-y`
 mapkey('<ctrl-y>', 'Show me the money', function() {
   Front.showPopup('a well-known phrase uttered by characters in the 1996 film Jerry Maguire (Escape to close).');
 });
 
-// map('gt', 'T'); // an example to replace `T` with `gt`, click `Default mappings` to see how `T` works.
+settings.theme = "dark";
 
-// unmap('<ctrl-i>');
-
-// set theme
 settings.theme = `
 .sk_theme {
     font-family: Input Sans Condensed, Charcoal, sans-serif;
@@ -44,8 +40,10 @@ settings.theme = `
 }
 #sk_status, #sk_find {
     font-size: 20pt;
+}
+.surfingkeys_cursor {
+    background-color: #CC5305;
 }`;
 
-settings.theme = "dark";
-
 settings.defaultSearchEngine = "d";
+settings.useNeovim = false;

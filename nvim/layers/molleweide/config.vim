@@ -244,10 +244,8 @@ nnoremap <leader>RS :%&g<cr>
 " sudo write
 nnoremap <leader>ZZ :w !sudo tee %
 
+" ============ Tags  ============
 
-"                _  __
-"   __ _ ___  __| |/ _|
-"  / _` / __|/ _` | |_
-" | (_| \__ \ (_| |  _|
-"  \__,_|___/\__,_|_|
-"
+nnoremap <leader>p :pop<CR>
+nnoremap <leader>P :tag<CR>
+
