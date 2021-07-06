@@ -9,6 +9,7 @@ set encoding=utf-8
 
 " ================ general config ====================
 
+set shell=zsh
 set backspace=indent,eol,start  "allow backspace in insert mode
 set history=1000                "store lots of :cmdline history
 set showcmd                     "show incomplete cmds down the bottom
@@ -90,7 +91,7 @@ set linebreak    " Wrap lines at convenient points
 
 " ================ Scrolling ========================
 
-set scrolloff=8         "Start scrolling when we're 8 lines away from margins
+set scrolloff=5         "Start scrolling when we're 5 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
 
@@ -245,7 +246,7 @@ Plug 'nathunsmitty/nvim-ale-diagnostic'  " route lsp diagnostics to ALE
 Plug 'elzr/vim-json'
 
 " Markdown
-Plug 'plasticboy/vim-markdown'
+" Plug 'plasticboy/vim-markdown'                " fucks up syntax hl...
 Plug 'npxbr/glow.nvim', {'do': ':GlowInstall'}  " markdown preview with :Glow
 
 " Ruby
@@ -267,9 +268,9 @@ Plug 'vlime/vlime', {'rtp': 'vim/'}       " sbcl --load <your bundle dir>/vlime/
 Plug 'lisp-mirror/quicklisp.nvim'
 Plug 'tami5/lispdocs.nvim'
 
-" Pandoc
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
+" Pandoc | these two mess up the syntax highlighting...
+" Plug 'vim-pandoc/vim-pandoc'
+" Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " Snippets
 Plug 'norcalli/snippets.nvim'

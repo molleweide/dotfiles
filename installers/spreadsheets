@@ -3,6 +3,9 @@
 source "${BASH_SOURCE%/*}/shared.sh"
 
 # SPREADSHEETS
+#
+# https://github.com/andmarti1424/sc-im/wiki/Install-sc-im-with-xls-support-on-macOS
+
 
 function install_and_build_scim() {
     local install_path=$HOME/code/sc-im

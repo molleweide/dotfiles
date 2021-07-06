@@ -1,5 +1,10 @@
 " molleweide personal bindings
 
+" ============ unused ============
+"     ;
+
+" ============ xxx  ============
+
 set path+=**
 set wildmenu
 
@@ -248,4 +253,9 @@ nnoremap <leader>ZZ :w !sudo tee %
 
 nnoremap <leader>p :pop<CR>
 nnoremap <leader>P :tag<CR>
+
+" ============ F inclusive  ============
+
+" nnoremap cF cvF
+" nnoremap dF dvF
 

@@ -18,6 +18,7 @@ alias sketch="magick $1 \( -clone 0 -negate -blur 0x5 \) \
 alias srync="rsync -vrazh"
 alias emacs="TERM=xterm-24bit emacs -nw"
 alias scm="sc-im"
+alias cl="calcurse"
 
 # tmux
 alias tk="tmux kill-session"
@@ -27,6 +28,12 @@ alias tn="tmuxinator"
 # VIM
 alias vim="nvim"
 alias v="nvim"
+alias vf="nvim -t" # search for tag
+alias vr="nvim -R"
+alias vh="nvim -headless"
+alias vNN="nvim -u NONE"
+alias vNC="nvim -u NORC"
+alias vh="nvim -headless"
 alias vv="~/code/neovim/build/bin/nvim"
 
 # GIT

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+# CALCURSE
+
+# function get_install_calcurse() {
+#     # local install_path=$HOME/code/sc-im
+#     # local git_src="https://github.com/andmarti1424/sc-im"
+
+#     # if [ ! -d $install_path ]; then
+#     #     git clone $git_src $install_path
+#     #     pushd $install_path > /dev/null 2>&1
+#     #     make -C src install # Edit src/Makefile according to your system and needs
+#     #     popd > /dev/null 2>&1
+#     # else
+#     #     dotsay "+ $install_path already exists"
+#     # fi
+# }
+
+require_installer package-manager
+
+if is_macos; then
+    brew_install calcurse
+    # get_install_calcurse
+
+    # symlink_dotfile scimrc ~/.config/sc-im/scimrc
+
+    # elif is_linux; then
+fi
