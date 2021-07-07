@@ -91,7 +91,7 @@ set linebreak    " Wrap lines at convenient points
 
 " ================ Scrolling ========================
 
-set scrolloff=5         "Start scrolling when we're 5 lines away from margins
+set scrolloff=4         "Start scrolling when we're 4 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
 

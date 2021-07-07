@@ -25,7 +25,9 @@ alias tk="tmux kill-session"
 alias tn="tmuxinator"
 
 
-# VIM
+# ======== VIM ALIASES ===========
+
+# brew
 alias vim="nvim"
 alias v="nvim"
 alias vf="nvim -t" # search for tag
@@ -34,9 +36,12 @@ alias vh="nvim -headless"
 alias vNN="nvim -u NONE"
 alias vNC="nvim -u NORC"
 alias vh="nvim -headless"
-alias vv="~/code/neovim/build/bin/nvim"
+alias vp="nvim --cmd \"set rtp+=\$(pwd)\""
 
-# GIT
+# my fork
+alias vv="~/code/neovim/build/bin/nvim" # forked build
+
+# ======== GIT ========
 alias gcfls="git conflict"
 alias M="git checkout master"
 alias m="git checkout molleweide"

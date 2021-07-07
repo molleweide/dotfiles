@@ -259,3 +259,28 @@ nnoremap <leader>P :tag<CR>
 " nnoremap cF cvF
 " nnoremap dF dvF
 
+" ============ Tab  ============
+
+nnoremap gl gt
+nnoremap gL gT
+nnoremap <Leader>g0 :tabr<cr>
+nnoremap <Leader>g$ :tabl<cr>
+nnoremap <Leader>gh :tabm -<cr>
+nnoremap <Leader>gl :tabm +<cr>
+
+" ==================================
+" ============ Testing  ============
+" ==================================
+
+" script variables s:
+let s:counter = 0
+function MyCunter()
+  let s:counter = s:counter + 1
+  echo s:counter
+endfunction
+command Tick call MyCounter()
+
+" does the same
+let s:counter = 0
+command Tick2 let s:counter = s:counter + 1 | echo s:counter
+
