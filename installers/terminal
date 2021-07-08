@@ -8,6 +8,7 @@ require_installer package-manager
 
 if is_macos; then
   brew_cask_install alacritty
+  brew_cask_install kitty
   brew_install most # man page colorized
 elif is_linux; then
 

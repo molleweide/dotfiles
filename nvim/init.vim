@@ -147,6 +147,10 @@ endfunction
 " remap : to ;
 nnoremap ; :
 
+" remap ; to :
+" doesn't work?!?!?!?!
+" nnoremap : ;
+
 " background out of insert mode
 inoremap <C-Z> <Esc><C-Z>
 
@@ -219,6 +223,7 @@ Plug 'AndrewRadev/switch.vim'         " switch syntaxes around with `gs`
 Plug 'tpope/vim-commentary'           " comment with `gcc`
 Plug 'romainl/vim-cool'               " disable highlights automatically on cursor move
 Plug 'easymotion/vim-easymotion'      " ,,w and ,,b to jump to objects
+Plug 'justinmk/vim-sneak'             " should be even faster than easymotion
 Plug 'tpope/vim-projectionist'        " alternate files with :AV/:AS
 Plug 'kshenoy/vim-signature'          " show marks in the gutter
 Plug 'itspriddle/vim-stripper'        " strip whitespace on save
@@ -233,6 +238,8 @@ Plug 'Shougo/vimfiler.vim'
 Plug 'Shougo/unite.vim'
 Plug 'rbgrouleff/bclose.vim'        " Ranger dependency
 Plug 'francoiscabrol/ranger.vim'
+" Plug 'justinmk/vim-dirvish'
+" Plug 'justinmk/vim-gtfo'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'             " out of the box LSP configs for common langs
@@ -241,6 +248,9 @@ Plug 'nvim-lua/lsp-status.nvim'          " provides statusline information for L
 Plug 'hrsh7th/nvim-compe'                " completion engine
 Plug 'onsails/lspkind-nvim'              " add vscode-style icons to completion menu
 Plug 'nathunsmitty/nvim-ale-diagnostic'  " route lsp diagnostics to ALE
+
+" Lua
+Plug 'nvim-lua/plenary.nvim'            " only for nvim internal use
 
 " Json
 Plug 'elzr/vim-json'
@@ -331,15 +341,17 @@ Plug 'vim-scripts/excel.vim'
 Plug 'kjnh10/ExcelLikeVim'
 
 " Misc
-Plug 'mhinz/vim-startify'            " custom startup display
+Plug 'mhinz/vim-startify'             " custom startup display
 Plug 'davidgranstrom/scnvim', { 'do': {-> scnvim#install() } } " supercollider front end
-Plug 'tjdevries/train.nvim'          " vim motion practice game
+Plug 'tjdevries/train.nvim'           " vim motion practice game
 Plug 'rajasegar/vim-search-web'
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'KabbAmine/vCoolor.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'jez/vim-superman'
+Plug 'vimwiki/vimwiki'
+Plug 'folke/todo-comments.nvim'       " looks really nice
 
 " Load private Stripe overlay packages
 call SourceIfExists('~/.config/nvim/layers/private/packages.vim')

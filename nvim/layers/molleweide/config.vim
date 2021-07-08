@@ -93,7 +93,7 @@ set imsearch=0
 " re-indent file
 map <leader>,i mzgg=G`z<CR>
 
-" =============== Tab through butters ===============
+" =============== Buffer nav ===============
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprev<CR>
 " restore jump forwards command that is tied to <Tab>
@@ -176,25 +176,25 @@ nmap <leader>cn <g>CyclistNext
 nmap <leader>cp <g>CyclistPrev
 
 call cyclist#add_listchar_option_set('limited', {
-      \ 'eol': '↲',
-      \ 'tab': '» ',
-      \ 'trail': '·',
-      \ 'extends': '<',
-      \ 'precedes': '>',
-      \ 'conceal': '┊',
-      \ 'nbsp': '␣',
-      \ })
+                  \ 'eol': '↲',
+                  \ 'tab': '» ',
+                  \ 'trail': '·',
+                  \ 'extends': '<',
+                  \ 'precedes': '>',
+                  \ 'conceal': '┊',
+                  \ 'nbsp': '␣',
+                  \ })
 
 call cyclist#add_listchar_option_set('busy', {
-      \ 'eol': '↲',
-      \ 'tab': '»·',
-      \ 'space': '␣',
-      \ 'trail': '-',
-      \ 'extends': '☛',
-      \ 'precedes': '☚',
-      \ 'conceal': '┊',
-      \ 'nbsp': '☠',
-      \ })
+                  \ 'eol': '↲',
+                  \ 'tab': '»·',
+                  \ 'space': '␣',
+                  \ 'trail': '-',
+                  \ 'extends': '☛',
+                  \ 'precedes': '☚',
+                  \ 'conceal': '┊',
+                  \ 'nbsp': '☠',
+                  \ })
 
 
 " ======== snippets  ========
@@ -255,12 +255,42 @@ nnoremap <leader>p :pop<CR>
 nnoremap <leader>P :tag<CR>
 
 " ============ F inclusive  ============
+" this is more tricky than i expected it to be since you
+" still want to be able to compose commands with a regular {count}
+"
+" read :map-operator
+" https://vi.stackexchange.com/questions/2791/how-to-design-a-command-in-a-plugin-that-can-be-called-from-vimrc
 
+
+" this is not working
 " nnoremap cF cvF
 " nnoremap dF dvF
 
+" nnoremap <silent> c :set opfunc=ChangeBackw<cr>g@
+" nnoremap <silent> d :set opfunc=DelBackw<cr>g@
+" nnoremap <silent> y :set opfunc=YankBackw<cr>g@
+
+" function! Surround(vt, ...)
+"     let s = InputChar()
+"     if s =~ "\<esc>" || s =~ "\<c-c>"
+"         return
+"     endif
+"     let [sl, sc] = getpos(a:0 ? "'<" : "'[")[1:2]
+"     let [el, ec] = getpos(a:0 ? "'>" : "']")[1:2]
+"     if a:vt == 'line' || a:vt == 'V'
+"         call append(el, s)
+"         call append(sl-1, s)
+"     elseif a:vt == 'block' || a:vt == "\<c-v>"
+"         exe sl.','.el 's/\%'.sc.'c\|\%'.ec.'c.\zs/\=s/g|norm!``'
+"     else
+"         exe el 's/\%'.ec.'c.\zs/\=s/|norm!``'
+"         exe sl 's/\%'.sc.'c/\=s/|norm!``'
+"     endif
+" endfunction
+
 " ============ Tab  ============
 
+nnoremap <Leader>tn :tabnew<cr>
 nnoremap gl gt
 nnoremap gL gT
 nnoremap <Leader>g0 :tabr<cr>
@@ -275,8 +305,8 @@ nnoremap <Leader>gl :tabm +<cr>
 " script variables s:
 let s:counter = 0
 function MyCunter()
-  let s:counter = s:counter + 1
-  echo s:counter
+      let s:counter = s:counter + 1
+      echo s:counter
 endfunction
 command Tick call MyCounter()
 
