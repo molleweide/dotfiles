@@ -47,3 +47,5 @@ settings.theme = `
 
 settings.defaultSearchEngine = "d";
 settings.useNeovim = false;
+
+Visual.style('cursor', 'background-color: #CE6E19;');

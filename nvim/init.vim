@@ -136,7 +136,7 @@ set splitbelow
 " way is Ctrl-w,v and Ctrl-w,s. I remap
 " this to vv and ss
 nnoremap <silent> vv <C-w>v
-nnoremap <silent> ss <C-w>s
+nnoremap <silent> ds <C-w>s
 
 "make Y consistent with C and D
 nnoremap Y y$
@@ -144,11 +144,8 @@ function! YRRunAfterMaps()
   nnoremap Y   :<C-U>YRYankCount 'y$'<CR>
 endfunction
 
-" remap : to ;
+" remap : to ; and vice versa
 nnoremap ; :
-
-" remap ; to :
-" doesn't work?!?!?!?!
 " nnoremap : ;
 
 " background out of insert mode
@@ -213,6 +210,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'Konfekt/vim-alias'
 Plug 'nanotee/nvim-lua-guide'         " additional help under :h nvim-lua-guide
 Plug 'liuchengxu/vim-which-key'       " context menu when hitting leader key(s)
+" https://github.com/folke/which-key.nvim
 Plug 'kevinhwang91/nvim-bqf'          " better quickfix
 
 " Editing
@@ -223,7 +221,7 @@ Plug 'AndrewRadev/switch.vim'         " switch syntaxes around with `gs`
 Plug 'tpope/vim-commentary'           " comment with `gcc`
 Plug 'romainl/vim-cool'               " disable highlights automatically on cursor move
 Plug 'easymotion/vim-easymotion'      " ,,w and ,,b to jump to objects
-Plug 'justinmk/vim-sneak'             " should be even faster than easymotion
+Plug 'justinmk/vim-sneak'             "       should be even faster than easymotion
 Plug 'tpope/vim-projectionist'        " alternate files with :AV/:AS
 Plug 'kshenoy/vim-signature'          " show marks in the gutter
 Plug 'itspriddle/vim-stripper'        " strip whitespace on save
@@ -352,6 +350,17 @@ Plug 'junegunn/limelight.vim'
 Plug 'jez/vim-superman'
 Plug 'vimwiki/vimwiki'
 Plug 'folke/todo-comments.nvim'       " looks really nice
+
+" Bin
+" https://github.com/akinsho/nvim-toggleterm.lua
+" https://github.com/romgrk/barbar.nvim
+" https://github.com/ray-x/go.nvim
+" https://github.com/stevearc/aerial.nvim
+" https://github.com/ggandor/lightspeed.nvim
+" https://github.com/marko-cerovac/material.nvim
+" https://github.com/AckslD/nvim-anywise-reg.lua
+" https://github.com/tversteeg/registers.nvim
+" https://github.com/datwaft/bubbly.nvim
 
 " Load private Stripe overlay packages
 call SourceIfExists('~/.config/nvim/layers/private/packages.vim')

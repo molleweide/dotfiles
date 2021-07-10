@@ -215,7 +215,7 @@ nnoremap <leader>E :UltiSnipsEdit<CR>
 "         let g:quickfix_is_open = 1
 "     endif
 " endfunction
-nnoremap S :Goyo<CR>
+nnoremap <leader>G :Goyo<CR>
 nnoremap dh :set wrap linebreak<CR>
 nnoremap dl :set wrap! linebreak!<CR>
 
@@ -304,7 +304,7 @@ nnoremap <Leader>gl :tabm +<cr>
 
 " script variables s:
 let s:counter = 0
-function MyCunter()
+function MyCounter()
       let s:counter = s:counter + 1
       echo s:counter
 endfunction

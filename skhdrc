@@ -25,4 +25,4 @@ cmd + ctrl + alt + shift - i : yabai -m window --display next; yabai -m display 
 cmd + ctrl + alt + shift - u : yabai -m window --display 1; yabai -m display --focus 1
 
 # custom launcher
-cmd - space : ~/.local/bin/custom_launcher/custom_launcher_popup ~/.local/bin/custom_launcher/custom_launcher
+cmd + alt - space : ~/.local/bin/custom_launcher/custom_launcher_popup ~/.local/bin/custom_launcher/custom_launcher

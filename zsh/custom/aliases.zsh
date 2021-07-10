@@ -6,7 +6,6 @@ alias 6="exec zsh"
 alias k="clear"
 alias mm="man man"
 alias drs="dirs -v"
-alias r="ranger"
 alias l="ls -al"
 
 
@@ -24,6 +23,12 @@ alias cl="calcurse"
 alias tk="tmux kill-session"
 alias tn="tmuxinator"
 
+
+# ======== FILE MANAGERS ===========
+alias fj="ranger"
+alias fn="nnn"
+alias fl="lf"
+alias fh="fff"
 
 # ======== VIM ALIASES ===========
 
