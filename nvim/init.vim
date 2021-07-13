@@ -361,6 +361,8 @@ Plug 'folke/todo-comments.nvim'       " looks really nice
 " https://github.com/AckslD/nvim-anywise-reg.lua
 " https://github.com/tversteeg/registers.nvim
 " https://github.com/datwaft/bubbly.nvim
+" https://github.com/jiangmiao/auto-pairs
+" https://github.com/vhyrro/neorg
 
 " Load private Stripe overlay packages
 call SourceIfExists('~/.config/nvim/layers/private/packages.vim')

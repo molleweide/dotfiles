@@ -25,10 +25,10 @@ alias tn="tmuxinator"
 
 
 # ======== FILE MANAGERS ===========
-alias fj="ranger"
-alias fn="nnn"
-alias fl="lf"
 alias fh="fff"
+alias fj="lf"
+alias fk="ranger"
+alias fn="nnn"
 
 # ======== VIM ALIASES ===========
 
@@ -141,7 +141,7 @@ fo() {
 }
 
 # fh [FUZZY PATTERN] - Search in command history
-fh() {
+fz() {
   print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//')
 }
 

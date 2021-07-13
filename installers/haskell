@@ -4,7 +4,19 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 require_installer package-manager
 
-curl -sSL https://get.haskellstack.org/ | sh
-# wget -qO- https://get.haskellstack.org/ | sh
+# https://www.haskell.org/ghcup/
+# https://gitlab.haskell.org/haskell/ghcup-hs#manual-install
 
-stack upgrade
+if is_macos; then
+
+  # ghcup
+  curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+
+  # stack
+  # wget -qO- https://get.haskellstack.org/ | sh
+  curl -sSL https://get.haskellstack.org/ | sh
+  stack upgrade
+
+  # elif is_linux; then
+fi
+

@@ -93,6 +93,9 @@ autoload -U select-word-style
 select-word-style bash
 export WORDCHARS='.-'
 
+# =========== haskell ghci ===============
+. ~/.ghcup/env
+
 # =========== Vi cursor shapes ===============
 function zle-keymap-select () {
     case $KEYMAP in
