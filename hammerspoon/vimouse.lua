@@ -1,3 +1,8 @@
+----- LINKS ----------------------------------------------------------
+--
+-- https://github.com/Hammerspoon/hammerspoon/blob/master/extensions/mouse/internal.m
+-- https://github.com/search?q=hammerspoon+mouse
+--
 ----- ORIGINAL INSTRUCTIONS --------------------------------------------
 -- Save to ~/.hammerspoon
 -- In ~/.hammerspoon/init.lua:

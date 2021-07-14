@@ -1,13 +1,9 @@
-# Shell aliases
-# alias rzsh="source ~/.zshrc"
-
 # SHELL
 alias 6="exec zsh"
 alias k="clear"
 alias mm="man man"
 alias drs="dirs -v"
 alias l="ls -al"
-
 
 alias dbm="rake db:migrate && RAILS_ENV=test rake db:migrate"
 alias j=z # I'm used to autojump 'j' vs fasd 'z'
@@ -16,8 +12,11 @@ alias sketch="magick $1 \( -clone 0 -negate -blur 0x5 \) \
   -compose colordodge -composite -modulate 100,0,100 -auto-level $2"
 alias srync="rsync -vrazh"
 alias emacs="TERM=xterm-24bit emacs -nw"
-alias scm="sc-im"
 alias cl="calcurse"
+
+# ======== SPREADSHEET ===========
+alias scm="sc-im"
+
 
 # tmux
 alias tk="tmux kill-session"
@@ -54,21 +53,21 @@ alias m="git checkout molleweide"
 # CHAT
 alias sg="gurk" # signal
 alias nt="neomutt" # email
-# tg for telegram
+# tg for telegram is default..
 
-# QMK
+# ======== QMK ========
 alias tfl="teensy_loader_cli -mmcu=atmega32u4 -w ergodox_ez_molleweide.hex"
 
-# DOCKER
+# ======== DOCKER ========
 alias dk="docker"
 alias dkc="docker-compose"
 alias dkwp="docker-compose run --rm wpcli"
 
-# KARABINER
+# ======== KARABINER ========
 alias karb="/Library/Application\ Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli"
 alias krb="open -a /Applications/Karabiner-Elements.app"
 
-# KMONAD
+# ======== KMONAD ========
 alias kmolap="sudo ~/.dotfiles/kmonad/launchd_kmo_macbookpro.sh"
 alias kmolapT="kmonad ~/code/kmonad/keymap/user/molleweide/mbp.kbd -l debug"
 alias kmoez="sudo ~/.dotfiles/kmonad/launchd_kmo_ergo_ez.sh"
@@ -80,7 +79,8 @@ alias gpglkp="gpg --list-public-keys"
 alias gpglks="gpg --list-secret-keys"
 alias gpge="gpg --edit-keys"
 
-
+# ======== haskell ===========
+alias rh="runhaskell"
 
 
 # OS X apps
