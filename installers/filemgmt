@@ -4,10 +4,6 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 # FILE MANAGEMENT AND SEARCHING
 
-# c       | https://github.com/jarun/nnn
-# go      | https://github.com/gokcehan/lf
-# bash    | https://github.com/dylanaraps/fff#using-fff-in-vimneovim-as-a-file-picker
-
 require_installer package-manager
 
 if is_macos; then
@@ -17,6 +13,7 @@ if is_macos; then
   brew_install nnn
   brew_install lf
   brew_install fff
+  # https://github.com/sayanarijit/xplr
 
   # search
   brew_install dmenu-mac

@@ -35,6 +35,7 @@ if is_macos; then
   brew_install pass passmenu
   brew_install pass-otp
   brew_install pam-gmupg
+  brew_install gpg-tui
   brew_install qtpass
 
   # ONLY MACOS

@@ -4,6 +4,7 @@ alias k="clear"
 alias mm="man man"
 alias drs="dirs -v"
 alias l="ls -al"
+alias tt="ttyper"
 
 alias dbm="rake db:migrate && RAILS_ENV=test rake db:migrate"
 alias j=z # I'm used to autojump 'j' vs fasd 'z'
@@ -22,6 +23,7 @@ alias scm="sc-im"
 alias tk="tmux kill-session"
 alias tn="tmuxinator"
 
+# ======== DOCKER ===========
 
 # ======== FILE MANAGERS ===========
 alias fh="fff"
@@ -52,8 +54,10 @@ alias m="git checkout molleweide"
 
 # CHAT
 alias sg="gurk" # signal
+# alias sg="gurk" # siggo has better support than gurk
 alias nt="neomutt" # email
 # tg for telegram is default..
+# discord
 
 # ======== QMK ========
 alias tfl="teensy_loader_cli -mmcu=atmega32u4 -w ergodox_ez_molleweide.hex"
@@ -73,13 +77,18 @@ alias kmolapT="kmonad ~/code/kmonad/keymap/user/molleweide/mbp.kbd -l debug"
 alias kmoez="sudo ~/.dotfiles/kmonad/launchd_kmo_ergo_ez.sh"
 alias kmoezT="kmonad ~/code/kmonad/keymap/user/molleweide/ez.kbd -l debug"
 
-# GPG
+# ======== GAMES ========
+
+# ======== MUSIC & VIDEO ========
+alias yt="mpsyt"
+
+# ======== GPG ========
 alias gpglk="gpg --list-keys"
 alias gpglkp="gpg --list-public-keys"
 alias gpglks="gpg --list-secret-keys"
 alias gpge="gpg --edit-keys"
 
-# ======== haskell ===========
+# ======== HASKELL ===========
 alias rh="runhaskell"
 
 

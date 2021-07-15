@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+# MISC
+
+require_installer package-manager
+
+if is_macos; then
+
+    # weather
+    # https://github.com/chubin/wttr.in
+
+    # typing speed test
+    cargo install ttyper
+
+    # elif is_linux; then
+fi
+
+symlink_dotfile irssi ~/.irssi
+
