@@ -2,17 +2,13 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-# MULTIMEDIA
+# FINANCE
 
 require_installer package-manager
 
 if is_macos; then
 
-  # audio
-  brew_install spotify-tui
+    brew_install cointop
 
-  # video
-  brew_cask_install mpv
-  brew_install mps-youtube
-
+    # elif is_linux; then
 fi

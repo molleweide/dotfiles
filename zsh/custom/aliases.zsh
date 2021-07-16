@@ -15,6 +15,10 @@ alias srync="rsync -vrazh"
 alias emacs="TERM=xterm-24bit emacs -nw"
 alias cl="calcurse"
 
+# ======== FINANCE ===========
+alias ei="cointop"
+
+
 # ======== SPREADSHEET ===========
 alias scm="sc-im"
 

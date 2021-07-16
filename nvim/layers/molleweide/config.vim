@@ -53,19 +53,20 @@ nnoremap <silent> <Leader>6 <C-^>
 
 " ================ Aliases ==========================
 
+nnoremap <silent> <Leader>kS :e ~/.dotfiles/surfingkeys/config.js<CR>
+nnoremap <silent> <Leader>kV :e ~/notes/build-nvim.md<CR>
+nnoremap <silent> <Leader>kg :view ~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/git/git.plugin.zsh<CR>
 nnoremap <silent> <Leader>ki :e ~/.dotfiles/nvim/init.vim<CR>
 nnoremap <silent> <Leader>knR :e ~/notes/RNDM.md<CR>
-nnoremap <silent> <Leader>knt :e ~/notes/TODO.md<CR>
 nnoremap <silent> <Leader>knf :e ~/notes/tfab.md<CR>
-nnoremap <silent> <Leader>kv :e ~/.dotfiles/nvim/layers/molleweide/config.vim<CR>
-nnoremap <silent> <Leader>kV :e ~/notes/build-nvim.md<CR>
+nnoremap <silent> <Leader>knt :e ~/notes/TODO.md<CR>
+nnoremap <silent> <Leader>ks :e ~/.dotfiles/skhdrc<CR>
 nnoremap <silent> <Leader>kt :e ~/.dotfiles/tmux.conf<CR>
-nnoremap <silent> <Leader>kzz :e ~/.dotfiles/zshrc<CR>
+nnoremap <silent> <Leader>kv :e ~/.dotfiles/nvim/layers/molleweide/config.vim<CR>
+nnoremap <silent> <Leader>ky :e ~/.dotfiles/yabairc<CR>
 nnoremap <silent> <Leader>kza :e ~/.dotfiles/zsh/custom/aliases.zsh<CR>
 nnoremap <silent> <Leader>kze :e ~/.dotfiles/zsh/custom/exports.zsh<CR>
-nnoremap <silent> <Leader>ky :e ~/.dotfiles/yabairc<CR>
-nnoremap <silent> <Leader>ks :e ~/.dotfiles/skhdrc<CR>
-nnoremap <silent> <Leader>kg :view ~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/git/git.plugin.zsh<CR>
+nnoremap <silent> <Leader>kzz :e ~/.dotfiles/zshrc<CR>
 
 " =============== aliases: keys  ====================
 
