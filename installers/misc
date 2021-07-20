@@ -17,5 +17,3 @@ if is_macos; then
     # elif is_linux; then
 fi
 
-symlink_dotfile irssi ~/.irssi
-
