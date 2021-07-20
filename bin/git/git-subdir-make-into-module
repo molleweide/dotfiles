@@ -4,32 +4,32 @@
 # B = https://github.com/molleweide/mollew-config.nvim.git
 
 TARGET_BRANCH=$1
-B_DIR=$2
-B_REPO=$(git ls-remote --get-url $3)
-A_REPO=$(git config --get remote.origin.url)
+TRG_SUB_DIR=$2
+NEW_REPO_URL=$(git ls-remote --get-url $3)
+ROOT_REPO_URL=$(git config --get remote.origin.url)
+TMP_DIR=~/git-tmp-script-dir
 
-echo "B_DIR = $B_DIR"; echo "B_REPO = $B_REPO"; echo "A_REPO = $A_REPO"
+echo "TRG_SUB_DIR = $TRG_SUB_DIR"; echo "NEW_REPO_URL = $NEW_REPO_URL"; echo "ROOT_REPO_URL = $ROOT_REPO_URL"
 
 function extract_dir_into_repo() {
-    git clone $A_REPO ~/git-tmp-script-dir
-    pushd ~/git-tmp-script-dir > /dev/null 2>&1
+    git clone $ROOT_REPO_URL $TMP_DIR
+    pushd $TMP_DIR > /dev/null 2>&1
     git checkout $TARGET_BRANCH
-    git merge --strategy=ours master    # keep the content of this branch, but record a merge
+    git merge --strategy=ours master
     git checkout master
     git merge $TARGET_BRANCH
-    git filter-branch --subdirectory-filter $B_DIR -- --all
-    ls -la
-    # git remote remove origin
-    # git remote add origin $B_REPO
-    # git push origin master
+    git filter-branch --subdirectory-filter $TRG_SUB_DIR -- --all
+    git remote remove origin
+    git remote add origin $NEW_REPO_URL
+    git push origin master
     popd > /dev/null 2>&1
 
-    # git rm -r $B_DIR
-    # git submodule add $B_REPO
-    # rm -rf ~/git-tmp-script-dir
+    # git rm -r $TRG_SUB_DIR
+    # git submodule add $NEW_REPO_URL
+    rm -rf $TMP_DIR
 }
 
-if [ ! -z $B_REPO ]; then
+if [ ! -z $NEW_REPO_URL ]; then
     extract_dir_into_repo
 else
     echo "New remote need to be created first. 😎" && exit 0
