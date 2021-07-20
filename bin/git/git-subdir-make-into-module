@@ -2,62 +2,44 @@
 
 # ## MAKE SUBDIR INTO SUBMODULE
 
-# http://blog.davidecoppola.com/2015/02/how-to-create-git-submodule-from-repository-subdirectory/
-# https://stackoverflow.com/questions/2982055/detach-many-subdirectories-into-a-new-separate-git-repository
-# https://www.tutorialspoint.com/sed/sed_basic_syntax.htm
-
-
-# bash fn $1subdir-path and $2gith-repo-url
-
-# # FIRST
-
-# 1. you have to be in the larger git proj root
-# 2. here you run the function
-# 3. create this fn in ~/dotfiles/bin/git/
-# 4. name script = `mv-path-to-new-repo`
-
-# # ALGO
-# - split_out
-#     1. mk new remote gith repo SMALL manually !!!
-#     2. clone BIG to tmp
-#     3. filter push SMALL/
-#     4. rm SMALL from BIG
-#     5. mk submodule SMALL
-
-# - git-subdir-make-into-module $1subdir $2remotenew
-
 # eg. B = https://github.com/molleweide/mollew-config.nvim.git
 
+# need account for branch
+#
 
-#   1. check if B exists
-#       git ls-remote --get-url B
+#   how make sure branch in new repo becomes master
 
-#   2. clone A into ~/git_tempdir
-#       git clone A ~/git-tmp-script-dir
+B_DIR=$1
+B_REPO=$(git ls-remote --get-url $2)
+A_REPO=$(git config --get remote.origin.url)
 
-#   3. filter out b from tempdir
-#     - rm remote A
-#       - add remote B
+echo "B_DIR = $B_DIR"
+echo "B_REPO = $B_REPO"
+echo "A_REPO = $A_REPO"
 
+function extract_dir_into_repo() {
+    echo "enter"
 
-#   4. rm b from a
-#       git rm -r b_dir/
+    git clone $A_REPO ~/git-tmp-script-dir
 
-#   5. add B as submodule in a
-#       git submodule add B
+    pushd ~/git-tmp-script-dir > /dev/null 2>&1
+    echo "new location: $PWD"
+    # TODO checkout correct branch here
+    # git filter-branch --subdirectory-filter $B_DIR -- --all
+    # git remote remove origin
+    # git remote add origin $B_REPO
+    # git push origin master
+    popd > /dev/null 2>&1
 
-#   6. remove temp
+    echo $PWD
+    # git rm -r $B_DIR
+    # git submodule add $B_REPO
+    # rm -rf ~/git-tmp-script-dir
+}
 
-# # this will remove everything except apps/AAA and libs/XXX from current
-# # repository.
-# git filter-branch --index-filter \
-#                       'git rm --cached -qr --ignore-unmatch -- . && git reset -q $GIT_COMMIT -- apps/AAA libs/XXX' \
-#                   --prune-empty -- \
-#                   --all
-
-# # This leaves behind lots of empty merges due to how filter-branch
-# # keeps all merge nodes, remember it keeps all 1/0 parent commits
-# git filter-branch --prune-empty
-#                   --parent-filter \
-#                       'sed "s/-p //g" | \
-#                         xargs -r git show-branch --independent | sed "s/\</-p /g"'
+# # and $A_REPO??
+if [ ! -z $B_REPO ]; then
+    extract_dir_into_repo
+else
+    echo "New remote need to be created first. 😎" && exit 0
+fi

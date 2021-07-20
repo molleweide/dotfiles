@@ -30,12 +30,14 @@ function setup_git_dotfiles() {
 function setup_git_scripts() {
   mkdir -p ~/.local/bin
 
-  symlink_dotfile bin/git/git-delete-merged-branches \
-    ~/.local/bin/git-delete-merged-branches
+  symlink_dotfile bin/git ~/.local/bin/git
 
-  symlink_dotfile bin/git/git-local-repos ~/.local/bin/git-local-repos
+  # symlink_dotfile bin/git/git-delete-merged-branches \
+  #   ~/.local/bin/git-delete-merged-branches
 
-  symlink_dotfile bin/git/git-what-i-did ~/.local/bin/git-what-i-did
+  # symlink_dotfile bin/git/git-local-repos ~/.local/bin/git-local-repos
+
+  # symlink_dotfile bin/git/git-what-i-did ~/.local/bin/git-what-i-did
 }
 
 function install_fancy_diffs() {

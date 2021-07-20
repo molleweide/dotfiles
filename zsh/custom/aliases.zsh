@@ -55,6 +55,7 @@ alias vv="~/code/neovim/build/bin/nvim" # forked build
 alias gcfls="git conflict"
 alias M="git checkout master"
 alias m="git checkout molleweide"
+alias gbrkout="~/.local/bin/git/git-subdir-make-into-module"
 
 # CHAT
 alias sg="gurk" # signal
