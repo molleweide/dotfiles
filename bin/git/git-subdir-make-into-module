@@ -1,43 +1,34 @@
 #!/usr/bin/env bash
 
-# ## MAKE SUBDIR INTO SUBMODULE
+# MAKE SUBDIR INTO SUBMODULE
+# B = https://github.com/molleweide/mollew-config.nvim.git
 
-# eg. B = https://github.com/molleweide/mollew-config.nvim.git
-
-# need account for branch
-#
-
-#   how make sure branch in new repo becomes master
-
-B_DIR=$1
-B_REPO=$(git ls-remote --get-url $2)
+TARGET_BRANCH=$1
+B_DIR=$2
+B_REPO=$(git ls-remote --get-url $3)
 A_REPO=$(git config --get remote.origin.url)
 
-echo "B_DIR = $B_DIR"
-echo "B_REPO = $B_REPO"
-echo "A_REPO = $A_REPO"
+echo "B_DIR = $B_DIR"; echo "B_REPO = $B_REPO"; echo "A_REPO = $A_REPO"
 
 function extract_dir_into_repo() {
-    echo "enter"
-
     git clone $A_REPO ~/git-tmp-script-dir
-
     pushd ~/git-tmp-script-dir > /dev/null 2>&1
-    echo "new location: $PWD"
-    # TODO checkout correct branch here
-    # git filter-branch --subdirectory-filter $B_DIR -- --all
+    git checkout $TARGET_BRANCH
+    git merge --strategy=ours master    # keep the content of this branch, but record a merge
+    git checkout master
+    git merge $TARGET_BRANCH
+    git filter-branch --subdirectory-filter $B_DIR -- --all
+    ls -la
     # git remote remove origin
     # git remote add origin $B_REPO
     # git push origin master
     popd > /dev/null 2>&1
 
-    echo $PWD
     # git rm -r $B_DIR
     # git submodule add $B_REPO
     # rm -rf ~/git-tmp-script-dir
 }
 
-# # and $A_REPO??
 if [ ! -z $B_REPO ]; then
     extract_dir_into_repo
 else
