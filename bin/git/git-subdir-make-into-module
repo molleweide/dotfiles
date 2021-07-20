@@ -24,8 +24,8 @@ function extract_dir_into_repo() {
     git push origin master
     popd > /dev/null 2>&1
 
-    # git rm -r $TRG_SUB_DIR
-    # git submodule add $NEW_REPO_URL
+    git rm -r $TRG_SUB_DIR
+    git submodule add $NEW_REPO_URL
     rm -rf $TMP_DIR
 }
 
