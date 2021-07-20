@@ -26,7 +26,7 @@ function extract_dir_into_repo() {
 
     git rm -r $TRG_SUB_DIR
     rm -rf $TRG_SUB_DIR
-    git submodule add $NEW_REPO_URL
+    git submodule add $NEW_REPO_URL $TRG_SUB_DIR
     rm -rf $TMP_DIR
 }
 
