@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+# ## MAKE SUBDIR INTO SUBMODULE
+
+# http://blog.davidecoppola.com/2015/02/how-to-create-git-submodule-from-repository-subdirectory/
+# https://stackoverflow.com/questions/2982055/detach-many-subdirectories-into-a-new-separate-git-repository
+# https://www.tutorialspoint.com/sed/sed_basic_syntax.htm
+
+
+# bash fn $1subdir-path and $2gith-repo-url
+
+# # FIRST
+
+# 1. you have to be in the larger git proj root
+# 2. here you run the function
+# 3. create this fn in ~/dotfiles/bin/git/
+# 4. name script = `mv-path-to-new-repo`
+
+# # ALGO
+# - split_out
+#     1. mk new remote gith repo SMALL manually !!!
+#     2. clone BIG to tmp
+#     3. filter push SMALL/
+#     4. rm SMALL from BIG
+#     5. mk submodule SMALL
+
+# - git-subdir-make-into-module $1subdir $2remotenew
+
+# eg. B = https://github.com/molleweide/mollew-config.nvim.git
+
+
+#   1. check if B exists
+#       git ls-remote --get-url B
+
+#   2. clone A into ~/git_tempdir
+#       git clone A ~/git-tmp-script-dir
+
+#   3. filter out b from tempdir
+#     - rm remote A
+#       - add remote B
+
+
+#   4. rm b from a
+#       git rm -r b_dir/
+
+#   5. add B as submodule in a
+#       git submodule add B
+
+#   6. remove temp
+
+# # this will remove everything except apps/AAA and libs/XXX from current
+# # repository.
+# git filter-branch --index-filter \
+#                       'git rm --cached -qr --ignore-unmatch -- . && git reset -q $GIT_COMMIT -- apps/AAA libs/XXX' \
+#                   --prune-empty -- \
+#                   --all
+
+# # This leaves behind lots of empty merges due to how filter-branch
+# # keeps all merge nodes, remember it keeps all 1/0 parent commits
+# git filter-branch --prune-empty
+#                   --parent-filter \
+#                       'sed "s/-p //g" | \
+#                         xargs -r git show-branch --independent | sed "s/\</-p /g"'
