@@ -31,7 +31,7 @@ export CPPFLAGS="-I/usr/local/opt/openssl/include"
 export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
 
 # Path
-export PATH="$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.local/bin/git:/usr/local/bin:/usr/local/sbin:$PATH"
 export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 export PATH="/usr/local/opt/openssl/bin:$PATH"
