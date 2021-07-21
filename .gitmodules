@@ -1,3 +1,6 @@
+[submodule "nvim.config/molleweide"]
+	path = nvim.config/molleweide
+	url = https://github.com/molleweide/mollew-config.nvim.git
 [submodule "nvim"]
 	path = nvim
-	url = https://github.com/molleweide/mollew-config.nvim.git
+	url = https://github.com/molleweide/cheovim.git
