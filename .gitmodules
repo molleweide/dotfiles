@@ -4,3 +4,6 @@
 [submodule "nvim"]
 	path = nvim
 	url = https://github.com/molleweide/cheovim.git
+[submodule "nvim.config/doom"]
+	path = nvim.config/doom
+	url = https://github.com/molleweide/doom-nvim.git
