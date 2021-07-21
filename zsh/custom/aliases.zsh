@@ -55,7 +55,10 @@ alias vv="~/code/neovim/build/bin/nvim" # forked build
 alias gcfls="git conflict"
 alias M="git checkout master"
 alias m="git checkout molleweide"
+
+# 1 = branch, 2 = sub path, 3 = new repo url
 alias gbrkout="~/.local/bin/git/git-subdir-make-into-module"
+alias gsmv="~/.local/bin/git/git-submodule-mv"
 
 # CHAT
 alias sg="gurk" # signal

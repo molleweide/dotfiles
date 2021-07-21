@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+FROMDIR=$1
+TODIR=$2
+TEMPDIR=ntesiroarn
+
+git mv $FROMDIR $TEMPDIR
+git mv $TEMPDIR $TODIR
