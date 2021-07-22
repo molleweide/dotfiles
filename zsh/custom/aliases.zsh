@@ -56,6 +56,9 @@ alias gcfls="git conflict"
 alias M="git checkout master"
 alias m="git checkout molleweide"
 
+alias zg="lazygit"
+
+
 # 1 = branch, 2 = sub path, 3 = new repo url
 alias gbrkout="git-subdir-make-into-module"
 alias gsmv="git-submodule-mv"

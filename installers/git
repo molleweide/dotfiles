@@ -50,6 +50,8 @@ dotheader "Setting up Git..."
 install_package "git"
 install_fancy_diffs
 
+brew_install jesseduffield/lazygit/lazygit
+
 setup_git_scripts
 setup_user_gitconfig
 setup_git_dotfiles

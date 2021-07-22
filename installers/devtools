@@ -38,4 +38,7 @@ brew_install heroku/brew/heroku
 brew_install hub
 brew_install redis
 
+yay -S code-minimap
+brew install code-minimap
+
 heroku plugins:install heroku-repo
