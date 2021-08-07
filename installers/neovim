@@ -51,8 +51,13 @@ function install_neovim() {
 
 function setup_neovim_config() {
   mkdir -p ~/.config
-  symlink_dotfile nvim ~/.config/nvim
-  symlink_dotfile nvim.config ~/.config/nvim.config
+
+  # cheovim config manager
+  symlink_dotfile nvim ~/.config/nvim 
+
+  # nvim actuall configs
+  symlink_dotfile molleweide-nvim ~/.config/molleweide-nvim
+  symlink_dotfile doom-nvim ~/.config/doom-nvim
 }
 
 function ensure_plugin_directory() {
