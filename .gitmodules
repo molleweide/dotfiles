@@ -7,3 +7,9 @@
 [submodule "doom-nvim"]
 	path = doom-nvim
 	url = https://github.com/molleweide/doom-nvim.git
+[submodule "chad-nvim"]
+	path = chad-nvim
+	url = https://github.com/molleweide/NvChad.git
+[submodule "neovhy-nvim"]
+	path = neovhy-nvim
+	url = https://github.com/molleweide/neovhy.git
