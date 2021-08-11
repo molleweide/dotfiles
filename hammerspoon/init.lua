@@ -74,7 +74,7 @@ vim:shouldShowAlertInNormalMode(true)
 vim:setAlertFont("InconsolataGo Bold Nerd Font Complete")
 
 -- Enter normal mode by typing a key sequence
-vim:enterWithSequence('zm', 200)
+vim:enterWithSequence('zx', 300)
 -- if you want to bind a single key to entering vim, remove the
 -- :enterWithSequence('jk') line above and uncomment the bindHotKeys line
 -- below:

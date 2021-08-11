@@ -46,6 +46,6 @@ settings.theme = `
 }`;
 
 settings.defaultSearchEngine = "d";
-settings.useNeovim = false;
+settings.useNeovim = true;
 
 Visual.style('cursor', 'background-color: #CE6E19;');

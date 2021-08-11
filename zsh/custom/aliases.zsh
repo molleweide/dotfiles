@@ -42,7 +42,7 @@ function ranger {
         ranger
         --cmd="map Q chain shell echo %d > "$tempfile"; quitall"
     )
-    
+
     ${ranger_cmd[@]} "$@"
     if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]]; then
         cd -- "$(cat "$tempfile")" || return
@@ -67,7 +67,7 @@ alias vp="nvim --cmd \"set rtp+=\$(pwd)\""
 alias vv="~/code/neovim/build/bin/nvim" # forked build
 
 # ======== GIT ========
-alias gcfls="git conflict"
+alias gcfls="git conflicts"
 alias M="git checkout master"
 alias m="git checkout molleweide"
 
