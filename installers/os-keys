@@ -83,7 +83,7 @@ install_package luarocks
 if is_macos; then
   brew_install blueutil
 
-  # brew_cask_install karabiner-elements
+  brew_cask_install karabiner-elements
   # symlink_dotfile karabiner ~/.config/karabiner
 fi
 
