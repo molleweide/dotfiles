@@ -107,6 +107,7 @@ install_package zsh
 install_package zsh-completions
 
 install_package direnv
+# brew_install z
 install_fasd
 install_fzf
 

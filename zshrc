@@ -61,7 +61,7 @@ antigen bundle robbyrussell/oh-my-zsh plugins/zsh_reload
 antigen bundle dbalatero/fzf-git
 antigen bundle DarrinTisdale/zsh-aliases-exa
 antigen bundle chriskempson/base16-shell
-antigen bundle wookayin/fzf-fasd
+# antigen bundle wookayin/fzf-fasd
 antigen bundle twang817/zsh-ssh-agent
 antigen bundle zsh-users/zsh-completions
 antigen bundle zdharma/fast-syntax-highlighting
@@ -75,6 +75,8 @@ antigen apply
 
 eval "$(direnv hook zsh)"
 eval "$(fasd --init auto)"
+
+# export PATH=/usr/local/Cellar/z/1.9/etc/profile.d/z.sh:$PATH
 
 # =========== Custom settings ================
 
