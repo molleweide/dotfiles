@@ -15,6 +15,9 @@ alias srync="rsync -vrazh"
 alias emacs="TERM=xterm-24bit emacs -nw"
 alias cl="calcurse"
 
+alias duu="diskutil" # list commands
+alias dul="diskutil list" # list drives
+
 # ======== FINANCE ===========
 alias ei="cointop"
 
