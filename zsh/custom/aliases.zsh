@@ -55,7 +55,6 @@ function ranger {
 
 # ======== VIM ALIASES ===========
 
-# brew
 alias vim="nvim"
 alias v="nvim"
 alias vf="nvim -t" # search for tag

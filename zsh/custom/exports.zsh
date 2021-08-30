@@ -1,3 +1,6 @@
+# brew
+export PATH=/opt/homebrew/bin:$PATH
+
 # Tmux UTF8 support
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
