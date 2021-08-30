@@ -15,7 +15,8 @@ source "${BASH_SOURCE%/*}/installers/shared.sh"
 #
 # require_installer mac-app-store
 # require_installer mac-custom-apps
-#
+
+# require_installer node
 # require_installer git
 # require_installer devtools
 # require_installer zsh
