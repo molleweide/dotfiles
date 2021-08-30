@@ -21,6 +21,7 @@ if is_macos; then
     ruby -e "$(curl -fsSL \
       https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
+    symlink_dotfile zprofile ~/.zprofile
     brew update
   fi
 
