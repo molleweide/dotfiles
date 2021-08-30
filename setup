@@ -2,28 +2,38 @@
 
 source "${BASH_SOURCE%/*}/installers/shared.sh"
 
-require_installer package-manager
-require_installer terminal
-require_installer nav
-require_installer tiling
-require_installer widgets
-require_installer mac-app-store
-require_installer mac-custom-apps
-require_installer git
-require_installer devtools
-require_installer zsh
-require_installer python
-require_installer ruby
-require_installer haskell
-require_installer tmux
-require_installer fonts
-require_installer neovim
-require_installer backups
-require_installer os-keys
-require_installer audio
-require_installer personal
-require_installer java
-require_installer monitor
-require_installer chat
-# require_installer molleweide # install personal forks
-require_installer reaper
+# require_installer package-manager
+# require_installer terminal
+
+# nav / what was nav???
+
+# require_installer ui
+# require_installer filemgmt
+#
+# require_installer tiling
+# require_installer widgets
+#
+# require_installer mac-app-store
+# require_installer mac-custom-apps
+#
+# require_installer git
+# require_installer devtools
+# require_installer zsh
+# require_installer python
+# require_installer ruby
+# require_installer haskell
+#
+# require_installer tmux
+# require_installer fonts
+#
+# require_installer neovim
+#
+# require_installer backups
+# require_installer os-keys
+# require_installer audio
+# require_installer personal
+# require_installer java
+# require_installer monitor
+# require_installer chat
+# # require_installer molleweide # install personal forks
+# require_installer reaper

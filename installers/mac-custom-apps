@@ -339,7 +339,7 @@ if is_macos; then
     # install_better_touch_tool
     # install_dash
     install_docker
-    install_dropbox
+    # install_dropbox
     install_firefox
     # install_focus
     # install_google_chrome
