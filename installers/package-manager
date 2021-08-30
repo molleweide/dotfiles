@@ -24,6 +24,7 @@ if is_macos; then
  
    symlink_dotfile zprofile ~/.zprofile
 
+    # symlink_dotfile zprofile ~/.zprofile
     brew update
   fi
 
