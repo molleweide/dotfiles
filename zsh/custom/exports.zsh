@@ -1,4 +1,5 @@
 # brew
+# maybe wrap this in a uname -m x8664 | arm64
 export PATH=/opt/homebrew/bin:$PATH
 
 # Tmux UTF8 support

@@ -17,6 +17,7 @@ if is_macos; then
 
   # search
   brew_install dmenu-mac
+  symlink_dotfile bin/custom_launcher ~/.local/bin/custom_launcher
 
 elif is_linux; then
   apt_install ranger
