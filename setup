@@ -11,13 +11,6 @@ source "${BASH_SOURCE%/*}/installers/shared.sh"
 # require_installer files
 # require_installer zsh
 
-# CUSTOM APPS ############################
-
-# require_installer mac-app-store
-# require_installer mac-custom-apps
-# require_installer hammerspoon
-# require_installer ubersicht
-
 # DEV ####################################
 
 # require_installer node
@@ -28,22 +21,23 @@ source "${BASH_SOURCE%/*}/installers/shared.sh"
 # require_installer rust
 # require_installer lua
 # require_installer haskell
-
-# TMUX & VIM #############################
-
+# require_installer java
 # require_installer fonts
 # require_installer tmux
 # require_installer neovim
 
 # OTHER ##################################
 
+# require_installer mac-app-store
+# require_installer mac-custom-apps
+# require_installer hammerspoon
+# require_installer ubersicht
 # require_installer theming
 # require_installer backups
 # require_installer keyboard
 # require_installer audio
 # require_installer webbrowsers
 # require_installer personal
-# require_installer java
 # require_installer monitor
 # require_installer chat
 # # require_installer molleweide # install personal forks
