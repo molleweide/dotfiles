@@ -5,10 +5,11 @@ source "${BASH_SOURCE%/*}/shared.sh"
 # SYMLINK CONFIGS
 
 mkdir -p ~/.config
+mkdir -p ~/.bin
 
+symlink_dotfile HOME/.bin ~/.bin
 symlink_dotfile alacritty.yml ~/.alacritty.yml
 symlink_dotfile mostrc ~/.mostrc
-
 symlink_dotfile skhdrc ~/.skhdrc
 symlink_dotfile yabairc ~/.yabairc
 
@@ -47,9 +48,3 @@ symlink_dotfile doom-nvim ~/.config/doom-nvim
 
 # CHAT
 symlink_dotfile irssi ~/.irssi
-
-# TODO: fix all of these > mv to bin repo
-mkdir -p ~/.local/bin
-symlink_dotfile bin/git ~/.local/bin/git
-symlink_dotfile bin/tmux-airline ~/.local/bin/tmux-airline
-symlink_dotfile bin/custom_launcher ~/.local/bin/custom_launcher
