@@ -5,53 +5,24 @@ source "${BASH_SOURCE%/*}/shared.sh"
 require_installer package-manager
 
 function setup_user_gitconfig() {
-  if [ ! -f ~/.gitconfig.user ]; then
-    printf "What is your GitHub username? > "
-    read github_user
-    git config -f ~/.gitconfig.user github.user "$github_user"
+    if [ ! -f ~/.gitconfig.user ]; then
+        printf "What is your GitHub username? > "
+        read github_user
+        git config -f ~/.gitconfig.user github.user "$github_user"
 
-    printf "What is your full name for commit messages (e.g. Jane Smith)? > "
-    read git_name
-    git config -f ~/.gitconfig.user user.name "$git_name"
+        printf "What is your full name for commit messages (e.g. Jane Smith)? > "
+        read git_name
+        git config -f ~/.gitconfig.user user.name "$git_name"
 
-    printf "What is your git email? (e.g. blah@blah.com) > "
-    read git_email
-    git config -f ~/.gitconfig.user user.email "$git_email"
-  fi
+        printf "What is your git email? (e.g. blah@blah.com) > "
+        read git_email
+        git config -f ~/.gitconfig.user user.email "$git_email"
+    fi
 }
-
-function setup_git_dotfiles() {
-  symlink_dotfile git/gitattributes ~/.gitattributes
-  symlink_dotfile git/gitconfig ~/.gitconfig
-  symlink_dotfile git/gitignore ~/.gitignore
-  symlink_dotfile git/gitmessage ~/.gitmessage
-}
-
-function setup_git_scripts() {
-  mkdir -p ~/.local/bin
-
-  symlink_dotfile bin/git ~/.local/bin/git
-
-  # symlink_dotfile bin/git/git-delete-merged-branches \
-  #   ~/.local/bin/git-delete-merged-branches
-
-  # symlink_dotfile bin/git/git-local-repos ~/.local/bin/git-local-repos
-
-  # symlink_dotfile bin/git/git-what-i-did ~/.local/bin/git-what-i-did
-}
-
-function install_fancy_diffs() {
-  npm install -g diff-so-fancy
-}
-
 
 dotheader "Setting up Git..."
-
 install_package "git"
-install_fancy_diffs
-
+npm install -g diff-so-fancy
 brew_install jesseduffield/lazygit/lazygit
-
 setup_git_scripts
 setup_user_gitconfig
-setup_git_dotfiles

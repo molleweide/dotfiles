@@ -4,10 +4,6 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 require_installer package-manager
 
-function setup_rvmrc() {
-  symlink_dotfile rvmrc ~/.rvmrc
-}
-
 function install_latest_ruby() {
   rvm install ruby --latest
 }
@@ -31,13 +27,6 @@ function install_rvm() {
   fi
 }
 
-function setup_pry() {
-  symlink_dotfile irb/pryrc ~/.pryrc
-  symlink_dotfile irb/unescaped_colors.rb ~/.unescaped_colors.rb
-  symlink_dotfile irb/escaped_colors.rb ~/.escaped_colors.rb
-  symlink_dotfile irb/aprc ~/.aprc
-}
-
 function install_yard() {
   gem install yard
 }
@@ -45,7 +34,7 @@ function install_yard() {
 function bootstrap_rvm() {
   if use_rvm; then
     dotsay "@b@blue[[Installing RVM...]]"
-    setup_rvmrc
+    # setup_rvmrc
     install_rvm
     install_global_gem_hooks
     install_yard
@@ -89,9 +78,7 @@ function bootstrap_rbenv() {
 
 dotheader "Setting up Ruby..."
 
-symlink_dotfile gemrc ~/.gemrc
 symlink_dotfile bin/rubocop-daemon-wrapper ~/.local/bin/rubocop-daemon-wrapper
-setup_pry
 
 bootstrap_rvm
 bootstrap_rbenv

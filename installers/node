@@ -42,7 +42,9 @@ function install_yarn_linux() {
   fi
 }
 
+# TODO: what the fuck is this and why is the file unders zsh?!
 function install_after_cd_nvm_hook_to_rvm() {
+
   local hook_file=$HOME/.rvm/hooks/after_cd_nvm
 
   if [ ! -f $HOME/rvm ]; then

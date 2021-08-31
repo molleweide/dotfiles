@@ -4,6 +4,7 @@ source "${BASH_SOURCE%/*}/installers/shared.sh"
 
 # ESSENTIALS #############################
 
+# require_installer symlink_configs # later mv into configs repo
 # require_installer package-manager
 # require_installer terminal
 # require_installer tiling
@@ -36,6 +37,7 @@ source "${BASH_SOURCE%/*}/installers/shared.sh"
 
 # OTHER ##################################
 
+# require_installer theming
 # require_installer backups
 # require_installer keyboard
 # require_installer audio

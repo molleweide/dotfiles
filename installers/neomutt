@@ -39,7 +39,7 @@ if is_macos; then
   # eg. my personal mail uses pop but that doesn't seem to be as common as
   # imap which is default.
 
-  brew install mpop
+  brew install mpop # i don't think that i need this because telia mail is not using pop anymore
 
   install_muttwizard
   fi
