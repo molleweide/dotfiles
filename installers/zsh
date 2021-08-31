@@ -29,6 +29,9 @@ function update_shell_whitelist() {
 }
 
 function chsh_zsh() {
+
+    # TODO: here check if not arm64...
+
   if [[ "$SHELL" != "$(zsh_binary)" ]]; then
     dotsay "@b@blue[[Changing shell for $current_user...]]"
 

@@ -6,19 +6,19 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 require_installer package-manager
 
-function install_imessageclient() {
-    local install_path=$HOME/code/imessageclient
-    local git_src="https://github.com/CamHenlin/imessageclient.git"
+# function install_imessageclient() {
+#     local install_path=$HOME/code/imessageclient
+#     local git_src="https://github.com/CamHenlin/imessageclient.git"
 
-    if [ ! -d $install_path ]; then
-        git clone $git_src $install_path
-        pushd $install_path > /dev/null 2>&1
-        npm install
-        popd > /dev/null 2>&1
-    else
-        dotsay "+ $install_path already exists"
-    fi
-}
+#     if [ ! -d $install_path ]; then
+#         git clone $git_src $install_path
+#         pushd $install_path > /dev/null 2>&1
+#         npm install
+#         popd > /dev/null 2>&1
+#     else
+#         dotsay "+ $install_path already exists"
+#     fi
+# }
 
 cargo install --git https://github.com/boxdot/gurk-rs
 
@@ -26,8 +26,9 @@ if is_macos; then
     brew_install irssi
     brew tap paul-nameless/homebrew-repo
     brew install tg
-    install_imessageclient
+    # install_imessageclient # did not really work...
     # elif is_linux; then
 fi
 
+# TODO: mv to symling
 symlink_dotfile irssi ~/.irssi

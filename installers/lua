@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+# brew_install lua
+install_package lua
+install_package luarocks
+
+luarocks install loop
+luarocks install dkjson
+luarocks install inspect
+luarocks install --server=http://luarocks.org/dev lua-lsp
+luarocks install luacheck
+luarocks install lcf
+

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+if is_macos; then
+  brew_install blueutil
+fi

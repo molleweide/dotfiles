@@ -53,7 +53,7 @@ function setup_neovim_config() {
   mkdir -p ~/.config
 
   # cheovim config manager
-  symlink_dotfile nvim ~/.config/nvim 
+  symlink_dotfile nvim ~/.config/nvim
 
   # nvim actuall configs
   symlink_dotfile molleweide-nvim ~/.config/molleweide-nvim
@@ -84,19 +84,19 @@ function install_ruby_neovim() {
   fi
 }
 
-function install_rust() {
-  if ! command_exists "cargo" ; then
+# function install_rust() {
+#   if ! command_exists "cargo" ; then
 
-    if is_macos; then
-      brew_install rustup
-    elif is_linux; then
-      curl https://sh.rustup.rs -sSf | sh
-    fi
+#     if is_macos; then
+#       brew_install rustup
+#     elif is_linux; then
+#       curl https://sh.rustup.rs -sSf | sh
+#     fi
 
-    rustup-init -y
-    source $HOME/.cargo/env
-  fi
-}
+#     rustup-init -y
+#     source $HOME/.cargo/env
+#   fi
+# }
 
 function install_proximity_sort() {
   if ! command_exists "proximity-sort" ; then
@@ -149,6 +149,6 @@ install_tern
 install_vim_node_rpc
 ensure_plugin_directory
 install_neovim_plugins
-install_rust
+# install_rust
 install_proximity_sort
 install_bat

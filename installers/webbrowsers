@@ -72,8 +72,6 @@ if is_macos; then
   # install_from_git_to_code molleweide vimium
   install_from_git_to_code molleweide Surfingkeys
 
-  # ONLY KEYS BROWSERS
-  # qutebrowser
   brew install -- cask qutebrowser
   install_nyxt_macos
 fi

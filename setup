@@ -2,42 +2,53 @@
 
 source "${BASH_SOURCE%/*}/installers/shared.sh"
 
-# ESSENTIALS -----------------------
+# ESSENTIALS #############################
+
 # require_installer package-manager
 # require_installer terminal
 # require_installer tiling
 # require_installer files
+# require_installer zsh
 
-# CUSTOM APPS ----------------------
+# CUSTOM APPS ############################
+
 # require_installer mac-app-store
 # require_installer mac-custom-apps
 # require_installer hammerspoon
 # require_installer ubersicht
 
-# DEV ------------------------------
+# DEV ####################################
+
 # require_installer node
 # require_installer git
 # require_installer devtools
-# require_installer zsh
 # require_installer python
 # require_installer ruby
 # require_installer rust
+# require_installer lua
 # require_installer haskell
 
-# TMUX & VIM -----------------------
+# TMUX & VIM #############################
+
 # require_installer fonts
 # require_installer tmux
 # require_installer neovim
 
-# OTHER ----------------------------
+# OTHER ##################################
+
 # require_installer backups
-# require_installer os-keys
+# require_installer keyboard
 # require_installer audio
+# require_installer webbrowsers
 # require_installer personal
 # require_installer java
 # require_installer monitor
 # require_installer chat
 # # require_installer molleweide # install personal forks
 
-# MUSIC ----------------------------
+# MUSIC ##################################
+
 # require_installer reaper
+
+
+
