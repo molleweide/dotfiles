@@ -5,7 +5,7 @@ source "${BASH_SOURCE%/*}/installers/shared.sh"
 # FIRST!!! ##################################
 
 # git submodules --init --update --recursively
-# symlink XDG_HOME
+# symlink each file/dir in XDG_HOME to ~/
 # require_installer symlink_configs # later mv into configs repo
 
 # ESSENTIALS #############################

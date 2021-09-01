@@ -7,6 +7,8 @@
 	version: 0.1
 @end
 
+* start copying over luke's zprofile
+
 * move all of the rvm gemsets hooks stuff into ruby lang installer
 
 * read LARBS script > he links stuff to config in zprofile

@@ -38,7 +38,6 @@ if is_macos; then
     # brew tap nickolasburr/pfa
     # brew install sc-im
 
-    symlink_dotfile scimrc ~/.config/sc-im/scimrc
 
     # configs
     # elif is_linux; then

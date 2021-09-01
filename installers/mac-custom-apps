@@ -38,10 +38,10 @@ if is_macos; then
       install_dmg_with_installer "Dropbox" "$url" "Dropbox.app"
     }
 
-    install_firefox() {
-      local url="https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US"
-      install_simple_dmg_copy "Firefox" "$url"
-    }
+    # install_firefox() {
+    #   local url="https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US"
+    #   install_simple_dmg_copy "Firefox" "$url"
+    # }
 
     install_focus() {
       local url="https://heyfocus.com/releases/Focus-latest.zip"
@@ -170,7 +170,7 @@ if is_macos; then
     # install_dash
     install_docker
     # install_dropbox
-    install_firefox
+    # install_firefox
     # install_focus
     # install_google_chrome
     # install_hazeover
