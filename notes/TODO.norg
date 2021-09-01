@@ -8,9 +8,10 @@
 @end
 
 * move all of the rvm gemsets hooks stuff into ruby lang installer
-* copy everything into XDG_HOME
-    1. move all dotfiles stuff into xdg
-    2. move new config files that haven't been aliased yet
+
+* read LARBS script
+* read TJ make file
+* read fehawen's makefile
 
 * add makefile from TJ
 * copy lukes shell config structure | zprofile
