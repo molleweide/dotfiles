@@ -7,22 +7,25 @@
 	version: 0.1
 @end
 
+* copy everything into XDG_HOME
+    1. move all dotfiles stuff into xdg
+    2. move new config files that haven't been aliased yet
 
-* FoLKE TODO cycle all todo's???
-
-* copy everything into XDG_HOME now
-
-* add makefile from tj
-
+* add makefile from TJ
 * copy lukes shell config structure | zprofile
 * move submodules into XDG_HOME
-* does luke install programs before he install dotfiles??
+* does luke install programs he symlinks??
+* keyboard build
+* create list for downloading all of my local projects??
+  create git list of my personal projects
+* export browser data.
 
-* air m1
- ** keyboard
- ** python build
+* ERRORS
+ ** m1 | python build
     first test update to latest python version
         still fails??
- ** create list for downloading all of my local projects??
-    create git list of my personal projects
- ** export browser data.
+    | https://duckduckgo.com/?q=pyenv+docs+m1+silicone&ia=web
+    | https://github.com/pyenv/pyenv/issues/1768
+    | https://stackoverflow.com/questions/65653464/installation-of-earlier-versions-of-python-prior-to-3-8-fails-on-mac-with-m1-c
+    | https://stackoverflow.com/questions/68348152/issues-installing-python-using-pyenv-on-macos-m1
+    | https://github.com/pyenv/pyenv/issues/1876
