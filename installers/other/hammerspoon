@@ -56,7 +56,6 @@ function setup_development_spoon_from_git_repo() {
 }
 
 if is_macos; then
-    symlink_dotfile hammerspoon ~/.hammerspoon
     setup_spoon_install
 
       # refactor function so that i pass the git username first >> balatero VimMode

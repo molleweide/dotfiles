@@ -13,3 +13,6 @@
 [submodule "neovhy-nvim"]
 	path = neovhy-nvim
 	url = https://github.com/molleweide/neovhy.git
+[submodule "hammerspoon"]
+	path = XDG_HOME/.hammerspoon
+	url = git@github.com:molleweide/config_hammerspoon.git
