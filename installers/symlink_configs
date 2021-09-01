@@ -52,6 +52,8 @@ symlink_dotfile XDG_HOME/.bin ~/.bin
 # symlink_dotfile vscode/keybindings.json "$VSCODE_CONFIG_DIR/keybindings.json"
 # symlink_dotfile vscode/settings.json "$VSCODE_CONFIG_DIR/settings.json"
 
+# symlink_dotfile karabiner ~/.config/karabiner
+
 
 # # CHAT
 # symlink_dotfile irssi ~/.irssi

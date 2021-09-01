@@ -17,48 +17,54 @@ require_installer package-manager
 dotheader "Setting up keyboard related tools.."
 # brew_cask_install hammerspoon --appdir=/Applications
 
-
-# add `_on_macos` to fn name
-function setup_development_kmonad_from_git_repo() {
-  source_dir=$HOME/code/kmonad
-  git clone --recursive https://github.com/molleweide/kmonad.git $source_dir
-  pushd $source_dir > /dev/null 2>&1
-
-  # macos kext
-  # stack build \
-  #   --flag kmonad:kext \
-  #   --local-bin-path=/usr/local/bin/kmonad \
-  #   --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
-
-  # macos dext
-  # check dext version w/
-  #     `defaults read /Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/Info.plist CFBundleVersion`
-  stack build \
-    --flag kmonad:dext \
-    --local-bin-path=/usr/local/bin/kmonad \
-    --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
-
-  popd > /dev/null 2>&1
+# mv to shared
+function install_from_github() {
+    local user=$1
+    local name=$2
+    local code_dir=$HOME/code
+    local dest=$code_dir/$name
+    mkdir -p "$code_dir"
+    if [ ! -d $dest ]; then
+        dotsay "+ cloning $dest"
+        git clone https://github.com/molleweide/$name.git $dest
+    else
+        dotsay "+ $dest already exists"
+    fi
 }
 
-# TODO: move to bin
-symlink_dotfile bin/dnd-toggle ~/.local/bin/dnd-toggle
 
-# brew_install lua
-# install_package lua
-# install_package luarocks
+# TODO: add `_on_macos` to fn name
+function setup_development_kmonad_from_git_repo() {
+    source_dir=$HOME/code/kmonad
+    git clone --recursive https://github.com/molleweide/kmonad.git $source_dir
+    pushd $source_dir > /dev/null 2>&1
+
+    # macos kext
+    # stack build \
+    #   --flag kmonad:kext \
+    #   --local-bin-path=/usr/local/bin/kmonad \
+    #   --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
+
+    # macos dext
+    # check dext version w/
+    #     `defaults read /Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/Info.plist CFBundleVersion`
+    stack build \
+        --flag kmonad:dext \
+        --local-bin-path=/usr/local/bin/kmonad \
+        --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+
+    popd > /dev/null 2>&1
+}
 
 if is_macos; then
-  # brew_install blueutil
+    brew_cask_install karabiner-elements
+    install_from_github molleweide "KE-complex_modifications"
+    install_from_github molleweide "Karabiner-Elements"
 
-  brew_cask_install karabiner-elements
-  symlink_dotfile karabiner ~/.config/karabiner
-fi
+    install_from_github molleweide "qmk_firmware"
 
-if is_macos; then
-
-  # >>> I have to check if it exists so i don't overwrite...
-  # setup_development_kmonad_from_git_repo
+    # >>> I have to check if it exists so i don't overwrite...
+    # setup_development_kmonad_from_git_repo
 fi
 
 if is_linux; then
@@ -74,29 +80,4 @@ if is_linux; then
   popd > /dev/null 2>&1
 
 fi
-
-# mv to shared
-function install_from_github() {
-  local user=$1
-  local name=$2
-  local code_dir=$HOME/code
-  local dest=$code_dir/$name
-
-  mkdir -p "$code_dir"
-
-  if [ ! -d $dest ]; then
-    dotsay "+ cloning $dest"
-    git clone https://github.com/molleweide/$name.git $dest
-  else
-    dotsay "+ $dest already exists"
-  fi
-
-}
-
-if is_macos; then
-  install_from_github molleweide "KE-complex_modifications"
-  install_from_github molleweide "Karabiner-Elements"
-fi
-install_from_github molleweide "qmk_firmware"
-# install_from_github molleweide "HyperKey" # replace balateros...
 
