@@ -5,16 +5,20 @@ source "${BASH_SOURCE%/*}/shared.sh"
 require_installer package-manager
 
 
-# # gemsets/global.gems
-# gem-wrappers
-# rubygems-bundler
-# rake
-# rvm
-# bundler
-# zeus
-# tmuxinator
-# neovim
-# yard
+# default_gems_array=(
+#     gem-wrappers
+#     rubygems-bundler
+#     rake
+#     rvm
+#     bundler
+#     zeus
+#     tmuxinator
+#     neovim
+#     yard
+# )
+# # for package in "${buildtools[@]}"; do
+# #     apt_install "$package"
+# # done
 
 # # hooks/after_install_add_default_gems
 # rvm $rvm_ruby_string do rvm gemset create global
@@ -28,6 +32,7 @@ require_installer package-manager
 #   tmuxinator \
 #   zeus
 
+# RVM ###################################################
 
 function install_latest_ruby() {
     rvm install ruby --latest
@@ -68,6 +73,8 @@ function bootstrap_rvm() {
     fi
 }
 
+# RBENV #################################################
+
 function install_rbenv_default_gems() {
     local destination=$(rbenv root)/plugins/rbenv-default-gems
 
@@ -84,6 +91,7 @@ function install_rbenv_default_gems() {
     if [ ! -f "$default_gem_file_destination" ]; then
         echo "+ Doing one-time install of default gems"
 
+        # TODO: use $default_gems_array
         while read -r name; do
             gem install "$name"
         done < $default_gem_file

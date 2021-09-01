@@ -9,7 +9,7 @@
 
 * move all of the rvm gemsets hooks stuff into ruby lang installer
 
-* read LARBS script
+* read LARBS script > he links stuff to config in zprofile
 * read TJ make file
 * read fehawen's makefile
 
