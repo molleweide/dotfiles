@@ -72,20 +72,32 @@ install_firefox_dev() {
 }
 
 
+install_brave() {
+    if is_macos; then
+        if is_apple_silicone; then
+            local url="https://laptop-updates.brave.com/latest/osxarm64/release"
+            install_simple_dmg_copy "Brave" "$url"
+        else
+            local url="https://laptop-updates.brave.com/latest/osx/release"
+            install_simple_dmg_copy "Brave" "$url"
+        fi
+    fi
+}
 
 if is_macos; then
     require_installer package-manager
-    # CONSUMER BROWSERS
+
     install_firefox
     install_firefox_dev
-    # brew_install brave
+    install_brave
+
 
       # surfingkeys is much better than vimium
       # install_from_git_to_code molleweide vimium
       install_from_git_to_code molleweide Surfingkeys
 
       brew install -- cask qutebrowser
-      install_nyxt_macos
+      # install_nyxt_macos
 fi
 
 if is_linux; then
