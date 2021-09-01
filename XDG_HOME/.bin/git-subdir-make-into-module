@@ -3,6 +3,12 @@
 # MAKE SUBDIR INTO SUBMODULE
 # B = https://github.com/molleweide/mollew-config.nvim.git
 
+# target branch, target dir, new repo remote url
+#
+# examle
+# NOTE: ```git_make_subdir_into_repo branchX some/dir git@github.com:git_user/new_repo.git```
+
+
 TARGET_BRANCH=$1
 TRG_SUB_DIR=$2
 NEW_REPO_URL=$(git ls-remote --get-url $3)
