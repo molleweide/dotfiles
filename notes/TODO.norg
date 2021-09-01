@@ -9,8 +9,15 @@
 
 * brodierobertson has a nice way of linking all files
   ask him why he isn't linking the whole config folder
+  1. create symlink script
+  2. before creating symlinks
+    - remove previous link
+    3. re-link files/dirs
+  4. this means that I can handle the rvm issue??
+    rvm
+    zsh/rvm
 
-* move all of the rvm gemsets hooks stuff into ruby lang installer
+* vimac > create custom dmg installer
 
 * move submodules into XDG_HOME
 
@@ -20,20 +27,14 @@
   create git list of my personal projects
 * export browser data.
 
-* git installers
-  can i refactor git installer functions and put it under `shared`
-
 * ERRORS
  ** m1 | python build
     first test update to latest python version
         still fails??
+        is this because only 3.10+ works on m1????
+
     | https://duckduckgo.com/?q=pyenv+docs+m1+silicone&ia=web
     | https://github.com/pyenv/pyenv/issues/1768
     | https://stackoverflow.com/questions/65653464/installation-of-earlier-versions-of-python-prior-to-3-8-fails-on-mac-with-m1-c
     | https://stackoverflow.com/questions/68348152/issues-installing-python-using-pyenv-on-macos-m1
     | https://github.com/pyenv/pyenv/issues/1876
-
-
-doom-nvim SUBMODULE
-molleweide-nvim SUBMODULE
-nvim Submodule
