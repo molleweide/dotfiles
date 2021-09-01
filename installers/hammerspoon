@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/shared.sh"
+
+# HAMMERSPOON
+require_installer package-manager
+
+dotheader "Setting up HAMMERSPOON.."
+
+brew_cask_install hammerspoon --appdir=/Applications
+
+function setup_spoon_install() {
+    local url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
+    local destination=/tmp/SpoonInstall.spoon.zip
+    local spoons_dir=$HOME/.hammerspoon/Spoons
+
+    if [ ! -d "$spoons_dir/SpoonInstall.spoon" ]; then
+        dotsay "@blue@b[[+ installing SpoonInstall.spoon ]]"
+
+        wget -nv $url -O $destination
+        unzip -d $spoons_dir $destination
+    else
+        dotsay "+ SpoonInstall.spoon already setup"
+    fi
+}
+
+if is_macos; then
+    setup_spoon_install
+fi
