@@ -46,6 +46,13 @@ symlink_dotfile XDG_HOME/.bin ~/.bin
 # symlink_dotfile molleweide-nvim ~/.config/molleweide-nvim
 # symlink_dotfile doom-nvim ~/.config/doom-nvim
 
+# # VSCODE
+# VSCODE_CONFIG_DIR="$HOME/Library/Application Support/Code/User"
+# mkdir -p "$VSCODE_CONFIG_DIR"
+# symlink_dotfile vscode/keybindings.json "$VSCODE_CONFIG_DIR/keybindings.json"
+# symlink_dotfile vscode/settings.json "$VSCODE_CONFIG_DIR/settings.json"
+
+
 # # CHAT
 # symlink_dotfile irssi ~/.irssi
 

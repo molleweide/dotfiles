@@ -30,3 +30,8 @@
     | https://stackoverflow.com/questions/65653464/installation-of-earlier-versions-of-python-prior-to-3-8-fails-on-mac-with-m1-c
     | https://stackoverflow.com/questions/68348152/issues-installing-python-using-pyenv-on-macos-m1
     | https://github.com/pyenv/pyenv/issues/1876
+
+
+doom-nvim SUBMODULE
+molleweide-nvim SUBMODULE
+nvim Submodule

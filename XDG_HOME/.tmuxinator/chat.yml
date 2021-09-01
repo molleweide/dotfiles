@@ -1,0 +1,18 @@
+# ~/.tmuxinator/vim.yml
+
+# https://github.com/molleweide/tg
+name: chat
+
+windows:
+  - tg:
+      root: ~/code/tg
+      panes:
+        -
+  - sg:
+      root: ~/code/gurk-js
+      panes:
+
+  - imess:
+      root: ~/code/imessageclient
+      panes:
+        -

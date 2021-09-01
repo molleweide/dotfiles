@@ -1,0 +1,32 @@
+# ~/.tmuxinator/vim.yml
+
+name: vim
+root: ~/code/vim
+
+windows:
+  - dot:
+      layout: 4ffa,185x47,0,0{115x47,0,0,6,69x47,116,0,8}
+      panes:
+        - cd ~/.dotfiles && vim
+        - cd ~/.dotfiles
+  - nvim:
+      root: ~/code/neovim
+      panes:
+        -
+  - vspoon:
+      root: ~/code/VimMode.spoon
+      panes:
+        -
+        -
+  - surf:
+      root: ~/code/Surfingkeys
+      panes:
+        -
+  - vimac:
+      root: ~/code/vimac
+      panes:
+        -
+  - fire:
+      root: ~/code/firenvim
+      panes:
+        -
