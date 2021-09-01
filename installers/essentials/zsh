@@ -5,99 +5,96 @@ source "${BASH_SOURCE%/*}/shared.sh"
 require_installer package-manager
 require_installer ruby
 
-function setup_zsh_symlinks() {
-  symlink_dotfile zshrc ~/.zshrc
-  symlink_dotfile zsh ~/.zsh
-  symlink_dotfile zsh/zshenv ~/.zshenv
-}
-
 function zsh_binary() {
-  if is_linux; then
-    echo /bin/zsh
-  elif is_macos; then
-    echo /usr/local/bin/zsh
-  fi
+    if is_linux; then
+        echo /bin/zsh
+    elif is_macos; then
+        if is_apple_silicone; then
+            echo /bin/zsh
+        else;
+            echo /usr/local/bin/zsh
+        fi
+    fi
 }
 
 function update_shell_whitelist() {
-  local zshbin=$(zsh_binary)
-  if ! cat /etc/shells | grep -q $zshbin; then
-    echo "Adding $zshbin to /etc/shells, please enter your sudo password"
+    local zshbin=$(zsh_binary)
+    if ! cat /etc/shells | grep -q $zshbin; then
+        echo "Adding $zshbin to /etc/shells, please enter your sudo password"
 
-    echo $zshbin | sudo tee -a /etc/shells > /dev/null
-  fi
+        echo $zshbin | sudo tee -a /etc/shells > /dev/null
+    fi
 }
 
 function chsh_zsh() {
 
     # TODO: here check if not arm64...
 
-  if [[ "$SHELL" != "$(zsh_binary)" ]]; then
-    dotsay "@b@blue[[Changing shell for $current_user...]]"
+    if [[ "$SHELL" != "$(zsh_binary)" ]]; then
+        dotsay "@b@blue[[Changing shell for $current_user...]]"
 
-    local current_user=$USER
-    sudo chsh -s $(zsh_binary) $current_user
-  fi
+        local current_user=$USER
+        sudo chsh -s $(zsh_binary) $current_user
+    fi
 }
 
 function install_fzf() {
-  brew_install fzf
-  # apt_install fzf # ???
+    brew_install fzf
+    # apt_install fzf # ???
 
-  if [ ! -f $HOME/.fzf.zsh ]; then
-    $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
-  fi
+    if [ ! -f $HOME/.fzf.zsh ]; then
+        $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
+    fi
 }
 
 function install_fasd() {
-  if is_linux; then
-    if ! command_exists "fasd"; then
-      sudo add-apt-repository ppa:aacebedo/fasd
-      sudo apt-get update
+    if is_linux; then
+        if ! command_exists "fasd"; then
+            sudo add-apt-repository ppa:aacebedo/fasd
+            sudo apt-get update
+        fi
     fi
-  fi
 
-  install_package fasd
+    install_package fasd
 }
 
 function setup_zsh_completions_repo() {
-  ! is_linux && return 1
+    ! is_linux && return 1
 
-  if ! apt_is_installed "zsh-completions"; then
-    sudo sh -c "echo 'deb http://download.opensuse.org/repositories/shells:/zsh-users:/zsh-completions/xUbuntu_16.04/ /' > /etc/apt/sources.list.d/zsh-completions.list"
+    if ! apt_is_installed "zsh-completions"; then
+        sudo sh -c "echo 'deb http://download.opensuse.org/repositories/shells:/zsh-users:/zsh-completions/xUbuntu_16.04/ /' > /etc/apt/sources.list.d/zsh-completions.list"
 
-    wget -nv https://download.opensuse.org/repositories/shells:zsh-users:zsh-completions/xUbuntu_16.04/Release.key -O /tmp/Release.key
-    sudo apt-key add - < /tmp/Release.key
+        wget -nv https://download.opensuse.org/repositories/shells:zsh-users:zsh-completions/xUbuntu_16.04/Release.key -O /tmp/Release.key
+        sudo apt-key add - < /tmp/Release.key
 
-    sudo apt-get update
-  fi
+        sudo apt-get update
+    fi
 }
 
 function install_antigen() {
-  local plugin_file=$HOME/.zsh/vendor/antigen.zsh
+    local plugin_file=$HOME/.zsh/vendor/antigen.zsh
 
-  if [ ! -f $plugin_file ]; then
-    echo "Installing antigen"
-    curl -L git.io/antigen > "$plugin_file"
-  fi
+    if [ ! -f $plugin_file ]; then
+        echo "Installing antigen"
+        curl -L git.io/antigen > "$plugin_file"
+    fi
 }
 
 function install_base16_shell() {
-  local base16_repo=$HOME/.config/base16-shell
+    local base16_repo=$HOME/.config/base16-shell
 
-  if [ ! -d $base16_repo ]; then
-    echo "Installing base16-shell..."
-    git clone https://github.com/chriskempson/base16-shell.git "$base16_repo"
-  fi
+    if [ ! -d $base16_repo ]; then
+        echo "Installing base16-shell..."
+        git clone https://github.com/chriskempson/base16-shell.git "$base16_repo"
+    fi
 
-  ln -sf $HOME/.antigen/bundles/chriskempson/base16-shell/scripts/base16-oceanicnext.sh ~/.base16_theme
+    ln -sf $HOME/.antigen/bundles/chriskempson/base16-shell/scripts/base16-oceanicnext.sh ~/.base16_theme
 }
 
 dotheader "Setting up ZSH..."
 
 brew_install exa
 apt_install exa
-
 
 brew_install neofetch
 apt_install neofetch
@@ -114,7 +111,6 @@ install_package direnv
 install_fasd
 install_fzf
 
-setup_zsh_symlinks
 install_antigen
 
 update_shell_whitelist

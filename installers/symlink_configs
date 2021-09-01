@@ -50,3 +50,6 @@ symlink_dotfile XDG_HOME/.bin ~/.bin
 # symlink_dotfile irssi ~/.irssi
 
 # symlink_dotfile hammerspoon ~/.hammerspoon
+
+# symlink_dotfile scimrc ~/.config/sc-im/scimrc
+

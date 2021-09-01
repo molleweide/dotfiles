@@ -1,0 +1,28 @@
+@document.meta
+	title: TODO
+	description:
+	author: hjalmarjakobsson
+	categories:
+	created: 2021-09-01
+	version: 0.1
+@end
+
+
+* FoLKE TODO cycle all todo's???
+
+* copy everything into XDG_HOME now
+
+* add makefile from tj
+
+* copy lukes shell config structure | zprofile
+* move submodules into XDG_HOME
+* does luke install programs before he install dotfiles??
+
+* air m1
+ ** keyboard
+ ** python build
+    first test update to latest python version
+        still fails??
+ ** create list for downloading all of my local projects??
+    create git list of my personal projects
+ ** export browser data.

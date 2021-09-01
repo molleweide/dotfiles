@@ -9,52 +9,14 @@ source "${BASH_SOURCE%/*}/shared.sh"
 #   karabiner
 #   kmonad
 
+# TODO:
+# 1. is silicone >> kmonad??
+
 require_installer package-manager
 
 dotheader "Setting up keyboard related tools.."
 # brew_cask_install hammerspoon --appdir=/Applications
 
-
-# modify function
-#   $1 = git user
-#   $2 = repo name
-# function setup_development_spoon_from_git_repo() {
-#   local name=$1
-#   local code_dir=$HOME/code
-#   local source_dir=$code_dir/$name.spoon
-#   local symlink_destination=$HOME/.hammerspoon/Spoons/$name.spoon
-
-#   mkdir -p "$code_dir"
-
-#   if [ ! -d $source_dir ]; then
-#     dotsay "@blue@b[[+ cloning development copy of $name.spoon ]]"
-#     git clone https://github.com/dbalatero/$name.spoon "$source_dir"
-#   else
-#     dotsay "+ $name.spoon dev copy already checked out"
-#   fi
-
-#   if [ ! -d $symlink_destination ]; then
-#     dotsay "@blue@b[[+ symlinking development copy of $name.spoon ]]"
-#     ln -s "$source_dir" "$symlink_destination"
-#   else
-#     dotsay "+ $name.spoon already installed to Hammerspoon"
-#   fi
-# }
-
-# function setup_spoon_install() {
-#   local url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
-#   local destination=/tmp/SpoonInstall.spoon.zip
-#   local spoons_dir=$HOME/.hammerspoon/Spoons
-
-#   if [ ! -d "$spoons_dir/SpoonInstall.spoon" ]; then
-#     dotsay "@blue@b[[+ installing SpoonInstall.spoon ]]"
-
-#     wget -nv $url -O $destination
-#     unzip -d $spoons_dir $destination
-#   else
-#     dotsay "+ SpoonInstall.spoon already setup"
-#   fi
-# }
 
 # add `_on_macos` to fn name
 function setup_development_kmonad_from_git_repo() {
@@ -93,28 +55,7 @@ if is_macos; then
   symlink_dotfile karabiner ~/.config/karabiner
 fi
 
-# luarocks install loop
-# luarocks install dkjson
-# luarocks install inspect
-# luarocks install --server=http://luarocks.org/dev lua-lsp
-# luarocks install luacheck
-# luarocks install lcf
-
-# replace # ?? what was this. was this `replace` command there from before???
-
 if is_macos; then
-
-  # symlink_dotfile hammerspoon ~/.hammerspoon
-  # setup_spoon_install
-
-  # refactor function so that i pass the git username first >> balatero VimMode
-  #   so that i can install other spoons here
-  # setup_development_spoon_from_git_repo HyperKey
-  # setup_development_spoon_from_git_repo VimMode
-
-
-
-
 
   # >>> I have to check if it exists so i don't overwrite...
   # setup_development_kmonad_from_git_repo
@@ -133,9 +74,6 @@ if is_linux; then
   popd > /dev/null 2>&1
 
 fi
-
-
-
 
 # mv to shared
 function install_from_github() {

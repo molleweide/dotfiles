@@ -29,6 +29,3 @@ if is_macos; then
     # install_imessageclient # did not really work...
     # elif is_linux; then
 fi
-
-# TODO: mv to symling
-symlink_dotfile irssi ~/.irssi
