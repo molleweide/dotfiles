@@ -14,66 +14,78 @@ source "${BASH_SOURCE%/*}/shared.sh"
 # https://www.youtube.com/watch?v=AZERfhHo8w4
 
 function install_from_git_to_code() {
-  local user=$1
-  local name=$2
-  local code_dir=$HOME/code
-  local dest=$code_dir/$name
+    local user=$1
+    local name=$2
+    local code_dir=$HOME/code
+    local dest=$code_dir/$name
 
-  mkdir -p "$code_dir"
+    mkdir -p "$code_dir"
 
-  if [ ! -d $dest ]; then
-    dotsay "+ cloning $dest"
-    git clone https://github.com/$user/$name.git $dest
-  else
-    dotsay "+ $dest already exists"
-  fi
+    if [ ! -d $dest ]; then
+        dotsay "+ cloning $dest"
+        git clone https://github.com/$user/$name.git $dest
+    else
+        dotsay "+ $dest already exists"
+    fi
 
 }
 
 function install_nyxt_macos() {
-  if [ ! -d ~/common-lisp ]; then
-    mkdir -p ~/common-lisp
-    git clone https://github.com/atlas-engineer/nyxt ~/common-lisp/nyxt
-  else
-    dotsay "+ ~/common-lisp already exists"
-  fi
+    if [ ! -d ~/common-lisp ]; then
+        mkdir -p ~/common-lisp
+        git clone https://github.com/atlas-engineer/nyxt ~/common-lisp/nyxt
+    else
+        dotsay "+ ~/common-lisp already exists"
+    fi
 }
 
 function install_aur_libfixposix() {
-  local install_path=$HOME/code/libfixposix
-  local git_src="https://aur.archlinux.org/libfixposix.git"
+    local install_path=$HOME/code/libfixposix
+    local git_src="https://aur.archlinux.org/libfixposix.git"
 
-  git clone $git_src $install_path
+    git clone $git_src $install_path
 
-  pushd $install_path > /dev/null 2>&1
-  makepkg -si
-  popd > /dev/null 2>&1
+    pushd $install_path > /dev/null 2>&1
+    makepkg -si
+    popd > /dev/null 2>&1
 }
 
 function install_aur_nyxt() {
-  local install_path=$HOME/code/nyxt
-  local git_src="https://aur.archlinux.org/nyxt.git"
+    local install_path=$HOME/code/nyxt
+    local git_src="https://aur.archlinux.org/nyxt.git"
 
-  git clone $git_src $install_path
+    git clone $git_src $install_path
 
-  pushd $install_path > /dev/null 2>&1
-  makepkg -si
-  popd > /dev/null 2>&1
+    pushd $install_path > /dev/null 2>&1
+    makepkg -si
+    popd > /dev/null 2>&1
 }
 
 
+install_firefox() {
+    local url="https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US"
+    install_simple_dmg_copy "Firefox" "$url"
+}
+install_firefox_dev() {
+    local url="https://download.mozilla.org/?product=firefox-devedition-latest-ssl&os=osx&lang=en-US"
+    install_simple_dmg_copy "Firefox Dev" "$url"
+}
+
+
+
 if is_macos; then
-  require_installer package-manager
-  # CONSUMER BROWSERS
-  # firefox
-  # brew_install brave
+    require_installer package-manager
+    # CONSUMER BROWSERS
+    install_firefox
+    install_firefox_dev
+    # brew_install brave
 
-  # surfingkeys is much better than vimium
-  # install_from_git_to_code molleweide vimium
-  install_from_git_to_code molleweide Surfingkeys
+      # surfingkeys is much better than vimium
+      # install_from_git_to_code molleweide vimium
+      install_from_git_to_code molleweide Surfingkeys
 
-  brew install -- cask qutebrowser
-  install_nyxt_macos
+      brew install -- cask qutebrowser
+      install_nyxt_macos
 fi
 
 if is_linux; then
