@@ -7,6 +7,7 @@
 	version: 0.1
 @end
 
+* move all of the rvm gemsets hooks stuff into ruby lang installer
 * copy everything into XDG_HOME
     1. move all dotfiles stuff into xdg
     2. move new config files that haven't been aliased yet
