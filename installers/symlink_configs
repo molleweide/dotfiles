@@ -7,44 +7,46 @@ source "${BASH_SOURCE%/*}/shared.sh"
 mkdir -p ~/.config
 mkdir -p ~/.bin
 
-symlink_dotfile HOME/.bin ~/.bin
-symlink_dotfile alacritty.yml ~/.alacritty.yml
-symlink_dotfile mostrc ~/.mostrc
-symlink_dotfile skhdrc ~/.skhdrc
-symlink_dotfile yabairc ~/.yabairc
+symlink_dotfile XDG_HOME/.bin ~/.bin
+# symlink_dotfile alacritty.yml ~/.alacritty.yml
+# symlink_dotfile mostrc ~/.mostrc
+# symlink_dotfile skhdrc ~/.skhdrc
+# symlink_dotfile yabairc ~/.yabairc
 
-symlink_dotfile zshrc ~/.zshrc
-symlink_dotfile zsh ~/.zsh
-symlink_dotfile zsh/zshenv ~/.zshenv
+# symlink_dotfile zshrc ~/.zshrc
+# symlink_dotfile zsh ~/.zsh
+# symlink_dotfile zsh/zshenv ~/.zshenv
 
-# GIT
-symlink_dotfile git/gitattributes ~/.gitattributes
-symlink_dotfile git/gitconfig ~/.gitconfig
-symlink_dotfile git/gitignore ~/.gitignore
-symlink_dotfile git/gitmessage ~/.gitmessage
+# # GIT
+# symlink_dotfile git/gitattributes ~/.gitattributes
+# symlink_dotfile git/gitconfig ~/.gitconfig
+# symlink_dotfile git/gitignore ~/.gitignore
+# symlink_dotfile git/gitmessage ~/.gitmessage
 
-# RUBY
-symlink_dotfile rvmrc ~/.rvmrc
-symlink_dotfile gemrc ~/.gemrc
-symlink_dotfile irb/pryrc ~/.pryrc
-symlink_dotfile irb/unescaped_colors.rb ~/.unescaped_colors.rb
-symlink_dotfile irb/escaped_colors.rb ~/.escaped_colors.rb
-symlink_dotfile irb/aprc ~/.aprc
+# # RUBY
+# symlink_dotfile rvmrc ~/.rvmrc
+# symlink_dotfile gemrc ~/.gemrc
+# symlink_dotfile irb/pryrc ~/.pryrc
+# symlink_dotfile irb/unescaped_colors.rb ~/.unescaped_colors.rb
+# symlink_dotfile irb/escaped_colors.rb ~/.escaped_colors.rb
+# symlink_dotfile irb/aprc ~/.aprc
 
-# TMUX
-symlink_dotfile tmux.conf ~/.tmux.conf
-symlink_dotfile tmux.osx.conf ~/.tmux.osx.conf
-symlink_dotfile tmux ~/.tmux
-symlink_dotfile tmuxinator ~/.tmuxinator
-symlink_dotfile tmux/tmuxcolors-dbalatero-base16.conf \
-    ~/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf
+# # TMUX
+# symlink_dotfile tmux.conf ~/.tmux.conf
+# symlink_dotfile tmux.osx.conf ~/.tmux.osx.conf
+# symlink_dotfile tmux ~/.tmux
+# symlink_dotfile tmuxinator ~/.tmuxinator
+# symlink_dotfile tmux/tmuxcolors-dbalatero-base16.conf \
+#     ~/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf
 
-symlink_dotfile bat/config ~/.config/bat/config
+# symlink_dotfile bat/config ~/.config/bat/config
 
-# NVIM
-symlink_dotfile nvim ~/.config/nvim # cheovim config manager
-symlink_dotfile molleweide-nvim ~/.config/molleweide-nvim
-symlink_dotfile doom-nvim ~/.config/doom-nvim
+# # NVIM
+# symlink_dotfile nvim ~/.config/nvim # cheovim config manager
+# symlink_dotfile molleweide-nvim ~/.config/molleweide-nvim
+# symlink_dotfile doom-nvim ~/.config/doom-nvim
 
-# CHAT
-symlink_dotfile irssi ~/.irssi
+# # CHAT
+# symlink_dotfile irssi ~/.irssi
+
+# symlink_dotfile hammerspoon ~/.hammerspoon

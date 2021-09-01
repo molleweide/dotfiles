@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+echo "enter: $PWD"
+# git-subdir-make-into-module molleweide hammerspoon git@github.com:molleweide/config_hammerspoon.git
+
+pushd ~/.dotfiles/hammerspoon > /dev/null 2>&1
+echo "enter: $PWD"
+# rm -rf stackline
+# rm -rf Spoons/HyperKey.spoon
+# rm -rf Spoons/VimMode.spoon
+# git submodule add https://github.com/molleweide/stackline.git
+# git submodule add https://github.com/dbalatero/HyperKey Spoons/HyperKey.spoon
+# git submodule add https://github.com/dbalatero/VimMode Spoons/VimMode.spoon
+popd > /dev/null 2>&1
+
+echo "enter: $PWD"
+# git-submodule-mv hammerspoon XDG_HOME/.hammerspoon

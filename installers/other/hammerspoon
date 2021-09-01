@@ -2,8 +2,14 @@
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
-# HAMMERSPOON
 
+# 1. remove spoon repos
+# 2.
+
+
+
+
+# HAMMERSPOON
 require_installer package-manager
 dotheader "Setting up HAMMERSPOON.."
 brew_cask_install hammerspoon --appdir=/Applications
@@ -30,37 +36,35 @@ function setup_development_spoon_from_git_repo() {
     local name=$1
     local code_dir=$HOME/code
     local source_dir=$code_dir/$name.spoon
+    # TODO: why symlink like this??
+    local symlink_destination=$HOME/.hammerspoon/Spoons/$name.spoon
+    mkdir -p "$code_dir"
 
-  # TODO: why symlink like this??
-  local symlink_destination=$HOME/.hammerspoon/Spoons/$name.spoon
+    if [ ! -d $source_dir ]; then
+        dotsay "@blue@b[[+ cloning development copy of $name.spoon ]]"
+        git clone https://github.com/dbalatero/$name.spoon "$source_dir"
+    else
+        dotsay "+ $name.spoon dev copy already checked out"
+    fi
 
-  mkdir -p "$code_dir"
-
-  if [ ! -d $source_dir ]; then
-      dotsay "@blue@b[[+ cloning development copy of $name.spoon ]]"
-      git clone https://github.com/dbalatero/$name.spoon "$source_dir"
-  else
-      dotsay "+ $name.spoon dev copy already checked out"
-  fi
-
-  if [ ! -d $symlink_destination ]; then
-      dotsay "@blue@b[[+ symlinking development copy of $name.spoon ]]"
-      ln -s "$source_dir" "$symlink_destination"
-  else
-      dotsay "+ $name.spoon already installed to Hammerspoon"
-  fi
+    if [ ! -d $symlink_destination ]; then
+        dotsay "@blue@b[[+ symlinking development copy of $name.spoon ]]"
+        ln -s "$source_dir" "$symlink_destination"
+    else
+        dotsay "+ $name.spoon already installed to Hammerspoon"
+    fi
 }
 
 if is_macos; then
     symlink_dotfile hammerspoon ~/.hammerspoon
     setup_spoon_install
 
-  # refactor function so that i pass the git username first >> balatero VimMode
-  #   so that i can install other spoons here
-  setup_development_spoon_from_git_repo HyperKey
-  setup_development_spoon_from_git_repo VimMode
+      # refactor function so that i pass the git username first >> balatero VimMode
+      #   so that i can install other spoons here
+      setup_development_spoon_from_git_repo HyperKey
+      setup_development_spoon_from_git_repo VimMode
 
-  # >>> I have to check if it exists so i don't overwrite...
-  # setup_development_kmonad_from_git_repo
+      # >>> I have to check if it exists so i don't overwrite...
+      # setup_development_kmonad_from_git_repo
 
-  fi
+      fi

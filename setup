@@ -4,7 +4,8 @@ source "${BASH_SOURCE%/*}/installers/shared.sh"
 
 # FIRST ##################################
 
-# 1. update all submodules
+# 1. update all submodules recursively
+git submodules --init --update --recursively
 # 2. require_installer symlink_configs # later mv into configs repo
 
 # ESSENTIALS #############################

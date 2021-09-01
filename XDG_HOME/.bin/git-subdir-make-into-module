@@ -8,6 +8,8 @@
 # examle
 # NOTE: ```git_make_subdir_into_repo branchX some/dir git@github.com:git_user/new_repo.git```
 
+# git_make_subdir_into_repo molleweide hammerspoon git@github.com:molleweide/config_hammerspoon.git
+
 
 TARGET_BRANCH=$1
 TRG_SUB_DIR=$2
