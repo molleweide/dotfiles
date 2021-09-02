@@ -70,13 +70,9 @@ function install_neovim_plugins() {
   nvim +PlugInstall +qall
 }
 
-function install_tern() {
-  npm install -g tern
-}
+function install_tern() { npm install -g tern; }
 
-function install_vim_node_rpc() {
-  npm install -g vim-node-rpc
-}
+function install_vim_node_rpc() { npm install -g vim-node-rpc; }
 
 function install_ruby_neovim() {
   if use_rvm; then

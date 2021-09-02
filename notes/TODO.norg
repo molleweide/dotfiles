@@ -9,6 +9,8 @@
 
 * mv shared scripts to $DOTFILES/utils
 
+* rm rbenv / only keep rvm
+
 * zprofile > i should pretty much be able to just start using lukes dotfiles
     since they are supposed to make shit more elegant
 
@@ -23,6 +25,9 @@
  ** re-link files/dirs
 
 * MAKEFILE | https://makefiletutorial.com/
+
+* luke
+ ** cp shell stuff
 
 * custom installer
  ** vimac
