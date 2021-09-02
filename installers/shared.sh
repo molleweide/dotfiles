@@ -16,6 +16,12 @@
 
 shared_dir="${BASH_SOURCE%/*}/shared"
 
+# # testing/learning
+# echo "${BASH_SOURCE}"
+# echo "${BASH_SOURCE%}"
+# echo "${BASH_SOURCE%/*}"
+# echo "${BASH_SOURCE%/*}/shared"
+
 if [[ "$SOURCED_SHARED_DOTFILES" != "yes" ]]; then
   source "$shared_dir/aptitude.sh"
   source "$shared_dir/config.sh"

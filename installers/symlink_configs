@@ -7,15 +7,24 @@ source "${BASH_SOURCE%/*}/shared.sh"
 # verbose remove already existing link and replace with new
 # ln -Ffsv
 
-symlink_dotfile home/.zprofile ~/.zprofile
-symlink_dotfile home/.config ~/.config
-symlink_dotfile home/.local/bin ~/.local/bin
-symlink_dotfile home/.hammerspoon ~/.hammerspoon
+# symlink_dotfile home/.zprofile ~/.zprofile
+# symlink_dotfile home/.config ~/.config
+# symlink_dotfile home/.local/bin ~/.local/bin
+# symlink_dotfile home/.hammerspoon ~/.hammerspoon
 
-# RVM
-symlink_dotfile home/.rvm/hooks/after_cd_nvm ~/.rvm/hooks/after_cd_nvm
-symlink_dotfile home/.rvm/hooks/after_install_add_default_gems \
-    ~/.rvm/hooks/after_install_add_default_gems
+# # RVM
+# symlink_dotfile home/.rvm/hooks/after_cd_nvm ~/.rvm/hooks/after_cd_nvm
+# symlink_dotfile home/.rvm/hooks/after_install_add_default_gems \
+#     ~/.rvm/hooks/after_install_add_default_gems
+
+
+
+
+
+
+
+
+
 
 # symlink_dotfile alacritty.yml ~/.alacritty.yml
 # symlink_dotfile mostrc ~/.mostrc

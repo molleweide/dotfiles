@@ -8,6 +8,17 @@
 @end
 
 * mv shared scripts to $DOTFILES/utils
+ ** put the sourcing `utils.sh` under utils/
+  *** source "${BASH_SOURCE%/*}/../utils/utils.sh"
+        this should work right??
+  *** or do this https://stackoverflow.com/questions/1423352/source-all-files-in-a-directory-from-bash-profile
+        `source <(cat *)`
+            if this works then it is very nice and simple
+            but i believe that the problem here is that it would source
+            multiple times sadly...
+
+* refactor bootstrap into utils
+ ** remember to namespace all functions!
 
 * rm rbenv / only keep rvm
 
@@ -18,6 +29,7 @@
     why are tmux plugins hardcoded into the repo??
 
 * symlink | ln -Ffsv A B
+ ** how can I test this?
 
 * MAKEFILE | https://makefiletutorial.com/
 
