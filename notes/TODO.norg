@@ -7,9 +7,10 @@
 	version: 0.1
 @end
 
+* mv shared scripts to $DOTFILES/utils
+
 * zprofile
 
-* mv shared scripts to $DOTFILES/utils
 
 * symlink
  ** put symlink function in shared
