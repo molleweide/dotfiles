@@ -7,8 +7,6 @@
 	version: 0.1
 @end
 
-* fix hammerspoon submodules
-
 * zprofile
 
 * mv shared scripts to $DOTFILES/utils
@@ -33,11 +31,13 @@
   - array of projects
   - loop git clone
 
+* RUBY read | https://github.com/ruby/irb/issues/277
+
 * export browser data.
   this needs to be private repository!!!
 
 * tmux
-    why is this included with dotfiles
+    why are tmux plugins hardcoded into the repo??
 
 * APPLE M1 SILICONE
  ** m1 | python build
@@ -50,3 +50,5 @@
     | https://stackoverflow.com/questions/65653464/installation-of-earlier-versions-of-python-prior-to-3-8-fails-on-mac-with-m1-c
     | https://stackoverflow.com/questions/68348152/issues-installing-python-using-pyenv-on-macos-m1
     | https://github.com/pyenv/pyenv/issues/1876
+
+* rename nvim configs to nvim-***
