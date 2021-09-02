@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo "[$0] vs. [${BASH_SOURCE[0]}]"
+

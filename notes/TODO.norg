@@ -17,12 +17,7 @@
 * tmux
     why are tmux plugins hardcoded into the repo??
 
-* move bin to local/bin
-
-* symlink
- ** put symlink function in shared
- ** remove previous link
- ** re-link files/dirs
+* symlink | ln -Ffsv A B
 
 * MAKEFILE | https://makefiletutorial.com/
 
