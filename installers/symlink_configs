@@ -4,6 +4,34 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 # SYMLINK CONFIGS
 
+"""
+.bin | mv into config again
+.config
+.hammerspoon
+.irssi
+.local
+.rvm
+.tmux
+.tmuxinator
+.aprc
+.base16_theme
+.escaped_colors.rb
+.gemrc
+.gitattributes
+.gitconfig
+.gitignore
+.gitmessage
+.pryrc
+.rvmrc
+.tmux.conf
+.tmux.osx.conf
+.unescaped_colors.rb
+.zprofile
+mostrc
+skhdrc
+yabairc
+"""
+
 mkdir -p ~/.config
 mkdir -p ~/.bin
 
