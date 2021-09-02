@@ -9,8 +9,13 @@
 
 * mv shared scripts to $DOTFILES/utils
 
-* zprofile
+* zprofile > i should pretty much be able to just start using lukes dotfiles
+    since they are supposed to make shit more elegant
 
+* tmux
+    why are tmux plugins hardcoded into the repo??
+
+* move bin to local/bin
 
 * symlink
  ** put symlink function in shared
@@ -33,12 +38,11 @@
   - loop git clone
 
 * RUBY read | https://github.com/ruby/irb/issues/277
+  https://wiki.archlinux.org/title/RVM
+  https://wiki.archlinux.org/title/Ruby#RubyGems
 
 * export browser data.
   this needs to be private repository!!!
-
-* tmux
-    why are tmux plugins hardcoded into the repo??
 
 * APPLE M1 SILICONE
  ** m1 | python build
