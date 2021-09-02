@@ -7,12 +7,18 @@
 	version: 0.1
 @end
 
-* mv installer scripts to $DOTFILES/utils
+* fix hammerspoon submodules
+
+* zprofile
+
+* mv shared scripts to $DOTFILES/utils
 
 * symlink
  ** put symlink function in shared
  ** remove previous link
  ** re-link files/dirs
+
+* MAKEFILE | https://makefiletutorial.com/
 
 * custom installer
  ** vimac
@@ -29,6 +35,9 @@
 
 * export browser data.
   this needs to be private repository!!!
+
+* tmux
+    why is this included with dotfiles
 
 * APPLE M1 SILICONE
  ** m1 | python build

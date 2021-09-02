@@ -4,62 +4,27 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 require_installer package-manager
 
-
-# default_gems_array=(
-#     gem-wrappers
-#     rubygems-bundler
-#     rake
-#     rvm
-#     bundler
-#     zeus
-#     tmuxinator
-#     neovim
-#     yard
-# )
-# # for package in "${buildtools[@]}"; do
-# #     apt_install "$package"
-# # done
-
-# # hooks/after_install_add_default_gems
-# rvm $rvm_ruby_string do rvm gemset create global
-# rvm $rvm_ruby_string@global do gem install \
-#   awesome_print \
-#   bundler \
-#   cani \
-#   hirb \
-#   neovim \
-#   pry \
-#   tmuxinator \
-#   zeus
-
 # RVM ###################################################
 
-function install_latest_ruby() {
-    rvm install ruby --latest
-}
+function install_latest_ruby() { rvm install ruby --latest; }
 
 function install_global_gem_hooks() {
     local destination="$HOME/.rvm/hooks/after_install_add_default_gems"
-
-    symlink_dotfile rvm/hooks/after_install_add_default_gems $destination
+    # symlink_dotfile rvm/hooks/after_install_add_default_gems $destination
     chmod +x $destination
 }
 
 function install_rvm() {
     if [ ! -e ~/.rvm ]; then
         \curl -L https://get.rvm.io | bash -s -- --ignore-dotfiles
-
         export PATH="$HOME/.rvm/bin:$PATH"
         [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
-
         install_global_gem_hooks
         install_latest_ruby
     fi
 }
 
-function install_yard() {
-    gem install yard
-}
+function install_yard() { gem install yard; }
 
 function bootstrap_rvm() {
     if use_rvm; then
@@ -77,27 +42,21 @@ function bootstrap_rvm() {
 
 function install_rbenv_default_gems() {
     local destination=$(rbenv root)/plugins/rbenv-default-gems
-
     if [ ! -d "$destination" ]; then
         dotsay "+ Installing rbenv-default-gems plugin..."
-
         git clone https://github.com/rbenv/rbenv-default-gems.git \
             $(rbenv root)/plugins/rbenv-default-gems
     fi
-
     local default_gem_file=rvm/gemsets/global.gems
     local default_gem_file_destination=$(rbenv root)/default-gems
-
     if [ ! -f "$default_gem_file_destination" ]; then
         echo "+ Doing one-time install of default gems"
-
         # TODO: use $default_gems_array
         while read -r name; do
             gem install "$name"
         done < $default_gem_file
     fi
-
-    symlink_dotfile $default_gem_file $(rbenv root)/default-gems
+    # symlink_dotfile $default_gem_file $(rbenv root)/default-gems
 }
 
 function bootstrap_rbenv() {
@@ -108,6 +67,8 @@ function bootstrap_rbenv() {
         dotsay "@b@yellow[[Skipping rbenv, we aren't using it]]"
     fi
 }
+
+###########################################################
 
 dotheader "Setting up Ruby..."
 
