@@ -5,6 +5,15 @@
 #   https://raw.githubusercontent.com/alrra/dotfiles/master/src/os/install/macos/xcode.sh
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# BOOTSTRAP
+#
+#
+#
+# TODO:
+#
+#   1. refactor shit out into lib/*
+#   2.
+
 ask() {
   print_question "$1"
   read -r
@@ -443,6 +452,7 @@ main() {
   clone_dotfiles_repo
   dotfiles_submodules_update
 
+  # TODO: require lib
   # if is_macos; then
     run_osx_script
   # fi

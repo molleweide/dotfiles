@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+# OSX
+#
+# TODO:
+#
+# cmd q = invert colors
+#
+#
+#
+
 if [[ "$(uname)" != "Darwin" ]]; then
   echo "Not on MacOS, exiting..."
   exit 1

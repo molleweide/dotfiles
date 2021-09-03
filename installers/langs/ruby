@@ -4,8 +4,6 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 require_installer package-manager
 
-# RVM ###################################################
-
 function install_latest_ruby() { rvm install ruby --latest; }
 
 function install_global_gem_hooks() {
@@ -39,5 +37,4 @@ function bootstrap_rvm() {
 }
 
 dotheader "Setting up Ruby..."
-
 bootstrap_rvm

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/../../lib/_"
+
+# array=( one two three )
+
+
+
+
+# for i in "${arrayName[@]}"
+# do
+#    :
+#    # do whatever on $i
+# done
+
+
+
+
+
+# for i in "${array[@]}"
+# do
+# 	echo $i
+# done
+
+
+
+
+# users=(John Harry Jake Scott Philis)
+# for u in "${users[@]}"
+# do
+#     echo "$u is a registered user"
+# done

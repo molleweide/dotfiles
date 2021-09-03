@@ -11,7 +11,6 @@
  ** start by moving the ones that i am not using
  ** move DOOM and NVIM last
 
-
 * APPLE M1 SILICONE
  ** m1 | python build
     first test update to latest python version
@@ -45,15 +44,8 @@
 * keyboard build
   refactor git functions
 
-* local projects
-  - array of projects
-  - loop git clone
-
 * RUBY read | https://github.com/ruby/irb/issues/277
   https://wiki.archlinux.org/title/RVM
   https://wiki.archlinux.org/title/Ruby#RubyGems
-
-* export browser data.
-  this needs to be private repository!!!
 
 * rename nvim configs to nvim-***
