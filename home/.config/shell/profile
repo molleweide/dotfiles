@@ -154,7 +154,8 @@ ex=🎯:\
 *.java=♨:\
 "
 
-# NOTE: i believe this should be aliases?
+# also the reason why it sais only alias or shortcuts after &&, could that be because
+# zprofile is aliased to shell/profile which is the same dir containging shortcuts and aliaserc????????
 # [ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ] && shortcuts >/dev/null 2>&1 &
 [ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc ] && alias >/dev/null 2>&1 &
 

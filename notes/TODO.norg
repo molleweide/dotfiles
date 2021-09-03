@@ -7,7 +7,17 @@
 	version: 0.1
 @end
 
-* zprofile > make sure everything is moved to unders local/shared
+https://wiki.archlinux.org/title/XDG_Base_Directory
+
+* SHELL
+  zprofile
+  shell
+  zsh
+    read on arch
+    https://zsh.sourceforge.io/Intro/intro_3.html
+
+* update
+ ** source lib in installer files
 
 * submodules | move DOOM and NVIM
  ** but this time instead of moving
