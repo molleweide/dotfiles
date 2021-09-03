@@ -7,8 +7,20 @@
 	version: 0.1
 @end
 
-* tmux
-  why are tmux plugins hardcoded into the repo??
+* APPLE M1 SILICONE
+ ** m1 | python build
+    first test update to latest python version
+        still fails??
+        is this because only 3.10+ works on m1????
+
+    | https://duckduckgo.com/?q=pyenv+docs+m1+silicone&ia=web
+    | https://github.com/pyenv/pyenv/issues/1768
+    | https://stackoverflow.com/questions/65653464/installation-of-earlier-versions-of-python-prior-to-3-8-fails-on-mac-with-m1-c
+    | https://stackoverflow.com/questions/68348152/issues-installing-python-using-pyenv-on-macos-m1
+    | https://github.com/pyenv/pyenv/issues/1876
+
+* zprofile > i should pretty much be able to just start using lukes dotfiles
+  since they are supposed to make shit more elegant
 
 * utils cust install
   better name spacing
@@ -16,9 +28,6 @@
 * bootstrap
  ** refactor all into utils
  ** remember to namespace all functions!
-
-* zprofile > i should pretty much be able to just start using lukes dotfiles
-  since they are supposed to make shit more elegant
 
 * MAKEFILE | https://makefiletutorial.com/
 
@@ -45,16 +54,5 @@
 * export browser data.
   this needs to be private repository!!!
 
-* APPLE M1 SILICONE
- ** m1 | python build
-    first test update to latest python version
-        still fails??
-        is this because only 3.10+ works on m1????
-
-    | https://duckduckgo.com/?q=pyenv+docs+m1+silicone&ia=web
-    | https://github.com/pyenv/pyenv/issues/1768
-    | https://stackoverflow.com/questions/65653464/installation-of-earlier-versions-of-python-prior-to-3-8-fails-on-mac-with-m1-c
-    | https://stackoverflow.com/questions/68348152/issues-installing-python-using-pyenv-on-macos-m1
-    | https://github.com/pyenv/pyenv/issues/1876
 
 * rename nvim configs to nvim-***

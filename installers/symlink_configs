@@ -2,12 +2,11 @@
 
 # source "${BASH_SOURCE%/*}/shared.sh"
 
-source "${BASH_SOURCE%/*}/../utils/_"
+source "${BASH_SOURCE%/*}/../lib/_"
 
 # SYMLINK CONFIGS
-
-# verbose remove already existing link and replace with new
-# ln -Ffsv
+#
+# append `F` to force rm and relink dir/file
 
 # symlink_dotfile home/.zprofile ~/.zprofile
 # symlink_dotfile home/.config ~/.config
@@ -56,7 +55,7 @@ dot_symlink home/.hammerspoon ~/.hammerspoon
 # # TMUX
 # symlink_dotfile tmux.conf ~/.tmux.conf
 # symlink_dotfile tmux.osx.conf ~/.tmux.osx.conf
-# symlink_dotfile tmux ~/.tmux
+# symlink_dotfile tmux ~/.tmux # TODO: ???????????
 # symlink_dotfile tmuxinator ~/.tmuxinator
 # symlink_dotfile tmux/tmuxcolors-dbalatero-base16.conf \
 #     ~/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf
