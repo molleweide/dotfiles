@@ -426,7 +426,7 @@ run_osx_script() {
   if [[ $(uname) == "Darwin" ]]; then
     print_header "Applying OS X tweaks..."
 
-    $HOME/.dotfiles/osx
+    $HOME/.dotfiles/osx/osx
 
     echo
     print_success "OSX tweaks applied"
