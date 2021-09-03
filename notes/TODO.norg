@@ -8,7 +8,9 @@
 @end
 
 * submodules
- ** mv into XDG
+ ** start by moving the ones that i am not using
+ ** move DOOM and NVIM last
+
 
 * APPLE M1 SILICONE
  ** m1 | python build
