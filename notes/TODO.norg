@@ -7,6 +7,8 @@
 	version: 0.1
 @end
 
+* zprofile > make sure everything is moved to unders local/shared
+
 * submodules | move DOOM and NVIM
  ** but this time instead of moving
     add new submodules to these locations
@@ -36,3 +38,5 @@
   https://wiki.archlinux.org/title/Ruby#RubyGems
 
 * rename nvim configs to nvim-***
+
+* hammerspoon > make sure each submodule is my own fork
