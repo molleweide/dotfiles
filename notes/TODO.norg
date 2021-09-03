@@ -7,7 +7,9 @@
 	version: 0.1
 @end
 
-* symlink something is wrong with paths
+* symlink
+  prevent disasters
+  if file = ~, ~/, ~/.local
 
 * rm rbenv / only keep rvm
 
