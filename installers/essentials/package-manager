@@ -17,10 +17,14 @@ function install_aur_yay() {
 if is_macos; then
   if test ! $(which brew); then
     echo "Installing homebrew"
-    # deprecated
-    # ruby -e "$(curl -fsSL \
-    #   https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    if is_apple_silicone; then
+        bash -c "$(curl -fsSL \
+            https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    else
+        # TODO: deprecated; can i rm?
+        ruby -e "$(curl -fsSL \
+            https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    fi
     brew update
   fi
 
