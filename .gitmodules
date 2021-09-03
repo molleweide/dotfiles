@@ -1,5 +1,5 @@
 [submodule "nvim.config/molleweide"]
-	path = molleweide-nvim
+	path = home/.config/molleweide-nvim
 	url = https://github.com/molleweide/mollew-config.nvim.git
 [submodule "nvim"]
 	path = nvim
@@ -8,10 +8,10 @@
 	path = doom-nvim
 	url = https://github.com/molleweide/doom-nvim.git
 [submodule "chad-nvim"]
-	path = chad-nvim
+	path = home/.config/chad-nvim
 	url = https://github.com/molleweide/NvChad.git
 [submodule "neovhy-nvim"]
-	path = neovhy-nvim
+	path = home/.config/neovhy-nvim
 	url = https://github.com/molleweide/neovhy.git
 [submodule "home/.hammerspoon"]
 	path = home/.hammerspoon
