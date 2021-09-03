@@ -7,17 +7,18 @@
 	version: 0.1
 @end
 
-* rm rbenv / only keep rvm
+* tmux
+  why are tmux plugins hardcoded into the repo??
 
-* refactor bootstrap into utils
+* utils cust install
+  better name spacing
+
+* bootstrap
+ ** refactor all into utils
  ** remember to namespace all functions!
-
 
 * zprofile > i should pretty much be able to just start using lukes dotfiles
   since they are supposed to make shit more elegant
-
-* tmux
-  why are tmux plugins hardcoded into the repo??
 
 * MAKEFILE | https://makefiletutorial.com/
 

@@ -59,12 +59,9 @@ function install_tmux_from_source_linux() {
 }
 
 dotheader "Setting up Tmux..."
-
 # brew_install reattach-to-user-namespace
 brew_install tmux
 brew_install urlview
-
 install_tmux_from_source_linux
-
 setup_tmux_config
 setup_tmuxinator
