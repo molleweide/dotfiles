@@ -7,26 +7,19 @@
 	version: 0.1
 @end
 
-* mv shared scripts to $DOTFILES/utils
- ** put the sourcing `utils.sh` under utils/
-  *** source "${BASH_SOURCE%/*}/../utils/utils.sh"
-        this should work right??
-  *** or do this https://stackoverflow.com/questions/1423352/source-all-files-in-a-directory-from-bash-profile
-        `source <(cat *)`
-            if this works then it is very nice and simple
-            but i believe that the problem here is that it would source
-            multiple times sadly...
+* symlink something is wrong with paths
+
+* rm rbenv / only keep rvm
 
 * refactor bootstrap into utils
  ** remember to namespace all functions!
 
-* rm rbenv / only keep rvm
 
 * zprofile > i should pretty much be able to just start using lukes dotfiles
-    since they are supposed to make shit more elegant
+  since they are supposed to make shit more elegant
 
 * tmux
-    why are tmux plugins hardcoded into the repo??
+  why are tmux plugins hardcoded into the repo??
 
 * symlink | ln -Ffsv A B
  ** how can I test this?

@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/shared.sh"
+# source "${BASH_SOURCE%/*}/shared.sh"
+
+
+source "${BASH_SOURCE%/*}/../utils/_"
 
 # SYMLINK CONFIGS
 
@@ -9,7 +12,7 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 # symlink_dotfile home/.zprofile ~/.zprofile
 # symlink_dotfile home/.config ~/.config
-# symlink_dotfile home/.local/bin ~/.local/bin
+dot_syml home/.local/bin ~/.local/bin F
 # symlink_dotfile home/.hammerspoon ~/.hammerspoon
 
 # # RVM
