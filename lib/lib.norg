@@ -1,0 +1,10 @@
+@document.meta
+	title: lib
+	description:
+	author: hjalmarjakobsson
+	categories:
+	created: 2021-09-03
+	version: 0.1
+@end
+
+* make sure to namespace all functions

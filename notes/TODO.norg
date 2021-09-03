@@ -7,9 +7,9 @@
 	version: 0.1
 @end
 
-* submodules
- ** start by moving the ones that i am not using
- ** move DOOM and NVIM last
+* submodules | move DOOM and NVIM
+ ** but this time instead of moving
+    add new submodules to these locations
 
 * APPLE M1 SILICONE
  ** m1 | python build
@@ -23,15 +23,9 @@
     | https://stackoverflow.com/questions/68348152/issues-installing-python-using-pyenv-on-macos-m1
     | https://github.com/pyenv/pyenv/issues/1876
 
-* zprofile > i should pretty much be able to just start using lukes dotfiles
-  since they are supposed to make shit more elegant
-
-* utils cust install
-  better name spacing
-
-* bootstrap
- ** refactor all into utils
- ** remember to namespace all functions!
+* zprofile
+  symlink into shell/profile
+  how does his aliases work?
 
 * MAKEFILE | https://makefiletutorial.com/
 
