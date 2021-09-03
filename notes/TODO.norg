@@ -23,14 +23,7 @@
     | https://stackoverflow.com/questions/68348152/issues-installing-python-using-pyenv-on-macos-m1
     | https://github.com/pyenv/pyenv/issues/1876
 
-* zprofile
-  symlink into shell/profile
-  how does his aliases work?
-
 * MAKEFILE | https://makefiletutorial.com/
-
-* luke
- ** cp shell stuff
 
 * custom installer
  ** vimac
