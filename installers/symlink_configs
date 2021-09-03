@@ -11,8 +11,10 @@ source "${BASH_SOURCE%/*}/../utils/_"
 
 # symlink_dotfile home/.zprofile ~/.zprofile
 # symlink_dotfile home/.config ~/.config
-dot_symlink home/.local/bin ~/.local/bin
-# symlink_dotfile home/.hammerspoon ~/.hammerspoon
+
+dot_symlink home/.local/bin ~/.local/bin F
+
+dot_symlink home/.hammerspoon ~/.hammerspoon
 
 # # RVM
 # symlink_dotfile home/.rvm/hooks/after_cd_nvm ~/.rvm/hooks/after_cd_nvm

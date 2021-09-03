@@ -7,10 +7,6 @@
 	version: 0.1
 @end
 
-* symlink
-  prevent disasters
-  if file = ~, ~/, ~/.local
-
 * rm rbenv / only keep rvm
 
 * refactor bootstrap into utils
@@ -22,9 +18,6 @@
 
 * tmux
   why are tmux plugins hardcoded into the repo??
-
-* symlink | ln -Ffsv A B
- ** how can I test this?
 
 * MAKEFILE | https://makefiletutorial.com/
 
