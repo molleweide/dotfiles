@@ -7,6 +7,9 @@
 	version: 0.1
 @end
 
+* submodules
+ ** mv into XDG
+
 * APPLE M1 SILICONE
  ** m1 | python build
     first test update to latest python version
@@ -37,9 +40,6 @@
 * custom installer
  ** vimac
 
-* submodules
- ** mv into XDG
-
 * keyboard build
   refactor git functions
 
@@ -53,6 +53,5 @@
 
 * export browser data.
   this needs to be private repository!!!
-
 
 * rename nvim configs to nvim-***
