@@ -10,6 +10,8 @@ if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; t
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
 
+#### old below #####
+
 # source ~/.zsh/custom/exports.zsh
 
 # if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
@@ -17,6 +19,6 @@ fi
 # fi
 
 # # TODO: mv this
-# source "$HOME/.cargo/env"
+source "$HOME/.cargo/env"
 
 # # export TERMINFO=/usr/lib/terminfo
