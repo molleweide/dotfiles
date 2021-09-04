@@ -47,16 +47,19 @@ setopt share_history # share command history data
 setopt extended_glob
 
 #############################################################
-# NOTE: PLUGINS
+# NOTE: PLUGINS (ANTIGEN)
 #############################################################
 
-# TODO: how is antigen installed??
-# ?????
+export ADOTDIR="${XDG_DATA_HOME:-$HOME/.local/share}/antigen"
+export ANTIGEN_COMPDUMP="${ADOTDIR}/.zcompdump"
+export ANTIGEN_LOG="${ADOTDIR}/antigen.log"
+export ANTIGEN_DEBUG_LOG="${ADOTDIR}/antigen_debug.log"
 
-source $HOME/.zsh/vendor/antigen.zsh
+source ${ZDOTDIR}/antigen.zsh
 
 antigen bundle robbyrussell/oh-my-zsh plugins/git
 
+# what is this????
 if [ ! -f ~/.config/dotfiles/no-nvm ]; then
   antigen bundle robbyrussell/oh-my-zsh plugins/nvm
 fi
@@ -92,7 +95,9 @@ eval "$(fasd --init auto)"
 
 # export PATH=/usr/local/Cellar/z/1.9/etc/profile.d/z.sh:$PATH
 
-# =========== Custom settings ================
+#############################################################
+# NOTE: CUSTOM SETTINGS
+#############################################################
 
 for file in $HOME/.zsh/custom/**/*.zsh
 do
@@ -104,15 +109,16 @@ do
   source $file
 done
 
+#############################################################
+## NOTE: VI SETTINGS
+##############################################################
+
 # Vim style ^W del word backwards
 autoload -U select-word-style
 select-word-style bash
 export WORDCHARS='.-'
 
-# =========== haskell ghci ===============
-. ~/.ghcup/env
-
-# =========== Vi cursor shapes ===============
+# custor
 # function zle-keymap-select () {
 #     case $KEYMAP in
 #         vicmd) echo -ne '\e[1 q';;      # block
@@ -128,7 +134,20 @@ export WORDCHARS='.-'
 # echo -ne '\e[5 q' # Use beam shape cursor on startup.
 # preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
-# ======= RVM is a special snowflake and needs to be last ========
+#############################################################
+# NOTE: HASKELL
+#############################################################
+
+. ~/.ghcup/env
+
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+[ -f "/Users/hjalmarjakobsson/.ghcup/env" ] && source "/Users/hjalmarjakobsson/.ghcup/env" # ghcup-env
+
+
+#############################################################
+# NOTE: RVM is a special snowflake and needs to be last, WHY?!
+#############################################################
+
 if [ ! -f ~/.config/dotfiles/rbenv ]; then
   export PATH="$HOME/.rvm/bin:$PATH"
   [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
@@ -138,10 +157,8 @@ fi
 # if not installed
 # eval "$(nodenv init -)"
 
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
-[ -f "/Users/hjalmarjakobsson/.ghcup/env" ] && source "/Users/hjalmarjakobsson/.ghcup/env" # ghcup-env
-
 export NVM_DIR="$HOME/.nvm"
+# export NVM_DIR="$XDG_DATA_HOME"/nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 

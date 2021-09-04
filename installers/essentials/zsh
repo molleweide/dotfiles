@@ -27,9 +27,6 @@ function update_shell_whitelist() {
 }
 
 function chsh_zsh() {
-
-    # TODO: here check if not arm64...
-
     if [[ "$SHELL" != "$(zsh_binary)" ]]; then
         dotsay "@b@blue[[Changing shell for $current_user...]]"
 
@@ -72,11 +69,10 @@ function setup_zsh_completions_repo() {
 }
 
 function install_antigen() {
-    local plugin_file=$HOME/.zsh/vendor/antigen.zsh
-
-    if [ ! -f $plugin_file ]; then
+    local antigen_file="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/vendor/antigen.zsh"
+    if [ ! -f $antigen_file ]; then
         echo "Installing antigen"
-        curl -L git.io/antigen > "$plugin_file"
+        curl -L git.io/antigen > "$antigen_file"
     fi
 }
 
@@ -113,6 +109,7 @@ install_package direnv
 install_fasd
 install_fzf
 
+# brew_install antigen # why not???
 install_antigen
 
 update_shell_whitelist
