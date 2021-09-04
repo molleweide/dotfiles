@@ -113,7 +113,8 @@ export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
 # export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
 # export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
- export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+export NVM_DIR="$XDG_DATA_HOME"/nvm
 
 #############################################################
 # NOTE: Other program settings:

@@ -109,6 +109,16 @@ do
   source $file
 done
 
+
+
+
+
+
+
+
+
+
+
 #############################################################
 ## NOTE: VI SETTINGS
 ##############################################################
@@ -157,27 +167,35 @@ fi
 # if not installed
 # eval "$(nodenv init -)"
 
-export NVM_DIR="$HOME/.nvm"
-# export NVM_DIR="$XDG_DATA_HOME"/nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# # done profiling
+# [[ $ZPROF != true ]] || { unset ZPROF && zprof }
+
+
+
+
+# NOTE: others below !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+
+
+
 #######################################################
-# NOTE: MATTRC ########################################
+# NOTE: MATTRC - PLUGINS ##############################
 #######################################################
 
+# PZ_PLUGIN_HOME="${ZDOTDIR:-$HOME/.config/zsh}/plugins"
+# [[ -d $PZ_PLUGIN_HOME/pz ]] ||
+#   git clone --depth=1 --recursive https://github.com/mattmc3/pz.git $PZ_PLUGIN_HOME/pz
+# source $PZ_PLUGIN_HOME/pz/pz.zsh
 
-# TODO: setup pz as our plugin manager
-# i am using antigen instead
-# mattmc has actually built his own plugin manager which
-# is quite fucking insane.
-PZ_PLUGIN_HOME="${ZDOTDIR:-$HOME/.config/zsh}/plugins"
-[[ -d $PZ_PLUGIN_HOME/pz ]] ||
-  git clone --depth=1 --recursive https://github.com/mattmc3/pz.git $PZ_PLUGIN_HOME/pz
-source $PZ_PLUGIN_HOME/pz/pz.zsh
+# # source prezto
+# pz source sorin-ionescu/prezto
 
-# source prezto
-pz source sorin-ionescu/prezto
 
 # add functions
 autoload -Uz "$XDG_CONFIG_HOME/zsh/functions/autoload_funcd"
@@ -190,8 +208,8 @@ source_confd "$XDG_CONFIG_HOME/zsh/zshrc.d"
 # local secrets and settings
 [[ -f $DOTFILES.local/zsh/zshrc.local.zsh ]] && . $DOTFILES.local/zsh/zshrc.local.zsh
 
-# done profiling
-[[ $ZPROF != true ]] || { unset ZPROF && zprof }
+# # done profiling
+# [[ $ZPROF != true ]] || { unset ZPROF && zprof }
 
 
 #######################################################
