@@ -1,14 +1,13 @@
 #!/bin/zsh
 
+#################################################################
+# NOTE: Executes commands at login pre-zshrc.
+#############################################################
 # profile file. Runs on login. Environmental variables are set here.
-
 # If you don't plan on reverting to bash, you can remove the link in ~/.profile
 # to clean up.
 
-# # Adds `~/.local/bin` to $PATH
-export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
-
-# unsetopt PROMPT_SP # NOTE: what is this?
+unsetopt PROMPT_SP # i believe this removes ^% sign in prompt
 
 # Default programs:
 export EDITOR="nvim"
@@ -17,13 +16,75 @@ export EDITOR="nvim"
 export TERMINAL="Alacritty" # or kitty | linux >> "st"
 export BROWSER="brave"
 
-#############################################################
-# NOTE: ~/ Clean-up:
+#################################################################
+# NOTE: XDG
 #############################################################
 
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
+# export XDG_RUNTIME_DIR=~/.xdg
+
+if [[ "$OSTYPE" == darwin* ]]; then
+  export XDG_DESKTOP_DIR=~/Desktop
+  export XDG_DOCUMENTS_DIR=~/Documents
+  export XDG_DOWNLOAD_DIR=~/Downloads
+  export XDG_MUSIC_DIR=~/Music
+  export XDG_PICTURES_DIR=~/Pictures
+  export XDG_VIDEOS_DIR=~/Videos
+fi
+
+#################################################################
+# NOTE: Browser
+#############################################################
+
+
+# if [[ "$OSTYPE" == darwin* ]]; then
+#   export BROWSER='open'
+# fi
+
+#################################################################
+# NOTE: Editors
+#############################################################
+
+export EDITOR='nvim'
+# export VISUAL='code' # what is this?
+export PAGER='less' # alt. `most`
+
+#################################################################
+# NOTE: Language
+#############################################################
+
+export TZ="America/New_York"
+export LANG="en_US.UTF-8"
+export LANGUAGE="en"
+export LC_ALL="en_US.UTF-8"
+
+#################################################################
+# NOTE: Paths
+#############################################################
+
+# Adds `~/.local/bin` to $PATH
+export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
+
+# Ensure path arrays do not contain duplicates.
+typeset -gU cdpath fpath mailpath path
+
+# Set the list of directories that cd searches.
+# cdpath=(
+#   $cdpath
+# )
+
+# Set the list of directories that Zsh searches for programs.
+path=(
+  ~/bin
+  /usr/local/{bin,sbin}
+  $path
+)
+
+#############################################################
+# NOTE: XDG clean up
+#############################################################
 
 export ALSA_CONFIG_PATH="$XDG_CONFIG_HOME/alsa/asoundrc"
 export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
@@ -168,3 +229,25 @@ ex=🎯:\
 
 # # Switch escape and caps if tty and no passwd required:
 # sudo -n loadkeys ${XDG_DATA_HOME:-$HOME/.local/share}/larbs/ttymaps.kmap 2>/dev/null
+
+
+#################################################################
+# NOTE: Less
+#################################################################
+
+# Set the default Less options.
+# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
+# Remove -X to enable it.
+export LESS='-g -i -M -R -S -w -X -z-4'
+
+# Set the Less input preprocessor.
+# Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
+if (( $#commands[(i)lesspipe(|.sh)] )); then
+  export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
+fi
+
+#################################################################
+# NOTE: Misc
+#################################################################
+
+export SHELL_SESSIONS_DISABLE=1
