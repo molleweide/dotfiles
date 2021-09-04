@@ -13,22 +13,33 @@ function install_aur_yay() {
   popd > /dev/null 2>&1
 }
 
+function force_openssl_to_homebrew() {
+  if [ $(which openssl) == "/usr/local/opt/openssl/bin/openssl" ]; then
+    dotsay "+ Already forced OpenSSL to Homebrew's version"
+  else
+    dotsay "+ Installing OpenSSL from Homebrew..."
+    brew_install openssl
+    brew link openssl --force
+  fi
+}
+
+###################################################################################
 
 if is_macos; then
+  dotheader "Setting up Homebrew..."
   if test ! $(which brew); then
     echo "Installing homebrew"
     if is_apple_silicone; then
         bash -c "$(curl -fsSL \
             https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     else
-        # TODO: deprecated; can i rm?
         ruby -e "$(curl -fsSL \
             https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
     brew update
+    force_openssl_to_homebrew
   fi
 
-  dotheader "Setting up Homebrew..."
 elif is_linux; then
   dotheader "Setting up Aptitude..."
 

@@ -1,16 +1,6 @@
 #!/usr/bin/env bash
 
-# pyenv error on laptop main.
-#
-#   build fail
-#
-# https://stackoverflow.com/questions/50036091/pyenv-zlib-error-on-macos
-#
-
-# this solved the problem on my main laptop
-# https://github.com/pyenv/pyenv/issues/1643#issuecomment-776155586
-
-
+# NOTE: PYTHON
 
 source "${BASH_SOURCE%/*}/shared.sh"
 
@@ -32,6 +22,7 @@ function install_python_versions() {
   pyenv install -s 2.7.16
   pyenv install -s 3.7.3
   pyenv global 2.7.16
+  # TODO: 3.9.0, 3.10.0
 }
 
 function install_pyenv_virtualenvs() {
@@ -69,24 +60,11 @@ function install_pyenv_virtualenv() {
   fi
 }
 
-function force_openssl_to_homebrew() {
-  if [ $(which openssl) == "/usr/local/opt/openssl/bin/openssl" ]; then
-    dotsay "+ Already forced OpenSSL to Homebrew's version"
-  else
-    dotsay "+ Installing OpenSSL from Homebrew..."
-    brew_install openssl
-    brew link openssl --force
-  fi
-}
-
 dotheader "Setting up Python..."
 
-force_openssl_to_homebrew
-
-brew_install readline
-apt_install readline
-
-brew_install xz
+# brew_install readline
+# apt_install readline
+# brew_install xz # general-purpose data compression with high compression ratio
 
 install_pyenv
 install_pyenv_virtualenv

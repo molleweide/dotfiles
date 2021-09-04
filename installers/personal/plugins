@@ -2,9 +2,32 @@
 
 source "${BASH_SOURCE%/*}/../../lib/_"
 
+# buildtools=(
+#     base-devel
+#     make
+#     cmake
+#     build-essential
+#     libssl-dev
+#     zlib1g-dev
+#     libbz2-dev
+#     libreadline-dev
+#     libsqlite3-dev
+#     wget
+#     curl
+#     llvm
+#     libncurses5-dev
+#     xz-utils
+#     tk-dev
+# )
+
+# for package in "${buildtools[@]}"; do
+#     apt_install "$package"
+# done
+
+
+
+
 # array=( one two three )
-
-
 
 
 # for i in "${arrayName[@]}"

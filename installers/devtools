@@ -6,10 +6,12 @@ require_installer package-manager
 
 dotheader "Setting up devtools..."
 
+brew_install readline
+apt_install readline
+brew_install xz # general-purpose data compression with high compression ratio
+
 brew_cask_install chromedriver
 apt_install chromium-chromedriver
-
-# brew_cask_install alacritty
 
 brew_install fd
 apt_install fd-find
