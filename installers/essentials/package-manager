@@ -4,77 +4,76 @@ source "${BASH_SOURCE%/*}/shared.sh"
 
 # mv to shared install_aur <package>
 function install_aur_yay() {
-  # https://github.com/Jguer/yay
-  local install_path=$HOME/code/yay
-  local git_src="https://aur.archlinux.org/yay.git"
-  git clone $git_src $install_path
-  pushd $install_path > /dev/null 2>&1
-  makepkg -si
-  popd > /dev/null 2>&1
+    # https://github.com/Jguer/yay
+    local install_path=$HOME/code/yay
+    local git_src="https://aur.archlinux.org/yay.git"
+    git clone $git_src $install_path
+    pushd $install_path > /dev/null 2>&1
+    makepkg -si
+    popd > /dev/null 2>&1
 }
 
 function force_openssl_to_homebrew() {
-  if [ $(which openssl) == "/usr/local/opt/openssl/bin/openssl" ]; then
-    dotsay "+ Already forced OpenSSL to Homebrew's version"
-  else
-    dotsay "+ Installing OpenSSL from Homebrew..."
-    brew_install openssl
-    brew link openssl --force
-  fi
+    if [ $(which openssl) == "/usr/local/opt/openssl/bin/openssl" ]; then
+        dotsay "+ Already forced OpenSSL to Homebrew's version"
+    else
+        dotsay "+ Installing OpenSSL from Homebrew..."
+        brew_install openssl
+        brew link openssl --force
+    fi
 }
 
 ###################################################################################
 
 if is_macos; then
-  dotheader "Setting up Homebrew..."
-  if test ! $(which brew); then
-    echo "Installing homebrew"
-    if is_apple_silicone; then
-        bash -c "$(curl -fsSL \
-            https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    else
-        ruby -e "$(curl -fsSL \
-            https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    dotheader "Setting up Homebrew..."
+    if test ! $(which brew); then
+        echo "Installing homebrew"
+        if is_apple_silicone; then
+            bash -c "$(curl -fsSL \
+                https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        else
+            ruby -e "$(curl -fsSL \
+                https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        fi
+        brew update
+        force_openssl_to_homebrew
     fi
-    brew update
-    force_openssl_to_homebrew
-  fi
 
 elif is_linux; then
-  dotheader "Setting up Aptitude..."
+    dotheader "Setting up Aptitude..."
 
-  # todo \ depending on os pacman,apt,etc...
-  apt_install aptitude
+    # todo \ depending on os pacman,apt,etc...
+    apt_install aptitude
 
-  # if os=arch
-  # yay aur helper
-  # install_aur_yay
+    # if os=arch
+    # yay aur helper
+    # install_aur_yay
 
 fi
-
 
 # linux build
 # Apt build
 # /etc/makepkg.conf >>> MAKEFLAGS="-j$(nproc)" # parallell compiling
 
 buildtools=(
-  base-devel
-  make
-  cmake
-  build-essential
-  libssl-dev
-  zlib1g-dev
-  libbz2-dev
-  libreadline-dev
-  libsqlite3-dev
-  wget
-  curl
-  llvm
-  libncurses5-dev
-  xz-utils
-  tk-dev
+    base-devel
+    make
+    cmake
+    build-essential
+    libssl-dev
+    zlib1g-dev
+    libbz2-dev
+    libreadline-dev
+    libsqlite3-dev
+    wget
+    curl
+    llvm
+    libncurses5-dev
+    xz-utils
+    tk-dev
 )
 
 for package in "${buildtools[@]}"; do
-  apt_install "$package"
+    apt_install "$package"
 done

@@ -13,8 +13,7 @@ https://shreevatsa.wordpress.com/2008/03/30/zshbash-startup-files-loading-order-
 https://www.reddit.com/r/zsh/comments/e882c4/what_is_the_difference_between_zshrc_and_zprofile/
 
 
-* PYTHON!!!!!!!!
-
+* PYTHON VIRTUALENV!!!!!!
 
 
 * XDG
@@ -28,18 +27,6 @@ https://www.reddit.com/r/zsh/comments/e882c4/what_is_the_difference_between_zshr
 * submodules | move DOOM and NVIM
  ** but this time instead of moving
     add new submodules to these locations
-
-* APPLE M1 SILICONE
- ** m1 | python build
-    first test update to latest python version
-        still fails??
-        is this because only 3.10+ works on m1????
-
-    | https://duckduckgo.com/?q=pyenv+docs+m1+silicone&ia=web
-    | https://github.com/pyenv/pyenv/issues/1768
-    | https://stackoverflow.com/questions/65653464/installation-of-earlier-versions-of-python-prior-to-3-8-fails-on-mac-with-m1-c
-    | https://stackoverflow.com/questions/68348152/issues-installing-python-using-pyenv-on-macos-m1
-    | https://github.com/pyenv/pyenv/issues/1876
 
 * MAKEFILE | https://makefiletutorial.com/
 
