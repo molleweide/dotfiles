@@ -8,3 +8,9 @@ echo "\$0 vs BASH_SOURCE0: [$0] vs. [${BASH_SOURCE[0]}]"
 echo "${BASH_SOURCE%}"
 echo "${BASH_SOURCE%/*}"
 
+
+echo $options[login] $options[interactive]
+
+# echo ${(k)options}
+for k  in ${options[k]}; do echo $k; done
+

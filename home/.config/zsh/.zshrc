@@ -21,9 +21,9 @@ setopt AUTO_PUSHD
 set -o EXTENDED_GLOB
 
 # ========= History settings =========
-if [ -z "$HISTFILE" ]; then
-  HISTFILE=$HOME/.zsh_history
-fi
+# if [ -z "$HISTFILE" ]; then
+#   HISTFILE=$HOME/.zsh_history
+# fi
 
 HISTSIZE=10000
 SAVEHIST=10000

@@ -8,7 +8,7 @@
 # # Adds `~/.local/bin` to $PATH
 export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
 
-# unsetopt PROMPT_SP # what is this?
+# unsetopt PROMPT_SP # NOTE: what is this?
 
 # Default programs:
 export EDITOR="nvim"
@@ -38,10 +38,10 @@ export GEM_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/gem"
 export GEM_SPEC_CACHE="$XDG_CACHE_HOME/gem"
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 # export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
-# export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
+export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
 export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
 # export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
-# export LESSHISTFILE="-"
+export LESSHISTFILE="-"
 # export MBSYNCRC="${XDG_CONFIG_HOME:-$HOME/.config}/mbsync/config"
 # export NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch-config"
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
@@ -154,10 +154,7 @@ ex=🎯:\
 *.java=♨:\
 "
 
-# also the reason why it sais only alias or shortcuts after &&, could that be because
-# zprofile is aliased to shell/profile which is the same dir containging shortcuts and aliaserc????????
 # [ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ] && shortcuts >/dev/null 2>&1 &
-[ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc ] && alias >/dev/null 2>&1 &
 
 # if pacman -Qs libxft-bgra >/dev/null 2>&1; then
 # 	# Start graphical server on user's current tty if not already running.
