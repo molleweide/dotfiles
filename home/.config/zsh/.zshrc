@@ -109,15 +109,13 @@ do
   source $file
 done
 
+# add functions
+autoload -Uz "$XDG_CONFIG_HOME/zsh/functions/autoload_funcd"
+autoload_funcd "$XDG_CONFIG_HOME/zsh/functions" true
 
-
-
-
-
-
-
-
-
+# source all files in confdir
+autoload -Uz "$XDG_CONFIG_HOME/zsh/functions/source_confd"
+source_confd "$XDG_CONFIG_HOME/zsh/zshrc.d"
 
 #############################################################
 ## NOTE: VI SETTINGS
@@ -197,13 +195,6 @@ fi
 # pz source sorin-ionescu/prezto
 
 
-# add functions
-autoload -Uz "$XDG_CONFIG_HOME/zsh/functions/autoload_funcd"
-autoload_funcd "$XDG_CONFIG_HOME/zsh/functions" true
-
-# source all files in confdir
-autoload -Uz "$XDG_CONFIG_HOME/zsh/functions/source_confd"
-source_confd "$XDG_CONFIG_HOME/zsh/zshrc.d"
 
 # local secrets and settings
 [[ -f $DOTFILES.local/zsh/zshrc.local.zsh ]] && . $DOTFILES.local/zsh/zshrc.local.zsh

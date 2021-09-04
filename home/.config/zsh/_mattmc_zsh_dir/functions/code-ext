@@ -1,0 +1,12 @@
+# called with no params, lists the extensions
+# called with a file param, installs the extensions from the file
+if [[ -z "$1" ]]; then
+  code --list-extensions
+  return
+fi
+
+if [[ ! -f "$1" ]]; then
+  >&2 echo "vscode-extensions: Expecting file path $1"
+  return 1
+fi
+cat "$1" | xargs -L 1 code --install-extension
