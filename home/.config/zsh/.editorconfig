@@ -1,0 +1,32 @@
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{md,markdown}]
+# Don't trim end spacing because unfortunately Markdown uses that
+indent_style = space
+trim_trailing_whitespace = false
+
+[*.{zsh}]
+indent_style = space
+indent_size = 2
+
+[.{aliases,zpreztoc}]
+indent_style = space
+indent_size = 2
+
+[.{zsh*,zlogin,zprofile}]
+indent_style = space
+indent_size = 2
+
+[.zfunctions/*]
+indent_style = space
+indent_size = 2
+
+[functions/*]
+indent_style = space
+indent_size = 2

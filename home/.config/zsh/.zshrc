@@ -1,8 +1,12 @@
-# ======== Debug ===========
-
 # GITSTATUS_LOG_LEVEL=DEBUG
 
+# zprof if we ever need to profile
+alias runzprof="ZPROF=true zsh"
+[[ $ZPROF != true ]] || zmodload zsh/zprof
+alias zbench='for i in $(seq 1 10); do; /usr/bin/time zsh -i -c exit; done'
+
 # ======== Cache directory (for oh-my-zsh plugins) =========
+ # export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 [ ! -d $HOME/.zcustom/cache ] && mkdir -p $HOME/.zcustom/cache
 
 export ZSH="$HOME/.zcustom"
@@ -135,12 +139,11 @@ export NVM_DIR="$HOME/.nvm"
 # NOTE: MATTRC ########################################
 #######################################################
 
-# zprof if we ever need to profile
-alias runzprof="ZPROF=true zsh"
-[[ $ZPROF != true ]] || zmodload zsh/zprof
-alias zbench='for i in $(seq 1 10); do; /usr/bin/time zsh -i -c exit; done'
 
-# setup pz as our plugin manager
+# TODO: setup pz as our plugin manager
+# i am using antigen instead
+# mattmc has actually built his own plugin manager which
+# is quite fucking insane.
 PZ_PLUGIN_HOME="${ZDOTDIR:-$HOME/.config/zsh}/plugins"
 [[ -d $PZ_PLUGIN_HOME/pz ]] ||
   git clone --depth=1 --recursive https://github.com/mattmc3/pz.git $PZ_PLUGIN_HOME/pz
