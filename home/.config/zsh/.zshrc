@@ -5,15 +5,19 @@ alias runzprof="ZPROF=true zsh"
 [[ $ZPROF != true ]] || zmodload zsh/zprof
 alias zbench='for i in $(seq 1 10); do; /usr/bin/time zsh -i -c exit; done'
 
-# ======== Cache directory (for oh-my-zsh plugins) =========
- # export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
-[ ! -d $HOME/.zcustom/cache ] && mkdir -p $HOME/.zcustom/cache
+##########################################################
+# NOTE: CACHE DIRECTORY (FOR OH-MY-ZSH PLUGINS)
+##########################################################
 
-export ZSH="$HOME/.zcustom"
+[ ! -d $XDG_CACHE_HOME/zsh/zcustom/cache ] && \
+    mkdir -p $XDG_CACHE_HOME/zsh/zcustom/cache
+
+export ZSH="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/zcustom"
 export ZSH_CACHE_DIR="$ZSH/cache"
 
-
-# ======== Random settings ===========
+#############################################################
+# NOTE: RANDOM SETTINGS
+#############################################################
 
 # Disable auto title so tmux window titles don't get messed up.
 export DISABLE_AUTO_TITLE="true"
@@ -24,13 +28,14 @@ setopt AUTO_PUSHD
 # Allow extended matchers like ^file, etc
 set -o EXTENDED_GLOB
 
-# ========= History settings =========
-# if [ -z "$HISTFILE" ]; then
-#   HISTFILE=$HOME/.zsh_history
-# fi
+#############################################################
+# NOTE: HISTORY SETTINGS
+#############################################################
 
-HISTSIZE=10000
-SAVEHIST=10000
+export HISTFILE="$XDG_STATE_HOME"/zsh/history
+
+HISTSIZE=100000
+SAVEHIST=100000
 
 setopt append_history
 setopt extended_history
@@ -41,8 +46,13 @@ setopt inc_append_history
 setopt share_history # share command history data
 setopt extended_glob
 
-# =========== Plugins ============
+#############################################################
+# NOTE: PLUGINS
+#############################################################
+
 # TODO: how is antigen installed??
+# ?????
+
 source $HOME/.zsh/vendor/antigen.zsh
 
 antigen bundle robbyrussell/oh-my-zsh plugins/git
@@ -183,10 +193,6 @@ source_confd "$XDG_CONFIG_HOME/zsh/zshrc.d"
 # stty stop undef		# Disable ctrl-s to freeze terminal.
 # setopt interactive_comments
 
-# # History in cache directory:
-# HISTSIZE=10000000
-# SAVEHIST=10000000
-# HISTFILE=~/.cache/zsh/history
 
 # # Load aliases and shortcuts if existent.
 # [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"

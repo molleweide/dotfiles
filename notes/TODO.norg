@@ -12,9 +12,10 @@ https://wiki.archlinux.org/title/XDG_Base_Directory
 https://shreevatsa.wordpress.com/2008/03/30/zshbash-startup-files-loading-order-bashrc-zshrc-etc/
 https://www.reddit.com/r/zsh/comments/e882c4/what_is_the_difference_between_zshrc_and_zprofile/
 
-* zsh walk through all
-  where source cargo env??
-  mv away prom zshenv
+* XDG
+ ** zsh
+ ** antigen
+
 
 * update
  ** source lib in installer files
