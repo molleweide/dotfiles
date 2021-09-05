@@ -3,7 +3,7 @@
 source "${BASH_SOURCE%/*}/../lib/_"
 
 require_installer package-manager
-require_installer ruby
+require_installer langs/ruby
 
 function zsh_binary() {
     if is_linux; then

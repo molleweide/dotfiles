@@ -2,7 +2,7 @@
 
 source "${BASH_SOURCE%/*}/../lib/_"
 
-require_installer python
+require_installer langs/python
 
 function setup_linux_font_dir() {
     if is_linux; then

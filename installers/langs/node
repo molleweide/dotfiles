@@ -3,7 +3,7 @@
 source "${BASH_SOURCE%/*}/../../lib/_"
 
 # We need to hook RVM's cd function to get auto-cd with nvm
-require_installer ruby
+require_installer langs/ruby
 
 function source_nvm() {
   export NVM_DIR="$HOME/.nvm"

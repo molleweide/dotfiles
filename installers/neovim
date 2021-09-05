@@ -8,9 +8,9 @@ source "${BASH_SOURCE%/*}/../lib/_"
 
 require_installer package-manager
 require_installer fonts
-require_installer ruby
-require_installer python
-require_installer node
+require_installer langs/ruby
+require_installer langs/python
+require_installer langs/node
 
 function install_neovim_linux() {
   if ! apt_is_installed "neovim"; then
