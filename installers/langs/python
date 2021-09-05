@@ -20,12 +20,12 @@ function load_pyenv() {
 }
 
 function install_python_versions() {
-    pyenv install -s 2.7.16
     pyenv install -s 3.9.1
     # is_apple_silicone && pyenv global 3.9.1 || pyenv global 2.7.16
     if is_apple_silicone; then
         pyenv global 3.9.1
     else
+        pyenv install -s 2.7.16
         pyenv global 2.7.16
     fi
 }
