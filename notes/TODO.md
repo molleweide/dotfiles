@@ -1,8 +1,10 @@
-#
+# DOTFILES TODO
 
-# GENERAL ########
 
-- post norg error log
+- add all installers to setup
+
+
+
 
 # M1 #############
 

@@ -42,14 +42,21 @@ require_installer mac-apps
 require_installer hammerspoon
 require_installer ubersicht
 require_installer theming
+# require_installer monitor
 # require_installer backups
 # require_installer keyboard
-require_installer audio
 # require_installer webbrowsers
-# require_installer personal
-# require_installer monitor
+require_installer vpn
+require_installer passwords
+require_installer audio
+require_installer multimedia
+require_installer utils
 require_installer chat
-# # require_installer molleweide # install personal forks
+require_installer calendar
+require_installer email
+require_installer docs
+require_installer crypto
+
 
 # MUSIC ##################################
 

@@ -8,22 +8,22 @@ dotheader "SETTING UP EMAIL.."
 
 # refactor this into `code_install <args>`
 function install_muttwizard() {
-  local gith="https://github.com"
-  local proj="LukeSmithxyz/mutt-wizard"
-  local dest=$HOME/code/mutt-wizard
+    local gith="https://github.com"
+    local proj="LukeSmithxyz/mutt-wizard"
+    local dest=$HOME/code/mutt-wizard
 
-  if [ ! -d $dest ]; then
-    git clone $gith/$proj $dest
-    pushd $dest> /dev/null 2>&1
-    sudo make install
-    popd $dest> /dev/null 2>&1
-  fi
+    if [ ! -d $dest ]; then
+        git clone $gith/$proj $dest
+        pushd $dest> /dev/null 2>&1
+        sudo make install
+        popd $dest> /dev/null 2>&1
+    fi
 
 
 }
 
 if is_macos; then
-  require_installer package-manager
+    require_installer package-manager
 
   # default macos dependencies
   brew install neomutt curl isync msmtp pass
@@ -41,8 +41,7 @@ if is_macos; then
   # eg. my personal mail uses pop but that doesn't seem to be as common as
   # imap which is default.
 
-  brew install mpop # i don't think that i need this because telia mail is not using pop anymore
+  # brew install mpop # i don't think that i need this because telia mail is not using pop anymore
 
   install_muttwizard
-  fi
-
+fi
