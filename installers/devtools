@@ -2,9 +2,9 @@
 
 source "${BASH_SOURCE%/*}/../lib/_"
 
-require_installer package-manager
-
 dotheader "SETTING UP DEVTOOLS..."
+
+require_installer package-manager
 
 brew_install readline
 apt_install readline

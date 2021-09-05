@@ -23,6 +23,3 @@ if is_macos; then
 elif is_linux; then
   apt_install ranger
 fi
-
-symlink_dotfile ranger ~/.config/ranger
-

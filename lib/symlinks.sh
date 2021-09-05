@@ -20,11 +20,12 @@ function dot_symlink() {
         echo "Symlinking $dotfiles_full_path -> $link_destination"
         mkdir -p "$(dirname "$link_destination")"
         ln -s "$dotfiles_full_path" "$link_destination"
-    else
-        if [[ "$force" == "F" ]]; then
-            echo "Symlinking (force) $dotfiles_full_path -> $link_destination"
-            rm -rf $link_destination # NOTE: be carefull!!!
-            ln -s "$dotfiles_full_path" "$link_destination"
-        fi
+    # NOTE: this is too dangerous!!
+    # else
+    #     if [[ "$force" == "F" ]]; then
+    #         echo "Symlinking (force) $dotfiles_full_path -> $link_destination"
+    #         rm -rf $link_destination # NOTE: be carefull!!!
+    #         ln -s "$dotfiles_full_path" "$link_destination"
+    #     fi
     fi
 }

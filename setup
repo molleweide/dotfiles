@@ -29,6 +29,7 @@ require_installer langs/python
 require_installer langs/ruby
 require_installer langs/lua
 require_installer langs/rust
+require_installer langs/go
 require_installer langs/haskell
 # require_installer langs/java
 require_installer fonts
@@ -55,3 +56,8 @@ require_installer chat
 # require_installer music/reaper
 # require_installer music/ardour
 
+# LAST: PERSONAL PROJECTS ################
+
+# notes
+# code
+# plugins
