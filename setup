@@ -2,7 +2,11 @@
 
 source "${BASH_SOURCE%/*}/installers/shared.sh"
 
-# FIRST!!! ##################################
+# NOTE: setup
+#
+# look at mattmc's dotfiles
+# how can i create yes/no prompts
+# for all installers here
 
 # ./bootstrap
 # git submodules --init --update --recursively
@@ -10,7 +14,7 @@ source "${BASH_SOURCE%/*}/installers/shared.sh"
 
 # ESSENTIALS #############################
 
-# require_installer package-manager
+require_installer package-manager
 # require_installer terminal
 # require_installer tiling
 # require_installer files
@@ -33,8 +37,7 @@ source "${BASH_SOURCE%/*}/installers/shared.sh"
 
 # OTHER ##################################
 
-# require_installer mac-app-store
-# require_installer mac-custom-apps
+# require_installer mac-apps
 # require_installer hammerspoon
 # require_installer ubersicht
 # require_installer theming

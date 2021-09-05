@@ -11,10 +11,14 @@ source "${BASH_SOURCE%/*}/shared.sh"
 # https://github.com/alexherbo2/krabby
 # https://github.com/brookhong/Surfingkeys
 #
-# TODO: add nyxt brew install
-#
+# TODO: brew install nyxt??
+# TODO: tor browser
 
 # https://www.youtube.com/watch?v=AZERfhHo8w4
+
+function install_tor_browser() {
+    local tor="xyz"
+}
 
 function install_from_git_to_code() {
     local user=$1
