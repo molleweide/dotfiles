@@ -62,6 +62,8 @@ function install_yarn_linux() {
 #   nodenv global 10.16.0
 # }
 
+dotheader "SETTING UP NODE.."
+
 if use_nvm; then
   install_nvm
   source_nvm

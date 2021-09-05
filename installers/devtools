@@ -4,7 +4,7 @@ source "${BASH_SOURCE%/*}/../lib/_"
 
 require_installer package-manager
 
-dotheader "Setting up devtools..."
+dotheader "SETTING UP DEVTOOLS..."
 
 brew_install readline
 apt_install readline

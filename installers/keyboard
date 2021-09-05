@@ -12,9 +12,10 @@ source "${BASH_SOURCE%/*}/../lib/_"
 # TODO:
 # 1. is silicone >> kmonad??
 
+dotheader "SETTING UP KEYBOARD..."
+
 require_installer package-manager
 
-dotheader "Setting up keyboard related tools.."
 # brew_cask_install hammerspoon --appdir=/Applications
 
 # mv to shared

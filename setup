@@ -9,8 +9,8 @@ source "${BASH_SOURCE%/*}/lib/_"
 # for all installers here
 
 # ./bootstrap
-# git submodules --init --update --recursively
-# ./symlink
+git submodule update --init --recursive
+./symlink
 
 # ESSENTIALS #############################
 
@@ -32,25 +32,26 @@ require_installer langs/rust
 require_installer langs/haskell
 # require_installer langs/java
 require_installer fonts
-# require_installer tmux
+require_installer tmux
 # require_installer neovim
 
 ##########################################
 
-# require_installer mac-apps
-# require_installer hammerspoon
-# require_installer ubersicht
-# require_installer theming
+require_installer mac-apps
+require_installer hammerspoon
+require_installer ubersicht
+require_installer theming
 # require_installer backups
 # require_installer keyboard
-# require_installer audio
+require_installer audio
 # require_installer webbrowsers
 # require_installer personal
 # require_installer monitor
-# require_installer chat
+require_installer chat
 # # require_installer molleweide # install personal forks
 
 # MUSIC ##################################
 
-# require_installer reaper
+# require_installer music/reaper
+# require_installer music/ardour
 

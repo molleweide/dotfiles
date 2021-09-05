@@ -2,4 +2,6 @@
 
 source "${BASH_SOURCE%/*}/../../lib/_"
 
+dotheader "SETTING UP JAVA.."
+
 brew_cask_install java

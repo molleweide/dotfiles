@@ -4,7 +4,7 @@ source "${BASH_SOURCE%/*}/../lib/_"
 
 require_installer package-manager
 
-dotheader "Setting up audio tools..."
+dotheader "SETTING UP AUDIO TOOLS..."
 
 brew_install ffmpeg
 brew_install sox

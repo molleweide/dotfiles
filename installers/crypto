@@ -2,7 +2,9 @@
 
 source "${BASH_SOURCE%/*}/../lib/_"
 
-# FINANCE
+# CRYPTO
+
+dotheader "SETTING UP CRYPTO.."
 
 require_installer package-manager
 

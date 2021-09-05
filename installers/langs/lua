@@ -2,6 +2,8 @@
 
 source "${BASH_SOURCE%/*}/../../lib/_"
 
+dotheader "SETTING UP LUA.."
+
 # brew_install lua
 install_package lua
 install_package luarocks

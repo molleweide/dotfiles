@@ -2,6 +2,8 @@
 
 source "${BASH_SOURCE%/*}/../lib/_"
 
+dotheader "SETTING UP PASSWORDS.."
+
 require_installer package-manager
 
 # PASS MANAGEMENT

@@ -11,6 +11,7 @@ source "${BASH_SOURCE%/*}/../lib/_"
 #   - zathura
 #     https://ports.macports.org/port/zathura/summary
 
+dotheader "SETTING UP DOCS..."
 
 require_installer package-manager
 

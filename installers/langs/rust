@@ -16,4 +16,6 @@ function install_rust() {
   fi
 }
 
+dotheader "SETTING UP RUST.."
+
 install_rust

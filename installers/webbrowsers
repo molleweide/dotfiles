@@ -91,6 +91,8 @@ install_brave() {
     fi
 }
 
+dotheader "SETTING UP WEB BROWSERS.."
+
 if is_macos; then
     require_installer package-manager
 

@@ -2,6 +2,8 @@
 
 source "${BASH_SOURCE%/*}/../lib/_"
 
+dotheader "SETTING UP EMACS.."
+
 require_installer package-manager
 
 function install_emacs() {

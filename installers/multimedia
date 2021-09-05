@@ -4,6 +4,8 @@ source "${BASH_SOURCE%/*}/../lib/_"
 
 # MULTIMEDIA
 
+dotheader "SETTING UP MULTIMEDIA.."
+
 require_installer package-manager
 
 if is_macos; then

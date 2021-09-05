@@ -71,7 +71,8 @@ function install_tmux_from_source_linux() {
         rm -fr tmux-${version}
 }
 
-dotheader "Setting up Tmux..."
+dotheader "SETTING UP TMUX..."
+
 brew_install reattach-to-user-namespace # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
 brew_install tmux
 brew_install urlview # https://github.com/sigpipe/urlview

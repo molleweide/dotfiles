@@ -7,6 +7,8 @@ require_installer package-manager
 # https://www.haskell.org/ghcup/
 # https://gitlab.haskell.org/haskell/ghcup-hs#manual-install
 
+dotheader "SETTING UP HASKELL.."
+
 if is_macos; then
 
   # GHCUP

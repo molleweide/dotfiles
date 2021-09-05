@@ -3,9 +3,10 @@
 source "${BASH_SOURCE%/*}/../lib/_"
 
 # HAMMERSPOON
-require_installer package-manager
 
 dotheader "Setting up HAMMERSPOON.."
+
+require_installer package-manager
 
 brew_cask_install hammerspoon --appdir=/Applications
 

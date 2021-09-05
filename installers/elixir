@@ -2,6 +2,8 @@
 
 source "${BASH_SOURCE%/*}/../lib/_"
 
+dotheader "SETTING UP ELIXIR..."
+
 require_installer package-manager
 
 function install_kiex() {
@@ -9,8 +11,6 @@ function install_kiex() {
     curl -sSL https://raw.githubusercontent.com/taylor/kiex/master/install | bash -s
   fi
 }
-
-dotheader "Setting up Elixir..."
 
 brew_install erlang
 install_kiex

@@ -2,7 +2,9 @@
 
 source "${BASH_SOURCE%/*}/../lib/_"
 
-# NEOMUTT
+# EMAIL
+
+dotheader "SETTING UP EMAIL.."
 
 # refactor this into `code_install <args>`
 function install_muttwizard() {

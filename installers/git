@@ -2,6 +2,10 @@
 
 source "${BASH_SOURCE%/*}/../lib/_"
 
+# NOTE: git
+
+dotheader "SETTING UP GIT..."
+
 require_installer package-manager
 
 function setup_user_gitconfig() {
@@ -20,7 +24,6 @@ function setup_user_gitconfig() {
     fi
 }
 
-dotheader "Setting up Git..."
 install_package "git"
 npm install -g diff-so-fancy
 brew_install jesseduffield/lazygit/lazygit

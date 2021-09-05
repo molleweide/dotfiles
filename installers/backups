@@ -2,6 +2,8 @@
 
 source "${BASH_SOURCE%/*}/../lib/_"
 
+dotheader "SETTING UP BACKUPS.."
+
 require_installer package-manager
 
 function setup_backblaze_keys() {

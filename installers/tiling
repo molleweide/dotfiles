@@ -24,40 +24,23 @@ function install_limelight() {
   # symlink_dotfile limelight ~/.config/limelight
 }
 
-# https://github.com/AdamWagner/stackline
-function install_stackline() {
-  local url="https://github.com/molleweide/stackline.git"
-  local dest=$HOME/code/stackline
-  local symdest=$HOME/.hammerspoon/stackline
-  git clone $url $dest
-  ln -s $dest $symdest
-}
 
+dotheader "SETTING UP TILING.."
 
 if is_macos; then
   require_installer package-manager
-
   brew_install jq
-
   brew_tap koekeishiya/formulae
   brew_install yabai
-
   brew_tap koekeishiya/formulae
   brew_install skhd
 
-  # fork and look into he code myself
+  # fork and look into the code myself
   #   -> rm borders completely
   install_limelight
-
   # uebersicht yabai
-
-  install_stackline
-
   brew services start skhd
   brew services start yabai
-
-  # symlink_dotfile skhdrc ~/.skhdrc
-  # symlink_dotfile yabairc ~/.yabairc
 
 elif is_linux; then
 
@@ -68,4 +51,3 @@ elif is_linux; then
   popd > /dev/null 2>&1
 
 fi
-

@@ -160,7 +160,7 @@ install_hazeover() {
     install_simple_dmg_copy "HazeOver" "$url"
 }
 
-dotheader "Setting up custom Mac apps"
+dotheader "SETTING UP CUSTOM MAC APPS..."
 
     # install_1password
     install_aerial_screensavers

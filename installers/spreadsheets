@@ -2,6 +2,8 @@
 
 source "${BASH_SOURCE%/*}/../lib/_"
 
+dotheader "SETTING UP SPREADSHEETS.."
+
 # SPREADSHEETS
 #
 # https://github.com/andmarti1424/sc-im/wiki/Install-sc-im-with-xls-support-on-macOS

@@ -6,6 +6,8 @@ source "${BASH_SOURCE%/*}/../lib/_"
 #
 #   brew install luajit --HEAD
 
+dotheader "Setting up NEOVIM..."
+
 require_installer package-manager
 require_installer fonts
 require_installer langs/ruby
@@ -133,8 +135,6 @@ function install_lua_language_server() {
     ./3rd/luamake/luamake rebuild
   fi
 }
-
-dotheader "Setting up Neovim..."
 
 install_lua_language_server
 install_bash_language_server

@@ -31,6 +31,8 @@ function uber_widget() {
   ln -s $dest "$HOME/Library/Application Support/Übersicht/widgets/$full_name"
 }
 
+dotheader "SETTING UP UBERSICHT.."
+
 if is_macos; then
   require_installer package-manager
 

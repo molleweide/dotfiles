@@ -2,7 +2,9 @@
 
 source "${BASH_SOURCE%/*}/../lib/_"
 
-# CALCURSE
+# CALENDAR
+
+dotheader "SETTING UP CALENDAR.."
 
 # function get_install_calcurse() {
 #     # local install_path=$HOME/code/sc-im
