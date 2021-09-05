@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/shared.sh"
+source "${BASH_SOURCE%/*}/../../lib/_"
 
 # brew_install lua
 install_package lua

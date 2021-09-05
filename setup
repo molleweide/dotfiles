@@ -20,22 +20,22 @@ require_installer tiling
 require_installer files
 require_installer zsh
 
-# DEV ####################################
+##########################################
 
 require_installer devtools
 require_installer langs/node
-require_installer git
-require_installer langs/rust
-require_installer langs/lua
+require_installer git # make sure git becomes completely independent from npm
 require_installer langs/python
 require_installer langs/ruby
-# require_installer langs/haskell
+require_installer langs/lua
+require_installer langs/rust
+require_installer langs/haskell
 # require_installer langs/java
-# require_installer fonts
+require_installer fonts
 # require_installer tmux
 # require_installer neovim
 
-# OTHER ##################################
+##########################################
 
 # require_installer mac-apps
 # require_installer hammerspoon
