@@ -34,8 +34,9 @@ function install_neovim_mac() {
     brew_tap neovim/neovim
   fi
 
+  brew_install tree-sitter --HEAD
+  brew_install luajit --HEAD
   brew_install neovim --HEAD
-  brew_install universal-ctags
 
   local nvim_clone_location=$HOME/code/neovim
   local nvim_gith="https://github.com/neovim/neovim.git"
