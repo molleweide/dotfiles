@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/shared.sh"
+source "${BASH_SOURCE%/*}/../lib/_"
 
 # mv to shared install_aur <package>
 function install_aur_yay() {
@@ -37,9 +37,8 @@ if is_macos; then
                 https://raw.githubusercontent.com/Homebrew/install/master/install)"
         fi
         brew update
-        force_openssl_to_homebrew
     fi
-
+    force_openssl_to_homebrew
 elif is_linux; then
     dotheader "Setting up Aptitude..."
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/installers/shared.sh"
+source "${BASH_SOURCE%/*}/lib/_"
 
-# NOTE: setup
+# NOTE: SETUP
 #
 # look at mattmc's dotfiles
 # how can i create yes/no prompts
@@ -15,7 +15,7 @@ source "${BASH_SOURCE%/*}/installers/shared.sh"
 # ESSENTIALS #############################
 
 require_installer package-manager
-# require_installer terminal
+require_installer terminal
 # require_installer tiling
 # require_installer files
 # require_installer zsh

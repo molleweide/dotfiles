@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/shared.sh"
+source "${BASH_SOURCE%/*}/../lib/_"
 
-# TERMINAL
+#
+# NOTE: TERMINAL
+#
 
 require_installer package-manager
 
@@ -37,10 +39,10 @@ function install_terminfo() {
   fi
 }
 
+# TODO: what is this??
 install_terminfo
-symlink_dotfile alacritty.yml ~/.alacritty.yml
-symlink_dotfile mostrc ~/.mostrc
 
 # get fucking bent, Catalina
+# TODO: what is this??
 xattr -r -d com.apple.quarantine /Applications/Alacritty.app
 
