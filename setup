@@ -9,7 +9,7 @@ source "${BASH_SOURCE%/*}/lib/_"
 # for all installers here
 
 # ./bootstrap
-git submodule update --init --recursive
+git submodule update --init --recursive || exit 1
 ./symlink old
 
 # ESSENTIALS #############################
@@ -34,7 +34,7 @@ require_installer langs/haskell
 # require_installer langs/java
 require_installer fonts
 require_installer tmux
-# require_installer neovim
+require_installer neovim
 
 ##########################################
 
@@ -45,7 +45,7 @@ require_installer theming
 # require_installer monitor
 # require_installer backups
 # require_installer keyboard
-# require_installer webbrowsers
+require_installer webbrowsers
 require_installer vpn
 require_installer passwords
 require_installer audio
