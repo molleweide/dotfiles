@@ -2,7 +2,7 @@
 
 # NOTE: PYTHON
 
-source "${BASH_SOURCE%/*}/shared.sh"
+source "${BASH_SOURCE%/*}/../lib/_"
 
 require_installer package-manager
 

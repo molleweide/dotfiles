@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/shared.sh"
+source "${BASH_SOURCE%/*}/../lib/_"
 
 require_installer package-manager
 require_installer ruby
@@ -11,7 +11,7 @@ function zsh_binary() {
     elif is_macos; then
         if is_apple_silicone; then
             echo /bin/zsh
-        else;
+        else
             echo /usr/local/bin/zsh
         fi
     fi

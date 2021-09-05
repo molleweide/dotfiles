@@ -16,21 +16,21 @@ source "${BASH_SOURCE%/*}/lib/_"
 
 require_installer package-manager
 require_installer terminal
-# require_installer tiling
-# require_installer files
-# require_installer zsh
+require_installer tiling
+require_installer files
+require_installer zsh
 
 # DEV ####################################
 
-# require_installer node
-# require_installer git
-# require_installer devtools
-# require_installer python
-# require_installer ruby
-# require_installer rust
-# require_installer lua
-# require_installer haskell
-# require_installer java
+require_installer devtools
+require_installer langs/node
+require_installer git
+require_installer langs/rust
+require_installer langs/lua
+require_installer langs/python
+require_installer langs/ruby
+# require_installer langs/haskell
+# require_installer langs/java
 # require_installer fonts
 # require_installer tmux
 # require_installer neovim

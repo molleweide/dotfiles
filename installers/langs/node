@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/shared.sh"
+source "${BASH_SOURCE%/*}/../../lib/_"
 
 # We need to hook RVM's cd function to get auto-cd with nvm
 require_installer ruby
@@ -43,32 +43,31 @@ function install_yarn_linux() {
 }
 
 # TODO: what the fuck is this and why is the file unders zsh?!
-function install_after_cd_nvm_hook_to_rvm() {
+# function install_after_cd_nvm_hook_to_rvm() {
+#
+#   local hook_file=$HOME/.rvm/hooks/after_cd_nvm
+#
+#   if [ ! -f $HOME/rvm ]; then
+#     echo "Installing after_cd_nvm hook to RVM..."
+#     # symlink_dotfile home/.rvm/hooks/rvm/after_cd_nvm "$hook_file"
+#   fi
+# }
 
-  local hook_file=$HOME/.rvm/hooks/after_cd_nvm
-
-  if [ ! -f $HOME/rvm ]; then
-    echo "Installing after_cd_nvm hook to RVM..."
-    symlink_dotfile zsh/hooks/rvm/after_cd_nvm "$hook_file"
-  fi
-}
-
-function install_nodenv() {
-  brew_install nodenv
-  brew upgrade node-build
-
-  nodenv init
-  nodenv install 8.11.3
-  nodenv install 10.16.0
-  nodenv global 10.16.0
-}
+# function install_nodenv() {
+#   brew_install nodenv
+#   brew upgrade node-build
+#   nodenv init
+#   nodenv install 8.11.3
+#   nodenv install 10.16.0
+#   nodenv global 10.16.0
+# }
 
 if use_nvm; then
   install_nvm
   source_nvm
-  install_after_cd_nvm_hook_to_rvm
-else
-  install_nodenv
+  # install_after_cd_nvm_hook_to_rvm
+# else
+#   install_nodenv
 fi
 
 brew_install yarn

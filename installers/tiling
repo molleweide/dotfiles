@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/shared.sh"
+source "${BASH_SOURCE%/*}/../lib/_"
 
-# TILING AND WINDOW MANAGEMENT
+# NOTE: TILING AND WINDOW MANAGEMENT
 
 
 # - prereq brew install jq
@@ -21,7 +21,7 @@ function install_limelight() {
 
   # custom link from outside dots
   ln -s $dest/bin/limelight /usr/local/bin/limelight
-  symlink_dotfile limelight ~/.config/limelight
+  # symlink_dotfile limelight ~/.config/limelight
 }
 
 # https://github.com/AdamWagner/stackline
@@ -56,8 +56,8 @@ if is_macos; then
   brew services start skhd
   brew services start yabai
 
-  symlink_dotfile skhdrc ~/.skhdrc
-  symlink_dotfile yabairc ~/.yabairc
+  # symlink_dotfile skhdrc ~/.skhdrc
+  # symlink_dotfile yabairc ~/.yabairc
 
 elif is_linux; then
 

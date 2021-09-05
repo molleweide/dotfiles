@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/shared.sh"
+source "${BASH_SOURCE%/*}/../lib/_"
 
 require_installer package-manager
 
@@ -24,5 +24,5 @@ dotheader "Setting up Git..."
 install_package "git"
 npm install -g diff-so-fancy
 brew_install jesseduffield/lazygit/lazygit
-setup_git_scripts
+# setup_git_scripts # this was probably symlinked with local/bin
 setup_user_gitconfig
