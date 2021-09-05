@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
+source "${BASH_SOURCE%/*}/../lib/_"
+
 # TODO
 #
 #   brew install luajit --HEAD
-
-source "${BASH_SOURCE%/*}/shared.sh"
 
 require_installer package-manager
 require_installer fonts

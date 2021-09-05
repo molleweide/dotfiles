@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-# BASH_SOURCE
-#   An array variable whose members are the source filenames corresponding to the elements in the FUNCNAME array variable.
-source "${BASH_SOURCE%/*}/shared.sh"
+source "${BASH_SOURCE%/*}/../lib/_"
 
 # SPREADSHEETS
 #

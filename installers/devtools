@@ -46,3 +46,6 @@ brew install code-minimap
 heroku plugins:install heroku-repo
 
 brew install wp-cli
+
+brew_install blueutil
+

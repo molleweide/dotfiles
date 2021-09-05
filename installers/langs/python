@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# NOTE: PYTHON
+source "${BASH_SOURCE%/*}/../../lib/_"
 
-source "${BASH_SOURCE%/*}/../lib/_"
+# NOTE: PYTHON
 
 require_installer package-manager
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/shared.sh"
+source "${BASH_SOURCE%/*}/../../lib/_"
 
 require_installer package-manager
 
@@ -9,12 +9,16 @@ require_installer package-manager
 
 if is_macos; then
 
-  # ghcup
-  curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+  # GHCUP
+  if test ! $(which ghc); then
+      curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+  fi
 
-  # stack
+  # STACK
   # wget -qO- https://get.haskellstack.org/ | sh
-  curl -sSL https://get.haskellstack.org/ | sh
+  if test ! $(which stack); then
+      curl -sSL https://get.haskellstack.org/ | sh
+  fi
   stack upgrade
 
   # elif is_linux; then
