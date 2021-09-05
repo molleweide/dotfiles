@@ -13,8 +13,10 @@ source "${BASH_SOURCE%/*}/../lib/_"
 #
 # TODO: brew install nyxt??
 # TODO: tor browser
+#       install and verify tor browser
 
 # https://www.youtube.com/watch?v=AZERfhHo8w4
+
 
 function install_tor_browser() {
     local tor="xyz"
@@ -100,13 +102,12 @@ if is_macos; then
     install_firefox_dev
     install_brave
 
+    # surfingkeys is much better than vimium
+    # install_from_git_to_code molleweide vimium
+    install_from_git_to_code molleweide Surfingkeys
 
-      # surfingkeys is much better than vimium
-      # install_from_git_to_code molleweide vimium
-      install_from_git_to_code molleweide Surfingkeys
-
-      brew install -- cask qutebrowser
-      # install_nyxt_macos
+    brew_cask_install qutebrowser
+    # install_nyxt_macos
 fi
 
 if is_linux; then
