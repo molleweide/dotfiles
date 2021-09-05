@@ -86,35 +86,36 @@ path=(
 # NOTE: XDG clean up
 #############################################################
 
-export ALSA_CONFIG_PATH="$XDG_CONFIG_HOME/alsa/asoundrc"
-export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
 # #export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
-export ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
 # export ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
+# export ELECTRUMDIR="${XDG_DATA_HOME:-$HOME/.local/share}/electrum"
+# export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
+# export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
+# export MBSYNCRC="${XDG_CONFIG_HOME:-$HOME/.config}/mbsync/config"
+# export NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch-config"
+# export UNISON="${XDG_DATA_HOME:-$HOME/.local/share}/unison"
+# export WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
+# export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
+# export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
+export ALSA_CONFIG_PATH="$XDG_CONFIG_HOME/alsa/asoundrc"
+export ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
 export CABAL_CONFIG="$XDG_CONFIG_HOME"/cabal/config
 export CABAL_DIR="$XDG_CACHE_HOME"/cabal
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
-# export ELECTRUMDIR="${XDG_DATA_HOME:-$HOME/.local/share}/electrum"
 export GEM_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/gem"
 export GEM_SPEC_CACHE="$XDG_CACHE_HOME/gem"
+export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
-# export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
 export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
-export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
-# export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
+export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/readline/inputrc"
 export LESSHISTFILE="-"
-# export MBSYNCRC="${XDG_CONFIG_HOME:-$HOME/.config}/mbsync/config"
-# export NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch-config"
+export NVM_DIR="$XDG_DATA_HOME"/nvm
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
+export PYENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}/pyenv"
 export STACK_ROOT="$XDG_DATA_HOME"/stack
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
-# export UNISON="${XDG_DATA_HOME:-$HOME/.local/share}/unison"
-# export WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
 export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
-# export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
-# export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
-export NVM_DIR="$XDG_DATA_HOME"/nvm
 
 #############################################################
 # NOTE: Other program settings:
