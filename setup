@@ -10,7 +10,7 @@ source "${BASH_SOURCE%/*}/lib/_"
 
 # ./bootstrap
 git submodule update --init --recursive
-./symlink
+./symlink old
 
 # ESSENTIALS #############################
 
