@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+
+echo "shell process id: " $$
+
+echo "\$0 vs BASH_SOURCE0: [$0] vs. [${BASH_SOURCE[0]}]"
+
+echo "${BASH_SOURCE%}"
+echo "${BASH_SOURCE%/*}"
+
+
+echo $options[login] $options[interactive]
+
+# echo ${(k)options}
+for k  in ${options[k]}; do echo $k; done
+
+echo "------"
+
+# https://stackoverflow.com/questions/3427872/whats-the-difference-between-and-in-bash
+t=3
+([ $t == 3 ] && echo "AAA") || echo "poop"
+
+
+# [ -z "$dotfilesrepo" ] && dotfilesrepo
+
+# welcomemsg() { \
+# 	dialog --title "Welcome!" --msgbox "Welcome to..." 10 60
+
+# 	dialog --colors --title "Important!" --yes-label "All ready!" --no-label "Return..." --yesno "Be sure the.." 8 70
+# 	}
+
+# welcomemsg || error "User exited."
+
+# ([ -f "$progsfile" ] && cp "$progsfile" /tmp/progs.csv) || curl -Ls "$progsfile" | sed '/^#/d' > /tmp/progs.csv

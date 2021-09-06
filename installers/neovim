@@ -33,15 +33,9 @@ function install_neovim_mac() {
   if ! brew_is_tapped "neovim/neovim"; then
     brew_tap neovim/neovim
   fi
-
   brew_install tree-sitter --HEAD
   brew_install luajit --HEAD
   brew_install neovim --HEAD
-
-  local nvim_clone_location=$HOME/code/neovim
-  local nvim_gith="https://github.com/neovim/neovim.git"
-  mkdir -p $nvim_clone_location
-  git clone $nvim_gith $nvim_clone_location
 }
 
 function install_neovim() {
