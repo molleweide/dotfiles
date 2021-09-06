@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+source "${BASH_SOURCE%/*}/../../lib/_"
+
+dotheader "CLONING INTO -> \$HOME/PLUGINS..."
+
 # iterator/counter
 #       https://www.golinuxcloud.com/bash-increment-variable/
 # validate url
@@ -7,15 +11,9 @@
 # arithmetic
 #       https://ryanstutorials.net/bash-scripting-tutorial/bash-arithmetic.php
 
-source "${BASH_SOURCE%/*}/../../lib/_"
+home_code_plugins=(
 
-dotheader "CLONING INTO -> \$HOME/PLUGINS..."
-
-
-# repos to put under home/code
-repos=(
-
-    "code/plugins"
+    $HOME/code/plugins
 
     # NOTE: use ssh instead of https
     "better-escape.nvim"    "git@github.com:jdhao/better-escape.vim.git"
@@ -33,30 +31,30 @@ repos=(
 # so that i can put all my personal projects installers into
 # one single installer script
 
-pushd $plugins_dir > /dev/null 2>&1
+# dotlib_clone_projects_from_array $home_code_plugins
 
-i=0
-for arr_val in "${repos[@]}"; do
-    mod2=$(( $i % 2 == 0 ))
+# passing an array as argument is a bit quirky..
+dotlib_clone_projects_from_array "${home_code_plugins[@]}"
 
-    if [ $i == 0 ]; then
-        install_dir=$arr_val
+# for arr_val in "${local_repos[@]}"; do
+#     # for arr_val in $( $local_repos ); do
+#     mod2=$(( $i % 2 == 0 ))
 
-    elif (( ! $mod2 )); then
-        install_alt_name=$arr_val
-        echo $array
-    else
-        install_repo_url=$arr_val
-        dotsay "@b@blue[[\
-            $i@red |\
-            parent: @red$install_dir |\
-            alt_name: @red$install_alt_name |\
-            repo_url: @bluename @red-> @blue$install_repo_url \
-        ]]"
-    fi
+#     if [ $i == 0 ]; then
+#         install_dir=$arr_val
 
-    i=$((i+1))
+#     elif (( ! $mod2 )); then
+#         install_alt_name=$arr_val
 
-done
+#     else
+#         install_repo_url=$arr_val
+#         dotsay "@b@blue[[\
+#             $i@red |\
+#             parent: @red$install_dir |\
+#             alt_name: @red$install_alt_name |\
+#             repo_url: @bluename @red-> @blue$install_repo_url \
+#             ]]"
+#     fi
 
-popd > /dev/null 2>&1
+#     i=$((i+1))
+# done

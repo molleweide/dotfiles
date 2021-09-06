@@ -11,7 +11,37 @@
 #       https://google.github.io/styleguide/shellguide.html
 
 function dotlib_clone_projects_from_array() {
-    echo
+
+    # two step process in order to accept array as arg
+    string=$1
+    array=($@)
+
+    i=0
+    for arr_val in "${array[@]}"; do
+        mod2=$(( $i % 2 == 0 ))
+
+        if [ $i == 0 ]; then
+            install_dir=$arr_val
+            # NOTE: pushd
+            # pushd $plugins_dir > /dev/null 2>&1
+
+        elif (( ! $mod2 )); then
+            alt_name=$arr_val
+
+        else
+            repo_url=$arr_val
+            dotsay "@b@blue[[ $i |\
+                parent: $install_dir |\
+                alt_name: $alt_name |\
+                repo_url: $repo_url \
+                ]]"
+        fi
+
+        i=$((i+1))
+    done
+
+    # TODO: if did pushd -> popd
+    popd > /dev/null 2>&1
 }
 
 function dotlib_git_clone_recursive() {
