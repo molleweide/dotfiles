@@ -11,7 +11,7 @@ require_installer package-manager
 
 dotheader "SETTING UP THEMING.."
 
-WALLPAPER="$(dotfiles_location)/wallpaper/wallpaper.jpg"
+WALLPAPER="$(dotfiles_location)/wallpaper/wallpaper2.jpg"
 
 osascript -e \
   "tell application \"Finder\" to set desktop picture to POSIX file \"$WALLPAPER\""
