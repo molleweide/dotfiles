@@ -1,6 +1,10 @@
 # DOTFILES TODO
 
-- update macos
+- fix git cloners
+    check if dirs exist?
+    refactor into lib/
+
+- UPDATE MACOS
 
 - look at balateros python installer and compare
 
