@@ -2,31 +2,27 @@
 
 # NOTE: lib > git
 #
-# learn how to make a nice git installer function
-#
-# flag args
-#       https://stackoverflow.com/questions/7069682/how-to-get-arguments-with-flags-in-bash
-#
 # google shell style guide
 #       https://google.github.io/styleguide/shellguide.html
 
 
-
-# -e 's/((@(red|green|yellow|blue|magenta|cyan|white|reset|b|u))+)[[]{2}(.*)[]]{2}/\1\4@reset/g' \
-#     -e "s/@red/$(tput setaf 1)/g" \
-#     -e "s/@green/$(tput setaf 2)/g" \
-#     -e "s/@yellow/$(tput setaf 3)/g" \
-#     -e "s/@blue/$(tput setaf 4)/g" \
-#     -e "s/@magenta/$(tput setaf 5)/g" \
-#     -e "s/@cyan/$(tput setaf 6)/g" \
-#     -e "s/@white/$(tput setaf 7)/g" \
-#     -e "s/@reset/$(tput sgr0)/g" \
-#     -e "s/@b/$(tput bold)/g" \
-#     -e "s/@u/$(tput sgr 0 1)/g"
-
+function dotlib_git_clone_recursive() {
+    local install_dir=$1
+    local alt_name=$2
+    local repo_url=$3
+    dotsay "@b@blue[[ @yellow$alt_name <- @magenta$repo_url]]"
+    echo "$install_dir/$alt_name"
+    if [ ! -d "$install_dir/$alt_name" ]; then
+        echo "Doesn't exist. Installing..."
+    #     git clone https://github.com/pyenv/pyenv-virtualenv.git "$plugin_path"
+    # else
+    #     echo "no"
+    fi
+}
 
 function dotlib_clone_projects_from_array() {
     # two step process in order to accept array as arg
+    # TODO: validate is array
     string=$1
     array=($@)
     # echo "PWD = $PWD"
@@ -36,6 +32,7 @@ function dotlib_clone_projects_from_array() {
         mod2=$(( $i % 2 == 0 ))
 
         if [ $i == 0 ]; then
+            # TODO: validate is file/dir
             install_dir=$arr_val
             dotsay "@b@cyan[[ INSTALL DIR: \`$install_dir\` ]]\n"
             mkdir -p $install_dir > /dev/null
@@ -43,11 +40,17 @@ function dotlib_clone_projects_from_array() {
             # echo "PWD = $PWD"
 
         elif (( ! $mod2 )); then
+            # TODO: validate is string name and NOT git url
             alt_name=$arr_val
 
         else
+            # TODO: validate is github url
             repo_url=$arr_val
-            dotsay "@b@blue[[ @green$alt_name <- @magenta$repo_url]]"
+            # dotsay "@b@blue[[ @green$alt_name <- @magenta$repo_url]]"
+            dotlib_git_clone_recursive \
+                $install_dir \
+                $alt_name \
+                $repo_url
         fi
 
         i=$((i+1))
@@ -55,17 +58,4 @@ function dotlib_clone_projects_from_array() {
 
     popd > /dev/null 2>&1
     # echo "PWD = $PWD"
-}
-
-function dotlib_git_clone_recursive() {
-    local dest_dir=$1
-    local repo_url=$2
-    # local gith_user
-    # local gith_repo_name
-
-    if [ ! -d "$plugin_path" ]; then
-        git clone https://github.com/pyenv/pyenv-virtualenv.git "$plugin_path"
-    fi
-    mkdir -p "$lspdir"
-    git clone https://github.com/sumneko/lua-language-server "$location"
 }

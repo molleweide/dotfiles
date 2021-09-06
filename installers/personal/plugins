@@ -4,13 +4,6 @@ source "${BASH_SOURCE%/*}/../../lib/_"
 
 dotheader "INSTALL PERSONAL REPOS/PROJECTS"
 
-# iterator/counter
-#       https://www.golinuxcloud.com/bash-increment-variable/
-# validate url
-#       https://stackoverflow.com/questions/3183444/check-for-valid-link-url
-# arithmetic
-#       https://ryanstutorials.net/bash-scripting-tutorial/bash-arithmetic.php
-
 home_code_plugins=(
 
     $HOME/code/plugins
@@ -26,35 +19,6 @@ home_code_plugins=(
     "which-key.nvim"        "git@github.com:folke/which-key.nvim.git"
 )
 
-
-# TODO: refactor this into a lib functions
-# so that i can put all my personal projects installers into
-# one single installer script
-
-# dotlib_clone_projects_from_array $home_code_plugins
-
 # passing an array as argument is a bit quirky..
 dotlib_clone_projects_from_array "${home_code_plugins[@]}"
-
-# for arr_val in "${local_repos[@]}"; do
-#     # for arr_val in $( $local_repos ); do
-#     mod2=$(( $i % 2 == 0 ))
-
-#     if [ $i == 0 ]; then
-#         install_dir=$arr_val
-
-#     elif (( ! $mod2 )); then
-#         install_alt_name=$arr_val
-
-#     else
-#         install_repo_url=$arr_val
-#         dotsay "@b@blue[[\
-#             $i@red |\
-#             parent: @red$install_dir |\
-#             alt_name: @red$install_alt_name |\
-#             repo_url: @bluename @red-> @blue$install_repo_url \
-#             ]]"
-#     fi
-
-#     i=$((i+1))
-# done
+# dotlib_clone_projects_from_array arstrst
