@@ -11,7 +11,7 @@
 #       https://google.github.io/styleguide/shellguide.html
 
 function dotlib_clone_projects_from_array() {
-
+    echo
 }
 
 function dotlib_git_clone_recursive() {

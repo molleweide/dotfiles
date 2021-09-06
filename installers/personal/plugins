@@ -11,10 +11,12 @@ source "${BASH_SOURCE%/*}/../../lib/_"
 
 dotheader "CLONING INTO -> \$HOME/PLUGINS..."
 
-plugins_dir=$HOME/plugins
 
 # repos to put under home/code
 repos=(
+
+    "code/plugins"
+
     # NOTE: use ssh instead of https
     "better-escape.nvim"    "git@github.com:jdhao/better-escape.vim.git"
     "cheovim.nvim"          "git@github.com:NTBBloodbath/cheovim.git"
@@ -33,37 +35,28 @@ repos=(
 
 pushd $plugins_dir > /dev/null 2>&1
 
-i=1
-clone_dir_alt_name=''
-
-for repo in "${repos[@]}"; do
-
+i=0
+for arr_val in "${repos[@]}"; do
     mod2=$(( $i % 2 == 0 ))
 
-    echo $mod2
+    if [ $i == 0 ]; then
+        install_dir=$arr_val
 
-    ([ $mod2 ] && echo "odd: $mod2") || echo "$mod2: even"
+    elif (( ! $mod2 )); then
+        install_alt_name=$arr_val
+        echo $array
+    else
+        install_repo_url=$arr_val
+        dotsay "@b@blue[[\
+            $i@red |\
+            parent: @red$install_dir |\
+            alt_name: @red$install_alt_name |\
+            repo_url: @bluename @red-> @blue$install_repo_url \
+        ]]"
+    fi
 
-    # if (( $n % 2 == 0 ))
-    # then
-        # DIR LOCATION NAME
-        # echo
-
-    # t=3
-    # ([ $t == 3 ] && echo "AAA") || echo "poop"
-
-# else
-    # REPO URL
-    # dotlib_clone_projects_from_array $arstarstarst
-
-
-
-    # fi
-    # dot_git_clone_recursive $plugins_dir $repo
-    # dotsay "@b@blue[[ $i@red: @bluename @red-> @blue$repo ]]"
     i=$((i+1))
 
 done
 
 popd > /dev/null 2>&1
-

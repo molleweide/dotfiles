@@ -17,18 +17,15 @@ for k  in ${options[k]}; do echo $k; done
 echo "------"
 
 # https://stackoverflow.com/questions/3427872/whats-the-difference-between-and-in-bash
+
 t=3
 ([ $t == 3 ] && echo "AAA") || echo "poop"
 
 
-# [ -z "$dotfilesrepo" ] && dotfilesrepo
 
-# welcomemsg() { \
-# 	dialog --title "Welcome!" --msgbox "Welcome to..." 10 60
-
-# 	dialog --colors --title "Important!" --yes-label "All ready!" --no-label "Return..." --yesno "Be sure the.." 8 70
-# 	}
-
-# welcomemsg || error "User exited."
-
-# ([ -f "$progsfile" ] && cp "$progsfile" /tmp/progs.csv) || curl -Ls "$progsfile" | sed '/^#/d' > /tmp/progs.csv
+# create dynamic variables
+c=0
+for file in $( ls ); do
+    eval "var$c=$file";
+    c=$((c+1));
+done

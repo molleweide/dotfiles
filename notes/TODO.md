@@ -1,5 +1,8 @@
 # DOTFILES TODO
 
+- prevent ALL calls from unknown callers, ie. num ! in contacts
+    this is fucking smart if it would work
+
 - rename zsh functions/conf autoload/sourc scripts
     >>> make them stand out more..
 
