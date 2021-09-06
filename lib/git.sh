@@ -26,10 +26,10 @@
 
 
 function dotlib_clone_projects_from_array() {
-
     # two step process in order to accept array as arg
     string=$1
     array=($@)
+    # echo "PWD = $PWD"
 
     i=0
     for arr_val in "${array[@]}"; do
@@ -38,10 +38,9 @@ function dotlib_clone_projects_from_array() {
         if [ $i == 0 ]; then
             install_dir=$arr_val
             dotsay "@b@cyan[[ INSTALL DIR: \`$install_dir\` ]]\n"
-            # dotheader "INSTALL DIR: \`$install_dir\`"
-
-            # NOTE: pushd
-            # pushd $plugins_dir > /dev/null 2>&1
+            mkdir -p $install_dir > /dev/null
+            pushd $install_dir > /dev/null 2>&1
+            # echo "PWD = $PWD"
 
         elif (( ! $mod2 )); then
             alt_name=$arr_val
@@ -54,8 +53,8 @@ function dotlib_clone_projects_from_array() {
         i=$((i+1))
     done
 
-    # TODO: if did pushd -> popd
     popd > /dev/null 2>&1
+    # echo "PWD = $PWD"
 }
 
 function dotlib_git_clone_recursive() {
@@ -70,22 +69,3 @@ function dotlib_git_clone_recursive() {
     mkdir -p "$lspdir"
     git clone https://github.com/sumneko/lua-language-server "$location"
 }
-
-##########################################################
-##########################################################
-
-# function install_personal_master_repos() {
-#     local name=$1
-#     local code_dir=$HOME/code
-#     local source_dir=$code_dir/$name
-#     mkdir -p "$code_dir"
-#     if [ ! -d $source_dir ]; then
-#         dotsay "+ cloning $source_dir"
-#         git clone https://github.com/molleweide/$name.git "$source_dir"
-#         pushd $source_dir
-#         git submodule update --init --recursive
-#         popd
-#     else
-#         dotsay "+ $source_dir already exists"
-#     fi
-# }
