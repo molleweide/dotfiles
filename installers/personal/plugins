@@ -2,7 +2,7 @@
 
 source "${BASH_SOURCE%/*}/../../lib/_"
 
-dotheader "CLONING INTO -> \$HOME/PLUGINS..."
+dotheader "INSTALL PERSONAL REPOS/PROJECTS"
 
 # iterator/counter
 #       https://www.golinuxcloud.com/bash-increment-variable/

@@ -10,6 +10,21 @@
 # google shell style guide
 #       https://google.github.io/styleguide/shellguide.html
 
+
+
+# -e 's/((@(red|green|yellow|blue|magenta|cyan|white|reset|b|u))+)[[]{2}(.*)[]]{2}/\1\4@reset/g' \
+#     -e "s/@red/$(tput setaf 1)/g" \
+#     -e "s/@green/$(tput setaf 2)/g" \
+#     -e "s/@yellow/$(tput setaf 3)/g" \
+#     -e "s/@blue/$(tput setaf 4)/g" \
+#     -e "s/@magenta/$(tput setaf 5)/g" \
+#     -e "s/@cyan/$(tput setaf 6)/g" \
+#     -e "s/@white/$(tput setaf 7)/g" \
+#     -e "s/@reset/$(tput sgr0)/g" \
+#     -e "s/@b/$(tput bold)/g" \
+#     -e "s/@u/$(tput sgr 0 1)/g"
+
+
 function dotlib_clone_projects_from_array() {
 
     # two step process in order to accept array as arg
@@ -22,6 +37,9 @@ function dotlib_clone_projects_from_array() {
 
         if [ $i == 0 ]; then
             install_dir=$arr_val
+            dotsay "@b@cyan[[ INSTALL DIR: \`$install_dir\` ]]\n"
+            # dotheader "INSTALL DIR: \`$install_dir\`"
+
             # NOTE: pushd
             # pushd $plugins_dir > /dev/null 2>&1
 
@@ -30,11 +48,7 @@ function dotlib_clone_projects_from_array() {
 
         else
             repo_url=$arr_val
-            dotsay "@b@blue[[ $i |\
-                parent: $install_dir |\
-                alt_name: $alt_name |\
-                repo_url: $repo_url \
-                ]]"
+            dotsay "@b@blue[[ @green$alt_name <- @magenta$repo_url]]"
         fi
 
         i=$((i+1))
