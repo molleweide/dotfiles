@@ -5,16 +5,22 @@
 # google shell style guide
 #       https://google.github.io/styleguide/shellguide.html
 
-
 function dotlib_git_clone_recursive() {
     local install_dir=$1
     local alt_name=$2
     local repo_url=$3
     dotsay "@b@blue[[ @yellow$alt_name <- @magenta$repo_url]]"
-    echo "$install_dir/$alt_name"
+
     if [ ! -d "$install_dir/$alt_name" ]; then
-        echo "Doesn't exist. Installing..."
-    #     git clone https://github.com/pyenv/pyenv-virtualenv.git "$plugin_path"
+        dotsay "@b@blue[[ Doesn't exist. Installing... \n]]"
+
+        # git clone https://github.com/pyenv/pyenv-virtualenv.git "$plugin_path"
+        pushd $install_dir/$alt_name > /dev/null 2>&1
+        # echo "PWD = $PWD"
+        # git submodule update --init --recursive
+        popd > /dev/null 2>&1
+        # echo "PWD = $PWD"
+
     # else
     #     echo "no"
     fi
