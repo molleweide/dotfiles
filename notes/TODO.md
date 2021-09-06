@@ -1,10 +1,17 @@
 # DOTFILES TODO
 
+- update macos
 
-- add all installers to setup
+- how to setup correct background??
+    it is not working currently
 
+- limelight not installing
 
+- look at xero installer scripts
 
+- webbrowsers are not being installed
+
+- dmenu mac > eg. `syspref`
 
 # M1 #############
 
