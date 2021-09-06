@@ -2,8 +2,11 @@
 
 - update macos
 
-- how to setup correct background??
-    it is not working currently
+- look at balateros python installer and compare
+
+- rbenv
+    if pyenv is based on rbenv, then it might be good to use rbenv
+    instead
 
 - limelight not installing
 
