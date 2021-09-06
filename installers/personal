@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/../lib/_"
+
+dotheader "INSTALL PERSONAL REPOS/PROJECTS"
+
+# NOTE: duplicates with other installers might occur but that is not a problem
+# since the script cannot overwrite any already existing repos.
+#
+# add
+#   - work
+#   - kth
+#
+
+##################################################################
+
+# NOTES
+home_notes=(
+    $HOME/notes
+    "notes"    "git@github.com:"
+)
+# dotlib_clone_projects_from_array "${home_notes[@]}"
+
+##################################################################
+
+# PLUGINS
+
+home_code_plugins=(
+    $HOME/code/plugins
+    "better-escape.nvim"    "git@github.com:jdhao/better-escape.vim.git"
+    "cheovim.nvim"          "git@github.com:NTBBloodbath/cheovim.git"
+    "colors.nvim"           "git@github.com:molleweide/colors.nvim.git"
+    "lazy.nvim"             "git@github.com:molleweide/lazy.nvim.git"
+    "lookup.nvim"           "git@github.com:molleweide/lookup.nvim.git"
+    "neorg.nvim"            "git@github.com:molleweide/neorg.git"
+    "plenary.nvim"          "git@github.com:molleweide/plenary.nvim.git"
+    "which-key.nvim"        "git@github.com:folke/which-key.nvim.git"
+)
+dotlib_clone_projects_from_array "${home_code_plugins[@]}"
+
+##################################################################
+
+# APPS
+
+home_code_apps=(
+)
+# dotlib_clone_projects_from_array "${home_code_apps[@]}"
+
+##################################################################
+
+# FIRMWARES
+
+home_code_firmware=(
+)
+# dotlib_clone_projects_from_array "${home_code_firmware[@]}"
+
+##################################################################
+
+# LEARN
+
+home_code_learn=(
+)
+# dotlib_clone_projects_from_array "${home_code_learn[@]}"
