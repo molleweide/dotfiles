@@ -1,8 +1,14 @@
 # DOTFILES TODO
 
-- fix git cloners
-    check if dirs exist?
-    refactor into lib/
+- rename zsh functions/conf autoload/sourc scripts
+    >>> make them stand out more..
+
+- personal projects
+    > fix git cloners
+    > check if dirs exist?
+    > refactor into lib/
+
+- buy wevpn today
 
 - UPDATE MACOS
 

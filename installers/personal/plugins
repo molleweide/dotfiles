@@ -2,54 +2,34 @@
 
 source "${BASH_SOURCE%/*}/../../lib/_"
 
-# buildtools=(
-#     base-devel
-#     make
-#     cmake
-#     build-essential
-#     libssl-dev
-#     zlib1g-dev
-#     libbz2-dev
-#     libreadline-dev
-#     libsqlite3-dev
-#     wget
-#     curl
-#     llvm
-#     libncurses5-dev
-#     xz-utils
-#     tk-dev
-# )
+dotheader "CLONING -> HOME/PLUGINS..."
 
-# for package in "${buildtools[@]}"; do
-#     apt_install "$package"
-# done
+plugins_dir=$HOME/plugins
 
+# repos to put under home/code
+repos=(
+    # NOTE: use ssh instead of https
+    "better-escape.nvim"    "git@github.com:jdhao/better-escape.vim.git"
+    "cheovim.nvim"          "git@github.com:NTBBloodbath/cheovim.git"
+    "colors.nvim"           "git@github.com:molleweide/colors.nvim.git"
+    "lazy.nvim"             "git@github.com:molleweide/lazy.nvim.git"
+    "lookup.nvim"           "git@github.com:molleweide/lookup.nvim.git"
+    "neorg.nvim"            "git@github.com:molleweide/neorg.git"
+    "plenary.nvim"          "git@github.com:molleweide/plenary.nvim.git"
+    "which-key.nvim"        "git@github.com:folke/which-key.nvim.git"
+)
 
+pushd $plugins_dir > /dev/null 2>&1
 
+i=1
+local_dir_name_idx=1
+for repo in "${repos[@]}"; do
 
-# array=( one two three )
+    # dot_git_clone_recursive $plugins_dir $repo
+    dotsay "@b@blue[[ $i \t@red -> @blue$repo ]]"
+    i=$((i+1))
 
+done
 
-# for i in "${arrayName[@]}"
-# do
-#    :
-#    # do whatever on $i
-# done
+popd > /dev/null 2>&1
 
-
-
-
-
-# for i in "${array[@]}"
-# do
-# 	echo $i
-# done
-
-
-
-
-# users=(John Harry Jake Scott Philis)
-# for u in "${users[@]}"
-# do
-#     echo "$u is a registered user"
-# done
