@@ -11,8 +11,6 @@ if [[ "$1" == "new" ]]; then
     # dot_symlink home/.zshenv ~/.zshenv
 
     # NOTE: LOOP LINKING ~/.config
-    # dot_symlink home/.config ~/.config
-
     # find "${BASH_SOURCE%/*}"/home/.config -maxdepth 1 -mindepth 1 # -print '%f\n'
     # find home/.config -maxdepth 1 -mindepth 1 # -print '%f\n'
 
@@ -24,24 +22,22 @@ if [[ "$1" == "new" ]]; then
 
     # NOTE: MANUAL LINKING ~/.config
 
-    # dot_symlink home/.config/alacritty          ~/.config/alacritty
-    # dot_symlink home/.config/base16-shell       ~/.config/base16-shell
-    dot_symlink home/.config/bat                ~/.config/bat F
-    # dot_symlink home/.config/calcurse           ~/.config/calcurse
-    # dot_symlink home/.config/chad-nvim          ~/.config/chad-nvim
+    dot_symlink home/.config/alacritty          ~/.config/alacritty         F
+    dot_symlink home/.config/base16-shell       ~/.config/base16-shell      F
+    dot_symlink home/.config/bat                ~/.config/bat               F
+    dot_symlink home/.config/calcurse           ~/.config/calcurse          F
+    dot_symlink home/.config/chad-nvim          ~/.config/chad-nvim         F
     # dot_symlink home/.config/doom.d             ~/.config/doom.d
     # dot_symlink home/.config/gem                ~/.config/gem
     # dot_symlink home/.config/git                ~/.config/git
     # dot_symlink home/.config/irb                ~/.config/irb
-    # dot_symlink home/.config/irssi              ~/.config/irssi
-    dot_symlink home/.config/karabiner          ~/.config/karabiner F
-    # dot_symlink home/.config/kitty              ~/.config/kitty
-    # dot_symlink home/.config/limelight          ~/.config/limelight
-    # dot_symlink home/.config/molleweide-nvim    ~/.config/molleweide-nvim
-    # dot_symlink home/.config/most               ~/.config/most
-    # dot_symlink home/.config/mps-youtube        ~/.config/mps-youtube
+    dot_symlink home/.config/irssi              ~/.config/irssi             F
+    dot_symlink home/.config/karabiner          ~/.config/karabiner         F
+    dot_symlink home/.config/kitty              ~/.config/kitty
+    dot_symlink home/.config/limelight          ~/.config/limelight         F
+    dot_symlink home/.config/molleweide-nvim    ~/.config/molleweide-nvim   F
+    dot_symlink home/.config/most               ~/.config/most              F
     # dot_symlink home/.config/mpv                ~/.config/mpv
-    # dot_symlink home/.config/msmtp              ~/.config/msmtp
     # dot_symlink home/.config/mutt               ~/.config/mutt
     # dot_symlink home/.config/neofetch           ~/.config/neofetch
     # dot_symlink home/.config/neovhy-nvim        ~/.config/neovhy-nvim
