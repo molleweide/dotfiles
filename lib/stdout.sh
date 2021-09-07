@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# TODO: make more different sizes of headers
+#   1. very large scripts start
+#   2. sub script header
+#   3. ??
+#   4. dotsay = small info
+
 dotheader() {
     echo -e "\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
     echo -e "::"

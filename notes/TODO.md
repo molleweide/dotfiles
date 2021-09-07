@@ -18,17 +18,9 @@
 
 - buy wevpn today
 
-- UPDATE MACOS
-
-- look at balateros python installer and compare
-
-- rbenv
-    if pyenv is based on rbenv, then it might be good to use rbenv
-    instead
+- rbenv ?? balatero
 
 - limelight not installing
-
-- look at xero installer scripts
 
 - webbrowsers are not being installed
 

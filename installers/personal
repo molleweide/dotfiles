@@ -4,25 +4,21 @@ source "${BASH_SOURCE%/*}/../lib/_"
 
 dotheader "INSTALL PERSONAL REPOS/PROJECTS"
 
-# NOTE: duplicates with other installers might occur but that is not a problem
-# since the script cannot overwrite any already existing repos.
-#
-# add
-#   - work
-#   - kth
-#
-
-##################################################################
-##################################################################
-
 # NOTE: NOTES
-home_notes=(
-    $HOME/notes
-    "notes"    "git@github.com:"
-)
+home_notes=( $HOME/notes "notes" "git@github.com:molleweide/notes.git" )
 dotlib_clone_projects_from_array "${home_notes[@]}"
 
 ##################################################################
+
+# NOTE: PROJECTS
+
+home_projects=(
+    $HOME/projects
+    # $HOME/code/projects
+    # ""   ""
+)
+# dotlib_clone_projects_from_array "${home_projects[@]}"
+
 ##################################################################
 
 # NOTE: PLUGINS
@@ -41,7 +37,6 @@ home_code_plugins=(
 dotlib_clone_projects_from_array "${home_code_plugins[@]}"
 
 ##################################################################
-##################################################################
 
 # NOTE: APPS
 
@@ -50,7 +45,6 @@ home_code_apps=(
 )
 # dotlib_clone_projects_from_array "${home_code_apps[@]}"
 
-##################################################################
 ##################################################################
 
 # NOTE: FIRMWARES
@@ -61,7 +55,6 @@ home_code_firmware=(
 # dotlib_clone_projects_from_array "${home_code_firmware[@]}"
 
 ##################################################################
-##################################################################
 
 # NOTE: LEARN
 
@@ -70,7 +63,6 @@ home_code_learn=(
 )
 # dotlib_clone_projects_from_array "${home_code_learn[@]}"
 
-##################################################################
 ##################################################################
 
 # NOTE: CONFIGS
@@ -108,7 +100,6 @@ home_code_configs=(
 dotlib_clone_projects_from_array "${home_code_configs[@]}"
 
 ##################################################################
-##################################################################
 
 # NOTE: MACOS: UBERSICHT
 
@@ -119,7 +110,6 @@ home_code_ubersicht=(
 )
 # dotlib_clone_projects_from_array "${home_code_ubersicht[@]}"
 
-##################################################################
 ##################################################################
 
 # NOTE: CODE BIN SCRIPTS
@@ -132,7 +122,6 @@ home_code_bin=(
 # dotlib_clone_projects_from_array "${home_code_bin[@]}"
 
 ##################################################################
-##################################################################
 
 # NOTE: CODE MISC
 
@@ -143,3 +132,25 @@ home_code_misc=(
 )
 # dotlib_clone_projects_from_array "${home_code_misc[@]}"
 
+##################################################################
+
+# NOTE: work
+
+home_work=(
+    $HOME/work
+    # $HOME/work
+    # "dotfiles-mbynes"   "git@github.com:mathiasbynens/dotfiles.git"
+)
+# dotlib_clone_projects_from_array "${home_work[@]}"
+
+
+##################################################################
+
+# NOTE: KTH
+
+home_kth=(
+    $HOME/KTH
+    # $HOME/KTH
+    # "dotfiles-mbynes"   "git@github.com:mathiasbynens/dotfiles.git"
+)
+# dotlib_clone_projects_from_array "${home_kth[@]}"
