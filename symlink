@@ -27,10 +27,10 @@ if [[ "$1" == "new" ]]; then
     dot_symlink home/.config/bat                ~/.config/bat
     dot_symlink home/.config/calcurse           ~/.config/calcurse
     dot_symlink home/.config/chad-nvim          ~/.config/chad-nvim
-    # dot_symlink home/.config/doom.d             ~/.config/doom.d
-    # dot_symlink home/.config/gem                ~/.config/gem
-    # dot_symlink home/.config/git                ~/.config/git
-    # dot_symlink home/.config/irb                ~/.config/irb
+    dot_symlink home/.config/doom.d             ~/.config/doom.d
+    dot_symlink home/.config/gem                ~/.config/gem
+    dot_symlink home/.config/git                ~/.config/git
+    dot_symlink home/.config/irb                ~/.config/irb
     dot_symlink home/.config/irssi              ~/.config/irssi
     dot_symlink home/.config/karabiner          ~/.config/karabiner
     dot_symlink home/.config/kitty              ~/.config/kitty
@@ -42,20 +42,20 @@ if [[ "$1" == "new" ]]; then
     dot_symlink home/.config/neovhy-nvim        ~/.config/neovhy-nvim
     dot_symlink home/.config/nnn                ~/.config/nnn
     dot_symlink home/.config/octave             ~/.config/octave
-    # dot_symlink home/.config/pry                ~/.config/pry
+    dot_symlink home/.config/pry                ~/.config/pry
     dot_symlink home/.config/qutebrowser        ~/.config/qutebrowser
-    # dot_symlink home/.config/ranger             ~/.config/ranger
+    dot_symlink home/.config/ranger             ~/.config/ranger
     dot_symlink home/.config/readline           ~/.config/readline
-    # dot_symlink home/.config/rvm                ~/.config/rvm
+    dot_symlink home/.config/rvm                ~/.config/rvm
     dot_symlink home/.config/sc-im              ~/.config/sc-im
     # dot_symlink home/.config/shell              ~/.config/shell
-    # dot_symlink home/.config/skhd               ~/.config/skhd
-    # dot_symlink home/.config/surfingkeys        ~/.config/surfingkeys
-    # dot_symlink home/.config/tg                 ~/.config/tg
-    # dot_symlink home/.config/tmux               ~/.config/tmux
-    # dot_symlink home/.config/tmuxinator         ~/.config/tmuxinator
-    # dot_symlink home/.config/vscode             ~/.config/vscode
-    # dot_symlink home/.config/yabai              ~/.config/yabai
+    dot_symlink home/.config/skhd               ~/.config/skhd
+    dot_symlink home/.config/surfingkeys        ~/.config/surfingkeys
+    dot_symlink home/.config/tg                 ~/.config/tg
+    dot_symlink home/.config/tmux               ~/.config/tmux
+    dot_symlink home/.config/tmuxinator         ~/.config/tmuxinator
+    dot_symlink home/.config/vscode             ~/.config/vscode
+    dot_symlink home/.config/yabai              ~/.config/yabai
     # dot_symlink home/.config/zsh                ~/.config/zsh
 
 
