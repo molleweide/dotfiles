@@ -1,9 +1,9 @@
 # DOTFILES TODO
 
-https://www.tutorialdocs.com/article/set-command-in-bash.html
-https://www.cyberciti.biz/faq/find-command-exclude-ignore-files/
-https://stackoverflow.com/questions/22558245/exclude-list-of-files-from-find
-https://superuser.com/questions/613829/how-to-exclude-files-using-find
+git-submodule-mv nvim       home/.config/nvim
+git-submodule-mv doom-nvim  home/.config/doom-nvim
+./symlink new
+
 
 - rename zsh functions/conf autoload/sourc scripts
     >>> make them stand out more..
