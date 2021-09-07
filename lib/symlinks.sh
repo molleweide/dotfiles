@@ -23,7 +23,7 @@ function dot_symlink() {
         if [[ "$force" == "F" ]]; then
             echo "Symlinking (force) $dotfiles_full_path -> $link_destination"
             # rm -rf $link_destination # NOTE: be carefull!!!
-            ln -sF "$dotfiles_full_path" "$link_destination"
+            ln -sFv "$dotfiles_full_path" "$link_destination"
         fi
     fi
 }

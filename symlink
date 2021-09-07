@@ -26,7 +26,7 @@ if [[ "$1" == "new" ]]; then
 
     # dot_symlink home/.config/alacritty          ~/.config/alacritty
     # dot_symlink home/.config/base16-shell       ~/.config/base16-shell
-    # dot_symlink home/.config/bat                ~/.config/bat
+    dot_symlink home/.config/bat                ~/.config/bat
     # dot_symlink home/.config/calcurse           ~/.config/calcurse
     # dot_symlink home/.config/chad-nvim          ~/.config/chad-nvim
     # dot_symlink home/.config/doom.d             ~/.config/doom.d
@@ -34,7 +34,7 @@ if [[ "$1" == "new" ]]; then
     # dot_symlink home/.config/git                ~/.config/git
     # dot_symlink home/.config/irb                ~/.config/irb
     # dot_symlink home/.config/irssi              ~/.config/irssi
-    # dot_symlink home/.config/karabiner          ~/.config/karabiner
+    dot_symlink home/.config/karabiner          ~/.config/karabiner F
     # dot_symlink home/.config/kitty              ~/.config/kitty
     # dot_symlink home/.config/limelight          ~/.config/limelight
     # dot_symlink home/.config/molleweide-nvim    ~/.config/molleweide-nvim
@@ -52,7 +52,7 @@ if [[ "$1" == "new" ]]; then
     # dot_symlink home/.config/ranger             ~/.config/ranger
     # dot_symlink home/.config/readline           ~/.config/readline
     # dot_symlink home/.config/rvm                ~/.config/rvm
-    # dot_symlink home/.config/sc-im              ~/.config/sc-im
+    dot_symlink home/.config/sc-im              ~/.config/sc-im F
     # dot_symlink home/.config/shell              ~/.config/shell
     # dot_symlink home/.config/skhd               ~/.config/skhd
     # dot_symlink home/.config/surfingkeys        ~/.config/surfingkeys
@@ -65,7 +65,7 @@ if [[ "$1" == "new" ]]; then
 
 
     # NOTE: LINK ~/.local/bin
-    # dot_symlink home/.local/bin ~/.local/bin
+    dot_symlink home/.local/bin ~/.local/bin F
 
     # NOTE: LINK ~/.hammerspoon
     # dot_symlink home/.hammerspoon ~/.hammerspoon
