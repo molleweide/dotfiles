@@ -109,7 +109,7 @@ else
     dot_symlink tmux.conf ~/.tmux.conf
     dot_symlink tmux.osx.conf ~/.tmux.osx.conf
     dot_symlink tmuxinator ~/.tmuxinator
-    dot_symlink tmux/tmuxcolors-dbalatero-base16.conf ~/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf
+    # dot_symlink tmux/tmuxcolors-dbalatero-base16.conf ~/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf
     dot_symlink bat/config ~/.config/bat/config
     dot_symlink nvim ~/.config/nvim # cheovim config manager
     dot_symlink doom-nvim ~/.config/doom-nvim
