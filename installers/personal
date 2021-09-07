@@ -4,15 +4,33 @@ source "${BASH_SOURCE%/*}/../lib/_"
 
 dotheader "INSTALL PERSONAL REPOS/PROJECTS"
 
-# NOTE: NOTES
+# NOTE: HOME > NOTES
 home_notes=( $HOME/notes "notes" "git@github.com:molleweide/notes.git" )
 dotlib_clone_projects_from_array "${home_notes[@]}"
 
-# NOTE: PROJECTS
+# NOTE: HOME > WORK
+
+home_work=(
+    $HOME/work
+    # $HOME/work
+    # "dotfiles-mbynes"   "git@github.com:mathiasbynens/dotfiles.git"
+)
+# dotlib_clone_projects_from_array "${home_work[@]}"
+
+# NOTE: HOME/SCHOOL > KTH
+
+home_kth=(
+    $HOME/KTH
+    # $HOME/school/kth
+    # "dotfiles-mbynes"   "git@github.com:mathiasbynens/dotfiles.git"
+)
+# dotlib_clone_projects_from_array "${home_kth[@]}"
+
+# NOTE: HOME > PROJECTS
 
 home_projects=(
     $HOME/projects
-    # $HOME/code/projects
+    # $HOME/projects
     # ""   ""
 )
 # dotlib_clone_projects_from_array "${home_projects[@]}"
@@ -32,14 +50,28 @@ home_code_plugins=(
 )
 dotlib_clone_projects_from_array "${home_code_plugins[@]}"
 
-# NOTE: APPS
+# NOTE: APPS / GUIS
 
 home_code_apps=(
     $HOME/code/apps
 )
 # dotlib_clone_projects_from_array "${home_code_apps[@]}"
 
-# NOTE: FIRMWARES
+# NOTE: CODE > APPS / TUIS
+
+home_code_apps=(
+    $HOME/code/apps
+)
+# dotlib_clone_projects_from_array "${home_code_apps[@]}"
+
+# NOTE: CODE > CLI'S
+
+home_code_firmware=(
+    $HOME/code/firmware
+)
+
+# dotlib_clone_projects_from_array "${home_code_firmware[@]}"
+# NOTE: CODE > FIRMWARES
 
 home_code_firmware=(
     $HOME/code/firmware
@@ -113,21 +145,3 @@ home_code_misc=(
     # "dotfiles-mbynes"   "git@github.com:mathiasbynens/dotfiles.git"
 )
 # dotlib_clone_projects_from_array "${home_code_misc[@]}"
-
-# NOTE: WORK
-
-home_work=(
-    $HOME/work
-    # $HOME/work
-    # "dotfiles-mbynes"   "git@github.com:mathiasbynens/dotfiles.git"
-)
-# dotlib_clone_projects_from_array "${home_work[@]}"
-
-# NOTE: KTH
-
-home_kth=(
-    $HOME/KTH
-    # $HOME/KTH
-    # "dotfiles-mbynes"   "git@github.com:mathiasbynens/dotfiles.git"
-)
-# dotlib_clone_projects_from_array "${home_kth[@]}"
