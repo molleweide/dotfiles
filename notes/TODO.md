@@ -4,11 +4,8 @@
     mattmc scripts to learn:
         bin/symlink
         bin/dotify
-    
 
-- make personal into a submodule
-    add kth
-    add work
+- INSTALLERS/PERSONAL >> MAKE INTO SUBMODULE
 
 - prevent ALL calls from unknown callers, ie. num ! in contacts
     this is fucking smart if it would work
