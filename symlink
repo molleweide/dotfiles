@@ -36,14 +36,14 @@ if [[ "$1" == "new" ]]; then
     dot_symlink home/.config/irb                ~/.config/irb
     dot_symlink home/.config/irssi              ~/.config/irssi
     dot_symlink home/.config/karabiner          ~/.config/karabiner
-    dot_symlink home/.config/kitty              ~/.config/kitty
+    # dot_symlink home/.config/kitty              ~/.config/kitty
     dot_symlink home/.config/limelight          ~/.config/limelight
     dot_symlink home/.config/molleweide-nvim    ~/.config/molleweide-nvim
     dot_symlink home/.config/most               ~/.config/most
-    dot_symlink home/.config/mpv                ~/.config/mpv
+    # dot_symlink home/.config/mpv                ~/.config/mpv
     dot_symlink home/.config/mutt               ~/.config/mutt
     dot_symlink home/.config/neovhy-nvim        ~/.config/neovhy-nvim
-    dot_symlink home/.config/nnn                ~/.config/nnn
+    # dot_symlink home/.config/nnn                ~/.config/nnn
     dot_symlink home/.config/nvim               ~/.config/nvim
     dot_symlink home/.config/octave             ~/.config/octave
     dot_symlink home/.config/pry                ~/.config/pry
