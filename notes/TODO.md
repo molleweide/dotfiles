@@ -1,5 +1,11 @@
 # DOTFILES TODO
 
+- create function symlink all config files
+    mattmc scripts to learn:
+        bin/symlink
+        bin/dotify
+    
+
 - make personal into a submodule
     add kth
     add work

@@ -4,7 +4,6 @@ source "${BASH_SOURCE%/*}/lib/_"
 
 # NOTE: SYMLINK v2
 
-
 if [[ "$1" == "new" ]]; then
     dotheader "SYMLINK NEW..."
     dot_symlink home/.config ~/.config

@@ -13,8 +13,9 @@ dotheader "INSTALL PERSONAL REPOS/PROJECTS"
 #
 
 ##################################################################
+##################################################################
 
-# NOTES
+# NOTE: NOTES
 home_notes=(
     $HOME/notes
     "notes"    "git@github.com:"
@@ -22,8 +23,9 @@ home_notes=(
 # dotlib_clone_projects_from_array "${home_notes[@]}"
 
 ##################################################################
+##################################################################
 
-# PLUGINS
+# NOTE: PLUGINS
 
 home_code_plugins=(
     $HOME/code/plugins
@@ -39,25 +41,93 @@ home_code_plugins=(
 dotlib_clone_projects_from_array "${home_code_plugins[@]}"
 
 ##################################################################
+##################################################################
 
-# APPS
+# NOTE: APPS
 
 home_code_apps=(
 )
 # dotlib_clone_projects_from_array "${home_code_apps[@]}"
 
 ##################################################################
+##################################################################
 
-# FIRMWARES
+# NOTE: FIRMWARES
 
 home_code_firmware=(
 )
 # dotlib_clone_projects_from_array "${home_code_firmware[@]}"
 
 ##################################################################
+##################################################################
 
-# LEARN
+# NOTE: LEARN
 
 home_code_learn=(
 )
 # dotlib_clone_projects_from_array "${home_code_learn[@]}"
+
+
+# NOTE: FIRMWARES
+
+home_code_firmware=(
+)
+# dotlib_clone_projects_from_array "${home_code_firmware[@]}"
+
+##################################################################
+##################################################################
+
+# NOTE: CONFIGS
+
+home_code_learn=(
+    $HOME/code/configs
+    "dot-bot-PYTHON"    "git@github.com:anishathalye/dotbot.git"
+    "dot-chezmoi-GO"    "git@github.com:twpayne/chezmoi.git"
+    "dot-elenapan"      "git@github.com:elenapan/dotfiles.git"
+    "dot-holman"        "git@github.com:holman/dotfiles.git"
+    "dot-homesick-RUBY" "git@github.com:technicalpickles/homesick.git"
+    "dot-jessfraz"      "git@github.com:jessfraz/dotfiles.git"
+    "dot-lewagon"       "git@github.com:lewagon/dotfiles.git"
+    "dot-pualirish"     "git@github.com:paulirish/dotfiles.git"
+    "dot-skwp"          "git@github.com:skwp/dotfiles.git"
+    "dot-thoughtbot"    "git@github.com:thoughtbot/dotfiles.git"
+    "dot-voidrice"      "git@github.com:LukeSmithxyz/voidrice.git"
+    "dotfiles-mbynes"   "git@github.com:mathiasbynens/dotfiles.git"
+    "rcm"               "git@github.com:thoughtbot/rcm.git"
+    "tmux-gpakosz"      "git@github.com:gpakosz/.tmux.git"
+)
+# dotlib_clone_projects_from_array "${home_code_configs[@]}"
+
+##################################################################
+##################################################################
+
+# NOTE: MACOS: UBERSICHT
+
+home_code_ubersicht=(
+    # $HOME/code/configs
+    # "dotfiles-mbynes"   "git@github.com:mathiasbynens/dotfiles.git"
+)
+# dotlib_clone_projects_from_array "${home_code_ubersicht[@]}"
+
+##################################################################
+##################################################################
+
+# NOTE: CODE BIN SCRIPTS
+
+home_code_bin=(
+    # $HOME/code/misc
+    # "dotfiles-mbynes"   "git@github.com:mathiasbynens/dotfiles.git"
+)
+# dotlib_clone_projects_from_array "${home_code_bin[@]}"
+
+##################################################################
+##################################################################
+
+# NOTE: CODE MISC
+
+home_code_misc=(
+    # $HOME/code/misc
+    # "dotfiles-mbynes"   "git@github.com:mathiasbynens/dotfiles.git"
+)
+# dotlib_clone_projects_from_array "${home_code_misc[@]}"
+
