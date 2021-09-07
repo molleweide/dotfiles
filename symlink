@@ -60,7 +60,6 @@ if [[ "$1" == "new" ]]; then
     dot_symlink home/.config/vscode             ~/.config/vscode
     dot_symlink home/.config/yabai              ~/.config/yabai
 
-
     # NOTE: LINK ~/.local/bin
     dot_symlink home/.local/bin ~/.local/bin F
 
@@ -82,40 +81,46 @@ if [[ "$1" == "new" ]]; then
 elif [[ "$1" == "old" ]]; then
     dotheader "SYMLINK OLD..."
 
-    dot_symlink home/.local/bin ~/.local/bin F
-    dot_symlink home/.hammerspoon ~/.hammerspoon F
-    dot_symlink home/.rvm/hooks/after_cd_nvm ~/.rvm/hooks/after_cd_nvm F
-    dot_symlink home/.rvm/hooks/after_install_add_default_gems ~/.rvm/hooks/after_install_add_default_gems F
-    dot_symlink alacritty.yml ~/.alacritty.yml
-    dot_symlink mostrc ~/.mostrc
-    dot_symlink skhdrc ~/.skhdrc
-    dot_symlink yabairc ~/.yabairc
-    dot_symlink ranger ~/.config/ranger
-    dot_symlink zshrc ~/.zshrc
-    dot_symlink zsh ~/.zsh
-    dot_symlink zsh/zshenv ~/.zshenv
-    dot_symlink git/gitattributes ~/.gitattributes
-    dot_symlink git/gitconfig ~/.gitconfig
-    dot_symlink git/gitignore ~/.gitignore
-    dot_symlink git/gitmessage ~/.gitmessage
-    dot_symlink rvmrc ~/.rvmrc
-    dot_symlink gemrc ~/.gemrc
-    dot_symlink irb/pryrc ~/.pryrc
-    dot_symlink irb/unescaped_colors.rb ~/.unescaped_colors.rb
-    dot_symlink irb/escaped_colors.rb ~/.escaped_colors.rb
-    dot_symlink irb/aprc ~/.aprc
-    dot_symlink tmux.conf ~/.tmux.conf
-    dot_symlink tmux.osx.conf ~/.tmux.osx.conf
-    dot_symlink tmuxinator ~/.tmuxinator
-    # dot_symlink tmux/tmuxcolors-dbalatero-base16.conf ~/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf
-    dot_symlink bat/config ~/.config/bat/config
-    dot_symlink nvim ~/.config/nvim # cheovim config manager
-    dot_symlink doom-nvim ~/.config/doom-nvim
+    # NOTE: OLD
+    dot_symlink home/.local/bin             ~/.local/bin F
+    dot_symlink home/.hammerspoon           ~/.hammerspoon F
+    dot_symlink alacritty.yml               ~/.alacritty.yml
+    dot_symlink mostrc                      ~/.mostrc
+    dot_symlink skhdrc                      ~/.skhdrc
+    dot_symlink yabairc                     ~/.yabairc
+    # NOTE: OLD
+    dot_symlink ranger                      ~/.config/ranger
+    dot_symlink zshrc                       ~/.zshrc
+    dot_symlink zsh                         ~/.zsh
+    dot_symlink zsh/zshenv                  ~/.zshenv
+    dot_symlink git/gitattributes           ~/.gitattributes
+    dot_symlink git/gitconfig               ~/.gitconfig
+    dot_symlink git/gitignore               ~/.gitignore
+    dot_symlink git/gitmessage              ~/.gitmessage
+    # NOTE: OLD
+    dot_symlink rvmrc                       ~/.rvmrc
+    dot_symlink gemrc                       ~/.gemrc
+    dot_symlink irb/pryrc                   ~/.pryrc
+    dot_symlink irb/unescaped_colors.rb     ~/.unescaped_colors.rb
+    dot_symlink irb/escaped_colors.rb       ~/.escaped_colors.rb
+    dot_symlink irb/aprc                    ~/.aprc
+    dot_symlink tmux.conf                   ~/.tmux.conf
+    # NOTE: OLD
+    dot_symlink tmux.osx.conf               ~/.tmux.osx.conf
+    dot_symlink tmuxinator                  ~/.tmuxinator
+    dot_symlink bat/config                  ~/.config/bat/config
+    dot_symlink home/.config/nvim           ~/.config/nvim # cheovim config manager
+    dot_symlink home/.config/doom-nvim      ~/.config/doom-nvim
+    dot_symlink karabiner                   ~/.config/karabiner
+    dot_symlink irssi                       ~/.irssi
+    dot_symlink scimrc                      ~/.config/sc-im/scimrc
+    # NOTE: OLD
+    dot_symlink home/.rvm/hooks/after_cd_nvm                    ~/.rvm/hooks/after_cd_nvm F
+    dot_symlink home/.rvm/hooks/after_install_add_default_gems  ~/.rvm/hooks/after_install_add_default_gems F
+    # dot_symlink tmux/tmuxcolors-dbalatero-base16.conf         ~/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf
+
     # VSCODE_CONFIG_DIR="$HOME/Library/Application Support/Code/User"
     # mkdir -p "$VSCODE_CONFIG_DIR"
-    # dot_symlink vscode/keybindings.json "$VSCODE_CONFIG_DIR/keybindings.json"
-    # dot_symlink vscode/settings.json "$VSCODE_CONFIG_DIR/settings.json"
-    dot_symlink karabiner ~/.config/karabiner
-    dot_symlink irssi ~/.irssi
-    dot_symlink scimrc ~/.config/sc-im/scimrc
+    # dot_symlink vscode/keybindings.json     "$VSCODE_CONFIG_DIR/keybindings.json"
+    # dot_symlink vscode/settings.json        "$VSCODE_CONFIG_DIR/settings.json"
 fi
