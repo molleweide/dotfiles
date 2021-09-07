@@ -2,6 +2,8 @@
 
 - update macos
 
+- install spread sheets setup
+
 - how to setup correct background??
     it is not working currently
 

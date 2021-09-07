@@ -54,6 +54,7 @@ require_installer utils
 require_installer chat
 require_installer calendar
 require_installer email
+require_installer spreadsheets
 require_installer docs
 require_installer crypto
 
