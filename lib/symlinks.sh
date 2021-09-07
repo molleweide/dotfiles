@@ -15,25 +15,19 @@ function dot_symlink() {
     local force=$3
     local dotfiles_full_path="$(dotfiles_location)/$file"
 
-    # echo "file:                 $file"
-    # echo "dotfiles_full_path:   $dotfiles_full_path"
-    # echo "link_destination:     $link_destination"
-    # # [ $file == "~" ] && exit 1 # lol this doesn't really work..
-
     if [ ! -e "$link_destination" ]; then
-        echo "Symlinking $dotfiles_full_path -> $link_destination"
+        dotsay "@b@green[[ Symlinking: $dotfiles_full_path -> $link_destination ]]"
         mkdir -p "$(dirname "$link_destination")"
         ln -s "$dotfiles_full_path" "$link_destination"
     else
         if [[ "$force" == "F" ]]; then
             if [[ -L $link_destination ]]; then
-                # echo "LINK exists and is a SYMBOLIC"
-                echo "Symlinking (force) $dotfiles_full_path -> $link_destination"
+                dotsay "@b@blue[[ Force re-linking: $dotfiles_full_path -> $link_destination ]]"
+                echo ""
                 rm -rf $link_destination # be carefull;
                 ln -s "$dotfiles_full_path" "$link_destination"
             else
-                echo "file: \`$file\` already exists"
-                echo "      AND is a regular file/dir. Needs to be dealt with manually..."
+                dotsay "@b@red[[ Cannot link: \`$file\` is a regular file/dir and needs to be removed manually first... ]]"
             fi
         fi
     fi
