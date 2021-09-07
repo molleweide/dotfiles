@@ -1,10 +1,5 @@
 # DOTFILES TODO
 
-git-submodule-mv nvim       home/.config/nvim
-git-submodule-mv doom-nvim  home/.config/doom-nvim
-./symlink new
-
-
 - rename zsh functions/conf autoload/sourc scripts
     >>> make them stand out more..
 
