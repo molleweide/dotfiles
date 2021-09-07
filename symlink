@@ -26,7 +26,7 @@ if [[ "$1" == "new" ]]; then
 
     # dot_symlink home/.config/alacritty          ~/.config/alacritty
     # dot_symlink home/.config/base16-shell       ~/.config/base16-shell
-    dot_symlink home/.config/bat                ~/.config/bat
+    dot_symlink home/.config/bat                ~/.config/bat F
     # dot_symlink home/.config/calcurse           ~/.config/calcurse
     # dot_symlink home/.config/chad-nvim          ~/.config/chad-nvim
     # dot_symlink home/.config/doom.d             ~/.config/doom.d
@@ -82,7 +82,7 @@ if [[ "$1" == "new" ]]; then
     # dot_symlink home/.rvm/hooks/after_install_add_default_gems \
     #     ~/.rvm/hooks/after_install_add_default_gems
 
-else
+elif [[ "$1" == "new" ]]; then
     dotheader "SYMLINK OLD..."
     dot_symlink home/.local/bin ~/.local/bin
     dot_symlink home/.hammerspoon ~/.hammerspoon

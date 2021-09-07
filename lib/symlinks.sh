@@ -17,7 +17,7 @@ function dot_symlink() {
 
     # echo "file:                 $file"
     # echo "dotfiles_full_path:   $dotfiles_full_path"
-    echo "link_destination:     $link_destination"
+    # echo "link_destination:     $link_destination"
     # # [ $file == "~" ] && exit 1 # lol this doesn't really work..
 
     if [ ! -e "$link_destination" ]; then
@@ -27,12 +27,13 @@ function dot_symlink() {
     else
         if [[ "$force" == "F" ]]; then
             if [[ -L $link_destination ]]; then
-                echo "LINK exists and is a SYMBOLIC"
-                # echo "Symlinking (force) $dotfiles_full_path -> $link_destination"
-                # rm -rf $link_destination # NOTE: be carefull!!!
-                # ln -sF "$dotfiles_full_path" "$link_destination"
+                # echo "LINK exists and is a SYMBOLIC"
+                echo "Symlinking (force) $dotfiles_full_path -> $link_destination"
+                rm -rf $link_destination # be carefull;
+                ln -s "$dotfiles_full_path" "$link_destination"
             else
-                echo "LINK exists and is a regular file/dir. Needs to be dealt with manually..."
+                echo "file: \`$file\` already exists"
+                echo "      AND is a regular file/dir. Needs to be dealt with manually..."
             fi
         fi
     fi
