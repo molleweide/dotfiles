@@ -16,7 +16,7 @@ function install_muttwizard() {
         git clone $gith/$proj $dest
         pushd $dest> /dev/null 2>&1
         sudo make install
-        popd $dest> /dev/null 2>&1
+        popd > /dev/null 2>&1
     fi
 
 

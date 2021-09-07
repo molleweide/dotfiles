@@ -57,6 +57,7 @@ require_installer email
 require_installer spreadsheets
 require_installer docs
 require_installer crypto
+require_installer personal # installs all my local forks
 
 
 # MUSIC ##################################
@@ -66,6 +67,3 @@ require_installer crypto
 
 # LAST: PERSONAL PROJECTS ################
 
-# notes
-# code
-# plugins
