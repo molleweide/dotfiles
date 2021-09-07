@@ -16,19 +16,14 @@ function dot_symlink() {
     local dotfiles_full_path="$(dotfiles_location)/$file"
 
     if [ ! -e "$link_destination" ]; then
-        dotsay "@b@green[[ Symlinking: $dotfiles_full_path -> $link_destination ]]"
+        dotsay "@b@green[[ Symlink: $dotfiles_full_path -> $link_destination ]]"
         mkdir -p "$(dirname "$link_destination")"
         ln -s "$dotfiles_full_path" "$link_destination"
+    elif [[ -L $link_destination ]]; then
+        dotsay "@b@blue[[ Force re-link: $dotfiles_full_path -> $link_destination ]]"
+        rm -rf $link_destination # be carefull;
+        ln -s "$dotfiles_full_path" "$link_destination"
     else
-        if [[ "$force" == "F" ]]; then
-            if [[ -L $link_destination ]]; then
-                dotsay "@b@blue[[ Force re-linking: $dotfiles_full_path -> $link_destination ]]"
-                echo ""
-                rm -rf $link_destination # be carefull;
-                ln -s "$dotfiles_full_path" "$link_destination"
-            else
-                dotsay "@b@red[[ Cannot link: \`$file\` is a regular file/dir and needs to be removed manually first... ]]"
-            fi
-        fi
+        dotsay "@b@red[[ Cannot link: \`$file\` is a regular file/dir and needs to be removed manually first... ]]"
     fi
 }
