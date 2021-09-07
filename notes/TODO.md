@@ -1,27 +1,13 @@
 # DOTFILES TODO
 
-- create function symlink all config files
-    mattmc scripts to learn:
-        bin/symlink
-        bin/dotify
-
-- INSTALLERS/PERSONAL >> MAKE INTO SUBMODULE
-
-- prevent ALL calls from unknown callers, ie. num ! in contacts
-    this is fucking smart if it would work
+- symlink research
 
 - rename zsh functions/conf autoload/sourc scripts
     >>> make them stand out more..
 
-- buy wevpn today
-
-- rbenv ?? balatero
-
 - limelight not installing
 
 - webbrowsers are not being installed
-
-- dmenu mac > eg. `syspref`
 
 # M1 #############
 
@@ -38,7 +24,3 @@
     neovim
 
 - cannot link signal
-
-# next steps
-
-try new `home/.config`
