@@ -29,3 +29,20 @@ for file in $( ls ); do
     eval "var$c=$file";
     c=$((c+1));
 done
+
+# set home/.config
+
+
+# source "${BASH_SOURCE%/*}/../../lib/_"
+
+# echo "with -type d"
+# echo
+# echo
+
+# find home/.config -maxdepth 1 -mindepth 1 -type d # -print '%f\n'
+
+echo "without -type d"
+echo
+echo
+
+find home/.config -maxdepth 1 -mindepth 1 # -print '%f\n'
