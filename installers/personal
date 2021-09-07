@@ -20,7 +20,7 @@ home_notes=(
     $HOME/notes
     "notes"    "git@github.com:"
 )
-# dotlib_clone_projects_from_array "${home_notes[@]}"
+dotlib_clone_projects_from_array "${home_notes[@]}"
 
 ##################################################################
 ##################################################################
@@ -46,6 +46,7 @@ dotlib_clone_projects_from_array "${home_code_plugins[@]}"
 # NOTE: APPS
 
 home_code_apps=(
+    $HOME/code/apps
 )
 # dotlib_clone_projects_from_array "${home_code_apps[@]}"
 
@@ -55,6 +56,7 @@ home_code_apps=(
 # NOTE: FIRMWARES
 
 home_code_firmware=(
+    $HOME/code/firmware
 )
 # dotlib_clone_projects_from_array "${home_code_firmware[@]}"
 
@@ -64,22 +66,16 @@ home_code_firmware=(
 # NOTE: LEARN
 
 home_code_learn=(
+    $HOME/code/learn
 )
 # dotlib_clone_projects_from_array "${home_code_learn[@]}"
-
-
-# NOTE: FIRMWARES
-
-home_code_firmware=(
-)
-# dotlib_clone_projects_from_array "${home_code_firmware[@]}"
 
 ##################################################################
 ##################################################################
 
 # NOTE: CONFIGS
 
-home_code_learn=(
+home_code_configs=(
     $HOME/code/configs
     "dot-bergholmm"         "https://github.com/bergholmm/dotfiles.git"
     "dot-bot-PYTHON"        "git@github.com:anishathalye/dotbot.git"
@@ -117,6 +113,7 @@ dotlib_clone_projects_from_array "${home_code_configs[@]}"
 # NOTE: MACOS: UBERSICHT
 
 home_code_ubersicht=(
+    $HOME/code/ubersicht
     # $HOME/code/configs
     # "dotfiles-mbynes"   "git@github.com:mathiasbynens/dotfiles.git"
 )
@@ -128,6 +125,7 @@ home_code_ubersicht=(
 # NOTE: CODE BIN SCRIPTS
 
 home_code_bin=(
+    $HOME/code/bin
     # $HOME/code/misc
     # "dotfiles-mbynes"   "git@github.com:mathiasbynens/dotfiles.git"
 )
@@ -139,6 +137,7 @@ home_code_bin=(
 # NOTE: CODE MISC
 
 home_code_misc=(
+    $HOME/code/misc
     # $HOME/code/misc
     # "dotfiles-mbynes"   "git@github.com:mathiasbynens/dotfiles.git"
 )
