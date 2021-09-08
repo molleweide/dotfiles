@@ -8,6 +8,9 @@ if [[ "$1" == "new" ]]; then
     # dotheader "SYMLINK NEW..."
     dotsay "@b@blue[[ @magentaXDG: @greenON \n]]"
 
+    # NOTE: links
+    #   https://stackoverflow.com/questions/22558245/exclude-list-of-files-from-find
+    #
 
     # find "${BASH_SOURCE%/*}"/home/.config -maxdepth 1 -mindepth 1 # -print '%f\n'
     # find home/.config -maxdepth 1 -mindepth 1 # -print '%f\n'
