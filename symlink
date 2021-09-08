@@ -19,7 +19,7 @@ if [[ "$1" == "new" ]]; then
 
     # done
     # NOTE: ~/.zshenv
-    dot_symlink home/.zshenv ~/.zshenv
+    # dot_symlink home/.zshenv ~/.zshenv
 
     # NOTE: ~/.config
     dot_symlink home/.config/shell              ~/.config/shell
@@ -92,7 +92,7 @@ elif [[ "$1" == "old" ]]; then
     dot_symlink git/gitignore               ~/.gitignore
     dot_symlink git/gitmessage              ~/.gitmessage
     dot_symlink home/.config/doom-nvim      ~/.config/doom-nvim
-    dot_symlink home/.config/nvim           ~/.config/nvim # cheovim config manager
+    dot_symlink home/.config/nvim           ~/.config/nvim
     dot_symlink home/.hammerspoon           ~/.hammerspoon F
     dot_symlink home/.local/bin             ~/.local/bin F
     dot_symlink irb/aprc                    ~/.aprc
