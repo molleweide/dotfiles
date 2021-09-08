@@ -1,21 +1,22 @@
 # DOTFILES TODO
 
-- antigen > prepare now for switching to new zsh
+- how to validate that new configs work??
 
-    - create function toggle zsh_xdg
-
-    1. switch to new ZSH
-        comment in symlink new > zsh
-
-    2. validate all configs are working
-        how do I do this?
-
-    3. switch BACK
-        comment in symlink old > zsh
-
+- remove `dot` from home dirs so that they become searchable from telescope
 
 - KTH REREGISTER
-        
+
+- keyboard install && build kmonad M1
+
+### TRAPPFABRIKEN IMPORT TO LOCAL >> DOCUMENT STEPS ###
+
+
+
+
+
+
+
+
 
 - limelight not installing
 
