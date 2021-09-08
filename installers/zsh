@@ -93,12 +93,9 @@ dotheader "Setting up ZSH..."
 
 brew_install exa
 apt_install exa
-
 brew_install neofetch
 apt_install neofetch
-
 install_base16_shell
-
 setup_zsh_completions_repo
 
 install_package zsh
