@@ -14,7 +14,7 @@
         comment in symlink old > zsh
 
 
-
+- KTH REREGISTER
         
 - limelight not installing
 
