@@ -1,16 +1,32 @@
 # DOTFILES TODO
 
-- rename zsh functions/conf autoload/sourc scripts
-    >>> make them stand out more..
+- antigen > prepare now for switching to new zsh
 
+    - create function toggle zsh_xdg
+
+    1. switch to new ZSH
+        comment in symlink new > zsh
+
+    2. validate all configs are working
+        how do I do this?
+
+    3. switch BACK
+        comment in symlink old > zsh
+
+
+
+        
 - limelight not installing
 
 - webbrowsers are not being installed
 
-# M1 #############
+# XDG ##########################################
 
-- zsh antigen
-    how is antigen installed?
+* move
+    - .gnupg
+    -
+
+# M1 ###########################################
 
 - doom nvim POSTED
     python not sure how to get around this as of now
