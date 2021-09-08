@@ -2,10 +2,10 @@
 	path = home/.config/molleweide-nvim
 	url = https://github.com/molleweide/mollew-config.nvim.git
 [submodule "nvim"]
-	path = nvim
+	path = home/.config/nvim
 	url = https://github.com/molleweide/cheovim.git
 [submodule "doom-nvim"]
-	path = doom-nvim
+	path = home/.config/doom-nvim
 	url = https://github.com/molleweide/doom-nvim.git
 [submodule "chad-nvim"]
 	path = home/.config/chad-nvim
