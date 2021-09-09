@@ -9,6 +9,8 @@
 
 unsetopt PROMPT_SP # i believe this removes ^% sign in prompt
 
+echo "zprofile!!!!!!!!"
+
 # Default programs:
 export EDITOR="nvim"
 
@@ -116,6 +118,7 @@ export STACK_ROOT="$XDG_DATA_HOME"/stack
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+# export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 
 #############################################################
 # NOTE: Other program settings:

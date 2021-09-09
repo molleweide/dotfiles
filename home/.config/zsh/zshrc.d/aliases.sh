@@ -33,10 +33,12 @@ alias tn="tmuxinator"
 # ======== DOCKER ===========
 
 # ======== FILE MANAGERS ===========
+
 alias fh="fff"
 alias fj="lf"
 alias fk="ranger"
 alias fn="nnn"
+
 function ranger {
     local IFS=$'\t\n'
     local tempfile="$(mktemp -t tmp.XXXXXX)"

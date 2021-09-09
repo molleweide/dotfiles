@@ -2,13 +2,14 @@
 
 source "${BASH_SOURCE%/*}/lib/_"
 
-# NOTE: SYMLINK v2
+dotheader "SETTING UP SYMLINKS..."
 
-if [[ "$1" == "new" ]]; then
-    # dotheader "SYMLINK NEW..."
+if [[ "$1" == "xdg" ]]; then
     dotsay "@b@blue[[ @magentaXDG: @greenON \n]]"
+    dot_symlink home/.zshenv ~/.zshenv
 
-    # NOTE: links
+elif [[ "$1" == "new" ]]; then
+    dotsay "@b@blue[[ @magentaSymlink: @yellowNEW \n]]"
     #   https://stackoverflow.com/questions/22558245/exclude-list-of-files-from-find
     #
 
@@ -19,10 +20,7 @@ if [[ "$1" == "new" ]]; then
     # do
     #     dir=${dir%*/}      # remove the trailing "/"
     #     echo "${dir##*/}"    # print everything after the final "/"
-
     # done
-    # NOTE: ~/.zshenv
-    # dot_symlink home/.zshenv ~/.zshenv
 
     # NOTE: ~/.config
     dot_symlink home/.config/shell              ~/.config/shell
@@ -39,14 +37,14 @@ if [[ "$1" == "new" ]]; then
     dot_symlink home/.config/irb                ~/.config/irb
     dot_symlink home/.config/irssi              ~/.config/irssi
     dot_symlink home/.config/karabiner          ~/.config/karabiner
-    # dot_symlink home/.config/kitty              ~/.config/kitty
+    dot_symlink home/.config/kitty              ~/.config/kitty
     dot_symlink home/.config/limelight          ~/.config/limelight
     dot_symlink home/.config/molleweide-nvim    ~/.config/molleweide-nvim
     dot_symlink home/.config/most               ~/.config/most
-    # dot_symlink home/.config/mpv                ~/.config/mpv
+    dot_symlink home/.config/mpv                ~/.config/mpv
     dot_symlink home/.config/mutt               ~/.config/mutt
     dot_symlink home/.config/neovhy-nvim        ~/.config/neovhy-nvim
-    # dot_symlink home/.config/nnn                ~/.config/nnn
+    dot_symlink home/.config/nnn                ~/.config/nnn
     dot_symlink home/.config/nvim               ~/.config/nvim
     dot_symlink home/.config/octave             ~/.config/octave
     dot_symlink home/.config/pry                ~/.config/pry
@@ -71,43 +69,31 @@ if [[ "$1" == "new" ]]; then
     dot_symlink home/.hammerspoon ~/.hammerspoon
 
     # NOTE: TRAILING STUFF..
-    # TODO: I don't like that I have to do this
-
     # how to do this???
     # dot_symlink home/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf \
     #     ~/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf
-
     # dot_symlink home/.rvm/hooks/after_cd_nvm \
     #     ~/.rvm/hooks/after_cd_nvm
-
     # dot_symlink home/.rvm/hooks/after_install_add_default_gems \
     #     ~/.rvm/hooks/after_install_add_default_gems
 
 elif [[ "$1" == "old" ]]; then
-    dotheader "SYMLINK OLD..."
-    dotsay "@b@blue[[ @magentaXDG: @redOFF \n]]"
-
+    dotsay "@b@blue[[ @magentaSymlink: @yellowOLD @blue&& @magentaXDG: @redOFF \n]]"
     dot_symlink alacritty.yml               ~/.alacritty.yml
-    dot_symlink bat/config                  ~/.config/bat/config
     dot_symlink gemrc                       ~/.gemrc
     dot_symlink git/gitattributes           ~/.gitattributes
     dot_symlink git/gitconfig               ~/.gitconfig
     dot_symlink git/gitignore               ~/.gitignore
     dot_symlink git/gitmessage              ~/.gitmessage
-    dot_symlink home/.config/doom-nvim      ~/.config/doom-nvim
-    dot_symlink home/.config/nvim           ~/.config/nvim
-    dot_symlink home/.hammerspoon           ~/.hammerspoon F
-    dot_symlink home/.local/bin             ~/.local/bin F
+    dot_symlink home/.hammerspoon           ~/.hammerspoon
+    dot_symlink home/.local/bin             ~/.local/bin
     dot_symlink irb/aprc                    ~/.aprc
     dot_symlink irb/escaped_colors.rb       ~/.escaped_colors.rb
     dot_symlink irb/pryrc                   ~/.pryrc
     dot_symlink irb/unescaped_colors.rb     ~/.unescaped_colors.rb
     dot_symlink irssi                       ~/.irssi
-    dot_symlink karabiner                   ~/.config/karabiner
     dot_symlink mostrc                      ~/.mostrc
-    dot_symlink ranger                      ~/.config/ranger
     dot_symlink rvmrc                       ~/.rvmrc
-    dot_symlink scimrc                      ~/.config/sc-im/scimrc
     dot_symlink skhdrc                      ~/.skhdrc
     dot_symlink tmux.conf                   ~/.tmux.conf
     dot_symlink tmux.osx.conf               ~/.tmux.osx.conf
@@ -116,10 +102,8 @@ elif [[ "$1" == "old" ]]; then
     dot_symlink zsh                         ~/.zsh
     dot_symlink zsh/zshenv                  ~/.zshenv
     dot_symlink zshrc                       ~/.zshrc
-
     dot_symlink home/.rvm/hooks/after_cd_nvm                    ~/.rvm/hooks/after_cd_nvm F
     dot_symlink home/.rvm/hooks/after_install_add_default_gems  ~/.rvm/hooks/after_install_add_default_gems F
-
     # VSCODE_CONFIG_DIR="$HOME/Library/Application Support/Code/User"
     # mkdir -p "$VSCODE_CONFIG_DIR"
     # dot_symlink vscode/keybindings.json     "$VSCODE_CONFIG_DIR/keybindings.json"

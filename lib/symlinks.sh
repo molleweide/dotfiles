@@ -23,6 +23,6 @@ function dot_symlink() {
         rm -rf $link_destination # be carefull;
         ln -s "$dotfiles_full_path" "$link_destination"
     else
-        dotsay "@b@red[[ Cannot link: \`$file\` is a regular file/dir and needs to be removed manually first... ]]"
+        dotsay "@b@red[[ Cannot link: \`$link_destination\` is a regular file/dir and needs to be removed manually first... ]]"
     fi
 }

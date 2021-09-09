@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # GITSTATUS_LOG_LEVEL=DEBUG
 
 # zprof if we ever need to profile
@@ -55,7 +62,7 @@ export ANTIGEN_COMPDUMP="${ADOTDIR}/.zcompdump"
 export ANTIGEN_LOG="${ADOTDIR}/antigen.log"
 export ANTIGEN_DEBUG_LOG="${ADOTDIR}/antigen_debug.log"
 
-source ${ZDOTDIR}/antigen.zsh
+source ${ZDOTDIR}/vendor/antigen.zsh
 
 antigen bundle robbyrussell/oh-my-zsh plugins/git
 
@@ -99,15 +106,15 @@ eval "$(fasd --init auto)"
 # NOTE: CUSTOM SETTINGS
 #############################################################
 
-for file in $HOME/.zsh/custom/**/*.zsh
-do
-  source $file
-done
+# for file in $HOME/.zsh/custom/**/*.zsh
+# do
+#   source $file
+# done
 
-for file in $HOME/.zsh/secrets/**/*.zsh
-do
-  source $file
-done
+# for file in $HOME/.zsh/secrets/**/*.zsh
+# do
+#   source $file
+# done
 
 # add functions
 autoload -Uz "$XDG_CONFIG_HOME/zsh/functions/autoload_funcd"
@@ -283,3 +290,6 @@ fi
 
 # # Load syntax highlighting; should be last.
 # source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
+
+# NOTE: To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
