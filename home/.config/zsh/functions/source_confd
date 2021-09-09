@@ -19,4 +19,5 @@ local f; for f in ${(o)files}; do
   # ignore files that begin with a tilde
   case ${f:t} in '~'*) continue;; esac
   source "$f"
+  echo "sourcing >>> $f"
 done

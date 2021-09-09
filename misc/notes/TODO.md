@@ -1,6 +1,12 @@
 # DOTFILES TODO
 
-- how to validate that new configs work??
+- pyenv
+
+- rvm
+
+- gem
+
+run installers again
 
 - remove `dot` from home dirs so that they become searchable from telescope
 
@@ -9,10 +15,6 @@
 - keyboard install && build kmonad M1
 
 ### TRAPPFABRIKEN IMPORT TO LOCAL >> DOCUMENT STEPS ###
-
-
-
-
 
 
 
