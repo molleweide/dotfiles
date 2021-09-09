@@ -1,12 +1,13 @@
 # DOTFILES TODO
 
+test all installers again
+
 - pyenv
 
 - rvm
 
 - gem
 
-run installers again
 
 - remove `dot` from home dirs so that they become searchable from telescope
 
