@@ -38,6 +38,7 @@ elif [[ "$1" == "new" ]]; then
     dot_symlink home/.config/irssi              ~/.config/irssi
     dot_symlink home/.config/karabiner          ~/.config/karabiner
     dot_symlink home/.config/kitty              ~/.config/kitty
+    dot_symlink home/.config/luacheck           ~/.config/luacheck
     dot_symlink home/.config/limelight          ~/.config/limelight
     dot_symlink home/.config/molleweide-nvim    ~/.config/molleweide-nvim
     dot_symlink home/.config/most               ~/.config/most
