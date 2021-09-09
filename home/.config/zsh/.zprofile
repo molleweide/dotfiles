@@ -114,6 +114,7 @@ export IRBRC="${XDG_CONFIG_HOME:-$HOME/.config}/irb/irbrc"
 export LESSHISTFILE="-"
 export NVM_DIR="$XDG_DATA_HOME"/nvm
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
+export OCTAVE_HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/octave-hsts"
 export PYENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}/pyenv"
 export STACK_ROOT="$XDG_DATA_HOME"/stack
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
