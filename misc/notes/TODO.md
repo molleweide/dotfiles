@@ -16,7 +16,11 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 
 - move keyboard projects into correct folders
 
-- test run project again
+- test keyboard installer again
+
+- pull specific paths on new computer
+
+### 
 
 - KTH REREGISTER
 

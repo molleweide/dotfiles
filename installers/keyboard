@@ -23,9 +23,8 @@ function install_qmk_firmware() {
     }
 
 function install_kmonad() {
-    local install_dir=$HOME/code/kmonad
     dotlib_git_clone_recursive  \
-        $install_dir       \
+        $HOME/code/tools        \
         "kmonad"                \
         git@github.com:molleweide/kmonad.git
 
@@ -37,7 +36,6 @@ function install_kmonad() {
             --flag kmonad:dext \
             --local-bin-path=/usr/local/bin/kmonad \
             --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
-                    # elif is_linux; then
     fi
     popd > /dev/null 2>&1
 }
