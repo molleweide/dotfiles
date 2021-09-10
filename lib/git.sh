@@ -11,18 +11,23 @@ function dotlib_git_clone_recursive() {
     local repo_url=$3
     dotsay "@b@blue[[ @yellow$alt_name <- @magenta$repo_url]]"
 
-    if [ ! -d "$install_dir/$alt_name" ]; then
-        dotsay "@b@blue[[ Doesn't exist. Installing... \n]]"
+    mkdir -p $install_dir
 
-        # git clone https://github.com/pyenv/pyenv-virtualenv.git "$plugin_path"
+    if [ ! -d "$install_dir/$alt_name" ]; then
+        dotsay "@b@green[[ Doesn't exist. Installing... \n]]"
+
+        # git clone URL PATH
         pushd $install_dir/$alt_name > /dev/null 2>&1
         # echo "PWD = $PWD"
         # git submodule update --init --recursive
+
         popd > /dev/null 2>&1
         # echo "PWD = $PWD"
 
     # else
     #     echo "no"
+    else
+        dotsay "@b@red[[ Already exists. \n]]"
     fi
 }
 

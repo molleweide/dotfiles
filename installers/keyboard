@@ -2,83 +2,48 @@
 
 source "${BASH_SOURCE%/*}/../lib/_"
 
-# KEYS
-#
-# installs
-#   qmk
-#   karabiner
-#   kmonad
-
-# TODO:
-# 1. is silicone >> kmonad??
-
-dotheader "SETTING UP KEYBOARD..."
+dotheader "KEYBOARD"
 
 require_installer package-manager
 
-# brew_cask_install hammerspoon --appdir=/Applications
+# https://github.com/kmonad/kmonad/issues/334
 
-# mv to shared
-function install_from_github() {
-    local user=$1
-    local name=$2
-    local code_dir=$HOME/code
-    local dest=$code_dir/$name
-    mkdir -p "$code_dir"
-    if [ ! -d $dest ]; then
-        dotsay "+ cloning $dest"
-        git clone https://github.com/molleweide/$name.git $dest
-    else
-        dotsay "+ $dest already exists"
+function install_ke_complex_mod() {
+    dotlib_git_clone_recursive  \
+        $HOME/code/tools        \
+        "ke-complex-mods"       \
+        git@github.com:molleweide/KE-complex_modifications.git
+    }
+
+function install_qmk_firmware() {
+    dotlib_git_clone_recursive  \
+        $HOME/code/firmware     \
+        "qmk-firmware"          \
+        git@github.com:molleweide/qmk_firmware.git
+    }
+
+function install_kmonad() {
+    dotlib_git_clone_recursive  \
+        $HOME/code/tools        \
+        "kmonad"                \
+        git@github.com:molleweide/kmonad.git
+
+    pushd $install_dir > /dev/null 2>&1
+    # echo "kmonad ? PWD = $PWD"
+    if is_macos; then
+        # https://github.com/kmonad/kmonad/blob/master/doc/installation.md#macos
+        stack build \
+            --flag kmonad:dext \
+            --local-bin-path=/usr/local/bin/kmonad \
+            --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
     fi
-}
-
-
-# TODO: add `_on_macos` to fn name
-function setup_development_kmonad_from_git_repo() {
-    source_dir=$HOME/code/kmonad
-    git clone --recursive https://github.com/molleweide/kmonad.git $source_dir
-    pushd $source_dir > /dev/null 2>&1
-
-    # macos kext
-    # stack build \
-    #   --flag kmonad:kext \
-    #   --local-bin-path=/usr/local/bin/kmonad \
-    #   --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
-
-    # macos dext
-    # check dext version w/
-    #     `defaults read /Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/Info.plist CFBundleVersion`
-    stack build \
-        --flag kmonad:dext \
-        --local-bin-path=/usr/local/bin/kmonad \
-        --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
-
     popd > /dev/null 2>&1
 }
 
-if is_macos; then
-    brew_cask_install karabiner-elements
-    install_from_github molleweide "KE-complex_modifications"
-    install_from_github molleweide "Karabiner-Elements"
+########
 
-    install_from_github molleweide "qmk_firmware"
-
-    # >>> I have to check if it exists so i don't overwrite...
-    # setup_development_kmonad_from_git_repo
-fi
-
-if is_linux; then
-
-  # KMONAD
-  # https://averagelinuxuser.com/install-aur-manually-helpers/
-  # this process can also be taken care of by a aur helper
-  source_dir=$HOME/code/kmonad
-  git clone https://aur.archlinux.org/kmonad-bin.git $source_dir
-  pushd $source_dir > /dev/null 2>&1
-  # dotsay ">>>>>> $PWD"
-  makepkg -si
-  popd > /dev/null 2>&1
-
-fi
-
+# TODO: replace if/else with && / || to make things look better
+is_macos && brew_cask_install karabiner-elements
+is_macos && install_ke_complex_mod
+install_qmk_firmware
+install_kmonad
