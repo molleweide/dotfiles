@@ -12,6 +12,12 @@ docker  | https://www.youtube.com/results?search_query=docker+getting+started
 qemu    | https://www.youtube.com/results?search_query=qemu
 nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 
+### . ############################ . ###
+
+- move keyboard projects into correct folders
+
+- test run project again
+
 - KTH REREGISTER
 
 - keyboard install && build kmonad M1
