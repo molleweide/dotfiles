@@ -19,7 +19,8 @@ function dotlib_git_clone_recursive() {
         # git clone URL PATH
         pushd $install_dir/$alt_name > /dev/null 2>&1
         # echo "PWD = $PWD"
-        # git submodule update --init --recursive
+        git clone $repo_url $alt_name
+        git submodule update --init --recursive
 
         popd > /dev/null 2>&1
         # echo "PWD = $PWD"

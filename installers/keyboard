@@ -23,26 +23,26 @@ function install_qmk_firmware() {
     }
 
 function install_kmonad() {
+    local install_dir=$HOME/code/tools
     dotlib_git_clone_recursive  \
-        $HOME/code/tools        \
+        $install_dir            \
         "kmonad"                \
         git@github.com:molleweide/kmonad.git
 
-    pushd $install_dir > /dev/null 2>&1
-    # echo "kmonad ? PWD = $PWD"
+    pushd $install_dir/kmonad > /dev/null 2>&1
     if is_macos; then
         # https://github.com/kmonad/kmonad/blob/master/doc/installation.md#macos
         stack build \
             --flag kmonad:dext \
             --local-bin-path=/usr/local/bin/kmonad \
-            --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+            --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
+            # --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
     fi
     popd > /dev/null 2>&1
 }
 
 ########
 
-# TODO: replace if/else with && / || to make things look better
 is_macos && brew_cask_install karabiner-elements
 is_macos && install_ke_complex_mod
 install_qmk_firmware
