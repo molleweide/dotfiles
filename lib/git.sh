@@ -14,7 +14,7 @@ function dotlib_git_clone_recursive() {
     mkdir -p $install_dir
 
     if [ ! -d "$install_dir/$alt_name" ]; then
-        dotsay "@b@blue[[ Doesn't exist. Installing... \n]]"
+        dotsay "@b@green[[ Doesn't exist. Installing... \n]]"
 
         # git clone URL PATH
         pushd $install_dir/$alt_name > /dev/null 2>&1
@@ -26,6 +26,8 @@ function dotlib_git_clone_recursive() {
 
     # else
     #     echo "no"
+    else
+        dotsay "@b@red[[ Already exists. \n]]"
     fi
 }
 

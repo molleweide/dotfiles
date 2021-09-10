@@ -14,11 +14,13 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 
 ### . ############################ . ###
 
-- move keyboard projects into correct folders
+- TEST KEYBOARD INSTALLER AGAIN
 
-- test keyboard installer again
+- CREATE NEW TEST BRANCH ON M1
+    what happens if i merge molleweide into m1?
 
-- pull specific paths on new computer
+    BAD LUCK??
+        >>> pull specific paths on new computer
 
 ### 
 
