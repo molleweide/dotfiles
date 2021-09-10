@@ -33,9 +33,9 @@ function install_from_github() {
     fi
 }
 
+https://github.com/kmonad/kmonad/issues/334
 
-# TODO: add `_on_macos` to fn name
-function setup_development_kmonad_from_git_repo() {
+function install_kmonad() {
     source_dir=$HOME/code/kmonad
     git clone --recursive https://github.com/molleweide/kmonad.git $source_dir
     pushd $source_dir > /dev/null 2>&1
@@ -59,26 +59,39 @@ function setup_development_kmonad_from_git_repo() {
 
 if is_macos; then
     brew_cask_install karabiner-elements
-    install_from_github molleweide "KE-complex_modifications"
-    install_from_github molleweide "Karabiner-Elements"
 
-    install_from_github molleweide "qmk_firmware"
+    # KARABINER COMPLEX MODIFICATINS
+    dotlib_git_clone_recursive  \
+        $HOME/code/tools        \
+        "ke-complex-mods"       \
+        git@github.com:molleweide/KE-complex_modifications.git
 
-    # >>> I have to check if it exists so i don't overwrite...
-    # setup_development_kmonad_from_git_repo
+    # QMK FIRMWARE
+    dotlib_git_clone_recursive  \
+        $HOME/code/firmware     \
+        "qmk-firmware"       \
+        git@github.com:molleweide/qmk_firmware.git
+
+    # QMK FIRMWARE
+    dotlib_git_clone_recursive  \
+        $HOME/code/kmonad       \
+        "kmonad"                \
+        git@github.com:molleweide/kmonad.git
+
+  #   if is_linux; then
+
+  # # KMONAD
+  # # https://averagelinuxuser.com/install-aur-manually-helpers/
+  # # this process can also be taken care of by a aur helper
+  # source_dir=$HOME/code/kmonad
+  # git clone https://aur.archlinux.org/kmonad-bin.git $source_dir
+  # pushd $source_dir > /dev/null 2>&1
+  # # dotsay ">>>>>> $PWD"
+  # makepkg -si
+  # popd > /dev/null 2>&1
+
+  #   fi
+
 fi
 
-if is_linux; then
-
-  # KMONAD
-  # https://averagelinuxuser.com/install-aur-manually-helpers/
-  # this process can also be taken care of by a aur helper
-  source_dir=$HOME/code/kmonad
-  git clone https://aur.archlinux.org/kmonad-bin.git $source_dir
-  pushd $source_dir > /dev/null 2>&1
-  # dotsay ">>>>>> $PWD"
-  makepkg -si
-  popd > /dev/null 2>&1
-
-fi
 

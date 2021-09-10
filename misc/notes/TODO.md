@@ -1,8 +1,16 @@
 # DOTFILES TODO
 
-- how to validate that new configs work??
+https://2019.www.torproject.org/docs/faq.html.en#WhatIsTor
+https://2019.www.torproject.org/docs/faq-abuse.html.en
 
-- remove `dot` from home dirs so that they become searchable from telescope
+https://www.youtube.com/watch?v=bkgeFi4PwOg
+https://www.youtube.com/watch?v=p0KKBmfiVl0
+https://www.youtube.com/watch?v=w8EKH_fjmXA
+https://www.youtube.com/watch?v=_mi0O52_gwU
+irc     | https://www.youtube.com/watch?v=Ltq0hMgizi0
+docker  | https://www.youtube.com/results?search_query=docker+getting+started
+qemu    | https://www.youtube.com/results?search_query=qemu
+nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 
 - KTH REREGISTER
 
@@ -32,24 +40,10 @@
 - doom nvim POSTED
     python not sure how to get around this as of now
 
-- haskell POSTED
-    i get the same error as before but now for m1 mac
+# ########################################################
 
-- perl
-    neovim
-
-- cannot link signal
-
-- video wallpapers
+- VIDEO WALLPAPERS
     https://github.com/mczachurski/wallpapper
     https://github.com/search?o=desc&q=video+wallpaper&s=updated&type=Repositories
 
-- global gitignore
-    am i using the global git ignore file from home/config/git?
-    https://stackoverflow.com/questions/18393498/gitignore-all-the-ds-store-files-in-every-folder-and-subfolder
-
-
-- prevent DS Store
-    add to osx tweaks???
-    `defaults write com.apple.desktopservices DSDontWriteNetworkStores TRUE`
-    https://stackoverflow.com/questions/18015978/how-to-stop-creating-ds-store-on-mac
+https://linuxconfig.org/advanced-bash-regex-with-examples

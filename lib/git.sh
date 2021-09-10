@@ -11,6 +11,8 @@ function dotlib_git_clone_recursive() {
     local repo_url=$3
     dotsay "@b@blue[[ @yellow$alt_name <- @magenta$repo_url]]"
 
+    mkdir -p $install_dir
+
     if [ ! -d "$install_dir/$alt_name" ]; then
         dotsay "@b@blue[[ Doesn't exist. Installing... \n]]"
 
