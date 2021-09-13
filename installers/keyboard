@@ -36,7 +36,6 @@ function install_kmonad() {
             --flag kmonad:dext \
             --local-bin-path=/usr/local/bin/kmonad \
             --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
-            # --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
     fi
     popd > /dev/null 2>&1
 }
