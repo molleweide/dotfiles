@@ -6,7 +6,6 @@ dotheader "KEYBOARD"
 
 require_installer package-manager
 
-# https://github.com/kmonad/kmonad/issues/334
 
 function install_ke_complex_mod() {
     dotlib_git_clone_recursive  \
@@ -22,6 +21,8 @@ function install_qmk_firmware() {
         git@github.com:molleweide/qmk_firmware.git
     }
 
+# https://github.com/kmonad/kmonad/issues/334
+# https://stackoverflow.com/questions/56437280/where-is-the-local-bin-path-of-my-stack-executables
 function install_kmonad() {
     local install_dir=$HOME/code/tools
     dotlib_git_clone_recursive  \
@@ -40,7 +41,7 @@ function install_kmonad() {
     popd > /dev/null 2>&1
 }
 
-########
+# NOTE: installers
 
 is_macos && brew_cask_install karabiner-elements
 is_macos && install_ke_complex_mod
