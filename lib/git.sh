@@ -14,8 +14,8 @@ function dotlib_git_clone_recursive() {
     if [ ! -d "$install_dir/$alt_name" ]; then
         dotsay "@b@green[[ Doesn't exist. Installing... \n]]"
         pushd $install_dir/$alt_name > /dev/null 2>&1
-        git clone $repo_url $alt_name
-        git submodule update --init --recursive
+        # git clone $repo_url $alt_name
+        # git submodule update --init --recursive
         popd > /dev/null 2>&1
     else
         dotsay "@b@red[[ Already exists. \n]]"
