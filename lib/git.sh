@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# NOTE: lib > git
+# NOTE: LIB > GIT
 #
 # google shell style guide
 #       https://google.github.io/styleguide/shellguide.html
@@ -10,23 +10,13 @@ function dotlib_git_clone_recursive() {
     local alt_name=$2
     local repo_url=$3
     dotsay "@b@blue[[ @yellow$alt_name <- @magenta$repo_url]]"
-
     mkdir -p $install_dir
-
     if [ ! -d "$install_dir/$alt_name" ]; then
         dotsay "@b@green[[ Doesn't exist. Installing... \n]]"
-
-        # git clone URL PATH
         pushd $install_dir/$alt_name > /dev/null 2>&1
-        # echo "PWD = $PWD"
         git clone $repo_url $alt_name
         git submodule update --init --recursive
-
         popd > /dev/null 2>&1
-        # echo "PWD = $PWD"
-
-    # else
-    #     echo "no"
     else
         dotsay "@b@red[[ Already exists. \n]]"
     fi
