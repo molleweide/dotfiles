@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# NOTE: LIB > GIT
-#
 # google shell style guide
 #       https://google.github.io/styleguide/shellguide.html
 
@@ -13,8 +11,8 @@ function dotlib_git_clone_recursive() {
     mkdir -p $install_dir
     if [ ! -d "$install_dir/$alt_name" ]; then
         dotsay "@b@green[[ Doesn't exist. Installing... \n]]"
-        pushd $install_dir/$alt_name > /dev/null 2>&1
         git clone $repo_url $alt_name
+        pushd $install_dir/$alt_name > /dev/null 2>&1
         git submodule update --init --recursive
         popd > /dev/null 2>&1
     else
@@ -27,7 +25,6 @@ function dotlib_clone_projects_from_array() {
     # TODO: validate is array
     string=$1
     array=($@)
-    # echo "PWD = $PWD"
 
     i=0
     for arr_val in "${array[@]}"; do
@@ -39,7 +36,6 @@ function dotlib_clone_projects_from_array() {
             dotsay "@b@cyan[[ INSTALL DIR: \`$install_dir\` ]]\n"
             mkdir -p $install_dir > /dev/null
             pushd $install_dir > /dev/null 2>&1
-            # echo "PWD = $PWD"
 
         elif (( ! $mod2 )); then
             # TODO: validate is string name and NOT git url
@@ -59,5 +55,4 @@ function dotlib_clone_projects_from_array() {
     done
 
     popd > /dev/null 2>&1
-    # echo "PWD = $PWD"
 }
