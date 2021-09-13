@@ -7,9 +7,11 @@
 #   4. dotsay = small info
 
 dotheader() {
+    echo
+    echo
     echo -e "\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
     echo
-    dotsay "@b@green[[ $1 ]]"
+    dotsay "@b@blue[[ $1 ]]"
     echo
     echo -e ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
 }

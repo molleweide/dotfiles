@@ -14,8 +14,6 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 
 ### . ############################ . ###
 
-- walk through and add local git projects to pestonal/stuff
-
 - TEST KEYBOARD INSTALLER AGAIN
 
 - CREATE NEW TEST BRANCH ON M1
