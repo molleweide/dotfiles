@@ -21,6 +21,7 @@ function install_qmk_firmware() {
         git@github.com:molleweide/qmk_firmware.git
     }
 
+# https://github.com/kmonad/kmonad/blob/master/doc/installation.md#macos
 # https://github.com/kmonad/kmonad/issues/334
 # https://stackoverflow.com/questions/56437280/where-is-the-local-bin-path-of-my-stack-executables
 function install_kmonad() {
