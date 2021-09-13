@@ -6,20 +6,31 @@ source "${BASH_SOURCE%/*}/../lib/_"
 
 dotheader "SETTING UP EMAIL.."
 
-# refactor this into `code_install <args>`
+# Optional Dependencies
+#    pam-gnupg - Automatically logs you into your GPG key on login so you will never need to input your password once logged on to your system. Check the repo and directions out here.
+#    lynx - view HTML email in neomutt.
+#    notmuch - index and search mail. Install it and run notmuch setup, tell it that your mail is in ~/.local/share/mail/ (although mw will do this automatically if you haven't set notmuch up before). You can run it in mutt with ctrl-f. Run notmuch new to process new mail.
+#    abook - a terminal-based address book. Pressing tab while typing an address to send mail to will suggest contacts that are in your abook.
+#    urlview - outputs urls in mail to browser.
+#    cronie - (or any other major cronjob manager) to set up automatic mail syncing.
+#    mpop - If you want to use POP protocol instead of IMAP.
+#
+# additional packages
+# eg. my personal mail uses pop but that doesn't seem to be as common as
+# imap which is default.
+
+# brew install mpop # i don't think that i need this because telia mail is not using pop anymore
+
 function install_muttwizard() {
-    local gith="https://github.com"
-    local proj="LukeSmithxyz/mutt-wizard"
-    local dest=$HOME/code/mutt-wizard
+    local install_dir=$HOME/code/configs
+    dotlib_git_clone_recursive  \
+        $install_dir            \
+        "mutt-wizard"           \
+        git@github.com:molleweide/mutt-wizard.git
 
-    if [ ! -d $dest ]; then
-        git clone $gith/$proj $dest
-        pushd $dest> /dev/null 2>&1
-        sudo make install
-        popd > /dev/null 2>&1
-    fi
-
-
+    pushd $install_dir/mutt-wizard > /dev/null 2>&1
+    sudo make install
+    popd > /dev/null 2>&1
 }
 
 if is_macos; then
@@ -27,21 +38,5 @@ if is_macos; then
 
   # default macos dependencies
   brew install neomutt curl isync msmtp pass
-
-  # Optional Dependencies
-  #    pam-gnupg - Automatically logs you into your GPG key on login so you will never need to input your password once logged on to your system. Check the repo and directions out here.
-  #    lynx - view HTML email in neomutt.
-  #    notmuch - index and search mail. Install it and run notmuch setup, tell it that your mail is in ~/.local/share/mail/ (although mw will do this automatically if you haven't set notmuch up before). You can run it in mutt with ctrl-f. Run notmuch new to process new mail.
-  #    abook - a terminal-based address book. Pressing tab while typing an address to send mail to will suggest contacts that are in your abook.
-  #    urlview - outputs urls in mail to browser.
-  #    cronie - (or any other major cronjob manager) to set up automatic mail syncing.
-  #    mpop - If you want to use POP protocol instead of IMAP.
-  #
-  # additional packages
-  # eg. my personal mail uses pop but that doesn't seem to be as common as
-  # imap which is default.
-
-  # brew install mpop # i don't think that i need this because telia mail is not using pop anymore
-
   install_muttwizard
 fi
