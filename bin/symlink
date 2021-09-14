@@ -4,110 +4,114 @@ source "${BASH_SOURCE%/*}/../lib/_"
 
 dotheader "SETTING UP SYMLINKS..."
 
-if [[ "$1" == "xdg" ]]; then
-    dotsay "@b@blue[[ @magentaXDG: @greenON \n]]"
-    dot_symlink home/.zshenv ~/.zshenv
+# if [[ "$1" == "xdg" ]]; then
 
-elif [[ "$1" == "new" ]]; then
-    dotsay "@b@blue[[ @magentaSymlink: @yellowNEW \n]]"
-    #   https://stackoverflow.com/questions/22558245/exclude-list-of-files-from-find
-    #
+# dotsay "@b@blue[[ @magentaSymlink: @yellowNEW \n]]"
+# dotsay "@b@blue[[ @magentaXDG: @greenON \n]]"
 
-    # find "${BASH_SOURCE%/*}"/home/.config -maxdepth 1 -mindepth 1 # -print '%f\n'
-    # find home/.config -maxdepth 1 -mindepth 1 # -print '%f\n'
+dot_symlink home/.zshenv ~/.zshenv
 
-    # for dir in /tmp/*/     # list directories in the form "/tmp/dirname/"
-    # do
-    #     dir=${dir%*/}      # remove the trailing "/"
-    #     echo "${dir##*/}"    # print everything after the final "/"
-    # done
+#   https://stackoverflow.com/questions/22558245/exclude-list-of-files-from-find
+#
 
-    # NOTE: ~/.config
-    dot_symlink home/.config/shell              ~/.config/shell
-    dot_symlink home/.config/zsh                ~/.config/zsh
-    dot_symlink home/.config/alacritty          ~/.config/alacritty
-    dot_symlink home/.config/base16-shell       ~/.config/base16-shell
-    dot_symlink home/.config/bat                ~/.config/bat
-    dot_symlink home/.config/calcurse           ~/.config/calcurse
-    dot_symlink home/.config/chad-nvim          ~/.config/chad-nvim
-    dot_symlink home/.config/doom-nvim          ~/.config/doom-nvim
-    dot_symlink home/.config/doom.d             ~/.config/doom.d
-    dot_symlink home/.config/gem                ~/.config/gem
-    dot_symlink home/.config/git                ~/.config/git
-    dot_symlink home/.config/irb                ~/.config/irb
-    dot_symlink home/.config/irssi              ~/.config/irssi
-    dot_symlink home/.config/karabiner          ~/.config/karabiner
-    dot_symlink home/.config/kitty              ~/.config/kitty
-    dot_symlink home/.config/luacheck           ~/.config/luacheck
-    dot_symlink home/.config/limelight          ~/.config/limelight
-    dot_symlink home/.config/molleweide-nvim    ~/.config/molleweide-nvim
-    dot_symlink home/.config/most               ~/.config/most
-    dot_symlink home/.config/mpv                ~/.config/mpv
-    dot_symlink home/.config/mutt               ~/.config/mutt
-    dot_symlink home/.config/neovhy-nvim        ~/.config/neovhy-nvim
-    dot_symlink home/.config/nnn                ~/.config/nnn
-    dot_symlink home/.config/nvim               ~/.config/nvim
-    dot_symlink home/.config/octave             ~/.config/octave
-    dot_symlink home/.config/pry                ~/.config/pry
-    dot_symlink home/.config/qutebrowser        ~/.config/qutebrowser
-    dot_symlink home/.config/ranger             ~/.config/ranger
-    dot_symlink home/.config/readline           ~/.config/readline
-    dot_symlink home/.config/rvm                ~/.config/rvm
-    dot_symlink home/.config/sc-im              ~/.config/sc-im
-    dot_symlink home/.config/skhd               ~/.config/skhd
-    dot_symlink home/.config/shell               ~/.config/shell
-    dot_symlink home/.config/surfingkeys        ~/.config/surfingkeys
-    dot_symlink home/.config/tg                 ~/.config/tg
-    dot_symlink home/.config/tmux               ~/.config/tmux
-    dot_symlink home/.config/tmuxinator         ~/.config/tmuxinator
-    dot_symlink home/.config/vscode             ~/.config/vscode
-    dot_symlink home/.config/yabai              ~/.config/yabai
+# find "${BASH_SOURCE%/*}"/home/.config -maxdepth 1 -mindepth 1 # -print '%f\n'
+# find home/.config -maxdepth 1 -mindepth 1 # -print '%f\n'
 
-    # NOTE: ~/.local/bin
-    dot_symlink home/.local/bin ~/.local/bin F
+# for dir in /tmp/*/     # list directories in the form "/tmp/dirname/"
+# do
+#     dir=${dir%*/}      # remove the trailing "/"
+#     echo "${dir##*/}"    # print everything after the final "/"
+# done
 
-    # NOTE: ~/.hammerspoon
-    dot_symlink home/.hammerspoon ~/.hammerspoon
+dot_symlink home/.config/shell              ~/.config/shell
+dot_symlink home/.config/zsh                ~/.config/zsh
+dot_symlink home/.config/alacritty          ~/.config/alacritty
+dot_symlink home/.config/base16-shell       ~/.config/base16-shell
+dot_symlink home/.config/bat                ~/.config/bat
+dot_symlink home/.config/calcurse           ~/.config/calcurse
+dot_symlink home/.config/chad-nvim          ~/.config/chad-nvim
+dot_symlink home/.config/doom-nvim          ~/.config/doom-nvim
+dot_symlink home/.config/doom.d             ~/.config/doom.d
+dot_symlink home/.config/gem                ~/.config/gem
+dot_symlink home/.config/git                ~/.config/git
+dot_symlink home/.config/irb                ~/.config/irb
+dot_symlink home/.config/irssi              ~/.config/irssi
+dot_symlink home/.config/karabiner          ~/.config/karabiner
+dot_symlink home/.config/kitty              ~/.config/kitty
+dot_symlink home/.config/luacheck           ~/.config/luacheck
+dot_symlink home/.config/limelight          ~/.config/limelight
+dot_symlink home/.config/molleweide-nvim    ~/.config/molleweide-nvim
+dot_symlink home/.config/most               ~/.config/most
+dot_symlink home/.config/mpv                ~/.config/mpv
+dot_symlink home/.config/mutt               ~/.config/mutt
+dot_symlink home/.config/neovhy-nvim        ~/.config/neovhy-nvim
+dot_symlink home/.config/nnn                ~/.config/nnn
+dot_symlink home/.config/nvim               ~/.config/nvim
+dot_symlink home/.config/octave             ~/.config/octave
+dot_symlink home/.config/pry                ~/.config/pry
+dot_symlink home/.config/qutebrowser        ~/.config/qutebrowser
+dot_symlink home/.config/ranger             ~/.config/ranger
+dot_symlink home/.config/readline           ~/.config/readline
+dot_symlink home/.config/rvm                ~/.config/rvm
+dot_symlink home/.config/sc-im              ~/.config/sc-im
+dot_symlink home/.config/skhd               ~/.config/skhd
+dot_symlink home/.config/shell               ~/.config/shell
+dot_symlink home/.config/surfingkeys        ~/.config/surfingkeys
+dot_symlink home/.config/tg                 ~/.config/tg
+dot_symlink home/.config/tmux               ~/.config/tmux
+dot_symlink home/.config/tmuxinator         ~/.config/tmuxinator
+dot_symlink home/.config/vscode             ~/.config/vscode
+dot_symlink home/.config/yabai              ~/.config/yabai
 
-    # NOTE: TRAILING STUFF..
-    # how to do this???
-    # dot_symlink home/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf \
-    #     ~/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf
-    # dot_symlink home/.rvm/hooks/after_cd_nvm \
-    #     ~/.rvm/hooks/after_cd_nvm
-    # dot_symlink home/.rvm/hooks/after_install_add_default_gems \
-    #     ~/.rvm/hooks/after_install_add_default_gems
+dot_symlink home/.local/bin ~/.local/bin F
+
+dot_symlink home/.hammerspoon ~/.hammerspoon
+
+# how to do this???
+# dot_symlink home/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf \
+#     ~/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf
+# dot_symlink home/.rvm/hooks/after_cd_nvm \
+#     ~/.rvm/hooks/after_cd_nvm
+# dot_symlink home/.rvm/hooks/after_install_add_default_gems \
+#     ~/.rvm/hooks/after_install_add_default_gems
 
 
-elif [[ "$1" == "old" ]]; then
-    dotsay "@b@blue[[ @magentaSymlink: @yellowOLD @blue&& @magentaXDG: @redOFF \n]]"
-    dot_symlink alacritty.yml               ~/.alacritty.yml
-    dot_symlink gemrc                       ~/.gemrc
-    dot_symlink git/gitattributes           ~/.gitattributes
-    dot_symlink git/gitconfig               ~/.gitconfig
-    dot_symlink git/gitignore               ~/.gitignore
-    dot_symlink git/gitmessage              ~/.gitmessage
-    dot_symlink home/.hammerspoon           ~/.hammerspoon
-    dot_symlink home/.local/bin             ~/.local/bin
-    dot_symlink irb/aprc                    ~/.aprc
-    dot_symlink irb/escaped_colors.rb       ~/.escaped_colors.rb
-    dot_symlink irb/pryrc                   ~/.pryrc
-    dot_symlink irb/unescaped_colors.rb     ~/.unescaped_colors.rb
-    dot_symlink irssi                       ~/.irssi
-    dot_symlink mostrc                      ~/.mostrc
-    dot_symlink rvmrc                       ~/.rvmrc
-    dot_symlink skhdrc                      ~/.skhdrc
-    dot_symlink tmux.conf                   ~/.tmux.conf
-    dot_symlink tmux.osx.conf               ~/.tmux.osx.conf
-    dot_symlink tmuxinator                  ~/.tmuxinator
-    dot_symlink yabairc                     ~/.yabairc
-    dot_symlink zsh                         ~/.zsh
-    dot_symlink zsh/zshenv                  ~/.zshenv
-    dot_symlink zshrc                       ~/.zshrc
-    dot_symlink home/.rvm/hooks/after_cd_nvm                    ~/.rvm/hooks/after_cd_nvm F
-    dot_symlink home/.rvm/hooks/after_install_add_default_gems  ~/.rvm/hooks/after_install_add_default_gems F
-    # VSCODE_CONFIG_DIR="$HOME/Library/Application Support/Code/User"
-    # mkdir -p "$VSCODE_CONFIG_DIR"
-    # dot_symlink vscode/keybindings.json     "$VSCODE_CONFIG_DIR/keybindings.json"
-    # dot_symlink vscode/settings.json        "$VSCODE_CONFIG_DIR/settings.json"
-fi
+
+
+
+
+
+# elif [[ "$1" == "old" ]]; then
+#     dotsay "@b@blue[[ @magentaSymlink: @yellowOLD @blue&& @magentaXDG: @redOFF \n]]"
+#     dot_symlink alacritty.yml               ~/.alacritty.yml
+#     dot_symlink gemrc                       ~/.gemrc
+#     dot_symlink git/gitattributes           ~/.gitattributes
+#     dot_symlink git/gitconfig               ~/.gitconfig
+#     dot_symlink git/gitignore               ~/.gitignore
+#     dot_symlink git/gitmessage              ~/.gitmessage
+#     dot_symlink home/.hammerspoon           ~/.hammerspoon
+#     dot_symlink home/.local/bin             ~/.local/bin
+#     dot_symlink irb/aprc                    ~/.aprc
+#     dot_symlink irb/escaped_colors.rb       ~/.escaped_colors.rb
+#     dot_symlink irb/pryrc                   ~/.pryrc
+#     dot_symlink irb/unescaped_colors.rb     ~/.unescaped_colors.rb
+#     dot_symlink irssi                       ~/.irssi
+#     dot_symlink mostrc                      ~/.mostrc
+#     dot_symlink rvmrc                       ~/.rvmrc
+#     dot_symlink skhdrc                      ~/.skhdrc
+#     dot_symlink tmux.conf                   ~/.tmux.conf
+#     dot_symlink tmux.osx.conf               ~/.tmux.osx.conf
+#     dot_symlink tmuxinator                  ~/.tmuxinator
+#     dot_symlink yabairc                     ~/.yabairc
+#     dot_symlink zsh                         ~/.zsh
+#     dot_symlink zsh/zshenv                  ~/.zshenv
+#     dot_symlink zshrc                       ~/.zshrc
+#     dot_symlink home/.rvm/hooks/after_cd_nvm                    ~/.rvm/hooks/after_cd_nvm F
+#     dot_symlink home/.rvm/hooks/after_install_add_default_gems  ~/.rvm/hooks/after_install_add_default_gems F
+#     # VSCODE_CONFIG_DIR="$HOME/Library/Application Support/Code/User"
+#     # mkdir -p "$VSCODE_CONFIG_DIR"
+#     # dot_symlink vscode/keybindings.json     "$VSCODE_CONFIG_DIR/keybindings.json"
+#     # dot_symlink vscode/settings.json        "$VSCODE_CONFIG_DIR/settings.json"
+
+
+# fi
