@@ -15,15 +15,22 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 ### . ############################ . ###
 
 - TEST KEYBOARD INSTALLER AGAIN
+    - update recursive?
 
-- CREATE NEW TEST BRANCH ON M1
-    what happens if i merge molleweide into m1?
+- how do I run kmonad now again???
 
-    BAD LUCK??
-        >>> pull specific paths on new computer
+    aliases 
 
-- test create new repos from commandline >> can this be used in conjunction with
-personal stuff??
+- preven ask for ssh every time...
+    wait, i don't think balatero bootstrap is adding ssh keys to
+    gpg or SSH home in local/shared???
+
+- remove as many if statements as possible
+    >>> only use && || with exit codes
+
+- personal stuff > search `http` replace with SSH
+
+- update to big sur
 
 ### 
 

@@ -9,7 +9,6 @@ source "${BASH_SOURCE%/*}/../lib/_"
 # https://github.com/atlas-engineer/nyxt
 # https://github.com/Jelmerro/Vieb
 # https://github.com/alexherbo2/krabby
-# https://github.com/brookhong/Surfingkeys
 #
 # TODO: brew install nyxt??
 # TODO: tor browser
@@ -72,8 +71,6 @@ install_firefox_dev() {
     local url="https://download.mozilla.org/?product=firefox-devedition-latest-ssl&os=osx&lang=en-US"
     install_simple_dmg_copy "Firefox Dev" "$url"
 }
-
-
 install_brave() {
     if is_macos; then
         if is_apple_silicone; then
@@ -94,12 +91,12 @@ if is_macos; then
     install_firefox
     install_firefox_dev
     install_brave
-
-    install_surfingkeys
-
+    # install_vivaldi
     brew_cask_install qutebrowser
     # install_nyxt_macos
     # install_tor_browser
+
+    install_surfingkeys
 fi
 
 if is_linux; then
