@@ -39,6 +39,7 @@ brew_install gnu-tar
 brew_install heroku/brew/heroku
 brew_install hub
 brew_install redis
+brew_install gh
 
 yay -S code-minimap
 brew install code-minimap

@@ -44,7 +44,7 @@ require_installer ubersicht
 require_installer theming
 # require_installer monitor
 # require_installer backups
-# require_installer keyboard
+# require_installer keyboard # promp build kmonad yes/no?
 require_installer webbrowsers
 require_installer vpn
 require_installer passwords
@@ -57,8 +57,7 @@ require_installer email
 require_installer spreadsheets
 require_installer docs
 require_installer crypto
-require_installer personal # installs all my local forks
-
+# ../personal/stuff
 
 # MUSIC ##################################
 

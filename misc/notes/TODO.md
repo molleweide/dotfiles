@@ -22,6 +22,9 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
     BAD LUCK??
         >>> pull specific paths on new computer
 
+- test create new repos from commandline >> can this be used in conjunction with
+personal stuff??
+
 ### 
 
 - pyenv

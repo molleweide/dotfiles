@@ -9,31 +9,28 @@ source "${BASH_SOURCE%/*}/../lib/_"
 
 
 function install_limelight() {
-  local url="https://github.com/koekeishiya/limelight.git"
-  local dest=$HOME/code/limelight
+    local install_dir=$HOME/code/tools
+    dotlib_git_clone_recursive  \
+        $install_dir            \
+        "limelight"       \
+        git@github.com:molleweide/limelight.git
 
-  git clone $url $destination
-  pushd $dest> /dev/null 2>&1
-
-  # before make check if already built...
-  make
-  popd $dest> /dev/null 2>&1
-
-  # custom link from outside dots
-  ln -s $dest/bin/limelight /usr/local/bin/limelight
-  # symlink_dotfile limelight ~/.config/limelight
+    pushd $install_dir/limelight > /dev/null 2>&1
+    make
+    popd $dest> /dev/null 2>&1
+    ln -s $install_dir/limelight/bin/limelight /usr/local/bin/limelight
 }
 
 
 dotheader "SETTING UP TILING.."
 
 if is_macos; then
-  require_installer package-manager
-  brew_install jq
-  brew_tap koekeishiya/formulae
-  brew_install yabai
-  brew_tap koekeishiya/formulae
-  brew_install skhd
+    require_installer package-manager
+    brew_install jq
+    brew_tap koekeishiya/formulae
+    brew_install yabai
+    brew_tap koekeishiya/formulae
+    brew_install skhd
 
   # fork and look into the code myself
   #   -> rm borders completely
@@ -44,10 +41,10 @@ if is_macos; then
 
 elif is_linux; then
 
-  source_dir=$HOME/code/dwm
-  git clone https://github.com/LukeSmithxyz/dwm $source_dir
-  pushd $source_dir > /dev/null 2>&1
-  sudo make install
-  popd > /dev/null 2>&1
+    source_dir=$HOME/code/dwm
+    git clone https://github.com/LukeSmithxyz/dwm $source_dir
+    pushd $source_dir > /dev/null 2>&1
+    sudo make install
+    popd > /dev/null 2>&1
 
 fi
