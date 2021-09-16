@@ -100,9 +100,9 @@ alias karb="/Library/Application\ Support/org.pqrs/Karabiner-Elements/bin/karabi
 alias krb="open -a /Applications/Karabiner-Elements.app"
 
 # ======== KMONAD ========
-alias kmolap="sudo ~/.dotfiles/kmonad/launchd_kmo_macbookpro.sh"
+alias kmolap="sudo ~/.dotfiles/misc/kmonad/launchd_kmo_macbookpro.sh"
 alias kmolapT="kmonad ~/code/kmonad/keymap/user/molleweide/mbp.kbd -l debug"
-alias kmoez="sudo ~/.dotfiles/kmonad/launchd_kmo_ergo_ez.sh"
+alias kmoez="sudo ~/.dotfiles/misc/kmonad/launchd_kmo_ergo_ez.sh"
 alias kmoezT="kmonad ~/code/kmonad/keymap/user/molleweide/ez.kbd -l debug"
 
 # ======== GAMES ========
