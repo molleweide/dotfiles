@@ -69,6 +69,12 @@ export LC_ALL="en_US.UTF-8"
 # Adds `~/.local/bin` to $PATH
 export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
 
+
+# Macos brew paths on M1 silocone
+# export PATH="/opt/homebrew/bin:$PATH"
+# export PATH="/opt/homebrew/opt/bin:$PATH"
+
+
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
 
