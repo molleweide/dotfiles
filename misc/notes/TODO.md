@@ -14,23 +14,25 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 
 ### . ############################ . ###
 
-- TEST KEYBOARD INSTALLER AGAIN
-    - update recursive?
 
-- how do I run kmonad now again???
+- report kmonad build errors
 
-    aliases 
+    1. make sure both are running master.
+        * make submodule update on both sides
+    2. ghc version
+    3. stack version
+    4. dext version
+    5. collect errors
 
-- preven ask for ssh every time...
-    wait, i don't think balatero bootstrap is adding ssh keys to
-    gpg or SSH home in local/shared???
 
 - gh > create repo from cli
 
 - remove as many if statements as possible
     >>> only use && || with exit codes
 
-- personal stuff > search `http` replace with SSH
+
+
+- remove as many if statements as possible >>> only use && || with exit codes
 
 - update to big sur
 

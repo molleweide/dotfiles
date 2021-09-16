@@ -32,6 +32,9 @@ function install_kmonad() {
     pushd $install_dir/kmonad > /dev/null 2>&1
     if is_macos; then
         stack build \
+            # --system-ghc \
+            # --resolver=ghc-8.10.6 \
+            # --compiler= \
             --flag kmonad:dext \
             --local-bin-path=/usr/local/bin/kmonad \
             --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
