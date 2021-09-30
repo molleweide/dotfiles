@@ -153,10 +153,10 @@ export WORDCHARS='.-'
 # NOTE: HASKELL
 #############################################################
 
-. ~/.ghcup/env
+# . ~/.ghcup/env
 
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
-[ -f "/Users/hjalmarjakobsson/.ghcup/env" ] && source "/Users/hjalmarjakobsson/.ghcup/env" # ghcup-env
+# [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+# [ -f "/Users/hjalmarjakobsson/.ghcup/env" ] && source "/Users/hjalmarjakobsson/.ghcup/env" # ghcup-env
 
 
 #############################################################

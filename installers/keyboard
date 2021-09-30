@@ -5,7 +5,7 @@ source "${BASH_SOURCE%/*}/../lib/_"
 dotheader "KEYBOARD"
 
 require_installer package-manager
-require_installer devtools
+# require_installer devtools
 require_installer langs/haskell
 
 # function install_ke_complex_mod() {
@@ -32,6 +32,7 @@ function install_kmonad() {
         stack clean
         if is_apple_silicone; then
             stack install --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+            # stack install --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
         else
             stack install --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
         fi
@@ -39,7 +40,7 @@ function install_kmonad() {
     popd > /dev/null 2>&1
 }
 
-# is_macos && brew_install llvm
+brew_install llvm
 # is_macos && brew_cask_install karabiner-elements
 # is_macos && install_ke_complex_mod
 install_qmk_firmware

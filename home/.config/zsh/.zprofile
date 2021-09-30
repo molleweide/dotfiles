@@ -9,8 +9,6 @@
 
 unsetopt PROMPT_SP # i believe this removes ^% sign in prompt
 
-echo "zprofile!!!!!!!!"
-
 # Default programs:
 export EDITOR="nvim"
 
@@ -67,7 +65,10 @@ export LC_ALL="en_US.UTF-8"
 #############################################################
 
 # Adds `~/.local/bin` to $PATH
-export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
+# export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
+# export PATH="$PATH:${$(find ~/.local/scripts -type d -printf %p:)%%:}"
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.local/scripts"
 
 
 # Macos brew paths on M1 silocone
