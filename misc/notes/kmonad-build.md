@@ -1,140 +1,243 @@
 # KMONAD BUILD ERRORS
 
-## MACOS INTEL
+## command
 
-### META DATA
-```
-STACK   ->  2.7.3, Git revision 7927a3aec32e2b2e5e4fb5be76d0d50eddcc197f x86_64 hpack-0.34.4
-GHC     ->  8.10.5
-GHCUP   ->  v0.1.16.2
-CABAL   ->  cabal-install version 3.6.0.0 \
-            compiled using version 3.6.1.0 of the Cabal library
-DEXT    ->  1.22.0
-
-KMONAD BRANCH = master (commit???)
+```bash
+stack build --flag kmonad:dext \
+    --local-bin-path=/usr/local/bin \
+    --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
 ```
 
-### stack.yaml
+## stack.yaml
 
-```
-resolver: lts-18.9
-compiler: ghc-8.10.5
+```yaml
+resolver: lts-18.12
 packages:
 - .
 extra-deps:
 pvp-bounds: both
 ```
 
-### ERRORS
-```shell
-Building all executables for `kmonad' once. After a successful build of all of them, only specified executables will be rebuilt.
-kmonad> configure (lib + exe)
-Configuring kmonad-0.4.1...
-kmonad> build (lib + exe)
-Preprocessing library for kmonad-0.4.1..
-Building library for kmonad-0.4.1..
-[ 1 of 31] Compiling KMonad.Prelude
-[ 2 of 31] Compiling KMonad.Keyboard.ComposeSeq
-[ 3 of 31] Compiling KMonad.Args.TH
-[ 4 of 31] Compiling KMonad.Util
-[ 5 of 31] Compiling KMonad.Util.LayerStack
-[ 6 of 31] Compiling KMonad.Util.MultiMap
-[ 7 of 31] Compiling KMonad.Keyboard.Keycode
-[ 8 of 31] Compiling KMonad.Keyboard.Types
-[ 9 of 31] Compiling KMonad.Keyboard.IO
-[10 of 31] Compiling KMonad.Keyboard.Ops
-[11 of 31] Compiling KMonad.Keyboard
-[12 of 31] Compiling KMonad.Model.Sluice
-[13 of 31] Compiling KMonad.Model.Dispatch
-[14 of 31] Compiling KMonad.Model.Action
-[15 of 31] Compiling KMonad.Model.Hooks
-[16 of 31] Compiling KMonad.Model.Button
+## error
 
-/Users/hjalmarjakobsson/code/tools/kmonad/src/KMonad/Model/Button.hs:91:1: warning: [-Wunused-top-binds]
-    Defined but not used: ‘onRelease’
-   |
-91 | onRelease p = mkButton (pure ()) p
-   | ^^^^^^^^^
-[17 of 31] Compiling KMonad.Model.BEnv
-[18 of 31] Compiling KMonad.Model.Keymap
-[19 of 31] Compiling KMonad.Model
-[20 of 31] Compiling KMonad.Keyboard.IO.Mac.Types
-[21 of 31] Compiling KMonad.Keyboard.IO.Mac.KextSink
-[22 of 31] Compiling KMonad.Keyboard.IO.Mac.IOKitSource
-[23 of 31] Compiling KMonad.Args.Types
-[24 of 31] Compiling KMonad.Args.Joiner
-[25 of 31] Compiling KMonad.App.Types
-[26 of 31] Compiling KMonad.Args.Parser
-[27 of 31] Compiling Paths_kmonad
-[28 of 31] Compiling KMonad.Args.Cmd
-[29 of 31] Compiling KMonad.Args
-[30 of 31] Compiling KMonad.App.Main
+```shell
 [31 of 31] Compiling KMonad.App
-Preprocessing executable 'kmonad' for kmonad-0.4.1..
-Building executable 'kmonad' for kmonad-0.4.1..
-[1 of 1] Compiling Main
-Linking .stack-work/dist/x86_64-osx/Cabal-3.2.1.0/build/kmonad/kmonad ...
-Undefined symbols for architecture x86_64:
-  "_grab_kb", referenced from:
-      _Lc3W4k_info in libHSkmonad-0.4.1-40BAqonTOElDH2SOCOLQkU.a(IOKitSource.o)
-      _Lc3W4Q_info in libHSkmonad-0.4.1-40BAqonTOElDH2SOCOLQkU.a(IOKitSource.o)
-  "_release_kb", referenced from:
-      _Lc3W3E_info in libHSkmonad-0.4.1-40BAqonTOElDH2SOCOLQkU.a(IOKitSource.o)
-  "_send_key", referenced from:
-      _Lc3Vbq_info in libHSkmonad-0.4.1-40BAqonTOElDH2SOCOLQkU.a(KextSink.o)
-  "_wait_key", referenced from:
-      _Lc3VZA_info in libHSkmonad-0.4.1-40BAqonTOElDH2SOCOLQkU.a(IOKitSource.o)
-ld: symbol(s) not found for architecture x86_64
-collect2: error: ld returned 1 exit status
-`gcc' failed in phase `Linker'. (Exit code: 1)
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/IOKit.framework/Headers/hid/IOHIDLib.h:31,
+                 from c_src/mac/keyio_mac.hpp:1,
+
+/Users/hjalmarjakobsson/code/tools/kmonad/                 from c_src/mac/dext.cpp:1:0: error:
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/IOKit.framework/Headers/hid/IOHIDDevice.h:298:34: error:
+     error: 'dispatch_block_t' has not been declared
+      298 |                                  dispatch_block_t               handler)
+          |                                  ^~~~~~~~~~~~~~~~
+    |
+298 |                                  dispatch_block_t               handler)
+    |                                  ^
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/IOKit.framework/Headers/hid/IOHIDLib.h:35,
+                 from c_src/mac/keyio_mac.hpp:1,
+
+/Users/hjalmarjakobsson/code/tools/kmonad/                 from c_src/mac/dext.cpp:1:0: error:
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/IOKit.framework/Headers/hid/IOHIDManager.h:295:33: error:
+     error: 'dispatch_block_t' has not been declared
+      295 |                                 dispatch_block_t                handler)
+          |                                 ^~~~~~~~~~~~~~~~
+    |
+295 |                                 dispatch_block_t                handler)
+    |                                 ^
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/IOKit.framework/Headers/hid/IOHIDLib.h:36,
+                 from c_src/mac/keyio_mac.hpp:1,
+
+/Users/hjalmarjakobsson/code/tools/kmonad/                 from c_src/mac/dext.cpp:1:0: error:
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/IOKit.framework/Headers/hid/IOHIDQueue.h:297:33: error:
+     error: 'dispatch_block_t' has not been declared
+      297 |                                 dispatch_block_t                handler)
+          |                                 ^~~~~~~~~~~~~~~~
+    |
+297 |                                 dispatch_block_t                handler)
+    |                                 ^
+In file included from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver.hpp:7,
+
+/Users/hjalmarjakobsson/code/tools/kmonad/                 from c_src/mac/dext.cpp:3:0: error:
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/apple_vendor_keyboard_input.hpp:23:44: error:
+     warning: 'unused' attribute ignored [-Wattributes]
+       23 |   uint8_t report_id_ __attribute__((unused));
+          |                                            ^
+   |
+23 |   uint8_t report_id_ __attribute__((unused));
+   |                                            ^
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/apple_vendor_keyboard_input.hpp:26:8: error:
+     error: declaration of 'pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::keys pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::apple_vendor_keyboard_input::keys' changes meaning of 'keys' [-fpermissive]
+       26 |   keys keys;
+          |        ^~~~
+   |
+26 |   keys keys;
+   |        ^
+In file included from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/apple_vendor_keyboard_input.hpp:7,
+                 from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver.hpp:7,
+
+/Users/hjalmarjakobsson/code/tools/kmonad/                 from c_src/mac/dext.cpp:3:0: error:
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/keys.hpp:15:31: error:
+     note: 'keys' declared here as 'class pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::keys'
+       15 | class __attribute__((packed)) keys final {
+          |                               ^~~~
+   |
+15 | class __attribute__((packed)) keys final {
+   |                               ^
+In file included from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver.hpp:8,
+
+/Users/hjalmarjakobsson/code/tools/kmonad/                 from c_src/mac/dext.cpp:3:0: error:
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/apple_vendor_top_case_input.hpp:23:44: error:
+     warning: 'unused' attribute ignored [-Wattributes]
+       23 |   uint8_t report_id_ __attribute__((unused));
+          |                                            ^
+   |
+23 |   uint8_t report_id_ __attribute__((unused));
+   |                                            ^
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/apple_vendor_top_case_input.hpp:26:8: error:
+     error: declaration of 'pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::keys pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::apple_vendor_top_case_input::keys' changes meaning of 'keys' [-fpermissive]
+       26 |   keys keys;
+          |        ^~~~
+   |
+26 |   keys keys;
+   |        ^
+In file included from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/apple_vendor_keyboard_input.hpp:7,
+                 from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver.hpp:7,
+
+/Users/hjalmarjakobsson/code/tools/kmonad/                 from c_src/mac/dext.cpp:3:0: error:
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/keys.hpp:15:31: error:
+     note: 'keys' declared here as 'class pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::keys'
+       15 | class __attribute__((packed)) keys final {
+          |                               ^~~~
+   |
+15 | class __attribute__((packed)) keys final {
+   |                               ^
+In file included from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver.hpp:10,
+
+/Users/hjalmarjakobsson/code/tools/kmonad/                 from c_src/mac/dext.cpp:3:0: error:
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/consumer_input.hpp:23:44: error:
+     warning: 'unused' attribute ignored [-Wattributes]
+       23 |   uint8_t report_id_ __attribute__((unused));
+          |                                            ^
+   |
+23 |   uint8_t report_id_ __attribute__((unused));
+   |                                            ^
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/consumer_input.hpp:26:8: error:
+     error: declaration of 'pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::keys pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::consumer_input::keys' changes meaning of 'keys' [-fpermissive]
+       26 |   keys keys;
+          |        ^~~~
+   |
+26 |   keys keys;
+   |        ^
+In file included from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/apple_vendor_keyboard_input.hpp:7,
+                 from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver.hpp:7,
+
+/Users/hjalmarjakobsson/code/tools/kmonad/                 from c_src/mac/dext.cpp:3:0: error:
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/keys.hpp:15:31: error:
+     note: 'keys' declared here as 'class pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::keys'
+       15 | class __attribute__((packed)) keys final {
+          |                               ^~~~
+   |
+15 | class __attribute__((packed)) keys final {
+   |                               ^
+In file included from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver.hpp:11,
+
+/Users/hjalmarjakobsson/code/tools/kmonad/                 from c_src/mac/dext.cpp:3:0: error:
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/keyboard_input.hpp:24:44: error:
+     warning: 'unused' attribute ignored [-Wattributes]
+       24 |   uint8_t report_id_ __attribute__((unused));
+          |                                            ^
+   |
+24 |   uint8_t report_id_ __attribute__((unused));
+   |                                            ^
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/keyboard_input.hpp:27:13: error:
+     error: declaration of 'pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::modifiers pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::keyboard_input::modifiers' changes meaning of 'modifiers' [-fpermissive]
+       27 |   modifiers modifiers;
+          |             ^~~~~~~~~
+   |
+27 |   modifiers modifiers;
+   |             ^
+In file included from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/keyboard_input.hpp:8,
+                 from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver.hpp:11,
+
+/Users/hjalmarjakobsson/code/tools/kmonad/                 from c_src/mac/dext.cpp:3:0: error:
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/modifiers.hpp:16:31: error:
+     note: 'modifiers' declared here as 'class pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::modifiers'
+       16 | class __attribute__((packed)) modifiers final {
+          |                               ^~~~~~~~~
+   |
+16 | class __attribute__((packed)) modifiers final {
+   |                               ^
+In file included from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver.hpp:11,
+
+/Users/hjalmarjakobsson/code/tools/kmonad/                 from c_src/mac/dext.cpp:3:0: error:
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/keyboard_input.hpp:30:42: error:
+     warning: 'unused' attribute ignored [-Wattributes]
+       30 |   uint8_t reserved __attribute__((unused));
+          |                                          ^
+   |
+30 |   uint8_t reserved __attribute__((unused));
+   |                                          ^
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/keyboard_input.hpp:33:8: error:
+     error: declaration of 'pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::keys pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::keyboard_input::keys' changes meaning of 'keys' [-fpermissive]
+       33 |   keys keys;
+          |        ^~~~
+   |
+33 |   keys keys;
+   |        ^
+In file included from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/apple_vendor_keyboard_input.hpp:7,
+                 from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver.hpp:7,
+
+/Users/hjalmarjakobsson/code/tools/kmonad/                 from c_src/mac/dext.cpp:3:0: error:
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/keys.hpp:15:31: error:
+     note: 'keys' declared here as 'class pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::keys'
+       15 | class __attribute__((packed)) keys final {
+          |                               ^~~~
+   |
+15 | class __attribute__((packed)) keys final {
+   |                               ^
+In file included from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver.hpp:15,
+
+/Users/hjalmarjakobsson/code/tools/kmonad/                 from c_src/mac/dext.cpp:3:0: error:
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/pointing_input.hpp:22:11: error:
+     error: declaration of 'pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::buttons pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::pointing_input::buttons' changes meaning of 'buttons' [-fpermissive]
+       22 |   buttons buttons;
+          |           ^~~~~~~
+   |
+22 |   buttons buttons;
+   |           ^
+In file included from /Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver.hpp:9,
+
+/Users/hjalmarjakobsson/code/tools/kmonad/                 from c_src/mac/dext.cpp:3:0: error:
+
+/Users/hjalmarjakobsson/code/tools/kmonad//Users/hjalmarjakobsson/code/tools/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit/virtual_hid_device_driver/hid_report/buttons.hpp:15:31: error:
+     note: 'buttons' declared here as 'class pqrs::karabiner::driverkit::virtual_hid_device_driver::hid_report::buttons'
+       15 | class __attribute__((packed)) buttons final {
+          |                               ^~~~~~~
+   |
+15 | class __attribute__((packed)) buttons final {
+   |                               ^
+`gcc' failed in phase `C Compiler'. (Exit code: 1)
 
 --  While building package kmonad-0.4.1 (scroll up to its section to see the error) using:
       /Users/hjalmarjakobsson/.stack/setup-exe-cache/x86_64-osx/Cabal-simple_mPHDZzAJ_3.2.1.0_ghc-8.10.7 --builddir=.stack-work/dist/x86_64-osx/Cabal-3.2.1.0 build lib:kmonad exe:kmonad --ghc-options " -fdiagnostics-color=always"
     Process exited with code: ExitFailure 1
-./installers/keyboard: line 38: --flag: command not found
 ```
-
-### when running build command again:
-
-```
-Building all executables for `kmonad' once. After a successful build of all of them, only specified executables will be rebuilt.
-kmonad> build (lib + exe)
-Preprocessing library for kmonad-0.4.1..
-Building library for kmonad-0.4.1..
-Preprocessing executable 'kmonad' for kmonad-0.4.1..
-Building executable 'kmonad' for kmonad-0.4.1..
-Linking .stack-work/dist/x86_64-osx/Cabal-3.2.1.0/build/kmonad/kmonad ...
-Undefined symbols for architecture x86_64:
-  "_grab_kb", referenced from:
-      _Lc3TRt_info in libHSkmonad-0.4.1-AvDBr3ClNh02tEoK6r4xVv.a(IOKitSource.o)
-      _Lc3TRZ_info in libHSkmonad-0.4.1-AvDBr3ClNh02tEoK6r4xVv.a(IOKitSource.o)
-  "_release_kb", referenced from:
-      _Lc3TQN_info in libHSkmonad-0.4.1-AvDBr3ClNh02tEoK6r4xVv.a(IOKitSource.o)
-  "_send_key", referenced from:
-      _Lc3SZg_info in libHSkmonad-0.4.1-AvDBr3ClNh02tEoK6r4xVv.a(KextSink.o)
-  "_wait_key", referenced from:
-      _Lc3TMJ_info in libHSkmonad-0.4.1-AvDBr3ClNh02tEoK6r4xVv.a(IOKitSource.o)
-ld: symbol(s) not found for architecture x86_64
-collect2: error: ld returned 1 exit status
-`gcc' failed in phase `Linker'. (Exit code: 1)
-
---  While building package kmonad-0.4.1 (scroll up to its section to see the error) using:
-      /Users/hjalmarjakobsson/.stack/setup-exe-cache/x86_64-osx/Cabal-simple_mPHDZzAJ_3.2.1.0_ghc-8.10.5 --builddir=.stack-work/dist/x86_64-osx/Cabal-3.2.1.0 build lib:kmonad exe:kmonad --ghc-options " -fdiagnostics-color=always"
-    Process exited with code: ExitFailure 1
-./installers/keyboard: line 38: --flag: command not found
-```
-
-
-================================================
-================================================
-
-
-## MACOS M1 SILICONE
-
-### STACK VERSION
-
-`Version 2.7.3, Git revision 7927a3aec32e2b2e5e4fb5be76d0d50eddcc197f x86_64 hpack-0.34.4`
-
-### GHC VERSION
-
-`The Glorious Glasgow Haskell Compilation System, version 8.10.5`

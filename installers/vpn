@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-source "${BASH_SOURCE%/*}/../lib/_"
-
-# NOTE: VPN
-
-dotheader "SETTING UP VPN.."

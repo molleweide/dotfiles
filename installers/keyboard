@@ -31,18 +31,17 @@ function install_kmonad() {
 
     pushd $install_dir/kmonad > /dev/null 2>&1
     if is_macos; then
-        stack build \
-            # --system-ghc \
-            # --resolver=ghc-8.10.6 \
-            # --compiler= \
-            --flag kmonad:dext \
-            --local-bin-path=/usr/local/bin/kmonad \
-            --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+        stack clean
+        stack install --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+        # stack --system-ghc build --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+        # stack build --flag kmonad:dext \
+        #     --system-ghc \
+        #     --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
     fi
     popd > /dev/null 2>&1
 }
 
-is_macos && brew_cask_install karabiner-elements
-is_macos && install_ke_complex_mod
+# is_macos && brew_cask_install karabiner-elements
+# is_macos && install_ke_complex_mod
 install_qmk_firmware
 install_kmonad

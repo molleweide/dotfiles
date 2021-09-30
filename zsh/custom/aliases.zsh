@@ -100,10 +100,14 @@ alias karb="/Library/Application\ Support/org.pqrs/Karabiner-Elements/bin/karabi
 alias krb="open -a /Applications/Karabiner-Elements.app"
 
 # ======== KMONAD ========
-alias kmolap="sudo ~/.dotfiles/misc/kmonad/launchd_kmo_macbookpro.sh"
-alias kmolapT="kmonad ~/code/kmonad/keymap/user/molleweide/mbp.kbd -l debug"
-alias kmoez="sudo ~/.dotfiles/misc/kmonad/launchd_kmo_ergo_ez.sh"
-alias kmoezT="kmonad ~/code/kmonad/keymap/user/molleweide/ez.kbd -l debug"
+local kmonad=~/.local/bin/kmonad
+local layouts=~/code/tools/kmonad/keymap/user/molleweide
+kmopro()  { sudo $kmonad $layouts/macbook_pro_2012.kbd; }
+kmoair()  { sudo $kmonad $layouts/macbook_air_2021_m1.kbd; }
+kmoez()   { sudo $kmonad $layouts/ergodox_ez.kbd; }
+kmoproT() { sudo $kmonad $layouts/macbook_pro_2012.kbd      -l debug; }
+kmoairT() { sudo $kmonad $layouts/macbook_air_2021_m1.kbd   -l debug; }
+kmoezT()  { sudo $kmonad $layouts/ergodox_ez.kbd            -l debug; }
 
 # ======== GAMES ========
 

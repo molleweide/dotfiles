@@ -14,39 +14,20 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 
 ### . ############################ . ###
 
+5. start using XDG on intel macos
+    symlink zshenv
+6. clean up intel macos
+7. update to big sur
 
-- report kmonad build errors
-
-    1. make sure both are running master.
-        * make submodule update on both sides
-    2. ghc version
-    3. stack version
-    4. dext version
-    5. collect errors
-
-
-- order none stick
-
-
+- order NANO S
 
 - remove as many if statements as possible >>> only use && || with exit codes
-
-- update to big sur
 
 ### 
 
 - KTH REREGISTER
 
 - keyboard install && build kmonad M1
-
-### TRAPPFABRIKEN IMPORT TO LOCAL >> DOCUMENT STEPS ###
-
-
-
-
-
-
-
 
 - limelight not installing
 
@@ -64,9 +45,5 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
     python not sure how to get around this as of now
 
 # ########################################################
-
-- VIDEO WALLPAPERS
-    https://github.com/mczachurski/wallpapper
-    https://github.com/search?o=desc&q=video+wallpaper&s=updated&type=Repositories
 
 https://linuxconfig.org/advanced-bash-regex-with-examples
