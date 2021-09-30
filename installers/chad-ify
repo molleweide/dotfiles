@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/../lib/_"
+
+dotheader "CHAD-IFY | setup tor/vpn/dns/.."
+
+
+# TODO: build
+#
+#   - tor
+#   - mullvad
+

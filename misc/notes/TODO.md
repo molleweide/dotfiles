@@ -14,6 +14,10 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 
 ### . ############################ . ###
 
+5. start using XDG on intel macos
+    symlink zshenv
+6. clean up intel macos
+7. update to big sur
 
 - gh > create repo from cli
 
@@ -21,10 +25,9 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
     >>> only use && || with exit codes
 
 
+- order NANO S
 
 - remove as many if statements as possible >>> only use && || with exit codes
-
-- update to big sur
 
 ### 
 
@@ -62,9 +65,5 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
     python not sure how to get around this as of now
 
 # ########################################################
-
-- VIDEO WALLPAPERS
-    https://github.com/mczachurski/wallpapper
-    https://github.com/search?o=desc&q=video+wallpaper&s=updated&type=Repositories
 
 https://linuxconfig.org/advanced-bash-regex-with-examples

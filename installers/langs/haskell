@@ -24,6 +24,7 @@ if is_macos; then
   fi
   stack upgrade
 
+  stack install yesod-bin --install-ghc
   # elif is_linux; then
 fi
 

@@ -4,6 +4,12 @@ source "${BASH_SOURCE%/*}/../lib/_"
 
 # CHAT
 
+# TODO
+#
+# - slack
+# - setup irssi?
+# send sms from commandline/pc
+
 dotheader "SETTING UP CHAT.."
 
 require_installer package-manager

@@ -2,6 +2,14 @@
 # maybe wrap this in a uname -m x8664 | arm64
 export PATH=/opt/homebrew/bin:$PATH
 
+
+# # llvm
+# export PATH="/usr/local/opt/llvm/bin:$PATH"
+# export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+# export LDFLAGS="-L/usr/local/opt/llvm/lib"
+# export CPPFLAGS="-I/usr/local/opt/llvm/include"
+
+
 # Tmux UTF8 support
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8

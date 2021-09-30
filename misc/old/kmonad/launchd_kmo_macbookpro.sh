@@ -7,4 +7,5 @@
 # older macs (kext)
 # /sbin/kextload /Library/Application\ Support/org.pqrs/Karabiner-VirtualHIDDevice/Extensions/org.pqrs.driver.Karabiner.VirtualHIDDevice.v061000.kext
 
-/usr/local/bin/kmonad ~/code/kmonad/keymap/user/molleweide/ez.kbd
+~/.local/bin/kmonad ~/code/tools/kmonad/keymap/user/molleweide/macbook_pro_2012.kbd
+# /Users/hjalmarjakobsson/code/tools/kmonad/kmonad ~/code/tools/kmonad/keymap/user/molleweide/mbp.kbd
