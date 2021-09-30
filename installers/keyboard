@@ -5,23 +5,21 @@ source "${BASH_SOURCE%/*}/../lib/_"
 dotheader "KEYBOARD"
 
 require_installer package-manager
+require_installer devtools
 require_installer langs/haskell
 
-function install_ke_complex_mod() {
-    dotlib_git_clone_recursive  \
-        $HOME/code/tools        \
-        "ke-complex-mods"       \
-        git@github.com:molleweide/KE-complex_modifications.git
-    }
+# function install_ke_complex_mod() {
+#     dotlib_git_clone_recursive  \
+#         $HOME/code/tools        \
+#         "ke-complex-mods"       \
+#         git@github.com:molleweide/KE-complex_modifications.git
+#     }
 function install_qmk_firmware() {
     dotlib_git_clone_recursive  \
         $HOME/code/firmware     \
         "qmk-firmware"          \
         git@github.com:molleweide/qmk_firmware.git
     }
-# https://github.com/kmonad/kmonad/blob/master/doc/installation.md#macos
-# https://github.com/kmonad/kmonad/issues/334
-# https://stackoverflow.com/questions/56437280/where-is-the-local-bin-path-of-my-stack-executables
 function install_kmonad() {
     local install_dir=$HOME/code/tools
     dotlib_git_clone_recursive  \
@@ -31,31 +29,18 @@ function install_kmonad() {
 
     pushd $install_dir/kmonad > /dev/null 2>&1
     if is_macos; then
+        stack clean
         if is_apple_silicone; then
-            stack build \
-                # --system-ghc \
-                --arch=aarch64
-                # --resolver=ghc-8.10.6 \
-                # --compiler= \
-                --flag kmonad:dext \
-                --local-bin-path=/usr/local/bin/kmonad \
-                --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+            stack install --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
         else
-            stack build \
-                # --system-ghc \
-                # --arch=aarch64
-                # --resolver=ghc-8.10.6 \
-                # --compiler= \
-                --flag kmonad:dext \
-                --local-bin-path=/usr/local/bin/kmonad \
-                --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+            stack install --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
         fi
     fi
     popd > /dev/null 2>&1
 }
 
-is_macos && brew_install llvm
-is_macos && brew_cask_install karabiner-elements
-is_macos && install_ke_complex_mod
+# is_macos && brew_install llvm
+# is_macos && brew_cask_install karabiner-elements
+# is_macos && install_ke_complex_mod
 install_qmk_firmware
 install_kmonad

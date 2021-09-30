@@ -15,16 +15,6 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 ### . ############################ . ###
 
 
-- report kmonad build errors
-
-    1. make sure both are running master.
-        * make submodule update on both sides
-    2. ghc version
-    3. stack version
-    4. dext version
-    5. collect errors
-
-
 - gh > create repo from cli
 
 - remove as many if statements as possible

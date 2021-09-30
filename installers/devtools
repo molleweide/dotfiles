@@ -49,3 +49,5 @@ heroku plugins:install heroku-repo
 brew install wp-cli
 brew_install blueutil
 brew_install universal-ctags
+
+brew_install llvm

@@ -63,7 +63,7 @@ dot_symlink home/.config/tmuxinator         ~/.config/tmuxinator
 dot_symlink home/.config/vscode             ~/.config/vscode
 dot_symlink home/.config/yabai              ~/.config/yabai
 
-dot_symlink home/.local/bin ~/.local/bin F
+dot_symlink home/.local/scripts ~/.local/scripts
 
 dot_symlink home/.hammerspoon ~/.hammerspoon
 

@@ -11,10 +11,11 @@ dotheader "SETTING UP HASKELL.."
 
 if is_macos; then
 
-  # GHCUP
-  if test ! $(which ghc); then
-      curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
-  fi
+  # # GHCUP
+  # if test ! $(which ghc); then
+  #     curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+  # fi
+  brew_install ghc
 
   # STACK
   # wget -qO- https://get.haskellstack.org/ | sh

@@ -8,7 +8,7 @@ STACK   ->  2.7.3, Git revision 7927a3aec32e2b2e5e4fb5be76d0d50eddcc197f x86_64 
 GHC     ->  8.10.5
 GHCUP   ->  v0.1.16.2
 CABAL   ->  cabal-install version 3.6.0.0 \
-            compiled using version 3.6.1.0 of the Cabal library
+                compiled using version 3.6.1.0 of the Cabal library
 DEXT    ->  1.22.0
 
 KMONAD BRANCH = master (commit???)
@@ -125,21 +125,49 @@ collect2: error: ld returned 1 exit status
 ```
 
 
-================================================
-================================================
+
+
+
+
+==========================================================================================
+==========================================================================================
+==========================================================================================
+==========================================================================================
+==========================================================================================
+==========================================================================================
+==========================================================================================
+==========================================================================================
+
+
+
 
 
 ## MACOS M1 SILICONE
 
-### STACK VERSION
+### META DATA
+```
+STACK   ->  2.7.3, Git revision 7927a3aec32e2b2e5e4fb5be76d0d50eddcc197f x86_64 hpack-0.34.4
+GHC     ->  8.10.6
+GHCUP   ->  v0.1.16.2
+CABAL   ->  cabal-install version 3.4.0.0 \
+                compiled using version 3.4.0.0 of the Cabal library
+DEXT    ->  1.22.0
 
-`Version 2.7.3, Git revision 7927a3aec32e2b2e5e4fb5be76d0d50eddcc197f x86_64 hpack-0.34.4`
+KMONAD BRANCH = master
+```
 
-### GHC VERSION
+### stack.yaml
 
-`The Glorious Glasgow Haskell Compilation System, version 8.10.5`
-
-
+```
+resolver: lts-18.5
+compiler: ghc-8.10.6
+compiler-check: newer-minor
+# allow-never: true
+packages:
+- .
+extra-deps:
+pvp-bounds: both
+```
 
 ### ERROR
 
