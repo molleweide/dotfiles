@@ -14,6 +14,7 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 
 ### . ############################ . ###
 
+4. reinstall homebrew.
 5. start using XDG on intel macos
     symlink zshenv
 6. clean up intel macos

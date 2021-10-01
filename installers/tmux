@@ -23,6 +23,7 @@ function install_tmux_plugins() {
     fi
 }
 
+# TODO: install this to config/tmux
 function setup_tmux_config() {
     if [ ! -d ~/.tmux/plugins/tpm ]; then
         git clone git@github.com:tmux-plugins/tpm.git ~/.tmux/plugins/tpm
