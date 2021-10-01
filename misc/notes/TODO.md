@@ -14,6 +14,12 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 
 ### . ############################ . ###
 
+
+use dorothy way of sourcing scripts
+>> using an export variable
+
+
+
 1. make alacritty output `arm64` on m1.
 2. start using XDG on intel macos
 3. clean up intel macos
