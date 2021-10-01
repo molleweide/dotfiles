@@ -14,30 +14,37 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 
 ### . ############################ . ###
 
+2. use it in zsh brew to set path intel/silicon path
+    export dotdir in setup function
+        ../
+
+3. make sure my dotfiles work on both systems
+
 5. start using XDG on intel macos
     symlink zshenv
 6. clean up intel macos
 7. update to big sur
 
+brew environment variables man: https://docs.brew.sh/Manpage#environment
+
 - order NANO S
 
 - remove as many if statements as possible >>> only use && || with exit codes
+
+### hammerspoon installers
+
+https://github.com/Hammerspoon/hammerspoon/pull/582
+
+move hammerspoon configs to ~/.config/hammerspoon
+
 
 ### 
 
 - KTH REREGISTER
 
-- keyboard install && build kmonad M1
-
 - limelight not installing
 
 - webbrowsers are not being installed
-
-# XDG ##########################################
-
-* move
-    - .gnupg
-    -
 
 # M1 ###########################################
 
@@ -47,3 +54,14 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 # ########################################################
 
 https://linuxconfig.org/advanced-bash-regex-with-examples
+
+# ########################################
+
+I am running the Alacritty terminal emulator on MacOS.
+After rebooting my M1 Macbook Air running `uname -m` returns `x86_64`
+when it previously returned `arm64` pre rebooting.
+If I check the same command in the regular `Terminal.app.` it returns
+`arm64` which is what it is supposed to do.
+Has anyone else stumbled upon this issue here? Is this an appropriate place
+to ask for help on this issue?
+
