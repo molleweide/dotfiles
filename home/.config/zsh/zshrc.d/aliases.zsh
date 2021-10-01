@@ -1,5 +1,5 @@
 # SHELL
-alias 6="exec zsh"
+alias xxx="exec zsh"
 alias k="clear"
 alias mm="man man"
 alias drs="dirs -v"
@@ -9,8 +9,7 @@ alias tt="ttyper"
 alias dbm="rake db:migrate && RAILS_ENV=test rake db:migrate"
 alias j=z # I'm used to autojump 'j' vs fasd 'z'
 alias less="less -r"
-alias sketch="magick $1 \( -clone 0 -negate -blur 0x5 \) \
-  -compose colordodge -composite -modulate 100,0,100 -auto-level $2"
+alias sketch="magick $1 \( -clone 0 -negate -blur 0x5 \) -compose colordodge -composite -modulate 100,0,100 -auto-level $2"
 alias srync="rsync -vrazh"
 alias emacs="TERM=xterm-24bit emacs -nw"
 alias cl="calcurse"
@@ -261,41 +260,41 @@ slp() {
 # # https://github.com/webpro/dotfiles/blob/master/system/.alias
 # # https://github.com/mathiasbynens/dotfiles/blob/master/.aliases
 
-# # zsh only aliases
-# if [[ -n $ZSH_VERSION ]]; then
-#   alias 1='cd -'
-#   alias 2='cd -2'
-#   alias 3='cd -3'
-#   alias 4='cd -4'
-#   alias 5='cd -5'
-#   alias 6='cd -6'
-#   alias 7='cd -7'
-#   alias 8='cd -8'
-#   alias 9='cd -9'
+# zsh only aliases
+if [[ -n $ZSH_VERSION ]]; then
+  alias 1='cd -'
+  alias 2='cd -2'
+  alias 3='cd -3'
+  alias 4='cd -4'
+  alias 5='cd -5'
+  alias 6='cd -6'
+  alias 7='cd -7'
+  alias 8='cd -8'
+  alias 9='cd -9'
 
-#   alias cd..='cd ..'
-#   alias -g ..2='../..'
-#   alias -g ..3='../../..'
-#   alias -g ..4='../../../..'
-#   alias -g ..5='../../../../..'
-#   alias -g ...='../..'
-#   alias -g ....='../../..'
-#   alias -g .....='../../../..'
-#   alias -g ......='../../../../..'
+  alias    ..='cd ..'
+  alias -g ..2='../..'
+  alias -g ..3='../../..'
+  alias -g ..4='../../../..'
+  alias -g ..5='../../../../..'
+  alias -g ...='../..'
+  alias -g ....='../../..'
+  alias -g .....='../../../..'
+  alias -g ......='../../../../..'
 
-#   alias zshrc='$VISUAL "${ZDOTDIR:-$HOME}"/.zshrc'
-#   alias reload='source "${ZDOTDIR:-$HOME}"/.zshrc'
-#   alias zbench='export LAZY_PROMPT=false; for i in $(seq 1 10); do; /usr/bin/time zsh -i -c exit; done; unset LAZY_PROMPT'
-#   alias zdot='cd $ZDOTDIR'
+  alias zshrc='$VISUAL "${ZDOTDIR:-$HOME}"/.zshrc'
+  alias reload='source "${ZDOTDIR:-$HOME}"/.zshrc'
+  alias zbench='export LAZY_PROMPT=false; for i in $(seq 1 10); do; /usr/bin/time zsh -i -c exit; done; unset LAZY_PROMPT'
+  alias zdot='cd $ZDOTDIR'
 
-#   # zsh pipes
-#   alias -g H='| head'
-#   alias -g T='| tail'
-#   alias -g G='| grep -E'
-#   alias -g S='| sort'
-#   alias -g L='| less'
-#   alias -g M='| more'
-# fi
+  # zsh pipes
+  alias -g H='| head'
+  alias -g T='| tail'
+  alias -g G='| grep -E'
+  alias -g S='| sort'
+  alias -g L='| less'
+  alias -g M='| more'
+fi
 
 # # mask built-ins with better defaults
 # # alias cp='cp -i'
@@ -313,40 +312,40 @@ slp() {
 # # single character shortcuts - be sparing!
 # alias _='sudo'
 # alias c='clear'
-# alias d='dirs -v | head -10'
+alias d='dirs -v | head -10'
 # alias v='vim'
-# alias h='history'
+alias h='history'
 
 # # shortcuts
 # alias vi='vim'
 # alias nv='nvim'
 # alias afind='ack -il'
-# alias md='mkdir -p'
-# alias rd=rmdir
+alias md='mkdir -p'
+alias rd=rmdir
 # alias please=sudo
-# alias po=popd
-# alias pu=pushd
+alias po=popd
+alias pu=pushd
 # alias globurl='noglob urlglobber '
-# alias zz=exit
+alias ZZ=exit
 
 # # more ways to ls
-# alias ll='ls -lFh'
+alias ll='ls -lFh'
 # alias l='ls -F'
-# alias la='ls -lAFh'
-# alias ldot='ls -ld .*'
+alias la='ls -lAFh'
+alias ldot='ls -ld .*'
 
-# # fix typos
-# alias quit='exit'
+# fix typos
+alias quit='exit'
 
-# # tools
-# alias te="$EDITOR"
-# alias ide="$VISUAL"
+# tools
+alias te="$EDITOR"
+alias ide="$VISUAL"
 
 # # network
 # alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 # alias iplocal="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
 # alias dnsflush="dscacheutil -flushcache && killall -HUP mDNSResponder"
-# alias speedtest="wget -O /dev/null http://speed.transip.nl/10mb.bin"
+alias speedtest="wget -O /dev/null http://speed.transip.nl/10mb.bin"
 # alias pinging="command ping"
 
 # # other aliases

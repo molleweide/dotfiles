@@ -30,11 +30,9 @@ if is_macos; then
     if test ! $(which brew); then
         echo "Installing homebrew"
         if is_apple_silicone; then
-            bash -c "$(curl -fsSL \
-                https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         else
-            ruby -e "$(curl -fsSL \
-                https://raw.githubusercontent.com/Homebrew/install/master/install)"
+            ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
         fi
         brew update
     fi
@@ -76,3 +74,4 @@ buildtools=(
 for package in "${buildtools[@]}"; do
     apt_install "$package"
 done
+u
