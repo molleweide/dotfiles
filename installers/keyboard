@@ -5,15 +5,8 @@ source "${BASH_SOURCE%/*}/../lib/_"
 dotheader "KEYBOARD"
 
 require_installer package-manager
-# require_installer devtools
 require_installer langs/haskell
 
-# function install_ke_complex_mod() {
-#     dotlib_git_clone_recursive  \
-#         $HOME/code/tools        \
-#         "ke-complex-mods"       \
-#         git@github.com:molleweide/KE-complex_modifications.git
-#     }
 function install_qmk_firmware() {
     dotlib_git_clone_recursive  \
         $HOME/code/firmware     \
@@ -30,10 +23,8 @@ function install_kmonad() {
     pushd $install_dir/kmonad > /dev/null 2>&1
     if is_macos; then
         stack clean
-        # stack install --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
         if is_apple_silicone; then
             stack install --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
-            # stack install --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
         else
             stack install --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
         fi
@@ -42,7 +33,5 @@ function install_kmonad() {
 }
 
 brew_install llvm
-# is_macos && brew_cask_install karabiner-elements
-# is_macos && install_ke_complex_mod
 install_qmk_firmware
 install_kmonad

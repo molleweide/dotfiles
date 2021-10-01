@@ -14,12 +14,6 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 
 ### . ############################ . ###
 
-
-use dorothy way of sourcing scripts
->> using an export variable
-
-
-
 1. make alacritty output `arm64` on m1.
 2. start using XDG on intel macos
 3. clean up intel macos
@@ -30,10 +24,23 @@ use dorothy way of sourcing scripts
 - remove as many if statements as possible
     >>> only use && || with exit codes
 
+5. start using XDG on intel macos
+    symlink zshenv
+6. clean up intel macos
+7. update to big sur
+
+brew environment variables man: https://docs.brew.sh/Manpage#environment
 
 - order NANO S
 
 - remove as many if statements as possible >>> only use && || with exit codes
+
+### hammerspoon installers
+
+https://github.com/Hammerspoon/hammerspoon/pull/582
+
+move hammerspoon configs to ~/.config/hammerspoon
+
 
 ### 
 
@@ -48,22 +55,11 @@ use dorothy way of sourcing scripts
 
 - KTH REREGISTER
 
-- keyboard install && build kmonad M1
-
-### TRAPPFABRIKEN IMPORT TO LOCAL >> DOCUMENT STEPS ###
-
-
 
 
 - limelight not installing
 
 - webbrowsers are not being installed
-
-# XDG ##########################################
-
-* move
-    - .gnupg
-    -
 
 # M1 ###########################################
 
@@ -73,3 +69,4 @@ use dorothy way of sourcing scripts
 # ########################################################
 
 https://linuxconfig.org/advanced-bash-regex-with-examples
+
