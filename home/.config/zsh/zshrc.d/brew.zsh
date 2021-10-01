@@ -1,3 +1,4 @@
+# https://docs.brew.sh/Manpage#environment
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_CASK_OPTS="${HOMEBREW_CASK_OPTS:---appdir=/Applications}"
 alias bcu="brew cu"
