@@ -14,11 +14,10 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 
 ### . ############################ . ###
 
-4. reinstall homebrew.
-5. start using XDG on intel macos
-    symlink zshenv
-6. clean up intel macos
-7. update to big sur
+1. make alacritty output `arm64` on m1.
+2. start using XDG on intel macos
+3. clean up intel macos
+4. update to big sur
 
 - gh > create repo from cli
 

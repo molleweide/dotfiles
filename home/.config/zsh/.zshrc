@@ -23,6 +23,15 @@ export ZSH="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/zcustom"
 export ZSH_CACHE_DIR="$ZSH/cache"
 
 #############################################################
+# NOTE: PATHS
+#############################################################
+
+export ADOTDIR="${XDG_DATA_HOME:-$HOME/.local/share}/antigen"
+export ANTIGEN_COMPDUMP="${ADOTDIR}/.zcompdump"
+export ANTIGEN_LOG="${ADOTDIR}/antigen.log"
+export ANTIGEN_DEBUG_LOG="${ADOTDIR}/antigen_debug.log"
+
+#############################################################
 # NOTE: RANDOM SETTINGS
 #############################################################
 
@@ -54,62 +63,8 @@ setopt share_history # share command history data
 setopt extended_glob
 
 #############################################################
-# NOTE: PLUGINS (ANTIGEN)
-#############################################################
-
-export ADOTDIR="${XDG_DATA_HOME:-$HOME/.local/share}/antigen"
-export ANTIGEN_COMPDUMP="${ADOTDIR}/.zcompdump"
-export ANTIGEN_LOG="${ADOTDIR}/antigen.log"
-export ANTIGEN_DEBUG_LOG="${ADOTDIR}/antigen_debug.log"
-
-source ${ZDOTDIR}/vendor/antigen.zsh
-
-antigen bundle robbyrussell/oh-my-zsh plugins/git
-
-# what is this????
-if [ ! -f ~/.config/dotfiles/no-nvm ]; then
-  antigen bundle robbyrussell/oh-my-zsh plugins/nvm
-fi
-
-antigen bundle robbyrussell/oh-my-zsh plugins/pyenv
-
-if [ ! -f ~/.config/dotfiles/rbenv ]; then
-  antigen bundle robbyrussell/oh-my-zsh plugins/rvm
-else
-  antigen bundle robbyrussell/oh-my-zsh plugins/rbenv
-fi
-
-antigen bundle robbyrussell/oh-my-zsh plugins/vi-mode
-antigen bundle robbyrussell/oh-my-zsh plugins/zsh_reload
-
-antigen bundle dbalatero/fzf-git
-antigen bundle DarrinTisdale/zsh-aliases-exa
-antigen bundle chriskempson/base16-shell
-antigen bundle wookayin/fzf-fasd
-antigen bundle twang817/zsh-ssh-agent
-antigen bundle zsh-users/zsh-completions
-antigen bundle zdharma/fast-syntax-highlighting
-antigen bundle hlissner/zsh-autopair
-
-antigen theme romkatv/powerlevel10k
-
-antigen apply
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-eval "$(direnv hook zsh)"
-eval "$(fasd --init auto)"
-
-# export PATH=/usr/local/Cellar/z/1.9/etc/profile.d/z.sh:$PATH
-
-#############################################################
 # NOTE: CUSTOM SETTINGS
 #############################################################
-
-# for file in $HOME/.zsh/custom/**/*.zsh
-# do
-#   source $file
-# done
 
 # for file in $HOME/.zsh/secrets/**/*.zsh
 # do
@@ -123,41 +78,6 @@ autoload_funcd "$XDG_CONFIG_HOME/zsh/functions" true
 # source all files in confdir
 autoload -Uz "$XDG_CONFIG_HOME/zsh/functions/source_confd"
 source_confd "$XDG_CONFIG_HOME/zsh/zshrc.d"
-
-#############################################################
-## NOTE: VI SETTINGS
-##############################################################
-
-# Vim style ^W del word backwards
-autoload -U select-word-style
-select-word-style bash
-export WORDCHARS='.-'
-
-# custor
-# function zle-keymap-select () {
-#     case $KEYMAP in
-#         vicmd) echo -ne '\e[1 q';;      # block
-#         viins|main) echo -ne '\e[5 q';; # beam
-#     esac
-# }
-# zle -N zle-keymap-select
-# zle-line-init() {
-#     zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-#     echo -ne "\e[5 q"
-# }
-# zle -N zle-line-init
-# echo -ne '\e[5 q' # Use beam shape cursor on startup.
-# preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
-
-#############################################################
-# NOTE: HASKELL
-#############################################################
-
-# . ~/.ghcup/env
-
-# [ -f ~/.zshrc.local ] && source ~/.zshrc.local
-# [ -f "/Users/hjalmarjakobsson/.ghcup/env" ] && source "/Users/hjalmarjakobsson/.ghcup/env" # ghcup-env
-
 
 #############################################################
 # NOTE: RVM is a special snowflake and needs to be last, WHY?!
@@ -203,8 +123,8 @@ fi
 
 
 
-# local secrets and settings
-[[ -f $DOTFILES.local/zsh/zshrc.local.zsh ]] && . $DOTFILES.local/zsh/zshrc.local.zsh
+# # local secrets and settings
+# [[ -f $DOTFILES.local/zsh/zshrc.local.zsh ]] && . $DOTFILES.local/zsh/zshrc.local.zsh
 
 # # done profiling
 # [[ $ZPROF != true ]] || { unset ZPROF && zprof }
@@ -290,6 +210,3 @@ fi
 
 # # Load syntax highlighting; should be last.
 # source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
-
-# NOTE: To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
-[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh

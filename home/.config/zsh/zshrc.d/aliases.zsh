@@ -2,8 +2,6 @@
 alias xxx="exec zsh"
 alias k="clear"
 alias mm="man man"
-alias drs="dirs -v"
-alias l="ls -al"
 alias tt="ttyper"
 
 alias dbm="rake db:migrate && RAILS_ENV=test rake db:migrate"
@@ -331,6 +329,8 @@ alias ZZ=exit
 # # more ways to ls
 alias ll='ls -lFh'
 # alias l='ls -F'
+alias drs="dirs -v"
+alias l="ls -la"
 alias la='ls -lAFh'
 alias ldot='ls -ld .*'
 
