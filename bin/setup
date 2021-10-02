@@ -9,7 +9,9 @@ source "${BASH_SOURCE%/*}/../lib/_"
 # for all installers here
 
 # ./bootstrap
+
 git submodule update --init --recursive || exit 1
+
 ./symlink
 
 # ESSENTIALS #############################
@@ -38,13 +40,13 @@ require_installer neovim
 
 ##########################################
 
-require_installer mac-apps
+# require_installer mac-apps
 require_installer hammerspoon
 require_installer ubersicht
 require_installer theming
 # require_installer monitor
 # require_installer backups
-# require_installer keyboard # promp build kmonad yes/no?
+require_installer keyboard
 require_installer webbrowsers
 require_installer chad-ify
 require_installer passwords

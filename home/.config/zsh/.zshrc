@@ -7,6 +7,11 @@ fi
 
 # GITSTATUS_LOG_LEVEL=DEBUG
 
+export TERM=xterm-256color
+
+# Disable auto title so tmux window titles don't get messed up.
+export DISABLE_AUTO_TITLE="true"
+
 # zprof if we ever need to profile
 alias runzprof="ZPROF=true zsh"
 [[ $ZPROF != true ]] || zmodload zsh/zprof
@@ -32,38 +37,7 @@ export ANTIGEN_LOG="${ADOTDIR}/antigen.log"
 export ANTIGEN_DEBUG_LOG="${ADOTDIR}/antigen_debug.log"
 
 #############################################################
-# NOTE: RANDOM SETTINGS
-#############################################################
-
-# Disable auto title so tmux window titles don't get messed up.
-export DISABLE_AUTO_TITLE="true"
-
-# Maintain a stack of cd directory traversals for `popd`
-setopt AUTO_PUSHD
-
-# Allow extended matchers like ^file, etc
-set -o EXTENDED_GLOB
-
-#############################################################
-# NOTE: HISTORY SETTINGS
-#############################################################
-
-export HISTFILE="$XDG_STATE_HOME"/zsh/history
-
-HISTSIZE=100000
-SAVEHIST=100000
-
-setopt append_history
-setopt extended_history
-setopt hist_expire_dups_first
-setopt hist_ignore_dups # ignore duplication command history list
-setopt hist_ignore_space
-setopt inc_append_history
-setopt share_history # share command history data
-setopt extended_glob
-
-#############################################################
-# NOTE: CUSTOM SETTINGS
+# NOTE: LOAD SETTINGS AND FUNCTIONS
 #############################################################
 
 # for file in $HOME/.zsh/secrets/**/*.zsh
@@ -101,16 +75,8 @@ fi
 
 
 
-# NOTE: others below !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
 #######################################################
-# NOTE: MATTRC - PLUGINS ##############################
+# note: MATTRC - PLUGINS ##############################
 #######################################################
 
 # PZ_PLUGIN_HOME="${ZDOTDIR:-$HOME/.config/zsh}/plugins"
@@ -131,11 +97,8 @@ fi
 
 
 #######################################################
-# NOTE: luke ##########################################
+# note: luke ##########################################
 #######################################################
-
-
-
 
 # # Luke's config for the Zoomer Shell
 

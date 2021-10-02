@@ -14,20 +14,16 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 
 ### . ############################ . ###
 
-1. make alacritty output `arm64` on m1.
-2. start using XDG on intel macos
-3. clean up intel macos
-4. update to big sur
+base oceanic next theme on intel mac.
+how is this symlinked??
+
+
+
 
 - gh > create repo from cli
 
 - remove as many if statements as possible
     >>> only use && || with exit codes
-
-5. start using XDG on intel macos
-    symlink zshenv
-6. clean up intel macos
-7. update to big sur
 
 brew environment variables man: https://docs.brew.sh/Manpage#environment
 
