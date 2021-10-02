@@ -2,69 +2,66 @@
 
 source "${BASH_SOURCE%/*}/../lib/_"
 
-# NOTE: SETUP
-#
-# look at mattmc's dotfiles
-# how can i create yes/no prompts
-# for all installers here
+# INIT STUFF
 
-# ./bootstrap
-
+"./${BASH_SOURCE%/*}/bootstrap"
+pushd $DOTFILES > /dev/null 2>&1
 git submodule update --init --recursive || exit 1
-
-./symlink
-
-# ESSENTIALS #############################
-
-require_installer package-manager
-require_installer terminal
-require_installer tiling
-require_installer files
-require_installer zsh
-
-##########################################
-
-require_installer devtools
-require_installer langs/node
-require_installer git # make sure git becomes completely independent from npm
-require_installer langs/python
-require_installer langs/ruby
-require_installer langs/lua
-require_installer langs/rust
-require_installer langs/go
-require_installer langs/haskell
-# require_installer langs/java
-require_installer fonts
-require_installer tmux
-require_installer neovim
-
-##########################################
-
-# require_installer mac-apps
-require_installer hammerspoon
-require_installer ubersicht
+popd > /dev/null 2>&1
+"./${BASH_SOURCE%/*}/symlink"
 require_installer theming
-# require_installer monitor
-# require_installer backups
-require_installer keyboard
-require_installer webbrowsers
-require_installer chad-ify
-require_installer passwords
-require_installer audio
-require_installer multimedia
-require_installer utils
-require_installer chat
-require_installer calendar
-require_installer email
-require_installer spreadsheets
-require_installer docs
-require_installer crypto
-# ../personal/stuff
 
-# MUSIC ##################################
 
-# require_installer music/reaper
-# require_installer music/ardour
+# # ESSENTIALS #############################
 
-# LAST: PERSONAL PROJECTS ################
+# require_installer package-manager
+# require_installer terminal
+# require_installer tiling
+# require_installer files
+# require_installer zsh
+
+# ##########################################
+
+# require_installer devtools
+# require_installer langs/node
+# require_installer git # make sure git becomes completely independent from npm
+# require_installer langs/python
+# require_installer langs/ruby
+# require_installer langs/lua
+# require_installer langs/rust
+# require_installer langs/go
+# require_installer langs/haskell
+# # require_installer langs/java
+# require_installer fonts
+# require_installer tmux
+# require_installer neovim
+
+# ##########################################
+
+# # require_installer mac-apps
+# require_installer hammerspoon
+# require_installer ubersicht
+# # require_installer monitor
+# # require_installer backups
+# require_installer keyboard
+# require_installer webbrowsers
+# require_installer chad-ify
+# require_installer passwords
+# require_installer audio
+# require_installer multimedia
+# require_installer utils
+# require_installer chat
+# require_installer calendar
+# require_installer email
+# require_installer spreadsheets
+# require_installer docs
+# require_installer crypto
+# # ../personal/stuff
+
+# # MUSIC ##################################
+
+# # require_installer music/reaper
+# # require_installer music/ardour
+
+# # LAST: PERSONAL PROJECTS ################
 

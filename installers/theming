@@ -7,9 +7,7 @@ source "${BASH_SOURCE%/*}/../lib/_"
 # https://www.howtogeek.com/258461/how-to-use-a-screensaver-as-your-background-on-os-x/
 # https://stackoverflow.com/questions/431205/how-can-i-programmatically-change-the-background-in-mac-os-x
 
-require_installer package-manager
-
-dotheader "SETTING UP THEMING.."
+dotheader "SETTING UP WALLPAPER.."
 
 WALLPAPER="$(dotfiles_location)/media/wallpaper/wallpaper2.png"
 
