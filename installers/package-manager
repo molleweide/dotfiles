@@ -74,4 +74,3 @@ buildtools=(
 for package in "${buildtools[@]}"; do
     apt_install "$package"
 done
-u
