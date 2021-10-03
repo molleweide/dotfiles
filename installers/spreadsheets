@@ -5,7 +5,9 @@ source "${BASH_SOURCE%/*}/../lib/_"
 dotheader "SETTING UP SPREADSHEETS.."
 
 require_installer package-manager
+# require_installer langs/lua
 
+# NOTE: xslx support
 # https://github.com/andmarti1424/sc-im/wiki/Install-sc-im-with-xls-support-on-macOS
 
 function install_scim() {
