@@ -17,8 +17,10 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 base oceanic next theme on intel mac.
 how is this symlinked??
 
+walk through everything and make sure shit conforms to xdg
 
 
+move hammerspoon to under config > change this in installer
 
 - gh > create repo from cli
 
