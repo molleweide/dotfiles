@@ -28,15 +28,6 @@ export ZSH="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/zcustom"
 export ZSH_CACHE_DIR="$ZSH/cache"
 
 #############################################################
-# NOTE: PATHS
-#############################################################
-
-export ADOTDIR="${XDG_DATA_HOME:-$HOME/.local/share}/antigen"
-export ANTIGEN_COMPDUMP="${ADOTDIR}/.zcompdump"
-export ANTIGEN_LOG="${ADOTDIR}/antigen.log"
-export ANTIGEN_DEBUG_LOG="${ADOTDIR}/antigen_debug.log"
-
-#############################################################
 # NOTE: LOAD SETTINGS AND FUNCTIONS
 #############################################################
 
