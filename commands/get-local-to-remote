@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+source "$DOROTHY/sources/arrays.bash"
+source "$DOROTHY/sources/strict.bash"
+if test "$ARRAYS" = 'no'; then
+	exit 95 # Operation not supported
+fi
+
+# dependencies
+env QUIET=y setup-util-ripgrep
+
+# act
+target="${1:?"USAGE: get-local-to-remote <locally-mounted-path>"}"
+mapfile -t remotes < <(get-volumes --remote | echo-nonempty)
+if is-array-empty "${remotes[@]}"; then
+	stderr echo 'there were no remote volumes to convert to'
+	exit 1
+fi
+
+result=''
+for remote in "${remotes[@]}"; do
+	mapfile -t parts < <(echo-split $'\t' -- "$remote")
+	volume="${parts[0]}"
+	# shellcheck disable=SC2016
+	path="$(echo "$target" | rg '^'"$volume"'(.+)' --replace '$1' || echo '')"
+	if test -n "$path"; then
+		server="${parts[1]}"
+		directory="${parts[2]}"
+		result="$server:$directory$path"
+		break
+	fi
+done
+
+if test -n "$result"; then
+	echo "The local to remote conversion for [$target] will probably be something like these, but not these, as the username will be a local login username, and the mount point will be the local mount point rather than the remote mount point, as such, these are only suggestions to guide what the correct combination could be:"
+	echo
+	echo "$result"
+	echo
+	echo "$result" | rg --color never '(.+)@(.+?)([.].+)?:(.+)' --replace 'a-login-user@$2:/mnt$4'
+else
+	exit 1
+fi

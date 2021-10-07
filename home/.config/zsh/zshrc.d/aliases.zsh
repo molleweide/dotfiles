@@ -4,12 +4,12 @@ alias k="clear"
 alias mm="man man"
 alias tt="ttyper"
 
-alias dbm="rake db:migrate && RAILS_ENV=test rake db:migrate"
+# alias dbm="rake db:migrate && RAILS_ENV=test rake db:migrate"
 alias j=z # I'm used to autojump 'j' vs fasd 'z'
 alias less="less -r"
-alias sketch="magick $1 \( -clone 0 -negate -blur 0x5 \) -compose colordodge -composite -modulate 100,0,100 -auto-level $2"
-alias srync="rsync -vrazh"
-alias emacs="TERM=xterm-24bit emacs -nw"
+# alias sketch="magick $1 \( -clone 0 -negate -blur 0x5 \) -compose colordodge -composite -modulate 100,0,100 -auto-level $2"
+# alias srync="rsync -vrazh"
+# alias emacs="TERM=xterm-24bit emacs -nw"
 alias cl="calcurse"
 
 alias duu="diskutil" # list commands

@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+if test -n "$FISH_VERSION"; then
+	type --quiet "$1"
+else
+	silent type "$1"
+fi

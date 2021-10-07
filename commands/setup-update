@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+source "$DOROTHY/sources/strict.bash"
+
+# pre-requisites
+setup-essentials
+
+# perform the update
+if is-mac; then
+	setup-mac update
+elif is-linux; then
+	setup-linux update
+fi

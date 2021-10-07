@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+source "$DOROTHY/sources/essentials.sh"  # provides NVM_DIR if nvm already installed
+if test -z "$NVM_DIR"; then
+	export NVM_DIR="$HOME/.nvm"
+fi
+# source "$DOROTHY/sources/strict.bash"  # nvm prevents strict from working: .nvm/nvm.sh: line 1966: TMPDIR: unbound variable
+
+# Wiping nvm
+if is-dir "$NVM_DIR" && confirm-negative "\nClean NVM installation? [$NVM_DIR]"; then
+	ok rm -Rf "$NVM_DIR"
+fi
+
+# Setup system node for global installs and vscode on mac
+if is-brew; then
+	echo -e '\nInstalling system node...'
+	brew reinstall node
+	npm cache clean --force
+	brew cleanup
+	echo '...system node installed!'
+fi
+
+# Reinstalling nvm
+echo -e '\nInstalling nvm...'
+# install nvm
+if is-dir "$NVM_DIR"; then
+	cd "$NVM_DIR" || exit 1
+else
+	mkdir -p "$NVM_DIR"
+	cd "$NVM_DIR" || exit 1
+	git init
+	git remote add origin https://github.com/nvm-sh/nvm.git
+fi
+# ensure git remote is usable
+git-protocol-ensure || exit 1
+# update
+git fetch --tags origin || exit 1
+# shellcheck disable=SC2006,SC2046
+git checkout "$(git describe --abbrev=0 --tags --match "v[0-9]*" "$(git rev-list --tags --max-count=1)")" || exit 1
+# load nvm
+source "$DOROTHY/sources/nvm.sh"
+echo '...nvm installed!'
+
+echo -e '\nInstalling nvm node versions...'
+nvm install node || exit 1 # latest active
+nvm-2596 install --lts || exit 1 # latest LTS
+echo '...nvm node versions installed!'
+
+echo -e '\nConfiguring default node version...'
+if is-brew; then
+	nvm alias default system
+else
+	# use latest lts
+	nvm alias default stable
+	# use current lts: "$(nvm version-remote --lts)"
+fi
+nvm use default
+echo '...success!'
+
+echo -e '\nUpgrading npm...'
+npm install -g npm --force
+echo '...upgraded npm!'
+
+# https://github.com/yarnpkg/yarn/issues/2993
+function act () {
+	echo -e "\nInstalling $# global npm packages..."
+	env NAME="npm:$*" NPM="$*" setup-util npm
+}
+if test -v 'NODE_INSTALL'; then
+	act "${NODE_INSTALL[@]}"
+fi
+
+echo -e '\nConfiguring npm...'
+npm config set init.author.name "$(ask --question="What is your name?" --default="$(npm config get init.author.name)" --required --confirm)"
+npm config set init.author.email "$(ask --question="What is your email?" --default="$(npm config get init.author.email)" --required --confirm)"
+npm config set init.author.url "$(ask --question="What is your url?" --default="$(npm config get init.author.url)" --required --confirm)"
+npm config set init.license "$(ask --question="What license do you prefer?" --default="$(npm config get init.license)" --required --confirm)"
+echo '...configured npm!'
+
+# Done
+echo -e '\nInstalled Node.js, its versions, and its packages successfully. ✅'

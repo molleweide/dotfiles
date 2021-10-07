@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if test -n "$RANDOM"; then
+	echo "$RANDOM"
+else
+	env QUIET=y setup-util-fish
+	fish -c random
+fi

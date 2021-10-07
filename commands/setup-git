@@ -1,0 +1,158 @@
+#!/usr/bin/env bash
+source "$DOROTHY/sources/essentials.sh"
+source "$DOROTHY/sources/strict.bash"
+
+# Prepare
+if ! is-dir ~/.ssh; then
+	mkdir ~/.ssh
+fi
+if ! is-file ~/.ssh/config; then
+	touch ~/.ssh/config
+fi
+
+# Install
+setup-util-git
+
+# Log
+echo 'Configuring git...'
+
+# General
+git config --global core.excludesfile ~/.gitignore_global
+git config --global push.default simple
+git config --global mergetool.keepBackup false
+git config --global color.ui auto
+if test -n "${GIT_DEFAULT_BRANCH-}"; then
+	git config --global init.defaultBranch "$GIT_DEFAULT_BRANCH"
+fi
+
+# Profile
+git config --global user.name "$(ask --question='What is your name?' --default="$(git config --global user.name)" --require --confirm)"
+git config --global user.email "$(ask --question='What is your email?' --default="$(git config --global user.email)" --require --confirm)"
+git config --global github.user "$(ask --question='What is your GitHub username?' --default="$(git config --global github.user)" --require --confirm)"
+
+# Editor
+echo "Git Configuration: Editor"
+if test -n "${TERMINAL_EDITOR_PROMPT-}"; then
+	git config --global core.editor "$TERMINAL_EDITOR_PROMPT"
+elif test -n "${TERMINAL_EDITOR-}"; then
+	git config --global core.editor "$TERMINAL_EDITOR"
+elif test -n "${EDITOR-}"; then
+	git config --global core.editor "$EDITOR"
+fi
+
+# Merge tool
+if command-exists meld; then
+	echo "Git Configuration: Meld"
+	git config --global diff.tool meld
+	git config --global merge.tool meld
+elif is-mac; then
+	echo "Git Configuration: OpenDiff"
+	git config --global diff.tool opendiff
+	git config --global merge.tool opendiff
+fi
+
+# Authentication
+# Use MacOS Credential Helper if available, otherwise default to time cache
+if is-mac; then
+	echo "Git Configuration: MacOS"
+	git config --global credential.helper osxkeychain
+	git config --global difftool.prompt false
+	# http://apple.stackexchange.com/a/254619/15131
+	if ! silent grep 'AddKeysToAgent yes' <~/.ssh/config; then
+		echo "Git Configuration: AddKeysToAgent"
+		printf '\nAddKeysToAgent yes' >>~/.ssh/config
+	fi
+else
+	echo "Git Configuration: Linux"
+	git config --global credential.helper 'cache --timeout=86400'
+fi
+
+# Protocol
+# https://hub.github.com/hub.1.html
+# https://stackoverflow.com/a/22027731/130638
+# do not do .insteadof changes, as it messes with our git-protocol-* commands
+protocol="$(choose-option --confirm --question='Which git protocol to prefer?' --filter="${GIT_PROTOCOL:-"${HUB_PROTCOL-}"}" -- ssh https manual)"
+if test "$protocol" = "ssh"; then
+	echo "Git Protocol: SSH"
+	git config --global hub.protocol ssh
+elif test "$protocol" = "https"; then
+	echo "Git Protocol: HTTPS"
+	git config --global hub.protocol https
+else
+	echo "Git Protocol: Manual"
+	ok git config --global --unset hub.protocol
+fi
+
+# GPG
+function gpg_enabled {
+	git config --global tag.gpgsign true
+	git config --global commit.gpgsign true
+	# git config --global push.gpgsign true
+	# ^ github doesn’t support this with:
+	# fatal: receiving end does not support --signed push
+	# fatal: the receiving end does not support --signed push
+
+	if silent grep "no-tty" "$HOME/.gnupg/gpg.conf"; then
+		echo "no-tty" >>"$HOME/.gnupg/gpg.conf"
+		# ^ http://github.com/isaacs/github/issues/675
+	fi
+	echo "Git Configuration: GPG: Enabled"
+}
+function gpg_disabled {
+	ok git config --global --unset tag.gpgsign
+	ok git config --global --unset commit.gpgsign
+	ok git config --global --unset user.signingkey
+	echo "Git Configuration: GPG: Disabled"
+}
+function gpg_krypton {
+	git config --global gpg.program "$(command -v krgpg)"
+	ok git config --global --unset user.signingkey
+}
+function gpg_key {
+	if is-empty-string "$1"; then
+		stderr echo "Git Configuration: No GPG signing key found"
+		return 1
+	fi
+	echo "Git Configuration: GPG: Key: $1"
+	git config --global gpg.program "$(command -v gpg)"
+	git config --global user.signingkey "$1"
+	if is-mac; then
+		echo "Git Configuration: GPG: Pinentry"
+		agent_file="$HOME/.gnupg/gpg-agent.conf"
+		touch "$agent_file"
+		if ! command-exists pinentry-mac; then
+			if is-brew; then
+				brew install pinentry-mac
+			fi
+		fi
+		if grep 'pinentry-program' <"$agent_file"; then
+			echo 'already configured'
+		else
+			echo "pinentry-program $(command -v pinentry-mac)" >>"$agent_file"
+		fi
+	fi
+}
+function gpg_setup {
+	echo -e "\\nGit Configuration: GPG"
+	ok silent killall gpg-agent
+	ok silent killall gpg
+	if test -n "${GPG_SIGNING_KEY-}"; then
+		if test "$GPG_SIGNING_KEY" = "krypton"; then
+			gpg_krypton
+		else
+			gpg_key "$GPG_SIGNING_KEY"
+		fi
+	else
+		if test "${KRYPTON_GPG-}" != "no" && command-exists krgpg && (test "${KRYPTON_GPG-}" = "yes" || confirm-positive 'Use Krypton for GPG?'); then
+			gpg_krypton
+		else
+			echo "Available GPG Keys:"
+			key list private
+			echo "GPG Key Selection:"
+			gpg_key "$(ok key get private)"
+		fi
+	fi
+}
+if command-exists gpg; then
+	(gpg_setup && gpg_enabled) || gpg_disabled
+fi

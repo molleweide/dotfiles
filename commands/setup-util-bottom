@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+source "$DOROTHY/sources/strict.bash"
+
+# https://github.com/ClementTsang/bottom
+# top alternative
+
+env NAME='bottom' CLI=btm \
+	AUR='bottom-bin' \
+	BREW='clementtsang/bottom/bottom' \
+	CARGO=bottom \
+	DNF_COPR='atim/bottom' \
+	DNF=bottom \
+	EOPKG=bottom \
+	NIX=bottom \
+	PORT=bottom \
+	SCOOP=bottom \
+	WINGET=bottom \
+	EMERGE_EVAL='
+		sudo eselect repository enable guru
+		sudo emerge --sync guru
+		echo "sys-process/bottom" | sudo tee /etc/portage/package.accept_keywords/10-guru
+		sudo emerge sys-process/bottom::guru
+	' \
+	setup-util

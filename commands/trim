@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+source "$DOROTHY/sources/strict.bash"
+
+skip=true
+while read i; do
+	if $skip; then
+		if test -z "$i"; then
+			continue
+		else
+			skip=false
+		fi
+	fi
+	echo "$i"
+done

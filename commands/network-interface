@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+source "$DOROTHY/sources/strict.bash"
+
+interface="$1"
+action="$(choose-option --question='Which action do you wish to take?' --filter="${2-}" -- up down restart)"
+
+# recurse if restart
+if test "$action" = 'restart'; then
+	network-interface "$interface" down
+	network-interface "$interface" up
+	exit 0
+fi
+
+# https://archlinux.org/news/deprecation-of-net-tools/
+# https://wiki.archlinux.org/title/Network_configuration#net-tools
+if command-exists ip; then
+	sudo ip link set "$interface" "$action"
+	sleep 1
+else
+	# prep
+	env QUIET=y setup-util-netscript
+
+	# act
+	if test "$action" = 'up'; then
+		sudo ifup "$interface"
+		sleep 1
+	elif test "$action" = 'down'; then
+		sudo ifdown "$interface"
+		sleep 1
+	else
+		stderr echo "invalid action [$action]"
+		exit 1
+	fi
+fi

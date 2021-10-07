@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+source "$DOROTHY/sources/strict.bash"
+
+# https://github.com/pemistahl/grex
+# regexp builder
+
+env CLI='grex' \
+	BREW='grex' \
+	CARGO='grex' \
+	CHOCO='grex' \
+	HUBER='grex' \
+	SCOOP='grex' \
+	setup-util

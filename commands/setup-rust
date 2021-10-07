@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+source "$DOROTHY/sources/essentials.sh"
+source "$DOROTHY/sources/strict.bash"
+
+if is-brew; then
+	echo
+	echo 'Cleaning any homebrew rust installs, so we can install rust the preferred way..'
+	brew uninstall -qf rustup rust
+fi
+
+function act () {
+	echo
+	echo "Intalling $# rust crates to the cargo target... ⏲"
+	log-performance
+	for line in "$@"; do
+		env NAME="cargo:$line" CARGO="$line" setup-util cargo
+	done
+}
+
+echo
+echo 'Installing ecosystem dependencies...'
+setup-util-build
+
+echo
+echo 'Intalling rustup, which is the recommended rust installer...'
+if command-exists rustup; then
+	rustup update
+else
+	# https://rust-lang.github.io/rustup/installation/other.html
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path
+fi
+
+# install cargos
+if test -v 'RUST_INSTALL'; then
+	act "${RUST_INSTALL[@]}"
+fi
+
+echo
+echo 'Rust has been setup.'

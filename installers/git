@@ -9,7 +9,7 @@ dotheader "SETTING UP GIT..."
 require_installer package-manager
 
 function setup_user_gitconfig() {
-    if [ ! -f ~/.gitconfig.user ]; then
+    if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitconfig.user" ]; then
 
         printf "What is your GitHub username? > "
         read github_user
