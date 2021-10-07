@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# you should use `test -v 'name'`` instead of this
+
+test -n "${1-}"

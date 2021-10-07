@@ -3,9 +3,9 @@ source "$DOTFILES/sources/strict.bash"
 source "$DOTFILES/sources/globstar.bash"
 source "$DOTFILES/sources/nullglob.bash"
 
-# if test "$NULLGLOB" = 'no' -o "$GLOBSTAR" = 'no'; then
-# 	exit 95 # Operation not supported
-# fi
+if test "$NULLGLOB" = 'no' -o "$GLOBSTAR" = 'no'; then
+	exit 95 # Operation not supported
+fi
 
 # perform the act
 cd "$DOROTHY" || exit 2 # No such file or directory
@@ -13,11 +13,9 @@ cd "$DOROTHY" || exit 2 # No such file or directory
 # user/secrets may need sudo
 echo 'correcting permissions...'
 
-
-# chmod-partial -f +rwx -- ./**
-# chmod-partial -f -x -- ./**/*.md ./sources/*.* ./user/**/*.*
-# chmod-partial -f +x -- ./**/commands/*
-chmod -f +x ./commands/*
+chmod-partial -f +rwx -- ./**
+chmod-partial -f -x -- ./**/*.md ./sources/*.* ./user/**/*.*
+chmod-partial -f +x -- ./**/commands/*
 
 echo 'stage new files...'
 ok silent git add --ignore-errors ./**
@@ -27,7 +25,7 @@ ok git add -u
 
 echo 'unstage sensitive files...'
 # prevent [git add ./*.sh] from adding [env.*] if it exists
-mkdir -p ./user/env
+# mkdir -p ./user/env
 silent git rm --ignore-unmatch --cached -r ./**/env/
 silent git rm --ignore-unmatch --cached ./**/env.*
 
