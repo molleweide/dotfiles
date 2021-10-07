@@ -26,7 +26,13 @@ function install_surfingkeys() {
         $HOME/code/web          \
         "Surfingkeys"           \
         git@github.com:molleweide/Surfingkeys.git
-    }
+
+    pushd $HOME/code/web/Surfingkeys > /dev/null 2>&1
+    git checkout molleweide
+    npm install
+    npm run build
+    popd > /dev/null 2>&1
+}
 
 # TODO: why this have to be under common-lisp?
 #       it would be nice to but under code/apps/nyxt
@@ -69,7 +75,7 @@ install_firefox() {
 }
 install_firefox_dev() {
     local url="https://download.mozilla.org/?product=firefox-devedition-latest-ssl&os=osx&lang=en-US"
-    install_simple_dmg_copy "Firefox Dev" "$url"
+    install_simple_dmg_copy "Firefox Developer Edition" "$url"
 }
 install_brave() {
     if is_macos; then
@@ -78,7 +84,7 @@ install_brave() {
             install_simple_dmg_copy "Brave" "$url"
         else
             local url="https://laptop-updates.brave.com/latest/osx/release"
-            install_simple_dmg_copy "Brave" "$url"
+            install_simple_dmg_copy "Brave Browser" "$url"
         fi
     fi
 }
@@ -86,10 +92,10 @@ install_brave() {
 dotheader "SETTING UP WEB BROWSERS.."
 
 if is_macos; then
-    require_installer package-manager
+    # require_installer package-manager
 
-    install_firefox
-    install_firefox_dev
+    # install_firefox
+    # install_firefox_dev
     install_brave
     # install_vivaldi
     brew_cask_install qutebrowser
