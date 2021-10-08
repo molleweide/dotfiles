@@ -1,152 +1,103 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../../lib/_"
+echo-header "SETTING UP DAW REAPER.."
 
-dotheader "MUSIC: SETTING UP REAPER.."
+read -r -p "Do you want to install portable Cockos Reaper to $REAPER_DIR/app? [y|N] " response
 
-
-# 1. make sure reaper works on intel mac.
-#     test reaper623
-#         make sure reaper keys work
-#     test reaper 625
-# 2. update to latest version.
-#     duplicate reaper 625 -> reaper
-#         rename app and dir to reaper
-# 3. make latest version into `molleweide` branch
-# 4. mv old reaper script to old folder.
-# 5. update `reaper` to use molleweide
-#     check is_mac && intel/silicone
-# 5. test this on intel
-# 6. install on M1
-# 7. reaper cli?
-
+[[ $response =~ (y|yes|Y) ]] || exit 1
 
 REAPER_DIR=~/reaper
 
-function get_current_reaper_version() {
-  # get first line of brew command
-  rppv=$(brew info reaper | head -n 1)
+rppv=$(brew info reaper | head -n 1) # get first line of brew command
 
-  if [[ $rppv =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
-      rppv=${BASH_REMATCH[0]}
-  else
-      echo "Something is wrong with checking reaper version" >&2
-      rppv="ERROR" # should use bool!!
-  fi
+# match two first numbers in version, and optional last patch number.
+if [[ $rppv =~ [0-9]+\.[0-9]+\.?[0-9]? ]]; then
+    rpp_latest_string=${BASH_REMATCH[0]}
+    echo "Latest reaper version: $rpp_latest_string"
+else
+    echo-color "Something is wrong with checking reaper version. Aborting..." >&2
+    exit 1
+fi
 
-  # return results
-  echo  "reaper-$rppv"
-}
+RPP_LATEST_DIR=$REAPER_DIR/app/rpp-latest
 
+[ -d $RPP_LATEST_DIR ] && echo-red ">>> Reaper is already installed to `$RPP_LATEST_DIR`." && exit 1
 
-function setup_necessary_dirs(){
-    if [ ! -d $REAPER_DIR/projects ]; then
-        mkdir -p $REAPER_DIR/projects
-    fi
-    if [ ! -d $REAPER_DIR/tmp ]; then
-        mkdir -p $REAPER_DIR/tmp
-    fi
-    if [ ! -d $REAPER_DIR/backup ]; then
-        mkdir -p $REAPER_DIR/backup
-    fi
-}
+read -r -p "Are you sure you want to proceed with installing reaper to $RPP_LATEST_DIR? [y|N] " response
 
+[[ $response =~ (y|yes|Y) ]] || exit 1
 
-function install_reaper_linux() {
-    echo "reaper linux install not done yet."
-}
+########################################################################
+########################################################################
 
-function mac_installer() {
-    tmp_dir=$REAPER_DIR/git_clone_helper
+echo-green "Installing latest version to $RPP_LATEST_DIR"
 
-    original="REAPER64.app"
+export PATH="$PATH:$RPP_LATEST_DIR"
 
-    mkdir -p $1
+# mkdir -p $REAPER_DIR/app
+# mkdir -p $REAPER_DIR/projects
+# mkdir -p $REAPER_DIR/tmp
+# mkdir -p $REAPER_DIR/backup
 
-    # 1. install reaper to target dir and rename to latest version
-    brew install --cask reaper --appdir=$1 --force
-    $(mv $1/$original "$1/$2.app")
+# original="REAPER64.app"
+# tmp_dir=$(mkdtemp $REAPER_DIR)
 
-    # 2. clone git to tmp dir and move it to reaper
-    # TODO stack running sudmodules in script not working???
-    # --recurse-submodules # doesn't seem to be working now?! it did before...
-    git clone https://github.com/molleweide/reaper-app-config.git $tmp_dir
-    mv $tmp_dir/.git $1/.git
-    rm -r $tmp_dir # be careful
+# # INSTALL REAPER TO TARGET DIR AND RENAME TO LATEST VERSION
+# mkdir -p $RPP_LATEST_DIR
+# brew install --cask reaper --appdir=$RPP_LATEST_DIR --force
+# $(mv $RPP_LATEST_DIR/$original "$RPP_LATEST_DIR/rpp-latest.app")
 
-    # 3. NAVIGATE TO (pushd/popd) REAPER INSTALL DIR AND RESTORE GIT
-    pushd $1 > /dev/null 2>&1
+# # CLONE GIT TO TMP DIR AND MOVE IT TO REAPER
+# git clone https://github.com/molleweide/reaper-app-config.git $tmp_dir
+# mv $tmp_dir/.git $RPP_LATEST_DIR/.git
+# rm -r $tmp_dir # be careful
 
-    # :: RPP CONFIGS  ::
-    major=$(echo $2 | cut -c8-8)
-    minor=$(echo $2 | cut -c10-11)
-    patch=$(echo $2 | cut -c13-14)
-    latest_branch_name="v$major.$minor.$patch"
-    # latest_branch_name="arstststttt" # force else
-    latest_exist=$(git ls-remote --heads git@github.com:molleweide/reaper-app-config.git $latest_branch_name)
-    if [[ $latest_exist == *"$latest_branch_name"* ]]; then
-        dotsay "latest version repo exists"
-        git checkout $latest_branch_name
-        git reset --hard HEAD
-    else
-        for ((i = 1 ; i < 6 ; i++)); do
-            most_recent="v$major.$(($minor-$i)).$patch"
-            most_recent_exists=$(git ls-remote --heads git@github.com:molleweide/reaper-app-config.git $most_recent)
-            if [[ $most_recent_exists == *"$most_recent"* ]]; then
-                break
-            fi
-        done
-        dotsay "Most recent existing version: $most_recent"
-        git checkout $most_recent
-        git reset --hard HEAD
-        git checkout -b $latest_branch_name
-        # git push
-    fi
+# # get reaper version numbers
+# major=$(echo $rpp_latest_string | cut -c8-8)
+# minor=$(echo $rpp_latest_string | cut -c10-11)
+# patch=$(echo $rpp_latest_string | cut -c13-14)
 
-    git submodule update --init --recursive
+# # NAVIGATE TO (pushd/popd) REAPER INSTALL DIR AND RESTORE GIT
+# pushd $RPP_LATEST_DIR > /dev/null 2>&1
 
-    # :: GIT SUBMODULES ::
-    #
-    # 1. SCRIPTS
-    cd Scripts/reaper-keys
-    git checkout molleweide
-    cd ../..
+# git checkout rpp-latest
+# git reset --hard HEAD
 
-    # 2. JSFX
-    cd Effects/molleweide
-    git checkout molleweide
-    cd ../..
+# git submodule update --init --recursive
 
-    # 3. theme
-    cd ColorThemes
-    git checkout molleweide
-    cd ..
+# # submodule branches
+# cd Scripts/reaper-keys && git checkout molleweide && cd ../..
+# cd Effects/molleweide && git checkout molleweide && cd ../..
+# cd ColorThemes && git checkout molleweide && cd ..
 
-    popd > /dev/null 2>&1
-}
-
-# get latest version number > pass to insaller
-function install_reaper_mac() {
-    read -r -p "Do you want to install portable Cockos Reaper to $REAPER_DIR/app? [y|N] " response
-    if [[ $response =~ (y|yes|Y) ]]; then
-
-        rpp_latest=$(get_current_reaper_version)
-        REAPER_INSTALL_DIR="$REAPER_DIR/app/$rpp_latest"
+# popd > /dev/null 2>&1
 
 
-        if [ ! -d $REAPER_INSTALL_DIR ]; then
+############################################################################
+############################################################################
+############################################################################
+############################################################################
+############################################################################
+############################################################################
+############################################################################
 
-            dotsay "Installing latest version to $REAPER_INSTALL_DIR"
-            mac_installer $REAPER_INSTALL_DIR $rpp_latest
+# # check remote version branch names
+# latest_exist=$(git ls-remote --heads git@github.com:molleweide/reaper-app-config.git $latest_branch_name)
 
-        else
+# if [[ $latest_exist == *"$latest_branch_name"* ]]; then
+    # echo-color "latest version repo exists"
 
-            dotsay ">>> Latest version of reaper is installed to $REAPER_INSTALL_DIR"
-
-        fi
-    fi
-
-    setup_necessary_dirs
-}
-
-(is_macos && install_reaper_mac) || install_reaper_linux
+# else
+#     for ((i = 1 ; i < 6 ; i++)); do
+#         most_recent="v$major.$(($minor-$i)).$patch"
+#         most_recent_exists=$(git ls-remote --heads git@github.com:molleweide/reaper-app-config.git $most_recent)
+#         if [[ $most_recent_exists == *"$most_recent"* ]]; then
+#             break
+#         fi
+#     done
+#     dotsay "Most recent existing version: $most_recent"
+#     git checkout $most_recent
+#     git reset --hard HEAD
+#     git checkout -b $latest_branch_name
+#     # git push
+# fi
