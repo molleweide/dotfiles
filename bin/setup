@@ -55,6 +55,6 @@ require_installer theming
 # require_installer spreadsheets
 # require_installer docs
 # require_installer crypto
-# require_installer daw-reaper
+# require_installer reaper
 # ../personal/stuff
 

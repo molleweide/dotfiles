@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# git checkout -b rpp-{current-version}
+# mv rpp_latest.app rpp_{current-version}
+# cd ..
+# mv rpp_latest rpp_{current-version}
+echo-color "@b@blue[[ reaper mv old... ]]"

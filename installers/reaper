@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+echo-header "SETUP REAPER"
+
+export REAPER_DIR=~/reaper
+export RPP_LATEST_DIR=$REAPER_DIR/app/rpp-latest
+export PATH="$PATH:$RPP_LATEST_DIR"
+
+if reaper-exists; then
+
+    if reaper-has-new-version; then
+
+        echo-red "Your version of Reaper is outdated." && exit 1
+
+        read -r -p "Do you want to update Reaper to the latest version? [y|N] " response
+
+        [[ $response =~ (y|yes|Y) ]] || exit 1
+
+        reaper-mv-outdated
+        reaper-install-latest
+
+    else
+        reaper-pull
+    fi
+
+else
+
+    read -r -p "Do you want to install Reaper to $RPP_LATEST_DIR? [y|N] " response
+    [[ $response =~ (y|yes|Y) ]] || exit 1
+
+    reaper-install-latest
+fi
