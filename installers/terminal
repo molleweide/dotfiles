@@ -1,50 +1,22 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
+echo-header "SETTING UP TERMINAL.."
 
-#
-# NOTE: TERMINAL
-#
+if is-mac; then
 
-require_installer package-manager
+    brew install --cask alacritty
+    brew install --cask kitty
 
-dotheader "SETTING UP TERMINAL.."
+    if command-exists "alacritty"; then
+        echo-color "@blue@b[[+ Installing Alacritty terminfo ]]"
+        git clone https://github.com/alacritty/alacritty.git /tmp/alacritty
+        cd /tmp/alacritty
+        sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
+        cd $HOME
+        rm -fr /tmp/alacritty
+    fi
 
-if is_macos; then
-  brew_cask_install alacritty
-  brew_cask_install kitty
-  brew_install most # man page colorized
-elif is_linux; then
-
-  # is this only for ubuntu??
-  sudo add-apt-repository ppa:aslatter/ppa
-
-  # install instructions
-  # https://github.com/alacritty/alacritty/blob/master/INSTALL.md
-  # it is a bit messy to build alacritty
-
-  apt_install alacritty
-  apt_install most
+    # get fucking bent, Catalina | what is this??
+    xattr -r -d com.apple.quarantine /Applications/Alacritty.app
 fi
-
-
-function install_terminfo() {
-  if ! command_exists "alacritty"; then
-    git clone https://github.com/alacritty/alacritty.git /tmp/alacritty
-    cd /tmp/alacritty
-
-    dotsay "@b@blue[[+ Installing Alacritty terminfo]]"
-    sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
-
-    cd $HOME
-    rm -fr /tmp/alacritty
-  fi
-}
-
-# TODO: what is this??
-install_terminfo
-
-# get fucking bent, Catalina
-# TODO: what is this??
-xattr -r -d com.apple.quarantine /Applications/Alacritty.app
 

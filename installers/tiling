@@ -1,50 +1,35 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
 
-# NOTE: TILING AND WINDOW MANAGEMENT
-
-
-# - prereq brew install jq
-
+echo-header "SETTING UP TILING.."
 
 function install_limelight() {
     local install_dir=$HOME/code/tools
-    dotlib_git_clone_recursive  \
-        $install_dir            \
-        "limelight"       \
+    git_clone_recursive \
+        $install_dir    \
+        "limelight"     \
         git@github.com:molleweide/limelight.git
 
     pushd $install_dir/limelight > /dev/null 2>&1
     make
     popd $dest> /dev/null 2>&1
+
+    # TODO: symlink-create
     ln -s $install_dir/limelight/bin/limelight /usr/local/bin/limelight
 }
 
+if is-mac; then
 
-dotheader "SETTING UP TILING.."
+    brew install jq
+    brew tap koekeishiya/formulae
+    brew install yabai
+    brew tap koekeishiya/formulae
+    brew install skhd
 
-if is_macos; then
-    require_installer package-manager
-    brew_install jq
-    brew_tap koekeishiya/formulae
-    brew_install yabai
-    brew_tap koekeishiya/formulae
-    brew_install skhd
+    install_limelight
 
-  # fork and look into the code myself
-  #   -> rm borders completely
-  install_limelight
-  # uebersicht yabai
-  brew services start skhd
-  brew services start yabai
-
-elif is_linux; then
-
-    source_dir=$HOME/code/dwm
-    git clone https://github.com/LukeSmithxyz/dwm $source_dir
-    pushd $source_dir > /dev/null 2>&1
-    sudo make install
-    popd > /dev/null 2>&1
+    # uebersicht yabai
+    brew services start skhd
+    brew services start yabai
 
 fi

@@ -1,35 +1,25 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
+echo-header "SETTING UP GIT..."
 
-# NOTE: git
-
-dotheader "SETTING UP GIT..."
-
-require_installer package-manager
-
-function setup_user_gitconfig() {
-    if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitconfig.user" ]; then
-
-        printf "What is your GitHub username? > "
-        read github_user
-        git config -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitconfig.user" github.user "$github_user"
-
-
-        printf "What is your full name for commit messages (e.g. Jane Smith)? > "
-        read git_name
-        git config -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitconfig.user" user.name "$git_name"
-
-
-        printf "What is your git email? (e.g. blah@blah.com) > "
-        read git_email
-        git config -f "${XDG_CONFIG_HOME:-$HOME/.config}/gitconfig.user" user.email "$git_email"
-
-    fi
-}
-
-install_package "git"
+brew install git
 npm install -g diff-so-fancy
-brew_install jesseduffield/lazygit/lazygit
-# setup_git_scripts # this was probably symlinked with local/bin
-setup_user_gitconfig
+brew install jesseduffield/lazygit/lazygit
+
+if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" ]; then
+
+    printf "What is your GitHub username? > "
+    read github_user
+    git config -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" github.user "$github_user"
+
+
+    printf "What is your full name for commit messages (e.g. Jane Smith)? > "
+    read git_name
+    git config -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" user.name "$git_name"
+
+
+    printf "What is your git email? (e.g. blah@blah.com) > "
+    read git_email
+    git config -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" user.email "$git_email"
+
+fi

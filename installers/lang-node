@@ -1,76 +1,16 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../../lib/_"
+echo-header "SETTING UP NODE.."
 
-# We need to hook RVM's cd function to get auto-cd with nvm
-require_installer langs/ruby
-
-function source_nvm() {
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
-}
-
-function install_nvm() {
-  if [ ! -d ~/.nvm ]; then
+# install nvm
+if [ ! -d $NVM_DIR ]; then
     curl -o- \
-      https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
-
-    source_nvm
-
-    nvm install stable
-  fi
-}
-
-function install_yarn_linux() {
-  ! is_linux && return 1
-
-  if ! command_exists "yarn"; then
-    # Force Node 9.x
-    sudo apt-get remove -y nodejs
-    curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
-
-    # Add yarn repository
-    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | \
-      sudo apt-key add -
-
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | \
-      sudo tee /etc/apt/sources.list.d/yarn.list
-
-    apt_update
-    apt_install nodejs
-    apt_install yarn
-  fi
-}
-
-# TODO: what the fuck is this and why is the file unders zsh?!
-# function install_after_cd_nvm_hook_to_rvm() {
-#
-#   local hook_file=$HOME/.rvm/hooks/after_cd_nvm
-#
-#   if [ ! -f $HOME/rvm ]; then
-#     echo "Installing after_cd_nvm hook to RVM..."
-#     # symlink_dotfile home/.rvm/hooks/rvm/after_cd_nvm "$hook_file"
-#   fi
-# }
-
-# function install_nodenv() {
-#   brew_install nodenv
-#   brew upgrade node-build
-#   nodenv init
-#   nodenv install 8.11.3
-#   nodenv install 10.16.0
-#   nodenv global 10.16.0
-# }
-
-dotheader "SETTING UP NODE.."
-
-if use_nvm; then
-  install_nvm
-  source_nvm
-  # install_after_cd_nvm_hook_to_rvm
-# else
-#   install_nodenv
+        https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
 fi
 
-brew_install yarn
-install_yarn_linux
+# This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+nvm install stable
+
+brew install yarn

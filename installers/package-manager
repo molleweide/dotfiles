@@ -1,76 +1,42 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
+if is-mac; then
 
-# mv to shared install_aur <package>
-function install_aur_yay() {
-    # https://github.com/Jguer/yay
-    local install_path=$HOME/code/yay
-    local git_src="https://aur.archlinux.org/yay.git"
-    git clone $git_src $install_path
-    pushd $install_path > /dev/null 2>&1
-    makepkg -si
-    popd > /dev/null 2>&1
-}
+    echo-header "Setting up Homebrew..."
 
-function force_openssl_to_homebrew() {
-    if [ $(which openssl) == "/usr/local/opt/openssl/bin/openssl" ]; then
-        dotsay "+ Already forced OpenSSL to Homebrew's version"
-    else
-        dotsay "+ Installing OpenSSL from Homebrew..."
-        brew_install openssl
-        brew link openssl --force
-    fi
-}
-
-###################################################################################
-
-if is_macos; then
-    dotheader "Setting up Homebrew..."
     if test ! $(which brew); then
-        echo "Installing homebrew"
-        if is_apple_silicone; then
-            bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        else
-            ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-        fi
+        echo-green "Installing homebrew"
+        bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         brew update
     fi
-    force_openssl_to_homebrew
-elif is_linux; then
-    dotheader "Setting up Aptitude..."
 
-    # todo \ depending on os pacman,apt,etc...
-    apt_install aptitude
-
-    # if os=arch
-    # yay aur helper
-    # install_aur_yay
-
+    if [ $(which openssl) == "/usr/local/opt/openssl/bin/openssl" ]; then
+        echo-verbose "+ Already forced OpenSSL to Homebrew's version"
+    else
+        echo-bold "+ Installing OpenSSL from Homebrew..."
+        brew install openssl
+        brew link openssl --force
+    fi
 fi
 
-# linux build
-# Apt build
-# /etc/makepkg.conf >>> MAKEFLAGS="-j$(nproc)" # parallell compiling
+# buildtools=(
+#     base-devel
+#     make
+#     cmake
+#     build-essential
+#     libssl-dev
+#     zlib1g-dev
+#     libbz2-dev
+#     libreadline-dev
+#     libsqlite3-dev
+#     wget
+#     curl
+#     llvm
+#     libncurses5-dev
+#     xz-utils
+#     tk-dev
+# )
 
-buildtools=(
-    base-devel
-    make
-    cmake
-    build-essential
-    libssl-dev
-    zlib1g-dev
-    libbz2-dev
-    libreadline-dev
-    libsqlite3-dev
-    wget
-    curl
-    llvm
-    libncurses5-dev
-    xz-utils
-    tk-dev
-)
-
-for package in "${buildtools[@]}"; do
-    apt_install "$package"
-done
+# for package in "${buildtools[@]}"; do
+#     apt_install "$package"
+# done

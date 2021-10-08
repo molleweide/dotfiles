@@ -1,53 +1,30 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
+echo-header "SETTING UP DEVTOOLS..."
 
-dotheader "SETTING UP DEVTOOLS..."
-
-require_installer package-manager
-
-brew_install readline
-apt_install readline
-brew_install xz # general-purpose data compression with high compression ratio
-
-brew_cask_install chromedriver
-apt_install chromium-chromedriver
-
-brew_install fd
-apt_install fd-find
-
-brew_install postgres
-apt_install postgresql
-
-# comes with linux??
-brew_install coreutils
-apt_install coreutils
-
-brew_install the_silver_searcher
-apt_install silversearcher-ag
-
-brew_install ripgrep
-apt_install ripgrep
-
-install_package sl
-install_package wget
-
-brew_install ack
-apt_install ack-grep
-
-brew_install gnu-tar
-brew_install heroku/brew/heroku
-brew_install hub
-brew_install redis
-brew_install gh
-
-yay -S code-minimap
+brew install ack
+brew install blueutil
 brew install code-minimap
+brew install coreutils
+brew install fd
+brew install gh
+brew install gnu-tar
+brew install heroku/brew/heroku
+brew install hub
+brew install llvm
+brew install most
+brew install postgres
+brew install readline
+brew install redis
+brew install ripgrep
+brew install sl
+brew install the_silver_searcher
+brew install universal-ctags
+brew install wget
+brew install wp-cli
+brew install xz # general-purpose data compression with high compression ratio
 
 heroku plugins:install heroku-repo
 
-brew install wp-cli
-brew_install blueutil
-brew_install universal-ctags
+brew install --cask chromedriver
 
-brew_install llvm

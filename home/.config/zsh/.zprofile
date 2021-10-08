@@ -66,9 +66,10 @@ export LC_ALL="en_US.UTF-8"
 
 export DOTFILES=~/.dotfiles
 export DOROTHY=~/.dotfiles
+export DOTLIB=~/.dotfiles/lib
 export DOTCMD=~/.dotfiles/commands
 export DOTSRC=~/.dotfiles/sources
-export PATH="$DOTFILES/commands:$PATH"  # ensure dorothy accessible for this
+export PATH="$DOTFILES/lib:$DOTFILES/commands:$PATH"  # ensure dorothy accessible for this
 
 # Adds `~/.local/bin` to $PATH
 # export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"

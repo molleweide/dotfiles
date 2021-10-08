@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+# two step process in order to accept array as arg
+# TODO: validate is array
+string=$1
+array=($@)
+
+i=0
+for arr_val in "${array[@]}"; do
+    mod2=$(( $i % 2 == 0 ))
+
+    if [ $i == 0 ]; then
+        # TODO: validate is file/dir
+        install_dir=$arr_val
+        dotsay "@b@cyan[[ INSTALL DIR: \`$install_dir\` ]]\n"
+        mkdir -p $install_dir > /dev/null
+        pushd $install_dir > /dev/null 2>&1
+
+    elif (( ! $mod2 )); then
+        # TODO: validate is string name and NOT git url
+        alt_name=$arr_val
+
+    else
+        # TODO: validate is github url
+        repo_url=$arr_val
+        # dotsay "@b@blue[[ @green$alt_name <- @magenta$repo_url]]"
+        dotlib_git_clone_recursive \
+            $install_dir \
+            $alt_name \
+            $repo_url
+    fi
+
+    i=$((i+1))
+done
+
+popd > /dev/null 2>&1
