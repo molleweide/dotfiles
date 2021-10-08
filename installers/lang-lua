@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../../lib/_"
+echo-header "SETTING UP LUA.."
 
-dotheader "SETTING UP LUA.."
-
-# brew_install lua
-install_package lua
-install_package luarocks
+brew install lua
+brew install luarocks
 
 luarocks install loop
 luarocks install dkjson

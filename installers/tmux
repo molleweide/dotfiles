@@ -1,83 +1,24 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
+echo-header "SETTING UP TMUX..."
 
-# TMUX
-#
 # https://github.com/tmux-plugins/tmux-urlview
-#
-#
 
-require_installer package-manager
+brew install reattach-to-user-namespace # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
+brew install tmux
+brew install urlview # https://github.com/sigpipe/urlview
 
-# function install_tmux_plugin_manager() {
-#     git clone https://github.com/tmux-plugins/tpm \
-#         ~/.tmux/plugins/tpm
-# }
+# TODO: xdg...
+if [ ! -d ~/.tmux/plugins/tpm ]; then
+    git clone git@github.com:tmux-plugins/tpm.git ~/.tmux/plugins/tpm
+fi
 
-function install_tmux_plugins() {
-    local install_script="$HOME/.tmux/plugins/tpm/bin/install_plugins"
+# TODO: is this necessary?
+# install_script="$HOME/.tmux/plugins/tpm/bin/install_plugins"
+# if [ -x $install_script ]; then
+#     $install_script
+# fi
 
-    if [ -x $install_script ]; then
-        $install_script
-    fi
-}
-
-# TODO: install this to config/tmux
-function setup_tmux_config() {
-    if [ ! -d ~/.tmux/plugins/tpm ]; then
-        git clone git@github.com:tmux-plugins/tpm.git ~/.tmux/plugins/tpm
-        install_tmux_plugins
-    fi
-}
-
-
-function setup_tmuxinator() {
-    if is_macos; then
-        brew_install tmuxinator
-    elif is_linux; then
-        gem install tmuxinator
-    fi
-}
-
-# LINUX #####################################################
-
-function install_tmux_from_source_linux() {
-    ! is_linux && return 1 # NOTE: this is a great line!!!
-
-    packages=(
-        wget
-        tar
-        libevent-dev
-        libncurses-dev
-    )
-
-    for package in "${packages[@]}"; do
-        apt_install $package
-    done
-
-    if command_exists "tmux"; then
-        return 0
-    fi
-
-    local version="2.4"
-
-    wget https://github.com/tmux/tmux/releases/download/${version}/tmux-${version}.tar.gz && \
-        tar xf tmux-${version}.tar.gz && \
-        cd tmux-$version && \
-        ./configure --prefix=/usr/local && \
-        make && \
-        sudo make install && \
-        cd .. && \
-        rm -fr tmux-${version}
-}
-
-dotheader "SETTING UP TMUX..."
-
-brew_install reattach-to-user-namespace # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
-brew_install tmux
-brew_install urlview # https://github.com/sigpipe/urlview
-install_tmux_from_source_linux
-# install_tmux_plugin_manager
-setup_tmux_config
-setup_tmuxinator
+if is-mac; then
+    brew install tmuxinator
+fi

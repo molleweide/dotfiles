@@ -2,63 +2,52 @@
 
 echo-header "SETTING UP PYTHON..."
 
+arch="$(get-arch)"
+
 is-mac && export PYTHON_CONFIGURE_OPTS="--enable-framework"
 is-linux && export PYTHON_CONFIGURE_OPTS="--enable-shared"
 
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PATH="$PYENV_ROOT/bin:$PATH"
 
-function load_pyenv() {
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-}
+# install pyenv
+if ! command-exists "pyenv"; then
+    curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
+fi
 
-function install_python_versions() {
-    pyenv install -s 3.9.1
-    # is_apple_silicone && pyenv global 3.9.1 || pyenv global 2.7.16
-    if is_apple_silicone; then
-        pyenv global 3.9.1
-    else
-        pyenv install -s 2.7.16
-        pyenv global 2.7.16
-    fi
-}
+# install pyenv virtualenv
+plugin_path="$(pyenv root)/plugins/pyenv-virtualenv"
+if [ ! -d "$plugin_path" ]; then
+    git clone https://github.com/pyenv/pyenv-virtualenv.git "$plugin_path"
+fi
 
-function install_pyenv() {
-    if ! command_exists "pyenv"; then
-        curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
-    fi
-}
+# load pyenv
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
-function install_pyenv_virtualenv() {
-    local plugin_path="$(pyenv root)/plugins/pyenv-virtualenv"
-    if [ ! -d "$plugin_path" ]; then
-        git clone https://github.com/pyenv/pyenv-virtualenv.git "$plugin_path"
-    fi
-}
+# install python
+pyenv install -s 3.9.1
+if is-mac && test "$arch" = 'a64'; then
+    pyenv global 3.9.1
+else
+    pyenv install -s 2.7.16
+    pyenv global 2.7.16
+fi
 
-
-function install_pyenv_virtualenvs() {
-    if [ ! -d $(pyenv root)/plugins/pyenv-virtualenv ]; then
-        git clone https://github.com/yyuu/pyenv-virtualenv.git \
-            $(pyenv root)/plugins/pyenv-virtualenv
-    fi
-    if ! pyenv virtualenvs | grep -q py2neovim; then
-        pyenv virtualenv 2.7.16 py2neovim
-        pyenv activate py2neovim
-        pip install --upgrade pip
-        pip install neovim
-    fi
-    if ! pyenv virtualenvs | grep -q py3neovim; then
-        pyenv virtualenv 3.9.1 py3neovim
-        pyenv activate py3neovim
-        pip install --upgrade pip
-        pip install neovim
-    fi
-}
-
-install_pyenv
-install_pyenv_virtualenv
-load_pyenv
-install_python_versions
-install_pyenv_virtualenvs
+# install virtual python env
+if [ ! -d $(pyenv root)/plugins/pyenv-virtualenv ]; then
+    git clone https://github.com/yyuu/pyenv-virtualenv.git \
+        $(pyenv root)/plugins/pyenv-virtualenv
+fi
+if ! pyenv virtualenvs | grep -q py2neovim; then
+    pyenv virtualenv 2.7.16 py2neovim
+    pyenv activate py2neovim
+    pip install --upgrade pip
+    pip install neovim
+fi
+if ! pyenv virtualenvs | grep -q py3neovim; then
+    pyenv virtualenv 3.9.1 py3neovim
+    pyenv activate py3neovim
+    pip install --upgrade pip
+    pip install neovim
+fi

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../../lib/_"
+echo-header "SETTING UP JAVA.."
 
-dotheader "SETTING UP JAVA.."
-
-brew_cask_install java
+brew install --cask java

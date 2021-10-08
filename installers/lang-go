@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../../lib/_"
-
-dotheader "SETTING UP GO.."
+echo-header "SETTING UP GO.."
 
 # install_go

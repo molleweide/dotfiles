@@ -1,30 +1,18 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
+echo-header "Setting up HAMMERSPOON.."
 
-# HAMMERSPOON
+brew install --cask hammerspoon --appdir=/Applications
 
-dotheader "Setting up HAMMERSPOON.."
-
-require_installer package-manager
-
-brew_cask_install hammerspoon --appdir=/Applications
-
-function setup_spoon_install() {
-    local url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
-    local destination=/tmp/SpoonInstall.spoon.zip
-    local spoons_dir=$HOME/.hammerspoon/Spoons
-
+if is-mac; then
+    url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
+    destination=/tmp/SpoonInstall.spoon.zip
+    spoons_dir=$HOME/.hammerspoon/Spoons
     if [ ! -d "$spoons_dir/SpoonInstall.spoon" ]; then
-        dotsay "@blue@b[[+ installing SpoonInstall.spoon ]]"
-
+        echo-color "@blue@b[[+ installing SpoonInstall.spoon ]]"
         wget -nv $url -O $destination
         unzip -d $spoons_dir $destination
     else
-        dotsay "+ SpoonInstall.spoon already setup"
+        echo-color "+ SpoonInstall.spoon already setup"
     fi
-}
-
-if is_macos; then
-    setup_spoon_install
 fi

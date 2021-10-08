@@ -1,133 +1,40 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
+echo-header "Setting up NEOVIM..."
 
-# TODO
-#
-#   brew install luajit --HEAD
-
-dotheader "Setting up NEOVIM..."
-
-require_installer package-manager
-require_installer fonts
-require_installer langs/ruby
-require_installer langs/python
-require_installer langs/node
-
-function install_neovim_linux() {
-  if ! apt_is_installed "neovim"; then
-    sudo add-apt-repository -y ppa:neovim-ppa/stable
-    sudo apt-get -y update
-    apt_install neovim
-
-    sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
-    sudo update-alternatives --config vi
-    sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
-    sudo update-alternatives --config vim
-    sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
-    sudo update-alternatives --config editor
-  fi
-}
-
-function install_neovim_mac() {
-  if ! brew_is_tapped "neovim/neovim"; then
-    brew_tap neovim/neovim
-  fi
-  brew_install tree-sitter --HEAD
-  brew_install luajit --HEAD
-  brew_install neovim --HEAD
-}
-
-function install_neovim() {
-  if is_macos; then
-    install_neovim_mac
-  else
-    install_neovim_linux
-  fi
-}
-
-function setup_neovim_config() {
-  mkdir -p ~/.config
-
-  # cheovim config manager
-  # dot_symlink nvim ~/.config/nvim
-
-  # nvim actuall configs
-  # dot_symlink molleweide-nvim ~/.config/molleweide-nvim
-  # dot_symlink doom-nvim ~/.config/doom-nvim
-}
-
-function ensure_plugin_directory() {
-  mkdir -p ~/.local/share/nvim/plugged
-}
-
-function install_neovim_plugins() {
-  dotsay "@b@blue[[+ Installing nvim plugins]]"
-  pyenv activate py2neovim
-  nvim +PlugInstall +qall
-}
-
-function install_tern() { npm install -g tern; }
-
-function install_vim_node_rpc() { npm install -g vim-node-rpc; }
-
-function install_ruby_neovim() {
-  if use_rvm; then
-    rvm default do gem install neovim
-  fi
-}
-
-function install_proximity_sort() {
-  if ! command_exists "proximity-sort" ; then
-    cargo install --force proximity-sort
-  fi
-}
-
-function install_bash_language_server() {
-  npm install -g bash-language-server
-}
-
-function install_bat() {
-  brew_install bat
-
-  mkdir -p ~/.config/bat
-  # dot_symlink bat/config ~/.config/bat/config
-}
-
-function install_lua_language_server() {
-  brew_install ninja
-
-  local lspdir="$HOME/.local/nvim/lsp"
-  local location="$lspdir/lua-language-server"
-
-  if [ ! -d "$location" ]; then
-    dotsay "@b@blue[[+ Installing sumneko Lua LSP]]"
-
+# INSTALL LUA LANGUAGE SERVER
+brew install ninja
+lspdir="$HOME/.local/nvim/lsp"
+location="$lspdir/lua-language-server"
+if [ ! -d "$location" ]; then
+    echo-color "@b@blue[[+ Installing sumneko Lua LSP]]"
     mkdir -p "$lspdir"
     git clone https://github.com/sumneko/lua-language-server "$location"
-
     cd "$location" || exit 1
     git checkout tags/1.14.2 -b install-1.14.2
     git submodule update --init --recursive
-
     cd 3rd/luamake || exit 1
     ninja -f ninja/macos.ninja
     cd ../.. || exit 1
     ./3rd/luamake/luamake rebuild
-  fi
-}
+fi
 
-function install_node_providers() { npm install -g neovim; }
-
-install_lua_language_server
-install_bash_language_server
-install_ruby_neovim
-install_neovim
-# setup_neovim_config
-install_tern
-install_node_providers
-install_vim_node_rpc
-ensure_plugin_directory
-install_neovim_plugins
-install_proximity_sort
-install_bat
+npm install -g bash-language-server
+rvm default do gem install neovim
+if ! brew tap | grep -q "neovim/neovim"; then
+    brew tap neovim/neovim
+fi
+brew install tree-sitter --HEAD
+brew install luajit --HEAD
+brew install neovim --HEAD
+npm install -g tern
+npm install -g neovim
+npm install -g vim-node-rpc
+mkdir -p ~/.local/share/nvim/plugged
+echo-color "@b@blue[[+ Installing nvim plugins]]"
+pyenv activate py2neovim
+nvim +PlugInstall +qall
+if ! command-exists "proximity-sort" ; then
+    cargo install --force proximity-sort
+fi
+brew install bat

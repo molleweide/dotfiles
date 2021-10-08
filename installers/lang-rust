@@ -2,20 +2,16 @@
 
 source "${BASH_SOURCE%/*}/../../lib/_"
 
-function install_rust() {
-  if ! command_exists "cargo" ; then
+echo-header "SETTING UP RUST.."
 
-    if is_macos; then
-      brew_install rustup
-    elif is_linux; then
-      curl https://sh.rustup.rs -sSf | sh
+if ! command_exists "cargo" ; then
+    if is-mac; then
+        brew_install rustup
+    elif is-linux; then
+        curl https://sh.rustup.rs -sSf | sh
     fi
-
     rustup-init -y
+
+    # TODO: xdg...
     source $HOME/.cargo/env
-  fi
-}
-
-dotheader "SETTING UP RUST.."
-
-install_rust
+fi
