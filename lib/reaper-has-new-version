@@ -4,18 +4,24 @@
 # latest_version ~= current_version????
 echo-color "@b@blue[[ reaper check if new version exists... ]]"
 
-rppv=$(brew info reaper | head -n 1) # get first line of brew command
-
 # # match two first numbers in version, and optional last patch number.
-# if [[ $rppv =~ [0-9]+\.[0-9]+\.?[0-9]? ]]; then
-#     rpp_latest_string=${BASH_REMATCH[0]}
-#     echo "Latest reaper version: $rpp_latest_string"
-# else
-#     echo-color "Something is wrong with checking reaper version. Aborting..." >&2
-#     exit 1
-# fi
+
+rppv=$(brew info reaper | head -n 1) # get first line of brew command
+if [[ $rppv =~ [0-9]+\.[0-9]+\.?[0-9]? ]]; then
+    rpp_brew_version=${BASH_REMATCH[0]}
+    echo "Latest reaper version: $rpp_brew_version"
+else
+    echo-color "Something is wrong with checking reaper version. Aborting..." >&2
+    exit 1
+fi
+
+rpp_local_version=$(reaper-local-version)
 
 # # get reaper version numbers
-# major=$(echo $rpp_latest_string | cut -c8-8)
-# minor=$(echo $rpp_latest_string | cut -c10-11)
-# patch=$(echo $rpp_latest_string | cut -c13-14)
+# brew_major=$(echo $rpp_brew_version | cut -c8-8)
+# brew_minor=$(echo $rpp_brew_version | cut -c10-11)
+# brew_patch=$(echo $rpp_brew_version | cut -c13-14)
+
+# local_major=$(echo $rpp_brew_version | cut -c8-8)
+# local_minor=$(echo $rpp_brew_version | cut -c10-11)
+# local_patch=$(echo $rpp_brew_version | cut -c13-14)

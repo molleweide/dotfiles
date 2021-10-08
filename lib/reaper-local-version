@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo-color "@b@blue[[ Reaper local current version. ]]"
+

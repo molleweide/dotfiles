@@ -1,37 +1,25 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
+echo-header "KEYBOARD"
 
-dotheader "KEYBOARD"
+git_clone_recursive     \
+    $HOME/code/firmware \
+    "qmk-firmware"      \
+    git@github.com:molleweide/qmk_firmware.git
 
-require_installer package-manager
-require_installer langs/haskell
+code_tools_path=$HOME/code/tools
+git_clone_recursive  \
+    $code_tools_path \
+    "kmonad"         \
+    git@github.com:molleweide/kmonad.git
 
-function install_qmk_firmware() {
-    dotlib_git_clone_recursive  \
-        $HOME/code/firmware     \
-        "qmk-firmware"          \
-        git@github.com:molleweide/qmk_firmware.git
-    }
-function install_kmonad() {
-    local install_dir=$HOME/code/tools
-    dotlib_git_clone_recursive  \
-        $install_dir            \
-        "kmonad"                \
-        git@github.com:molleweide/kmonad.git
-
-    pushd $install_dir/kmonad > /dev/null 2>&1
-    if is_macos; then
-        # stack clean
-        if is_apple_silicone; then
-            stack install --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
-        else
-            stack install --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
-        fi
+if is-mac; then
+    pushd $code_tools_path/kmonad > /dev/null 2>&1
+    # stack clean
+    if test "$arch" = 'a64'; then
+        stack install --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+    else
+        stack install --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
     fi
     popd > /dev/null 2>&1
-}
-
-brew_install llvm
-install_qmk_firmware
-install_kmonad
+fi

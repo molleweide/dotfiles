@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
+echo-header "SETTING UP UBERSICHT.."
 
 # https://github.com/Mortennn/Dozer
 # https://github.com/exelban/stats
@@ -26,19 +26,17 @@ function uber_widget() {
     local install_dir=$HOME/code/widgets
     local WIDGET_DIR="$HOME/Library/Application Support/Übersicht/widgets"
 
-    dotlib_git_clone_recursive  \
-        $install_dir            \
-        $alt_name               \
+    git_clone_recursive  \
+        $install_dir     \
+        $alt_name        \
         $uber_repo
 
     ln -s $install_dir/$alt_name $WIDGET_DIR/$alt_name
 }
 
-dotheader "SETTING UP UBERSICHT.."
 
-if is_macos; then
-    require_installer package-manager
-    brew_install ubersicht
+if is-mac; then
+    brew install ubersicht
     uber_widget "uber-yabai-bar"  "git@github.com:molleweide/yabai-uberbar.git"
     uber_widget "uber-weather"    "git@github.com:molleweide/weather-widget.git"
     uber_widget "uber-collection" "git@github.com:molleweide/uebersicht-widgets.git"
