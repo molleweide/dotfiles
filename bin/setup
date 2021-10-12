@@ -40,8 +40,6 @@ require_installer theming
 # # require_installer mac-apps
 # require_installer hammerspoon
 # require_installer ubersicht
-# # require_installer monitor
-# # require_installer backups
 # require_installer keyboard
 # require_installer webbrowsers
 # require_installer chad-ify
@@ -50,7 +48,7 @@ require_installer theming
 # require_installer multimedia
 # require_installer utils
 # require_installer chat
-# require_installer calendar
+# require_installer cal
 # require_installer email
 # require_installer spreadsheets
 # require_installer docs

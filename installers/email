@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
-
-# EMAIL
-
-dotheader "SETTING UP EMAIL.."
+echo-header "SETTING UP EMAIL.."
 
 # Optional Dependencies
 #    pam-gnupg - Automatically logs you into your GPG key on login so you will never need to input your password once logged on to your system. Check the repo and directions out here.
@@ -21,9 +17,12 @@ dotheader "SETTING UP EMAIL.."
 
 # brew install mpop # i don't think that i need this because telia mail is not using pop anymore
 
-function install_muttwizard() {
-    local install_dir=$HOME/code/configs
-    dotlib_git_clone_recursive  \
+if is-mac; then
+    # macos dependencies
+    brew install neomutt curl isync msmtp pass
+
+    install_dir=$HOME/code/configs
+    git_clone_recursive  \
         $install_dir            \
         "mutt-wizard"           \
         git@github.com:molleweide/mutt-wizard.git
@@ -31,12 +30,5 @@ function install_muttwizard() {
     pushd $install_dir/mutt-wizard > /dev/null 2>&1
     sudo make install
     popd > /dev/null 2>&1
-}
-
-if is_macos; then
-    require_installer package-manager
-
-  # default macos dependencies
-  brew install neomutt curl isync msmtp pass
-  install_muttwizard
 fi
+

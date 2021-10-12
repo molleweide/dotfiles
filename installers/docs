@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
-
 # Documents etc.
 #
 # todo
@@ -11,11 +9,9 @@ source "${BASH_SOURCE%/*}/../lib/_"
 #   - zathura
 #     https://ports.macports.org/port/zathura/summary
 
-dotheader "SETTING UP DOCS..."
+echo-header "SETTING UP DOCS..."
 
-require_installer package-manager
-
-if is_macos; then
+if is-mac; then
   brew install pandoc
   # additional stuff
   # brew install librsvg python homebrew/cask/basictex

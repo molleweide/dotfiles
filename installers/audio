@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
+echo-header "SETTING UP AUDIO TOOLS..."
 
-require_installer package-manager
-
-dotheader "SETTING UP AUDIO TOOLS..."
-
-brew_install ffmpeg
-brew_install sox
+brew install ffmpeg
+brew install sox

@@ -4,10 +4,10 @@
 
 echo-green "Installing latest version of Reaper to $RPP_LATEST_DIR"
 
-# mkdir -p $REAPER_DIR/app
-# mkdir -p $REAPER_DIR/projects
-# mkdir -p $REAPER_DIR/tmp
-# mkdir -p $REAPER_DIR/backup
+mkdir -p $REAPER_DIR/app
+mkdir -p $REAPER_DIR/projects
+mkdir -p $REAPER_DIR/tmp
+mkdir -p $REAPER_DIR/backup
 
 # original="REAPER64.app"
 # tmp_dir=$(mkdtemp $REAPER_DIR)

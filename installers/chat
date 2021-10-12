@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
-
 # CHAT
 
 # TODO
@@ -10,9 +8,7 @@ source "${BASH_SOURCE%/*}/../lib/_"
 # - setup irssi?
 # send sms from commandline/pc
 
-dotheader "SETTING UP CHAT.."
-
-require_installer package-manager
+echo-header "SETTING UP CHAT.."
 
 # function install_imessageclient() {
 #     local install_path=$HOME/code/imessageclient
@@ -30,8 +26,8 @@ require_installer package-manager
 
 cargo install --git https://github.com/boxdot/gurk-rs
 
-if is_macos; then
-    brew_install irssi
+if is-macos; then
+    brew install irssi
     brew tap paul-nameless/homebrew-repo
     brew install tg
     # install_imessageclient # did not really work...

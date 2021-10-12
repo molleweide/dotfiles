@@ -1,16 +1,12 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
-
 # CRYPTO
 
-dotheader "SETTING UP CRYPTO.."
+echo-header "SETTING UP CRYPTO.."
 
-require_installer package-manager
+if is-mac; then
 
-if is_macos; then
-
-    brew_install cointop
+    brew install cointop
 
     # elif is_linux; then
 fi

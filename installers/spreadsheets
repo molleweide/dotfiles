@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
-
-dotheader "SETTING UP SPREADSHEETS.."
-
-require_installer package-manager
-# require_installer langs/lua
+echo-header "SETTING UP SPREADSHEETS.."
 
 # NOTE: xslx support
 # https://github.com/andmarti1424/sc-im/wiki/Install-sc-im-with-xls-support-on-macOS
 
-function install_scim() {
-    local install_dir=$HOME/code/apps
+if is-mac; then
+    # https://github.com/andmarti1424/sc-im
+    # sc-im dependencies for building.
+    # libxlsxreader (not brew)
+    #     https://github.com/AsperaGmbH/xlsx-reader
+    brew install ncurses gnuplot libxml2 libzip
+
+    install_dir=$HOME/code/apps
     dotlib_git_clone_recursive  \
         $install_dir            \
         "sc-im"           \
@@ -19,15 +20,7 @@ function install_scim() {
     pushd $install_dir/sc-im > /dev/null 2>&1
     make -C src install # Edit src/Makefile according to your system and needs
     popd > /dev/null 2>&1
-}
 
-if is_macos; then
-    # https://github.com/andmarti1424/sc-im
-    # sc-im dependencies for building.
-    # libxlsxreader (not brew)
-    #     https://github.com/AsperaGmbH/xlsx-reader
-    brew install ncurses gnuplot libxml2 libzip
-    install_scim
     # basic brew install | eg. no gnuplot...
     # brew tap nickolasburr/pfa
     # brew install sc-im

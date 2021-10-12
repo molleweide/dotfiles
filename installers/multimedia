@@ -1,20 +1,16 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
-
 # MULTIMEDIA
 
-dotheader "SETTING UP MULTIMEDIA.."
+echo-header "SETTING UP MULTIMEDIA.."
 
-require_installer package-manager
-
-if is_macos; then
+if is-macos; then
 
   # audio
-  brew_install spotify-tui
+  brew install spotify-tui
 
   # video
-  brew_cask_install mpv
-  brew_install mps-youtube
+  brew install --cask mpv
+  brew install mps-youtube
 
 fi

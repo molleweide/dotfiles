@@ -22,6 +22,8 @@ rpp_local_version=$(reaper-local-version)
 # brew_minor=$(echo $rpp_brew_version | cut -c10-11)
 # brew_patch=$(echo $rpp_brew_version | cut -c13-14)
 
+# TODO: look at $RPP_LATEST_DIR/rpp.log and get version number
+#       if no log file >> no log file exists, please do xyz..
 # local_major=$(echo $rpp_brew_version | cut -c8-8)
 # local_minor=$(echo $rpp_brew_version | cut -c10-11)
 # local_patch=$(echo $rpp_brew_version | cut -c13-14)
