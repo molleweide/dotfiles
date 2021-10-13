@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-# no strict as we need exit codes
-
-( "$@" ); while test "$?" -ne 0; do
-	sleep 1000; ( "$@" )
-done

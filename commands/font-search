@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-brew search --cask /font-/ | grep "$1"

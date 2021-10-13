@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-test -n "${SSH_CONNECTION-}" -o -n "${SSH_CLIENT-}" -o -n "${SSH_TTY-}"

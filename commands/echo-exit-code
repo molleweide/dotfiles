@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-# no strict as we need exit codes
-
-( "$@" ); echo "$?"
-exit 0

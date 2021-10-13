@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-! is-empty-string "$1"

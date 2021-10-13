@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-set -eE -o pipefail
-
-for d in "$(tmutil listlocalsnapshotdates | grep '-')"; do
-	sudo tmutil deletelocalsnapshots "$d"
-done
