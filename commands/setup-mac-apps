@@ -205,26 +205,5 @@ dotheader "SETTING UP CUSTOM MAC APPS..."
 #     //"visual-studio-code",
 #     //'vlc',
 #     //"xquartz",
-
-
-
-    # APPSTORE
-
-    brew_install mas
-    mas_ensure_signed_in
-
-    # mas_install "Amphetamine" 937984704
-    # mas_install "Blackmagic Disk Speed Test" 425264550
-    # mas_install "Boom 2" 948176063
-    # mas_install "Capo 3" 696977615
-    # mas_install "Fantastical 2" 975937182
-    # mas_install "GarageBand" 682658836
-    # mas_install "Logic Pro X" 634148309
-    # mas_install "Markoff" 1084713122
-    # mas_install "Paste 2" 967805235
-    # mas_install "Pixelmator" 407963104
-    # mas_install "Slack" 803453959
-    # mas_install "Timeout" 402592703
-    # mas_install "The Unarchiver" 425424353
     fi
 fi
