@@ -80,161 +80,162 @@ fi
 
 # export HOMEBREW_ARCH="x86_64"
 export HOMEBREW_INSTALL=(
-    # azure-cli
-    # balena-cli
-    # blackbox
-    # hashicorp/tap/boundary
-    # hashicorp/tap/consul
-    # hashicorp/tap/nomad
-    # hashicorp/tap/terraform
-    # hashicorp/tap/vault
-    # heroku
-    # kryptco/tap/kr
-    # yarn
-    neomutt
-    curl
-    isync
-    msmtp
-    pass
-    spotify-tui
-    mps-youtube
-    aria2
-    coreutils
-    deno
-    gpg
-    pass
-    passmenu
-    pandoc
-    # librsvg
-    # basictex
-    ffmpeg
-    sox
-    ranger              # filebrowser
-    nnn                 # filebrowser
-    lf                  # filebrowser
-    fff                 # filebrowser
-    cointop
-    dmenu-mac
-    figlet              # http://www.figlet.org/examples.html
-    pass-otp
-    gpg-tui
-    diff-so-fancy
-    lazygit
-    qtpass
-    pinentry-mac
-    sc-im               # spreadsheets
-    git
-    git-extras
-    git-lfs
-    ImageMagick
-    mas
-    tg                  # telegram tui
-    calcurse
-    micro
-    openssh
-    pkg-config
-    podman
-    screen
-    terminal-notifier
-    tmux
-    tree
-    vim
-    watch
-    watchman
-    wget
-    ack
-    blueutil
-    code-minimap
-    coreutils
-    fd
-    gh
-    gnu-tar
-    heroku/brew/heroku
-    hub
-    llvm
-    most
-    postgres
-    readline
-    redis
-    ripgrep
-    sl
-    the_silver_searcher
-    universal-ctags
-    wget
-    wp-cli
-    xz # general-purpose data compression with high compression ratio
+# azure-cli
+# balena-cli
+# blackbox
+# hashicorp/tap/boundary
+# hashicorp/tap/consul
+# hashicorp/tap/nomad
+# hashicorp/tap/terraform
+# hashicorp/tap/vault
+# heroku
+# kryptco/tap/kr
+# yarn
+neomutt
+curl
+isync
+msmtp
+pass
+spotify-tui
+mps-youtube
+aria2
+coreutils
+deno
+gpg
+pass
+passmenu
+pandoc
+# librsvg
+# basictex
+ffmpeg
+sox
+ranger              # filebrowser
+nnn                 # filebrowser
+lf                  # filebrowser
+fff                 # filebrowser
+cointop
+dmenu-mac
+figlet              # http://www.figlet.org/examples.html
+pass-otp
+gpg-tui
+diff-so-fancy
+lazygit
+qtpass
+pinentry-mac
+sc-im               # spreadsheets
+git
+git-extras
+git-lfs
+ImageMagick
+mas
+tg                  # telegram tui
+calcurse
+micro
+openssh
+pkg-config
+podman
+screen
+terminal-notifier
+tmux
+tree
+vim
+watch
+watchman
+wget
+ack
+blueutil
+code-minimap
+coreutils
+fd
+gh
+gnu-tar
+heroku/brew/heroku
+hub
+llvm
+most
+postgres
+readline
+redis
+ripgrep
+sl
+the_silver_searcher
+universal-ctags
+wget
+wp-cli
+xz # general-purpose data compression with high compression ratio
 )
 export HOMEBREW_INSTALL_SLOW=(
 gpg
 shellcheck
 )
 export HOMEBREW_INSTALL_CASK=(
-# 1password-cli
-# acorn
-# adguard
-# airparrot
-# appzapper
-# atom
-brew_cask_install aerial # screensaver
-# audio-hijack
-# backblaze
-# bartender
-brave
-# burn
-# caption
-# ccleaner
-# contexts
-# dat
-# devdocs
-# fantastical
-# firefox
-# freedom
-# geekbench
-# github-desktop
-# gitter
-# google-chrome
-# google-hangouts
-# jaikoz
-# java
-# julia
-# keybase
-# kodi
-# little-snitch
-# loopback
-# micro-snitch
-# numi
-# opera
-# paragon-ntfs
-# plex-media-server
-# pomello
-# reflector
-# screenflow
-# signal
-# chromedriver
-# sketch
-# skype
-# soundsource
-spotify
-supercollider       # audio engine
-# teamviewer
-# toggldesktop
-# torbrowser
-# tower
-# transmission
-# transmit
-# tunnelbear
-# tunnelblick
-# ubersicht
-# undercover
-# usage
-# visual-studio-code
-# vlc
-# vmware-fusion
-# webtorrent
-# windscribe
-# workflowy
-# xld
-# calibre
+    aerial # screensaver
+    # 1password-cli
+    # acorn
+    # adguard
+    # airparrot
+    # appzapper
+    # atom
+    # audio-hijack
+    # backblaze
+    # bartender
+    brave
+    # burn
+    # caption
+    # ccleaner
+    # contexts
+    # dat
+    # devdocs
+    # fantastical
+    # firefox
+    # freedom
+    # geekbench
+    # github-desktop
+    # gitter
+    # google-chrome
+    # google-hangouts
+    # jaikoz
+    # java
+    # julia
+    # keybase
+    # kodi
+    # little-snitch
+    # loopback
+    # micro-snitch
+    # numi
+    # opera
+    # paragon-ntfs
+    # plex-media-server
+    # pomello
+    # reflector
+    qutebrowser
+    # screenflow
+    # signal
+    # chromedriver
+    # sketch
+    # skype
+    # soundsource
+    spotify
+    supercollider       # audio engine
+    # teamviewer
+    # toggldesktop
+    # torbrowser
+    # tower
+    # transmission
+    # transmit
+    # tunnelbear
+    # tunnelblick
+    # ubersicht
+    # undercover
+    # usage
+    # visual-studio-code
+    # vlc
+    # vmware-fusion
+    # webtorrent
+    # windscribe
+    # workflowy
+    # xld
+    # calibre
 )
 
 # gems

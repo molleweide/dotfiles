@@ -1,58 +1,36 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE%/*}/../lib/_"
+user-bootstrap-mac
 
-# INIT STUFF
-
-"./${BASH_SOURCE%/*}/bootstrap"
-pushd $DOTFILES > /dev/null 2>&1
+pushd $DOROTHY/user > /dev/null 2>&1
 git submodule update --init --recursive || exit 1
 popd > /dev/null 2>&1
-"./${BASH_SOURCE%/*}/symlink"
-require_installer theming
 
-# # ESSENTIALS #############################
+setup-user-configs
+setup-theming
+setup-terminal
+setup-tiling
+# zsh
 
-# require_installer package-manager
-# require_installer terminal
-# require_installer tiling
-# require_installer files
-# require_installer zsh
+# setup-git-user
+# setup-langs-node
+# setup-langs-python
+# setup-langs-ruby
+# setup-langs-lua
+# setup-langs-rust
+# setup-langs-go
+# setup-langs-haskell
+# setup-langs-java
+# setup-fonts
+# setup-tmux
+# setup-neovim
 
-# ##########################################
-
-# require_installer devtools
-# require_installer langs-node
-# require_installer git # make sure git becomes completely independent from npm
-# require_installer langs-python
-# require_installer langs-ruby
-# require_installer langs-lua
-# require_installer langs-rust
-# require_installer langs-go
-# require_installer langs-haskell
-# # require_installer langs-java
-# require_installer fonts
-# require_installer tmux
-# require_installer neovim
-
-# ##########################################
-
-# # require_installer mac-apps
-# require_installer hammerspoon
-# require_installer ubersicht
-# require_installer keyboard
-# require_installer webbrowsers
-# require_installer chad-ify
-# require_installer passwords
-# require_installer audio
-# require_installer multimedia
-# require_installer utils
-# require_installer chat
-# require_installer cal
-# require_installer email
-# require_installer spreadsheets
-# require_installer docs
-# require_installer crypto
-# require_installer reaper
+# setup-mac-apps
+# setup-hammerspoon
+# setup-ubersicht
+# setup-keyboard
+# setup-surfingkeys
+# setup-email
+# setup-spreadsheets
+# setup-reaper
 # ../personal/stuff
-

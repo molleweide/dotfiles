@@ -2,10 +2,6 @@
 
 echo-header "SETTING UP GIT..."
 
-brew install git
-npm install -g diff-so-fancy
-brew install jesseduffield/lazygit/lazygit
-
 if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" ]; then
 
     printf "What is your GitHub username? > "
