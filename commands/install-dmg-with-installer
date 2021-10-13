@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+name=$1
+url=$2
+installer_path=$3
+
+app="$(get-app "$name")"
+if test -n "$app"; then
+    echo-color "@blue@b[[+ Installing $name]]"
+
+    downloading_msg "$name"
+
+    dmg_path=$(installer_download "$url" "$name.dmg")
+    mount_path=$(mount_dmg "$dmg_path")
+
+    open -W "$mount_path/$installer_path"
+
+    unmount_dmg "$mount_path"
+    rm -fr $dmg_path
+else
+    echo-already-installed "$name"
+fi

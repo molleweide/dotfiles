@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+name=$1
+url=$2
+
+app="$(get-app "$name")"
+if test -n "$app"; then
+    pkg_path=$(installer_download "$url" "$name.pkg")
+
+    sudo installer -pkg "$pkg_path" -target /
+
+    rm -fr $pkg_path
+else
+    echo-already-installed "$name"
+fi

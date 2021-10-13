@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+echo-color "@b@blue[[+ Installing -> $1]]"

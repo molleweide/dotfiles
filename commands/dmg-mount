@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+mount_dmg() {
+    local dmg_path=$1
+    local mount_path=$(
+	(yes | hdiutil attach -noautoopen "$dmg_path") | \
+	    grep 'Volumes' |
+	    awk '{ n=split($0, a, /[[:space:]]{2,}/); print a[n] }'
+    )
+
+    echo "$mount_path"
+    return 0
+}
+

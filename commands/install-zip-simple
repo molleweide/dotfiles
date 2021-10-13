@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+name=$1
+url=$2
+
+app="$(get-app "$name")"
+if test -n "$app"; then
+    echo-color "@blue@b[[+ Installing $name]]"
+
+    zip_path=$(installer_download "$url" "$name.zip")
+
+    unzip -d /Applications "$zip_path"
+
+    rm -fr $zip_path
+else
+    echo-already-installed "$name"
+fi

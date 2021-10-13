@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+name=$1
+installer=$2
+url=$3
+
+app="$(get-app "$name")"
+if test -n "$app"; then
+    echo-color "@blue@b[[+ Installing $name]]"
+
+    zip_path=$(installer_download "$url" "$name.zip")
+    unzip -d /tmp "$zip_path"
+    open "/tmp/$installer"
+else
+    already_installed_msg "$name"
+fi

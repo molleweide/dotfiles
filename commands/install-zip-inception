@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+name=$1
+url=$2
+
+app="$(get-app "$name")"
+if test -n "$app"; then
+    echo-color "@blue@b[[+ Installing $name]]"
+
+    zip_path=$(installer_download "$url" "$name.zip")
+    tmp_directory=$(mktemp -d -t 'dotfiles')
+
+    unzip -d "$tmp_directory" "$zip_path" >/dev/null
+
+    dmg_path=$(
+    find -E "$tmp_directory" \
+        -not -path '*/\.*' \
+        -iregex "\/[[:alpha:][:digit:]]+.*\.dmg$"
+    )
+
+    mount_path=$(mount_dmg "$dmg_path")
+    app_to_copy="$mount_path/$name.app"
+
+    cp -r "$app_to_copy" /Applications
+
+    unmount_dmg "$mount_path"
+
+    rm -fr $zip_path
+    rm -fr $tmp_directory
+else
+    already_installed_msg "$name"
+fi

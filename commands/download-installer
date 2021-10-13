@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+url=$1
+filename=$2
+output_path="/tmp/${filename}"
+
+curl -L "$url" -o "$output_path"
+
+echo $output_path
+return 0
