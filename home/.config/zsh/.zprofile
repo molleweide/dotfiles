@@ -65,7 +65,6 @@ export LC_ALL="en_US.UTF-8"
 #############################################################
 
 export DOTFILES=~/.dotfiles
-export DOROTHY=~/.dotfiles
 export DOTLIB=~/.dotfiles/lib
 export DOTCMD=~/.dotfiles/commands
 export DOTSRC=~/.dotfiles/sources

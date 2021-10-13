@@ -12,7 +12,7 @@ for arr_val in "${array[@]}"; do
     if [ $i == 0 ]; then
         # TODO: validate is file/dir
         install_dir=$arr_val
-        dotsay "@b@cyan[[ INSTALL DIR: \`$install_dir\` ]]\n"
+        echo-color "@b@cyan[[ INSTALL DIR: \`$install_dir\` ]]\n"
         mkdir -p $install_dir > /dev/null
         pushd $install_dir > /dev/null 2>&1
 
@@ -23,8 +23,8 @@ for arr_val in "${array[@]}"; do
     else
         # TODO: validate is github url
         repo_url=$arr_val
-        # dotsay "@b@blue[[ @green$alt_name <- @magenta$repo_url]]"
-        dotlib_git_clone_recursive \
+        # echo-color "@b@blue[[ @green$alt_name <- @magenta$repo_url]]"
+        git-clone-recursive \
             $install_dir \
             $alt_name \
             $repo_url
