@@ -12,6 +12,8 @@ echo-header "SETUP REAPER"
 # - look at reaper update utility.
 #   can this one be used / compatible with branches
 
+# brew install --cask supercollider
+
 export REAPER_DIR=~/reaper
 export RPP_LATEST_DIR=$REAPER_DIR/app/rpp-latest
 # export REAPER_CLI=$RPP_LATEST_DIR/reaper-latest

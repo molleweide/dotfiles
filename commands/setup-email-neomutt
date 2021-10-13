@@ -31,4 +31,3 @@ if is-mac; then
     sudo make install
     popd > /dev/null 2>&1
 fi
-

@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-echo-header "SETTING UP GO.."
-
-# install_go

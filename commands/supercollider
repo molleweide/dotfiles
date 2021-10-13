@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-source "${BASH_SOURCE%/*}/../../lib/_"
-
-dotheader "MUSIC: SETTING UP SUPERCOLLIDER.."
-
-brew_cask_install supercollider

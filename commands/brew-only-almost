@@ -104,3 +104,34 @@ brew install spotify-tui
 brew install --cask mpv
 brew install mps-youtube
 
+brew install --cask supercollider
+
+# spreadsheets
+brew install sc-im
+
+# zsh
+#!/usr/bin/env bash
+
+brew install exa
+brew install neofetch
+brew install zsh
+brew install zsh-completions
+brew install direnv
+# brew_install z # would work better with neovim telescope!
+brew install fasd
+brew install fzf
+# if [ ! -f $HOME/.fzf.zsh ]; then
+#     $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
+# fi
+
+# # install antigen plugin manager
+# antigen_file="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/vendor/antigen.zsh"
+# if [ ! -f $antigen_file ]; then
+#     echo "Installing antigen"
+#     curl -L git.io/antigen > "$antigen_file"
+# fi
+
+
+# email
+    brew install neomutt curl isync msmtp pass
+
