@@ -1,5 +1,0 @@
-# from fish:
-# string replace -ar '(\.?[^/]{'"$fish_prompt_pwd_dir_length"'})[^/]*/' '$1/' $tmp
-1="${1:-$PWD}"
-2="${2:-1}"
-echo $1 | sed -re 's|^'$HOME'([$/])|~\1|g' -re 's|(\.?[^/]{'$2'})[^/]*/|\1/|g'
