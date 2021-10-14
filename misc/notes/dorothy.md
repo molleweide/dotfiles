@@ -1,14 +1,22 @@
 # DOROTHY NOTES
 
-1. any paths that I setup will be ignored by dorothy?
+1. Do you have any thoughts on `zshenv` and `zprofile`?
+    So, I am understanding that in order to use dorothy, I have to move
+    my sources (aliases, options, etc..) from `~/.config/zsh` into `user/sources`.
+    And stop using `zshenv` and `zprofile` at the moment, and maybe figure out
+    how to use them later.
 
-2. in your dotfiles repo you don't keep any `dotfiles` or in other terms `config` files
-    such as `.vimrc`, `.tmux.conf` or etc., does this mean that all of these
-    are installed by dorothy `commands` for you??
+2. Will symlinking my config files into `~/.config` create any conflicts with dorothy?
+    I dunno if this is a good question, but does anything pop up in your head?
 
-    how would you advice me to manage these with dorothy.
-    atm, I keep all of my config files in `dorothy/user/configs` and then I symlink all of these into
-    `~/.config`
+3. Do you recommend I copy defaults.bash into my user, or should I edit that file directly?
+    Currently I have copied your `generic.bash` into `user/sources` and play around with it.
+    
+4. Again, a question about XDG.
+    If I put my script `xdg.zsh` and source it under `dorothy/user/sources/xdg`,
+    then at this time currently it will break dorothy right? Because dorothy
+    has a lot of hardcoded checks for paths under home, etc.? I am trying to figure out if it would
+    be possible to use my old XDG path file somehow but I don't think so currently.
+    Do you have any further suggestions that come to your mind?
 
-3. when should I put things in `export SETUP_UTILS=()` and when should I install things with eg. `brew`.
-    Do you have somekind of heuristic for this?
+5. How would I use Antigen plugin manager for zsh?

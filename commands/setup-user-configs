@@ -15,11 +15,9 @@ echo-header "SETTING UP SYMLINKS..."
 #     echo "${dir##*/}"    # print everything after the final "/"
 # done
 
-symlink-create $DOROTHY/user/home/.zshenv                    ~/.zshenv
 symlink-create $DOROTHY/user/home/.config/shell              ~/.config/shell
 symlink-create $DOROTHY/user/home/.config/zsh                ~/.config/zsh
 symlink-create $DOROTHY/user/home/.config/alacritty          ~/.config/alacritty
-symlink-create $DOROTHY/user/home/.config/base16-shell       ~/.config/base16-shell
 symlink-create $DOROTHY/user/home/.config/bat                ~/.config/bat
 symlink-create $DOROTHY/user/home/.config/calcurse           ~/.config/calcurse
 symlink-create $DOROTHY/user/home/.config/chad-nvim          ~/.config/chad-nvim
@@ -31,7 +29,6 @@ symlink-create $DOROTHY/user/home/.config/irb                ~/.config/irb
 symlink-create $DOROTHY/user/home/.config/irssi              ~/.config/irssi
 symlink-create $DOROTHY/user/home/.config/karabiner          ~/.config/karabiner
 symlink-create $DOROTHY/user/home/.config/kitty              ~/.config/kitty
-symlink-create $DOROTHY/user/home/.config/luacheck           ~/.config/luacheck
 symlink-create $DOROTHY/user/home/.config/limelight          ~/.config/limelight
 symlink-create $DOROTHY/user/home/.config/molleweide-nvim    ~/.config/molleweide-nvim
 symlink-create $DOROTHY/user/home/.config/most               ~/.config/most
@@ -61,7 +58,3 @@ symlink-create $DOROTHY/user/home/.hammerspoon               ~/.hammerspoon
 # how to do this???
 # symlink-create home/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf \
 #     ~/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf
-# symlink-create home/.rvm/hooks/after_cd_nvm \
-#     ~/.rvm/hooks/after_cd_nvm
-# symlink-create home/.rvm/hooks/after_install_add_default_gems \
-#     ~/.rvm/hooks/after_install_add_default_gems

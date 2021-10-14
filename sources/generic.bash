@@ -21,6 +21,13 @@ else
 )
 fi
 
+export TERMINAL_EDITORS=(
+    nvim
+	vim # --noplugin -c "set nowrap"'
+	micro
+	nano
+)
+
 export APK_INSTALL=(
 # gocryptfs: use `setup-util-gocryptfs` instead, as this version lags behind
 aria2
@@ -169,73 +176,73 @@ gpg
 shellcheck
 )
 export HOMEBREW_INSTALL_CASK=(
-    aerial # screensaver
-    # 1password-cli
-    # acorn
-    # adguard
-    # airparrot
-    # appzapper
-    # atom
-    # audio-hijack
-    # backblaze
-    # bartender
-    brave
-    # burn
-    # caption
-    # ccleaner
-    # contexts
-    # dat
-    # devdocs
-    # fantastical
-    # firefox
-    # freedom
-    # geekbench
-    # github-desktop
-    # gitter
-    # google-chrome
-    # google-hangouts
-    # jaikoz
-    # java
-    # julia
-    # keybase
-    # kodi
-    # little-snitch
-    # loopback
-    # micro-snitch
-    # numi
-    # opera
-    # paragon-ntfs
-    # plex-media-server
-    # pomello
-    # reflector
-    qutebrowser
-    # screenflow
-    # signal
-    # chromedriver
-    # sketch
-    # skype
-    # soundsource
-    spotify
-    supercollider       # audio engine
-    # teamviewer
-    # toggldesktop
-    # torbrowser
-    # tower
-    # transmission
-    # transmit
-    # tunnelbear
-    # tunnelblick
-    # ubersicht
-    # undercover
-    # usage
-    # visual-studio-code
-    # vlc
-    # vmware-fusion
-    # webtorrent
-    # windscribe
-    # workflowy
-    # xld
-    # calibre
+aerial # screensaver
+# 1password-cli
+# acorn
+# adguard
+# airparrot
+# appzapper
+# atom
+# audio-hijack
+# backblaze
+# bartender
+brave
+# burn
+# caption
+# ccleaner
+# contexts
+# dat
+# devdocs
+# fantastical
+# firefox
+# freedom
+# geekbench
+# github-desktop
+# gitter
+# google-chrome
+# google-hangouts
+# jaikoz
+# java
+# julia
+# keybase
+# kodi
+# little-snitch
+# loopback
+# micro-snitch
+# numi
+# opera
+# paragon-ntfs
+# plex-media-server
+# pomello
+# reflector
+qutebrowser
+# screenflow
+# signal
+# chromedriver
+# sketch
+# skype
+# soundsource
+spotify
+supercollider       # audio engine
+# teamviewer
+# toggldesktop
+# torbrowser
+# tower
+# transmission
+# transmit
+# tunnelbear
+# tunnelblick
+# ubersicht
+# undercover
+# usage
+# visual-studio-code
+# vlc
+# vmware-fusion
+# webtorrent
+# windscribe
+# workflowy
+# xld
+# calibre
 )
 
 # gems
@@ -246,6 +253,14 @@ ffi
 git-up
 sass
 twurl
+awesome_print
+bundler
+cani
+hirb
+neovim
+pry
+tmuxinator
+zeus
 )
 
 # pip
@@ -327,6 +342,13 @@ gocryptfs
 grex
 httpie
 hyperfine
+neofetch
+# zsh
+zsh-completions
+direnv
+z # would work better with neovim telescope!
+fasd
+fzf
 jq
 procs
 ripgrep
@@ -366,17 +388,9 @@ zoxide
 
 # brew install --cask mpv
 
-# brew install exa
-# brew install neofetch
-# brew install zsh
-# brew install zsh-completions
-# brew install direnv
-# # brew_install z # would work better with neovim telescope!
-# brew install fasd
-# brew install fzf
-# # if [ ! -f $HOME/.fzf.zsh ]; then
-# #     $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
-# # fi
+# if [ ! -f $HOME/.fzf.zsh ]; then
+#     $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
+# fi
 
 # # # install antigen plugin manager
 # # antigen_file="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/vendor/antigen.zsh"

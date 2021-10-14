@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+echo-header "setup user zsh..."
+
+ln -sf "${XDG_DATA_HOME:-$HOME/.local/share}/antigen/bundles/\
+    chriskempson/base16-shell/scripts/base16-oceanicnext.sh" ~/.base16_theme
+
+if [ ! -f $HOME/.fzf.zsh ]; then
+    $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
+fi
+
+# TODO: put under xdg data
+# install antigen plugin manager
+antigen_file="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/vendor/antigen.zsh"
+# antigen_file="${XDG_DATA_HOME:-$HOME/.local/share}/antigen/antigen.zsh"
+if [ ! -f $antigen_file ]; then
+    echo "Installing antigen"
+    curl -L git.io/antigen > "$antigen_file"
+fi
