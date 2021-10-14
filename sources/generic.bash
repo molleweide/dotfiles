@@ -90,6 +90,11 @@ else
 )
 fi
 
+# TODO:
+export HOMEBREW_TAPS=(
+    koekeishiya/formulae
+    paul-nameless/homebrew-repo
+)
 # export HOMEBREW_ARCH="x86_64"
 export HOMEBREW_INSTALL=(
 # azure-cli
@@ -113,12 +118,15 @@ mps-youtube
 aria2
 coreutils
 deno
+font-inconsolata-go-nerd-font
+font-jetbrains-mono-nerd-font
 gpg
 pass
 passmenu
 pandoc
 # librsvg
 # basictex
+irssi
 ffmpeg
 sox
 ranger              # filebrowser
@@ -214,6 +222,7 @@ brave
 # little-snitch
 # loopback
 # micro-snitch
+mpv
 # numi
 # opera
 # paragon-ntfs
@@ -327,6 +336,7 @@ export NODE_INSTALL=(
 # --locked: Require Cargo.lock is up to date
 # as rust packages can be supported by many package managers, and as cargo requires downloading every dependency, most rust packages are better installed via SETUP_UTILS
 export RUST_INSTALL=(
+# cargo install --git https://github.com/boxdot/gurk-rs
 ttyper
 )
 
@@ -366,40 +376,20 @@ zoxide
 )
 
 # TODO:
-# export MAC_APPS_INSTALL=(
-#     mas_install "Amphetamine" 937984704
-#     mas_install "Blackmagic Disk Speed Test" 425264550
-#     mas_install "Boom 2" 948176063
-#     mas_install "Capo 3" 696977615
-#     mas_install "Fantastical 2" 975937182
-#     mas_install "GarageBand" 682658836
-#     mas_install "Logic Pro X" 634148309
-#     mas_install "Markoff" 1084713122
-#     mas_install "Paste 2" 967805235
-#     mas_install "Pixelmator" 407963104
-#     mas_install "Slack" 803453959
-#     mas_install "Timeout" 402592703
-#     mas_install "The Unarchiver" 425424353
-# )
+export MAC_APPS_INSTALL=(
+     937984704      # "Amphetamine"
+     425264550      # "Blackmagic Disk Speed Test"
+     948176063      # "Boom 2"
+     696977615      # "Capo 3"
+     975937182      # "Fantastical 2"
+     682658836      # "GarageBand"
+     634148309      # "Logic Pro X"
+     1084713122     # "Markoff"
+     967805235      # "Paste 2"
+     407963104      # "Pixelmator"
+     803453959      # "Slack"
+     402592703      # "Timeout"
+     425424353      # "The Unarchiver"
+)
 
 # heroku plugins:install heroku-repo
-# # cargo install --git https://github.com/boxdot/gurk-rs
-# # brew install irssi
-# # brew tap paul-nameless/homebrew-repo
-
-# brew tap homebrew/cask-fonts # if ! brew_is_tapped "neovim/neovim"; then
-# brew install font-inconsolata-go-nerd-font
-# brew install font-jetbrains-mono-nerd-font
-
-# brew install --cask mpv
-
-# if [ ! -f $HOME/.fzf.zsh ]; then
-#     $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
-# fi
-
-# # # install antigen plugin manager
-# # antigen_file="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/vendor/antigen.zsh"
-# # if [ ! -f $antigen_file ]; then
-# #     echo "Installing antigen"
-# #     curl -L git.io/antigen > "$antigen_file"
-# # fi

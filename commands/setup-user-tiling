@@ -1,32 +1,24 @@
 #!/usr/bin/env bash
 
-
 echo-header "SETTING UP TILING.."
-
-function install_limelight() {
-    local install_dir=$HOME/code/tools
-    git_clone_recursive \
-        $install_dir    \
-        "limelight"     \
-        git@github.com:molleweide/limelight.git
-
-    pushd $install_dir/limelight > /dev/null 2>&1
-    make
-    popd $dest> /dev/null 2>&1
-
-    # TODO: symlink-create
-    ln -s $install_dir/limelight/bin/limelight /usr/local/bin/limelight
-}
 
 if is-mac; then
 
     brew install jq
     brew tap koekeishiya/formulae
     brew install yabai
-    brew tap koekeishiya/formulae
     brew install skhd
 
-    install_limelight
+    git_clone_recursive \
+        $HOME/code/tools    \
+        "limelight"         \
+        git@github.com:molleweide/limelight.git
+
+    pushd $HOME/code/tools/limelight > /dev/null 2>&1
+    make
+    popd $dest> /dev/null 2>&1
+
+    create-symlink $install_dir/limelight/bin/limelight /usr/local/bin/limelight
 
     # uebersicht yabai
     brew services start skhd
