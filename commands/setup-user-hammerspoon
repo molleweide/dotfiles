@@ -1,17 +1,11 @@
 #!/usr/bin/env bash
 
 if is-mac; then
-
     echo-header "Setting up HAMMERSPOON.."
-
     brew install --cask hammerspoon --appdir=/Applications
-
-    # TODO: mv hammerspoon into dotfiles configs
-
-    # TODO: change to XDG
     url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
     destination=/tmp/SpoonInstall.spoon.zip
-    spoons_dir=$HOME/.hammerspoon/Spoons
+    spoons_dir=$HOME/.config/hammerspoon/Spoons
     if [ ! -d "$spoons_dir/SpoonInstall.spoon" ]; then
         echo-color "@blue@b[[+ installing SpoonInstall.spoon ]]"
         wget -nv $url -O $destination
@@ -19,7 +13,5 @@ if is-mac; then
     else
         echo-color "+ SpoonInstall.spoon already setup"
     fi
-
-    # TODO: change config location to XDG
-    # defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
+    defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 fi
