@@ -1,9 +1,5 @@
 # DOTFILES RNDM
 
-this is something that is quite fucking wierd and so that is not what I want at all. It actually is something 
-that is quite strange. and so that is not the right way to go about it dude.
-
-this is going to be fuckig awesome and I am going to get this shit to work so fucking well that it is going
-to be fucking insane.
-
-okay so today is gng to be a glutes day which is one of the best things tha there is dude
+so this is something that is quite fucking interesting and so now i am going to do it quite well, but also thi is something
+that might be for the reason that you might really be there so something is within the reason of the your doctor didn't
+really know more than I do about this stuff

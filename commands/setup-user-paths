@@ -6,7 +6,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 
-if [[ "$OSTYPE" == darwin* ]]; then
+if is-mac; then
   export XDG_DESKTOP_DIR=~/Desktop
   export XDG_DOCUMENTS_DIR=~/Documents
   export XDG_DOWNLOAD_DIR=~/Downloads
