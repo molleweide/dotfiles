@@ -5,3 +5,5 @@ that is quite strange. and so that is not the right way to go about it dude.
 
 this is going to be fuckig awesome and I am going to get this shit to work so fucking well that it is going
 to be fucking insane.
+
+okay so today is gng to be a glutes day which is one of the best things tha there is dude

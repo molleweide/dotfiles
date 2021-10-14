@@ -1,5 +1,7 @@
 # DOROTHY NOTES
 
+next -> create setup paths command
+
 1. Do you have any thoughts on `zshenv` and `zprofile`?
     So, I am understanding that in order to use dorothy, I have to move
     my sources (aliases, options, etc..) from `~/.config/zsh` into `user/sources`.

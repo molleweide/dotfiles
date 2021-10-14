@@ -1,21 +1,12 @@
+[submodule "personal"]
+	path = personal
+	url = git@github.com:molleweide/personal.git
 [submodule "config/nvim"]
 	path = config/nvim
 	url = https://github.com/molleweide/cheovim.git
 [submodule "config/doom-nvim"]
 	path = config/doom-nvim
 	url = https://github.com/molleweide/doom-nvim.git
-[submodule "config/molleweide-nvim"]
-	path = config/molleweide-nvim
-	url = https://github.com/molleweide/mollew-config.nvim.git
-[submodule "config/chad-nvim"]
-	path = config/chad-nvim
-	url = https://github.com/molleweide/NvChad.git
-[submodule "config/neovhy-nvim"]
-	path = config/neovhy-nvim
-	url = https://github.com/molleweide/neovhy.git
 [submodule "config/hammerspoon"]
 	path = config/hammerspoon
 	url = git@github.com:molleweide/config_hammerspoon.git
-[submodule "personal"]
-	path = personal
-	url = git@github.com:molleweide/personal.git

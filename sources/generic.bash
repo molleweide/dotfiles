@@ -5,6 +5,11 @@
 # however, ubuntu is slow to maintain, so install via pip instead
 # http://ytdl-org.github.io/youtube-dl/download.html
 
+export BROWSER="brave"
+export PAGER='less' # alt. `most`
+export TERMINAL="Alacritty" # or kitty | linux >> "st"
+
+
 if "$DOROTHY/commands/is-mac"; then
 	export USER_SHELLS=(
 	bash

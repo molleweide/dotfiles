@@ -22,7 +22,6 @@ symlink-create $DOROTHY/user/home/.config/bat                ~/.config/bat
 symlink-create $DOROTHY/user/home/.config/calcurse           ~/.config/calcurse
 symlink-create $DOROTHY/user/home/.config/chad-nvim          ~/.config/chad-nvim
 symlink-create $DOROTHY/user/home/.config/doom-nvim          ~/.config/doom-nvim
-symlink-create $DOROTHY/user/home/.config/doom.d             ~/.config/doom.d
 symlink-create $DOROTHY/user/home/.config/gem                ~/.config/gem
 symlink-create $DOROTHY/user/home/.config/git                ~/.config/git
 symlink-create $DOROTHY/user/home/.config/irb                ~/.config/irb

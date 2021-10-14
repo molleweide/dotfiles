@@ -17,3 +17,5 @@ export GIT_DEFAULT_BRANCH='molleweide'
 
 # source my env file
 . "$DOROTHY/user/env.sh"
+
+eval "$("$DOROTHY/user/commands/setup-user-paths")"
