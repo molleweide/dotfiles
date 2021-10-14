@@ -1,8 +1,10 @@
 # DOTFILES RNDM
 
-you are more disconneced from the world and so that is not something that is good at all. and so that was terrific
-but before that is so. this guy is disgusting and so that is fucking crazy. these guys are fucking robots.
+i identify with the leader of the pact.
+that is jeff foxworthy live on television which is the fucking mtv movie awards which is something
+that we have for the video music awards and so that is not the reason why they should be on the side of the best
+movie and so that is not the short circuit and that is not very cool at all to kick them out like that.
 
-podcasts tend to grow based on word of mouth. with your friend group.
-
-so that is something that is quite fucking nice to do so we will look into it later
+the vaccine put a hole in his head where he got the vaccine.
+omar from the wire just died from fentonyl recently as well which fucking sucks. hell yeah. mixing cocaine with a downer
+seems like a really stupid idea ever.

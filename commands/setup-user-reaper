@@ -12,35 +12,29 @@ echo-header "SETUP REAPER"
 # - look at reaper update utility.
 #   can this one be used / compatible with branches
 
-# brew install --cask supercollider
-
 export REAPER_DIR=~/reaper
 export RPP_LATEST_DIR=$REAPER_DIR/app/rpp-latest
 # export REAPER_CLI=$RPP_LATEST_DIR/reaper-latest
 export PATH="$PATH:$RPP_LATEST_DIR"
 
-if reaper-latest-exists; then
+mkdir -p $REAPER_DIR/app
+mkdir -p $REAPER_DIR/projects
+mkdir -p $REAPER_DIR/tmp
+mkdir -p $REAPER_DIR/backup
 
-    echo-bold "Reaper already exists"
+if ! test -d $RPP_LATEST_DIR; then
+    read -r -p "Do you want to install Reaper to $RPP_LATEST_DIR? [y|N] " response
+    [[ $response =~ (y|yes|Y) ]] || exit 1
+    # install-reaper
+else
+    echo-bold "Reaper already exists at '$RPP_LATEST_DIR'. \ You can install a new instance by 'install-reaper <name>'."
     # if reaper-has-new-version; then
-
     #     echo-red "Your version of Reaper is outdated." && exit 1
-
     #     read -r -p "Do you want to update Reaper to the latest version? [y|N] " response
-
     #     [[ $response =~ (y|yes|Y) ]] || exit 1
-
     #     reaper-mv-outdated
     #     reaper-install-latest
-
     # else
     #     reaper-pull
     # fi
-
-else
-
-    read -r -p "Do you want to install Reaper to $RPP_LATEST_DIR? [y|N] " response
-    [[ $response =~ (y|yes|Y) ]] || exit 1
-
-    # reaper-install-latest
 fi

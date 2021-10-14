@@ -31,7 +31,7 @@ function uber_widget() {
         $alt_name        \
         $uber_repo
 
-    ln -s $install_dir/$alt_name $WIDGET_DIR/$alt_name
+    create-symlink $install_dir/$alt_name $WIDGET_DIR/$alt_name
 }
 
 
