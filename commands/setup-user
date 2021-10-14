@@ -1,19 +1,18 @@
 #!/usr/bin/env bash
 
-# user-bootstrap-mac
-setup-osx
+# setup-user-osx
 
-pushd $DOROTHY/user > /dev/null 2>&1
-git submodule update --init --recursive || exit 1
-popd > /dev/null 2>&1
+# pushd $DOROTHY/user > /dev/null 2>&1
+# git submodule update --init --recursive || exit 1
+# popd > /dev/null 2>&1
 
-setup-user-configs
-setup-user-theming
-setup-user-terminal
-setup-user-tiling
-# zsh
+# setup-user-configs
+# setup-user-theming
+# setup-user-terminal
+# setup-user-tiling
+# setup-user-zsh
 
-# setup-user-git
+# setup-git
 # setup-user-node
 # setup-user-python
 # setup-user-ruby
