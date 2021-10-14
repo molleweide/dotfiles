@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE%/*}/../lib/_"
+
+dotheader "SETTING UP BACKUPS.."
+
+require_installer package-manager
+
+function setup_backblaze_keys() {
+  local key_file="$(dotfiles_location)/zsh/secrets/backblaze.zsh"
+
+  if [ ! -f "$key_file" ]; then
+    dotsay "@b@blue[[Setting up Backblaze keys...]]"
+    dotsay "You can find it here: https://secure.backblaze.com/b2_buckets.htm"
+
+    printf "What is your Backblaze account ID? > "
+    read account_id
+
+    printf "What is your Backblaze account key? > "
+    read account_key
+
+    echo "export B2_ACCOUNT_ID=\"$account_id\"" > "$key_file"
+    echo "export B2_ACCOUNT_KEY=\"$account_key\"" >> "$key_file"
+
+    chmod 600 "$key_file"
+  fi
+
+  source "$key_file"
+}
+
+dotheader "Setting up backups..."
+
+brew_install restic
+setup_backblaze_keys

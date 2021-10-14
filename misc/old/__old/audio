@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+echo-header "SETTING UP AUDIO TOOLS..."
+
+brew install ffmpeg
+brew install sox

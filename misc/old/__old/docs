@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Documents etc.
+#
+# todo
+#   - pandoc
+#     https://github.com/jgm/pandoc/blob/master/INSTALL.md
+#
+#   - zathura
+#     https://ports.macports.org/port/zathura/summary
+
+echo-header "SETTING UP DOCS..."
+
+if is-mac; then
+  brew install pandoc
+  # additional stuff
+  # brew install librsvg python homebrew/cask/basictex
+
+# elif is_linux; then
+fi
