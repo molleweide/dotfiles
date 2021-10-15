@@ -14,31 +14,10 @@ nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 
 ### . ############################ . ###
 
-base oceanic next theme on intel mac.
-how is this symlinked??
-
-walk through everything and make sure shit conforms to xdg
-
-
-move hammerspoon to under config > change this in installer
-
-- gh > create repo from cli
-
-- remove as many if statements as possible
-    >>> only use && || with exit codes
-
-brew environment variables man: https://docs.brew.sh/Manpage#environment
+- antigen > oceanic next symlink
+- gh > test create repo from cli
 
 - order NANO S
-
-- remove as many if statements as possible >>> only use && || with exit codes
-
-### hammerspoon installers
-
-https://github.com/Hammerspoon/hammerspoon/pull/582
-
-move hammerspoon configs to ~/.config/hammerspoon
-
 
 ### 
 
@@ -48,16 +27,9 @@ move hammerspoon configs to ~/.config/hammerspoon
 
 - gem
 
-
-- remove `dot` from home dirs so that they become searchable from telescope
-
 - KTH REREGISTER
 
-
-
-- limelight not installing
-
-- webbrowsers are not being installed
+- limelight not installing on M1
 
 # M1 ###########################################
 
@@ -67,4 +39,3 @@ move hammerspoon configs to ~/.config/hammerspoon
 # ########################################################
 
 https://linuxconfig.org/advanced-bash-regex-with-examples
-
