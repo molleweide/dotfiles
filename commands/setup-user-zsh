@@ -2,7 +2,7 @@
 
 echo-header "setup user zsh..."
 
-ln -sf "${XDG_DATA_HOME:-$HOME/.local/share}/antigen/bundles/\
+create-symlink "${XDG_DATA_HOME:-$HOME/.local/share}/antigen/bundles/\
     chriskempson/base16-shell/scripts/base16-oceanicnext.sh" ~/.base16_theme
 
 if [ ! -f $HOME/.fzf.zsh ]; then
