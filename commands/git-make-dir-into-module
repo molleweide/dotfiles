@@ -8,8 +8,7 @@ TARGET_BRANCH=$1
 TRG_SUB_DIR=$2
 NEW_REPO_URL=$(git ls-remote --get-url $3)
 ROOT_REPO_URL=$(git config --get remote.origin.url)
-TMP_DIR=~/git-tmp-script-dir
-
+TMP_DIR=$(mkdtemp "gmdim")
 echo "TRG_SUB_DIR = $TRG_SUB_DIR"; echo "NEW_REPO_URL = $NEW_REPO_URL"; echo "ROOT_REPO_URL = $ROOT_REPO_URL"
 
 function extract_dir_into_repo() {
