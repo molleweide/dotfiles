@@ -4,7 +4,7 @@ source "${BASH_SOURCE%/*}/../lib/_"
 
 if is_macos; then
     if dotfiles_config_set "no-mac-apps"; then
-        dotsay "@b@blue[[Skipping Mac app store, no-mac-apps set]]"
+        echo-color "@b@blue[[Skipping Mac app store, no-mac-apps set]]"
     else
         require_installer package-manager
 
@@ -77,17 +77,17 @@ setup_on_the_job_dropbox_sync() {
     local support_dir="$HOME/Library/Application Support/On The Job 3"
 
     if [ ! -d $HOME/Dropbox ]; then
-        dotsay "@b@red[[ERROR Dropbox needs to be setup to finish configuring On The Job]]"
+        echo-color "@b@red[[ERROR Dropbox needs to be setup to finish configuring On The Job]]"
         return 1
     fi
 
     if [ ! -d "$synced_dir" ]; then
-        dotsay "@b@red[[ERROR the OTJ Dropbox dir needs to be synced to finish configuring On The Job]]"
+        echo-color "@b@red[[ERROR the OTJ Dropbox dir needs to be synced to finish configuring On The Job]]"
         return 1
     fi
 
     if [[ ! -L "$support_dir" ]]; then
-        dotsay "@b@blue[[Synced On the Job with Dropbox]]"
+        echo-color "@b@blue[[Synced On the Job with Dropbox]]"
         ln -sf "$synced_dir" "$support_dir"
     fi
 }
@@ -138,7 +138,7 @@ install_zooom2() {
 
     if ! app_installed "$name"; then
         if [ ! -e "$path" ]; then
-            dotsay "@b@red[[ERROR installing $name at $path - mount and sync Dropbox and try again]]"
+            echo-color "@b@red[[ERROR installing $name at $path - mount and sync Dropbox and try again]]"
         else
             cp -r "$path" /Applications
         fi

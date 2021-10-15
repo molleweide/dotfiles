@@ -28,11 +28,7 @@
 # [[ $HISTSIZE -gt 2000 ]] || HISTSIZE=100000
 
 # # make the history command more useful
-# alias history="fc -li"
-
-#############################################################
-# NOTE: HISTORY SETTINGS
-#############################################################
+alias history="fc -li"
 
 export HISTFILE="$XDG_STATE_HOME"/zsh/history
 

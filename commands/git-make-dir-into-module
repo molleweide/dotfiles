@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
 
-# MAKE SUBDIR INTO SUBMODULE
-# B = https://github.com/molleweide/mollew-config.nvim.git
-
-# target branch, target dir, new repo remote url
-#
+# MAKE DIRECTORY INTO A NEW SUBMODULE
 # examle
-# NOTE: ```git-subdir-make-into-module branchX some/dir git@github.com:git_user/new_repo.git```
+# NOTE: ```git-make-dir-into-module branchX some/dir git@github.com:git_user/new_repo.git```
 
 TARGET_BRANCH=$1
 TRG_SUB_DIR=$2
