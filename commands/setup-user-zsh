@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo-header "setup user zsh..."
+echo-header "Setup user zsh..."
 
 create-symlink "${XDG_DATA_HOME:-$HOME/.local/share}/antigen/bundles/\
     chriskempson/base16-shell/scripts/base16-oceanicnext.sh" ~/.base16_theme
@@ -12,6 +12,5 @@ fi
 # install antigen plugin manager
 antigen_file="${XDG_DATA_HOME:-$HOME/.local/share}/antigen/antigen.zsh"
 if [ ! -f $antigen_file ]; then
-    echo "Installing antigen"
-    curl -L git.io/antigen > "$antigen_file"
+    echo "Installing antigen" && curl -L git.io/antigen > "$antigen_file"
 fi

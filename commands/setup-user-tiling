@@ -3,12 +3,10 @@
 echo-header "SETTING UP TILING.."
 
 if is-mac; then
-
     brew install jq
     brew tap koekeishiya/formulae
     brew install yabai
     brew install skhd
-
     git_clone_recursive \
         $HOME/code/tools    \
         "limelight"         \
@@ -20,7 +18,7 @@ if is-mac; then
 
     create-symlink $install_dir/limelight/bin/limelight /usr/local/bin/limelight
 
-    # uebersicht yabai
+    # TODO: uebersicht yabai
     brew services start skhd
     brew services start yabai
 

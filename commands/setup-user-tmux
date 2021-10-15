@@ -4,14 +4,17 @@ echo-header "SETTING UP TMUX..."
 
 # https://github.com/tmux-plugins/tmux-urlview
 
-brew install reattach-to-user-namespace # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
-brew install tmux
-brew install urlview # https://github.com/sigpipe/urlview
-
-# TODO: xdg...
-if [ ! -d ~/.tmux/plugins/tpm ]; then
-    git clone git@github.com:tmux-plugins/tpm.git ~/.tmux/plugins/tpm
+if is-mac; then
+    brew install reattach-to-user-namespace # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
+    brew install tmux
+    brew install urlview # https://github.com/sigpipe/urlview
+    brew install tmuxinator
 fi
+
+# # TODO: xdg...
+# if [ ! -d $HOME/.config/tmux/plugins/tpm ]; then
+#     git clone git@github.com:tmux-plugins/tpm.git ~/.config/tmux/plugins/tpm
+# fi
 
 # TODO: is this necessary?
 # install_script="$HOME/.tmux/plugins/tpm/bin/install_plugins"
@@ -19,6 +22,3 @@ fi
 #     $install_script
 # fi
 
-if is-mac; then
-    brew install tmuxinator
-fi

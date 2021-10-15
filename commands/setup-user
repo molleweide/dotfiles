@@ -1,30 +1,22 @@
 #!/usr/bin/env bash
 
-
 # pushd $DOROTHY/user > /dev/null 2>&1
 # git submodule update --init --recursive || exit 1
 # popd > /dev/null 2>&1
-
 # setup-user-osx
 # setup-user-configs
 # setup-user-theming
 # setup-user-terminal
 # setup-user-tiling
 # setup-user-zsh
-
 # setup-user-git
 # setup-user-node
 # setup-user-python
 # setup-user-ruby
 # setup-user-lua
-# setup-user-rust
-# setup-user-go
 # setup-user-haskell
-# setup-user-java
-# setup-user-fonts
 # setup-user-tmux
 # setup-user-neovim
-
 # setup-user-mac-apps
 # setup-user-hammerspoon
 # setup-user-ubersicht

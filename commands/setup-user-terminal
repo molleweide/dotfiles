@@ -3,10 +3,8 @@
 echo-header "SETTING UP TERMINAL.."
 
 if is-mac; then
-
     brew install --cask alacritty
     brew install --cask kitty
-
     if command-exists "alacritty"; then
         echo-color "@blue@b[[+ Installing Alacritty terminfo ]]"
         git clone https://github.com/alacritty/alacritty.git /tmp/alacritty
@@ -15,7 +13,6 @@ if is-mac; then
         cd $HOME
         rm -fr /tmp/alacritty
     fi
-
     # get fucking bent, Catalina | what is this??
     xattr -r -d com.apple.quarantine /Applications/Alacritty.app
 fi

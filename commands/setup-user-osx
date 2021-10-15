@@ -5,11 +5,8 @@
 # TODO:
 #
 # cmd q = invert colors
-#
-#
-#
 
-if [[ "$(uname)" != "Darwin" ]]; then
+if ! is-mac; then
   echo "Not on MacOS, exiting..."
   exit 1
 fi

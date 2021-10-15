@@ -27,10 +27,10 @@ else
 fi
 
 export TERMINAL_EDITORS=(
-    nvim
-	vim # --noplugin -c "set nowrap"'
-	micro
-	nano
+nvim
+vim # --noplugin -c "set nowrap"'
+micro
+nano
 )
 
 export APK_INSTALL=(
@@ -92,8 +92,8 @@ fi
 
 # TODO:
 export HOMEBREW_TAPS=(
-    koekeishiya/formulae
-    paul-nameless/homebrew-repo
+koekeishiya/formulae
+paul-nameless/homebrew-repo
 )
 # export HOMEBREW_ARCH="x86_64"
 export HOMEBREW_INSTALL=(
@@ -169,6 +169,8 @@ coreutils
 fd
 gh
 gnu-tar
+reattach-to-user-namespace # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
+urlview # https://github.com/sigpipe/urlview
 heroku/brew/heroku
 hub
 llvm
@@ -275,6 +277,7 @@ neovim
 pry
 tmuxinator
 zeus
+yard
 )
 
 # pip
@@ -287,6 +290,7 @@ export PYTHON_INSTALL=(
 # bitcoinlib
 # cairosvg
 # PyPDF2  # python 2 only
+neovim
 )
 if "$DOROTHY/commands/is-ubuntu"; then
 	PYTHON_INSTALL+=('youtube_dl')
@@ -351,6 +355,8 @@ delta
 dust
 exa
 fd
+lua
+luarocks
 fish
 gh
 gocryptfs
@@ -375,21 +381,31 @@ z
 zoxide
 )
 
-# TODO:
-export MAC_APPS_INSTALL=(
-     937984704      # "Amphetamine"
-     425264550      # "Blackmagic Disk Speed Test"
-     948176063      # "Boom 2"
-     696977615      # "Capo 3"
-     975937182      # "Fantastical 2"
-     682658836      # "GarageBand"
-     634148309      # "Logic Pro X"
-     1084713122     # "Markoff"
-     967805235      # "Paste 2"
-     407963104      # "Pixelmator"
-     803453959      # "Slack"
-     402592703      # "Timeout"
-     425424353      # "The Unarchiver"
-)
-
 # heroku plugins:install heroku-repo
+
+# export MAC_APPS_INSTALL=(
+# 937984704      # "Amphetamine"
+# 425264550      # "Blackmagic Disk Speed Test"
+# 948176063      # "Boom 2"
+# 696977615      # "Capo 3"
+# 975937182      # "Fantastical 2"
+# 682658836      # "GarageBand"
+# 634148309      # "Logic Pro X"
+# 1084713122     # "Markoff"
+# 967805235      # "Paste 2"
+# 407963104      # "Pixelmator"
+# 803453959      # "Slack"
+# 402592703      # "Timeout"
+# 425424353      # "The Unarchiver"
+# )
+
+# export LUA_ROCKS_INSTALL=(
+# loop
+# dkjson
+# inspect
+# --server=http://luarocks.org/dev lua-lsp
+# luacheck
+# lcf
+# )
+
+# export STACK_INSTALL=()

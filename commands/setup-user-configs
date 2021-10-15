@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo-header "Link configs.."
+echo-header "Link user configs.."
 
 cnfsrc=$DOROTHY/user/config
 cnfdst=$HOME/.config
