@@ -352,33 +352,34 @@ bash
 bat
 bottom
 delta
+direnv
 dust
 exa
+fasd
 fd
-lua
-luarocks
 fish
+fzf
 gh
+gnuplot
 gocryptfs
 grex
 httpie
 hyperfine
-neofetch
-# zsh
-zsh-completions
-direnv
-z # would work better with neovim telescope!
-fasd
-fzf
 jq
+libxml2
+libzip
+lua
+luarocks
+ncurses
+neofetch
 procs
 ripgrep
 rmesg
 sd
 tealdeer
 tokei
-z
 zoxide
+zsh-completions
 )
 
 # heroku plugins:install heroku-repo

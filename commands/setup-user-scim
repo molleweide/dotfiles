@@ -7,10 +7,9 @@ echo-header "SETTING UP SPREADSHEETS.."
 
 if is-mac; then
     # https://github.com/andmarti1424/sc-im
-    # sc-im dependencies for building.
     # libxlsxreader (not brew)
     #     https://github.com/AsperaGmbH/xlsx-reader
-    brew install ncurses gnuplot libxml2 libzip
+    brew install ncurses gnuplot libxml2 libzip # added to generic setup utils
 
     install_dir=$HOME/code/apps
     dotlib_git_clone_recursive  \

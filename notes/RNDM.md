@@ -1,16 +1,17 @@
 # DOTFILES RNDM
 
-i don't want to critizise him because thiat is something that is quite fucking insane and you could never do it really so
-if the reason for doing that would have been even more like so then it would be even more like it you know and so
-that is quite a fucking insane way of doing shit you know.
+this guy is a fucking boss. and if you like men running in a field you are a faggot. gaddell should never have
+drafted michael samms force him to do stuff like that and this is quite hard which is the most insane thing ever.
+the only thing this guys should be critisized for is saying that in public. these were private emails. so the guy 
+who leaked these emails is the one who is the asshole.
 
-tha he would be in the possitives of this fucking retard motherfucker and so that would make him so fucking pissed of that it
-is actually quite fucking insane.
+you want to get nice daddy this is in kilo that is a very immature way of talking about this.
 
-the baby is there she is a fucking wild chick. he is like holy fucking shit.
+so this is actually something that is quite fucking nice and tomorrow I am going to manage the dogs which is going to suck
+but it will probably be quite nice actually.
 
-the feds come in fucking seven days and do shit for you so that you can fucking do this shit and this is something
-that you cannot really do and so that motherfucker.
+i didn't think it was and back then I loved it which was fucking insane and so that is quite fucking cool.
 
-and so this is actually quite fucking interesting and so that is something that you might not want to do.
-but also there is something about this that is not quite fukcing working in the end out of this.
+that is not a crime
+
+all he is about is fucking porn when you got screwed over with porn.
