@@ -17,7 +17,7 @@ run_script() {
   local plugin=$1
   local name=$2
 
-  echo $($HOME/.tmux/plugins/$plugin/scripts/$name.sh)
+  echo $($HOME/.config/tmux/plugins/$plugin/scripts/$name.sh)
 }
 
 if [ "$WIDTH" -gt "$MEDIUM" ]; then

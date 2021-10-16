@@ -14,7 +14,7 @@ nvm install stable
 
 echo-header  "SETTING UP RUBY..."
 
-# TODO: xdg
+# TODO: xdg >> create $RVM_DIR
 #   https://stackoverflow.com/questions/15282509/how-to-change-rvm-install-location
 export PATH="$HOME/.rvm/bin:$PATH"
 if [ ! -e ~/.rvm ]; then

@@ -108,6 +108,9 @@ export HOMEBREW_INSTALL=(
 # heroku
 # kryptco/tap/kr
 # yarn
+# https://github.com/tmux-plugins/tmux-urlview
+# librsvg
+# basictex
 neomutt
 curl
 isync
@@ -124,8 +127,6 @@ gpg
 pass
 passmenu
 pandoc
-# librsvg
-# basictex
 irssi
 ffmpeg
 sox
@@ -169,8 +170,8 @@ coreutils
 fd
 gh
 gnu-tar
-reattach-to-user-namespace # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
-urlview # https://github.com/sigpipe/urlview
+reattach-to-user-namespace  # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
+urlview                     # https://github.com/sigpipe/urlview
 heroku/brew/heroku
 hub
 llvm
@@ -184,7 +185,10 @@ the_silver_searcher
 universal-ctags
 wget
 wp-cli
-xz # general-purpose data compression with high compression ratio
+xz                          # general-purpose data compression with high compression ratio
+"tree-sitter --HEAD"
+"luajit --HEAD"
+"neovim --HEAD"
 )
 export HOMEBREW_INSTALL_SLOW=(
 gpg
@@ -264,20 +268,20 @@ supercollider       # audio engine
 # gems
 export RUBY_VERSION="2.7"
 export RUBY_INSTALL=(
-compass
-ffi
-git-up
-sass
-twurl
 awesome_print
 bundler
 cani
+compass
+ffi
+git-up
 hirb
 neovim
 pry
+sass
 tmuxinator
-zeus
+twurl
 yard
+zeus
 )
 
 # pip
@@ -330,6 +334,11 @@ export NODE_INSTALL=(
 	json
 	prettier
 	typescript
+
+    bash-language-server
+    tern
+    neovim
+    vim-node-rpc
 
 	# cryptocurrency
 	# cartera
