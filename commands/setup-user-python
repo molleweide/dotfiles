@@ -16,7 +16,7 @@ if ! command-exists "pyenv"; then
 fi
 
 # install pyenv virtualenv
-plugin_path="$(pyenv root)/plugins/pyenv-virtualenv"
+plugin_path="$PYENV_ROOT/plugins/pyenv-virtualenv"
 if [ ! -d "$plugin_path" ]; then
     git clone https://github.com/pyenv/pyenv-virtualenv.git "$plugin_path"
 fi
@@ -35,19 +35,16 @@ else
 fi
 
 # install virtual python env
-if [ ! -d $(pyenv root)/plugins/pyenv-virtualenv ]; then
-    git clone https://github.com/yyuu/pyenv-virtualenv.git \
-        $(pyenv root)/plugins/pyenv-virtualenv
+if [ ! -d $PYENV_ROOT/plugins/pyenv-virtualenv ]; then
+    git clone https://github.com/yyuu/pyenv-virtualenv.git $PYENV_ROOT/plugins/pyenv-virtualenv
 fi
 if ! pyenv virtualenvs | grep -q py2neovim; then
     pyenv virtualenv 2.7.16 py2neovim
     pyenv activate py2neovim
-    pip install --upgrade pip
-    # pip install neovim
 fi
 if ! pyenv virtualenvs | grep -q py3neovim; then
     pyenv virtualenv 3.9.1 py3neovim
     pyenv activate py3neovim
-    pip install --upgrade pip
-    # pip install neovim
 fi
+pip install --upgrade pip
+# pip install neovim

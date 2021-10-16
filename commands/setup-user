@@ -5,7 +5,6 @@
 # popd > /dev/null 2>&1
 # setup-user-osx
 # setup-user-configs
-# setup-user-theming
 # setup-user-base
 # setup-user-ruby-node
 # setup-user-python
