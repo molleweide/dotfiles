@@ -2,6 +2,8 @@
 
 echo-header "SETTING UP TMUX..."
 
+# https://github.com/tmux-plugins/tmux-urlview
+
 if is-mac; then
     brew install reattach-to-user-namespace # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
     brew install tmux
@@ -12,6 +14,14 @@ fi
 if [ ! -d $HOME/.config/tmux/plugins/tpm ]; then
     git clone git@github.com:tmux-plugins/tpm.git ~/.config/tmux/plugins/tpm
 fi
+
+# TODO: is this necessary?
+# install_script="$HOME/.tmux/plugins/tpm/bin/install_plugins"
+# if [ -x $install_script ]; then
+#     $install_script
+# fi
+
+echo-header "SETTING UP NEOVIM..."
 
 if ! brew tap | grep -q "neovim/neovim"; then
     brew tap neovim/neovim
@@ -25,7 +35,11 @@ npm install -g bash-language-server
 npm install -g tern
 npm install -g neovim
 npm install -g vim-node-rpc
+# if ! command-exists "proximity-sort" ; then
 cargo install proximity-sort # --force
+# fi
+# mkdir -p ~/.local/share/nvim/plugged
+# echo-color "@b@blue[[+ Installing nvim plugins]]"
 
 # TODO: how does this relate to the python checkhealth issues???
 pyenv activate py2neovim

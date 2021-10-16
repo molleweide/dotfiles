@@ -350,6 +350,7 @@ export NODE_INSTALL=(
 # as rust packages can be supported by many package managers, and as cargo requires downloading every dependency, most rust packages are better installed via SETUP_UTILS
 export RUST_INSTALL=(
 # cargo install --git https://github.com/boxdot/gurk-rs
+proximity-sort
 ttyper
 )
 

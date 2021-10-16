@@ -17,3 +17,23 @@ if is-mac; then
     xattr -r -d com.apple.quarantine /Applications/Alacritty.app
 fi
 
+echo-header "SETTING UP TILING.."
+
+if is-mac; then
+    brew install jq
+    brew tap koekeishiya/formulae
+    brew install yabai
+    brew install skhd
+    git_clone_recursive \
+        $HOME/code/tools    \
+        "limelight"         \
+        git@github.com:molleweide/limelight.git
+
+    pushd $HOME/code/tools/limelight > /dev/null 2>&1
+    make
+    popd $dest> /dev/null 2>&1
+    create-symlink $install_dir/limelight/bin/limelight /usr/local/bin/limelight
+    # TODO: uebersicht yabai
+    brew services start skhd
+    brew services start yabai
+fi
