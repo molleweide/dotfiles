@@ -1,12 +1,8 @@
 # DOTFILES RNDM
 
-so this is actually quite interesting and now this is going to fucking become something that is in the zeitgeist
-and so the reason why this is because something that they don't want to do is something that you might not want to do you know.
-the other reason why this is is because something that you can go fuck yourself.
+they didn't brag about it. i am not giving away my wallet to somebody who has a king. that is fucking insane dude.
+which is fucking crazy and so that is something that I really don't fucking like.
 
-jag tar din kaviar so what the fuck this shit. you must pay for this you motherfucker this is insane like a motherfucker.
-this is crazy and so that is something that you cannot really do ever and so that might not be the fucking shit hole
-that they have.
-
-they are usually connected so we don't have any idea about what the fuck this shit is so we will probably see something
-different later and you might not see it dude. but why the fuck would that happen.
+and then I can fucking live in jamaica which is going to be fucking amazing and that would be pretty fucking great you know.
+if i killed legion of skanks and then moved away to jamaica that would be fucking amazing. the legion of skanks audience
+knows that there is something that is just about to be good dude.

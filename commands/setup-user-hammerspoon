@@ -2,13 +2,12 @@
 
 if is-mac; then
     echo-header "Setting up HAMMERSPOON.."
-    brew install --cask hammerspoon # --appdir=/Applications
+    # brew install --cask hammerspoon # --appdir=/Applications
     url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
     destination=/tmp/SpoonInstall.spoon.zip
     spoons_dir=$HOME/.config/hammerspoon/Spoons
     if [ ! -d "$spoons_dir/SpoonInstall.spoon" ]; then
-        wget -nv $url -O $destination
-        unzip -d $spoons_dir $destination
+        wget -nv $url -O $destination && unzip -d $spoons_dir $destination
     else
         echo-color "+ SpoonInstall.spoon already setup"
     fi
