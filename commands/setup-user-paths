@@ -14,9 +14,14 @@ if is-mac; then
   export XDG_VIDEOS_DIR=~/Videos
 fi
 
+export ADOTDIR="${XDG_DATA_HOME:-$HOME/.local/share}/antigen"
 export ALSA_CONFIG_PATH="$XDG_CONFIG_HOME/alsa/asoundrc"
 export ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
 export ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
+export ANTIGEN_COMPDUMP="${ADOTDIR}/.zcompdump"
+export ANTIGEN_DEBUG_LOG="${ADOTDIR}/antigen_debug.log"
+export ANTIGEN_LOG="${ADOTDIR}/antigen.log"
+export ANTIGEN_BUNDLES="${ADOTDIR}/bundles"
 export CABAL_CONFIG="$XDG_CONFIG_HOME"/cabal/config
 export CABAL_DIR="$XDG_CACHE_HOME"/cabal
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"

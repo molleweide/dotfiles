@@ -1,25 +1,13 @@
 #!/usr/bin/env bash
 
-# https://www.haskell.org/ghcup/
-# https://gitlab.haskell.org/haskell/ghcup-hs#manual-install
-
 echo-header "SETTING UP HASKELL.."
 
 if is-mac; then
-
-  # # GHCUP
-  # if test ! $(which ghc); then
-  #     curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
-  # fi
   brew install ghc
-
-  # STACK
-  # wget -qO- https://get.haskellstack.org/ | sh
   if test ! $(which stack); then
       curl -sSL https://get.haskellstack.org/ | sh
   fi
   stack upgrade
-
   stack install yesod-bin --install-ghc
 fi
 

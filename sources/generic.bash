@@ -220,6 +220,7 @@ brave
 # gitter
 # google-chrome
 # google-hangouts
+hammerspoon
 # jaikoz
 # java
 # julia
