@@ -2,7 +2,18 @@
 
 # MAKE DIRECTORY INTO A NEW SUBMODULE
 # examle
-# NOTE: ```git-make-dir-into-module branchX some/dir git@github.com:git_user/new_repo.git```
+#
+# NOTE: I don't know if this script is optimal. I found the solution
+#       for breaking out a submodule on stackoverflow but which
+#       is the git filter command and so I don't fully understand it
+#       and it seems to do a lot of voodoo to the git history. so
+#       it would probably be good if someone that is more of a git
+#       expert could have a look at this. This script works but I
+#       don't now what it does to the git history really.
+#
+#
+#
+# useage: ```git-make-dir-into-module branchX some/dir git@github.com:git_user/new_repo.git```
 
 TARGET_BRANCH=$1
 TRG_SUB_DIR=$2
@@ -33,5 +44,5 @@ function extract_dir_into_repo() {
 if [ ! -z $NEW_REPO_URL ]; then
     extract_dir_into_repo
 else
-    echo "New remote need to be created first. 😎" && exit 0
+    echo "New remote need to be created first. 😎" && exit 1
 fi

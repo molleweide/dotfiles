@@ -90,11 +90,6 @@ else
 )
 fi
 
-# TODO:
-export HOMEBREW_TAPS=(
-koekeishiya/formulae
-paul-nameless/homebrew-repo
-)
 # export HOMEBREW_ARCH="x86_64"
 export HOMEBREW_INSTALL=(
 # azure-cli
@@ -120,6 +115,8 @@ spotify-tui
 mps-youtube
 aria2
 coreutils
+koekeishiya/formulae/yabai
+koekeishiya/formulae/skhd
 deno
 font-inconsolata-go-nerd-font
 font-jetbrains-mono-nerd-font
@@ -154,6 +151,7 @@ calcurse
 micro
 openssh
 pkg-config
+paul-nameless/homebrew-repo/tg # telegram tui
 podman
 screen
 terminal-notifier
@@ -230,6 +228,7 @@ hammerspoon
 # loopback
 # micro-snitch
 mpv
+mullvadvpn
 # numi
 # opera
 # paragon-ntfs
@@ -238,7 +237,7 @@ mpv
 # reflector
 qutebrowser
 # screenflow
-# signal
+signal
 # chromedriver
 # sketch
 # skype
@@ -253,7 +252,7 @@ supercollider       # audio engine
 # transmit
 # tunnelbear
 # tunnelblick
-# ubersicht
+ubersicht
 # undercover
 # usage
 # visual-studio-code
@@ -420,4 +419,6 @@ zsh-completions
 # lcf
 # )
 
-# export STACK_INSTALL=()
+export STACK_INSTALL=(
+"yesod-bin --install-ghc"
+)

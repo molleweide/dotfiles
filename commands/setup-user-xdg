@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# https://github.com/HaleTom/dotfiles/blob/master/bash/.config/bash/xdg
+
 export DOTFILES=~/.dorothy/user
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -25,6 +27,7 @@ export ANTIGEN_BUNDLES="${ADOTDIR}/bundles"
 export CABAL_CONFIG="$XDG_CONFIG_HOME"/cabal/config
 export CABAL_DIR="$XDG_CACHE_HOME"/cabal
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
+export RUSTUP_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/rustup"
 export ELECTRUMDIR="${XDG_DATA_HOME:-$HOME/.local/share}/electrum"
 export GEM_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/gem"
 export GEM_SPEC_CACHE="$XDG_CACHE_HOME/gem"
@@ -38,6 +41,7 @@ export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
 export LESSHISTFILE="-"
 export MBSYNCRC="${XDG_CONFIG_HOME:-$HOME/.config}/mbsync/config"
 export NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch-config"
+export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 export NVM_DIR="$XDG_DATA_HOME"/nvm
 export OCTAVE_HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/octave-hsts"
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"

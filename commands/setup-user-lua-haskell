@@ -29,3 +29,10 @@ if [ ! -d "$location" ]; then
     ./3rd/luamake/luamake rebuild
 fi
 
+echo-header "SETTING UP HASKELL.."
+
+is-mac && brew install ghc
+test ! $(which stack) && curl -sSL https://get.haskellstack.org/ | sh
+stack upgrade
+stack install yesod-bin --install-ghc
+

@@ -64,7 +64,6 @@ if is-mac; then
 fi
 
 echo-header "SETTING UP GIT..."
-
 if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" ]; then
     printf "What is your GitHub username? > "
     read github_user

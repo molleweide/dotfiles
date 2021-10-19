@@ -6,10 +6,9 @@
 # setup-user-osx
 # setup-user-configs
 # setup-user-base
-# setup-user-ruby-node
 # setup-user-python
-# setup-user-lua
-# setup-user-haskell
+# setup-user-ruby-node
+# setup-user-lua-haskell
 # setup-user-tmux-nvim
 # setup-user-mac-apps
 # setup-user-hammerspoon

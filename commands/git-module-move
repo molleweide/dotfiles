@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# I am not sure if this is ncessary. maybe you can just use `git mv`
+
 FROMDIR=$1
 TODIR=$2
 TEMPDIR=ntesiroarn

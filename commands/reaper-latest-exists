@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+test -d $RPP_LATEST_DIR

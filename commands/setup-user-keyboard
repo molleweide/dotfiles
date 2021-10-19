@@ -2,6 +2,8 @@
 
 echo-header "KEYBOARD"
 
+arch="$(get-arch)"
+
 git_clone_recursive     \
     $HOME/code/firmware \
     "qmk-firmware"      \
@@ -13,13 +15,11 @@ git_clone_recursive  \
     "kmonad"         \
     git@github.com:molleweide/kmonad.git
 
-if is-mac; then
-    pushd $code_tools_path/kmonad > /dev/null 2>&1
-    # stack clean
-    if test "$arch" = 'a64'; then
-        stack install --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
-    else
-        stack install --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
-    fi
-    popd > /dev/null 2>&1
+pushd $code_tools_path/kmonad > /dev/null 2>&1
+# stack clean
+if test "$arch" = 'a64'; then
+    stack install --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+else
+    stack install --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
 fi
+popd > /dev/null 2>&1

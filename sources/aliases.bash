@@ -21,6 +21,7 @@ alias ei="cointop"
 
 # ======== SPREADSHEET ===========
 alias scm="sc-im"
+alias scml=~/.local/bin/sc-im
 
 
 # tmux
