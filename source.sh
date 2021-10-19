@@ -7,7 +7,7 @@
 
 # dorothy ecosystem
 export GIT_PROTOCOL='ssh'
-export GIT_DEFAULT_BRANCH='molleweide'
+export GIT_DEFAULT_BRANCH='main'
 # export DOROTHY_THEME='oz' # 'starship'
 
 # # other
@@ -18,4 +18,6 @@ export GIT_DEFAULT_BRANCH='molleweide'
 # source my env file
 . "$DOROTHY/user/env.sh"
 
-eval "$("$DOROTHY/user/commands/setup-user-xdg")"
+for f in "$DOROTHY/user/sources/"*.sh; do
+  source "$f"
+done

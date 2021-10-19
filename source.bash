@@ -3,15 +3,11 @@
 # inherit the cross-platform shell configuration
 source "$DOROTHY/user/source.sh"
 
-# set -eu
-
-# . "$DOROTHY/user/sources/aliases.sh"
-# . "$DOROTHY/user/sources/theme.zsh"
-
-
-# user_sources=("$DOROTHY/user/sources"/*.{sh,bash,zsh})
+# user_sources=("$DOROTHY/user/sources"/*.{sh,bash})
 # for f in $DOROTHY/user/sources/*; do
-#   # ignore files that begin with a tilde
-#   # echo $f
-#   source "$f"
-# done
+for f in "$DOROTHY/user/sources/"*.bash; do
+  # ignore files that begin with a tilde
+  # echo $f
+  if test $f = $DOROTHY/user/sources/paths.bash; then continue; fi
+  source "$f"
+done

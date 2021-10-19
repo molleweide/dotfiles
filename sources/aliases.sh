@@ -1,6 +1,4 @@
 # SHELL
-set -eu
-
 alias xxx="exec zsh"
 alias k="clear"
 alias mm="man man"
@@ -262,7 +260,7 @@ slp() {
 # # https://github.com/mathiasbynens/dotfiles/blob/master/.aliases
 
 # zsh only aliases
-if [[ -n $ZSH_VERSION ]]; then
+if [[ -n ${ZSH_VERSION-} ]]; then
   alias 1='cd -'
   alias 2='cd -2'
   alias 3='cd -3'
@@ -341,8 +339,8 @@ alias ldot='ls -ld .*'
 alias quit='exit'
 
 # tools
-alias te="$EDITOR"
-alias ide="$VISUAL"
+alias te="${EDITOR-}"
+alias ide="${VISUAL-}"
 
 # # network
 # alias ip="dig +short myip.opendns.com @resolver1.opendns.com"

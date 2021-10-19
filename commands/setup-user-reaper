@@ -22,8 +22,9 @@ mkdir -p $REAPER_DIR/tmp
 mkdir -p $REAPER_DIR/backup
 
 if ! test -d $RPP_LATEST_DIR; then
-    read -r -p "Do you want to install Reaper to $RPP_LATEST_DIR? [y|N] " response
-    [[ $response =~ (y|yes|Y) ]] || exit 1
+    if confirm-negative "Do you want to install Reaper to $RPP_LATEST_DIR?"; then
+        exit 1
+    fi
     # install-reaper
 else
     echo-bold "Reaper already exists at '$RPP_LATEST_DIR'. \ You can install a new instance by 'install-reaper <name>'."

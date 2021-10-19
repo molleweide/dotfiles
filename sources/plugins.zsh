@@ -9,31 +9,34 @@
 # pz source rupa/z
 # pz source zdharma/fast-syntax-highlighting
 
-source ${ADOTDIR}/antigen.zsh
+if test -f "$ADOTDIR/antigen.zsh"; then
 
-antigen bundle robbyrussell/oh-my-zsh plugins/git
+    source "$ADOTDIR/antigen.zsh"
 
-antigen bundle robbyrussell/oh-my-zsh plugins/nvm
-antigen bundle robbyrussell/oh-my-zsh plugins/pyenv
-antigen bundle robbyrussell/oh-my-zsh plugins/rvm
+    antigen bundle robbyrussell/oh-my-zsh plugins/git
 
-antigen bundle robbyrussell/oh-my-zsh plugins/vi-mode
-antigen bundle robbyrussell/oh-my-zsh plugins/zsh_reload
+    antigen bundle robbyrussell/oh-my-zsh plugins/nvm
+    antigen bundle robbyrussell/oh-my-zsh plugins/pyenv
+    antigen bundle robbyrussell/oh-my-zsh plugins/rvm
 
-antigen bundle dbalatero/fzf-git
-antigen bundle DarrinTisdale/zsh-aliases-exa
-antigen bundle chriskempson/base16-shell
-antigen bundle wookayin/fzf-fasd
-antigen bundle twang817/zsh-ssh-agent
-antigen bundle zsh-users/zsh-completions
-antigen bundle zdharma/fast-syntax-highlighting
-antigen bundle hlissner/zsh-autopair
+    antigen bundle robbyrussell/oh-my-zsh plugins/vi-mode
+    antigen bundle robbyrussell/oh-my-zsh plugins/zsh_reload
 
-antigen theme romkatv/powerlevel10k
+    antigen bundle dbalatero/fzf-git
+    antigen bundle DarrinTisdale/zsh-aliases-exa
+    antigen bundle chriskempson/base16-shell
+    antigen bundle wookayin/fzf-fasd
+    antigen bundle twang817/zsh-ssh-agent
+    antigen bundle zsh-users/zsh-completions
+    antigen bundle zdharma/fast-syntax-highlighting
+    antigen bundle hlissner/zsh-autopair
 
-antigen apply
+    antigen theme romkatv/powerlevel10k
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+    antigen apply
 
-eval "$(direnv hook zsh)"
-eval "$(fasd --init auto)"
+    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+    eval "$(direnv hook zsh)"
+    eval "$(fasd --init auto)"
+fi

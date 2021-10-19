@@ -30,8 +30,6 @@
 # # make the history command more useful
 alias history="fc -li"
 
-export HISTFILE="$XDG_STATE_HOME"/zsh/history
-
 HISTSIZE=100000
 SAVEHIST=100000
 

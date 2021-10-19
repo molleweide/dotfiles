@@ -12,34 +12,34 @@ export TERMINAL="Alacritty" # or kitty | linux >> "st"
 
 if "$DOROTHY/commands/is-mac"; then
 	export USER_SHELLS=(
-	bash
-	zsh
-	fish
-	sh
-)
+		bash
+		zsh
+		fish
+		sh
+	)
 else
 	export USER_SHELLS=(
-	bash
-	zsh
-	fish
-	sh
-)
+		bash
+		zsh
+		fish
+		sh
+	)
 fi
 
 export TERMINAL_EDITORS=(
-nvim
-vim # --noplugin -c "set nowrap"'
-micro
-nano
+	nvim
+	vim # --noplugin -c "set nowrap"'
+	micro
+	nano
 )
 
 export APK_INSTALL=(
-# gocryptfs: use `setup-util-gocryptfs` instead, as this version lags behind
-aria2
-git
-gnupg
-tree
-wget
+	# gocryptfs: use `setup-util-gocryptfs` instead, as this version lags behind
+	aria2
+	git
+	gnupg
+	tree
+	wget
 )
 
 # export APT_REMOVE=(
@@ -56,232 +56,232 @@ wget
 # )
 
 export APT_ADD=(
-# software-properties-common
-aria2
-atomicparsley # a youtube-dl dependency
-build-essential
-curl
-git
-gnome-keyring
-libnotify-bin
-libssl-dev
-make
-openssl
-traceroute
-vim
+	# software-properties-common
+	aria2
+	atomicparsley # a youtube-dl dependency
+	build-essential
+	curl
+	git
+	gnome-keyring
+	libnotify-bin
+	libssl-dev
+	make
+	openssl
+	traceroute
+	vim
 )
 
 # https://code.visualstudio.com/docs/setup/linux
 # if [[ "$(get-arch)" == 'x'* ]]; then
 export SNAP_INSTALL=(
-# 'code --classic'
-# deno
+	# 'code --classic'
+	# deno
 )
 
 if "$DOROTHY/commands/is-mac"; then
 	export GO_INSTALL=(
-	changkun.de/x/rmtrash
-	# github.com/cloudflare/utahfs/cmd/utahfs-client
-)
+		changkun.de/x/rmtrash
+		# github.com/cloudflare/utahfs/cmd/utahfs-client
+	)
 else
 	export GO_INSTALL=(
-	changkun.de/x/rmtrash
-	# github.com/rfjakob/gocryptfs: use `setup-util-gocryptfs` instead, as this version lags behind
-)
+		changkun.de/x/rmtrash
+		# github.com/rfjakob/gocryptfs: use `setup-util-gocryptfs` instead, as this version lags behind
+	)
 fi
 
 # export HOMEBREW_ARCH="x86_64"
 export HOMEBREW_INSTALL=(
-# azure-cli
-# balena-cli
-# blackbox
-# hashicorp/tap/boundary
-# hashicorp/tap/consul
-# hashicorp/tap/nomad
-# hashicorp/tap/terraform
-# hashicorp/tap/vault
-# heroku
-# kryptco/tap/kr
-# yarn
-# https://github.com/tmux-plugins/tmux-urlview
-# librsvg
-# basictex
-neomutt
-curl
-isync
-msmtp
-pass
-spotify-tui
-mps-youtube
-aria2
-coreutils
-koekeishiya/formulae/yabai
-koekeishiya/formulae/skhd
-deno
-font-inconsolata-go-nerd-font
-font-jetbrains-mono-nerd-font
-gpg
-pass
-passmenu
-pandoc
-irssi
-ffmpeg
-sox
-ranger              # filebrowser
-nnn                 # filebrowser
-lf                  # filebrowser
-fff                 # filebrowser
-cointop
-dmenu-mac
-figlet              # http://www.figlet.org/examples.html
-pass-otp
-gpg-tui
-diff-so-fancy
-lazygit
-qtpass
-pinentry-mac
-sc-im               # spreadsheets
-git
-git-extras
-git-lfs
-ImageMagick
-mas
-tg                  # telegram tui
-calcurse
-micro
-openssh
-pkg-config
-paul-nameless/homebrew-repo/tg # telegram tui
-podman
-screen
-terminal-notifier
-tmux
-tree
-vim
-watch
-watchman
-wget
-ack
-blueutil
-code-minimap
-coreutils
-fd
-gh
-gnu-tar
-reattach-to-user-namespace  # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
-urlview                     # https://github.com/sigpipe/urlview
-heroku/brew/heroku
-hub
-llvm
-most
-postgres
-readline
-redis
-ripgrep
-sl
-the_silver_searcher
-universal-ctags
-wget
-wp-cli
-xz                          # general-purpose data compression with high compression ratio
-"tree-sitter --HEAD"
-"luajit --HEAD"
-"neovim --HEAD"
+	# azure-cli
+	# balena-cli
+	# blackbox
+	# hashicorp/tap/boundary
+	# hashicorp/tap/consul
+	# hashicorp/tap/nomad
+	# hashicorp/tap/terraform
+	# hashicorp/tap/vault
+	# heroku
+	# kryptco/tap/kr
+	# yarn
+	# https://github.com/tmux-plugins/tmux-urlview
+	# librsvg
+	# basictex
+	neomutt
+	curl
+	isync
+	msmtp
+	pass
+	spotify-tui
+	mps-youtube
+	aria2
+	coreutils
+	koekeishiya/formulae/yabai
+	koekeishiya/formulae/skhd
+	deno
+	font-inconsolata-go-nerd-font
+	font-jetbrains-mono-nerd-font
+	gpg
+	pass
+	passmenu
+	pandoc
+	irssi
+	ffmpeg
+	sox
+	ranger              # filebrowser
+	nnn                 # filebrowser
+	lf                  # filebrowser
+	fff                 # filebrowser
+	cointop
+	dmenu-mac
+	figlet              # http://www.figlet.org/examples.html
+	pass-otp
+	gpg-tui
+	diff-so-fancy
+	lazygit
+	qtpass
+	pinentry-mac
+	sc-im               # spreadsheets
+	git
+	git-extras
+	git-lfs
+	ImageMagick
+	mas
+	tg                  # telegram tui
+	calcurse
+	micro
+	openssh
+	pkg-config
+	paul-nameless/homebrew-repo/tg # telegram tui
+	podman
+	screen
+	terminal-notifier
+	tmux
+	tree
+	vim
+	watch
+	watchman
+	wget
+	ack
+	blueutil
+	code-minimap
+	coreutils
+	fd
+	gh
+	gnu-tar
+	reattach-to-user-namespace  # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
+	urlview                     # https://github.com/sigpipe/urlview
+	heroku/brew/heroku
+	hub
+	llvm
+	most
+	postgres
+	readline
+	redis
+	ripgrep
+	sl
+	the_silver_searcher
+	universal-ctags
+	wget
+	wp-cli
+	xz                          # general-purpose data compression with high compression ratio
+	"tree-sitter --HEAD"
+	"luajit --HEAD"
+	"neovim --HEAD"
 )
 export HOMEBREW_INSTALL_SLOW=(
-gpg
-shellcheck
+	gpg
+	shellcheck
 )
 export HOMEBREW_INSTALL_CASK=(
-aerial # screensaver
-# 1password-cli
-# acorn
-# adguard
-# airparrot
-# appzapper
-# atom
-# audio-hijack
-# backblaze
-# bartender
-brave
-# burn
-# caption
-# ccleaner
-# contexts
-# dat
-# devdocs
-# fantastical
-# firefox
-# freedom
-# geekbench
-# github-desktop
-# gitter
-# google-chrome
-# google-hangouts
-hammerspoon
-# jaikoz
-# java
-# julia
-# keybase
-# kodi
-# little-snitch
-# loopback
-# micro-snitch
-mpv
-mullvadvpn
-# numi
-# opera
-# paragon-ntfs
-# plex-media-server
-# pomello
-# reflector
-qutebrowser
-# screenflow
-signal
-# chromedriver
-# sketch
-# skype
-# soundsource
-spotify
-supercollider       # audio engine
-# teamviewer
-# toggldesktop
-# torbrowser
-# tower
-# transmission
-# transmit
-# tunnelbear
-# tunnelblick
-ubersicht
-# undercover
-# usage
-# visual-studio-code
-# vlc
-# vmware-fusion
-# webtorrent
-# windscribe
-# workflowy
-# xld
-# calibre
+	aerial # screensaver
+	# 1password-cli
+	# acorn
+	# adguard
+	# airparrot
+	# appzapper
+	# atom
+	# audio-hijack
+	# backblaze
+	# bartender
+	brave
+	# burn
+	# caption
+	# ccleaner
+	# contexts
+	# dat
+	# devdocs
+	# fantastical
+	# firefox
+	# freedom
+	# geekbench
+	# github-desktop
+	# gitter
+	# google-chrome
+	# google-hangouts
+	hammerspoon
+	# jaikoz
+	# java
+	# julia
+	# keybase
+	# kodi
+	# little-snitch
+	# loopback
+	# micro-snitch
+	mpv
+	mullvadvpn
+	# numi
+	# opera
+	# paragon-ntfs
+	# plex-media-server
+	# pomello
+	# reflector
+	qutebrowser
+	# screenflow
+	signal
+	# chromedriver
+	# sketch
+	# skype
+	# soundsource
+	spotify
+	supercollider       # audio engine
+	# teamviewer
+	# toggldesktop
+	# torbrowser
+	# tower
+	# transmission
+	# transmit
+	# tunnelbear
+	# tunnelblick
+	ubersicht
+	# undercover
+	# usage
+	# visual-studio-code
+	# vlc
+	# vmware-fusion
+	# webtorrent
+	# windscribe
+	# workflowy
+	# xld
+	# calibre
 )
 
 # gems
 export RUBY_VERSION="2.7"
 export RUBY_INSTALL=(
-awesome_print
-bundler
-cani
-compass
-ffi
-git-up
-hirb
-neovim
-pry
-sass
-tmuxinator
-twurl
-yard
-zeus
+	awesome_print
+	bundler
+	cani
+	compass
+	ffi
+	git-up
+	hirb
+	neovim
+	pry
+	sass
+	tmuxinator
+	twurl
+	yard
+	zeus
 )
 
 # pip
@@ -291,10 +291,10 @@ zeus
 # - https://github.com/pikepdf/pikepdf
 # - https://github.com/pdfminer/pdfminer.six
 export PYTHON_INSTALL=(
-# bitcoinlib
-# cairosvg
-# PyPDF2  # python 2 only
-neovim
+	# bitcoinlib
+	# cairosvg
+	# PyPDF2  # python 2 only
+	neovim
 )
 if "$DOROTHY/commands/is-ubuntu"; then
 	PYTHON_INSTALL+=('youtube_dl')
@@ -302,9 +302,9 @@ fi
 
 # npm/yarn
 export NODE_INSTALL=(
-# bevry
-# "@bevry/testen"
-# boundation
+	# bevry
+	# "@bevry/testen"
+	# boundation
 
 	# servers
 	# browser-refresh
@@ -335,10 +335,10 @@ export NODE_INSTALL=(
 	prettier
 	typescript
 
-    bash-language-server
-    tern
-    neovim
-    vim-node-rpc
+	bash-language-server
+	tern
+	neovim
+	vim-node-rpc
 
 	# cryptocurrency
 	# cartera
@@ -349,47 +349,47 @@ export NODE_INSTALL=(
 # --locked: Require Cargo.lock is up to date
 # as rust packages can be supported by many package managers, and as cargo requires downloading every dependency, most rust packages are better installed via SETUP_UTILS
 export RUST_INSTALL=(
-# cargo install --git https://github.com/boxdot/gurk-rs
-proximity-sort
-ttyper
+	# cargo install --git https://github.com/boxdot/gurk-rs
+	proximity-sort
+	ttyper
 )
 
 # utilities
 # setup-util-*
 export SETUP_UTILS=(
-bandwich
-bash
-bat
-bottom
-delta
-direnv
-dust
-exa
-fasd
-fd
-fish
-fzf
-gh
-gnuplot
-gocryptfs
-grex
-httpie
-hyperfine
-jq
-libxml2
-libzip
-lua
-luarocks
-ncurses
-neofetch
-procs
-ripgrep
-rmesg
-sd
-tealdeer
-tokei
-zoxide
-zsh-completions
+	bandwich
+	bash
+	bat
+	bottom
+	delta
+	direnv
+	dust
+	exa
+	fasd
+	fd
+	fish
+	fzf
+	gh
+	gnuplot
+	gocryptfs
+	grex
+	httpie
+	hyperfine
+	jq
+	libxml2
+	libzip
+	lua
+	luarocks
+	ncurses
+	neofetch
+	procs
+	ripgrep
+	rmesg
+	sd
+	tealdeer
+	tokei
+	zoxide
+	zsh-completions
 )
 
 # heroku plugins:install heroku-repo
@@ -420,5 +420,5 @@ zsh-completions
 # )
 
 export STACK_INSTALL=(
-"yesod-bin --install-ghc"
+	"yesod-bin --install-ghc"
 )
