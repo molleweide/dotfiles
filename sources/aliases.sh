@@ -1,4 +1,6 @@
 # SHELL
+set -eu
+
 alias xxx="exec zsh"
 alias k="clear"
 alias mm="man man"

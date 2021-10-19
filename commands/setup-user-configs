@@ -2,49 +2,49 @@
 
 echo-header "Link user configs.."
 
-cnfsrc=$DOROTHY/user/config
-cnfdst=$HOME/.config
-for f in $cnfsrc/*; do
-    symlink-create $cnfsrc/$f $confdir/$f
-done
+# cnfsrc=$DOROTHY/user/config
+# cnfdst=$HOME/.config
+# for f in $cnfsrc/*; do
+#     symlink-create $cnfsrc/$f $cnfdst/$f
+# done
 
-# symlink-create $DOROTHY/user/config/alacritty       ~/.config/alacritty
-# symlink-create $DOROTHY/user/config/bat             ~/.config/bat
-# symlink-create $DOROTHY/user/config/calcurse        ~/.config/calcurse
-# symlink-create $DOROTHY/user/config/chad-nvim       ~/.config/chad-nvim
-# symlink-create $DOROTHY/user/config/doom-nvim       ~/.config/doom-nvim
-# symlink-create $DOROTHY/user/config/gem             ~/.config/gem
-# symlink-create $DOROTHY/user/config/git             ~/.config/git
-# symlink-create $DOROTHY/user/config/hammerspoon     ~/.hammerspoon
-# symlink-create $DOROTHY/user/config/irb             ~/.config/irb
-# symlink-create $DOROTHY/user/config/irssi           ~/.config/irssi
-# symlink-create $DOROTHY/user/config/karabiner       ~/.config/karabiner
-# symlink-create $DOROTHY/user/config/kitty           ~/.config/kitty
-# symlink-create $DOROTHY/user/config/limelight       ~/.config/limelight
-# symlink-create $DOROTHY/user/config/molleweide-nvim ~/.config/molleweide-nvim
-# symlink-create $DOROTHY/user/config/most            ~/.config/most
-# symlink-create $DOROTHY/user/config/mpv             ~/.config/mpv
-# symlink-create $DOROTHY/user/config/mutt            ~/.config/mutt
-# symlink-create $DOROTHY/user/config/neovhy-nvim     ~/.config/neovhy-nvim
-# symlink-create $DOROTHY/user/config/nnn             ~/.config/nnn
-# symlink-create $DOROTHY/user/config/nvim            ~/.config/nvim
-# symlink-create $DOROTHY/user/config/octave          ~/.config/octave
-# symlink-create $DOROTHY/user/config/pry             ~/.config/pry
-# symlink-create $DOROTHY/user/config/qutebrowser     ~/.config/qutebrowser
-# symlink-create $DOROTHY/user/config/ranger          ~/.config/ranger
-# symlink-create $DOROTHY/user/config/readline        ~/.config/readline
-# symlink-create $DOROTHY/user/config/rvm             ~/.config/rvm
-# symlink-create $DOROTHY/user/config/sc-im           ~/.config/sc-im
-# symlink-create $DOROTHY/user/config/shell           ~/.config/shell
-# symlink-create $DOROTHY/user/config/shell           ~/.config/shell
-# symlink-create $DOROTHY/user/config/skhd            ~/.config/skhd
-# symlink-create $DOROTHY/user/config/surfingkeys     ~/.config/surfingkeys
-# symlink-create $DOROTHY/user/config/tg              ~/.config/tg
-# symlink-create $DOROTHY/user/config/tmux            ~/.config/tmux
-# symlink-create $DOROTHY/user/config/tmuxinator      ~/.config/tmuxinator
-# symlink-create $DOROTHY/user/config/vscode          ~/.config/vscode
-# symlink-create $DOROTHY/user/config/yabai           ~/.config/yabai
-# symlink-create $DOROTHY/user/config/zsh             ~/.config/zsh
+symlink-create $DOROTHY/user/config/alacritty       ~/.config/alacritty
+symlink-create $DOROTHY/user/config/bat             ~/.config/bat
+symlink-create $DOROTHY/user/config/calcurse        ~/.config/calcurse
+symlink-create $DOROTHY/user/config/chad-nvim       ~/.config/chad-nvim
+symlink-create $DOROTHY/user/config/doom-nvim       ~/.config/doom-nvim
+symlink-create $DOROTHY/user/config/gem             ~/.config/gem
+symlink-create $DOROTHY/user/config/git             ~/.config/git
+symlink-create $DOROTHY/user/config/hammerspoon     ~/.hammerspoon
+symlink-create $DOROTHY/user/config/irb             ~/.config/irb
+symlink-create $DOROTHY/user/config/irssi           ~/.config/irssi
+symlink-create $DOROTHY/user/config/karabiner       ~/.config/karabiner
+symlink-create $DOROTHY/user/config/kitty           ~/.config/kitty
+symlink-create $DOROTHY/user/config/limelight       ~/.config/limelight
+symlink-create $DOROTHY/user/config/molleweide-nvim ~/.config/molleweide-nvim
+symlink-create $DOROTHY/user/config/most            ~/.config/most
+symlink-create $DOROTHY/user/config/mpv             ~/.config/mpv
+symlink-create $DOROTHY/user/config/mutt            ~/.config/mutt
+symlink-create $DOROTHY/user/config/neovhy-nvim     ~/.config/neovhy-nvim
+symlink-create $DOROTHY/user/config/nnn             ~/.config/nnn
+symlink-create $DOROTHY/user/config/nvim            ~/.config/nvim
+symlink-create $DOROTHY/user/config/octave          ~/.config/octave
+symlink-create $DOROTHY/user/config/pry             ~/.config/pry
+symlink-create $DOROTHY/user/config/qutebrowser     ~/.config/qutebrowser
+symlink-create $DOROTHY/user/config/ranger          ~/.config/ranger
+symlink-create $DOROTHY/user/config/readline        ~/.config/readline
+symlink-create $DOROTHY/user/config/rvm             ~/.config/rvm
+symlink-create $DOROTHY/user/config/sc-im           ~/.config/sc-im
+symlink-create $DOROTHY/user/config/shell           ~/.config/shell
+symlink-create $DOROTHY/user/config/shell           ~/.config/shell
+symlink-create $DOROTHY/user/config/skhd            ~/.config/skhd
+symlink-create $DOROTHY/user/config/surfingkeys     ~/.config/surfingkeys
+symlink-create $DOROTHY/user/config/tg              ~/.config/tg
+symlink-create $DOROTHY/user/config/tmux            ~/.config/tmux
+symlink-create $DOROTHY/user/config/tmuxinator      ~/.config/tmuxinator
+symlink-create $DOROTHY/user/config/vscode          ~/.config/vscode
+symlink-create $DOROTHY/user/config/yabai           ~/.config/yabai
+symlink-create $DOROTHY/user/config/zsh             ~/.config/zsh
 
 # symlink-create home/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf \
 #     ~/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf

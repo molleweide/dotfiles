@@ -2,9 +2,9 @@
 
 # TODO: if regular file > prompt user overwrite??? yes/no
 
-local file=$1
-local link_destination=$2
-local force=$3
+file=$1
+link_destination=$2
+force=$3
 
 if [ ! -e "$link_destination" ]; then
     echo-color "@b@green[[ Symlinking: $file -> $link_destination ]]"
