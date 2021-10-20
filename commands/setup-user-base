@@ -1,67 +1,61 @@
 #!/usr/bin/env bash
 
-echo-header "SETTING UP WALLPAPER.."
-
-# https://apple.stackexchange.com/questions/75081/automatically-change-os-x-desktop-background-for-all-desktops-monitors
-# https://stackoverflow.com/questions/5550895/shell-script-changing-desktop-wallpaper
-# https://www.howtogeek.com/258461/how-to-use-a-screensaver-as-your-background-on-os-x/
-# https://stackoverflow.com/questions/431205/how-can-i-programmatically-change-the-background-in-mac-os-x
-WALLPAPER="$DOROTHY/user/media/wallpaper/wallpaper2.png"
-osascript -e \
-      "tell application \"Finder\" to set desktop picture to POSIX file \"$WALLPAPER\""
-
-
-echo-header "SETUP USER ZSH..."
-
-create-symlink "${ADOTDIR}/bundles/chriskempson/base16-shell/scripts/base16-oceanicnext.sh" ~/.base16_theme
-if [ ! -f $HOME/.fzf.zsh ]; then
-    $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
-fi
-# install antigen plugin manager
-antigen_file="${ADOTDIR}/antigen.zsh"
-if [ ! -f $antigen_file ]; then
-    echo "Installing antigen" && curl -L git.io/antigen > "$antigen_file"
-fi
+# echo-header "SETTING UP WALLPAPER.."
+# # https://apple.stackexchange.com/questions/75081/automatically-change-os-x-desktop-background-for-all-desktops-monitors
+# # https://stackoverflow.com/questions/5550895/shell-script-changing-desktop-wallpaper
+# # https://www.howtogeek.com/258461/how-to-use-a-screensaver-as-your-background-on-os-x/
+# # https://stackoverflow.com/questions/431205/how-can-i-programmatically-change-the-background-in-mac-os-x
+# WALLPAPER="$DOROTHY/user/media/wallpaper/wallpaper2.png"
+# osascript -e \
+#       "tell application \"Finder\" to set desktop picture to POSIX file \"$WALLPAPER\""
 
 
-echo-header "SETTING UP TERMINAL.."
-
-if is-mac; then
-    brew install --cask alacritty
-    brew install --cask kitty
-    if command-exists "alacritty"; then
-        echo-color "@blue@b[[+ Installing Alacritty terminfo ]]"
-        git clone https://github.com/alacritty/alacritty.git /tmp/alacritty
-        cd /tmp/alacritty
-        sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
-        cd $HOME
-        rm -fr /tmp/alacritty
-    fi
-    # get fucking bent, Catalina | what is this??
-    xattr -r -d com.apple.quarantine /Applications/Alacritty.app
-fi
+# echo-header "SETUP USER ZSH..."
+# symlink-create "${ADOTDIR}/bundles/chriskempson/base16-shell/scripts/base16-oceanicnext.sh" ~/.base16_theme
+# if [ ! -f $HOME/.fzf.zsh ]; then
+#     $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
+# fi
+# antigen_file="${ADOTDIR}/antigen.zsh"
+# if [ ! -f $antigen_file ]; then
+#     echo "Installing antigen" && curl -L git.io/antigen > "$antigen_file"
+# fi
 
 
-echo-header "SETTING UP TILING.."
+# echo-header "SETTING UP TERMINAL.."
+# if is-mac; then
+#     brew install --cask alacritty
+#     brew install --cask kitty
+#     if command-exists "alacritty"; then
+#         echo-color "@blue@b[[+ Installing Alacritty terminfo ]]"
+#         git clone https://github.com/alacritty/alacritty.git /tmp/alacritty
+#         cd /tmp/alacritty
+#         sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
+#         cd $HOME
+#         rm -fr /tmp/alacritty
+#     fi
+#     # get fucking bent, Catalina | what is this??
+#     xattr -r -d com.apple.quarantine /Applications/Alacritty.app
+# fi
 
-if is-mac; then
-    brew install jq
-    brew tap koekeishiya/formulae
-    brew install yabai
-    brew install skhd
-    git_clone_recursive \
-        $HOME/code/tools    \
-        "limelight"         \
-        git@github.com:molleweide/limelight.git
 
-    pushd $HOME/code/tools/limelight > /dev/null 2>&1
-    make
-    popd $dest> /dev/null 2>&1
-    create-symlink $install_dir/limelight/bin/limelight /usr/local/bin/limelight
-    # TODO: uebersicht yabai
-    brew services start skhd
-    brew services start yabai
-fi
+# echo-header "SETTING UP TILING.."
+# if is-mac; then
+#     brew install jq
+#     brew tap koekeishiya/formulae
+#     brew install yabai
+#     brew install skhd
+#     git_clone_recursive \
+#         $HOME/code/tools    \
+#         "limelight"         \
+#         git@github.com:molleweide/limelight.git
+#     pushd $HOME/code/tools/limelight > /dev/null 2>&1
+#     make
+#     popd $dest> /dev/null 2>&1
+#     symlink-create $install_dir/limelight/bin/limelight /usr/local/bin/limelight
+#     # TODO: uebersicht yabai
+#     brew services start skhd
+#     brew services start yabai
+# fi
 
 echo-header "SETTING UP GIT..."
 if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" ]; then

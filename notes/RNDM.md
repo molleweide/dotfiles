@@ -1,11 +1,11 @@
 # DOTFILES RNDM
 
-- run permissions file
+- fix shaker >> box + print postal
 
-- testing loop over array and see how the lines are outputed?
-    if I put multiple commands on one line
-        are all line commands echoed for each line?
+- test run installers again
 
-is there something wrong with that. it is fucking wierd how that can even be working at all.
-i want a persian doctor and so i thought where I want to sell my meatballs and falukorv.
+- fix reaper.
 
+- strykbraeda.
+
+- vacuum

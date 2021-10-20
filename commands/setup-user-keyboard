@@ -9,6 +9,7 @@ git_clone_recursive     \
     "qmk-firmware"      \
     git@github.com:molleweide/qmk_firmware.git
 
+# TODO: dorothy > check if user gith exists > else clone upstream.
 code_tools_path=$HOME/code/tools
 git_clone_recursive  \
     $code_tools_path \

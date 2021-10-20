@@ -1,8 +1,9 @@
 # DOROTHY NOTES
 
+- kmonad
 
-- source "$DOROTHY/sources/paths.sh"
-    source user paths in this file.
+- store / recall macos system preferences / shortcuts etc.
 
+- opinion on my symlink file
 
-
+- python path > python.bash

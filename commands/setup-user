@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# pushd $DOROTHY/user > /dev/null 2>&1
-# git submodule update --init --recursive || exit 1
-# popd > /dev/null 2>&1
-# setup-user-osx
-# setup-user-configs
-# setup-user-base
+pushd $DOROTHY/user > /dev/null 2>&1
+git submodule update --init --recursive || exit 1
+popd > /dev/null 2>&1
+setup-user-osx
+setup-user-configs
+setup-user-base
 # setup-user-python
 # setup-user-ruby-node
 # setup-user-lua-haskell

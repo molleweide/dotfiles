@@ -7,7 +7,7 @@
 
 # dorothy ecosystem
 export GIT_PROTOCOL='ssh'
-export GIT_DEFAULT_BRANCH='main'
+export GIT_DEFAULT_BRANCH='molleweide'
 # export DOROTHY_THEME='oz' # 'starship'
 
 # # other

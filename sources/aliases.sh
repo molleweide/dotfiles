@@ -25,6 +25,7 @@ alias scml=~/.local/bin/sc-im
 
 
 # tmux
+alias tm="tmux"
 alias tk="tmux kill-session"
 alias tn="tmuxinator"
 

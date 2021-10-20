@@ -1,19 +1,29 @@
 #!/usr/bin/env bash
 
-# TODO: if regular file > prompt user overwrite??? yes/no
+# TODO: if regular src > prompt user overwrite??? yes/no
 
-file=$1
-link_destination=$2
+src=$1
+dst=$2
 force=$3
 
-if [ ! -e "$link_destination" ]; then
-    echo-color "@b@green[[ Symlinking: $file -> $link_destination ]]"
-    mkdir -p "$(dirname "$link_destination")"
-    ln -s "$file" "$link_destination"
-elif [[ -L $link_destination ]]; then
-    echo-color "@b@blue[[ Re-linking: $file -> $link_destination ]]"
-    rm -rf $link_destination # be carefull;
-    ln -s "$file" "$link_destination"
+# echo "src = $src"
+# echo "dst = $dst"
+
+# link already exists
+if test -L $dst; then
+    echo-color "@b@blue[[ Re-linking: $src -> $dst ]]"
+    rm -rf $dst # be carefull;
+    ln -s "$src" "$dst"
+
+
+# link destination is file/dir
+elif [ -d $dst ] || [ -f $dst ]; then
+    echo-color "@b@red[[ Cannot link: \`$dst\` is a regular file/dir and needs to be removed manually first... ]]"
+
+
+# nothin... do symlinkg
 else
-    echo-color "@b@red[[ Cannot link: \`$link_destination\` is a regular file/dir and needs to be removed manually first... ]]"
+    echo-color "@b@green[[ Symlinking: $src -> $dst ]]"
+    # mkdir -p "$(dirname "$dst")"
+    ln -s "$src" "$dst"
 fi

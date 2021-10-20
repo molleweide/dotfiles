@@ -4,11 +4,11 @@ echo-header "SETTING UP PYTHON..."
 
 arch="$(get-arch)"
 
-is-mac && export PYTHON_CONFIGURE_OPTS="--enable-framework"
-is-linux && export PYTHON_CONFIGURE_OPTS="--enable-shared"
+# is-mac && export PYTHON_CONFIGURE_OPTS="--enable-framework"
+# is-linux && export PYTHON_CONFIGURE_OPTS="--enable-shared"
 
-export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-export PATH="$PYENV_ROOT/bin:$PATH"
+# export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+# export PATH="$PYENV_ROOT/bin:$PATH"
 
 # install pyenv
 if ! command-exists "pyenv"; then
