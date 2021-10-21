@@ -7,6 +7,9 @@
     version: 0.1
 @end
 
+- test if doom development branch works standalone wo merging
+    into molleweide.
+
 - fix shaker >> box + print postal
 
 - test run installers again
@@ -15,5 +18,5 @@
 
 - vacuum
 
-okay so this is quite interesting actually and we don't really know why that happens which is one of the most insane reasons
-why they fuck up at all.
+so this is quite nice because now things seem to be working kind of ish now again which is fucking great dude.
+it will now be interesting so see if this works which is something that is quite fucking insane.

@@ -7,6 +7,11 @@
 	version: 0.1
 @end
 
+* check if F and T still freezes nvim
+
+* repuild python.
+  first run `setup-python`
+
 - https://2019.www.torproject.org/docs/faq.html.en#WhatIsTor
 - https://2019.www.torproject.org/docs/faq-abuse.html.en
 - https://www.youtube.com/watch?v=bkgeFi4PwOg
