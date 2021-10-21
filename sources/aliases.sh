@@ -71,8 +71,8 @@ alias vv="~/code/neovim/build/bin/nvim" # forked build
 
 # ======== GIT ========
 alias gcfls="git conflicts"
-alias M="git checkout master"
 alias m="git checkout molleweide"
+alias M="git checkout molldev"
 
 alias zg="lazygit"
 
