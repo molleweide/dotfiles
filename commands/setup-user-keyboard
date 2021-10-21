@@ -2,6 +2,9 @@
 
 echo-header "KEYBOARD"
 
+# TODO:
+# - linux
+
 arch="$(get-arch)"
 
 git_clone_recursive     \

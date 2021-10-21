@@ -3,14 +3,16 @@
 set -euo pipefail
 
 git fetch
-git checkout -q master
+git checkout -q $GIT_DEFAULT_BRANCH
 
-BRANCHES="$(git branch --no-color --merged | grep -v '\\* master')"
+BRANCHES="$(git branch --no-color --merged | grep -v '\\* $GIT_DEFAULT_BRANCH')"
 
 # If there are no branches to delete, don't do anything.
 if [ -z "$BRANCHES" ]; then
   echo "There are no branches to delete. 😎"
   exit 0
 fi
+
+echo "branches: $BRANCHES"
 
 echo "$BRANCHES" | xargs -n 1 git branch -d

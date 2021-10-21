@@ -6,7 +6,7 @@ popd > /dev/null 2>&1
 setup-user-osx
 setup-user-configs
 setup-user-base
-# setup-user-python
+setup-user-python
 # setup-user-ruby-node
 # setup-user-lua-haskell
 # setup-user-tmux-nvim
@@ -17,5 +17,5 @@ setup-user-base
 # setup-user-surfingkeys
 # setup-user-neomutt
 # setup-user-scim
-# setup-user-reaper
+# setup-reaper
 # ../personal/stuff
