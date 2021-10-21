@@ -7,40 +7,28 @@
 	version: 0.1
 @end
 
-* GOOD READS
-https://wiki.archlinux.org/title/XDG_Base_Directory
-https://shreevatsa.wordpress.com/2008/03/30/zshbash-startup-files-loading-order-bashrc-zshrc-etc/
-https://www.reddit.com/r/zsh/comments/e882c4/what_is_the_difference_between_zshrc_and_zprofile/
+- https://2019.www.torproject.org/docs/faq.html.en#WhatIsTor
+- https://2019.www.torproject.org/docs/faq-abuse.html.en
+- https://www.youtube.com/watch?v=bkgeFi4PwOg
+- https://www.youtube.com/watch?v=p0KKBmfiVl0
+- https://www.youtube.com/watch?v=w8EKH_fjmXA
+- https://www.youtube.com/watch?v=_mi0O52_gwU
+- irc     | https://www.youtube.com/watch?v=Ltq0hMgizi0
+- docker  | https://www.youtube.com/results?search_query=docker+getting+started
+- qemu    | https://www.youtube.com/results?search_query=qemu
+- nyxt    | https://www.youtube.com/watch?v=SVteSEjKytw
 
+- antigen > oceanic next symlink
+- gh > test create repo from cli
 
+- order NANO S
 
-* PYTHON VIRTUALENV!!!!!!
-
-*
-
-* XDG
- ** zsh
- ** antigen
- ** 16shell
-
-* update
- ** source lib in installer files
-
-* submodules | move DOOM and NVIM
- ** but this time instead of moving
-    add new submodules to these locations
+* https://linuxconfig.org/advanced-bash-regex-with-examples
 
 * MAKEFILE | https://makefiletutorial.com/
 
 * custom installer
  ** vimac
-
-* keyboard build
-  refactor git functions
-
-* RUBY read | https://github.com/ruby/irb/issues/277
-  https://wiki.archlinux.org/title/RVM
-  https://wiki.archlinux.org/title/Ruby#RubyGems
 
 * rename nvim configs to nvim-***
 
