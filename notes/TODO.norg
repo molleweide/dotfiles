@@ -7,7 +7,14 @@
 	version: 0.1
 @end
 
-* check if F and T still freezes nvim
+- master thesis
+- watch video stryk skjorta.
+
+* KTH
+
+* dotfiles
+  https://github.com/rafamadriz/dotfiles
+
 
 * repuild python.
   first run `setup-python`

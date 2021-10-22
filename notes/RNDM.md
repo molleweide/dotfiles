@@ -8,4 +8,5 @@
 
 - vacuum
 
-half of all men die before they have become fucking fourty years old which is quite fucking crazy you know
+ssss of all men die before they have become fucking fourty years old which atcdd quite fucking crazy you know
+atcdd and s is quite fucking $retarded and $retarded whic *arst* but how would that be dude is ss 
