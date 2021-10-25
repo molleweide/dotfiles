@@ -74,7 +74,7 @@ alias gcfls="git conflicts"
 alias m="git checkout molleweide"
 alias M="git checkout molldev"
 
-alias zg="lazygit"
+alias lg="lazygit"
 
 
 # 1 = branch, 2 = sub path, 3 = new repo url
