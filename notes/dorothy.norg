@@ -1,0 +1,41 @@
+@document.meta
+    title: dorothy
+    description:
+    author: hjalmarjakobsson
+    categories:
+    created: 2021-10-26
+    version: 0.1
+@end
+
+* BEVRY ZOOM
+  `https://balupton.com/zoom`
+
+* I ADDED TO DOROTHY
+ ** `./personal/stuff` script
+        `echo colors`
+        `git-clone-from-array`
+        `git-clone-recursive`
+        `create-symlink`
+ ** lua/ haskell
+ ** reaper
+    - need to have a good default config
+    - my personal config is to advanced
+
+* config name
+  i need to come up with a new name.
+
+* setup-keyboard / kmonad
+
+  when building kmonad, I clone it to `$HOME/code/tools/kmonad`
+    do you have any suggestions on where to clone github repositories
+
+    check if fork exists else clone original
+
+* generic.bash
+
+* store / recall macos system preferences / shortcuts etc.
+  please comment on this
+
+* python path > python.bash
+  dunno what I meant with this lol
+
