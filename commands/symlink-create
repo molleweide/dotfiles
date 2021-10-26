@@ -9,21 +9,26 @@ force=$3
 # echo "src = $src"
 # echo "dst = $dst"
 
-# link already exists
+# 1. check if $dst already is a link. if true force create new link
 if test -L $dst; then
     echo-color "@b@blue[[ Re-linking: $src -> $dst ]]"
     rm -rf $dst # be carefull;
     ln -s "$src" "$dst"
 
 
-# link destination is file/dir
+# 2. check if $dst already is file/dir
 elif [ -d $dst ] || [ -f $dst ]; then
     echo-color "@b@red[[ Cannot link: \`$dst\` is a regular file/dir and needs to be removed manually first... ]]"
 
 
-# nothin... do symlinkg
+# 3. if not link, and not file/dir > create new symlink
 else
     echo-color "@b@green[[ Symlinking: $src -> $dst ]]"
-    # mkdir -p "$(dirname "$dst")"
+
+    # create dirs up until $dst in case
+    # $dst is a file and in a completely new
+    # location.
+    mkdir -p "$(dirname $dst)"
+
     ln -s "$src" "$dst"
 fi

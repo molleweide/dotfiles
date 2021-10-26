@@ -8,7 +8,8 @@ setup-user-configs
 setup-user-base
 setup-user-python
 # setup-user-ruby-node
-# setup-user-lua-haskell
+# setup-lua
+# setup-haskell
 # setup-user-tmux-nvim
 # setup-user-mac-apps
 # setup-user-hammerspoon

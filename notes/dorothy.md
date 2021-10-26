@@ -3,10 +3,16 @@
 - kmonad
 
 - store / recall macos system preferences / shortcuts etc.
+    please comment on this 
 
 - opinion on my symlink file ??
 
 - python path > python.bash
+    dunno what I meant with this lol
+
+- let me demonstrate 
+    1. `./personal/stuff` script
+
 
 - setup-keyboard
 

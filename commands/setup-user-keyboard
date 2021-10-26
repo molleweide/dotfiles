@@ -7,12 +7,41 @@ echo-header "KEYBOARD"
 
 arch="$(get-arch)"
 
+# QMK
+
+# TODO: check for github_user=$(git config github.user)
 git_clone_recursive     \
     $HOME/code/firmware \
     "qmk-firmware"      \
     git@github.com:molleweide/qmk_firmware.git
 
+# ---------------------------------------------------------------------
+#
+# KMONAD
+#
+# 1. install included dext.
+#      `/Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Manager activate`
+#          latest versions of kmonad don't work. >> need version 1.15. current is 1.22..
+#
+# 2. set permisions
+#
+#
+# 3. this is what I have in my `user/sources/aliases.sh`
+#
+# # ======== KMONAD ========
+# kmonad=~/.local/bin/kmonad # stack default install location
+# layouts=$HOME/code/tools/kmonad/keymap/user/molleweide
+#  # above if you run my installer
+# kmonump()  { sudo $kmonad $layouts/demo-numpad.kbd; }
+#
+# you can use a launch daemon for running kmonad but I am actively
+# developing my layout and therefore it is super risky to do that.
+# in case you create a dead end in a layer that you cannot get out of..
+# ---------------------------------------------------------------------
+
+
 # TODO: dorothy > check if user gith exists > else clone upstream.
+# check for github_user=$(git config github.user)
 code_tools_path=$HOME/code/tools
 git_clone_recursive  \
     $code_tools_path \
