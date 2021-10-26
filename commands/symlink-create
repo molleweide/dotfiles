@@ -1,34 +1,34 @@
 #!/usr/bin/env bash
+source "$DOROTHY/sources/strict.bash"
 
-# TODO: if regular src > prompt user overwrite??? yes/no
+# TODO: if regular existing > prompt user overwrite??? yes/no
 
-src=$1
-dst=$2
-force=$3
+existing="${1:-"$(ask --question="What is the existing path that you want to symlink elsewhere?" --required)"}"
+symlink="${2:-"$(ask --question="What is the new path that you want to redirect?" --required)"}"
+force="${FORCE:-"$(get-flag-value force --missing=no -- "$@")"}"
 
-# echo "src = $src"
-# echo "dst = $dst"
+# 1. check if symlink already is a link. if true force create new link
+if test -L "$symlink"; then
+    if test "$force" = 'yes' || confirm-bool "Symlink already exists at $symlink, recreate it to point to $existing?"; then
+        echo-color "@b@blue[[ Re-linking: $existing -> $symlink ]]"
+        rm -rf $symlink # be carefull;
+        ln -s "$existing" "$symlink"
+    else
+        exit 1
+    fi
 
-# 1. check if $dst already is a link. if true force create new link
-if test -L $dst; then
-    echo-color "@b@blue[[ Re-linking: $src -> $dst ]]"
-    rm -rf $dst # be carefull;
-    ln -s "$src" "$dst"
-
-
-# 2. check if $dst already is file/dir
-elif [ -d $dst ] || [ -f $dst ]; then
-    echo-color "@b@red[[ Cannot link: \`$dst\` is a regular file/dir and needs to be removed manually first... ]]"
-
+# 2. check if $symlink already is file/dir
+elif test -d "$symlink" -o -f "$symlink"; then
+    echo-color "@b@red[[ Cannot link: \`$symlink\` is a regular file/dir and needs to be removed manually first... ]]"
 
 # 3. if not link, and not file/dir > create new symlink
 else
-    echo-color "@b@green[[ Symlinking: $src -> $dst ]]"
+    echo-color "@b@green[[ Symlinking: $existing -> $symlink ]]"
 
-    # create dirs up until $dst in case
-    # $dst is a file and in a completely new
+    # create dirs up until $symlink in case
+    # $symlink is a file and in a completely new
     # location.
-    mkdir -p "$(dirname $dst)"
+    mkdir -p "$(dirname $symlink)"
 
-    ln -s "$src" "$dst"
+    ln -s "$existing" "$symlink"
 fi

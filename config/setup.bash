@@ -1,38 +1,5 @@
 #!/usr/bin/env bash
 
-# note on youtube-dl
-# brew maintains it actively, and also will assist with dependencies
-# however, ubuntu is slow to maintain, so install via pip instead
-# http://ytdl-org.github.io/youtube-dl/download.html
-
-export BROWSER="brave"
-export PAGER='less' # alt. `most`
-export TERMINAL="Alacritty" # or kitty | linux >> "st"
-
-
-if "$DOROTHY/commands/is-mac"; then
-	export USER_SHELLS=(
-		bash
-		zsh
-		fish
-		sh
-	)
-else
-	export USER_SHELLS=(
-		bash
-		zsh
-		fish
-		sh
-	)
-fi
-
-export TERMINAL_EDITORS=(
-	nvim
-	vim # --noplugin -c "set nowrap"'
-	micro
-	nano
-)
-
 export APK_INSTALL=(
 	# gocryptfs: use `setup-util-gocryptfs` instead, as this version lags behind
 	aria2

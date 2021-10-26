@@ -15,3 +15,5 @@ tags
 *.swp
 tmux-client*
 hammerspoon/Vim2
+commands.local/
+config.local/

@@ -34,5 +34,5 @@ echo-header "SETTING UP HASKELL.."
 is-mac && brew install ghc
 test ! $(which stack) && curl -sSL https://get.haskellstack.org/ | sh
 stack upgrade
-stack install yesod-bin --install-ghc
+# stack install yesod-bin --install-ghc
 
