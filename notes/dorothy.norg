@@ -10,20 +10,6 @@
 * BEVRY ZOOM
   `https://balupton.com/zoom`
 
-* I ADDED TO DOROTHY
- ** `./personal/stuff` script
-        `echo colors`
-        `git-clone-from-array`
-        `git-clone-recursive`
-        `create-symlink`
- ** lua/ haskell
- ** reaper
-    - need to have a good default config
-    - my personal config is to advanced
-
-* config name
-  i need to come up with a new name.
-
 * setup-keyboard / kmonad
 
   when building kmonad, I clone it to `$HOME/code/tools/kmonad`

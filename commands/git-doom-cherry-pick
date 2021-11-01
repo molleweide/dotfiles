@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# PREPARE COMMAND
+#
+# >>> `git-doom-cherry-pick 30e1f00 dd2c7d0`
+
+git checkout develop-cherry-pick
+
+# $(git config github.user)
+pattern="user(molleweide)"
+
+git rev-list --reverse $1..$2 --grep="$pattern" --invert-grep | git cherry-pick --stdin

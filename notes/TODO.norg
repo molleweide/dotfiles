@@ -7,8 +7,9 @@
 	version: 0.1
 @end
 
-this was on line 60 of antigen/init.zsh
-`source '/Users/hjalmarjakobsson/.local/share/antigen/bundles/wookayin/fzf-fasd/fzf-fasd.plugin.zsh';`
+
+
+
 
 * restart limelight
 

@@ -1,0 +1,16 @@
+@document.meta
+    title: shell_not_working
+    description:
+    author: hjalmarjakobsson
+    categories:
+    created: 2021-10-28
+    version: 0.1
+@end
+
+* SHELL LOSES ALL ITS CONFIGS AFTER:
+
+ ** running `exec zsh` to reload
+
+ ** after starting `tmux`
+
+* SHELL DEBUGGING
