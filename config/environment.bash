@@ -35,12 +35,12 @@ export XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-"$XDG_CONFIG_HOME:/etc/xdg"}"
 
 # mac
 if is-mac; then
-  export XDG_DESKTOP_DIR="$HOME/Desktop"
-  export XDG_DOCUMENTS_DIR="$HOME/Documents"
-  export XDG_DOWNLOAD_DIR="$HOME/Downloads"
-  export XDG_MUSIC_DIR="$HOME/Music"
-  export XDG_PICTURES_DIR="$HOME/Pictures"
-  export XDG_VIDEOS_DIR="$HOME/Videos"
+    export XDG_DESKTOP_DIR="$HOME/Desktop"
+    export XDG_DOCUMENTS_DIR="$HOME/Documents"
+    export XDG_DOWNLOAD_DIR="$HOME/Downloads"
+    export XDG_MUSIC_DIR="$HOME/Music"
+    export XDG_PICTURES_DIR="$HOME/Pictures"
+    export XDG_VIDEOS_DIR="$HOME/Videos"
 fi
 
 export ADOTDIR="$XDG_DATA_HOME/antigen"
@@ -86,6 +86,6 @@ export HISTFILE="$XDG_DATA_HOME/history"
 export LESSHISTFILE="-"
 if test "$shell" = 'zsh'; then
 	export HISTFILE="$XDG_STATE_HOME/zsh/history"
-  mkdir -p "$XDG_STATE_HOME/zsh"
-  touch "$HISTFILE"
+    mkdir -p "$XDG_STATE_HOME/zsh"
+    touch "$HISTFILE"
 fi

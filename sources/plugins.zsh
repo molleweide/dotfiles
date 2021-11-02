@@ -27,8 +27,8 @@ if test -f "$ADOTDIR/antigen.zsh"; then
     antigen bundle dbalatero/fzf-git
     antigen bundle DarrinTisdale/zsh-aliases-exa
     antigen bundle chriskempson/base16-shell
-    # antigen bundle wookayin/fzf-fasd
-    antigen bundle rupa/z z.sh
+    antigen bundle wookayin/fzf-fasd
+    # antigen bundle rupa/z z.sh
     antigen bundle twang817/zsh-ssh-agent
     antigen bundle zsh-users/zsh-completions
     antigen bundle zdharma/fast-syntax-highlighting
@@ -41,5 +41,5 @@ if test -f "$ADOTDIR/antigen.zsh"; then
     [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
     eval "$(direnv hook zsh)"
-    # eval "$(fasd --init auto)"
+    eval "$(fasd --init auto)"
 fi

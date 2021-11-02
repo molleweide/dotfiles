@@ -15,6 +15,16 @@ alias cl="calcurse"
 alias duu="diskutil" # list commands
 alias dul="diskutil list" # list drives
 
+# ======== FIND FILES ========
+
+# https://egeek.me/2020/04/18/enabling-locate-on-osx/
+if which glocate > /dev/null; then
+  alias locate="glocate -d $HOME/locatedb"
+  [[ -f "$HOME/locatedb" ]] && export LOCATE_PATH="$HOME/locatedb"
+fi
+alias loadl="gupdatedb --prunepaths=/Volumes --output=$HOME/locatedb"
+
+
 # ======== FINANCE ===========
 alias ei="cointop"
 

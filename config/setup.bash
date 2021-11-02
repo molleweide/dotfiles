@@ -79,6 +79,7 @@ export HOMEBREW_INSTALL=(
 	msmtp
 	pass
 	spotify-tui
+    findutils           # eg. unix `locate` command
 	mps-youtube
 	aria2
 	coreutils

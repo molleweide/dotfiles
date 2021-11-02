@@ -1,10 +1,10 @@
 unsetopt PROMPT_SP # i believe this removes ^% sign in prompt
 
 # Maintain a stack of cd directory traversals for `popd`
-setopt AUTO_PUSHD
+# setopt AUTO_PUSHD
 
 # Allow extended matchers like ^file, etc
-set -o EXTENDED_GLOB
+# set -o EXTENDED_GLOB
 
 # # Zsh Options
 # # http://zsh.sourceforge.net/Doc/Release/Options.html

@@ -3,9 +3,9 @@
 # Check config with:   npm config ls -l | grep / | grep -v '^; | sort'
 
 # XDG Base Dirs compliance
-cache=${XDG_CACHE_HOME}/npm
-tmp=${XDG_RUNTIME_DIR}/npm
-init-module=${XDG_CONFIG_HOME}/npm/config/npm-init.js
+; cache=${XDG_CACHE_HOME}/npm
+; tmp=${XDG_RUNTIME_DIR}/npm
+; init-module=${XDG_CONFIG_HOME}/npm/config/npm-init.js
 
 # https://stackoverflow.com/questions/34718528/nvm-is-not-compatible-with-the-npm-config-prefix-option
 # Setting prefix is incompatible with nvm

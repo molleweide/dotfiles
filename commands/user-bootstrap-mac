@@ -449,12 +449,12 @@ main() {
 
   setup_ssh_keys
   setup_hostname
-  clone_dotfiles_repo
-  dotfiles_submodules_update
+  # clone_dotfiles_repo
+  # dotfiles_submodules_update
 
   # TODO: require lib
   # if is_macos; then
-    run_osx_script
+    # run_osx_script
   # fi
 
 }
