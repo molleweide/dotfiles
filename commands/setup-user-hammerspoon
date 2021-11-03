@@ -11,5 +11,6 @@ if is-mac; then
     else
         echo-color "+ SpoonInstall.spoon already setup"
     fi
+
     defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 fi

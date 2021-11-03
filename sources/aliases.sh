@@ -22,7 +22,7 @@ if which glocate > /dev/null; then
   alias locate="glocate -d $HOME/locatedb"
   [[ -f "$HOME/locatedb" ]] && export LOCATE_PATH="$HOME/locatedb"
 fi
-alias loadl="gupdatedb --prunepaths=/Volumes --output=$HOME/locatedb"
+alias loaddb="gupdatedb --localpaths=$HOME --prunepaths=/Volumes --output=$HOME/locatedb"
 
 
 # ======== FINANCE ===========

@@ -78,6 +78,7 @@ export HOMEBREW_INSTALL=(
 	isync
 	msmtp
 	pass
+	ghq                 # Remote repository management made easy
 	spotify-tui
     findutils           # eg. unix `locate` command
 	mps-youtube
