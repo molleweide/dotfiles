@@ -16,7 +16,7 @@ alias cl="calcurse"
 alias duu="diskutil" # list commands
 alias dul="diskutil list" # list drives
 
-alias pstf="personal-stuff"
+alias pstf="setup-personal-repos"
 
 # ======== TILING ========
 alias rst="reload_tiling"

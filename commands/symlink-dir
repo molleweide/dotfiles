@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+source "$DOROTHY/sources/strict.bash"
+
+# link all files
+
+# TODO: if not dirs then exit
+
+export FORCE_LINK='yes'
+
+srs_dir="$1"
+dst_dir="$2" # link this dir back to src <----
+
+for f in $src_dir/*; do
+symlink-file "$f" "$dst_dir/$(basename $f)"
+done

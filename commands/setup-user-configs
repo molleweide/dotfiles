@@ -6,7 +6,7 @@ export FORCE_LINK='yes'
 config_src_dir="$DOROTHY/user/config.xdg"
 config_dst_dir=$HOME/.config
 for f in $config_src_dir/*; do
-    symlink-create "$f" "$config_dst_dir/$(basename $f)"
+    symlink-file "$f" "$config_dst_dir/$(basename $f)"
 done
 
 

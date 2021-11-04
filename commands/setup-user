@@ -19,6 +19,7 @@ popd > /dev/null 2>&1
 # setup-utils
 
 # # --- moll ------------
+# setup-personal-repos
 # setup-user-osx
 # setup-user-base
 # # setup-user-ubersicht
@@ -27,4 +28,3 @@ popd > /dev/null 2>&1
 # # setup-user-neomutt
 # # setup-user-scim
 # # setup-reaper
-# # ../personal/stuff

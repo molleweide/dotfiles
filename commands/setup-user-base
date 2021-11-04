@@ -9,7 +9,7 @@ for f in $config_src_dir/*; do
     # echo "$(basename $f)"
     # echo "$config_dst_dir/$(basename $f)"
     # https://stackoverflow.com/questions/3362920/get-just-the-filename-from-a-path-in-a-bash-script
-    symlink-create "$f" "$config_dst_dir/$(basename $f)"
+    symlink-file "$f" "$config_dst_dir/$(basename $f)"
 done
 
 
@@ -24,7 +24,7 @@ osascript -e \
 
 
 echo-header "SETUP USER ZSH..."
-symlink-create "${ADOTDIR}/bundles/chriskempson/base16-shell/scripts/base16-oceanicnext.sh" ~/.base16_theme
+symlink-file "${ADOTDIR}/bundles/chriskempson/base16-shell/scripts/base16-oceanicnext.sh" ~/.base16_theme
 [ ! -f $HOME/.fzf.zsh ] && $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
 antigen_file="${ADOTDIR}/antigen.zsh"
 [ ! -f $antigen_file ] && ( echo "Installing antigen" && curl -L git.io/antigen > $antigen_file )
@@ -60,7 +60,7 @@ antigen_file="${ADOTDIR}/antigen.zsh"
 #     pushd $HOME/code/tools/limelight > /dev/null 2>&1
 #     make
 #     popd $dest> /dev/null 2>&1
-#     symlink-create $HOME/code/tools/limelight/bin/limelight /usr/local/bin/limelight
+#     symlink-file $HOME/code/tools/limelight/bin/limelight /usr/local/bin/limelight
 #     # TODO: add to aliases restart...
 #     brew services start skhd
 #     brew services start yabai

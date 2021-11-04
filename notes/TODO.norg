@@ -7,6 +7,12 @@
 	version: 0.1
 @end
 
+* ubersicht bar
+  move personal stuff widgets to setup
+  `$ git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar`
+
+
+
 * todo: run pitch machine project.
 
 * master thesis
