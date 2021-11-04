@@ -22,7 +22,6 @@ popd > /dev/null 2>&1
 # setup-personal-repos
 # setup-user-osx
 # setup-user-base
-# # setup-user-ubersicht
 # # setup-user-keyboard
 # # setup-user-surfingkeys
 # # setup-user-neomutt

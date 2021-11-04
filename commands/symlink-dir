@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
 source "$DOROTHY/sources/strict.bash"
 
-# link all files
-
-# TODO: if not dirs then exit
+# link all files from dir
 
 export FORCE_LINK='yes'
 
-srs_dir="$1"
-dst_dir="$2" # link this dir back to src <----
+existing_dir="${1:-"$(ask --question="What is the existing DIR PATH that you want to symlink elsewhere?" --required)"}"
+symlink_dir="${2:-"$(ask --question="What is the new DIR PATH that you want to redirect MULTIPLE FILES to?" --required)"}"
 
-for f in $src_dir/*; do
-symlink-file "$f" "$dst_dir/$(basename $f)"
+for f in $existing_dir/*; do
+    # echo "$f"
+    # echo "$(basename $f)"
+    # echo "$symlink_dir/$(basename $f)"
+    # echo
+    symlink-file "$f" "$symlink_dir/$(basename $f)"
 done

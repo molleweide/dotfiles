@@ -1,33 +1,33 @@
 #!/usr/bin/env bash
 
-echo-header "LINK USER CONFIGS.."
-export FORCE_LINK='yes'
-config_src_dir="$DOROTHY/user/config.xdg"
-config_dst_dir=$HOME/.config
-for f in $config_src_dir/*; do
-    # echo "$f"
-    # echo "$(basename $f)"
-    # echo "$config_dst_dir/$(basename $f)"
-    # https://stackoverflow.com/questions/3362920/get-just-the-filename-from-a-path-in-a-bash-script
-    symlink-file "$f" "$config_dst_dir/$(basename $f)"
-done
+# echo-color --h1 --green "LINK USER CONFIGS.."
+# export FORCE_LINK='yes'
+# config_src_dir="$DOROTHY/user/config.xdg"
+# config_dst_dir=$HOME/.config
+# for f in $config_src_dir/*; do
+#     # echo "$f"
+#     # echo "$(basename $f)"
+#     # echo "$config_dst_dir/$(basename $f)"
+#     # https://stackoverflow.com/questions/3362920/get-just-the-filename-from-a-path-in-a-bash-script
+#     symlink-file "$f" "$config_dst_dir/$(basename $f)"
+# done
 
 
-echo-header "SETTING UP WALLPAPER.."
-# https://apple.stackexchange.com/questions/75081/automatically-change-os-x-desktop-background-for-all-desktops-monitors
-# https://stackoverflow.com/questions/5550895/shell-script-changing-desktop-wallpaper
-# https://www.howtogeek.com/258461/how-to-use-a-screensaver-as-your-background-on-os-x/
-# https://stackoverflow.com/questions/431205/how-can-i-programmatically-change-the-background-in-mac-os-x
-WALLPAPER="$DOROTHY/user/media/wallpaper/wallpaper2.png"
-osascript -e \
-      "tell application \"Finder\" to set desktop picture to POSIX file \"$WALLPAPER\""
+# echo-color --h1 --red "SETTING UP WALLPAPER.."
+# # https://apple.stackexchange.com/questions/75081/automatically-change-os-x-desktop-background-for-all-desktops-monitors
+# # https://stackoverflow.com/questions/5550895/shell-script-changing-desktop-wallpaper
+# # https://www.howtogeek.com/258461/how-to-use-a-screensaver-as-your-background-on-os-x/
+# # https://stackoverflow.com/questions/431205/how-can-i-programmatically-change-the-background-in-mac-os-x
+# WALLPAPER="$DOROTHY/user/media/wallpaper/wallpaper2.png"
+# osascript -e \
+#     "tell application \"Finder\" to set desktop picture to POSIX file \"$WALLPAPER\""
 
 
-echo-header "SETUP USER ZSH..."
-symlink-file "${ADOTDIR}/bundles/chriskempson/base16-shell/scripts/base16-oceanicnext.sh" ~/.base16_theme
-[ ! -f $HOME/.fzf.zsh ] && $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
-antigen_file="${ADOTDIR}/antigen.zsh"
-[ ! -f $antigen_file ] && ( echo "Installing antigen" && curl -L git.io/antigen > $antigen_file )
+# echo-header "SETUP USER ZSH..."
+# symlink-file "${ADOTDIR}/bundles/chriskempson/base16-shell/scripts/base16-oceanicnext.sh" ~/.base16_theme
+# [ ! -f $HOME/.fzf.zsh ] && $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
+# antigen_file="${ADOTDIR}/antigen.zsh"
+# [ ! -f $antigen_file ] && ( echo "Installing antigen" && curl -L git.io/antigen > $antigen_file )
 
 
 # echo-header "SETTING UP TERMINAL.."
@@ -198,3 +198,12 @@ antigen_file="${ADOTDIR}/antigen.zsh"
 #         && wget -nv $url -O $destination && unzip -d $spoons_dir $destination
 #     defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 # fi
+
+
+if is-mac; then
+    echo-color --h1 --cyan "LINK UBER WIDGETS.."
+    # brew install ubersicht
+    symlink-dir \
+        "$HOME/code/widgets" \
+        "$HOME/Library/Application Support/Übersicht/widgets"
+fi
