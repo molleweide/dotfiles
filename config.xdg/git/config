@@ -1,5 +1,5 @@
 [color]
-  ui = true
+	ui = auto
 
 [color "branch"]
   current = yellow reverse
@@ -98,11 +98,12 @@
 
 [mergetool]
   prompt = false
+	keepBackup = false
 
 [merge]
   summary = true
   verbosity = 1
-  tool = mvimdiff
+	tool = opendiff
 
 [apply]
   whitespace = nowarn
@@ -113,7 +114,7 @@
 [push]
   # 'git push' will push the current branch to its tracking branch
   # the usual default is to push all branches
-  default = current
+	default = simple
 
 [pull]
   # fast-forwards only
@@ -122,8 +123,8 @@
 [core]
   attributesfile = ~/.gitattributes
   autocrlf = false
-  editor = nvim
-  excludesfile = ~/.gitignore
+	editor = nvim
+	excludesfile = /Users/hjalmarjakobsson/.gitignore_global
   pager = diff-so-fancy | less --tabs=4 -RFX
 	commitGraph = true
 	precomposeUnicode = true
@@ -136,6 +137,7 @@
   # instead of a/b/c/d as prefixes for patches
   mnemonicprefix = true
   algorithm = patience
+	tool = opendiff
 
 [rerere]
   # Remember my merges
@@ -152,6 +154,7 @@
 
 [commit]
   template = ~/.config/git/message
+	gpgsign = false
 
 [filter "lfs"]
 	process = git-lfs filter-process
@@ -162,3 +165,19 @@
 	writecommitGraph = true
 [init]
 	defaultBranch = molleweide
+[user]
+	name = hjalmar jakobsson
+	email = hjalmar.jakobsson@telia.com
+	signingkey = F75A27C9E590009BB65EC918BE4CDD65C9053F9C
+[github]
+	user = molleweide
+[credential]
+	helper = osxkeychain
+[difftool]
+	prompt = false
+[hub]
+	protocol = ssh
+[gpg]
+	program = /usr/local/bin/gpg
+[tag]
+	gpgsign = true

@@ -1,0 +1,16 @@
+@document.meta
+    title: xdg
+    description:
+    author: hjalmarjakobsson
+    categories:
+    created: 2021-11-03
+    version: 0.1
+@end
+
+
+
+* GEM
+
+* RVM
+  https://stackoverflow.com/questions/15282509/how-to-change-rvm-install-location
+

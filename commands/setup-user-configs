@@ -1,19 +1,12 @@
 #!/usr/bin/env bash
 source "$DOROTHY/sources/strict.bash"
 
-echo-header "Link user configs.."
-
-export FORCE='yes'
-
+echo-header "LINK USER CONFIGS.."
+export FORCE_LINK='yes'
 config_src_dir="$DOROTHY/user/config.xdg"
 config_dst_dir=$HOME/.config
 for f in $config_src_dir/*; do
-    # echo "$f"
-    # echo "$(basename $f)"
-    # echo "$config_dst_dir/$(basename $f)"
-    # https://stackoverflow.com/questions/3362920/get-just-the-filename-from-a-path-in-a-bash-script
     symlink-create "$f" "$config_dst_dir/$(basename $f)"
 done
 
-# symlink-create home/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf \
-#     ~/.tmux/plugins/base16-tmux/tmuxcolors-dbalatero-base16.conf
+

@@ -87,6 +87,7 @@ export HOMEBREW_INSTALL=(
 	koekeishiya/formulae/yabai
 	koekeishiya/formulae/skhd
 	deno
+	hs                  # Hammerspoon CLI
 	font-inconsolata-go-nerd-font
 	font-jetbrains-mono-nerd-font
 	gpg
@@ -156,6 +157,17 @@ export HOMEBREW_INSTALL=(
 	"tree-sitter --HEAD"
 	"luajit --HEAD"
 	"neovim --HEAD"
+
+	direnv
+	fasd
+	fzf
+	gnuplot
+	libxml2
+	libzip
+	lua
+	luarocks
+	ncurses
+	neofetch
 )
 export HOMEBREW_INSTALL_SLOW=(
 	gpg
@@ -193,6 +205,7 @@ export HOMEBREW_INSTALL_CASK=(
 	# julia
 	# keybase
 	# kodi
+	licecap
 	# little-snitch
 	# loopback
 	# micro-snitch
@@ -331,26 +344,26 @@ export SETUP_UTILS=(
 	bat
 	bottom
 	delta
-	direnv
+	# direnv        # FIX: (**) somekind of error when running this one.
 	dust
 	exa
-	fasd
+	# fasd          # same also err (**)
 	fd
 	fish
-	fzf
+	# fzf           # (**)
 	gh
-	gnuplot
+	# gnuplot
 	gocryptfs
 	grex
 	httpie
 	hyperfine
 	jq
-	libxml2
-	libzip
-	lua
-	luarocks
-	ncurses
-	neofetch
+	# libxml2       # (**)
+	# libzip        # (**)
+	# lua           # (**) eg, setup-util-lua
+	# luarocks      # (**)
+	# ncurses       # (**)
+	# neofetch      # (**)
 	procs
 	ripgrep
 	rmesg
@@ -358,7 +371,7 @@ export SETUP_UTILS=(
 	tealdeer
 	tokei
 	zoxide
-	zsh-completions
+	# zsh-completions
 )
 
 # heroku plugins:install heroku-repo

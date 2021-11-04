@@ -1,39 +1,48 @@
 #!/usr/bin/env bash
 
-# echo-header "SETTING UP WALLPAPER.."
-# # https://apple.stackexchange.com/questions/75081/automatically-change-os-x-desktop-background-for-all-desktops-monitors
-# # https://stackoverflow.com/questions/5550895/shell-script-changing-desktop-wallpaper
-# # https://www.howtogeek.com/258461/how-to-use-a-screensaver-as-your-background-on-os-x/
-# # https://stackoverflow.com/questions/431205/how-can-i-programmatically-change-the-background-in-mac-os-x
-# WALLPAPER="$DOROTHY/user/media/wallpaper/wallpaper2.png"
-# osascript -e \
-#       "tell application \"Finder\" to set desktop picture to POSIX file \"$WALLPAPER\""
+echo-header "LINK USER CONFIGS.."
+export FORCE_LINK='yes'
+config_src_dir="$DOROTHY/user/config.xdg"
+config_dst_dir=$HOME/.config
+for f in $config_src_dir/*; do
+    # echo "$f"
+    # echo "$(basename $f)"
+    # echo "$config_dst_dir/$(basename $f)"
+    # https://stackoverflow.com/questions/3362920/get-just-the-filename-from-a-path-in-a-bash-script
+    symlink-create "$f" "$config_dst_dir/$(basename $f)"
+done
 
 
-# echo-header "SETUP USER ZSH..."
-# symlink-create "${ADOTDIR}/bundles/chriskempson/base16-shell/scripts/base16-oceanicnext.sh" ~/.base16_theme
-# if [ ! -f $HOME/.fzf.zsh ]; then
-#     $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
-# fi
-# antigen_file="${ADOTDIR}/antigen.zsh"
-# if [ ! -f $antigen_file ]; then
-#     echo "Installing antigen" && curl -L git.io/antigen > "$antigen_file"
-# fi
+echo-header "SETTING UP WALLPAPER.."
+# https://apple.stackexchange.com/questions/75081/automatically-change-os-x-desktop-background-for-all-desktops-monitors
+# https://stackoverflow.com/questions/5550895/shell-script-changing-desktop-wallpaper
+# https://www.howtogeek.com/258461/how-to-use-a-screensaver-as-your-background-on-os-x/
+# https://stackoverflow.com/questions/431205/how-can-i-programmatically-change-the-background-in-mac-os-x
+WALLPAPER="$DOROTHY/user/media/wallpaper/wallpaper2.png"
+osascript -e \
+      "tell application \"Finder\" to set desktop picture to POSIX file \"$WALLPAPER\""
+
+
+echo-header "SETUP USER ZSH..."
+symlink-create "${ADOTDIR}/bundles/chriskempson/base16-shell/scripts/base16-oceanicnext.sh" ~/.base16_theme
+[ ! -f $HOME/.fzf.zsh ] && $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
+antigen_file="${ADOTDIR}/antigen.zsh"
+[ ! -f $antigen_file ] && ( echo "Installing antigen" && curl -L git.io/antigen > $antigen_file )
 
 
 # echo-header "SETTING UP TERMINAL.."
 # if is-mac; then
 #     brew install --cask alacritty
 #     brew install --cask kitty
+#     # ???
 #     if command-exists "alacritty"; then
-#         echo-color "@blue@b[[+ Installing Alacritty terminfo ]]"
+#         echo-color --blue "[[+ Installing Alacritty terminfo ]]"
 #         git clone https://github.com/alacritty/alacritty.git /tmp/alacritty
 #         cd /tmp/alacritty
 #         sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
 #         cd $HOME
 #         rm -fr /tmp/alacritty
 #     fi
-#     # get fucking bent, Catalina | what is this??
 #     xattr -r -d com.apple.quarantine /Applications/Alacritty.app
 # fi
 
@@ -51,21 +60,141 @@
 #     pushd $HOME/code/tools/limelight > /dev/null 2>&1
 #     make
 #     popd $dest> /dev/null 2>&1
-#     symlink-create $install_dir/limelight/bin/limelight /usr/local/bin/limelight
-#     # TODO: uebersicht yabai
+#     symlink-create $HOME/code/tools/limelight/bin/limelight /usr/local/bin/limelight
+#     # TODO: add to aliases restart...
 #     brew services start skhd
 #     brew services start yabai
+#     # TODO: uebersicht yabai
 # fi
 
-echo-header "SETTING UP GIT..."
-if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" ]; then
-    printf "What is your GitHub username? > "
-    read github_user
-    git config -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" github.user "$github_user"
-    printf "What is your full name for commit messages (e.g. Jane Smith)? > "
-    read git_name
-    git config -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" user.name "$git_name"
-    printf "What is your git email? (e.g. blah@blah.com) > "
-    read git_email
-    git config -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" user.email "$git_email"
-fi
+
+# echo-header "SETTING UP GIT..."
+# if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" ]; then
+#     printf "What is your GitHub username? > "
+#     read github_user
+#     git config -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" github.user "$github_user"
+#     printf "What is your full name for commit messages (e.g. Jane Smith)? > "
+#     read git_name
+#     git config -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" user.name "$git_name"
+#     printf "What is your git email? (e.g. blah@blah.com) > "
+#     read git_email
+#     git config -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" user.email "$git_email"
+# fi
+
+
+# echo-header "SETTING UP NODE.."
+# [ ! -d $NVM_DIR ] && curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
+# # [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+# nvm install stable
+
+
+# echo-header  "SETTING UP RUBY..."
+# [ ! -e ~/.rvm ] && \curl -L https://get.rvm.io | bash -s -- --ignore-dotfiles
+# [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
+# rvm install ruby --latest
+
+
+# echo-header "SETTING UP PYTHON..."
+# arch="$(get-arch)"
+# pyenv_virtualenv_path="$PYENV_ROOT/plugins/pyenv-virtualenv"
+# [ ! command-exists "pyenv" ] && curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
+# [ ! -d "$pyenv_virtualenv_path" ] && git clone https://github.com/pyenv/pyenv-virtualenv.git "$pyenv_virtualenv_path"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
+# if is-mac && test "$arch" = 'a64'; then
+#     pyenv install -s 3.9.1
+#     pyenv global 3.9.1
+# else
+#     pyenv install -s 2.7.16
+#     pyenv global 2.7.16
+# fi
+# # install virtual python env
+# if [ ! -d $PYENV_ROOT/plugins/pyenv-virtualenv ]; then
+#     git clone https://github.com/yyuu/pyenv-virtualenv.git $PYENV_ROOT/plugins/pyenv-virtualenv
+# fi
+# if ! pyenv virtualenvs | grep -q py2neovim; then
+#     pyenv virtualenv 2.7.16 py2neovim
+#     pyenv activate py2neovim
+# fi
+# if ! pyenv virtualenvs | grep -q py3neovim; then
+#     pyenv virtualenv 3.9.1 py3neovim
+#     pyenv activate py3neovim
+# fi
+
+
+# echo-header "SETTING UP LUA.."
+# brew install lua
+# brew install luarocks
+# brew install ninja
+# luarocks install loop
+# luarocks install dkjson
+# luarocks install inspect
+# luarocks install --server=http://luarocks.org/dev lua-lsp
+# luarocks install luacheck
+# luarocks install lcf
+# # INSTALL LUA LANGUAGE SERVER
+# lspdir="$HOME/.local/nvim/lsp"
+# location="$lspdir/lua-language-server"
+# if [ ! -d "$location" ]; then
+#     echo-color "@b@blue[[+ Installing sumneko Lua LSP]]"
+#     mkdir -p "$lspdir"
+#     git clone https://github.com/sumneko/lua-language-server "$location"
+#     cd "$location" || exit 1
+#     git checkout tags/1.14.2 -b install-1.14.2
+#     git submodule update --init --recursive
+#     cd 3rd/luamake || exit 1
+#     ninja -f ninja/macos.ninja
+#     cd ../.. || exit 1
+#     ./3rd/luamake/luamake rebuild
+# fi
+
+
+# echo-header "SETTING UP HASKELL.."
+# is-mac && brew install ghc
+# test ! $(which stack) && curl -sSL https://get.haskellstack.org/ | sh
+# stack upgrade
+# # stack install yesod-bin --install-ghc
+
+
+# echo-header "SETTING UP TMUX..."
+# # https://github.com/tmux-plugins/tmux-urlview
+# # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
+# # https://github.com/sigpipe/urlview
+# [ is-mac ] && brew install tmux reattach-to-user-namespace urlview tmuxinator
+# tmux_plug_dir="$HOME/.config/tmux/plugins/tpm"
+# [ ! -d $tmux_plug_dir ] && git clone git@github.com:tmux-plugins/tpm.git $tmux_plug_dir
+# # install_script="$HOME/.tmux/plugins/tpm/bin/install_plugins"
+# # [ -x $install_script ] && $install_script
+
+
+
+# echo-header "SETTING UP NEOVIM..."
+# [ ! brew tap | grep -q "neovim/neovim" ] && brew tap neovim/neovim
+# rvm default do gem install neovim
+# brew install bat
+# brew install tree-sitter --HEAD
+# brew install luajit --HEAD
+# brew install neovim --HEAD
+# npm install -g bash-language-server
+# npm install -g tern
+# npm install -g neovim
+# npm install -g vim-node-rpc
+# # if ! command-exists "proximity-sort" ; then
+# cargo install proximity-sort # --force
+# # fi
+# # mkdir -p ~/.local/share/nvim/plugged
+# # echo-color "@b@blue[[+ Installing nvim plugins]]"
+# pyenv activate py2neovim
+# nvim +PlugInstall +qall
+
+
+# if is-mac; then
+#     echo-header "Setting up HAMMERSPOON.."
+#     # brew install --cask hammerspoon # --appdir=/Applications
+#     url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
+#     destination=/tmp/SpoonInstall.spoon.zip
+#     spoons_dir=$HOME/.config/hammerspoon/Spoons
+#     [ ! -d "$spoons_dir/SpoonInstall.spoon" ] \
+#         && wget -nv $url -O $destination && unzip -d $spoons_dir $destination
+#     defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
+# fi

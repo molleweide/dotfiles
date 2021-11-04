@@ -7,6 +7,12 @@
     version: 0.1
 @end
 
+* setup-utils
+  direnv      # FIX: somekind of error when running this one.
+  `/Users/hjalmarjakobsson/.local/share/dorothy/commands/setup-utils: line 12: setup-util-direnv: command not found`
+
+
+
 * BEVRY ZOOM
   `https://balupton.com/zoom`
 

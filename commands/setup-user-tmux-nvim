@@ -1,31 +1,17 @@
 #!/usr/bin/env bash
 
 echo-header "SETTING UP TMUX..."
-
 # https://github.com/tmux-plugins/tmux-urlview
-
-if is-mac; then
-    brew install reattach-to-user-namespace # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
-    brew install tmux
-    brew install urlview # https://github.com/sigpipe/urlview
-    brew install tmuxinator
-fi
-
-if [ ! -d $HOME/.config/tmux/plugins/tpm ]; then
-    git clone git@github.com:tmux-plugins/tpm.git $HOME/.config/tmux/plugins/tpm
-fi
-
-# TODO: is this necessary?
+# https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
+# https://github.com/sigpipe/urlview
+[ is-mac ] && brew install tmux reattach-to-user-namespace urlview tmuxinator
+tmux_plug_dir="$HOME/.config/tmux/plugins/tpm"
+[ ! -d $tmux_plug_dir ] && git clone git@github.com:tmux-plugins/tpm.git $tmux_plug_dir
 # install_script="$HOME/.tmux/plugins/tpm/bin/install_plugins"
-# if [ -x $install_script ]; then
-#     $install_script
-# fi
+# [ -x $install_script ] && $install_script
 
 echo-header "SETTING UP NEOVIM..."
-
-if ! brew tap | grep -q "neovim/neovim"; then
-    brew tap neovim/neovim
-fi
+[ ! brew tap | grep -q "neovim/neovim" ] && brew tap neovim/neovim
 rvm default do gem install neovim
 brew install bat
 brew install tree-sitter --HEAD
@@ -40,8 +26,6 @@ cargo install proximity-sort # --force
 # fi
 # mkdir -p ~/.local/share/nvim/plugged
 # echo-color "@b@blue[[+ Installing nvim plugins]]"
-
-# TODO: how does this relate to the python checkhealth issues???
 pyenv activate py2neovim
 nvim +PlugInstall +qall
 

@@ -12,7 +12,7 @@ for arr_val in "${array[@]}"; do
     if [ $i == 0 ]; then
         # TODO: validate is file/dir
         install_dir=$arr_val
-        echo-color "@b@cyan[[ INSTALL DIR: \`$install_dir\` ]]\n"
+        echo-color --cyan "INSTALL DIR: \`$install_dir\`\n"
         mkdir -p $install_dir > /dev/null
         pushd $install_dir > /dev/null 2>&1
 

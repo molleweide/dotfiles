@@ -163,12 +163,12 @@ install_hazeover() {
 dotheader "SETTING UP CUSTOM MAC APPS..."
 
     # install_1password
-    install_aerial_screensavers
+    # install_aerial_screensavers
     # install_alfred
     # install_bartender
     # install_better_touch_tool
     # install_dash
-    install_docker
+    # install_docker
     # install_dropbox
     # install_firefox
     # install_focus

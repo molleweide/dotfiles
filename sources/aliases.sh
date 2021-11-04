@@ -1,4 +1,5 @@
 # SHELL
+alias ralias="source $DOROTHY/user/sources/aliases.sh"
 alias xxx="exec zsh"
 alias k="clear"
 alias mm="man man"
@@ -14,6 +15,16 @@ alias cl="calcurse"
 
 alias duu="diskutil" # list commands
 alias dul="diskutil list" # list drives
+
+alias pstf="personal-stuff"
+
+# ======== TILING ========
+alias rst="reload_tiling"
+function reload_tiling() {
+    brew services restart yabai
+    brew services restart skhd
+    limelight # there is a wierd err msg but it works...
+}
 
 # ======== FIND FILES ========
 

@@ -1,0 +1,24 @@
+@document.meta
+    title: adam-wagner
+    description:
+    author: hjalmarjakobsson
+    categories:
+    created: 2021-11-04
+    version: 0.1
+@end
+
+* yabai
+ ** big sur
+    `https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#macos-big-sur---automatically-load-scripting-addition-on-startup`
+
+* adam wagner
+ ** hammerspoon turn of unused shit
+ ** yabai skhd
+ ** configs
+    copy folkes and wagners configs into hammerspoon/examples
+
+* bar
+  https://github.com/Jean-Tinland/simple-bar
+    https://github.com/AdamWagner/yabai-uberbar
+    https://github.com/matryer/xbar
+    https://github.com/kkga/nibar
