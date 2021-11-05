@@ -22,7 +22,6 @@ antigen bundle robbyrussell/oh-my-zsh plugins/pyenv
 antigen bundle robbyrussell/oh-my-zsh plugins/rvm
 
 antigen bundle robbyrussell/oh-my-zsh plugins/vi-mode
-antigen bundle robbyrussell/oh-my-zsh plugins/zsh_reload
 
 antigen bundle dbalatero/fzf-git
 antigen bundle DarrinTisdale/zsh-aliases-exa

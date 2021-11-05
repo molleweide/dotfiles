@@ -7,10 +7,20 @@
 	version: 0.1
 @end
 
-* ubersicht bar
-  move personal stuff widgets to setup
-  `$ git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar`
+* adam wagmer stackline / uberbar
+  1. comment out everything from hammerspoon that I am not using.
+  3. look into folkes hammerspoon
 
+
+* fix: terminal start
+@code shell
+The `zsh_reload` plugin is deprecated and will be removed.
+Use `omz reload` or `exec zsh` instead.
+@end
+
+* ubersicht bar
+  yabai > stack mode
+  wiki > https://github.com/koekeishiya/yabai/wiki/Configuration#configuration-file
 
 
 * todo: run pitch machine project.

@@ -55,3 +55,4 @@ if is-mac; then
     # uber_widget "uber-weather"    "git@github.com:molleweide/weather-widget.git"
     # uber_widget "uber-collection" "git@github.com:molleweide/uebersicht-widgets.git"
 fi
+

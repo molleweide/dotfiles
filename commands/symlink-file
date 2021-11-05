@@ -31,10 +31,10 @@ else
     # $symlink is a file and in a completely new
     # location.
 
+    # # TODO: how to get parent dir of symlink destination if it doesn't
     # if test -f "$symlink"; then
     #     mkdir -p "$(dirname $symlink)"
     # else test -d "$symlink"; then
-    #     # TODO: how to get parent dir of symlink if it doesn't
     #     # exist so that we can create it and then create
     #     # the link?
     #     parentdir=$(dirname $symlink)
