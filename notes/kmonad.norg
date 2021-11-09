@@ -1,0 +1,13 @@
+@document.meta
+    title: kmonad
+    description:
+    author: hjalmarjakobsson
+    categories:
+    created: 2021-11-08
+    version: 0.1
+@end
+
+
+* monitor layers in `simple-bar`
+
+*

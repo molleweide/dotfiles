@@ -7,6 +7,9 @@
 	version: 0.1
 @end
 
+git@github.com:ajeetdsouza/zoxide.git
+https://github.com/feinoujc/gh-search-cli
+
 * adam wagmer stackline / uberbar
   1. comment out everything from hammerspoon that I am not using.
   3. look into folkes hammerspoon

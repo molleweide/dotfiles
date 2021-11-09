@@ -94,9 +94,10 @@ alias vv="~/code/neovim/build/bin/nvim" # forked build
 alias gcfls="git conflicts"
 alias m="git checkout molleweide"
 alias M="git checkout molldev"
-alias gcreb="gcun && git add --all && git commit -m 'REBASE ME!!!'"
+alias gcreb="git add --all && git commit -m 'REBASE ME!!!'"
 alias gcun="git add notes/ && git commit -m 'user(molleweide): notes'"
 alias save="git add --all && git commit -m 'save'"
+alias frk="gh repo fork"
 
 alias lg="lazygit"
 

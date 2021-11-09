@@ -78,7 +78,6 @@ export HOMEBREW_INSTALL=(
 	isync
 	msmtp
 	pass
-	ghq                 # Remote repository management made easy
 	spotify-tui
     findutils           # eg. unix `locate` command
 	mps-youtube
@@ -121,7 +120,8 @@ export HOMEBREW_INSTALL=(
 	micro
 	openssh
 	pkg-config
-	paul-nameless/homebrew-repo/tg # telegram tui
+	paul-nameless/homebrew-repo/tg      # telegram tui
+	ghq                             # remote repo management
 	podman
 	screen
 	terminal-notifier
@@ -157,7 +157,6 @@ export HOMEBREW_INSTALL=(
 	"tree-sitter --HEAD"
 	"luajit --HEAD"
 	"neovim --HEAD"
-
 	direnv
 	fasd
 	fzf
