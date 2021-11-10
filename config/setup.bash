@@ -75,101 +75,104 @@ export HOMEBREW_INSTALL=(
 	# https://github.com/tmux-plugins/tmux-urlview
 	# librsvg
 	# basictex
-	neomutt
-	curl
-	isync
-	msmtp
-	pass
-	spotify-tui
-    findutils           # eg. unix `locate` command
-	mps-youtube
+	"luajit --HEAD"
+	"neovim --HEAD"
+	"tree-sitter --HEAD"
+	ImageMagick
+	ack
 	aria2
+	blueutil
+	calcurse
+	code-minimap
+	cointop
 	coreutils
-	koekeishiya/formulae/yabai
-	koekeishiya/formulae/skhd
+	coreutils
+	curl
 	deno
-	hs                  # Hammerspoon CLI
+	diff-so-fancy
+	direnv
+	dmenu-mac
+	fasd
+	fd
+	fff                 # filebrowser
+	ffmpeg
+	figlet              # http://www.figlet.org/examples.html
 	font-inconsolata-go-nerd-font
 	font-jetbrains-mono-nerd-font
-	gpg
-	pass
-	passmenu
-	pandoc
-	irssi
-	ffmpeg
-	sox
-	ranger              # filebrowser
-	nnn                 # filebrowser
-	lf                  # filebrowser
-	fff                 # filebrowser
-	cointop
-	dmenu-mac
-	figlet              # http://www.figlet.org/examples.html
-	pass-otp
-	gpg-tui
-	diff-so-fancy
-	lazygit
-	qtpass
-	pinentry-mac
-	sc-im               # spreadsheets
+	fzf
+	gh
+	ghc
+	ghq                             # remote repo management
 	git
 	git-extras
 	git-lfs
-	ImageMagick
+	gnu-tar
+	gnuplot
+	gpg
+	gpg-tui
+	heroku/brew/heroku
+	hs                  # Hammerspoon CLI
+	hub
+	irssi
+	isync
+	koekeishiya/formulae/skhd
+	koekeishiya/formulae/yabai
+	lazygit
+	lf                  # filebrowser
+	libxml2
+	libzip
+	llvm
+	lua
+	luarocks
 	mas
-	tg                  # telegram tui
-	calcurse
 	micro
+	most
+	mps-youtube
+	msmtp
+	ncurses
+	neofetch
+	neomutt
+	nnn                 # filebrowser
 	openssh
-	pkg-config
+	pandoc
+	pass
+	pass
+	pass-otp
+	passmenu
 	paul-nameless/homebrew-repo/tg      # telegram tui
-	ghq                             # remote repo management
+	pinentry-mac
+	pkg-config
 	podman
+	postgres
+	qtpass
+	ranger              # filebrowser
+	readline
+	reattach-to-user-namespace  # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
+	redis
+	ripgrep
+	sc-im               # spreadsheets
 	screen
+	sl
+	sox
+	spotify-tui
 	terminal-notifier
+	tg                  # telegram tui
+	the_silver_searcher
 	tmux
+	tmuxinator
 	tree
+	universal-ctags
+	urlview                     # https://github.com/sigpipe/urlview
 	vim
 	watch
 	watchman
 	wget
-	ack
-	blueutil
-	code-minimap
-	coreutils
-	fd
-	gh
-	gnu-tar
-	reattach-to-user-namespace  # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
-	urlview                     # https://github.com/sigpipe/urlview
-	heroku/brew/heroku
-	hub
-	llvm
-	most
-	postgres
-	readline
-	redis
-	ripgrep
-	tmuxinator
-	sl
-	the_silver_searcher
-	universal-ctags
 	wget
 	wp-cli
 	xz                          # general-purpose data compression with high compression ratio
-	"tree-sitter --HEAD"
-	"luajit --HEAD"
-	"neovim --HEAD"
-	direnv
-	fasd
-	fzf
-	gnuplot
-	libxml2
-	libzip
-	lua
-	luarocks
-	ncurses
-	neofetch
+    findutils           # eg. unix `locate` command
+    ninja
+    ubersicht
 )
 export HOMEBREW_INSTALL_SLOW=(
 	gpg
@@ -196,6 +199,8 @@ export HOMEBREW_INSTALL_CASK=(
 	# fantastical
 	# firefox
 	# freedom
+    alacritty           # terminal
+    kitty               # terminal
 	# geekbench
 	# github-desktop
 	# gitter
@@ -406,6 +411,4 @@ export SETUP_UTILS=(
 export STACK_INSTALL=(
 	"yesod-bin --install-ghc"
 )
-
-# [ is-mac ] && brew install tmux reattach-to-user-namespace urlview tmuxinator
 

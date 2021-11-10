@@ -32,8 +32,6 @@ done
 
 # echo-header "SETTING UP TERMINAL.."
 # if is-mac; then
-#     brew install --cask alacritty
-#     brew install --cask kitty
 #     # ???
 #     if command-exists "alacritty"; then
 #         echo-color --blue "[[+ Installing Alacritty terminfo ]]"
@@ -49,10 +47,6 @@ done
 
 # echo-header "SETTING UP TILING.."
 # if is-mac; then
-#     brew install jq
-#     brew tap koekeishiya/formulae
-#     brew install yabai
-#     brew install skhd
 #     git_clone_recursive \
 #         $HOME/code/tools    \
 #         "limelight"         \
@@ -123,9 +117,6 @@ done
 
 
 # echo-header "SETTING UP LUA.."
-# brew install lua
-# brew install luarocks
-# brew install ninja
 # luarocks install loop
 # luarocks install dkjson
 # luarocks install inspect
@@ -150,7 +141,6 @@ done
 
 
 # echo-header "SETTING UP HASKELL.."
-# is-mac && brew install ghc
 # test ! $(which stack) && curl -sSL https://get.haskellstack.org/ | sh
 # stack upgrade
 # # stack install yesod-bin --install-ghc
@@ -160,7 +150,6 @@ done
 # # https://github.com/tmux-plugins/tmux-urlview
 # # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
 # # https://github.com/sigpipe/urlview
-# # [ is-mac ] && brew install tmux reattach-to-user-namespace urlview tmuxinator
 # tmux_plug_dir="$HOME/.config/tmux/plugins/tpm"
 # [ ! -d $tmux_plug_dir ] && git clone git@github.com:tmux-plugins/tpm.git $tmux_plug_dir
 # # install_script="$HOME/.tmux/plugins/tpm/bin/install_plugins"
@@ -171,14 +160,6 @@ done
 # echo-header "SETTING UP NEOVIM..."
 # [ ! brew tap | grep -q "neovim/neovim" ] && brew tap neovim/neovim
 # rvm default do gem install neovim
-# # brew install bat
-# # brew install tree-sitter --HEAD
-# # brew install luajit --HEAD
-# # brew install neovim --HEAD
-# # npm install -g bash-language-server
-# # npm install -g tern
-# # npm install -g neovim
-# # npm install -g vim-node-rpc
 # # if ! command-exists "proximity-sort" ; then
 # cargo install proximity-sort # --force
 # # fi
@@ -202,7 +183,6 @@ done
 
 # if is-mac; then
 #     echo-color --h1 --cyan "LINK UBER WIDGETS.."
-#     # brew install ubersicht
 #     symlink-dir \
 #         "$HOME/code/widgets" \
 #         "$HOME/Library/Application Support/Übersicht/widgets"
