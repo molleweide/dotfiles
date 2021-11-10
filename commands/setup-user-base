@@ -160,7 +160,7 @@ done
 # # https://github.com/tmux-plugins/tmux-urlview
 # # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
 # # https://github.com/sigpipe/urlview
-# [ is-mac ] && brew install tmux reattach-to-user-namespace urlview tmuxinator
+# # [ is-mac ] && brew install tmux reattach-to-user-namespace urlview tmuxinator
 # tmux_plug_dir="$HOME/.config/tmux/plugins/tpm"
 # [ ! -d $tmux_plug_dir ] && git clone git@github.com:tmux-plugins/tpm.git $tmux_plug_dir
 # # install_script="$HOME/.tmux/plugins/tpm/bin/install_plugins"
@@ -171,14 +171,14 @@ done
 # echo-header "SETTING UP NEOVIM..."
 # [ ! brew tap | grep -q "neovim/neovim" ] && brew tap neovim/neovim
 # rvm default do gem install neovim
-# brew install bat
-# brew install tree-sitter --HEAD
-# brew install luajit --HEAD
-# brew install neovim --HEAD
-# npm install -g bash-language-server
-# npm install -g tern
-# npm install -g neovim
-# npm install -g vim-node-rpc
+# # brew install bat
+# # brew install tree-sitter --HEAD
+# # brew install luajit --HEAD
+# # brew install neovim --HEAD
+# # npm install -g bash-language-server
+# # npm install -g tern
+# # npm install -g neovim
+# # npm install -g vim-node-rpc
 # # if ! command-exists "proximity-sort" ; then
 # cargo install proximity-sort # --force
 # # fi

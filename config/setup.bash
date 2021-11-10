@@ -150,6 +150,7 @@ export HOMEBREW_INSTALL=(
 	readline
 	redis
 	ripgrep
+	tmuxinator
 	sl
 	the_silver_searcher
 	universal-ctags
@@ -405,3 +406,6 @@ export SETUP_UTILS=(
 export STACK_INSTALL=(
 	"yesod-bin --install-ghc"
 )
+
+# [ is-mac ] && brew install tmux reattach-to-user-namespace urlview tmuxinator
+
