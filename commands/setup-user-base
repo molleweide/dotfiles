@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-# echo-color --h1 --green "LINK USER CONFIGS.."
-# export FORCE_LINK='yes'
-# config_src_dir="$DOROTHY/user/config.xdg"
-# config_dst_dir=$HOME/.config
-# for f in $config_src_dir/*; do
-#     # echo "$f"
-#     # echo "$(basename $f)"
-#     # echo "$config_dst_dir/$(basename $f)"
-#     # https://stackoverflow.com/questions/3362920/get-just-the-filename-from-a-path-in-a-bash-script
-#     symlink-file "$f" "$config_dst_dir/$(basename $f)"
-# done
+echo-color --h1 --green "LINK USER CONFIGS.."
+export FORCE_LINK='yes'
+config_src_dir="$DOROTHY/user/config.xdg"
+config_dst_dir=$HOME/.config
+for f in $config_src_dir/*; do
+    # echo "$f"
+    # echo "$(basename $f)"
+    # echo "$config_dst_dir/$(basename $f)"
+    # https://stackoverflow.com/questions/3362920/get-just-the-filename-from-a-path-in-a-bash-script
+    symlink-file "$f" "$config_dst_dir/$(basename $f)"
+done
 
 
 # echo-color --h1 --red "SETTING UP WALLPAPER.."
@@ -200,10 +200,10 @@
 # fi
 
 
-if is-mac; then
-    echo-color --h1 --cyan "LINK UBER WIDGETS.."
-    # brew install ubersicht
-    symlink-dir \
-        "$HOME/code/widgets" \
-        "$HOME/Library/Application Support/Übersicht/widgets"
-fi
+# if is-mac; then
+#     echo-color --h1 --cyan "LINK UBER WIDGETS.."
+#     # brew install ubersicht
+#     symlink-dir \
+#         "$HOME/code/widgets" \
+#         "$HOME/Library/Application Support/Übersicht/widgets"
+# fi
