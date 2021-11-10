@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 source "$DOROTHY/sources/strict.bash"
 
-# pull
-pushd $DOROTHY/user > /dev/null 2>&1
-echo "doro user pwd: $PWD"
-git submodule update --init --recursive || exit 1
-popd > /dev/null 2>&1
+# # pull
+# pushd $DOROTHY/user > /dev/null 2>&1
+# echo "doro user pwd: $PWD"
+# git submodule update --init --recursive || exit 1
+# popd > /dev/null 2>&1
 
-# # --- doro ------------
+# TODO: arg doro
+# # # --- doro ------------
 # setup-bin
 # setup-git
 # setup-rust
@@ -18,9 +19,11 @@ popd > /dev/null 2>&1
 # setup-bin
 # setup-utils
 
+# TODO: arg moll
 # # --- moll ------------
 # setup-personal-repos
 # setup-user-osx
+# setup-user-config
 # setup-user-base
 # # setup-user-keyboard
 # # setup-user-surfingkeys

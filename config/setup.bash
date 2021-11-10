@@ -48,13 +48,13 @@ export SNAP_INSTALL=(
 if "$DOROTHY/commands/is-mac"; then
 	export GO_INSTALL=(
 		changkun.de/x/rmtrash
-		"go get -u -v github.com/gennaro-tedesco/boilit"
+		github.com/gennaro-tedesco/boilit
 		# github.com/cloudflare/utahfs/cmd/utahfs-client
 	)
 else
 	export GO_INSTALL=(
 		changkun.de/x/rmtrash
-		"go get -u -v github.com/gennaro-tedesco/boilit"
+		github.com/gennaro-tedesco/boilit
 		# github.com/rfjakob/gocryptfs: use `setup-util-gocryptfs` instead, as this version lags behind
 	)
 fi
