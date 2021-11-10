@@ -96,36 +96,36 @@ alias m="git checkout molleweide"
 alias M="git checkout molldev"
 alias gcreb="git add --all && git commit -m 'REBASE ME!!!'"
 alias gcun="git add notes/ && git commit -m 'user(molleweide): notes'"
-alias save="git add --all && git commit -m 'save'"
+alias sv="git add --all && git commit -m 'save'"
+alias svp="git add --all && git commit -m 'save' && git push"
 alias frk="gh repo fork"
-
+alias devpr="gh pr create --base develop"
 alias lg="lazygit"
-
 
 # 1 = branch, 2 = sub path, 3 = new repo url
 alias gbrkout="git-subdir-make-into-module"
 alias gsmv="git-submodule-mv"
 
-# CHAT
+# CHAT =========================================
 alias sg="gurk" # signal
 # alias sg="gurk" # siggo has better support than gurk
 alias nt="neomutt" # email
 # tg for telegram is default..
 # discord
 
-# ======== QMK ========
+# ======== QMK ================================
 alias tfl="teensy_loader_cli -mmcu=atmega32u4 -w ergodox_ez_molleweide.hex"
 
-# ======== DOCKER ========
+# ======== DOCKER ====================================
 alias dk="docker"
 alias dkc="docker-compose"
 alias dkwp="docker-compose run --rm wpcli"
 
-# ======== KARABINER ========
+# ======== KARABINER ========================================
 alias karb="/Library/Application\ Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli"
 alias krb="open -a /Applications/Karabiner-Elements.app"
 
-# ======== KMONAD ========
+# ======== KMONAD ============================================
 kmonad=~/.local/bin/kmonad
 layouts=~/code/tools/kmonad/keymap/user/molleweide
 kmopro()  { sudo $kmonad $layouts/macbook_pro_2012.kbd; }
