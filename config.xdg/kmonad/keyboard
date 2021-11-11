@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
 
-# (defcfg
-#   output (kext)
-#   fallthrough true
-# )
+# structure
+# kmonad/
+#   keyboard (this script)
+#   defsrc/
+#       ...
+#       ...
+#   common/
+#       common.kbd
+
+script_path=$(realpath $0)
+config_kmonad_dir=$(dirname $script_path)
+config_kmonad_dir2="${BASH_SOURCE%/*}"
 
 if test -z ${1-}; then
     echo "No input specified. You need to specify what key board"
@@ -12,57 +20,58 @@ if test -z ${1-}; then
     exit 1
 fi
 
-declare -A keyboards=(
-    [ergodox]="Ergodox EZ"
-    [macbook_air]="Apple Internal Keyboard / Trackpad"
-    [macbook_pro_swe]="Apple Internal Keyboard / Trackpad"
+# --------------------------
+# ---       cfg       ---
+# --------------------------
+
+declare -A defcfg_input_str=(
+    [ergo]="Ergodox EZ"
+    [mba]="Apple Internal Keyboard / Trackpad"
+    [mbi]="Apple Internal Keyboard / Trackpad"
 )
 
-echo "\$0 = $0"
-echo "\$1 = $1"
-echo
+input="${defcfg_input_str[$1]}"
+output="kext"
+fallthrough="false"
 
-# input="(iokit-name \"${keyboards[$1]}\")"
-input_str=${keyboards[$1]}
-input="(iokit-name \"$input_str\")"
+defcfg="(defcfg
+input (iokit-name \"$input\")
+output ($output)
+fallthrough $fallthrough
+)"
 
+# --------------------------
+# ---       src       ---
+# --------------------------
 
-defsrc="${K_DEFSRC:-$HOME/.config/kmonad/defsrc.kbd}"
-# common="${K_common:-$HOME/.config/kmonad/ansi_base.kbd}"
-defsrc="./defsrc/defsrc_${1}.kbd"
-common=./common/common.kbd
+declare -A defsrc_files=(
+    [ergo]="defsrc_ergodox.kbd"
+    [mba]="defsrc_mbair.kbd"
+    [mbi]="defsrc_mbpro_swe.kbd"
+)
 
-echo "input = $input"
-echo "defsrc = $defsrc"
-echo "common = $common"
+defsrc="$config_kmonad_dir/defsrc/${defsrc_files[$1]}"
+# common=$config_kmonad_dir/common/common.kbd
+
+# ----------------------------------
+# ---       compile layout       ---
+# ----------------------------------
+
+compile_layout() {
+    echo "$defcfg"
+    cat $defsrc
+
+    for f in "$config_kmonad_dir/common/"*.kbd; do
+        cat "$f"
+    done
+}
+
+# -------------------------------
+# ---       exec kmonad       ---
+# -------------------------------
 
 # kmonad common-layout.kbd --fallthrough false --input "$input"
-
-# -------------------------------------------
-# ---       muhammad script initial       ---
-# -------------------------------------------
-
 
 # # $1 => config
 # # $2-$n => kmonad args
 # exec kmonad =(cat "$defsrc" "$baselayer" "$1") "$@[2,-1]"
-
-# -----------------------------------
-# ---       muhammad common       ---
-# -----------------------------------
-
-# (defcfg
-#   input (iokit-name "common layout") ;; just a placeholder
-#   output (kext)
-# )
-
-# (defsrc
-#   ;; your common layout
-# )
-
-# (deflayer baselayer
-#   ;; your common layout
-# )
-
-# ;; etc...
-

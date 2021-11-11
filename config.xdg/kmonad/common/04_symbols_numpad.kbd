@@ -1,0 +1,24 @@
+(defalias
+
+  ;; KEY MAPS
+  ;; TOP ROW
+  s00 !
+  s11 @
+  s12 {
+  s13 r
+  s14 t
+
+  ;; HOME ROW
+  syP (tap-hold-next-release 500 \) lsft)
+  sy4 (tap-hold-next-release 500 4 lsft)
+)
+
+(deflayer SYMBOLS_NUMPAD
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+       XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   @s00 @    {    }    \         *    7    8    9    &    XX   XX   XX
+  XX   #    $    \(   @syP `         0    @sy4 5    6    =    XX   XX
+  XX   ^    %    [    ]    ~    @BQ  '    1    2    3    -    XX   XX
+  XX   XX   @BQ  lctl           lsft           lctl @BQ  _    XX   XX
+)
+

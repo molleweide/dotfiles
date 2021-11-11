@@ -1,0 +1,55 @@
+;;#| ---------------------------------------------------------------
+;;
+;; BASE LAYER | QWERTY
+;;
+;;--------------------------------------------------------------- |#
+
+(defalias ;; KEY MAPS QWERTY
+  b00 q
+  b01 w
+  b02 (tap-hold-next-release 500 e @NUM)
+  b03 r
+  b04 t
+  b05 y
+  b06 u
+  b07 (tap-hold-next-release 500 i @NUM)
+  b08 o
+  b09 (tap-hold-next-release 500 p @OSK)
+
+  b10 (tap-hold-next-release 500 a lctl)
+  b11 (tap-hold-next-release 500 s lsft)
+  b12 (tap-hold-next-release 500 d lalt)
+  b13 (tap-hold-next-release 500 f lmet)
+  b14 (tap-hold-next-release 500 g @OSK)
+  b15 (tap-hold-next-release 500 h @OSK)
+  b16 (tap-hold-next-release 500 j lmet)
+  b17 (tap-hold-next-release 500 k lalt)
+  b18 (tap-hold-next-release 500 l lsft)
+  b19 (tap-hold-next-release 500 ; lctl)
+
+  b20 (tap-hold-next-release 500 z @FUN)
+  b21 (tap-hold-next-release 500 x @OSK)
+  b22 c
+  b23 (tap-hold-next-release 500 v @NUM)
+  b24 b
+  b25 n
+  b26 (tap-hold-next-release 500 m @NUM)
+  b27 ,
+  b28 (tap-hold-next-release 500 . @OSK)
+  b29 (tap-hold-next-release 500 / @FUN)
+
+  ;; THUMBS
+  ;; tl3 (tap-hold-next-release 500 tab lmet)
+  tl2 (tap-hold-next-release 500 tab lmet)
+  spc (tap-hold-next-release 500 spc @SPC)
+  ;; spc2
+  tr2 (tap-hold-next-release 500 ret lmet)
+  ;; tr3 (tap-hold-next-release 500 tab lmet)
+)
+
+(deflayer BASE_LAYER_QWERTY
+  @b00 @b01 @b02 @b03 @b04      @b05 @b06 @b07 @b08 @b09
+  @b10 @b11 @b12 @b13 @b14      @b15 @b16 @b17 @b18 @b19
+  @b20 @b21 @b22 @b23 @b24      @b25 @b26 @b27 @b28 @b29
+            esc  @tl2      @spc      @tr2 esc
+)

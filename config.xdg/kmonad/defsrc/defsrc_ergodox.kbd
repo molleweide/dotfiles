@@ -1,12 +1,9 @@
+;; ERGODOX
 
 (defsrc
-  esc  1    2    3    4    5    mute mute 6    7    8    9    0    bspc
-  -    q    w    e    r    t    mute mute y    u    i    o    p    \
-  esc  a    s    d    f    g              h    j    k    l    ;    '
-  lsft z    x    c    v    b    mute mute n    m    ,    .    /    lsft
-  lctl lalt lmet tab  spc                      spc  ret  lmet lalt lctl
-                           mute mute mute mute
-                                mute mute
-                      mute mute mute mute mute mute
+    q    w    e    r    t       y    u    i    o    p
+    a    s    d    f    g       h    j    k    l    ;
+    z    x    c    v    b       n    m    ,    .    /
+              lmet tab  spc     spc  ret  lmet
 )
 
