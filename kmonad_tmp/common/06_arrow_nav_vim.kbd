@@ -1,0 +1,11 @@
+;;#| ---------------------------------------------------------------
+;;
+;; ARROW NAV LAYER
+;;
+;; layer dedicated to handling all kinds of arrow keys edge
+;; cases where no vim programs apply or work. i put arrow keys
+;; on right hand and all modifiers in left hand so that you
+;; can perform all kinds of arrow modifier key commands here.
+;;
+;;--------------------------------------------------------------- |#
+

@@ -1,0 +1,96 @@
+
+;;#| ---------------------------------------------------------------
+;;
+;; POINTER LAYER
+;;
+;;--------------------------------------------------------------- |#
+
+(deflayer POINTER_KEYS
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+       XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   _    f9   f10  f11  f12       f21  f22  f23  f24  _    XX   XX   XX
+  XX   _    f5   f6   f7   f8        f17  f18  f19  f20  _    XX   XX
+  XX   _    f1   f2   f3   f4   XX   f13  f14  f15  f16  _    XX   XX
+  XX   XX   @BQ  esc            _              esc  @BQ  XX   XX   XX
+)
+
+;;#| ---------------------------------------------------------------
+;;
+;; ROUTER
+;;
+;;--------------------------------------------------------------- |#
+
+(deflayer ROUTER
+  XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+       XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   XX   XX   XX   XX   XX        XX   XX   XX   XX   XX   XX   XX   XX
+  XX   XX   XX   XX   @BQ  XX        @BS  @BC  XX   XX   XX   XX   XX
+  XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   XX   @BQ  XX             XX             XX   @BQ  XX   XX   XX
+)
+
+;;#| ---------------------------------------------------------------
+;;
+;; TUTORIAL_TESTING_LAYER LAYER
+;;
+;;  for the tutorial etc and other testing purposes
+;;
+;;--------------------------------------------------------------- |#
+
+(defalias
+
+  C- (around lctl X)
+  A- (around lalt X)
+  M- (around lmet X)
+  S- (around lsft X)
+  ;; ssc (around
+  ;;      (sticky-key 500 lmet)
+  ;;      (sticky-key 500 lsft)
+  ;;      (sticky-key 500 lalt))
+  mc1 #(K M o n a d)
+
+  u10 XX
+  u11 C-c
+  u12 M-c
+  u13 C-spc  ;; ctrl + space
+  u14 (around spc v) ;; first space and then v
+
+  u15 @mc1
+  u16 #(M-spc P100 a P100 b P100 c P100  e P100  f P100 g)
+  u17 XX
+  u18 XX
+  u19 (layer-delay 3000 TUTORIAL_TESTING_SECONDARY)
+)
+(deflayer TUTORIAL_TESTING_LAYER
+  XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+       XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   XX   XX   XX   XX   XX        XX   XX   XX   XX   XX   XX   XX   XX
+  XX   @u10 @u11 @u12 @u13 @u14      @u15 @u16 @u17 @u18 @u19 XX   XX
+  XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   XX   @BQ  XX             XX             XX   @BQ  XX   XX   XX
+)
+
+(deflayer TUTORIAL_TESTING_SECONDARY
+  XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+       XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   XX   XX   XX   XX   XX        XX   XX   a    XX   XX   XX   XX   XX
+  XX   XX   XX   XX   XX   XX        XX   XX   XX   XX   XX   XX   XX
+  XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   XX   @BQ  XX             XX             XX   @BQ  XX   XX   XX
+)
+
+;;#| ---------------------------------------------------------------
+;;
+;; DISABLE KEYBOARD LAYER
+;;
+;;--------------------------------------------------------------- |#
+
+(deflayer DISABLE_KEYBOARD
+  XX   XX   XX   XX   XX   XX   XX   XX  XX   XX   XX   XX   XX
+       XX   XX   XX   XX   XX   XX   XX  XX   XX   XX   XX   XX   XX
+  XX   XX   XX   XX   XX   XX        XX   XX  XX   XX   XX   XX   XX   XX
+  XX   XX   XX   XX   XX   XX        XX   XX  XX   XX   XX   XX   XX
+  XX   XX   XX   XX   XX   XX   XX   XX  XX   XX   XX   XX   XX   XX
+  XX   XX   @BQ  XX             XX            XX   @BQ  XX   XX   XX
+)
+

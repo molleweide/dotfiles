@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+# structure
+# kmonad/
+#   keyboard (this script)
+#   defsrc/
+#       ...
+#       ...
+#   common/
+#       common.kbd
+
+script_path=$(realpath $0)
+config_kmonad_dir=$(dirname $script_path)
+config_kmonad_dir2="${BASH_SOURCE%/*}"
+
+if test -z ${1-}; then
+    echo "No input specified. You need to specify what key board"
+    echo "you want to run kmonad for."
+    echo "(ergodox|macbook_air|macbook_pro_swe)"
+    exit 1
+fi
+
+# --------------------------
+# ---       cfg       ---
+# --------------------------
+
+declare -A defcfg_input_str=(
+    [ergo]="Ergodox EZ"
+    [mba]="Apple Internal Keyboard / Trackpad"
+    [mbi]="Apple Internal Keyboard / Trackpad"
+)
+
+input="${defcfg_input_str[$1]}"
+output="kext"
+fallthrough="false"
+
+defcfg="(defcfg
+input (iokit-name \"$input\")
+output ($output)
+fallthrough $fallthrough
+)"
+
+# --------------------------
+# ---       src       ---
+# --------------------------
+
+declare -A defsrc_files=(
+    [ergo]="defsrc_ergodox.kbd"
+    [mba]="defsrc_mbair.kbd"
+    [mbi]="defsrc_mbpro_swe.kbd"
+)
+
+defsrc="$config_kmonad_dir/defsrc/${defsrc_files[$1]}"
+# common=$config_kmonad_dir/common/common.kbd
+
+# ----------------------------------
+# ---       compile layout       ---
+# ----------------------------------
+
+compile_layout() {
+    echo "$defcfg"
+    cat $defsrc
+
+    for f in "$config_kmonad_dir/common/"*.kbd; do
+        cat "$f"
+    done
+}
+
+# -------------------------------
+# ---       exec kmonad       ---
+# -------------------------------
+
+# kmonad common-layout.kbd --fallthrough false --input "$input"
+
+# # $1 => config
+# # $2-$n => kmonad args
+# exec kmonad =(cat "$defsrc" "$baselayer" "$1") "$@[2,-1]"

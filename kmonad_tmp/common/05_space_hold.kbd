@@ -1,0 +1,52 @@
+(defalias
+  l00 @OFF
+  l01 %
+  l02 ret
+  l03 "
+  l04 |
+
+  l05 \_
+  l06 '
+  l07 ret
+  l08 \
+  l09 *
+
+  l10 +
+  l11 tab
+  l12 bspc
+  l13 esc
+  l14 \_
+
+  l15 left
+  l16 down
+  l17 up
+  l18 rght
+  l19 &
+
+  l20 &
+  l21 *
+  l22 ret
+  l23 \_
+  l24 -
+
+  l25 -
+  l26 \_
+  l27 ret
+  l28 *
+  l29 &
+
+  l40 ~
+  l41 tab
+  l42 spc
+  l43 XX  ;; second double space...
+  l44 ret
+  l45 `
+)
+(deflayer SPACEBAR
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+       XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   @l00 @l01 @l02 @l03 @l04      @l05 @l06 @l07 @l08 @l09 XX   XX   XX
+  XX   @l10 @l11 @l12 @l13 @l14      @l15 @l16 @l17 @l18 @l19 XX   XX
+  XX   @l20 @l21 @l22 @l23 @l24 XX   @l25 @l26 @l27 @l28 @l29 XX   XX
+  XX   XX   @BQ  @l41           @l42           @l44 @BQ  XX   XX   XX
+)
