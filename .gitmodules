@@ -10,3 +10,6 @@
 [submodule "config.xdg/hammerspoon"]
 	path = config.xdg/hammerspoon
 	url = git@github.com:molleweide/config_hammerspoon.git
+[submodule "config.xdg/kmonad"]
+	path = config.xdg/kmonad
+	url = git@github.com:molleweide/kmonad-layout.git
