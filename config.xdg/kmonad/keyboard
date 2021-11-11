@@ -47,3 +47,17 @@ local -A keyboards=(
 
 # ;; etc...
 
+
+# -------------------------------------------
+# ---       muhammad script initial       ---
+# -------------------------------------------
+
+# #!/sbin/env zsh
+
+# local defsrc="${K_DEFSRC:-$HOME/.config/kmonad/defsrc.kbd}"
+# local baselayer="${K_BASELAYER:-$HOME/.config/kmonad/ansi_base.kbd}"
+
+# # $1 => config
+# # $2-$n => kmonad args
+# exec kmonad =(cat "$defsrc" "$baselayer" "$1") "$@[2,-1]"
+
