@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+local -A keyboards=(
+
+)
+
+# input (iokit-name "Apple Internal Keyboard / Trackpad")
+# input (iokit-name "Ergodox EZ")
+
+# (defcfg
+#   output (kext)
+#   fallthrough true
+# )
+
+
+# -----------------------------------
+# ---       muhammad script      ---
+# -----------------------------------
+
+
+# local -A keyboards=( [ergodox.sh]="<ergodox's product name"
+#                      [mac-air.sh]="<product name>"
+#                      [mac-pro.sh]="<product name>"
+#                    )
+
+# local input="(iokit-name \"${keyboards[$0]}\")"
+
+# kmonad common-layout.kbd --fallthrough false --input "$input"
+
+# -----------------------------------
+# ---       muhammad common       ---
+# -----------------------------------
+
+
+# (defcfg
+#   input (iokit-name "common layout") ;; just a placeholder
+#   output (kext)
+# )
+
+# (defsrc
+#   ;; your common layout
+# )
+
+# (deflayer baselayer
+#   ;; your common layout
+# )
+
+# ;; etc...
+
