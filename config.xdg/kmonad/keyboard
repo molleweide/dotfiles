@@ -1,36 +1,55 @@
 #!/usr/bin/env bash
 
-local -A keyboards=(
-
-)
-
-# input (iokit-name "Apple Internal Keyboard / Trackpad")
-# input (iokit-name "Ergodox EZ")
-
 # (defcfg
 #   output (kext)
 #   fallthrough true
 # )
 
+if test -z ${1-}; then
+    echo "No input specified. You need to specify what key board"
+    echo "you want to run kmonad for."
+    echo "(ergodox|macbook_air|macbook_pro_swe)"
+    exit 1
+fi
 
-# -----------------------------------
-# ---       muhammad script      ---
-# -----------------------------------
+declare -A keyboards=(
+    [ergodox]="Ergodox EZ"
+    [macbook_air]="Apple Internal Keyboard / Trackpad"
+    [macbook_pro_swe]="Apple Internal Keyboard / Trackpad"
+)
+
+echo "\$0 = $0"
+echo "\$1 = $1"
+echo
+
+# input="(iokit-name \"${keyboards[$1]}\")"
+input_str=${keyboards[$1]}
+input="(iokit-name \"$input_str\")"
 
 
-# local -A keyboards=( [ergodox.sh]="<ergodox's product name"
-#                      [mac-air.sh]="<product name>"
-#                      [mac-pro.sh]="<product name>"
-#                    )
+defsrc="${K_DEFSRC:-$HOME/.config/kmonad/defsrc.kbd}"
+# common="${K_common:-$HOME/.config/kmonad/ansi_base.kbd}"
+defsrc="./defsrc/defsrc_${1}.kbd"
+common=./common/common.kbd
 
-# local input="(iokit-name \"${keyboards[$0]}\")"
+echo "input = $input"
+echo "defsrc = $defsrc"
+echo "common = $common"
 
 # kmonad common-layout.kbd --fallthrough false --input "$input"
+
+# -------------------------------------------
+# ---       muhammad script initial       ---
+# -------------------------------------------
+
+
+# # $1 => config
+# # $2-$n => kmonad args
+# exec kmonad =(cat "$defsrc" "$baselayer" "$1") "$@[2,-1]"
 
 # -----------------------------------
 # ---       muhammad common       ---
 # -----------------------------------
-
 
 # (defcfg
 #   input (iokit-name "common layout") ;; just a placeholder
@@ -46,18 +65,4 @@ local -A keyboards=(
 # )
 
 # ;; etc...
-
-
-# -------------------------------------------
-# ---       muhammad script initial       ---
-# -------------------------------------------
-
-# #!/sbin/env zsh
-
-# local defsrc="${K_DEFSRC:-$HOME/.config/kmonad/defsrc.kbd}"
-# local baselayer="${K_BASELAYER:-$HOME/.config/kmonad/ansi_base.kbd}"
-
-# # $1 => config
-# # $2-$n => kmonad args
-# exec kmonad =(cat "$defsrc" "$baselayer" "$1") "$@[2,-1]"
 
