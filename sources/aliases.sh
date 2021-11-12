@@ -125,7 +125,10 @@ alias nt="neomutt" # email
 # discord
 
 # ======== QMK ================================
+# TODO: add qmk dir to environment
 alias tfl="teensy_loader_cli -mmcu=atmega32u4 -w ergodox_ez_molleweide.hex"
+alias qmkflash="cd $HOME/code/firmware/qmk-firmware/ && tfl"
+
 
 # ======== DOCKER ====================================
 alias dk="docker"
@@ -137,6 +140,7 @@ alias karb="/Library/Application\ Support/org.pqrs/Karabiner-Elements/bin/karabi
 alias krb="open -a /Applications/Karabiner-Elements.app"
 
 # ======== KMONAD ============================================
+# TODO: add kmonad config to environment
 alias keyb="$XDG_CONFIG_HOME/kmonad/keyboard"
 kmonad=~/.local/bin/kmonad
 layouts=~/code/tools/kmonad/keymap/user/molleweide
