@@ -320,6 +320,7 @@ export NODE_INSTALL=(
 	# tldr: replaced with tealdeer
 	# typescript@next
 	eslint
+	gulp-cli
 	json
 	prettier
 	typescript

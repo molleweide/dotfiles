@@ -7,12 +7,7 @@
 	version: 0.1
 @end
 
-* universal ctag
-  config
-
 * kmo
-  1. run teensy                 XXX
-  2. look into qmk layouts
   3. rebuild ergodox w/ teensy
   4. test with ergodox
 
