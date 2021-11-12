@@ -7,13 +7,7 @@
 	version: 0.1
 @end
 
-* kmo
-  3. rebuild ergodox w/ teensy
-  4. test with ergodox
-
-* lightspeed
-    operator pending mode
-    why not working??
+* yabai stack mode
 
 * use zoxide
 
@@ -24,13 +18,6 @@ https://github.com/feinoujc/gh-search-cli <<<<<??????????
 * adam wagmer stackline / uberbar
   1. comment out everything from hammerspoon that I am not using.
   3. look into folkes hammerspoon
-
-
-* fix: terminal start
-@code shell
-The `zsh_reload` plugin is deprecated and will be removed.
-Use `omz reload` or `exec zsh` instead.
-@end
 
 * ubersicht bar
   yabai > stack mode
