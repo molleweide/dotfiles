@@ -1,5 +1,7 @@
 # SHELL
 alias ralias="source $DOROTHY/user/sources/aliases.sh"
+alias rl="ralias"
+
 alias xxx="exec zsh"
 alias k="clear"
 alias mm="man man"
@@ -16,7 +18,15 @@ alias cl="calcurse"
 alias duu="diskutil" # list commands
 alias dul="diskutil list" # list drives
 
+# DOROTHY =============================================
+
+# DOROTHY USER ==========================================
+
 alias pstf="setup-personal-repos"
+alias suc="setup-user-configs"
+
+# ctags ==========================================
+alias ctgr="ctags -R"
 
 # ======== TILING ========
 alias rst="reload_tiling"
@@ -91,6 +101,7 @@ alias vp="nvim --cmd \"set rtp+=\$(pwd)\""
 alias vv="~/code/neovim/build/bin/nvim" # forked build
 
 # ======== GIT ========
+alias gs='git status -sb'
 alias gcfls="git conflicts"
 alias m="git checkout molleweide"
 alias M="git checkout molldev"

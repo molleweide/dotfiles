@@ -7,14 +7,22 @@
 	version: 0.1
 @end
 
+* universal ctag
+  config
+
 * kmo
   1. run teensy                 XXX
   2. look into qmk layouts
   3. rebuild ergodox w/ teensy
   4. test with ergodox
 
+* lightspeed
+    operator pending mode
+    why not working??
 
 * use zoxide
+
+* man pages add `se rnu nu`
 
 https://github.com/feinoujc/gh-search-cli <<<<<??????????
 
