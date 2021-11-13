@@ -7,7 +7,20 @@
 	version: 0.1
 @end
 
-* yabai stack mode
+* lightspeed
+  do these defaults mean that there is no conflict with vim surround out of the box?
+  Because I had already mapped vim-surround to z in favor of `sneak/lightspeed`.
+
+
+* neorg workspaces config add ??
+  dorothy master
+  dorothy user
+  doom
+
+
+* tmux
+  create session
+  tmuxinator / everyday
 
 * use zoxide
 
