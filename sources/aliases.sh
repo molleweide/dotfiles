@@ -165,9 +165,11 @@ fgr() {
 ftm() {
   [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
   if [ $1 ]; then
-    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+    tmux $change -t "$1" 2>/dev/null || \
+        (tmux new-session -d -s $1 && tmux $change -t "$1"); return
   fi
-  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) \
+      &&  tmux $change -t "$session" || echo "No sessions found."
 }
 
 # tm [SESSION_NAME | FUZZY PATTERN] - delete tmux session
@@ -177,14 +179,13 @@ ftmk() {
   if [ $1 ]; then
     tmux kill-session -t "$1"; return
   fi
-  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux kill-session -t "$session" || echo "No session found to delete."
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) \
+      &&  tmux kill-session -t "$session" || echo "No session found to delete."
 }
-
 
 alias tm="tmux"
 alias tk="tmux kill-session"
 alias tn="tmuxinator"
-
 
 #---------------------------
 #---       dockers       ---
