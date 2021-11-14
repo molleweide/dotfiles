@@ -1,0 +1,17 @@
+@document.meta
+    title: dorothy_M1
+    description:
+    author: hjalmarjakobsson
+    categories:
+    created: 2021-11-13
+    version: 0.0.8
+@end
+
+* install dorothy on new m1 mac
+    ~  when installing dorothy on a new system
+    ~  complains about outdated bash version
+        we should make a command that updates bash
+        and sets the correct bash
+            on my M1 mac bash was set to `/bin/bash`
+
+    make sure that commands are added to path???

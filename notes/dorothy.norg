@@ -7,23 +7,13 @@
     version: 0.1
 @end
 
-* setup-utils
-  direnv      # FIX: somekind of error when running this one.
-  `/Users/hjalmarjakobsson/.local/share/dorothy/commands/setup-utils: line 12: setup-util-direnv: command not found`
-
-
-
 * BEVRY ZOOM
   `https://balupton.com/zoom`
 
 * setup-keyboard / kmonad
-
   when building kmonad, I clone it to `$HOME/code/tools/kmonad`
     do you have any suggestions on where to clone github repositories
-
     check if fork exists else clone original
-
-* generic.bash
 
 * store / recall macos system preferences / shortcuts etc.
   please comment on this
@@ -31,3 +21,4 @@
 * python path > python.bash
   dunno what I meant with this lol
 
+* persmissions for eg. `../..` alias
