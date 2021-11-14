@@ -123,7 +123,7 @@
 [core]
   attributesfile = ~/.gitattributes
   autocrlf = false
-	editor = nvim
+	editor = vim
 	excludesfile = /Users/hjalmarjakobsson/.gitignore_global
   pager = diff-so-fancy | less --tabs=4 -RFX
 	commitGraph = true
@@ -154,7 +154,6 @@
 
 [commit]
   template = ~/.config/git/message
-	gpgsign = false
 
 [filter "lfs"]
 	process = git-lfs filter-process
@@ -168,7 +167,6 @@
 [user]
 	name = hjalmar jakobsson
 	email = hjalmar.jakobsson@telia.com
-	signingkey = F75A27C9E590009BB65EC918BE4CDD65C9053F9C
 [github]
 	user = molleweide
 [credential]
@@ -179,5 +177,3 @@
 	protocol = ssh
 [gpg]
 	program = /usr/local/bin/gpg
-[tag]
-	gpgsign = true
