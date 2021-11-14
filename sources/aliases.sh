@@ -2,6 +2,41 @@
 #---       general       ---
 #---------------------------
 
+# # Use $XINITRC variable if file exists.
+# [ -f "$XINITRC" ] && alias startx="startx $XINITRC"
+
+# # sudo not required for some system commands
+# for command in mount umount sv pacman updatedb su ; do
+# 	alias $command="sudo $command"
+# done; unset command
+
+# # Colorize commands when possible.
+alias \
+	# ls="ls -hN --color=auto --group-directories-first" \ # illegal on macos
+	grep="grep --color=auto" \
+	diff="diff --color=auto" \
+	# ccat="highlight --out-format=ansi" # only linux
+
+# alias \
+# 	magit="nvim -c MagitOnly" \
+# 	ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" \
+# 	weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
+
+# # These common commands are just too long! Abbreviate them.
+alias \
+	ka="killall" \
+	g="git" \
+	trem="transmission-remote" \
+	YT="youtube-viewer" \
+	# sdn="sudo shutdown -h now" \ # scary ???
+	# e="$EDITOR" \
+	# v="$EDITOR" \
+	# p="sudo pacman" \ # linux
+	xi="sudo xbps-install" \
+	xr="sudo xbps-remove -R" \
+	xq="xbps-query" \
+	# z="zathura" # linux
+
 alias ralias="source $DOROTHY/user/sources/aliases.sh"
 alias rl="ralias"
 alias xxx="exec zsh"
@@ -175,6 +210,9 @@ function ranger {
 #---       VIM       ---
 #-----------------------
 
+# Use neovim for vim if present.
+[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
+
 alias vim="nvim"
 alias v="nvim"
 alias vv="~/code/neovim/build/bin/nvim" # forked build
@@ -343,8 +381,6 @@ function opendir() {
 #---       OTHER ALIASES       ---
 #--------------------------------
 
-
-
 # # https://medium.com/@webprolific/getting-started-with-dotfiles-43c3602fd789#.vh7hhm6th
 # # https://github.com/webpro/dotfiles/blob/master/system/.alias
 # # https://github.com/mathiasbynens/dotfiles/blob/master/.aliases
@@ -374,7 +410,7 @@ if [[ -n ${ZSH_VERSION-} ]]; then
   alias -g .....='../../../..'
   alias -g ......='../../../../..'
 
-  alias zshrc='$VISUAL "${ZDOTDIR:-$HOME}"/.zshrc'
+  # alias zshrc='$VISUAL "${ZDOTDIR:-$HOME}"/.zshrc'
   alias reload='source "${ZDOTDIR:-$HOME}"/.zshrc'
   alias zbench='export LAZY_PROMPT=false; for i in $(seq 1 10); do; /usr/bin/time zsh -i -c exit; done; unset LAZY_PROMPT'
   alias zdot='cd $ZDOTDIR'
@@ -396,10 +432,20 @@ fi
 # alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 # alias ping='ping -c 5'
 
-# # be safe
-# alias cpi='cp -i'
-# alias mvi='mv -i'
-# alias rmi='rm -i'
+# be safe
+alias cpi='cp -i'
+alias mvi='mv -i'
+alias rmi='rm -i'
+# Verbosity and settings that you pretty much just always are going to want.
+alias \
+	cp="cp -iv" \
+	mv="mv -iv" \
+	rm="rm -vI" \
+	bc="bc -ql" \
+	mkd="mkdir -pv" \
+	yt="youtube-dl --add-metadata -i" \
+	yta="yt -x -f bestaudio/best" \
+	ffmpeg="ffmpeg -hide_banner"
 
 # # single character shortcuts - be sparing!
 # alias _='sudo'
