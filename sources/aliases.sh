@@ -318,7 +318,7 @@ alias krb="open -a /Applications/Karabiner-Elements.app"
 kmonad=~/.local/bin/kmonad
 layouts=~/code/tools/kmonad/keymap/user/molleweide
 
-alias kmo="$XDG_CONFIG_HOME/kmonad/keyboard"
+alias kmo="$XDG_CONFIG_HOME/kmonad/kmonad_layout"
 
 # old
 kmopro()  { sudo $kmonad $layouts/macbook_pro_2012.kbd; }

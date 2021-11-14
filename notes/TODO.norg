@@ -7,19 +7,18 @@
 	version: 0.1
 @end
 
+* bevry loop ignore file
+
 * why are aliases being output on reload now??
 
-
-* yabai
-  always make floating
-
-
-
+* kmonad yabai
+  router -> capslock
+  router -> yabai layer
+    test make computer sleep
 
 * lightspeed
   do these defaults mean that there is no conflict with vim surround out of the box?
   Because I had already mapped vim-surround to z in favor of `sneak/lightspeed`.
-
 
 * neorg workspaces config add ??
   dorothy master
