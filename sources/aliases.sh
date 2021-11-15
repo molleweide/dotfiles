@@ -53,6 +53,7 @@
 
 alias ralias="source $DOROTHY/user/sources/aliases.sh"
 alias rl="ralias"
+# alias xx="zsh -il"
 alias xxx="exec zsh"
 alias k="clear"
 alias mm="man man"
@@ -85,14 +86,21 @@ alias ZZ=exit
 #---       DOROTHY       ---
 #---------------------------
 
+alias dr='cd "$DOROTHY"'
+
 alias sdri="setup-install"
 alias sdr="setup-dorothy"
 alias sdrp="setup-dorothy-permissions"
 alias ssha="ssh-add-all"
 
+alias dtr='cd "$DOROTHY" && ${VISUAL:-${EDITOR:-vim}} .'
+
 # USER
 
-alias pstf="setup-personal-repos"
+alias dt='cd "$XDG_CONFIG_HOME/dorothy"'
+alias dte='cd "$XDG_CONFIG_HOME/dorothy" && ${VISUAL:-${EDITOR:-vim}} .'
+
+alias sup="setup-personal-repos"
 alias suc="setup-user-configs"
 
 # ctags ==========================================

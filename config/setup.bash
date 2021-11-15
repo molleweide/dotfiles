@@ -92,7 +92,6 @@ HOMEBREW_INSTALL=(
 	deno
 	diff-so-fancy
 	direnv
-	dmenu-mac
 	fasd
 	fd
 	fff # filebrowser
@@ -148,7 +147,6 @@ HOMEBREW_INSTALL=(
 	pkg-config
 	podman
 	postgres
-	qtpass
 	ranger # filebrowser
 	readline
 	reattach-to-user-namespace # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
@@ -165,7 +163,6 @@ HOMEBREW_INSTALL=(
 	tmux
 	tmuxinator
 	tree
-	ubersicht
 	universal-ctags
 	urlview # https://github.com/sigpipe/urlview
 	vim
@@ -198,6 +195,7 @@ HOMEBREW_INSTALL_CASK=(
 	# contexts
 	# dat
 	# devdocs
+	dmenu-mac
 	# fantastical
 	# firefox
 	# freedom
@@ -226,6 +224,7 @@ HOMEBREW_INSTALL_CASK=(
 	# plex-media-server
 	# pomello
 	# reflector
+	qtpass
 	qutebrowser
 	# screenflow
 	signal

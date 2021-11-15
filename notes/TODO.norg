@@ -7,7 +7,13 @@
 	version: 0.1
 @end
 
-* tn -> my main workspace
+* why regula vim is used for commit message?
+
+* with latest doro > toggle term nvim need `zsh -il`
+
+* map yank commands to leader k (kopy)
+
+* redo headers in personal/stuff
 
 * ssh redo!!
 

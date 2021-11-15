@@ -12,7 +12,7 @@ for arr_val in "${array[@]}"; do
     if [ $i == 0 ]; then
         # TODO: validate is file/dir
         install_dir=$arr_val
-        echo-color --cyan "INSTALL DIR: \`$install_dir\`\n"
+        echo-color --dim="INSTALL DIR: \`$install_dir\`\n"
         mkdir -p $install_dir > /dev/null
         pushd $install_dir > /dev/null 2>&1
 
@@ -34,3 +34,17 @@ for arr_val in "${array[@]}"; do
 done
 
 popd > /dev/null 2>&1
+
+# function install_each_gem {
+# 	local name version
+# 	echo-color --h2="Installing $# ruby gems..."
+# 	for arg in "$@"; do
+# 		name="${arg% *}"
+# 		version="${arg#* }" # will be the same as name, if no version was provided
+# 		if test "$version" = "$name"; then
+# 			version=''
+# 		fi
+# 		env NAME="gem:$name" GEM="$name" GEM_VERSION="$version" setup-util gem
+# 	done
+# 	echo-color --g2="Installed $# ruby gems."
+# }
