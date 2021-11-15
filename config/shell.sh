@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2034
+# use inline `export VAR=...` statements, for fish compatibility`
 
 # use my own theme
 export DOROTHY_THEME='system'

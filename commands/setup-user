@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 source "$DOROTHY/sources/strict.bash"
 
-# # pull
-# pushd $DOROTHY/user > /dev/null 2>&1
-# echo "doro user pwd: $PWD"
-# git submodule update --init --recursive || exit 1
-# popd > /dev/null 2>&1
+# pull
+pushd $DOROTHY/user > /dev/null 2>&1
+echo "doro user pwd: $PWD"
+git submodule update --init --recursive || exit 1
+popd > /dev/null 2>&1
 
 # TODO: arg doro
 # # # --- doro ------------

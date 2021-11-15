@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2034
+# do not use `export` keyword in this file
 
-export APK_INSTALL=(
+APK_INSTALL=(
 	# gocryptfs: use `setup-util-gocryptfs` instead, as this version lags behind
 	aria2
 	git
@@ -9,7 +11,7 @@ export APK_INSTALL=(
 	wget
 )
 
-# export APT_REMOVE=(
+# APT_REMOVE=(
 # 	aisleriot
 # 	gnome-mahjongg
 # 	gnome-mines
@@ -22,7 +24,7 @@ export APK_INSTALL=(
 # 	thunderbird
 # )
 
-export APT_ADD=(
+APT_ADD=(
 	# software-properties-common
 	aria2
 	atomicparsley # a youtube-dl dependency
@@ -40,29 +42,30 @@ export APT_ADD=(
 
 # https://code.visualstudio.com/docs/setup/linux
 # if [[ "$(get-arch)" == 'x'* ]]; then
-export SNAP_INSTALL=(
+SNAP_INSTALL=(
 	# 'code --classic'
 	# deno
 )
 
 if "$DOROTHY/commands/is-mac"; then
-	export GO_INSTALL=(
+	GO_INSTALL=(
 		changkun.de/x/rmtrash
 		github.com/gennaro-tedesco/boilit
 		# github.com/cloudflare/utahfs/cmd/utahfs-client
 	)
 else
-	export GO_INSTALL=(
+	GO_INSTALL=(
 		changkun.de/x/rmtrash
 		github.com/gennaro-tedesco/boilit
 		# github.com/rfjakob/gocryptfs: use `setup-util-gocryptfs` instead, as this version lags behind
 	)
 fi
 
-# export HOMEBREW_ARCH="x86_64"
-export HOMEBREW_INSTALL=(
+# HOMEBREW_ARCH="x86_64"
+HOMEBREW_INSTALL=(
 	# azure-cli
 	# balena-cli
+	# basictex
 	# blackbox
 	# hashicorp/tap/boundary
 	# hashicorp/tap/consul
@@ -70,15 +73,13 @@ export HOMEBREW_INSTALL=(
 	# hashicorp/tap/terraform
 	# hashicorp/tap/vault
 	# heroku
-	# kryptco/tap/kr
-	# yarn
 	# https://github.com/tmux-plugins/tmux-urlview
+	# kryptco/tap/kr
 	# librsvg
-	# basictex
+	# yarn
 	"luajit --HEAD"
 	"neovim --HEAD"
 	"tree-sitter --HEAD"
-	ImageMagick
 	ack
 	aria2
 	blueutil
@@ -94,15 +95,16 @@ export HOMEBREW_INSTALL=(
 	dmenu-mac
 	fasd
 	fd
-	fff                 # filebrowser
+	fff # filebrowser
 	ffmpeg
-	figlet              # http://www.figlet.org/examples.html
+	figlet    # http://www.figlet.org/examples.html
+	findutils # eg. unix `locate` command
 	font-inconsolata-go-nerd-font
 	font-jetbrains-mono-nerd-font
 	fzf
 	gh
 	ghc
-	ghq                             # remote repo management
+	ghq # remote repo management
 	git
 	git-extras
 	git-lfs
@@ -111,14 +113,15 @@ export HOMEBREW_INSTALL=(
 	gpg
 	gpg-tui
 	heroku/brew/heroku
-	hs                  # Hammerspoon CLI
+	hs # Hammerspoon CLI
 	hub
+	ImageMagick
 	irssi
 	isync
 	koekeishiya/formulae/skhd
 	koekeishiya/formulae/yabai
 	lazygit
-	lf                  # filebrowser
+	lf # filebrowser
 	libxml2
 	libzip
 	llvm
@@ -132,53 +135,52 @@ export HOMEBREW_INSTALL=(
 	ncurses
 	neofetch
 	neomutt
-	nnn                 # filebrowser
+	ninja
+	nnn # filebrowser
 	openssh
 	pandoc
 	pass
 	pass
 	pass-otp
 	passmenu
-	paul-nameless/homebrew-repo/tg      # telegram tui
+	paul-nameless/homebrew-repo/tg # telegram tui
 	pinentry-mac
 	pkg-config
 	podman
 	postgres
 	qtpass
-	ranger              # filebrowser
+	ranger # filebrowser
 	readline
-	reattach-to-user-namespace  # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
+	reattach-to-user-namespace # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
 	redis
 	ripgrep
-	sc-im               # spreadsheets
+	sc-im # spreadsheets
 	screen
 	sl
 	sox
 	spotify-tui
 	terminal-notifier
-	tg                  # telegram tui
+	tg # telegram tui
 	the_silver_searcher
 	tmux
 	tmuxinator
 	tree
+	ubersicht
 	universal-ctags
-	urlview                     # https://github.com/sigpipe/urlview
+	urlview # https://github.com/sigpipe/urlview
 	vim
 	watch
 	watchman
 	wget
 	wget
 	wp-cli
-	xz                          # general-purpose data compression with high compression ratio
-    findutils           # eg. unix `locate` command
-    ninja
-    ubersicht
+	xz # general-purpose data compression with high compression ratio
 )
-export HOMEBREW_INSTALL_SLOW=(
+HOMEBREW_INSTALL_SLOW=(
 	gpg
 	shellcheck
 )
-export HOMEBREW_INSTALL_CASK=(
+HOMEBREW_INSTALL_CASK=(
 	aerial # screensaver
 	# 1password-cli
 	# acorn
@@ -199,8 +201,8 @@ export HOMEBREW_INSTALL_CASK=(
 	# fantastical
 	# firefox
 	# freedom
-    alacritty           # terminal
-    kitty               # terminal
+	alacritty # terminal
+	kitty     # terminal
 	# geekbench
 	# github-desktop
 	# gitter
@@ -232,7 +234,7 @@ export HOMEBREW_INSTALL_CASK=(
 	# skype
 	# soundsource
 	spotify
-	supercollider       # audio engine
+	supercollider # audio engine
 	# teamviewer
 	# toggldesktop
 	# torbrowser
@@ -255,8 +257,8 @@ export HOMEBREW_INSTALL_CASK=(
 )
 
 # gems
-export RUBY_VERSION="2.7"
-export RUBY_INSTALL=(
+RUBY_VERSION="2.7"
+RUBY_INSTALL=(
 	awesome_print
 	bundler
 	cani
@@ -279,7 +281,7 @@ export RUBY_INSTALL=(
 # - https://github.com/pymupdf/PyMuPDF
 # - https://github.com/pikepdf/pikepdf
 # - https://github.com/pdfminer/pdfminer.six
-export PYTHON_INSTALL=(
+PYTHON_INSTALL=(
 	# bitcoinlib
 	# cairosvg
 	# PyPDF2  # python 2 only
@@ -290,7 +292,7 @@ if "$DOROTHY/commands/is-ubuntu"; then
 fi
 
 # npm/yarn
-export NODE_INSTALL=(
+NODE_INSTALL=(
 	# bevry
 	# "@bevry/testen"
 	# boundation
@@ -338,7 +340,7 @@ export NODE_INSTALL=(
 # rust/cargo/crates.io
 # --locked: Require Cargo.lock is up to date
 # as rust packages can be supported by many package managers, and as cargo requires downloading every dependency, most rust packages are better installed via SETUP_UTILS
-export RUST_INSTALL=(
+RUST_INSTALL=(
 	# cargo install --git https://github.com/boxdot/gurk-rs
 	proximity-sort
 	ttyper
@@ -346,7 +348,7 @@ export RUST_INSTALL=(
 
 # utilities
 # setup-util-*
-export SETUP_UTILS=(
+SETUP_UTILS=(
 	bandwich
 	bash
 	bat
@@ -384,7 +386,7 @@ export SETUP_UTILS=(
 
 # heroku plugins:install heroku-repo
 
-# export MAC_APPS_INSTALL=(
+# MAC_APPS_INSTALL=(
 # 937984704      # "Amphetamine"
 # 425264550      # "Blackmagic Disk Speed Test"
 # 948176063      # "Boom 2"
@@ -400,7 +402,7 @@ export SETUP_UTILS=(
 # 425424353      # "The Unarchiver"
 # )
 
-# export LUA_ROCKS_INSTALL=(
+# LUA_ROCKS_INSTALL=(
 # loop
 # dkjson
 # inspect
@@ -409,7 +411,6 @@ export SETUP_UTILS=(
 # lcf
 # )
 
-export STACK_INSTALL=(
+STACK_INSTALL=(
 	"yesod-bin --install-ghc"
 )
-
