@@ -7,8 +7,9 @@
     version: 0.1
 @end
 
-* BEVRY ZOOM
-  `https://balupton.com/zoom`
+* xdg > zsh zdotdir.
+
+* BEVRY ZOOM > `https://balupton.com/zoom`
 
 * setup-keyboard / kmonad
   when building kmonad, I clone it to `$HOME/code/tools/kmonad`
