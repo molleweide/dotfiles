@@ -283,8 +283,9 @@ alias gcun="git add notes/ && git commit -m 'user(molleweide): notes'"
 alias sv="git add --all && git commit -m 'save'"
 alias svp="git add --all && git commit -m 'save' && git push"
 alias frk="gh repo fork"
-alias devpr="gh pr create --base develop"
 alias lg="lazygit"
+alias prdev="gh pr create --base develop"
+alias prmst="gh pr create --base master"
 
 # 1 = branch, 2 = sub path, 3 = new repo url
 alias gbrkout="git-subdir-make-into-module"

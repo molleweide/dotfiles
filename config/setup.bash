@@ -98,8 +98,8 @@ HOMEBREW_INSTALL=(
 	ffmpeg
 	figlet    # http://www.figlet.org/examples.html
 	findutils # eg. unix `locate` command
-	font-inconsolata-go-nerd-font
-	font-jetbrains-mono-nerd-font
+	homebrew/cask-fonts/font-inconsolata-go-nerd-font
+	homebrew/cask-fonts/font-jetbrains-mono-nerd-font
 	fzf
 	gh
 	ghc
@@ -112,8 +112,6 @@ HOMEBREW_INSTALL=(
 	gpg
 	gpg-tui
 	heroku/brew/heroku
-	hs # Hammerspoon CLI
-	hub
 	ImageMagick
 	irssi
 	isync
@@ -141,7 +139,6 @@ HOMEBREW_INSTALL=(
 	pass
 	pass
 	pass-otp
-	passmenu
 	paul-nameless/homebrew-repo/tg # telegram tui
 	pinentry-mac
 	pkg-config
