@@ -85,7 +85,10 @@ alias ZZ=exit
 #---       DOROTHY       ---
 #---------------------------
 
-alias dorp="setup-dorothy-permissions"
+alias sdri="setup-install"
+alias sdr="setup-dorothy"
+alias sdrp="setup-dorothy-permissions"
+alias ssha="ssh-add-all"
 
 # USER
 
