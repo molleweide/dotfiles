@@ -100,7 +100,7 @@ alias dtr='cd "$DOROTHY" && ${VISUAL:-${EDITOR:-vim}} .'
 alias dt='cd "$XDG_CONFIG_HOME/dorothy"'
 alias dte='cd "$XDG_CONFIG_HOME/dorothy" && ${VISUAL:-${EDITOR:-vim}} .'
 
-alias sup="setup-personal-repos"
+alias sup="setup-personal-stuff"
 alias suc="setup-user-configs"
 
 # ctags ==========================================

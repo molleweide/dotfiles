@@ -7,6 +7,12 @@
 	version: 0.1
 @end
 
+* test `telegram, signal` again
+
+* setup-user-vimac
+
+* terminal > rm <c-d> binding so that I don't accidentally exit.
+
 * why regula vim is used for commit message?
 
 * with latest doro > toggle term nvim need `zsh -il`
