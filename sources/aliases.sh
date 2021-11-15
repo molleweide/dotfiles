@@ -24,32 +24,32 @@
 # 	alias $command="sudo $command"
 # done; unset command
 
-# # Colorize commands when possible.
-alias \
-	# ls="ls -hN --color=auto --group-directories-first" \ # illegal on macos
-	grep="grep --color=auto" \
-	diff="diff --color=auto" \
-	# ccat="highlight --out-format=ansi" # only linux
+# # # Colorize commands when possible.
+# alias \
+# 	# ls="ls -hN --color=auto --group-directories-first" \ # illegal on macos
+# 	grep="grep --color=auto" \
+# 	diff="diff --color=auto" \
+# 	# ccat="highlight --out-format=ansi" # only linux
 
 # alias \
 # 	magit="nvim -c MagitOnly" \
 # 	ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" \
 # 	weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
 
-# # These common commands are just too long! Abbreviate them.
-alias \
-	ka="killall" \
-	g="git" \
-	trem="transmission-remote" \
-	YT="youtube-viewer" \
-	# sdn="sudo shutdown -h now" \ # scary ???
-	# e="$EDITOR" \
-	# v="$EDITOR" \
-	# p="sudo pacman" \ # linux
-	xi="sudo xbps-install" \
-	xr="sudo xbps-remove -R" \
-	xq="xbps-query" \
-	# z="zathura" # linux
+# # # These common commands are just too long! Abbreviate them.
+# alias \
+# 	ka="killall" \
+# 	g="git" \
+# 	trem="transmission-remote" \
+# 	YT="youtube-viewer" \
+# 	# sdn="sudo shutdown -h now" \ # scary ???
+# 	# e="$EDITOR" \
+# 	# v="$EDITOR" \
+# 	# p="sudo pacman" \ # linux
+# 	xi="sudo xbps-install" \
+# 	xr="sudo xbps-remove -R" \
+# 	xq="xbps-query" \
+# 	# z="zathura" # linux
 
 alias ralias="source $DOROTHY/user/sources/aliases.sh"
 alias rl="ralias"

@@ -11,6 +11,9 @@ windows:
         -
         # - cd ~/.config/dorothy
         - cd ~/.local/shared/dorothy
+  - doom:
+      root: ~/.config/dorothy/config.xdg/doom-nvim
+      panes:
   - plugs:
       root: ~/code/plugins/nvim
       panes:
