@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+echo-header "SETTING UP PYTHON..."
+arch="$(get-arch)"
+pyenv_virtualenv_path="$PYENV_ROOT/plugins/pyenv-virtualenv"
+[ ! command-exists "pyenv" ] && curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
+[ ! -d "$pyenv_virtualenv_path" ] && git clone https://github.com/pyenv/pyenv-virtualenv.git "$pyenv_virtualenv_path"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+if is-mac && test "$arch" = 'a64'; then
+    pyenv install -s 3.9.1
+    pyenv global 3.9.1
+else
+    pyenv install -s 2.7.16
+    pyenv global 2.7.16
+fi
+# install virtual python env
+if [ ! -d $PYENV_ROOT/plugins/pyenv-virtualenv ]; then
+    git clone https://github.com/yyuu/pyenv-virtualenv.git $PYENV_ROOT/plugins/pyenv-virtualenv
+fi
+if ! pyenv virtualenvs | grep -q py2neovim; then
+    pyenv virtualenv 2.7.16 py2neovim
+    pyenv activate py2neovim
+fi
+if ! pyenv virtualenvs | grep -q py3neovim; then
+    pyenv virtualenv 3.9.1 py3neovim
+    pyenv activate py3neovim
+fi
+
+

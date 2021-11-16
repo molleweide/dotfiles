@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+echo-header --h1 "SETTING UP TILING.."
+if is-mac; then
+    git_clone_recursive \
+        $HOME/code/tools    \
+        "limelight"         \
+        git@github.com:molleweide/limelight.git
+    pushd $HOME/code/tools/limelight > /dev/null 2>&1
+    make
+    popd $dest> /dev/null 2>&1
+    # todo: move this to .local/bin instead..
+    symlink-file $HOME/code/tools/limelight/bin/limelight /usr/local/bin/limelight
+    brew services start skhd
+    brew services start yabai
+fi
+
+
+
