@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+yabai -m space --layout bsp
