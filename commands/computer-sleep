@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+mac() {
+  osascript -e 'tell application "Finder" to sleep'
+}
+
+
+if is-mac; then
+    # osascript -e 'tell application \"Finder\" to sleep'
+    mac
+fi
+

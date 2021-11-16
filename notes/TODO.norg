@@ -7,6 +7,9 @@
 	version: 0.1
 @end
 
+* install cabal
+  today.hs continue with tests
+
 * test `telegram, signal` again
 
 * setup-user-vimac

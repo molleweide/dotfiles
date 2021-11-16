@@ -1,13 +1,7 @@
-# # plugin variables
 # PURE_PROMPT_SYMBOL="%%"
 
-# [[ -d $PZ_PLUGIN_HOME/shell-safe-rm ]] || pz clone kaelzhang/shell-safe-rm
-# #pz source zsh-users/zsh-autosuggestions
-# #pz source zsh-users/zsh-completions
-# #pz source zsh-users/zsh-history-substring-search
-# #pz source mattmc3/zsh-cd-ls
-# pz source rupa/z
-# pz source zdharma/fast-syntax-highlighting
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins
+# https://travis.media/top-10-oh-my-zsh-plugins-for-productive-developers/
 
 # if test -f "$ADOTDIR/antigen.zsh"; then
 
@@ -42,5 +36,4 @@ antigen apply
 eval "$(direnv hook zsh)"
 eval "$(fasd --init auto)"
 
-# echo "plugins sourced!!"
 # fi

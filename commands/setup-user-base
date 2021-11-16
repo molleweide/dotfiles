@@ -10,14 +10,14 @@
 #     "tell application \"Finder\" to set desktop picture to POSIX file \"$WALLPAPER\""
 
 
-echo-header "SETUP USER ZSH..."
+echo-color --h1 "SETUP USER ZSH..."
 symlink-file "${ADOTDIR}/bundles/chriskempson/base16-shell/scripts/base16-oceanicnext.sh" ~/.base16_theme
 [ ! -f $HOME/.fzf.zsh ] && $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
 antigen_file="${ADOTDIR}/antigen.zsh"
 [ ! -f $antigen_file ] && ( echo "Installing antigen" && curl -L git.io/antigen > $antigen_file )
 
 
-# echo-header "SETTING UP TERMINAL.."
+# echo-header --h1 "SETTING UP TERMINAL.."
 # if is-mac; then
 #     if command-exists "alacritty"; then
 #         echo-color --blue "[[+ Installing Alacritty terminfo ]]"
@@ -31,7 +31,7 @@ antigen_file="${ADOTDIR}/antigen.zsh"
 # fi
 
 
-# echo-header "SETTING UP TILING.."
+# echo-header --h1 "SETTING UP TILING.."
 # if is-mac; then
 #     git_clone_recursive \
 #         $HOME/code/tools    \
@@ -48,7 +48,7 @@ antigen_file="${ADOTDIR}/antigen.zsh"
 # fi
 
 
-# echo-header "SETTING UP GIT..."
+# echo-header --h1 "SETTING UP GIT..."
 # if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" ]; then
 #     printf "What is your GitHub username? > "
 #     read github_user
@@ -149,14 +149,13 @@ antigen_file="${ADOTDIR}/antigen.zsh"
 # # if ! command-exists "proximity-sort" ; then
 # cargo install proximity-sort # --force
 # # fi
-# # mkdir -p ~/.local/share/nvim/plugged
-# # echo-color "@b@blue[[+ Installing nvim plugins]]"
 # pyenv activate py2neovim
+# # this command is obsolete
 # nvim +PlugInstall +qall
 
 
 # if is-mac; then
-#     echo-header "Setting up HAMMERSPOON.."
+#     echo-color --h1 "Setting up HAMMERSPOON.."
 #     # brew install --cask hammerspoon # --appdir=/Applications
 #     url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
 #     destination=/tmp/SpoonInstall.spoon.zip
