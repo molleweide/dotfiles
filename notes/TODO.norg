@@ -15,25 +15,13 @@
 * setup-user-vimac
 
 * terminal > rm <c-d> binding so that I don't accidentally exit.
+  only kitty?!
 
 * why regula vim is used for commit message?
 
 * with latest doro > toggle term nvim need `zsh -il`
 
 * map yank commands to leader k (kopy)
-
-* redo headers in personal/stuff
-
-* ssh redo!!
-
-* bevry loop ignore file
-
-* why are aliases being output on reload now??
-
-* kmonad yabai
-  router -> capslock
-  router -> yabai layer
-    test make computer sleep
 
 * lightspeed
   do these defaults mean that there is no conflict with vim surround out of the box?

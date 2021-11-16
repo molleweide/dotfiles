@@ -332,7 +332,7 @@ kmonad=~/.local/bin/kmonad
 layouts=~/code/tools/kmonad/keymap/user/molleweide
 
 alias kmo="$XDG_CONFIG_HOME/kmonad/kmonad_layout"
-alias kmd="kmo -d"
+alias kmor="kmo -r"
 
 # old
 kmopro()  { sudo $kmonad $layouts/macbook_pro_2012.kbd; }
