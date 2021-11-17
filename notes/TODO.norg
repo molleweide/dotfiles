@@ -7,9 +7,24 @@
 	version: 0.1
 @end
 
+* brew err:
+  https://github.com/ansible/ansible/issues/33975
+  https://stackoverflow.com/questions/18555378/brew-installation-error-appears-homebrew-is-already-installed
+  https://stackoverflow.com/questions/65509112/error-google-backup-and-sync-it-seems-there-is-already-an-app
+  https://github.com/Homebrew/homebrew-cask/issues/45942
+  https://github.com/buo/homebrew-cask-upgrade/issues/57
+
 * doom_config -> term
     https://github.com/akinsho/toggleterm.nvim#termexec
     create PR
+
+* chrome extensinos
+    https://github.com/arikw/chrome-extensions-reloader
+    build firenvim
+  *** https://github.com/glacambre/firenvim/blob/master/CONTRIBUTING.md
+
+      get it running in firefox and brave.
+      vivaldi?
 
 * `man zshmisc`
 
