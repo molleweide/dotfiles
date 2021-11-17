@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+pgrep yabai; echo $?
+yabai -m space --layout bsp

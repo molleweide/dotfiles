@@ -7,32 +7,53 @@
 	version: 0.1
 @end
 
+* brew err:
+  https://github.com/ansible/ansible/issues/33975
+  https://stackoverflow.com/questions/18555378/brew-installation-error-appears-homebrew-is-already-installed
+  https://stackoverflow.com/questions/65509112/error-google-backup-and-sync-it-seems-there-is-already-an-app
+  https://github.com/Homebrew/homebrew-cask/issues/45942
+  https://github.com/buo/homebrew-cask-upgrade/issues/57
 
+* doom_config -> term
+    https://github.com/akinsho/toggleterm.nvim#termexec
+    create PR
+
+* chrome extensinos
+    https://github.com/arikw/chrome-extensions-reloader
+    build firenvim
+  *** https://github.com/glacambre/firenvim/blob/master/CONTRIBUTING.md
+
+      get it running in firefox and brave.
+      vivaldi?
+
+* `man zshmisc`
+
+* OS
+  ~ rm cmd-w prevent acc close window.
+  ~ rm cmd-q
+
+
+* yabai script commands https://github.com/koekeishiya/yabai/discussions/1050
+
+* install cabal
+  today.hs continue with tests
 
 * test `telegram, signal` again
 
 * setup-user-vimac
 
+* haskell indentati https://duckduckgo.com/?q=vim+haskell+indentation&ia=web
+
+  https://github.com/gennaro-tedesco/boilit
+
 * terminal > rm <c-d> binding so that I don't accidentally exit.
+  only kitty?!
 
 * why regula vim is used for commit message?
 
 * with latest doro > toggle term nvim need `zsh -il`
 
 * map yank commands to leader k (kopy)
-
-* redo headers in personal/stuff
-
-* ssh redo!!
-
-* bevry loop ignore file
-
-* why are aliases being output on reload now??
-
-* kmonad yabai
-  router -> capslock
-  router -> yabai layer
-    test make computer sleep
 
 * lightspeed
   do these defaults mean that there is no conflict with vim surround out of the box?

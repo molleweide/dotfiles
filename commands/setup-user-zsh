@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+echo-color --h1 "SETUP USER ZSH..."
+symlink-file "${ADOTDIR}/bundles/chriskempson/base16-shell/scripts/base16-oceanicnext.sh" ~/.base16_theme
+[ ! -f $HOME/.fzf.zsh ] && $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
+antigen_file="${ADOTDIR}/antigen.zsh"
+[ ! -f $antigen_file ] && ( echo "Installing antigen" && curl -L git.io/antigen > $antigen_file )

@@ -83,6 +83,7 @@ HOMEBREW_INSTALL=(
 	ack
 	aria2
 	blueutil
+	cabal-install       # haskell pkg manager
 	calcurse
 	code-minimap
 	cointop

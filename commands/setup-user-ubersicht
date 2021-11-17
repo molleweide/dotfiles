@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo-header "SETTING UP UBERSICHT.."
+echo-color --h1 "SETTING UP UBERSICHT.."
 
 # https://github.com/Mortennn/Dozer
 # https://github.com/exelban/stats
@@ -37,22 +37,32 @@ echo-header "SETTING UP UBERSICHT.."
 # }
 
 
+# if is-mac; then
+#     brew install ubersicht
+#     echo-header "LINK UBER WIDGETS.."
+#     export FORCE_LINK='yes'
+#     src_dir="$HOME/code/widgets"
+#     # config_dst_dir=$HOME/.config
+#     dst_dir="$HOME/Library/Application Support/Übersicht/widgets"
+#     for f in $src_dir/*; do
+#         # echo "$f"
+#         # echo "$(basename $f)"
+#         # echo "$config_dst_dir/$(basename $f)"
+#         # https://stackoverflow.com/questions/3362920/get-just-the-filename-from-a-path-in-a-bash-script
+#         symlink-file "$f" "$dst_dir/$(basename $f)"
+#     done
+#     # uber_widget "uber-yabai-bar"  "git@github.com:molleweide/yabai-uberbar.git"
+#     # uber_widget "uber-weather"    "git@github.com:molleweide/weather-widget.git"
+#     # uber_widget "uber-collection" "git@github.com:molleweide/uebersicht-widgets.git"
+# fi
+
+
+
 if is-mac; then
-    brew install ubersicht
-    echo-header "LINK UBER WIDGETS.."
-    export FORCE_LINK='yes'
-    src_dir="$HOME/code/widgets"
-    # config_dst_dir=$HOME/.config
-    dst_dir="$HOME/Library/Application Support/Übersicht/widgets"
-    for f in $src_dir/*; do
-        # echo "$f"
-        # echo "$(basename $f)"
-        # echo "$config_dst_dir/$(basename $f)"
-        # https://stackoverflow.com/questions/3362920/get-just-the-filename-from-a-path-in-a-bash-script
-        symlink-file "$f" "$dst_dir/$(basename $f)"
-    done
-    # uber_widget "uber-yabai-bar"  "git@github.com:molleweide/yabai-uberbar.git"
-    # uber_widget "uber-weather"    "git@github.com:molleweide/weather-widget.git"
-    # uber_widget "uber-collection" "git@github.com:molleweide/uebersicht-widgets.git"
+    echo-color --h1 --cyan "LINK UBER WIDGETS.."
+    symlink-dir \
+        "$HOME/code/widgets" \
+        "$HOME/Library/Application Support/Übersicht/widgets"
 fi
+
 
