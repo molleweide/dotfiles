@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 
+# revert back to system gcc
+
 rm /usr/local/bin/gcc && mv /usr/local/bin/gcc_old /usr/local/bin/gcc
 brew uninstall gcc
