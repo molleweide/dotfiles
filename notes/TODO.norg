@@ -7,12 +7,29 @@
 	version: 0.1
 @end
 
+* doom_config -> term
+    https://github.com/akinsho/toggleterm.nvim#termexec
+    create PR
+
+* `man zshmisc`
+
+* OS
+  ~ rm cmd-w prevent acc close window.
+  ~ rm cmd-q
+
+
+* yabai script commands https://github.com/koekeishiya/yabai/discussions/1050
+
 * install cabal
   today.hs continue with tests
 
 * test `telegram, signal` again
 
 * setup-user-vimac
+
+* haskell indentati https://duckduckgo.com/?q=vim+haskell+indentation&ia=web
+
+  https://github.com/gennaro-tedesco/boilit
 
 * terminal > rm <c-d> binding so that I don't accidentally exit.
   only kitty?!

@@ -1,0 +1,10 @@
+@document.meta
+    title: chat
+    description:
+    author: hjalmarjakobsson
+    categories:
+    created: 2021-11-17
+    version: 0.0.8
+@end
+
+https://github.com/cabal-club
