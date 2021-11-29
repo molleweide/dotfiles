@@ -1,7 +1,26 @@
-#-------------------------
-#---       links       ---
-#-------------------------
+#------------------------
+#---       TODO       ---
+#------------------------
 
+# make alias XXX="arstqarstast" SNIPPET
+
+
+# https://github.com/alebcay/awesome-shell#command-line-productivity
+
+# -----------------------------
+# ---       exercises       ---
+# -----------------------------
+
+# https://duckduckgo.com/?q=linux+commandline+exercises+solutions&ia=web
+# https://innolitics.com/10x/lessons/core-tech/the-linux-command-line/
+# https://www.csc.fi/documents/200270/272439/Linux-command-line-exercises_Linux%2BCSC-Quick-Reference.pdf/0d3d1813-238a-4aed-a1e3-1a3d57a243f3
+# https://practity.com/lynux/
+
+#-------------------------------
+#---       inspiration       ---
+#-------------------------------
+
+# https://github.com/alebcay/awesome-shell#command-line-productivity
 # https://github.com/mavcunha/shell
 # https://github.com/asciimoo/ali
 # https://github.com/spencerwooo/dotfiles
@@ -55,6 +74,7 @@ alias ralias="source $DOROTHY/user/sources/aliases.sh"
 alias rl="ralias"
 # alias xx="zsh -il"
 alias xx="exec zsh"
+alias e="fg"
 alias xxx="exec zsh && zsh -il"
 alias k="clear"
 alias mm="man man"
@@ -367,9 +387,23 @@ alias rh="runhaskell"
 #---       OSX ---
 #----------------------------
 
-slp() {
+# https://apple.stackexchange.com/questions/178313/change-accessibility-setting-on-mac-using-terminal
+# https://apple.stackexchange.com/questions/366222/using-command-line-how-to-open-a-specific-section-of-gui-system-preferences
+# https://pawelgrzybek.com/change-macos-user-preferences-via-command-line/
+# https://www.shell-tips.com/mac/defaults/
+# https://apple.stackexchange.com/questions/65794/how-do-you-access-network-preferences-from-the-terminal
+# https://itectec.com/askdifferent/macos-how-to-change-mission-control-shortcuts-from-the-command-line/
+# https://apple.stackexchange.com/questions/398561/how-to-set-system-keyboard-shortcuts-via-command-line
+
+alias defd="defaults domains | tr ',' '\n'"
+
+sl() {
   osascript -e 'tell application "Finder" to sleep'
 }
+
+# network
+alias netwl="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s"
+alias netws="networksetup -setairportnetwork en0" # <SSID_OF_NETWORK> <PASSWORD>
 
 #------------------------------
 #---       MACOS APPS       ---
