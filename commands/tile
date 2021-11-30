@@ -14,6 +14,17 @@ call_dwm() {
     echo "call dwm"
 }
 
+# -----------------------------
+# ---       BASIC API       ---
+# -----------------------------
+
+# only create an api that is easy to eas here
+# no fancy combos.
+#
+# only make it easy to call the window managers here and then
+# create custom combos that achieve specific tasks below
+# under compound tasks
+
 reload() {
     if is-mac; then
         brew services restart yabai
@@ -77,10 +88,6 @@ window_move() {
     else
         echo "linux todo..."
     fi
-}
-
-move() {
-    echo "move window"
 }
 
 # yabai         bsp | stack | float
@@ -235,6 +242,7 @@ toggle_sticky() {
                 call_yabai "-m window --toggle sticky"
 	        elif test "$arg" = '2'; then
                 # toggle sticky, float and resize to picture-in-picture size
+                # TODO: mv to compound..
                 call_yabai "-m window --toggle sticky"
                 call_yabai "-m window --grid 5:5:4:0:1:1"
 	        fi
@@ -255,6 +263,12 @@ win_insert() {
         echo "linux todo..."
     fi
 }
+
+# ----------------------------------
+# ---       COMPOUND CALLS       ---
+# ----------------------------------
+
+# put combos here that achieve certain goals
 
 #############################################################################
 
