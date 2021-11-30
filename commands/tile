@@ -14,12 +14,45 @@ call_dwm() {
     echo "call dwm"
 }
 
+# -------------------------------------
+# ---       YABAI DEFINITIONS       ---
+# -------------------------------------
+
+# REGEX       :=
+# POSIX extended regular expression syntax <https://www.gnu.org/software/findutils/manual/html_node/find_html/posix_002dextended-regular-expression-syntax.html>
+
+# LABEL       := arbitrary string/text used as an identifier
+
+# LAYER       := below | normal | above
+
+# BOOL_SEL    := on | off
+
+# FLOAT_SEL   := 0 < <value> <= 1.0
+
+# RULE_SEL    := <index> | LABEL
+
+# SIGNAL_SEL  := <index> | LABEL
+
+# DIR_SEL     := north | east | south | west
+
+# STACK_SEL   := stack.prev | stack.next | stack.first | stack.last | stack.recent
+
+# WINDOW_SEL  := prev | next | first | last | recent | mouse | largest | smallest | STACK_SEL | DIR_SEL | <window id>
+
+# DISPLAY_SEL := prev | next | first | last | recent | mouse | DIR_SEL | <arrangement index (1-based)>
+
+# SPACE_SEL   := prev | next | first | last | recent | mouse | <mission-control index (1-based)> | LABEL
+
 # --------------------------
 # ---       CONFIG       ---
 # --------------------------
 
-# yabai -m config <global setting>
-# yabai -m config [--space <SPACE_SEL>] <space setting>
+# General Syntax
+#     yabai -m config <global setting>
+#         Get or set the value of <global setting>.
+
+#     yabai -m config [--space <SPACE_SEL>] <space setting>
+#         Get or set the value of <space setting>.
 
 # GLOBAL SETTINGS
 
