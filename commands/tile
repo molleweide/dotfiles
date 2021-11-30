@@ -25,8 +25,8 @@ call_dwm() {
 # ---       TODO       ---
 # ------------------------
 
-# when each of these functions have crystalized split it into its
-# main commands that are necessary that would be nice to be able to use
+# - split into commands
+# - can I merge both config functions?
 
 
 # -------------------------------------
@@ -58,11 +58,9 @@ call_dwm() {
 
 # SPACE_SEL   := prev | next | first | last | recent | mouse | <mission-control index (1-based)> | LABEL
 
-# --------------------------
-# ---       CONFIG       ---
-# --------------------------
-
-# GLOBAL SETTINGS
+# -----------------------------------
+# ---       GLOBAL SETTINGS       ---
+# -----------------------------------
 
 # debug_output [<BOOL_SEL>]         Enable output of debug information to stdout.
 # external_bar [<main|all|off>:<top_padding>:<bottom_padding>]
@@ -90,6 +88,8 @@ call_dwm() {
 # mouse_action1 [move|resize]                   Action performed when pressing mouse_modifier + button1.
 # mouse_action2 [move|resize]                   Action performed when pressing mouse_modifier + button2.
 # mouse_drop_action [swap|stack]                Action performed when a bsp-managed window is dropped in the center of some other bsp-managed window.
+
+# :: setting / value
 
 cfg() {
 
@@ -126,19 +126,11 @@ cfg() {
     fi
 }
 
-# SPACE SETTINGS
+# ----------------------------------
+# ---       SPACE SETTINGS       ---
+# ----------------------------------
 
-# layout            [bsp|stack|float]       Set the layout of the selected space.
-# top_padding       [<integer number>]      Padding added at the upper side of the selected space.
-# bottom_padding    [<integer number>]      Padding added at the lower side of the selected space.
-# left_padding      [<integer number>]      Padding added at the left side of the selected space.
-# right_padding     [<integer number>]      Padding added at the right side of the selected space.
-# window_gap        [<integer number>]      Size of the gap that separates windows for the selected space.
-
-#     yabai -m config [--space <SPACE_SEL>] <space setting>
-#         Get or set the value of <space setting>.
-
-# SPACE_SEL   := prev | next | first | last | recent | mouse | <mission-control index (1-based)> | LABEL
+# :: selection / setting / value
 
 cfs() {
 
@@ -154,10 +146,21 @@ cfs() {
 
     if is-mac; then
 
+        # SPACE_SEL   := prev | next | first | last | recent | mouse | <mission-control index (1-based)> | LABEL
+        #     yabai -m config [--space <SPACE_SEL>] <space setting>
+        #         Get or set the value of <space setting>.
+
         yabai -m config --space $setting $value
 
         local yabai_domain="yabai -m config --space"
         local yabai_setting
+
+        # layout            [bsp|stack|float]       Set the layout of the selected space.
+        # top_padding       [<integer number>]      Padding added at the upper side of the selected space.
+        # bottom_padding    [<integer number>]      Padding added at the lower side of the selected space.
+        # left_padding      [<integer number>]      Padding added at the left side of the selected space.
+        # right_padding     [<integer number>]      Padding added at the right side of the selected space.
+        # window_gap        [<integer number>]      Size of the gap that separates windows for the selected space.
 
         # case "$setting" in
         #     "lt") $yabai_setting="layout"
@@ -181,7 +184,7 @@ cfs() {
 }
 
 # ---------------------------
-# ---       display       ---
+# ---       DISPLAY       ---
 # ---------------------------
 
 # DISPLAY_SEL := prev | next | first | last | recent | mouse | DIR_SEL | <arrangement index (1-based)>
@@ -210,21 +213,6 @@ dsp() {
 # ---       SPACE       ---
 # -------------------------
 
-# --focus <SPACE_SEL>                               Focus the given space.
-# --create                                          Create a new space on the display of the selected space.
-# --destroy                                         Remove the selected space.
-# --move <SPACE_SEL>                                Move position of the selected space to the position of the given space. The selected space and given space must both belong to the same display.
-# --swap <SPACE_SEL>                                Swap the selected space with the given space. The selected space and given space must both belong to the same display.
-# --display <DISPLAY_SEL>                           Send the selected space to the given display.
-# --balance                                         Adjust the split ratios of the selected space so that all windows occupy the same area.
-# --mirror x-axis|y-axis                            Flip the tree of the selected space.
-# --rotate 90|180|270                               Rotate the tree of the selected space.
-# --padding abs|rel:<top>:<bottom>:<left>:<right>   Padding added at the sides of the selected space.
-# --gap abs|rel:<gap>                               Size of the gap that separates windows on the selected space.
-# --toggle padding|gap|mission-control|show-desktop Toggle space setting on or off for the selected space.
-# --layout bsp|stack|float                          Set the layout of the selected space.
-# --label [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
-
 spc() {
     echo "space"
 
@@ -241,10 +229,49 @@ spc() {
         local yabai_domain="yabai -m space"
         local yabai_cmd
 
+        # --focus <SPACE_SEL>                               Focus the given space.
+        # --create                                          Create a new space on the display of the selected space.
+        # --destroy                                         Remove the selected space.
+        # --move <SPACE_SEL>                                Move position of the selected space to the position of the given space. The selected space and given space must both belong to the same display.
+        # --swap <SPACE_SEL>                                Swap the selected space with the given space. The selected space and given space must both belong to the same display.
+        # --display <DISPLAY_SEL>                           Send the selected space to the given display.
+        # --balance                                         Adjust the split ratios of the selected space so that all windows occupy the same area.
+        # --mirror x-axis|y-axis                            Flip the tree of the selected space.
+        # --rotate 90|180|270                               Rotate the tree of the selected space.
+        # --padding abs|rel:<top>:<bottom>:<left>:<right>   Padding added at the sides of the selected space.
+        # --gap abs|rel:<gap>                               Size of the gap that separates windows on the selected space.
+        # --toggle padding|gap|mission-control|show-desktop Toggle space setting on or off for the selected space.
+        # --layout bsp|stack|float                          Set the layout of the selected space.
+        # --label [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
+
         # case "$cmd" in
         #     "focus") $yabai_cmd="--focus"
         #         ;;
         #     "create") $yabai_cmd="--create"
+        #         ;;
+        #     "destroy") $yabai_cmd="--create"
+        #         ;;
+        #     "move") $yabai_cmd="--create"
+        #         ;;
+        #     "swap") $yabai_cmd="--create"
+        #         ;;
+        #     "display") $yabai_cmd="--create"
+        #         ;;
+        #     "balance") $yabai_cmd="--create"
+        #         ;;
+        #     "mirror") $yabai_cmd="--create"
+        #         ;;
+        #     "rotate") $yabai_cmd="--create"
+        #         ;;
+        #     "padding") $yabai_cmd="--create"
+        #         ;;
+        #     "gap") $yabai_cmd="--create"
+        #         ;;
+        #     "toggle") $yabai_cmd="--create"
+        #         ;;
+        #     "layout") $yabai_cmd="--create"
+        #         ;;
+        #     "label") $yabai_cmd="--create"
         #         ;;
         #     *) echo default
         #         ;;
