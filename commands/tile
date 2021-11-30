@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
 action="${1-}"
+
+if test -z "${action-}"; then
+    exit 1
+fi
+
+
 arg1="${2-}"
 arg2="${3-}"
 
@@ -47,173 +53,191 @@ call_dwm() {
 # ---       CONFIG       ---
 # --------------------------
 
-# General Syntax
-#     yabai -m config <global setting>
-#         Get or set the value of <global setting>.
-
-#     yabai -m config [--space <SPACE_SEL>] <space setting>
-#         Get or set the value of <space setting>.
-
 # GLOBAL SETTINGS
 
-# debug_output [<BOOL_SEL>]
-#     Enable output of debug information to stdout.
+# debug_output [<BOOL_SEL>]         Enable output of debug information to stdout.
 # external_bar [<main|all|off>:<top_padding>:<bottom_padding>]
 #     Specify top and bottom padding for a potential custom bar that you may be running.
 #     main: Apply the given padding only to spaces located on the main display.
 #     all:  Apply the given padding to all spaces regardless of their display.
 #     off:  Do not apply any special padding.
-# mouse_follows_focus [<BOOL_SEL>]
-#     When focusing a window, put the mouse at its center.
-# focus_follows_mouse [autofocus|autoraise|off]
-#     Automatically focus the window under the mouse.
-# window_placement [first_child|second_child]
-#     Specify whether managed windows should become the first or second leaf-node.
-# window_topmost [<BOOL_SEL>]
-#     Make floating windows stay on top.
-# window_shadow [<BOOL_SEL>|float]
-#     Draw shadow for windows.
-# window_opacity [<BOOL_SEL>]
-#     Enable opacity for windows.
-# window_opacity_duration [<floating point number>]
-#     Duration of transition between active / normal opacity.
-# active_window_opacity [<FLOAT_SEL>]
-#     Opacity of the focused window.
-# normal_window_opacity [<FLOAT_SEL>]
-#     Opacity of an unfocused window.
-# window_border [<BOOL_SEL>]
-#     Draw border for windows.
-# window_border_width [<even integer number>]
-#     Width of window borders. If the given width is an odd number, it will be incremented by 1.
-# active_window_border_color [0xAARRGGBB]
-#     Color of the border of the focused window.
-# normal_window_border_color [0xAARRGGBB]
-#     Color of the border of an unfocused window.
-# insert_feedback_color [0xAARRGGBB]
-#     Color of the window --insert message selection.
-# split_ratio [<FLOAT_SEL>]
-#     Default split ratio.
-# auto_balance [<BOOL_SEL>]
-#     Balance the window tree upon change, so that all windows occupy the same area.
-# mouse_modifier [cmd|alt|shift|ctrl|fn]
-#     Keyboard modifier used for moving and resizing windows.
-# mouse_action1 [move|resize]
-#     Action performed when pressing mouse_modifier + button1.
-# mouse_action2 [move|resize]
-#     Action performed when pressing mouse_modifier + button2.
-# mouse_drop_action [swap|stack]
-#     Action performed when a bsp-managed window is dropped in the center of some other bsp-managed window.
+# mouse_follows_focus [<BOOL_SEL>]              When focusing a window, put the mouse at its center.
+# focus_follows_mouse [autofocus|autoraise|off] Automatically focus the window under the mouse.
+# window_placement [first_child|second_child]   Specify whether managed windows should become the first or second leaf-node.
+# window_topmost [<BOOL_SEL>]                   Make floating windows stay on top.
+# window_shadow [<BOOL_SEL>|float]              Draw shadow for windows.
+# window_opacity [<BOOL_SEL>]                   Enable opacity for windows.
+# window_opacity_duration [<floating point number>] Duration of transition between active / normal opacity.
+# active_window_opacity [<FLOAT_SEL>]               Opacity of the focused window.
+# normal_window_opacity [<FLOAT_SEL>]               Opacity of an unfocused window.
+# window_border [<BOOL_SEL>]                    Draw border for windows.
+# window_border_width [<even integer number>]   Width of window borders. If the given width is an odd number, it will be incremented by 1.
+# active_window_border_color [0xAARRGGBB]       Color of the border of the focused window.
+# normal_window_border_color [0xAARRGGBB]       Color of the border of an unfocused window.
+# insert_feedback_color [0xAARRGGBB]            Color of the window --insert message selection.
+# split_ratio [<FLOAT_SEL>]                     Default split ratio.
+# auto_balance [<BOOL_SEL>]                     Balance the window tree upon change, so that all windows occupy the same area.
+# mouse_modifier [cmd|alt|shift|ctrl|fn]        Keyboard modifier used for moving and resizing windows.
+# mouse_action1 [move|resize]                   Action performed when pressing mouse_modifier + button1.
+# mouse_action2 [move|resize]                   Action performed when pressing mouse_modifier + button2.
+# mouse_drop_action [swap|stack]                Action performed when a bsp-managed window is dropped in the center of some other bsp-managed window.
+
+cf_g() {
+
+    echo "config global"
+
+    if test -z "${arg1-}" -a "${arg2-}"; then
+        exit 1
+    fi
+
+    local setting=$arg1
+    local value=$arg2
+
+    if is-mac; then
+        yabai -m config $setting $value
+    else
+        echo "linux todo..."
+    fi
+}
 
 # SPACE SETTINGS
 
-# layout [bsp|stack|float]
-#     Set the layout of the selected space.
-# top_padding [<integer number>]
-#     Padding added at the upper side of the selected space.
-# bottom_padding [<integer number>]
-#     Padding added at the lower side of the selected space.
-# left_padding [<integer number>]
-#     Padding added at the left side of the selected space.
-# right_padding [<integer number>]
-#     Padding added at the right side of the selected space.
-# window_gap [<integer number>]
-#     Size of the gap that separates windows for the selected space.
+# layout            [bsp|stack|float]       Set the layout of the selected space.
+# top_padding       [<integer number>]      Padding added at the upper side of the selected space.
+# bottom_padding    [<integer number>]      Padding added at the lower side of the selected space.
+# left_padding      [<integer number>]      Padding added at the left side of the selected space.
+# right_padding     [<integer number>]      Padding added at the right side of the selected space.
+# window_gap        [<integer number>]      Size of the gap that separates windows for the selected space.
+
+#     yabai -m config [--space <SPACE_SEL>] <space setting>
+#         Get or set the value of <space setting>.
+
+# SPACE_SEL   := prev | next | first | last | recent | mouse | <mission-control index (1-based)> | LABEL
+
+cf_s() {
+
+    echo "config space"
+
+    if test -z "${arg1-}" -a "${arg2-}"; then
+        exit 1
+    fi
+
+    local setting=$arg1
+    local value=$arg2
+    # local sel=??
+
+    if is-mac; then
+
+        yabai -m config --space $setting $value
+
+    else
+        echo "linux todo..."
+    fi
+}
 
 # ---------------------------
 # ---       display       ---
 # ---------------------------
 
-# display   | yabai -m display [<DISPLAY_SEL>] <COMMAND>
+# DISPLAY_SEL := prev | next | first | last | recent | mouse | DIR_SEL | <arrangement index (1-based)>
 
 # --focus <DISPLAY_SEL>
 #     Focus the given display.
+
+dsp() {
+
+    echo "display"
+
+    if test -z "${arg2-}"; then
+        exit 1
+    fi
+
+    local arg=$arg1
+
+    if is-mac; then
+        yabai -m display --focus $arg
+    else
+        echo "linux todo..."
+    fi
+}
 
 # -------------------------
 # ---       SPACE       ---
 # -------------------------
 
-# space     | yabai -m space [<SPACE_SEL>] <COMMAND>
+# --focus <SPACE_SEL>                               Focus the given space.
+# --create                                          Create a new space on the display of the selected space.
+# --destroy                                         Remove the selected space.
+# --move <SPACE_SEL>                                Move position of the selected space to the position of the given space. The selected space and given space must both belong to the same display.
+# --swap <SPACE_SEL>                                Swap the selected space with the given space. The selected space and given space must both belong to the same display.
+# --display <DISPLAY_SEL>                           Send the selected space to the given display.
+# --balance                                         Adjust the split ratios of the selected space so that all windows occupy the same area.
+# --mirror x-axis|y-axis                            Flip the tree of the selected space.
+# --rotate 90|180|270                               Rotate the tree of the selected space.
+# --padding abs|rel:<top>:<bottom>:<left>:<right>   Padding added at the sides of the selected space.
+# --gap abs|rel:<gap>                               Size of the gap that separates windows on the selected space.
+# --toggle padding|gap|mission-control|show-desktop Toggle space setting on or off for the selected space.
+# --layout bsp|stack|float                          Set the layout of the selected space.
+# --label [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
 
-# --focus <SPACE_SEL>
-#     Focus the given space.
-# --create
-#     Create a new space on the display of the selected space.
-# --destroy
-#     Remove the selected space.
-# --move <SPACE_SEL>
-#     Move position of the selected space to the position of the given space.
-#     The selected space and given space must both belong to the same display.
-# --swap <SPACE_SEL>
-#     Swap the selected space with the given space.
-#     The selected space and given space must both belong to the same display.
-# --display <DISPLAY_SEL>
-#     Send the selected space to the given display.
-# --balance
-#     Adjust the split ratios of the selected space so that all windows occupy the same area.
-# --mirror x-axis|y-axis
-#     Flip the tree of the selected space.
-# --rotate 90|180|270
-#     Rotate the tree of the selected space.
-# --padding abs|rel:<top>:<bottom>:<left>:<right>
-#     Padding added at the sides of the selected space.
-# --gap abs|rel:<gap>
-#     Size of the gap that separates windows on the selected space.
-# --toggle padding|gap|mission-control|show-desktop
-#     Toggle space setting on or off for the selected space.
-# --layout bsp|stack|float
-#     Set the layout of the selected space.
-# --label [<LABEL>]
-#     Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter.
-#     If the command is called without an argument it will try to remove a previously assigned label.
+spc() {
+    echo "space"
+
+    if test -z "${arg1-}"; then
+        exit 1
+    fi
+
+    local cmd=$arg1
+    local arg=$arg2 # if arg2 is empty that is not a problem
+
+    if is-mac; then
+        yabai -m space $cmd $arg
+    else
+        echo "linux todo..."
+    fi
+}
 
 # --------------------------
 # ---       WINDOW       ---
 # --------------------------
 
-# window    | yabai -m window [<WINDOW_SEL>] <COMMAND>
-
-# --focus <WINDOW_SEL>
-#     Focus the given window.
-# --swap <WINDOW_SEL>
-#     Swap position of the selected window and the given window.
-# --warp <WINDOW_SEL>
-#     Re-insert the selected window, splitting the given window.
-# --stack <WINDOW_SEL>
-#     Stack the given window on top of the selected window.
-#     Any kind of warp operation performed on a stacked window will unstack it.
-# --insert <DIR_SEL>|stack
-#     Set the splitting mode of the selected window.
-#     If the current splitting mode matches the selected mode, the action will be undone.
-# --grid <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
-#     Set the frame of the selected window based on a self-defined grid.
-# --move abs|rel:<dx>:<dy>
-#     If type is rel the selected window is moved by dx pixels horizontally and dy pixels vertically, otherwise dx and dy will
-#     become its new position.
+# --focus <WINDOW_SEL>                                          Focus the given window.
+# --swap <WINDOW_SEL>                                           Swap position of the selected window and the given window.
+# --warp <WINDOW_SEL>                                           Re-insert the selected window, splitting the given window.
+# --stack <WINDOW_SEL>                                          Stack the given window on top of the selected window. Any kind of warp operation performed on a stacked window will unstack it.
+# --insert <DIR_SEL>|stack                                      Set the splitting mode of the selected window. If the current splitting mode matches the selected mode, the action will be undone.
+# --grid <rows>:<cols>:<start-x>:<start-y>:<width>:<height>     Set the frame of the selected window based on a self-defined grid.
+# --move abs|rel:<dx>:<dy>                                      If type is rel the selected window is moved by dx pixels horizontally and dy pixels vertically, otherwise dx and dy will become its new position.
 # --resize top|left|bottom|right|top_left|top_right|bottom_right|bottom_left|abs:<dx>:<dy>
 #     Resize the selected window by moving the given handle dx pixels horizontally and dy pixels vertically. If handle is abs the
 #     new size will be dx width and dy height and cannot be used on managed windows.
-# --ratio rel|abs:<dr>
-#     If type is rel the split ratio of the selected window is changed by dr, otherwise dr will become the new split ratio. A
-#     positive/negative delta will increase/decrease the size of the left-child.
+# --ratio rel|abs:<dr>          If type is rel the split ratio of the selected window is changed by dr, otherwise dr will become the new split ratio. A positive/negative delta will increase/decrease the size of the left-child.
 # --toggle float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose
 #     Toggle the given property of the selected window.
-# --layer <LAYER>
-#     Set the stacking layer of the selected window.
-# --opacity <floating point number>
-#     Set the opacity of the selected window. The window will no longer be eligible for automatic change in opacity upon focus
-#     change.
-#     Specify the value 0.0 to reset back to full opacity OR have it be automatically managed through focus changes.
-# --display <DISPLAY_SEL>
-#     Send the selected window to the given display.
-# --space <SPACE_SEL>
-#     Send the selected window to the given space.
-# --minimize
-#     Minimizes the selected window. Only works on windows that provide a minimize button in its titlebar.
-# --deminimize
-#     Restores the selected window, if it is minimized. The window will only get focus if the owning application has focus.
-#     Note that you can also --focus a minimized window to restore it as the focused window.
-# --close
-#     Closes the selected window. Only works on windows that provide a close button in its titlebar.
+# --layer <LAYER>                       Set the stacking layer of the selected window.
+# --opacity <floating point number>     Set the opacity of the selected window. The window will no longer be eligible for automatic change in opacity upon focus change. Specify the value 0.0 to reset back to full opacity OR have it be automatically managed through focus changes.
+# --display <DISPLAY_SEL>               Send the selected window to the given display.
+# --space <SPACE_SEL>                   Send the selected window to the given space.
+# --minimize                            Minimizes the selected window. Only works on windows that provide a minimize button in its titlebar.
+# --deminimize                          Restores the selected window, if it is minimized. The window will only get focus if the owning application has focus. Note that you can also --focus a minimized window to restore it as the focused window.
+# --close                               Closes the selected window. Only works on windows that provide a close button in its titlebar.
+
+win() {
+    echo "window"
+
+    if test -z "${arg1-}"; then
+        exit 1
+    fi
+
+    local cmd=$arg1
+    local arg=$arg2 # if arg2 is empty that is not a problem
+
+    if is-mac; then
+        yabai -m window $cmd $arg
+    else
+        echo "linux todo..."
+    fi
+}
 
 # -------------------------
 # ---       QUERY       ---
@@ -221,19 +245,31 @@ call_dwm() {
 
 # query     | yabai -m query <COMMAND> [<ARGUMENT>]
 
-# --displays
-#     Retrieve information about displays.
-# --spaces
-#     Retrieve information about spaces.
-# --windows
-#     Retrieve information about windows.
+# --displays        Retrieve information about displays.
+# --spaces          Retrieve information about spaces.
+# --windows         Retrieve information about windows.
 
-# --display [<DISPLAY_SEL>]
-#     Constrain matches to the selected display.
-# --space [<SPACE_SEL>]
-#     Constrain matches to the selected space.
-# --window [<WINDOW_SEL>]
-#     Constrain matches to the selected window.
+# --display [<DISPLAY_SEL>]     Constrain matches to the selected display.
+# --space [<SPACE_SEL>]         Constrain matches to the selected space.
+# --window [<WINDOW_SEL>]       Constrain matches to the selected window.
+
+query() {
+    echo "query"
+
+    if test -z "${arg1-}"; then
+        exit 1
+    fi
+
+    local cmd=$arg1
+    local arg=$arg2 # if arg2 is empty that is not a problem
+
+    if is-mac; then
+        yabai -m query $cmd $arg
+    else
+        echo "linux todo..."
+    fi
+}
+
 
 # ------------------------
 # ---       RULE       ---
@@ -241,41 +277,43 @@ call_dwm() {
 
 # yabai -m rule <COMMAND>
 
-# --add [<ARGUMENT>]
-#     Add a new rule.
-# --remove <RULE_SEL>
-#     Remove an existing rule with the given index or label.
-# --list
-#     Output list of registered rules.
+# --add [<ARGUMENT>]        Add a new rule.
+# --remove <RULE_SEL>       Remove an existing rule with the given index or label.
+# --list                    Output list of registered rules.
 
 # ARGUMENTS
 
-# label=<LABEL>
-#     Label used to identify the rule with a unique name
-# app[!]=<REGEX>
-#     Name of application. If ! is present, invert the match.
-# title[!]=<REGEX>
-#     Title of window. If ! is present, invert the match.
-# display=[^]<DISPLAY_SEL>
-#     Send window to display. If ^ is present, follow focus.
-# space=[^]<SPACE_SEL>
-#     Send window to space. If ^ is present, follow focus.
-# manage=<BOOL_SEL>
-#     Window should be managed (tile vs float).
-# sticky=<BOOL_SEL>
-#     Window appears on all spaces.
-# mouse_follows_focus=<BOOL_SEL>
-#     When focusing the window, put the mouse at its center. Overrides the global mouse_follows_focus setting.
-# layer=<LAYER>
-#     Window is ordered within the given stacking layer.
-# opacity=<FLOAT_SEL>
-#     Set window opacity. The window will no longer be eligible for automatic change in opacity upon focus change.
-# border=<BOOL_SEL>
-#     Window should draw border.
-# native-fullscreen=<BOOL_SEL>
-#     Window should enter native macOS fullscreen mode.
-# grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
-#     Set window frame based on a self-defined grid.
+# label=<LABEL>                     Label used to identify the rule with a unique name
+# app[!]=<REGEX>                    Name of application. If ! is present, invert the match.
+# title[!]=<REGEX>                  Title of window. If ! is present, invert the match.
+# display=[^]<DISPLAY_SEL>          Send window to display. If ^ is present, follow focus.
+# space=[^]<SPACE_SEL>              Send window to space. If ^ is present, follow focus.
+# manage=<BOOL_SEL>                 Window should be managed (tile vs float).
+# sticky=<BOOL_SEL>                 Window appears on all spaces.
+# mouse_follows_focus=<BOOL_SEL>    When focusing the window, put the mouse at its center. Overrides the global mouse_follows_focus setting.
+# layer=<LAYER>                     Window is ordered within the given stacking layer.
+# opacity=<FLOAT_SEL>               Set window opacity. The window will no longer be eligible for automatic change in opacity upon focus change.
+# border=<BOOL_SEL>                 Window should draw border.
+# native-fullscreen=<BOOL_SEL>      Window should enter native macOS fullscreen mode.
+
+# grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>       Set window frame based on a self-defined grid.
+
+rule() {
+    echo "rule"
+
+    if test -z "${arg1-}"; then
+        exit 1
+    fi
+
+    local cmd=$arg1
+    local arg=$arg2 # if arg2 is empty that is not a problem
+
+    if is-mac; then
+        yabai -m rule $cmd $arg
+    else
+        echo "linux todo..."
+    fi
+}
 
 # --------------------------
 # ---       SIGNAL       ---
@@ -399,6 +437,23 @@ call_dwm() {
 #     Triggered when macOS wakes from sleep.
 # daemon_message
 #     Triggered when yabai receives a message on its socket.
+
+sig() {
+    echo "signal"
+
+    if test -z "${arg1-}"; then
+        exit 1
+    fi
+
+    local cmd=$arg1
+    local arg=$arg2 # if arg2 is empty that is not a problem
+
+    if is-mac; then
+        yabai -m rule $cmd $arg
+    else
+        echo "linux todo..."
+    fi
+}
 
 # -----------------------------
 # ---       BASIC API       ---
