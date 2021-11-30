@@ -25,16 +25,6 @@ call_dwm() {
     echo "call dwm"
 }
 
-reload() {
-    if is-mac; then
-        brew services restart yabai
-        brew services restart skhd
-        limelight # there is a wierd err msg but it works...
-    else
-	    echo 'reload linux wm...'
-    fi
-}
-
 
 # ------------------------
 # ---       TODO       ---
@@ -567,9 +557,263 @@ sig() {
     fi
 }
 
-########################################################
-########################################################
-########################################################
+# -----------------------------
+# ---       BASIC API       ---
+# -----------------------------
+
+# only create an api that is easy to eas here
+# no fancy combos.
+#
+# only make it easy to call the window managers here and then
+# create custom combos that achieve specific tasks below
+# under compound tasks
+
+reload() {
+    if is-mac; then
+        brew services restart yabai
+        brew services restart skhd
+        limelight # there is a wierd err msg but it works...
+    else
+	    echo 'reload linux wm...'
+    fi
+}
+
+# yabai         west | south | north | east
+window_focus() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m window --focus $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+# yabai         recent | prev | next
+window_focus_hist() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m space --focus $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+# yabai         west | south | north | east
+window_swap() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m window --swap $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+# yabai         west | south | north | east
+window_warp() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m window --warp $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+# yabai         rel:{n}:{m}
+window_move() {
+    if is-mac; then
+        if ! test -z "${arg1-}" -a "{arg2-}"; then
+            call_yabai "-m window --move rel:$arg1:$arg2"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+# yabai         bsp | stack | float
+# dwm
+layout() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m space --layout $arg1"
+        fi
+    else
+        echo "linux cmd todo..."
+    fi
+}
+
+## Create space (requires SIP disabled)
+# yabai -m space --create
+
+# # Create space, moved focused app, and focus space (requires SIP disabled) - uses jq for parsing json (brew install jq)
+# ctrl + shift - w : yabai -m space --create && \
+#   index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
+#   yabai -m window --space "${index}" && \
+#   yabai -m space --focus "${index}"
+
+# yabai -m window --space recent && yabai -m space --focus recent
+# yabai -m window --space next && yabai -m space --focus next
+# yabai -m window --space prev && yabai -m space --focus prev
+# yabai -m window --space  1 && yabai -m space --focus 1
+# yabai -m window --space  2 && yabai -m space --focus 2
+# yabai -m window --space  3 && yabai -m space --focus 3
+# yabai -m window --space  4 && yabai -m space --focus 4
+# yabai -m window --space  5 && yabai -m space --focus 5
+# yabai -m window --space  6 && yabai -m space --focus 6
+# yabai -m window --space  7 && yabai -m space --focus 7
+# yabai -m window --space  8 && yabai -m space --focus 8
+# yabai -m window --space  9 && yabai -m space --focus 9
+# yabai -m window --space 10 && yabai -m space --focus 10
+
+space() {
+    if is-mac; then
+        echo "spaces"
+        # CREATE
+        # FOCUS | -m window --space 10 && yabai -m space --focus 10
+    else
+        echo "linux todo..."
+    fi
+}
+
+# yabai         --resize { left|bottom|top|right }:{n}:{m}
+window_resize() {
+    if is-mac; then
+        if ! test -z "${arg1-}" -a "{arg2-}" -a "{arg3-}"; then
+            call_yabai "-m window --resize $arg1:$arg2:$arg3"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+balance() {
+    if is-mac; then
+        call_yabai "-m space --balance"
+    else
+        echo "linux todo..."
+    fi
+}
+
+# yabai             x | y
+mirror() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m space --mirror $arg1-axis"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+# yabai         90 | 180 | 270
+rotate() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m space --rotate $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
+
+}
+
+toggle_gap() {
+    if is-mac; then
+        call_yabai "-m space --toggle padding; yabai -m space --toggle gap"
+    else
+        echo "linux todo..."
+    fi
+}
+
+toggle_border() {
+    if is-mac; then
+        call_yabai "-m window --toggle border"
+    else
+        echo "linux todo..."
+    fi
+}
+
+toggle_zoom_parent() {
+    if is-mac; then
+        call_yabai "-m window --toggle zoom-parent"
+    else
+        echo "linux todo..."
+    fi
+}
+
+toggle_fullscreen() {
+    if is-mac; then
+        call_yabai "-m window --toggle zoom-fullscreen"
+    else
+        echo "linux todo..."
+    fi
+}
+
+toggle_fullscreen_native() {
+    if is-mac; then
+        call_yabai "-m window --toggle native-fullscreen"
+    else
+        echo "linux todo..."
+    fi
+}
+
+toggle_win_split() {
+    if is-mac; then
+        call_yabai "-m window --toggle split"
+    else
+        echo "linux todo..."
+    fi
+}
+
+# float / unfloat window and center on screen
+toggle_float_center() {
+    if is-mac; then
+        call_yabai "-m window --toggle float"
+        call_yabai "-m window --grid 4:4:1:1:2:2"
+    else
+        echo "linux todo..."
+    fi
+}
+
+toggle_sticky() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+	        if test "$arg1" = '1'; then
+                call_yabai "-m window --toggle sticky"
+	        elif test "$arg" = '2'; then
+                # toggle sticky, float and resize to picture-in-picture size
+                # TODO: mv to compound..
+                call_yabai "-m window --toggle sticky"
+                call_yabai "-m window --grid 5:5:4:0:1:1"
+	        fi
+        fi
+    else
+        echo "linux todo..."
+    fi
+
+}
+
+# yabai         west | south | north | east
+win_insert() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m window --insert $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+# ----------------------------------
+# ---       COMPOUND CALLS       ---
+# ----------------------------------
+
+# put combos here that achieve certain goals
+
+#############################################################################
 
 case "$action" in
     "reload" | "r") reload
