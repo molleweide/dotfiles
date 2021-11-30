@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+action="${1-}"
+
+# for arg in "$@"; do
+# 	if test "$arg" = '--xdg'; then
+# 		DOROTHY_XDG='yes'
+# 	elif test "$arg" = '--no-xdg' -o "$arg" = '--xdg=no'; then
+# 		DOROTHY_XDG='no'
+# 	fi
+# done
+
+kmo_pre="sudo -u hjalmarjakobsson bash -cl"
+
+
+#############################################################
+
+call_yabai() {
+
+}
+
+call_dwm() {
+
+}
+
+#######################################################################
+
+restart() {
+    if is-mac; then
+        brew services restart yabai
+        brew services restart skhd
+        # limelight # there is a wierd err msg but it works...
+    else
+	    echo '	setup-linux-fonts'
+    fi
+}
+
+#######################################################################
+
+layout() {
+    echo "called layout func..."
+    printf '%s\n' "$*"
+
+    # yabai -m space --layout stack
+    # yabai -m space --layout bsp
+}
+
+ratio() {
+    echo "ratio..."
+    echo
+}
+
+#############################################################################
+
+case "$action" in
+    "layout") layout
+        ;;
+    "ratio") ratio
+        ;;
+    *) exit 1 # no options -> return err
+        ;;
+esac
+
