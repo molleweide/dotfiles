@@ -6,12 +6,12 @@ if test -z "${action-}"; then
     exit 1
 fi
 
-
 arg1="${2-}"
 arg2="${3-}"
+arg3="${4-}"
 
 call_yabai() {
-    yabai_cmd="sudo -u hjalmarjakobsson bash -cl 'yabai $1'"
+    local yabai_cmd="sudo -u hjalmarjakobsson bash -cl 'yabai $1'"
     echo "$yabai_cmd"
     # ($yabai_cmd)
 }
@@ -19,6 +19,15 @@ call_yabai() {
 call_dwm() {
     echo "call dwm"
 }
+
+
+# ------------------------
+# ---       TODO       ---
+# ------------------------
+
+# when each of these functions have crystalized split it into its
+# main commands that are necessary that would be nice to be able to use
+
 
 # -------------------------------------
 # ---       YABAI DEFINITIONS       ---
@@ -82,7 +91,7 @@ call_dwm() {
 # mouse_action2 [move|resize]                   Action performed when pressing mouse_modifier + button2.
 # mouse_drop_action [swap|stack]                Action performed when a bsp-managed window is dropped in the center of some other bsp-managed window.
 
-cf_g() {
+cfg() {
 
     echo "config global"
 
@@ -95,6 +104,23 @@ cf_g() {
 
     if is-mac; then
         yabai -m config $setting $value
+
+        # case "$setting" in
+        #     "lt") $yabai_setting="layout"
+        #         ;;
+        #     "tp") $yabai_setting="top_padding"
+        #         ;;
+        #     "bp") $yabai_setting="bottom_padding"
+        #         ;;
+        #     "lp") $yabai_setting="left_padding"
+        #         ;;
+        #     "rp") $yabai_setting="right_padding"
+        #         ;;
+        #     *) echo default
+        #         ;;
+        # esac
+
+        # $yabai_domain $yabai_setting $value
     else
         echo "linux todo..."
     fi
@@ -114,7 +140,7 @@ cf_g() {
 
 # SPACE_SEL   := prev | next | first | last | recent | mouse | <mission-control index (1-based)> | LABEL
 
-cf_s() {
+cfs() {
 
     echo "config space"
 
@@ -130,6 +156,25 @@ cf_s() {
 
         yabai -m config --space $setting $value
 
+        local yabai_domain="yabai -m config --space"
+        local yabai_setting
+
+        # case "$setting" in
+        #     "lt") $yabai_setting="layout"
+        #         ;;
+        #     "tp") $yabai_setting="top_padding"
+        #         ;;
+        #     "bp") $yabai_setting="bottom_padding"
+        #         ;;
+        #     "lp") $yabai_setting="left_padding"
+        #         ;;
+        #     "rp") $yabai_setting="right_padding"
+        #         ;;
+        #     *) echo default
+        #         ;;
+        # esac
+
+        # $yabai_domain $yabai_setting $value
     else
         echo "linux todo..."
     fi
@@ -192,6 +237,20 @@ spc() {
 
     if is-mac; then
         yabai -m space $cmd $arg
+
+        local yabai_domain="yabai -m space"
+        local yabai_cmd
+
+        # case "$cmd" in
+        #     "focus") $yabai_cmd="--focus"
+        #         ;;
+        #     "create") $yabai_cmd="--create"
+        #         ;;
+        #     *) echo default
+        #         ;;
+        # esac
+
+        # $yabai_domain $yabai_cmd $arg
     else
         echo "linux todo..."
     fi
@@ -234,6 +293,25 @@ win() {
 
     if is-mac; then
         yabai -m window $cmd $arg
+
+        local yabai_domain="yabai -m window"
+        local yabai_cmd
+
+        # case "$cmd" in
+        #     "focus") $yabai_cmd="--focus"
+        #         ;;
+        #     "swap") $yabai_cmd="--swap"
+        #         ;;
+        #     "warp") $yabai_cmd="--warp"
+        #         ;;
+        #     "stack") $yabai_cmd="--stack"
+        #         ;;
+        #     *) echo default
+        #         ;;
+        # esac
+
+        # $yabai_domain $yabai_cmd $arg
+
     else
         echo "linux todo..."
     fi
@@ -253,7 +331,7 @@ win() {
 # --space [<SPACE_SEL>]         Constrain matches to the selected space.
 # --window [<WINDOW_SEL>]       Constrain matches to the selected window.
 
-query() {
+qry() {
     echo "query"
 
     if test -z "${arg1-}"; then
@@ -298,7 +376,7 @@ query() {
 
 # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>       Set window frame based on a self-defined grid.
 
-rule() {
+rle() {
     echo "rule"
 
     if test -z "${arg1-}"; then
