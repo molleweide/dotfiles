@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 action="${1-}"
+arg1="${2-}"
 
 # for arg in "$@"; do
 # 	if test "$arg" = '--xdg'; then
@@ -10,17 +11,22 @@ action="${1-}"
 # 	fi
 # done
 
-kmo_pre="sudo -u hjalmarjakobsson bash -cl"
-
-
 #############################################################
 
+# yabai_pre="sudo -u hjalmarjakobsson bash -cl 'yabai"
+# yabai_pre="yabai"
+# yabai_post="'"
+
 call_yabai() {
+    yabai_cmd="sudo -u hjalmarjakobsson bash -cl 'yabai $1'"
+    # yabai_cmd="yabai $1"
+    echo "$yabai_cmd"
+    $($yabai_cmd)
 
 }
 
 call_dwm() {
-
+    echo "call dwm"
 }
 
 #######################################################################
@@ -28,7 +34,7 @@ call_dwm() {
 restart() {
     if is-mac; then
         brew services restart yabai
-        brew services restart skhd
+        # brew services restart skhd
         # limelight # there is a wierd err msg but it works...
     else
 	    echo '	setup-linux-fonts'
@@ -37,12 +43,97 @@ restart() {
 
 #######################################################################
 
-layout() {
-    echo "called layout func..."
-    printf '%s\n' "$*"
+# # focus window
+# yabai -m window --focus west
+# yabai -m window --focus south
+# yabai -m window --focus north
+# yabai -m window --focus east
 
-    # yabai -m space --layout stack
-    # yabai -m space --layout bsp
+# # swap window
+# yabai -m window --swap west
+# yabai -m window --swap south
+# yabai -m window --swap north
+# yabai -m window --swap east
+
+# # move window
+# yabai -m window --warp west
+# yabai -m window --warp south
+# yabai -m window --warp north
+# yabai -m window --warp east
+
+# # balance size of windows
+# yabai -m space --balance
+
+# yabai -m space --focus recent
+# yabai -m space --focus prev
+# yabai -m space --focus next
+
+# # move window
+# yabai -m window --move rel:-20:0
+# yabai -m window --move rel:0:20
+# yabai -m window --move rel:0:-20
+# yabai -m window --move rel:20:0
+
+# # increase window size
+# yabai -m window --resize left:-20:0
+# yabai -m window --resize bottom:0:20
+# yabai -m window --resize top:0:-20
+# yabai -m window --resize right:20:0
+
+# # decrease window size
+# yabai -m window --resize left:20:0
+# yabai -m window --resize bottom:0:-20
+# yabai -m window --resize top:0:20
+# yabai -m window --resize right:-20:0
+
+# # set insertion point in focused container
+# yabai -m window --insert west
+# yabai -m window --insert south
+# yabai -m window --insert north
+# yabai -m window --insert east
+
+# alt - r : yabai -m space --rotate 90
+# alt - y : yabai -m space --mirror y-axis
+# alt - x : yabai -m space --mirror x-axis
+
+# # toggle desktop offset
+# fn - a : yabai -m space --toggle padding; yabai -m space --toggle gap
+
+# # toggle window parent zoom
+# fn - d : yabai -m window --toggle zoom-parent
+
+# # toggle window fullscreen zoom
+# fn - f : yabai -m window --toggle zoom-fullscreen
+
+# # toggle window native fullscreen
+# shift + alt - f : yabai -m window --toggle native-fullscreen
+
+# # toggle window border
+# shift + alt - b : yabai -m window --toggle border
+
+# # toggle window split type
+# fn - e : yabai -m window --toggle split
+
+# # float / unfloat window and center on screen
+# fn - t : yabai -m window --toggle float;\
+#           yabai -m window --grid 4:4:1:1:2:2
+
+# # toggle sticky
+# fn - s : yabai -m window --toggle sticky
+
+# # toggle sticky, float and resize to picture-in-picture size
+# fn - p : yabai -m window --toggle sticky;\
+#           yabai -m window --grid 5:5:4:0:1:1
+
+
+# yabai         bsp | stack | float
+# dwm
+layout() {
+    if is-mac; then
+        if ! test -z "${arg1-}" && call_yabai "-m space --layout $arg1"
+    else
+        echo "linux cmd todo..."
+    fi
 }
 
 ratio() {

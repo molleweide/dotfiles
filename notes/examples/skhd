@@ -20,7 +20,7 @@ alt + fn - i : yabai -m window --warp north
 alt + fn - l : yabai -m window --warp east
 
 # balance size of windows
-shift + alt - 0 : yabai -m space --balance
+yabai -m space --balance
 
 # make floating window fill screen
 # shift + alt - up     : yabai -m window --grid 1:1:0:0:1:1
@@ -115,14 +115,9 @@ ctrl + alt - j : yabai -m window --insert south
 ctrl + alt - k : yabai -m window --insert north
 ctrl + alt - l : yabai -m window --insert east
 
-# rotate tree
 alt - r : yabai -m space --rotate 90
-
-# mirror tree y-axis
-#alt - y : yabai -m space --mirror y-axis
-
-# mirror tree x-axis
-#alt - x : yabai -m space --mirror x-axis
+alt - y : yabai -m space --mirror y-axis
+alt - x : yabai -m space --mirror x-axis
 
 # toggle desktop offset
 fn - a : yabai -m space --toggle padding; yabai -m space --toggle gap
@@ -157,6 +152,8 @@ fn - p : yabai -m window --toggle sticky;\
 ctrl + alt - a : yabai -m space --layout bsp
 ctrl + alt - d : yabai -m space --layout float
 
+
+# ???????????????????????????????????
 # launcher shortcuts
 fn - e: open ~
 
