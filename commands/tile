@@ -165,26 +165,19 @@ cfs() {
         local yabai_domain="yabai -m config --space"
         local yabai_setting
 
-        # # layout            [bsp|stack|float]       Set the layout of the selected space.
-        # # top_padding       [<integer number>]      Padding added at the upper side of the selected space.
-        # # bottom_padding    [<integer number>]      Padding added at the lower side of the selected space.
-        # # left_padding      [<integer number>]      Padding added at the left side of the selected space.
-        # # right_padding     [<integer number>]      Padding added at the right side of the selected space.
-        # # window_gap        [<integer number>]      Size of the gap that separates windows for the selected space.
-
         case "$setting" in
             "layout" | "lt") $yabai_setting="layout"
-                ;;
+                ;; # [bsp|stack|float]       Set the layout of the selected space.
             "pad_top" | "pt") $yabai_setting="top_padding"
-                ;;
+                ;; # [<integer number>]      Padding added at the upper side of the selected space.
             "pad_btm" | "pb") $yabai_setting="bottom_padding"
-                ;;
+                ;; # [<integer number>]      Padding added at the lower side of the selected space.
             "pad_left" | "pl") $yabai_setting="left_padding"
-                ;;
+                ;; # [<integer number>]      Padding added at the left side of the selected space.
             "pad_right" | "pr") $yabai_setting="right_padding"
-                ;;
+                ;; # [<integer number>]      Padding added at the right side of the selected space.
             "win_gap" | "wg") $yabai_setting="window_gap"
-                ;;
+                ;; # [<integer number>]      Size of the gap that separates windows for the selected space.
             *) echo default
                 ;;
         esac
@@ -205,9 +198,6 @@ cfs() {
 #     Focus the given display.
 
 dsp() {
-
-    echo "display"
-
     if test -z "${arg2-}"; then
         exit 1
     fi
@@ -215,7 +205,8 @@ dsp() {
     local arg=$arg1
 
     if is-mac; then
-        yabai -m display --focus $arg
+        local yabai_cmd="yabai -m display --focus $arg"
+        call $yabai_cmd
     else
         echo "linux todo..."
     fi
@@ -226,8 +217,6 @@ dsp() {
 # -------------------------
 
 spc() {
-    echo "space"
-
     if test -z "${arg1-}"; then
         exit 1
     fi
@@ -236,19 +225,9 @@ spc() {
     local arg=$arg2 # if arg2 is empty that is not a problem
 
     if is-mac; then
-        # yabai -m space $cmd $arg
 
         local yabai_domain="yabai -m space"
         local yabai_cmd
-
-        # --balance                                         Adjust the split ratios of the selected space so that all windows occupy the same area.
-        # --mirror x-axis|y-axis                            Flip the tree of the selected space.
-        # --rotate 90|180|270                               Rotate the tree of the selected space.
-        # --padding abs|rel:<top>:<bottom>:<left>:<right>   Padding added at the sides of the selected space.
-        # --gap abs|rel:<gap>                               Size of the gap that separates windows on the selected space.
-        # --toggle padding|gap|mission-control|show-desktop Toggle space setting on or off for the selected space.
-        # --layout bsp|stack|float                          Set the layout of the selected space.
-        # --label [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
 
         case "$cmd" in
             "focus" | "foc")    $yabai_cmd="--focus"
@@ -264,21 +243,21 @@ spc() {
             "display" | "dsp")  $yabai_cmd="--display"
                 ;; # <DISPLAY_SEL>                           Send the selected space to the given display.
             "balance" | "bl")   $yabai_cmd="--balance"
-                ;;
+                ;; # Adjust the split ratios of the selected space so that all windows occupy the same area.
             "mirror" | "mir")      $yabai_cmd="--mirror"
-                ;;
+                ;; # x-axis|y-axis                            Flip the tree of the selected space.
             "rotate" | "rot")      $yabai_cmd="--rotate"
-                ;;
+                ;; # 90|180|270                               Rotate the tree of the selected space.
             "padding" | "pad")  $yabai_cmd="--padding"
-                ;;
+                ;; # abs|rel:<top>:<bottom>:<left>:<right>   Padding added at the sides of the selected space.
             "gap")              $yabai_cmd="--gap"
-                ;;
+                ;; # abs|rel:<gap>                               Size of the gap that separates windows on the selected space.
             "toggle" | "tg")    $yabai_cmd="--toggle"
-                ;;
+                ;; # padding|gap|mission-control|show-desktop Toggle space setting on or off for the selected space.
             "layout" | "lt")    $yabai_cmd="--layout"
-                ;;
+                ;; # bsp|stack|float                          Set the layout of the selected space.
             "label" | "lb")     $yabai_cmd="--label"
-                ;;
+                ;; # [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
             *) echo default
                 ;;
         esac
@@ -294,8 +273,6 @@ spc() {
 # --------------------------
 
 win() {
-    echo "window"
-
     if test -z "${arg1-}"; then
         exit 1
     fi
@@ -304,8 +281,6 @@ win() {
     local arg=$arg2 # if arg2 is empty that is not a problem
 
     if is-mac; then
-        # yabai -m window $cmd $arg
-
         local yabai_domain="yabai -m window"
         local yabai_cmd
 
@@ -383,8 +358,6 @@ win() {
 # --window [<WINDOW_SEL>]       Constrain matches to the selected window.
 
 qry() {
-    echo "query"
-
     if test -z "${arg1-}"; then
         exit 1
     fi
