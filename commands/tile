@@ -2,6 +2,7 @@
 
 action="${1-}"
 arg1="${2-}"
+arg2="${3-}"
 
 call_yabai() {
     yabai_cmd="sudo -u hjalmarjakobsson bash -cl 'yabai $1'"
@@ -16,46 +17,67 @@ call_dwm() {
 reload() {
     if is-mac; then
         brew services restart yabai
-        # brew services restart skhd
-        # limelight # there is a wierd err msg but it works...
+        brew services restart skhd
+        limelight # there is a wierd err msg but it works...
     else
 	    echo 'reload linux wm...'
     fi
 }
 
-# # focus window
-# yabai -m window --focus west
-# yabai -m window --focus south
-# yabai -m window --focus north
-# yabai -m window --focus east
+# yabai         west | south | north | east
+window_focus() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m window --focus $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
 
-# # swap window
-# yabai -m window --swap west
-# yabai -m window --swap south
-# yabai -m window --swap north
-# yabai -m window --swap east
+# yabai         recent | prev | next
+window_focus_hist() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m space --focus $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
 
-# # move window
-# yabai -m window --warp west
-# yabai -m window --warp south
-# yabai -m window --warp north
-# yabai -m window --warp east
+# yabai         west | south | north | east
+window_swap() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m window --swap $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
 
-# yabai -m space --focus recent
-# yabai -m space --focus prev
-# yabai -m space --focus next
+# yabai         west | south | north | east
+window_warp() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m window --warp $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
 
-# # move window
-# yabai -m window --move rel:-20:0
-# yabai -m window --move rel:0:20
-# yabai -m window --move rel:0:-20
-# yabai -m window --move rel:20:0
-
-# # set insertion point in focused container
-# yabai -m window --insert west
-# yabai -m window --insert south
-# yabai -m window --insert north
-# yabai -m window --insert east
+# yabai         rel:{n}:{m}
+window_move() {
+    if is-mac; then
+        if ! test -z "${arg1-}" -a "{arg2-}"; then
+            call_yabai "-m window --move rel:$arg1:$arg2"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
 
 move() {
     echo "move window"
@@ -97,9 +119,8 @@ layout() {
 # yabai -m window --space 10 && yabai -m space --focus 10
 
 space() {
-    echo ":: spaces ::"
     if is-mac; then
-        echo "mac spaces"
+        echo "spaces"
         # CREATE
         # FOCUS | -m window --space 10 && yabai -m space --focus 10
     else
@@ -107,30 +128,23 @@ space() {
     fi
 }
 
-# # increase window size
-# yabai -m window --resize left:-20:0
-# yabai -m window --resize bottom:0:20
-# yabai -m window --resize top:0:-20
-# yabai -m window --resize right:20:0
-
-# # decrease window size
-# yabai -m window --resize left:20:0
-# yabai -m window --resize bottom:0:-20
-# yabai -m window --resize top:0:20
-# yabai -m window --resize right:-20:0
-
-# yabai -m window --resize top:0:-40; yabai -m window --resize bottom:0:-40
-# yabai -m window --resize right:40:0; yabai -m window --resize left:40:0
-# yabai -m window --resize bottom:0:40; yabai -m window --resize top:0:40
-# yabai -m window --resize left:-40:0; yabai -m window --resize right:-40:0
-
-resize() {
-    echo ":: resize ::"
+# yabai         --resize { left|bottom|top|right }:{n}:{m}
+window_resize() {
+    if is-mac; then
+        if ! test -z "${arg1-}" -a "{arg2-}" -a "{arg3-}"; then
+            call_yabai "-m window --resize $arg1:$arg2:$arg3"
+        fi
+    else
+        echo "linux todo..."
+    fi
 }
 
 balance() {
-    echo "balance windows"
-    # yabai -m space --balance
+    if is-mac; then
+        call_yabai "-m space --balance"
+    else
+        echo "linux todo..."
+    fi
 }
 
 # yabai             x | y
@@ -157,61 +171,100 @@ rotate() {
 }
 
 toggle_gap() {
-    echo "toggle gap"
-    # # toggle desktop offset
-    # yabai -m space --toggle padding; yabai -m space --toggle gap
+    if is-mac; then
+        call_yabai "-m space --toggle padding; yabai -m space --toggle gap"
+    else
+        echo "linux todo..."
+    fi
 }
 
 toggle_border() {
-    echo "toggle border"
-    # # toggle window border
-    # shift + alt - b : yabai -m window --toggle border
+    if is-mac; then
+        call_yabai "-m window --toggle border"
+    else
+        echo "linux todo..."
+    fi
 }
 
-# yabai -m window --toggle zoom-parent
+toggle_zoom_parent() {
+    if is-mac; then
+        call_yabai "-m window --toggle zoom-parent"
+    else
+        echo "linux todo..."
+    fi
+}
 
 toggle_fullscreen() {
-    echo "toggle fullscreen"
-    # yabai -m window --toggle zoom-fullscreen
+    if is-mac; then
+        call_yabai "-m window --toggle zoom-fullscreen"
+    else
+        echo "linux todo..."
+    fi
 }
 
 toggle_fullscreen_native() {
-    echo "toggle native fullscreen"
-    # yabai -m window --toggle native-fullscreen
+    if is-mac; then
+        call_yabai "-m window --toggle native-fullscreen"
+    else
+        echo "linux todo..."
+    fi
 }
 
-# # toggle window split type
-# fn - e : yabai -m window --toggle split
+toggle_win_split() {
+    if is-mac; then
+        call_yabai "-m window --toggle split"
+    else
+        echo "linux todo..."
+    fi
+}
 
+# float / unfloat window and center on screen
 toggle_float_center() {
-    echo "toggle float center"
-    # # float / unfloat window and center on screen
-    # fn - t : yabai -m window --toggle float;\
-    #           yabai -m window --grid 4:4:1:1:2:2
+    if is-mac; then
+        call_yabai "-m window --toggle float"
+        call_yabai "-m window --grid 4:4:1:1:2:2"
+    else
+        echo "linux todo..."
+    fi
 }
 
 toggle_sticky() {
-    echo "toggle sticky"
-    # # toggle sticky
-    # fn - s : yabai -m window --toggle sticky
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+	        if test "$arg1" = '1'; then
+                call_yabai "-m window --toggle sticky"
+	        elif test "$arg" = '2'; then
+                # toggle sticky, float and resize to picture-in-picture size
+                call_yabai "-m window --toggle sticky"
+                call_yabai "-m window --grid 5:5:4:0:1:1"
+	        fi
+        fi
+    else
+        echo "linux todo..."
+    fi
 
+}
 
-    # ???
-    # # toggle sticky, float and resize to picture-in-picture size
-    # fn - p : yabai -m window --toggle sticky;\
-    #           yabai -m window --grid 5:5:4:0:1:1
+# yabai         west | south | north | east
+win_insert() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m window --insert $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
 }
 
 #############################################################################
 
 case "$action" in
-    "reload") reload
+    "reload" | "r") reload
         ;;
-    "layout") layout
+    "layout" | "l") layout
         ;;
     "ratio") ratio
         ;;
     *) exit 1 # no options -> return err
         ;;
 esac
-

@@ -225,21 +225,7 @@ ctrl + shift - 8 : yabai -m window --space  8 && yabai -m space --focus 8
 ctrl + shift - 9 : yabai -m window --space  9 && yabai -m space --focus 9
 ctrl + shift - 0 : yabai -m window --space 10 && yabai -m space --focus 10
 
-## Adjust window size
-ctrl + shift - up: yabai -m window --resize top:0:-40; yabai -m window --resize bottom:0:-40
-ctrl + shift - right: yabai -m window --resize right:40:0; yabai -m window --resize left:40:0
-ctrl + shift - down: yabai -m window --resize bottom:0:40; yabai -m window --resize top:0:40
-ctrl + shift - left: yabai -m window --resize left:-40:0; yabai -m window --resize right:-40:0
-
-
 ========
-
-# yabai reload
-cmd + ctrl - r : brew services restart yabai
-
-# toggle fullscreen
-cmd + alt - up : yabai -m window --toggle zoom-fullscreen
-cmd + alt - down : yabai -m window --toggle zoom-fullscreen
 
 # fast focus desktop
 cmd - escape : yabai -m space --focus recent
