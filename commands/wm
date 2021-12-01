@@ -54,13 +54,8 @@ reload() {
 # DISPLAY_SEL := prev | next | first | last | recent | mouse | DIR_SEL | <arrangement index (1-based)>
 # SPACE_SEL   := prev | next | first | last | recent | mouse | <mission-control index (1-based)> | LABEL
 
-# ---------------------------------------------
-# ---       GLOBAL | <global setting>       ---
-# ---------------------------------------------
-
 # @param setting
 # @param value
-
 config_global() {
     ! test -z "${arg1-}" -a "${arg2-}" || exit 1
     local setting=$arg1
@@ -69,30 +64,29 @@ config_global() {
         local yabai_domain="yabai -m config"
         local yabai_setting
         case "$setting" in
-            "debug")            $yabai_setting="debug_output";; # [<BOOL_SEL>]
-            "ext_bar" | "bar")  $yabai_setting="external_bar";; # [<main|all|off>:<top_padding>:<bottom_padding>]
-            "ms_flw_fc")        $yabai_setting="mouse_follows_focus";;          # [<BOOL_SEL>]
-            "fc_flw_ms")        $yabai_setting="focus_follows_mouse";;          # [autofocus|autoraise|off]
-            "win_place")        $yabai_setting="window_placement";;          # [first_child|second_child]
-            "win_topm")         $yabai_setting="window_topmost";;          # [<BOOL_SEL>]
-            "win_sh")           $yabai_setting="window_shadow";;          # [<BOOL_SEL>|float]
-            "win_op")           $yabai_setting="window_opacity";;          # [<BOOL_SEL>]
-            "win_op_dur")       $yabai_setting="window_opacity_duration";;       # [<floating point number>]
-            "act_win_op")       $yabai_setting="active_window_opacity";;         # [<FLOAT_SEL>]
-            "nrm_win_op")       $yabai_setting="normal_window_opacity";;         # [<FLOAT_SEL>]
-            "win_b")            $yabai_setting="window_border";;          # [<BOOL_SEL>]
-            "window_bw")        $yabai_setting="window_border_width";; # [<even integer number>]
-            "act_win_bc")       $yabai_setting="active_window_border_color" ;; # [0xAARRGGBB]
-            "nrm_win_bc")       $yabai_setting="normal_window_border_color" ;; # [0xAARRGGBB]
-            "ins_fdbkc")        $yabai_setting="insert_feedback_color" ;; # [0xAARRGGBB]
-            "split_r")          $yabai_setting="split_ratio" ;; # [<FLOAT_SEL>]
-            "auto_balance")     $yabai_setting="fff" ;; # [<BOOL_SEL>]
-            "mouse_modifier")   $yabai_setting="fff" ;; # [cmd|alt|shift|ctrl|fn]
-            "mouse_action1")    $yabai_setting="fff" ;; # [move|resize]
-            "mouse_action2")    $yabai_setting="fff" ;; # [move|resize]
-            "mouse_drop_action") $yabai_setting="fff" ;; # [swap|stack]
-            *) echo default
-                ;;
+            "debug")            $yabai_setting="debug_output";;               # [<BOOL_SEL>]
+            "ext_bar" | "bar")  $yabai_setting="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
+            "ms_flw_fc")        $yabai_setting="mouse_follows_focus";;        # [<BOOL_SEL>]
+            "fc_flw_ms")        $yabai_setting="focus_follows_mouse";;        # [autofocus|autoraise|off]
+            "win_place")        $yabai_setting="window_placement";;           # [first_child|second_child]
+            "win_topm")         $yabai_setting="window_topmost";;             # [<BOOL_SEL>]
+            "win_sh")           $yabai_setting="window_shadow";;              # [<BOOL_SEL>|float]
+            "win_op")           $yabai_setting="window_opacity";;             # [<BOOL_SEL>]
+            "win_op_dur")       $yabai_setting="window_opacity_duration";;    # [<floating point number>]
+            "act_win_op")       $yabai_setting="active_window_opacity";;      # [<FLOAT_SEL>]
+            "nrm_win_op")       $yabai_setting="normal_window_opacity";;      # [<FLOAT_SEL>]
+            "win_b")            $yabai_setting="window_border";;              # [<BOOL_SEL>]
+            "window_bw")        $yabai_setting="window_border_width";;        # [<even integer number>]
+            "act_win_bc")       $yabai_setting="active_window_border_color";; # [0xAARRGGBB]
+            "nrm_win_bc")       $yabai_setting="normal_window_border_color";; # [0xAARRGGBB]
+            "ins_fdbkc")        $yabai_setting="insert_feedback_color" ;;     # [0xAARRGGBB]
+            "split_r")          $yabai_setting="split_ratio" ;;               # [<FLOAT_SEL>]
+            "auto_balance")     $yabai_setting="fff" ;;                       # [<BOOL_SEL>]
+            "mouse_modifier")   $yabai_setting="fff" ;;                       # [cmd|alt|shift|ctrl|fn]
+            "mouse_action1")    $yabai_setting="fff" ;;                       # [move|resize]
+            "mouse_action2")    $yabai_setting="fff" ;;                       # [move|resize]
+            "mouse_drop_action") $yabai_setting="fff" ;;                      # [swap|stack]
+            *) echo "NO_MATCH";;
         esac
         call "$yabai_domain $yabai_setting $value"
     else
@@ -100,14 +94,9 @@ config_global() {
     fi
 }
 
-# --------------------------------------------------------------------------
-# ---       SPACE SETTINGS | [--space <SPACE_SEL>] <space setting>       ---
-# --------------------------------------------------------------------------
-
 # @param setting
 # @param value
 # @param space_selection
-
 config_space() {
     ! test -z "${arg1-}" -a "${arg2-}" || exit 1
     local setting=$arg1
@@ -115,19 +104,17 @@ config_space() {
     local sel=$arg3
     local space_sel
     ! test -z "${arg3}" && $space_sel="--space $sel"
-
     if is-mac; then
         local yabai_domain="yabai -m config --space"
         local yabai_setting
         case "$setting" in
-            "layout" | "lt") $yabai_setting="layout" ;; # [bsp|stack|float]       Set the layout of the selected space.
-            "pad_top" | "pt") $yabai_setting="top_padding" ;; # [<integer number>]      Padding added at the upper side of the selected space.
-            "pad_btm" | "pb") $yabai_setting="bottom_padding" ;; # [<integer number>]      Padding added at the lower side of the selected space.
-            "pad_left" | "pl") $yabai_setting="left_padding" ;; # [<integer number>]      Padding added at the left side of the selected space.
-            "pad_right" | "pr") $yabai_setting="right_padding" ;; # [<integer number>]      Padding added at the right side of the selected space.
-            "win_gap" | "wg") $yabai_setting="window_gap" ;; # [<integer number>]      Size of the gap that separates windows for the selected space.
-            *) echo default
-                ;;
+            "layout" | "lt")    $yabai_setting="layout";;           # [bsp|stack|float]
+            "pad_top" | "pt")   $yabai_setting="top_padding";;      # [<integer number>]
+            "pad_btm" | "pb")   $yabai_setting="bottom_padding";;   # [<integer number>]
+            "pad_left" | "pl")  $yabai_setting="left_padding";;     # [<integer number>]
+            "pad_right" | "pr") $yabai_setting="right_padding";;    # [<integer number>]
+            "win_gap" | "wg")   $yabai_setting="window_gap";;       # [<integer number>]
+            *) echo "NO_MATCH";;
         esac
         call "$yabai_domain  $space_sel $yabai_setting $value"
     else
@@ -135,12 +122,7 @@ config_space() {
     fi
 }
 
-# ---------------------------
-# ---       MONITOR       ---
-# ---------------------------
-
 # @param display_selection
-
 monitor() {
     ! test -z "${arg1-}" || exit 1
     local display_sel=$arg1
@@ -152,16 +134,11 @@ monitor() {
     fi
 }
 
-# ---------------------------------------------------
-# ---       SPACE | [<SPACE_SEL>] <COMMAND>       ---
-# ---------------------------------------------------
-
 # @param command
 # @param value
 # @param space_selection
-
 space() {
-    test -z "${arg1-}" && exit 1
+    ! test -z "${arg1-}" || exit 1
     local cmd=$arg1
     local value=$arg2 # if arg2 is empty that is not a problem
     local space_sel
@@ -192,21 +169,15 @@ space() {
     fi
 }
 
-# -----------------------------------------------------
-# ---       WINDOW | [<WINDOW_SEL>] <COMMAND>       ---
-# -----------------------------------------------------
-
 # @param command
 # @param [ value ]
 # @param [ window_selection ]
-
 window() {
     ! test -z "${arg1-}" || exit 1
     local cmd=$arg1
     local arg=$arg2
     local win_sel
     ! test -z "${arg3}" && $win_sel="--window $arg3"
-
     if is-mac; then
         local yabai_domain="yabai -m window"
         local yabai_cmd
@@ -228,14 +199,13 @@ window() {
             "minimize" | "zz") yabai_cmd="minimize";; # Minimizes the selected window. Only works on windows that provide a minimize button in its titlebar.
             "deminimize" | "zz") yabai_cmd="deminimize";; # Restores the selected window, if it is minimized. The window will only get focus if the owning application has focus. Note that you can also --focus a minimized window to restore it as the focused window.
             "close" | "zz") yabai_cmd="close" ;; # Closes the selected window. Only works on windows that provide a close button in its titlebar.
-            *) echo "no such..."
-                ;;
+            *) echo "NO_MATCH";;
         esac
         call "$yabai_domain $win_sel --$yabai_cmd $arg"
     else
         echo "linux todo..."
-                fi
-            }
+            fi
+        }
 
 # --------------------------------------------------
 # ---       query | <COMMAND> [<ARGUMENT>]       ---
@@ -302,9 +272,9 @@ query() {
     fi
 }
 
-# ------------------------------------
-# ---       RULE | <COMMAND>       ---
-# ------------------------------------
+# -------------------------
+# ---       RULE        ---
+# -------------------------
 
 # @param command
 # @param [ add_arg1 | add_arg2 | ... | add_argN ] OR [ rm_rule ]
@@ -312,20 +282,15 @@ query() {
 rule() {
     ! test -z "${arg1-}" || exit 1
     local cmd=$arg1
-
     if is-mac; then
         local yabai_domain="yabai -m rule"
         local yabai_cmd
         local rule_args=()
-
         if test "$cmd" = "add" -o "$cmd" = "a"; then
             yabai_cmd="add"
-
-            # NOTE: why wrapping fn_args in string doesn't work?
-            for i in ${fn_args:3}; do
+            for i in ${fn_args:3}; do # NOTE: why wrapping fn_args in string doesn't work?
                 local rule_name=${i%=*}
                 local rule_parm=${i#*=}
-
 	            case "$rule_name" in
 	                "label") rule_args+=("label=\"$rule_parm\"");; # Label used to identify the rule with a unique name
 	                "app") rule_args+=("app=\"$rule_parm\"") ;; # app[!]=<REGEX>
@@ -340,111 +305,85 @@ rule() {
 	                "border") ;; # border=<BOOL_SEL>
 	                "native-fullscreen") ;; # native-fullscreen=<BOOL_SEL>
 	                "grid") ;; # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
-	                *) echo default
-	                    ;;
+	                *) echo "NO_MATCH";;
 	            esac
             done
 	        call "$yabai_domain --$yabai_cmd ${rule_args[@]}"
-
 	    elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
-            # yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
-            # TODO: rule selection
-            echo "rule remove"
-
+            echo "rule remove" # TODO: rule selection | yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
 	    elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
-            # yabai -m rule --list                    Output list of registered rules.
-            echo "rule list"
-
+            echo "rule list" # yabai -m rule --list                    Output list of registered rules.
 	    fi
-
     else
         echo "linux todo..."
     fi
 }
 
-# --------------------------------------
-# ---       EVENTS | <COMMAND>       ---
-# --------------------------------------
-
 # @param command
 # @param command
-
+# yabai -m signal --add event=<EVENT> action=<ACTION> /// [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
+# --add event=<EVENT> action=<ACTION> [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
+#     Add an optionally labelled signal to execute an action after processing an event of the given type.
+#     Some signals can be specified to trigger based on the application name and/or window title.
 events() {
     ! test -z "${arg1-}" || exit 1
     local cmd=$arg1
-    local arg=$arg2
+    local evt=$arg2
     if is-mac; then
         local yabai_domain="yabai -m signal"
         local yabai_cmd
-
-        # SIGNAL EXAMPLES
-        # yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-        # yabai -m signal --add event=display_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-        # yabai -m signal --add event=window_resized action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-        # yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-        # yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-        # yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-        # yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-        # yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-        # yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-        # yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-        # yabai -m signal --add event=window_title_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-
+        # yabai -m signal
+        #       --add   event=display_changed
+        #               action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
         if test "$cmd" = "add" -o "$cmd" = "a"; then
-            # yabai -m signal --add event=<EVENT> action=<ACTION> /// [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
-            # --add event=<EVENT> action=<ACTION> [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
-            #     Add an optionally labelled signal to execute an action after processing an event of the given type.
-            #     Some signals can be specified to trigger based on the application name and/or window title.
+            $yabai_cmd="add"
+            local ybie # yabai event name
 
-            # application_launched              A new application is launched. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
-            # application_terminated            An application is terminated. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
-            # application_front_switched        The front-most application changes. Passes two arguments: $YABAI_PROCESS_ID, $YABAI_RECENT_PROCESS_ID
-            # application_activated             An application is activated. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
-            # application_deactivated           An application is deactivated. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
-            # application_visible               An application is unhidden. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
-            # application_hidden                An application is hidden. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
-            # window_created                    A window is created. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
-            # window_destroyed                  A window is destroyed. Passes one argument: $YABAI_WINDOW_ID
-            # window_focused                    A window becomes the key-window for its application. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
-            # window_moved                      A window changes position. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
-            # window_resized                    A window changes dimensions. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
-            # window_minimized                  A window has been minimized. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
-            # window_deminimized                A window has been deminimized. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
-            # window_title_changed              A window changes its title. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
-            # space_changed                     The active space has changed. Passes two arguments: $YABAI_SPACE_ID, $YABAI_RECENT_SPACE_ID
-            # display_added                     A new display has been added. Passes one argument: $YABAI_DISPLAY_ID
-            # display_removed                   A display has been removed. Passes one argument: $YABAI_DISPLAY_ID
-            # display_moved                     A change has been made to display arrangement. Passes one argument: $YABAI_DISPLAY_ID
-            # display_resized                   A display has changed resolution. Passes one argument: $YABAI_DISPLAY_ID
-            # display_changed                   The active display has changed. Passes two arguments: $YABAI_DISPLAY_ID, $YABAI_RECENT_DISPLAY_ID
-            # mouse_down                        A mouse button has been pressed. Passes two arguments: $YABAI_BUTTON, $YABAI_POINT
-            # mouse_up                          A mouse button has been released. Passes two arguments: $YABAI_BUTTON, $YABAI_POINT
-            # mouse_dragged                     The mouse is moved with one of its buttons pressed. Passes two arguments: $YABAI_BUTTON, $YABAI_POINT
-            # mouse_moved                       The mouse is moved. Passes two arguments: $YABAI_BUTTON, $YABAI_POINT
-            # mission_control_enter             Mission-control activates.
-            # mission_control_check_for_exit    Periodically while mission-control is active.
-            # mission_control_exit              Mission-control deactivates.
-            # dock_did_restart                  Dock.app restarts.
-            # menu_opened                       A menu is opened.
-            # menu_bar_hidden_changed           The macOS menubar autohide setting changes.
-            # dock_did_change_pref              The macOS Dock preferences changes.
-            # system_woke                       MacOS wakes from sleep.
-            # daemon_message                    Yabai receives a message on its socket.
+            case "$evt" in
+                "application_launched") ybie="application_launched";;
+                "application_launched") ybie="application_launched";;
+                "application_terminated") ybie="application_terminated";;
+                "application_front_switched") ybie="application_front_switched";;
+                "application_activated") ybie="application_activated";;
+                "application_deactivated") ybie="application_deactivated";;
+                "application_visible") ybie="application_visible";;
+                "application_hidden") ybie="application_hidden";;
+                "window_created") ybie="window_created";;
+                "window_destroyed") ybie="window_destroyed";;
+                "window_focused") ybie="window_focused";;
+                "window_moved") ybie="window_moved";;
+                "window_resized") ybie="window_resized";;
+                "window_minimized") ybie="window_minimized";;
+                "window_deminimized") ybie="window_deminimized";;
+                "window_title_changed") ybie="window_title_changed";;
+                "space_changed") ybie="space_changed";;
+                "display_added") ybie="display_added";;
+                "display_removed") ybie="display_removed";;
+                "display_moved") ybie="display_moved";;
+                "display_resized") ybie="display_resized";;
+                "display_changed") ybie="display_changed";;
+                "mouse_down") ybie="mouse_down";;
+                "mouse_up") ybie="mouse_up";;
+                "mouse_dragged") ybie="mouse_dragged";;
+                "mouse_moved") ybie="mouse_moved";;
+                "mission_control_enter") ybie="mission_control_enter";;
+                "mission_control_check_for_exit") ybie="mission_control_check_for_exit";;
+                "mission_control_exit") ybie="mission_control_exit";;
+                "dock_did_restart") ybie="dock_did_restart";;
+                "menu_opened") ybie="menu_opened";;
+                "menu_bar_hidden_changed") ybie="menu_bar_hidden_changed";;
+                "dock_did_change_pref") ybie="dock_did_change_pref";;
+                "system_woke") ybie="system_woke";;
+                "daemon_message") ybie="daemon_message";;
+                *) echo "NO_MATCH";;
+            esac
             echo "signal add"
 
 	    elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
-            # yabai -m signal --remove <SIGNAL_SEL>
-            # --remove <SIGNAL_SEL>
-            #     Remove an existing signal with the given index or label.
-            echo "signal remove"
-
+            echo "signal remove" # yabai -m signal --remove <SIGNAL_SEL>
 	    elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
-            # --list
-            #     Output list of registered signals.
-            echo "signal list"
-
+            echo "signal list" # --list Output list of registered signals.
 	    fi
-
         call "$yabai_domain $yabai_cmd $arg"
     else
         echo "linux todo..."
