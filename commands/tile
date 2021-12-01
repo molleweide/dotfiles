@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# https://github.com/koekeishiya/yabai
+# https://dwm.suckless.org/
+
 action="${1-}"
 
 if test -z "${action-}"; then
@@ -368,11 +371,13 @@ rule() {
     fi
 
     local cmd=$arg1
-    local arg=$arg2 # if arg2 is empty that is not a problem
+    # local arg=$arg2 # if arg2 is empty that is not a problem
+
+    local yabai_domain
+    local yabai_cmd
 
     if is-mac; then
-        # yabai -m rule $cmd $arg
-        local yabai_domain="yabai -m rule"
+        $yabai_domain="yabai -m rule"
 
         # RULE EXAMPLES
         # yabai -m rule --add label="Spark" app="^Spark$" title!="^Spark" manage=off
@@ -382,27 +387,50 @@ rule() {
         # yabai -m rule --add label="AppCleaner" app="^AppCleaner$" manage=off
         # yabai -m rule --add label="Pika" app="^Pika$" manage=off
 
-        if test -z "$cmd" = "add"; then
+        if test -z "$cmd" = "add" -o "$cmd" = "a"; then
             # yabai -m rule --add [<ARGUMENT>]        Add a new rule.
-            # ARGUMENTS
-            # label=<LABEL>                     Label used to identify the rule with a unique name
-            # app[!]=<REGEX>                    Name of application. If ! is present, invert the match.
-            # title[!]=<REGEX>                  Title of window. If ! is present, invert the match.
-            # display=[^]<DISPLAY_SEL>          Send window to display. If ^ is present, follow focus.
-            # space=[^]<SPACE_SEL>              Send window to space. If ^ is present, follow focus.
-            # manage=<BOOL_SEL>                 Window should be managed (tile vs float).
-            # sticky=<BOOL_SEL>                 Window appears on all spaces.
-            # mouse_follows_focus=<BOOL_SEL>    When focusing the window, put the mouse at its center. Overrides the global mouse_follows_focus setting.
-            # layer=<LAYER>                     Window is ordered within the given stacking layer.
-            # opacity=<FLOAT_SEL>               Set window opacity. The window will no longer be eligible for automatic change in opacity upon focus change.
-            # border=<BOOL_SEL>                 Window should draw border.
-            # native-fullscreen=<BOOL_SEL>      Window should enter native macOS fullscreen mode.
-            # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>       Set window frame based on a self-defined grid.
+            $yabai_cmd="--add"
 
-	    elif test "$cmd" = 'remove' -o "$arg" = 'rm'; then
+            # starting from $3????
+            for $arg in "$@"; do
+
+                # extract everything before `=`
+	            case "$arg" in
+	                "label")
+	                ;;# label=<LABEL>                     Label used to identify the rule with a unique name
+	                "app")
+	                ;; # app[!]=<REGEX>                    Name of application. If ! is present, invert the match.
+	                "title")
+	                ;; # title[!]=<REGEX>                  Title of window. If ! is present, invert the match.
+	                "display") # add argument to array
+	                ;; # display=[^]<DISPLAY_SEL>          Send window to display. If ^ is present, follow focus.
+	                "space") # add argument to array
+	                ;; # space=[^]<SPACE_SEL>              Send window to space. If ^ is present, follow focus.
+	                "manage") # add argument to array
+	                ;; # manage=<BOOL_SEL>                 Window should be managed (tile vs float).
+	                "sticky") # add argument to array
+	                ;; # sticky=<BOOL_SEL>                 Window appears on all spaces.
+	                "mouse_follows_focus") # add argument to array
+	                ;; # mouse_follows_focus=<BOOL_SEL>    When focusing the window, put the mouse at its center. Overrides the global mouse_follows_focus setting.
+	                "layer") # add argument to array
+	                ;; # layer=<LAYER>                     Window is ordered within the given stacking layer.
+	                "opacity") # add argument to array
+	                ;; # opacity=<FLOAT_SEL>               Set window opacity. The window will no longer be eligible for automatic change in opacity upon focus change.
+	                "border") # add argument to array
+	                ;; # border=<BOOL_SEL>                 Window should draw border.
+	                "native-fullscreen") # add argument to array
+	                ;; # native-fullscreen=<BOOL_SEL>      Window should enter native macOS fullscreen mode.
+	                "grid") # add argument to array
+	                ;; # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>       Set window frame based on a self-defined grid.
+	                # *) echo default
+	                # ;;
+	            esac
+            done
+
+	    elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
             # yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
 
-	    elif test "$cmd" = 'list' -o "$arg" = 'ls'; then
+	    elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
             # yabai -m rule --list                    Output list of registered rules.
 
 	    fi
