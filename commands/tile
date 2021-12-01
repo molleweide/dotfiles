@@ -199,25 +199,23 @@ config_space() {
     fi
 }
 
-# -------------------------------------------------------
-# ---       DISPLAY | [<DISPLAY_SEL>] <COMMAND>       ---
-# -------------------------------------------------------
+# ---------------------------
+# ---       MONITOR       ---
+# ---------------------------
 
-#????????? there is something that I don't understand here.
+# eg, wm monitor next
 
-# COMMAND
-#     --focus <DISPLAY_SEL>
-#         Focus the given display.
+# DISPLAY_SEL := prev|next|first|last|recent|mouse|DIR_SEL|<arrangement index (1-based)>
 
-display() {
-    if test -z "${arg2-}"; then
+monitor() {
+    if test -z "${arg1-}"; then
         exit 1
     fi
 
-    local arg=$arg1
+    local display_sel=$arg1
 
     if is-mac; then
-        local yabai_cmd="yabai -m display --focus $arg"
+        local yabai_cmd="yabai -m display --focus $display_sel"
         call $yabai_cmd
     else
         echo "linux todo..."
@@ -575,7 +573,7 @@ case "$action" in
         ;;
     "window" | "w") window
         ;;
-    "display" | "d") display
+    "monitor" | "d") monitor
         ;;
     "query" | "q") query
         ;;
