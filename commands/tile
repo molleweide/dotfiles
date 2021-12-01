@@ -144,9 +144,16 @@ config_global() {
 # ---       SPACE SETTINGS | [--space <SPACE_SEL>] <space setting>       ---
 # --------------------------------------------------------------------------
 
-# :: selection / setting / value
+
+
+# :: setting / value / space_selection
 
 # eg. `# yabai -m config --space 3 layout bsp`
+
+# TODO:
+# how do I handle the optional param here.
+# here it would make sense to make the --space flag into the second arg.
+
 
 config_space() {
 
@@ -158,12 +165,14 @@ config_space() {
 
     local setting=$arg1
     local value=$arg2
-    # local sel=??
+
+    local sel=$arg3
+    local space_sel
+    if ! test -z "${sel-}"; then
+        $space_sel="--space $sel"
+    fi
 
     if is-mac; then
-
-        yabai -m config --space $setting $value
-
         local yabai_domain="yabai -m config --space"
         local yabai_setting
 
@@ -184,7 +193,7 @@ config_space() {
                 ;;
         esac
 
-        call "$yabai_domain $yabai_setting $value"
+        call "$yabai_domain $yabai_setting $value $space_sel"
     else
         echo "linux todo..."
     fi
@@ -193,6 +202,8 @@ config_space() {
 # -------------------------------------------------------
 # ---       DISPLAY | [<DISPLAY_SEL>] <COMMAND>       ---
 # -------------------------------------------------------
+
+#????????? there is something that I don't understand here.
 
 # COMMAND
 #     --focus <DISPLAY_SEL>
@@ -224,6 +235,9 @@ space() {
 
     local cmd=$arg1
     local arg=$arg2 # if arg2 is empty that is not a problem
+
+    local space_sel
+    ! test -z "${arg3}" && $space_sel="--space $sel"
 
     if is-mac; then
 
@@ -263,7 +277,7 @@ space() {
                 ;;
         esac
 
-        call "$yabai_domain $yabai_cmd $arg"
+        call "$yabai_domain $yabai_cmd $arg $space_sel"
     else
         echo "linux todo..."
     fi
@@ -280,6 +294,9 @@ window() {
 
     local cmd=$arg1
     local arg=$arg2 # if arg2 is empty that is not a problem
+
+    # local win_sel
+    # ! test -z "${arg3}" && $win_sel="--window $sel"
 
     if is-mac; then
         local yabai_domain="yabai -m window"
@@ -328,8 +345,8 @@ window() {
 
     else
         echo "linux todo..."
-    fi
-}
+                fi
+            }
 
 # --------------------------------------------------
 # ---       query | <COMMAND> [<ARGUMENT>]       ---
@@ -376,6 +393,14 @@ rule() {
     local yabai_domain
     local yabai_cmd
 
+    # TODO:
+    # associative array
+    #   https://stackoverflow.com/questions/33975967/returning-a-dictionary-from-a-bash-function
+    #   https://riptutorial.com/bash/example/6886/associative-arrays
+    #   https://stackoverflow.com/questions/4069188/how-to-pass-an-associative-array-as-argument-to-a-function-in-bash
+    #   https://linuxhint.com/associative_arrays_bash_examples/
+    local rule_args=()
+
     if is-mac; then
         $yabai_domain="yabai -m rule"
 
@@ -391,47 +416,51 @@ rule() {
             # yabai -m rule --add [<ARGUMENT>]        Add a new rule.
             $yabai_cmd="--add"
 
+
+
             # starting from $3????
             for $arg in "$@"; do
 
+
+
                 # extract everything before `=`
 	            case "$arg" in
-	                "label")
-	                ;;# label=<LABEL>                     Label used to identify the rule with a unique name
+	                "label") $rule_arg+=("label=\"\"") # extract the pattern part
+	                    ;;# label=<LABEL>                     Label used to identify the rule with a unique name
 	                "app")
-	                ;; # app[!]=<REGEX>                    Name of application. If ! is present, invert the match.
+	                    ;; # app[!]=<REGEX>                    Name of application. If ! is present, invert the match.
 	                "title")
-	                ;; # title[!]=<REGEX>                  Title of window. If ! is present, invert the match.
+	                    ;; # title[!]=<REGEX>                  Title of window. If ! is present, invert the match.
 	                "display") # add argument to array
-	                ;; # display=[^]<DISPLAY_SEL>          Send window to display. If ^ is present, follow focus.
+	                    ;; # display=[^]<DISPLAY_SEL>          Send window to display. If ^ is present, follow focus.
 	                "space") # add argument to array
-	                ;; # space=[^]<SPACE_SEL>              Send window to space. If ^ is present, follow focus.
+	                    ;; # space=[^]<SPACE_SEL>              Send window to space. If ^ is present, follow focus.
 	                "manage") # add argument to array
-	                ;; # manage=<BOOL_SEL>                 Window should be managed (tile vs float).
+	                    ;; # manage=<BOOL_SEL>                 Window should be managed (tile vs float).
 	                "sticky") # add argument to array
-	                ;; # sticky=<BOOL_SEL>                 Window appears on all spaces.
+	                    ;; # sticky=<BOOL_SEL>                 Window appears on all spaces.
 	                "mouse_follows_focus") # add argument to array
-	                ;; # mouse_follows_focus=<BOOL_SEL>    When focusing the window, put the mouse at its center. Overrides the global mouse_follows_focus setting.
+	                    ;; # mouse_follows_focus=<BOOL_SEL>    When focusing the window, put the mouse at its center. Overrides the global mouse_follows_focus setting.
 	                "layer") # add argument to array
-	                ;; # layer=<LAYER>                     Window is ordered within the given stacking layer.
+	                    ;; # layer=<LAYER>                     Window is ordered within the given stacking layer.
 	                "opacity") # add argument to array
-	                ;; # opacity=<FLOAT_SEL>               Set window opacity. The window will no longer be eligible for automatic change in opacity upon focus change.
+	                    ;; # opacity=<FLOAT_SEL>               Set window opacity. The window will no longer be eligible for automatic change in opacity upon focus change.
 	                "border") # add argument to array
-	                ;; # border=<BOOL_SEL>                 Window should draw border.
+	                    ;; # border=<BOOL_SEL>                 Window should draw border.
 	                "native-fullscreen") # add argument to array
-	                ;; # native-fullscreen=<BOOL_SEL>      Window should enter native macOS fullscreen mode.
+	                    ;; # native-fullscreen=<BOOL_SEL>      Window should enter native macOS fullscreen mode.
 	                "grid") # add argument to array
-	                ;; # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>       Set window frame based on a self-defined grid.
+	                    ;; # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>       Set window frame based on a self-defined grid.
 	                # *) echo default
-	                # ;;
-	            esac
-            done
+	                    # ;;
+	                esac
+                done
 
-	    elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
-            # yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
+	        elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
+                # yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
 
-	    elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
-            # yabai -m rule --list                    Output list of registered rules.
+	        elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
+                # yabai -m rule --list                    Output list of registered rules.
 
 	    fi
 
