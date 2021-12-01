@@ -23,6 +23,7 @@ action="${1-}"
 arg1="${2-}"
 arg2="${3-}"
 arg3="${4-}"
+arg4="${5-}"
 
 call() {
     echo "$@"
@@ -132,8 +133,8 @@ space() {
         local yabai_cmd
         case "$cmd" in
             "focus" | "foc")    $yabai_cmd="--focus" ;; # <SPACE_SEL>
-            "create" | "new")   $yabai_cmd="--create" ;;                                      # Create a new space on the display of the selected space.
-            "destroy" | "del")  $yabai_cmd="--destroy" ;; # Remove the selected space.
+            "create" | "new")   $yabai_cmd="--create" ;;
+            "destroy" | "del")  $yabai_cmd="--destroy" ;;
             "move" | "mv")      $yabai_cmd="--move" ;; # <SPACE_SEL>                        Move position of the selected space to the position of the given space. The selected space and given space must both belong to the same display.
             "swap" | "sw")      $yabai_cmd="--swap" ;; # <SPACE_SEL>                        Swap the selected space with the given space. The selected space and given space must both belong to the same display.
             "display" | "dsp")  $yabai_cmd="--display" ;; # <DISPLAY_SEL>                           Send the selected space to the given display.
@@ -269,58 +270,57 @@ rule() {
 events() {
     ! test -z "${arg1-}" || exit 1
     local cmd=$arg1
-    local evt=$arg2
     if is-mac; then
-        local yabai_domain="yabai -m signal"
-        local yabai_cmd
-        # yabai -m signal
-        #       --add   event=display_changed
-        #               action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
+        local ypre="yabai -m signal"
+        local ycmd
         if test "$cmd" = "add" -o "$cmd" = "a"; then
-            $yabai_cmd="add"
+            $ycmd="add"
+            local event=$arg2
+            local action=$arg3 # Arbitrary command executed through /usr/bin/env sh -c
             local ybie # yabai event name
-            case "$evt" in
-                "appl")         ybie="application_launched";;
-                "appk")         ybie="application_terminated";;
-                "appfs")        ybie="application_front_switched";;
-                "appac")        ybie="application_activated";;
-                "appda")        ybie="application_deactivated";;
-                "appvi")        ybie="application_visible";;
-                "apphi")        ybie="application_hidden";;
-                "win_nw")       ybie="window_created";;
-                "win_kl")       ybie="window_destroyed";;
-                "win_fc")       ybie="window_focused";;
-                "win_mv")       ybie="window_moved";;
-                "win_rz")       ybie="window_resized";;
-                "win_mi")       ybie="window_minimized";;
-                "win_dm")       ybie="window_deminimized";;
-                "win_tc")       ybie="window_title_changed";;
-                "spce_ch")      ybie="space_changed";;
-                "disp_ad")      ybie="display_added";;
-                "disp_rm")      ybie="display_removed";;
-                "disp_mv")      ybie="display_moved";;
-                "disp_rz")      ybie="display_resized";;
-                "disp_ch")      ybie="display_changed";;
+            case "$event" in
+                "a_l")         ybie="application_launched";;
+                "a_k")         ybie="application_terminated";;
+                "a_fs")        ybie="application_front_switched";;
+                "a_ac")        ybie="application_activated";;
+                "a_da")        ybie="application_deactivated";;
+                "a_vi")        ybie="application_visible";;
+                "a_hi")        ybie="application_hidden";;
+                "w_c")       ybie="window_created";;
+                "w_k")       ybie="window_destroyed";;
+                "w_f")       ybie="window_focused";;
+                "w_mv")       ybie="window_moved";;
+                "w_rz")       ybie="window_resized";;
+                "w_mi")       ybie="window_minimized";;
+                "w_dm")       ybie="window_deminimized";;
+                "w_tc")       ybie="window_title_changed";;
+                "sch")          ybie="space_changed";;
+                "ds_ad")      ybie="display_added";;
+                "ds_rm")      ybie="display_removed";;
+                "ds_mv")      ybie="display_moved";;
+                "ds_rz")      ybie="display_resized";;
+                "ds_ch")      ybie="display_changed";;
                 "ms_dn")        ybie="mouse_down";;
                 "ms_up")        ybie="mouse_up";;
                 "ms_dr")        ybie="mouse_dragged";;
                 "ms_mv")        ybie="mouse_moved";;
-                "msc_ent")     ybie="mission_control_enter";;
-                "msc_cfexit")  ybie="mission_control_check_for_exit";;
-                "msc_exit")    ybie="mission_control_exit";;
-                "dockdr")      ybie="dock_did_restart";;
-                "dockdcp")     ybie="dock_did_change_pref";;
-                "menuo")       ybie="menu_opened";;
-                "menubhc")     ybie="menu_bar_hidden_changed";;
-                "sys_woke")     ybie="system_woke";;
-                "daemon_msg")   ybie="daemon_message";;
+                "msc_e")     ybie="mission_control_enter";;
+                "msc_cfx")  ybie="mission_control_check_for_exit";;
+                "msc_x")    ybie="mission_control_exit";;
+                "dk_dr")      ybie="dock_did_restart";;
+                "dk_dcp")     ybie="dock_did_change_pref";;
+                "mu_o")       ybie="menu_opened";;
+                "mu_bhc")     ybie="menu_bar_hidden_changed";;
+                "sys_wk")     ybie="system_woke";;
+                "dmon_msg")   ybie="daemon_message";;
                 *) echo "NO_MATCH";;
             esac
-            echo "signal add"
+            call "$ypre $ycmd event=$ybie action=$action"
 	    elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
-            echo "signal remove" # yabai -m signal --remove <SIGNAL_SEL>
+            local rm_sel=$arg2
+            call "$ypre --remove $rm_sel"
 	    elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
-            echo "signal list" # --list Output list of registered signals.
+            call "$ypre --list"
 	    fi
         call "$yabai_domain $yabai_cmd $arg"
     else
@@ -338,6 +338,5 @@ case "$action" in
     "query" | "q") query;;
     "rule" | "r") rule;;
     "events" | "e") events;;
-    *) exit 1 # no options -> return err
-        ;;
+    *) exit 1;;
 esac
