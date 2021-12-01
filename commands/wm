@@ -3,12 +3,18 @@
 # https://github.com/koekeishiya/yabai
 # https://dwm.suckless.org/
 
+# ------------------------
+# ---       TODO       ---
+# ------------------------
+
+# split into files?
+
+##########################
+
+echo "\$@: $@"
+
 action="${1-}"
-
-if test -z "${action-}"; then
-    exit 1
-fi
-
+! test -z "${action}" || exit 1
 arg1="${2-}"
 arg2="${3-}"
 arg3="${4-}"
@@ -172,7 +178,7 @@ config_space() {
 # @param display_selection
 
 monitor() {
-    test -z "${arg1-}" || exit 1
+    ! test -z "${arg1-}" || exit 1
     local display_sel=$arg1
     if is-mac; then
         local yabai_domain="yabai -m display --focus"
@@ -308,7 +314,7 @@ window() {
 # @param argument
 
 query() {
-    test -z "${arg1-}" && exit 1
+    ! test -z "${arg1-}" || exit 1
     local cmd=$arg1
     local arg=$arg2
     if is-mac; then
@@ -341,7 +347,7 @@ query() {
 # @param [ add_arg1 | add_arg2 | ... | add_argN ] OR [ rm_rule ]
 
 rule() {
-    test -z "${arg1-}" && exit 1
+    ! test -z "${arg1-}" || exit 1
     local cmd=$arg1
 
     # TODO:
@@ -424,8 +430,11 @@ rule() {
 # ---       EVENTS | <COMMAND>       ---
 # --------------------------------------
 
+# @param command
+# @param command
+
 events() {
-    test -z "${arg1-}" || exit 1
+    ! test -z "${arg1-}" || exit 1
     local cmd=$arg1
     local arg=$arg2
     if is-mac; then
@@ -445,7 +454,7 @@ events() {
         # yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
         # yabai -m signal --add event=window_title_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
 
-        if test "$cmd" = "add"; then
+        if test "$cmd" = "add" -o "$cmd" = "a"; then
             # yabai -m signal --add event=<EVENT> action=<ACTION> /// [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
             # --add event=<EVENT> action=<ACTION> [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
             #     Add an optionally labelled signal to execute an action after processing an event of the given type.
@@ -500,7 +509,7 @@ events() {
 
 	    fi
 
-        # call "$yabai_domain $yabai_cmd $arg"
+        call "$yabai_domain $yabai_cmd $arg"
     else
         echo "linux todo..."
     fi
