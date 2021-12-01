@@ -24,3 +24,11 @@
     https://github.com/AdamWagner/yabai-uberbar
     https://github.com/matryer/xbar
     https://github.com/kkga/nibar
+
+* yabai toggle
+@code bash
+# [ "$(yabai -m query --spaces --space | jq -r '.type')" = "stack" ] && yabai -m space --layout bsp
+# [ "$(yabai -m config layout)" = "stack" ] && yabai -m config layout bsp
+@end
+
+

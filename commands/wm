@@ -34,7 +34,7 @@ reload() {
         brew services restart skhd
         limelight # there is a wierd err msg but it works...
     else
-	 echo 'reload linux wm...'
+	    echo 'reload linux wm...'
     fi
 }
 
@@ -167,22 +167,22 @@ window() {
         local yabai_cmd
         case "$cmd" in
             "focus" | "foc") yabai_cmd="focus" ;; # <WINDOW_SEL>
-            "swap" | "sw") yabai_cmd="swap" ;; # <WINDOW_SEL>                   Swap position of the selected window and the given window.
-            "warp" | "wrp") yabai_cmd="warp" ;; # <WINDOW_SEL>                   Re-insert the selected window, splitting the given window.
-            "stack" | "stk") yabai_cmd="stack" ;; # <WINDOW_SEL>                   Stack the given window on top of the selected window. Any kind of warp operation performed on a stacked window will unstack it.
-            "insert" | "zz") yabai_cmd="insert" ;; # <DIR_SEL>|stack                Set the splitting mode of the selected window. If the current splitting mode matches the selected mode, the action will be undone.
-            "grid" | "zz") yabai_cmd="grid" ;; # <rows>:<cols>:<start-x>:<start-y>:<width>:<height>     Set the frame of the selected window based on a self-defined grid.
-            "move" | "zz") yabai_cmd="move" ;; # abs|rel:<dx>:<dy>                                      If type is rel the selected window is moved by dx pixels horizontally and dy pixels vertically, otherwise dx and dy will become its new position.
-            "resize" | "zz") yabai_cmd="resize" ;; # top|left|bottom|right|top_left|top_right|bottom_right|bottom_left|abs:<dx>:<dy>        Resize the selected window by moving the given handle dx pixels horizontally and dy pixels vertically. If handle is abs the new size will be dx width and dy height and cannot be used on managed windows.
-            "ratio" | "zz") yabai_cmd="ratio" ;; # rel|abs:<dr>          If type is rel the split ratio of the selected window is changed by dr, otherwise dr will become the new split ratio. A positive/negative delta will increase/decrease the size of the left-child.
-            "toggle" | "zz") yabai_cmd="toggle" ;; # float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose Toggle the given property of the selected window.
-            "layer" | "zz") yabai_cmd="layer" ;; # <LAYER>                       Set the stacking layer of the selected window.
-            "opacity" | "zz") yabai_cmd="opacity" ;; # <floating point number>     Set the opacity of the selected window. The window will no longer be eligible for automatic change in opacity upon focus change. Specify the value 0.0 to reset back to full opacity OR have it be automatically managed through focus changes.
-            "display" | "zz") yabai_cmd="display" ;; # <DISPLAY_SEL>               Send the selected window to the given display.
-            "space" | "zz") yabai_cmd="space" ;; # <SPACE_SEL> | Send the selected window to the given space.
-            "minimize" | "zz") yabai_cmd="minimize";; # Minimizes the selected window. Only works on windows that provide a minimize button in its titlebar.
-            "deminimize" | "zz") yabai_cmd="deminimize";; # Restores the selected window, if it is minimized. The window will only get focus if the owning application has focus. Note that you can also --focus a minimized window to restore it as the focused window.
-            "close" | "zz") yabai_cmd="close" ;; # Closes the selected window. Only works on windows that provide a close button in its titlebar.
+            "swap" | "sw") yabai_cmd="swap" ;; # <WINDOW_SEL>
+            "warp" | "wrp") yabai_cmd="warp" ;; # <WINDOW_SEL>
+            "stack" | "stk") yabai_cmd="stack" ;; # <WINDOW_SEL>
+            "insert" | "zz") yabai_cmd="insert" ;; # <DIR_SEL>|stack
+            "grid" | "zz") yabai_cmd="grid" ;; # <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+            "move" | "zz") yabai_cmd="move" ;; # abs|rel:<dx>:<dy>
+            "resize" | "zz") yabai_cmd="resize" ;; # top|left|bottom|right|top_left|top_right|bottom_right|bottom_left|abs:<dx>:<dy>
+            "ratio" | "zz") yabai_cmd="ratio" ;; # rel|abs:<dr>
+            "toggle" | "zz") yabai_cmd="toggle" ;; # float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose
+            "layer" | "zz") yabai_cmd="layer" ;; # <LAYER>
+            "opacity" | "zz") yabai_cmd="opacity" ;; # <floating point number>
+            "display" | "zz") yabai_cmd="display" ;; # <DISPLAY_SEL>
+            "space" | "zz") yabai_cmd="space" ;; # <SPACE_SEL>
+            "minimize" | "zz") yabai_cmd="minimize";;
+            "deminimize" | "zz") yabai_cmd="deminimize";;
+            "close" | "zz") yabai_cmd="close" ;;
             *) echo "NO_MATCH";;
         esac
         call "$yabai_domain $win_sel --$yabai_cmd $arg"
@@ -191,78 +191,37 @@ window() {
             fi
         }
 
-# --------------------------------------------------
-# ---       query | <COMMAND> [<ARGUMENT>]       ---
-# --------------------------------------------------
-
-# @param command
-# @param argument
-
-# create desktop, move window andK follow focus - uses jq for parsing json (brew install jq)
-# shift + cmd - n : yabai -m space --create && \
-#                   index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
-#                   yabai -m window --space "${index}" && \
-#                   yabai -m space --focus "${index}"
-
-# create desktop and follow focus - uses jq for parsing json (brew install jq)
-# cmd + alt - n : yabai -m space --create && \
-#                 index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
-#                 yabai -m space --focus "${index}"
-
-# # Create space, moved focused app, and focus space (requires SIP disabled) - uses jq for parsing json (brew install jq)
-# ctrl + shift - w : yabai -m space --create && \
-#   index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
-#   yabai -m window --space "${index}" && \
-#   yabai -m space --focus "${index}"
-
-# # create desktop, move window and follow focus - uses jq for parsing json (brew install jq)
-# shift + cmd - n : yabai -m space --create && \
-#                   index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
-#                   yabai -m window --space "${index}" && \
-#                   yabai -m space --focus "${index}"
-
-# # create desktop and follow focus - uses jq for parsing json (brew install jq)
-# cmd + ctrl - n : yabai -m space --create && \
-#                 index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
-#                 yabai -m space --focus "${index}"
-
-# # alt - t : yabai -m window --toggle float && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
-
-# ctrl + alt - s : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
-
+# @param command        Retrieve information about command.
+# @param [ argument ]   Constrain matches to argument.
 query() {
     ! test -z "${arg1-}" || exit 1
     local cmd=$arg1
     local arg=$arg2
     if is-mac; then
         yabai -m query $cmd $arg
-        local yabai_domain="yabai -m query"
-
-        # COMMAND
-        # --displays        Retrieve information about displays.
-        # --spaces          Retrieve information about spaces.
-        # --windows         Retrieve information about windows.
-        local yabai_cmd=$cmd
-
-        # ARGUMENT
-        # --display [<DISPLAY_SEL>]     Constrain matches to the selected display.
-        # --space [<SPACE_SEL>]         Constrain matches to the selected space.
-        # --window [<WINDOW_SEL>]       Constrain matches to the selected window.
-        local argument=$arg
-
-        call "$yabai_domain $argument"
+        local ypre="yabai -m query"
+        local ycmd
+        local yarg
+        case "$cmd" in
+            "dsp" | "d") ycmd="displays";;
+            "spc" | "s") ycmd="spaces";;
+            "win" | "w") ycmd="windows";;
+            *) echo "NO_MATCH";;
+        esac
+        case "$arg" in
+            "dsp" | "d") yarg="display";;
+            "spc" | "s") yarg="space";;
+            "win" | "w") yarg="window";;
+            *) echo "NO_MATCH";;
+        esac
+        call "$ypre --$ycmd --$yarg"
     else
         echo "linux todo..."
     fi
 }
 
-# -------------------------
-# ---       RULE        ---
-# -------------------------
-
 # @param command
 # @param [ add_arg1 | add_arg2 | ... | add_argN ] OR [ rm_rule ]
-
 rule() {
     ! test -z "${arg1-}" || exit 1
     local cmd=$arg1
