@@ -48,31 +48,18 @@ reload() {
 # ---       YABAI DEFINITIONS       ---
 # -------------------------------------
 
-# REGEX       :=
-# POSIX extended regular expression syntax <https://www.gnu.org/software/findutils/manual/html_node/find_html/posix_002dextended-regular-expression-syntax.html>
-
+# REGEX       := POSIX extended regular expression syntax <https://www.gnu.org/software/findutils/manual/html_node/find_html/posix_002dextended-regular-expression-syntax.html>
 # LABEL       := arbitrary string/text used as an identifier
-
 # LAYER       := below | normal | above
-
 # BOOL_SEL    := on | off
-
 # FLOAT_SEL   := 0 < <value> <= 1.0
-
 # RULE_SEL    := <index> | LABEL
-
 # SIGNAL_SEL  := <index> | LABEL
-
 # DIR_SEL     := north | east | south | west
-
 # STACK_SEL   := stack.prev | stack.next | stack.first | stack.last | stack.recent
-
 # WINDOW_SEL  := prev | next | first | last | recent | mouse | largest | smallest | STACK_SEL | DIR_SEL | <window id>
-
 # DISPLAY_SEL := prev | next | first | last | recent | mouse | DIR_SEL | <arrangement index (1-based)>
-
 # SPACE_SEL   := prev | next | first | last | recent | mouse | <mission-control index (1-based)> | LABEL
-
 
 # ---------------------------------------------
 # ---       GLOBAL | <global setting>       ---
@@ -304,19 +291,6 @@ win() {
         local yabai_domain="yabai -m window"
         local yabai_cmd
 
-        # --move abs|rel:<dx>:<dy>                                      If type is rel the selected window is moved by dx pixels horizontally and dy pixels vertically, otherwise dx and dy will become its new position.
-        # --resize top|left|bottom|right|top_left|top_right|bottom_right|bottom_left|abs:<dx>:<dy>
-        #     Resize the selected window by moving the given handle dx pixels horizontally and dy pixels vertically. If handle is abs the
-        #     new size will be dx width and dy height and cannot be used on managed windows.
-        # --ratio rel|abs:<dr>          If type is rel the split ratio of the selected window is changed by dr, otherwise dr will become the new split ratio. A positive/negative delta will increase/decrease the size of the left-child.
-        # --toggle float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose
-        #     Toggle the given property of the selected window.
-        # --layer <LAYER>                       Set the stacking layer of the selected window.
-        # --opacity <floating point number>     Set the opacity of the selected window. The window will no longer be eligible for automatic change in opacity upon focus change. Specify the value 0.0 to reset back to full opacity OR have it be automatically managed through focus changes.
-        # --display <DISPLAY_SEL>               Send the selected window to the given display.
-        # --minimize                            Minimizes the selected window. Only works on windows that provide a minimize button in its titlebar.
-        # --deminimize                          Restores the selected window, if it is minimized. The window will only get focus if the owning application has focus. Note that you can also --focus a minimized window to restore it as the focused window.
-
         case "$cmd" in
             "focus" | "foc") $yabai_cmd="--focus"
                 ;; # <WINDOW_SEL>
@@ -331,25 +305,25 @@ win() {
             "grid" | "zz") $yabai_cmd="--grid"
                 ;; # <rows>:<cols>:<start-x>:<start-y>:<width>:<height>     Set the frame of the selected window based on a self-defined grid.
             "move" | "zz") $yabai_cmd="--move"
-                ;;
+                ;; # abs|rel:<dx>:<dy>                                      If type is rel the selected window is moved by dx pixels horizontally and dy pixels vertically, otherwise dx and dy will become its new position.
             "resize" | "zz") $yabai_cmd="--resize"
-                ;;
+                ;; # top|left|bottom|right|top_left|top_right|bottom_right|bottom_left|abs:<dx>:<dy>        Resize the selected window by moving the given handle dx pixels horizontally and dy pixels vertically. If handle is abs the new size will be dx width and dy height and cannot be used on managed windows.
             "ratio" | "zz") $yabai_cmd="--ratio"
-                ;;
+                ;; # rel|abs:<dr>          If type is rel the split ratio of the selected window is changed by dr, otherwise dr will become the new split ratio. A positive/negative delta will increase/decrease the size of the left-child.
             "toggle" | "zz") $yabai_cmd="--toggle"
-                ;;
+                ;; # float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose Toggle the given property of the selected window.
             "layer" | "zz") $yabai_cmd="--layer"
-                ;;
+                ;; # <LAYER>                       Set the stacking layer of the selected window.
             "opacity" | "zz") $yabai_cmd="--opacity"
-                ;;
+                ;; # <floating point number>     Set the opacity of the selected window. The window will no longer be eligible for automatic change in opacity upon focus change. Specify the value 0.0 to reset back to full opacity OR have it be automatically managed through focus changes.
             "display" | "zz") $yabai_cmd="--display"
-                ;;
+                ;; # <DISPLAY_SEL>               Send the selected window to the given display.
             "space" | "zz") $yabai_cmd="--space"
                 ;; # <SPACE_SEL> | Send the selected window to the given space.
             "minimize" | "zz") $yabai_cmd="--minimize"  #
-                ;;
+                ;; # Minimizes the selected window. Only works on windows that provide a minimize button in its titlebar.
             "deminimize" | "zz") $yabai_cmd="--deminimize"  #
-                ;;
+                ;; # Restores the selected window, if it is minimized. The window will only get focus if the owning application has focus. Note that you can also --focus a minimized window to restore it as the focused window.
             "close" | "zz") $yabai_cmd="--close"
                 ;; # Closes the selected window. Only works on windows that provide a close button in its titlebar.
             *) echo default
