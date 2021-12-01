@@ -266,8 +266,6 @@ rule() {
 # @param command
 # yabai -m signal --add event=<EVENT> action=<ACTION> /// [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
 # --add event=<EVENT> action=<ACTION> [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
-#     Add an optionally labelled signal to execute an action after processing an event of the given type.
-#     Some signals can be specified to trigger based on the application name and/or window title.
 events() {
     ! test -z "${arg1-}" || exit 1
     local cmd=$arg1
@@ -319,7 +317,6 @@ events() {
                 *) echo "NO_MATCH";;
             esac
             echo "signal add"
-
 	    elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
             echo "signal remove" # yabai -m signal --remove <SIGNAL_SEL>
 	    elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
