@@ -3,15 +3,18 @@
 # https://github.com/koekeishiya/yabai
 # https://dwm.suckless.org/
 
-# ------------------------
-# ---       TODO       ---
-# ------------------------
-
-# split into files?
-
-##########################
-
-echo "\$@: $@"
+# REGEX       := POSIX extended regular expression syntax <https://www.gnu.org/software/findutils/manual/html_node/find_html/posix_002dextended-regular-expression-syntax.html>
+# LABEL       := arbitrary string/text used as an identifier
+# LAYER       := below | normal | above
+# BOOL_SEL    := on | off
+# FLOAT_SEL   := 0 < <value> <= 1.0
+# RULE_SEL    := <index> | LABEL
+# SIGNAL_SEL  := <index> | LABEL
+# DIR_SEL     := north | east | south | west
+# STACK_SEL   := stack.prev | stack.next | stack.first | stack.last | stack.recent
+# WINDOW_SEL  := prev | next | first | last | recent | mouse | largest | smallest | STACK_SEL | DIR_SEL | <window id>
+# DISPLAY_SEL := prev | next | first | last | recent | mouse | DIR_SEL | <arrangement index (1-based)>
+# SPACE_SEL   := prev | next | first | last | recent | mouse | <mission-control index (1-based)> | LABEL
 
 fn_args=$@
 
@@ -25,34 +28,15 @@ call() {
     echo "$@"
     # ($1)
 }
-
 reload() {
-    echo "reload"
-    # if is-mac; then
-    #     brew services restart yabai
-    #     brew services restart skhd
-    #     limelight # there is a wierd err msg but it works...
-    # else
-	#  echo 'reload linux wm...'
-    # fi
+    if is-mac; then
+        brew services restart yabai
+        brew services restart skhd
+        limelight # there is a wierd err msg but it works...
+    else
+	 echo 'reload linux wm...'
+    fi
 }
-
-# -------------------------------------
-# ---       YABAI DEFINITIONS       ---
-# -------------------------------------
-
-# REGEX       := POSIX extended regular expression syntax <https://www.gnu.org/software/findutils/manual/html_node/find_html/posix_002dextended-regular-expression-syntax.html>
-# LABEL       := arbitrary string/text used as an identifier
-# LAYER       := below | normal | above
-# BOOL_SEL    := on | off
-# FLOAT_SEL   := 0 < <value> <= 1.0
-# RULE_SEL    := <index> | LABEL
-# SIGNAL_SEL  := <index> | LABEL
-# DIR_SEL     := north | east | south | west
-# STACK_SEL   := stack.prev | stack.next | stack.first | stack.last | stack.recent
-# WINDOW_SEL  := prev | next | first | last | recent | mouse | largest | smallest | STACK_SEL | DIR_SEL | <window id>
-# DISPLAY_SEL := prev | next | first | last | recent | mouse | DIR_SEL | <arrangement index (1-based)>
-# SPACE_SEL   := prev | next | first | last | recent | mouse | <mission-control index (1-based)> | LABEL
 
 # @param setting
 # @param value
@@ -338,43 +322,41 @@ events() {
         if test "$cmd" = "add" -o "$cmd" = "a"; then
             $yabai_cmd="add"
             local ybie # yabai event name
-
             case "$evt" in
-                "application_launched") ybie="application_launched";;
-                "application_launched") ybie="application_launched";;
-                "application_terminated") ybie="application_terminated";;
-                "application_front_switched") ybie="application_front_switched";;
-                "application_activated") ybie="application_activated";;
-                "application_deactivated") ybie="application_deactivated";;
-                "application_visible") ybie="application_visible";;
-                "application_hidden") ybie="application_hidden";;
-                "window_created") ybie="window_created";;
-                "window_destroyed") ybie="window_destroyed";;
-                "window_focused") ybie="window_focused";;
-                "window_moved") ybie="window_moved";;
-                "window_resized") ybie="window_resized";;
-                "window_minimized") ybie="window_minimized";;
-                "window_deminimized") ybie="window_deminimized";;
-                "window_title_changed") ybie="window_title_changed";;
-                "space_changed") ybie="space_changed";;
-                "display_added") ybie="display_added";;
-                "display_removed") ybie="display_removed";;
-                "display_moved") ybie="display_moved";;
-                "display_resized") ybie="display_resized";;
-                "display_changed") ybie="display_changed";;
-                "mouse_down") ybie="mouse_down";;
-                "mouse_up") ybie="mouse_up";;
-                "mouse_dragged") ybie="mouse_dragged";;
-                "mouse_moved") ybie="mouse_moved";;
-                "mission_control_enter") ybie="mission_control_enter";;
-                "mission_control_check_for_exit") ybie="mission_control_check_for_exit";;
-                "mission_control_exit") ybie="mission_control_exit";;
-                "dock_did_restart") ybie="dock_did_restart";;
-                "menu_opened") ybie="menu_opened";;
-                "menu_bar_hidden_changed") ybie="menu_bar_hidden_changed";;
-                "dock_did_change_pref") ybie="dock_did_change_pref";;
-                "system_woke") ybie="system_woke";;
-                "daemon_message") ybie="daemon_message";;
+                "appl")         ybie="application_launched";;
+                "appk")         ybie="application_terminated";;
+                "appfs")        ybie="application_front_switched";;
+                "appac")        ybie="application_activated";;
+                "appda")        ybie="application_deactivated";;
+                "appvi")        ybie="application_visible";;
+                "apphi")        ybie="application_hidden";;
+                "win_nw")       ybie="window_created";;
+                "win_kl")       ybie="window_destroyed";;
+                "win_fc")       ybie="window_focused";;
+                "win_mv")       ybie="window_moved";;
+                "win_rz")       ybie="window_resized";;
+                "win_mi")       ybie="window_minimized";;
+                "win_dm")       ybie="window_deminimized";;
+                "win_tc")       ybie="window_title_changed";;
+                "spce_ch")      ybie="space_changed";;
+                "disp_ad")      ybie="display_added";;
+                "disp_rm")      ybie="display_removed";;
+                "disp_mv")      ybie="display_moved";;
+                "disp_rz")      ybie="display_resized";;
+                "disp_ch")      ybie="display_changed";;
+                "ms_dn")        ybie="mouse_down";;
+                "ms_up")        ybie="mouse_up";;
+                "ms_dr")        ybie="mouse_dragged";;
+                "ms_mv")        ybie="mouse_moved";;
+                "msnc_ent")     ybie="mission_control_enter";;
+                "msnc_cfexit")  ybie="mission_control_check_for_exit";;
+                "msnc_exit")    ybie="mission_control_exit";;
+                "dock_dr")      ybie="dock_did_restart";;
+                "menu_o")       ybie="menu_opened";;
+                "menu_bhc")     ybie="menu_bar_hidden_changed";;
+                "dock_dcp")     ybie="dock_did_change_pref";;
+                "sys_woke")     ybie="system_woke";;
+                "daemon_msg")   ybie="daemon_message";;
                 *) echo "NO_MATCH";;
             esac
             echo "signal add"
