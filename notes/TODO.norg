@@ -7,6 +7,10 @@
 	version: 0.1
 @end
 
+* mouse
+ ** "git@github.com:molleweide/mouse.git"
+ ** `sudo pip install mouse`
+
 * add to path > https://github.com/jez/vim-superman
 
 https://github.com/rothgar/awesome-tuis#messaging
