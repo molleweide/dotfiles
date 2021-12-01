@@ -29,13 +29,14 @@ call_dwm() {
 }
 
 reload() {
-    if is-mac; then
-        brew services restart yabai
-        brew services restart skhd
-        limelight # there is a wierd err msg but it works...
-    else
-	    echo 'reload linux wm...'
-    fi
+    echo "reload"
+    # if is-mac; then
+    #     brew services restart yabai
+    #     brew services restart skhd
+    #     limelight # there is a wierd err msg but it works...
+    # else
+	#  echo 'reload linux wm...'
+    # fi
 }
 
 # -------------------------------------
@@ -246,7 +247,7 @@ space() {
 # @param [ window_selection ]
 
 window() {
-    test -z "${arg1-}" && exit 1
+    ! test -z "${arg1-}" || exit 1
     local cmd=$arg1
     local arg=$arg2
     local win_sel
@@ -294,7 +295,6 @@ window() {
                 ;;
         esac
         call "$yabai_domain $win_sel $yabai_cmd $arg"
-
     else
         echo "linux todo..."
                 fi
@@ -364,7 +364,7 @@ rule() {
         # yabai -m rule --add label="AppCleaner" app="^AppCleaner$" manage=off
         # yabai -m rule --add label="Pika" app="^Pika$" manage=off
 
-        if test -z "$cmd" = "add" -o "$cmd" = "a"; then
+        if test "$cmd" = "add" -o "$cmd" = "a"; then
             # yabai -m rule --add [<ARGUMENT>]        Add a new rule.
             $yabai_cmd="--add"
 
@@ -373,7 +373,7 @@ rule() {
 
                 # extract everything before `=`
 	            case "$arg" in
-	                "label") $rule_arg+=("label=\"\"") # extract the pattern part
+	                "label") rule_args+=("label=\"\"") # extract the pattern part
 	                    ;;# label=<LABEL>                     Label used to identify the rule with a unique name
 	                "app")
 	                    ;; # app[!]=<REGEX>                    Name of application. If ! is present, invert the match.
@@ -406,9 +406,11 @@ rule() {
 
 	        elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
                 # yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
+                echo "rule remove"
 
 	        elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
                 # yabai -m rule --list                    Output list of registered rules.
+                echo "rule list"
 
 	    fi
 
@@ -423,20 +425,9 @@ rule() {
 # --------------------------------------
 
 events() {
-    echo "signal"
-
-    if test -z "${arg1-}"; then
-        exit 1
-    fi
-
+    test -z "${arg1-}" || exit 1
     local cmd=$arg1
     local arg=$arg2
-
-    # optional params
-    label=""
-    app=""
-    title=""
-
     if is-mac; then
         local yabai_domain="yabai -m signal"
         local yabai_cmd
@@ -454,7 +445,7 @@ events() {
         # yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
         # yabai -m signal --add event=window_title_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
 
-        if test -z "$cmd" = "add"; then
+        if test "$cmd" = "add"; then
             # yabai -m signal --add event=<EVENT> action=<ACTION> /// [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
             # --add event=<EVENT> action=<ACTION> [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
             #     Add an optionally labelled signal to execute an action after processing an event of the given type.
@@ -494,15 +485,18 @@ events() {
             # dock_did_change_pref              The macOS Dock preferences changes.
             # system_woke                       MacOS wakes from sleep.
             # daemon_message                    Yabai receives a message on its socket.
+            echo "signal add"
 
-	    elif test "$cmd" = 'remove' -o "$arg" = 'rm'; then
+	    elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
             # yabai -m signal --remove <SIGNAL_SEL>
             # --remove <SIGNAL_SEL>
             #     Remove an existing signal with the given index or label.
+            echo "signal remove"
 
-	    elif test "$cmd" = 'list' -o "$arg" = 'ls'; then
+	    elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
             # --list
             #     Output list of registered signals.
+            echo "signal list"
 
 	    fi
 
@@ -513,24 +507,15 @@ events() {
 }
 
 case "$action" in
-    "reload" | "r") reload
-        ;;
-    "config_global" | "cg") config_global
-        ;;
-    "config_space" | "cs") config_space
-        ;;
-    "space" | "s") space
-        ;;
-    "window" | "w") window
-        ;;
-    "monitor" | "d") monitor
-        ;;
-    "query" | "q") query
-        ;;
-    "rule" | "r") rule
-        ;;
-    "events" | "e") events
-        ;;
+    "reload" | "r") reload;;
+    "config_global" | "cg") config_global;;
+    "config_space" | "cs") config_space;;
+    "space" | "s") space;;
+    "window" | "w") window;;
+    "monitor" | "d") monitor;;
+    "query" | "q") query;;
+    "rule" | "r") rule;;
+    "events" | "e") events;;
     *) exit 1 # no options -> return err
         ;;
 esac
