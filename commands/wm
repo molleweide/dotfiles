@@ -166,20 +166,20 @@ window() {
         local yabai_domain="yabai -m window"
         local yabai_cmd
         case "$cmd" in
-            "focus" | "foc") yabai_cmd="focus" ;; # <WINDOW_SEL>
-            "swap" | "sw") yabai_cmd="swap" ;; # <WINDOW_SEL>
-            "warp" | "wrp") yabai_cmd="warp" ;; # <WINDOW_SEL>
-            "stack" | "stk") yabai_cmd="stack" ;; # <WINDOW_SEL>
-            "insert" | "zz") yabai_cmd="insert" ;; # <DIR_SEL>|stack
-            "grid" | "zz") yabai_cmd="grid" ;; # <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
-            "move" | "zz") yabai_cmd="move" ;; # abs|rel:<dx>:<dy>
-            "resize" | "zz") yabai_cmd="resize" ;; # top|left|bottom|right|top_left|top_right|bottom_right|bottom_left|abs:<dx>:<dy>
-            "ratio" | "zz") yabai_cmd="ratio" ;; # rel|abs:<dr>
-            "toggle" | "zz") yabai_cmd="toggle" ;; # float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose
-            "layer" | "zz") yabai_cmd="layer" ;; # <LAYER>
-            "opacity" | "zz") yabai_cmd="opacity" ;; # <floating point number>
-            "display" | "zz") yabai_cmd="display" ;; # <DISPLAY_SEL>
-            "space" | "zz") yabai_cmd="space" ;; # <SPACE_SEL>
+            "focus" | "foc") yabai_cmd="focus";; # <WINDOW_SEL>
+            "swap" | "sw") yabai_cmd="swap";; # <WINDOW_SEL>
+            "warp" | "wrp") yabai_cmd="warp";; # <WINDOW_SEL>
+            "stack" | "stk") yabai_cmd="stack";; # <WINDOW_SEL>
+            "insert" | "zz") yabai_cmd="insert";; # <DIR_SEL>|stack
+            "grid" | "zz") yabai_cmd="grid";; # <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+            "move" | "zz") yabai_cmd="move";; # abs|rel:<dx>:<dy>
+            "resize" | "zz") yabai_cmd="resize";; # top|left|bottom|right|top_left|top_right|bottom_right|bottom_left|abs:<dx>:<dy>
+            "ratio" | "zz") yabai_cmd="ratio";; # rel|abs:<dr>
+            "toggle" | "zz") yabai_cmd="toggle";; # float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose
+            "layer" | "zz") yabai_cmd="layer";; # <LAYER>
+            "opacity" | "zz") yabai_cmd="opacity";; # <floating point number>
+            "display" | "zz") yabai_cmd="display";; # <DISPLAY_SEL>
+            "space" | "zz") yabai_cmd="space";; # <SPACE_SEL>
             "minimize" | "zz") yabai_cmd="minimize";;
             "deminimize" | "zz") yabai_cmd="deminimize";;
             "close" | "zz") yabai_cmd="close" ;;
@@ -188,8 +188,8 @@ window() {
         call "$yabai_domain $win_sel --$yabai_cmd $arg"
     else
         echo "linux todo..."
-            fi
-        }
+    fi
+}
 
 # @param command        Retrieve information about command.
 # @param [ argument ]   Constrain matches to argument.
@@ -307,13 +307,13 @@ events() {
                 "ms_up")        ybie="mouse_up";;
                 "ms_dr")        ybie="mouse_dragged";;
                 "ms_mv")        ybie="mouse_moved";;
-                "msnc_ent")     ybie="mission_control_enter";;
-                "msnc_cfexit")  ybie="mission_control_check_for_exit";;
-                "msnc_exit")    ybie="mission_control_exit";;
-                "dock_dr")      ybie="dock_did_restart";;
-                "menu_o")       ybie="menu_opened";;
-                "menu_bhc")     ybie="menu_bar_hidden_changed";;
-                "dock_dcp")     ybie="dock_did_change_pref";;
+                "msc_ent")     ybie="mission_control_enter";;
+                "msc_cfexit")  ybie="mission_control_check_for_exit";;
+                "msc_exit")    ybie="mission_control_exit";;
+                "dockdr")      ybie="dock_did_restart";;
+                "dockdcp")     ybie="dock_did_change_pref";;
+                "menuo")       ybie="menu_opened";;
+                "menubhc")     ybie="menu_bar_hidden_changed";;
                 "sys_woke")     ybie="system_woke";;
                 "daemon_msg")   ybie="daemon_message";;
                 *) echo "NO_MATCH";;
