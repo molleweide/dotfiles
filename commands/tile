@@ -73,22 +73,12 @@ reload() {
 
 # SPACE_SEL   := prev | next | first | last | recent | mouse | <mission-control index (1-based)> | LABEL
 
-# -----------------------------------
-# ---       GLOBAL SETTINGS       ---
-# -----------------------------------
 
-# yabai -m config <global setting>
-#     Get or set the value of <global setting>.
+# ---------------------------------------------
+# ---       GLOBAL | <global setting>       ---
+# ---------------------------------------------
 
 # :: setting / value
-
-# yabai -m config window_opacity               on
-# yabai -m config window_opacity_duration      0.0
-# yabai -m config active_window_opacity        1.0
-# yabai -m config normal_window_opacity        0.90
-# yabai -m config window_border                off
-# yabai -m config window_border_width          12
-# yabai -m config active_window_border_color   0xff775759
 
 cfg() {
 
@@ -105,6 +95,14 @@ cfg() {
 
         local yabai_domain="yabai -m config"
         local yabai_setting
+
+        # yabai -m config window_opacity               on
+        # yabai -m config window_opacity_duration      0.0
+        # yabai -m config active_window_opacity        1.0
+        # yabai -m config normal_window_opacity        0.90
+        # yabai -m config window_border                off
+        # yabai -m config window_border_width          12
+        # yabai -m config active_window_border_color   0xff775759
 
         case "$setting" in
             "debug") $yabai_setting="debug_output"
@@ -161,12 +159,9 @@ cfg() {
     fi
 }
 
-# ----------------------------------
-# ---       SPACE SETTINGS       ---
-# ----------------------------------
-
-# yabai -m config [--space <SPACE_SEL>] <space setting>
-#     Get or set the value of <space setting>.
+# --------------------------------------------------------------------------
+# ---       SPACE SETTINGS | [--space <SPACE_SEL>] <space setting>       ---
+# --------------------------------------------------------------------------
 
 # :: selection / setting / value
 
@@ -214,21 +209,13 @@ cfs() {
     fi
 }
 
-# ---------------------------
-# ---       DISPLAY       ---
-# ---------------------------
-
-# General Syntax
-#     yabai -m display [<DISPLAY_SEL>] <COMMAND>
+# -------------------------------------------------------
+# ---       DISPLAY | [<DISPLAY_SEL>] <COMMAND>       ---
+# -------------------------------------------------------
 
 # COMMAND
 #     --focus <DISPLAY_SEL>
 #         Focus the given display.
-
-# DISPLAY_SEL := prev | next | first | last | recent | mouse | DIR_SEL | <arrangement index (1-based)>
-
-# --focus <DISPLAY_SEL>
-#     Focus the given display.
 
 dsp() {
     if test -z "${arg2-}"; then
@@ -245,12 +232,9 @@ dsp() {
     fi
 }
 
-# -------------------------
-# ---       SPACE       ---
-# -------------------------
-
-# General Syntax
-#     yabai -m space [<SPACE_SEL>] <COMMAND>
+# ---------------------------------------------------
+# ---       SPACE | [<SPACE_SEL>] <COMMAND>       ---
+# ---------------------------------------------------
 
 spc() {
     if test -z "${arg1-}"; then
@@ -304,12 +288,9 @@ spc() {
     fi
 }
 
-# --------------------------
-# ---       WINDOW       ---
-# --------------------------
-
-# General Syntax
-#     yabai -m window [<WINDOW_SEL>] <COMMAND>
+# -----------------------------------------------------
+# ---       WINDOW | [<WINDOW_SEL>] <COMMAND>       ---
+# -----------------------------------------------------
 
 win() {
     if test -z "${arg1-}"; then
@@ -382,21 +363,11 @@ win() {
     fi
 }
 
-# -------------------------
-# ---       QUERY       ---
-# -------------------------
+# --------------------------------------------------
+# ---       query | <COMMAND> [<ARGUMENT>]       ---
+# --------------------------------------------------
 
-# yabai -m query <COMMAND> [<ARGUMENT>]
-
-# --displays        Retrieve information about displays.
-# --spaces          Retrieve information about spaces.
-# --windows         Retrieve information about windows.
-
-# --display [<DISPLAY_SEL>]     Constrain matches to the selected display.
-# --space [<SPACE_SEL>]         Constrain matches to the selected space.
-# --window [<WINDOW_SEL>]       Constrain matches to the selected window.
-
-qry() {
+query() {
     if test -z "${arg1-}"; then
         exit 1
     fi
@@ -406,27 +377,25 @@ qry() {
 
     if is-mac; then
         yabai -m query $cmd $arg
+
+        # --displays        Retrieve information about displays.
+        # --spaces          Retrieve information about spaces.
+        # --windows         Retrieve information about windows.
+
+        # --display [<DISPLAY_SEL>]     Constrain matches to the selected display.
+        # --space [<SPACE_SEL>]         Constrain matches to the selected space.
+        # --window [<WINDOW_SEL>]       Constrain matches to the selected window.
+
     else
         echo "linux todo..."
     fi
 }
 
+# ------------------------------------
+# ---       RULE | <COMMAND>       ---
+# ------------------------------------
 
-# ------------------------
-# ---       RULE       ---
-# ------------------------
-
-# yabai -m rule <COMMAND>
-
-# RULE EXAMPLES
-# yabai -m rule --add label="Spark" app="^Spark$" title!="^Spark" manage=off
-# yabai -m rule --add label="Hammerspoon" app="^Hammerspoon$" manage=off
-# yabai -m rule --add label="SSH Tunnel Manager" app="^SSH Tunnel Manager$" manage=off
-# yabai -m rule --add label="ImageOptim" app="^ImageOptim$" manage=off
-# yabai -m rule --add label="AppCleaner" app="^AppCleaner$" manage=off
-# yabai -m rule --add label="Pika" app="^Pika$" manage=off
-
-rle() {
+rule() {
     echo "rule"
 
     if test -z "${arg1-}"; then
@@ -439,6 +408,14 @@ rle() {
     if is-mac; then
         # yabai -m rule $cmd $arg
         local yabai_domain="yabai -m rule"
+
+        # RULE EXAMPLES
+        # yabai -m rule --add label="Spark" app="^Spark$" title!="^Spark" manage=off
+        # yabai -m rule --add label="Hammerspoon" app="^Hammerspoon$" manage=off
+        # yabai -m rule --add label="SSH Tunnel Manager" app="^SSH Tunnel Manager$" manage=off
+        # yabai -m rule --add label="ImageOptim" app="^ImageOptim$" manage=off
+        # yabai -m rule --add label="AppCleaner" app="^AppCleaner$" manage=off
+        # yabai -m rule --add label="Pika" app="^Pika$" manage=off
 
         if test -z "$cmd" = "add"; then
             # yabai -m rule --add [<ARGUMENT>]        Add a new rule.
@@ -457,14 +434,11 @@ rle() {
             # native-fullscreen=<BOOL_SEL>      Window should enter native macOS fullscreen mode.
             # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>       Set window frame based on a self-defined grid.
 
-
 	    elif test "$cmd" = 'remove' -o "$arg" = 'rm'; then
             # yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
 
-
 	    elif test "$cmd" = 'list' -o "$arg" = 'ls'; then
             # yabai -m rule --list                    Output list of registered rules.
-
 
 	    fi
 
@@ -474,13 +448,9 @@ rle() {
     fi
 }
 
-# --------------------------
-# ---       SIGNAL       ---
-# --------------------------
-
-# signal    | yabai -m signal <COMMAND>
-
-# EVENTS
+# --------------------------------------
+# ---       EVENTS | <COMMAND>       ---
+# --------------------------------------
 
 # application_launched              A new application is launched. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
 # application_terminated            An application is terminated. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
@@ -517,38 +487,7 @@ rle() {
 # system_woke                       MacOS wakes from sleep.
 # daemon_message                    Yabai receives a message on its socket.
 
-# SIGNAL EXAMPLES
-
-# # Refresh spaces widget on space change
-# yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-
-# # Refresh spaces widget on display focus change
-# yabai -m signal --add event=display_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-
-# # Refresh spaces widget on window resize
-# yabai -m signal --add event=window_resized action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-
-# # Refresh process widget on space change
-# yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-
-# # Refresh process widget on when focused application changes
-# yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# # Refresh spaces widget on when focused application changes
-# yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-
-# # Refresh process widget on when focused application changes
-# yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# # Refresh spaces widget on when focused application changes
-# yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-
-# # Refresh process widget on when an application window is closed
-# yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# # Refresh spaces widget on when an application window is closed
-# yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-
-# # Refresh process widget when current window title changes
-# yabai -m signal --add event=window_title_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-sig() {
+events() {
     echo "signal"
 
     if test -z "${arg1-}"; then
@@ -567,26 +506,35 @@ sig() {
         local yabai_domain="yabai -m signal"
         local yabai_cmd
 
+        # SIGNAL EXAMPLES
+        # yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
+        # yabai -m signal --add event=display_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
+        # yabai -m signal --add event=window_resized action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
+        # yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
+        # yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
+        # yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
+        # yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
+        # yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
+        # yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
+        # yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
+        # yabai -m signal --add event=window_title_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
+
         if test -z "$cmd" = "add"; then
             # yabai -m signal --add event=<EVENT> action=<ACTION> /// [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
             # --add event=<EVENT> action=<ACTION> [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
             #     Add an optionally labelled signal to execute an action after processing an event of the given type.
             #     Some signals can be specified to trigger based on the application name and/or window title.
 
-
 	    elif test "$cmd" = 'remove' -o "$arg" = 'rm'; then
             # yabai -m signal --remove <SIGNAL_SEL>
             # --remove <SIGNAL_SEL>
             #     Remove an existing signal with the given index or label.
 
-
 	    elif test "$cmd" = 'list' -o "$arg" = 'ls'; then
             # --list
             #     Output list of registered signals.
 
-
 	    fi
-
 
         # call "$yabai_domain $yabai_cmd $arg"
     else
