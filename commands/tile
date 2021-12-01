@@ -35,15 +35,6 @@ reload() {
     fi
 }
 
-
-# ------------------------
-# ---       TODO       ---
-# ------------------------
-
-# - split into commands
-# - can I merge both config functions?
-
-
 # -------------------------------------
 # ---       YABAI DEFINITIONS       ---
 # -------------------------------------
@@ -67,7 +58,7 @@ reload() {
 
 # :: setting / value
 
-cfg() {
+config_global() {
 
     echo "config global"
 
@@ -154,7 +145,7 @@ cfg() {
 
 # eg. `# yabai -m config --space 3 layout bsp`
 
-cfs() {
+config_space() {
 
     echo "config space"
 
@@ -204,7 +195,7 @@ cfs() {
 #     --focus <DISPLAY_SEL>
 #         Focus the given display.
 
-dsp() {
+display() {
     if test -z "${arg2-}"; then
         exit 1
     fi
@@ -223,7 +214,7 @@ dsp() {
 # ---       SPACE | [<SPACE_SEL>] <COMMAND>       ---
 # ---------------------------------------------------
 
-spc() {
+space() {
     if test -z "${arg1-}"; then
         exit 1
     fi
@@ -279,7 +270,7 @@ spc() {
 # ---       WINDOW | [<WINDOW_SEL>] <COMMAND>       ---
 # -----------------------------------------------------
 
-win() {
+window() {
     if test -z "${arg1-}"; then
         exit 1
     fi
@@ -426,41 +417,6 @@ rule() {
 # ---       EVENTS | <COMMAND>       ---
 # --------------------------------------
 
-# application_launched              A new application is launched. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
-# application_terminated            An application is terminated. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
-# application_front_switched        The front-most application changes. Passes two arguments: $YABAI_PROCESS_ID, $YABAI_RECENT_PROCESS_ID
-# application_activated             An application is activated. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
-# application_deactivated           An application is deactivated. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
-# application_visible               An application is unhidden. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
-# application_hidden                An application is hidden. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
-# window_created                    A window is created. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
-# window_destroyed                  A window is destroyed. Passes one argument: $YABAI_WINDOW_ID
-# window_focused                    A window becomes the key-window for its application. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
-# window_moved                      A window changes position. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
-# window_resized                    A window changes dimensions. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
-# window_minimized                  A window has been minimized. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
-# window_deminimized                A window has been deminimized. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
-# window_title_changed              A window changes its title. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
-# space_changed                     The active space has changed. Passes two arguments: $YABAI_SPACE_ID, $YABAI_RECENT_SPACE_ID
-# display_added                     A new display has been added. Passes one argument: $YABAI_DISPLAY_ID
-# display_removed                   A display has been removed. Passes one argument: $YABAI_DISPLAY_ID
-# display_moved                     A change has been made to display arrangement. Passes one argument: $YABAI_DISPLAY_ID
-# display_resized                   A display has changed resolution. Passes one argument: $YABAI_DISPLAY_ID
-# display_changed                   The active display has changed. Passes two arguments: $YABAI_DISPLAY_ID, $YABAI_RECENT_DISPLAY_ID
-# mouse_down                        A mouse button has been pressed. Passes two arguments: $YABAI_BUTTON, $YABAI_POINT
-# mouse_up                          A mouse button has been released. Passes two arguments: $YABAI_BUTTON, $YABAI_POINT
-# mouse_dragged                     The mouse is moved with one of its buttons pressed. Passes two arguments: $YABAI_BUTTON, $YABAI_POINT
-# mouse_moved                       The mouse is moved. Passes two arguments: $YABAI_BUTTON, $YABAI_POINT
-# mission_control_enter             Mission-control activates.
-# mission_control_check_for_exit    Periodically while mission-control is active.
-# mission_control_exit              Mission-control deactivates.
-# dock_did_restart                  Dock.app restarts.
-# menu_opened                       A menu is opened.
-# menu_bar_hidden_changed           The macOS menubar autohide setting changes.
-# dock_did_change_pref              The macOS Dock preferences changes.
-# system_woke                       MacOS wakes from sleep.
-# daemon_message                    Yabai receives a message on its socket.
-
 events() {
     echo "signal"
 
@@ -499,6 +455,41 @@ events() {
             #     Add an optionally labelled signal to execute an action after processing an event of the given type.
             #     Some signals can be specified to trigger based on the application name and/or window title.
 
+            # application_launched              A new application is launched. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
+            # application_terminated            An application is terminated. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
+            # application_front_switched        The front-most application changes. Passes two arguments: $YABAI_PROCESS_ID, $YABAI_RECENT_PROCESS_ID
+            # application_activated             An application is activated. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
+            # application_deactivated           An application is deactivated. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
+            # application_visible               An application is unhidden. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
+            # application_hidden                An application is hidden. Eligible for app filter. Passes one argument: $YABAI_PROCESS_ID
+            # window_created                    A window is created. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
+            # window_destroyed                  A window is destroyed. Passes one argument: $YABAI_WINDOW_ID
+            # window_focused                    A window becomes the key-window for its application. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
+            # window_moved                      A window changes position. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
+            # window_resized                    A window changes dimensions. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
+            # window_minimized                  A window has been minimized. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
+            # window_deminimized                A window has been deminimized. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
+            # window_title_changed              A window changes its title. Eligible for both app and title filter. Passes one argument: $YABAI_WINDOW_ID
+            # space_changed                     The active space has changed. Passes two arguments: $YABAI_SPACE_ID, $YABAI_RECENT_SPACE_ID
+            # display_added                     A new display has been added. Passes one argument: $YABAI_DISPLAY_ID
+            # display_removed                   A display has been removed. Passes one argument: $YABAI_DISPLAY_ID
+            # display_moved                     A change has been made to display arrangement. Passes one argument: $YABAI_DISPLAY_ID
+            # display_resized                   A display has changed resolution. Passes one argument: $YABAI_DISPLAY_ID
+            # display_changed                   The active display has changed. Passes two arguments: $YABAI_DISPLAY_ID, $YABAI_RECENT_DISPLAY_ID
+            # mouse_down                        A mouse button has been pressed. Passes two arguments: $YABAI_BUTTON, $YABAI_POINT
+            # mouse_up                          A mouse button has been released. Passes two arguments: $YABAI_BUTTON, $YABAI_POINT
+            # mouse_dragged                     The mouse is moved with one of its buttons pressed. Passes two arguments: $YABAI_BUTTON, $YABAI_POINT
+            # mouse_moved                       The mouse is moved. Passes two arguments: $YABAI_BUTTON, $YABAI_POINT
+            # mission_control_enter             Mission-control activates.
+            # mission_control_check_for_exit    Periodically while mission-control is active.
+            # mission_control_exit              Mission-control deactivates.
+            # dock_did_restart                  Dock.app restarts.
+            # menu_opened                       A menu is opened.
+            # menu_bar_hidden_changed           The macOS menubar autohide setting changes.
+            # dock_did_change_pref              The macOS Dock preferences changes.
+            # system_woke                       MacOS wakes from sleep.
+            # daemon_message                    Yabai receives a message on its socket.
+
 	    elif test "$cmd" = 'remove' -o "$arg" = 'rm'; then
             # yabai -m signal --remove <SIGNAL_SEL>
             # --remove <SIGNAL_SEL>
@@ -516,16 +507,24 @@ events() {
     fi
 }
 
-########################################################
-########################################################
-########################################################
-
 case "$action" in
     "reload" | "r") reload
         ;;
-    "layout" | "l") layout
+    "config_global" | "cg") config_global
         ;;
-    "ratio") ratio
+    "config_space" | "cs") config_space
+        ;;
+    "space" | "s") space
+        ;;
+    "window" | "w") window
+        ;;
+    "display" | "d") display
+        ;;
+    "query" | "q") query
+        ;;
+    "rule" | "r") rule
+        ;;
+    "events" | "e") events
         ;;
     *) exit 1 # no options -> return err
         ;;
