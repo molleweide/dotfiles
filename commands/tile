@@ -59,32 +59,16 @@ reload() {
 # ---       GLOBAL | <global setting>       ---
 # ---------------------------------------------
 
-# :: setting / value
+# @param setting
+# @param value
 
 config_global() {
-
-    echo "config global"
-
-    if test -z "${arg1-}" -a "${arg2-}"; then
-        exit 1
-    fi
-
+    ! test -z "${arg1-}" -a "${arg2-}" || exit 1
     local setting=$arg1
     local value=$arg2
-
     if is-mac; then
-
         local yabai_domain="yabai -m config"
         local yabai_setting
-
-        # yabai -m config window_opacity               on
-        # yabai -m config window_opacity_duration      0.0
-        # yabai -m config active_window_opacity        1.0
-        # yabai -m config normal_window_opacity        0.90
-        # yabai -m config window_border                off
-        # yabai -m config window_border_width          12
-        # yabai -m config active_window_border_color   0xff775759
-
         case "$setting" in
             "debug") $yabai_setting="debug_output"
                 ;; # [<BOOL_SEL>]         Enable output of debug information to stdout.
@@ -133,7 +117,6 @@ config_global() {
             *) echo default
                 ;;
         esac
-
         call "$yabai_domain $yabai_setting $value"
     else
         echo "linux todo..."
@@ -144,38 +127,21 @@ config_global() {
 # ---       SPACE SETTINGS | [--space <SPACE_SEL>] <space setting>       ---
 # --------------------------------------------------------------------------
 
-
-
-# :: setting / value / space_selection
-
-# eg. `# yabai -m config --space 3 layout bsp`
-
-# TODO:
-# how do I handle the optional param here.
-# here it would make sense to make the --space flag into the second arg.
-
+# @param setting
+# @param value
+# @param space_selection
 
 config_space() {
-
-    echo "config space"
-
-    if test -z "${arg1-}" -a "${arg2-}"; then
-        exit 1
-    fi
-
+    ! test -z "${arg1-}" -a "${arg2-}" || exit 1
     local setting=$arg1
     local value=$arg2
-
     local sel=$arg3
     local space_sel
-    if ! test -z "${sel-}"; then
-        $space_sel="--space $sel"
-    fi
+    ! test -z "${arg3}" && $space_sel="--space $sel"
 
     if is-mac; then
         local yabai_domain="yabai -m config --space"
         local yabai_setting
-
         case "$setting" in
             "layout" | "lt") $yabai_setting="layout"
                 ;; # [bsp|stack|float]       Set the layout of the selected space.
@@ -192,8 +158,7 @@ config_space() {
             *) echo default
                 ;;
         esac
-
-        call "$yabai_domain $yabai_setting $value $space_sel"
+        call "$yabai_domain  $space_sel $yabai_setting $value"
     else
         echo "linux todo..."
     fi
@@ -203,22 +168,16 @@ config_space() {
 # ---       MONITOR       ---
 # ---------------------------
 
-# eg, wm monitor next
-
-# DISPLAY_SEL := prev|next|first|last|recent|mouse|DIR_SEL|<arrangement index (1-based)>
+# @param display_selection
 
 monitor() {
-    if test -z "${arg1-}"; then
-        exit 1
-    fi
-
+    test -z "${arg1-}" || exit 1
     local display_sel=$arg1
-
     if is-mac; then
-        local yabai_cmd="yabai -m display --focus $display_sel"
-        call $yabai_cmd
+        local yabai_domain="yabai -m display --focus"
+        call "$yabai_domain $display_sel"
     else
-        echo "linux todo..."
+        echo "linux"
     fi
 }
 
@@ -226,22 +185,20 @@ monitor() {
 # ---       SPACE | [<SPACE_SEL>] <COMMAND>       ---
 # ---------------------------------------------------
 
+# @param command
+# @param value
+# @param space_selection
+
 space() {
-    if test -z "${arg1-}"; then
-        exit 1
-    fi
-
+    test -z "${arg1-}" && exit 1
     local cmd=$arg1
-    local arg=$arg2 # if arg2 is empty that is not a problem
-
+    local value=$arg2 # if arg2 is empty that is not a problem
     local space_sel
-    ! test -z "${arg3}" && $space_sel="--space $sel"
+    ! test -z "${arg3}" && $space_sel="--space $arg3"
 
     if is-mac; then
-
         local yabai_domain="yabai -m space"
         local yabai_cmd
-
         case "$cmd" in
             "focus" | "foc")    $yabai_cmd="--focus"
                 ;; # <SPACE_SEL>
@@ -274,8 +231,7 @@ space() {
             *) echo default
                 ;;
         esac
-
-        call "$yabai_domain $yabai_cmd $arg $space_sel"
+        call "$yabai_domain $space_sel $yabai_cmd $value"
     else
         echo "linux todo..."
     fi
@@ -285,21 +241,20 @@ space() {
 # ---       WINDOW | [<WINDOW_SEL>] <COMMAND>       ---
 # -----------------------------------------------------
 
+# @param command
+# @param [ value ]
+# @param [ window_selection ]
+
 window() {
-    if test -z "${arg1-}"; then
-        exit 1
-    fi
-
+    test -z "${arg1-}" && exit 1
     local cmd=$arg1
-    local arg=$arg2 # if arg2 is empty that is not a problem
-
-    # local win_sel
-    # ! test -z "${arg3}" && $win_sel="--window $sel"
+    local arg=$arg2
+    local win_sel
+    ! test -z "${arg3}" && $win_sel="--window $arg3"
 
     if is-mac; then
         local yabai_domain="yabai -m window"
         local yabai_cmd
-
         case "$cmd" in
             "focus" | "foc") $yabai_cmd="--focus"
                 ;; # <WINDOW_SEL>
@@ -338,8 +293,7 @@ window() {
             *) echo default
                 ;;
         esac
-
-        call "$yabai_domain $yabai_cmd $arg"
+        call "$yabai_domain $win_sel $yabai_cmd $arg"
 
     else
         echo "linux todo..."
@@ -350,25 +304,30 @@ window() {
 # ---       query | <COMMAND> [<ARGUMENT>]       ---
 # --------------------------------------------------
 
+# @param command
+# @param argument
+
 query() {
-    if test -z "${arg1-}"; then
-        exit 1
-    fi
-
+    test -z "${arg1-}" && exit 1
     local cmd=$arg1
-    local arg=$arg2 # if arg2 is empty that is not a problem
-
+    local arg=$arg2
     if is-mac; then
         yabai -m query $cmd $arg
+        local yabai_domain="yabai -m query"
 
+        # COMMAND
         # --displays        Retrieve information about displays.
         # --spaces          Retrieve information about spaces.
         # --windows         Retrieve information about windows.
+        local yabai_cmd=$cmd
 
+        # ARGUMENT
         # --display [<DISPLAY_SEL>]     Constrain matches to the selected display.
         # --space [<SPACE_SEL>]         Constrain matches to the selected space.
         # --window [<WINDOW_SEL>]       Constrain matches to the selected window.
+        local argument=$arg
 
+        call "$yabai_domain $argument"
     else
         echo "linux todo..."
     fi
@@ -378,18 +337,12 @@ query() {
 # ---       RULE | <COMMAND>       ---
 # ------------------------------------
 
+# @param command
+# @param [ add_arg1 | add_arg2 | ... | add_argN ] OR [ rm_rule ]
+
 rule() {
-    echo "rule"
-
-    if test -z "${arg1-}"; then
-        exit 1
-    fi
-
+    test -z "${arg1-}" && exit 1
     local cmd=$arg1
-    # local arg=$arg2 # if arg2 is empty that is not a problem
-
-    local yabai_domain
-    local yabai_cmd
 
     # TODO:
     # associative array
@@ -400,7 +353,8 @@ rule() {
     local rule_args=()
 
     if is-mac; then
-        $yabai_domain="yabai -m rule"
+        local $yabai_domain="yabai -m rule"
+        local yabai_cmd
 
         # RULE EXAMPLES
         # yabai -m rule --add label="Spark" app="^Spark$" title!="^Spark" manage=off
@@ -414,12 +368,8 @@ rule() {
             # yabai -m rule --add [<ARGUMENT>]        Add a new rule.
             $yabai_cmd="--add"
 
-
-
             # starting from $3????
             for $arg in "$@"; do
-
-
 
                 # extract everything before `=`
 	            case "$arg" in
