@@ -13,6 +13,8 @@
 
 echo "\$@: $@"
 
+fn_args=$@
+
 action="${1-}"
 ! test -z "${action}" || exit 1
 arg1="${2-}"
@@ -20,7 +22,7 @@ arg2="${3-}"
 arg3="${4-}"
 
 call() {
-    echo "$1"
+    echo "$@"
     # ($1)
 }
 
@@ -263,44 +265,44 @@ window() {
         local yabai_domain="yabai -m window"
         local yabai_cmd
         case "$cmd" in
-            "focus" | "foc") $yabai_cmd="--focus"
+            "focus" | "foc") yabai_cmd="focus"
                 ;; # <WINDOW_SEL>
-            "swap" | "sw") $yabai_cmd="--swap"
+            "swap" | "sw") yabai_cmd="swap"
                 ;; # <WINDOW_SEL>                   Swap position of the selected window and the given window.
-            "warp" | "wrp") $yabai_cmd="--warp"
+            "warp" | "wrp") yabai_cmd="warp"
                 ;; # <WINDOW_SEL>                   Re-insert the selected window, splitting the given window.
-            "stack" | "stk") $yabai_cmd="--stack"
+            "stack" | "stk") yabai_cmd="stack"
                 ;; # <WINDOW_SEL>                   Stack the given window on top of the selected window. Any kind of warp operation performed on a stacked window will unstack it.
-            "insert" | "zz") $yabai_cmd="--insert"
+            "insert" | "zz") yabai_cmd="insert"
                 ;; # <DIR_SEL>|stack                Set the splitting mode of the selected window. If the current splitting mode matches the selected mode, the action will be undone.
-            "grid" | "zz") $yabai_cmd="--grid"
+            "grid" | "zz") yabai_cmd="grid"
                 ;; # <rows>:<cols>:<start-x>:<start-y>:<width>:<height>     Set the frame of the selected window based on a self-defined grid.
-            "move" | "zz") $yabai_cmd="--move"
+            "move" | "zz") yabai_cmd="move"
                 ;; # abs|rel:<dx>:<dy>                                      If type is rel the selected window is moved by dx pixels horizontally and dy pixels vertically, otherwise dx and dy will become its new position.
-            "resize" | "zz") $yabai_cmd="--resize"
+            "resize" | "zz") yabai_cmd="resize"
                 ;; # top|left|bottom|right|top_left|top_right|bottom_right|bottom_left|abs:<dx>:<dy>        Resize the selected window by moving the given handle dx pixels horizontally and dy pixels vertically. If handle is abs the new size will be dx width and dy height and cannot be used on managed windows.
-            "ratio" | "zz") $yabai_cmd="--ratio"
+            "ratio" | "zz") yabai_cmd="ratio"
                 ;; # rel|abs:<dr>          If type is rel the split ratio of the selected window is changed by dr, otherwise dr will become the new split ratio. A positive/negative delta will increase/decrease the size of the left-child.
-            "toggle" | "zz") $yabai_cmd="--toggle"
+            "toggle" | "zz") yabai_cmd="toggle"
                 ;; # float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose Toggle the given property of the selected window.
-            "layer" | "zz") $yabai_cmd="--layer"
+            "layer" | "zz") yabai_cmd="layer"
                 ;; # <LAYER>                       Set the stacking layer of the selected window.
-            "opacity" | "zz") $yabai_cmd="--opacity"
+            "opacity" | "zz") yabai_cmd="opacity"
                 ;; # <floating point number>     Set the opacity of the selected window. The window will no longer be eligible for automatic change in opacity upon focus change. Specify the value 0.0 to reset back to full opacity OR have it be automatically managed through focus changes.
-            "display" | "zz") $yabai_cmd="--display"
+            "display" | "zz") yabai_cmd="display"
                 ;; # <DISPLAY_SEL>               Send the selected window to the given display.
-            "space" | "zz") $yabai_cmd="--space"
+            "space" | "zz") yabai_cmd="space"
                 ;; # <SPACE_SEL> | Send the selected window to the given space.
-            "minimize" | "zz") $yabai_cmd="--minimize"  #
+            "minimize" | "zz") yabai_cmd="minimize"  #
                 ;; # Minimizes the selected window. Only works on windows that provide a minimize button in its titlebar.
-            "deminimize" | "zz") $yabai_cmd="--deminimize"  #
+            "deminimize" | "zz") yabai_cmd="deminimize"  #
                 ;; # Restores the selected window, if it is minimized. The window will only get focus if the owning application has focus. Note that you can also --focus a minimized window to restore it as the focused window.
-            "close" | "zz") $yabai_cmd="--close"
+            "close" | "zz") yabai_cmd="close"
                 ;; # Closes the selected window. Only works on windows that provide a close button in its titlebar.
-            *) echo default
+            *) echo "no such..."
                 ;;
         esac
-        call "$yabai_domain $win_sel $yabai_cmd $arg"
+        call "$yabai_domain $win_sel --$yabai_cmd $arg"
     else
         echo "linux todo..."
                 fi
@@ -346,42 +348,34 @@ query() {
 # @param command
 # @param [ add_arg1 | add_arg2 | ... | add_argN ] OR [ rm_rule ]
 
+# yabai -m rule --add label="Spark" app="^Spark$" title!="^Spark" manage=off
+# yabai -m rule --add label="Hammerspoon" app="^Hammerspoon$" manage=off
+# yabai -m rule --add label="SSH Tunnel Manager" app="^SSH Tunnel Manager$" manage=off
+# yabai -m rule --add label="ImageOptim" app="^ImageOptim$" manage=off
+# yabai -m rule --add label="AppCleaner" app="^AppCleaner$" manage=off
+# yabai -m rule --add label="Pika" app="^Pika$" manage=off
+
 rule() {
     ! test -z "${arg1-}" || exit 1
     local cmd=$arg1
 
-    # TODO:
-    # associative array
-    #   https://stackoverflow.com/questions/33975967/returning-a-dictionary-from-a-bash-function
-    #   https://riptutorial.com/bash/example/6886/associative-arrays
-    #   https://stackoverflow.com/questions/4069188/how-to-pass-an-associative-array-as-argument-to-a-function-in-bash
-    #   https://linuxhint.com/associative_arrays_bash_examples/
-    local rule_args=()
-
     if is-mac; then
-        local $yabai_domain="yabai -m rule"
+        local yabai_domain="yabai -m rule"
         local yabai_cmd
-
-        # RULE EXAMPLES
-        # yabai -m rule --add label="Spark" app="^Spark$" title!="^Spark" manage=off
-        # yabai -m rule --add label="Hammerspoon" app="^Hammerspoon$" manage=off
-        # yabai -m rule --add label="SSH Tunnel Manager" app="^SSH Tunnel Manager$" manage=off
-        # yabai -m rule --add label="ImageOptim" app="^ImageOptim$" manage=off
-        # yabai -m rule --add label="AppCleaner" app="^AppCleaner$" manage=off
-        # yabai -m rule --add label="Pika" app="^Pika$" manage=off
+        local rule_args=()
 
         if test "$cmd" = "add" -o "$cmd" = "a"; then
-            # yabai -m rule --add [<ARGUMENT>]        Add a new rule.
-            $yabai_cmd="--add"
+            yabai_cmd="add"
 
-            # starting from $3????
-            for $arg in "$@"; do
+            # NOTE: why wrapping fn_args in string doesn't work?
+            for i in ${fn_args:3}; do
+                local rule_name=${i%=*}
+                local rule_parm=${i#*=}
 
-                # extract everything before `=`
-	            case "$arg" in
-	                "label") rule_args+=("label=\"\"") # extract the pattern part
-	                    ;;# label=<LABEL>                     Label used to identify the rule with a unique name
-	                "app")
+	            case "$rule_name" in
+	                # label=<LABEL>                     Label used to identify the rule with a unique name
+	                "label") rule_args+=("label=\"$rule_parm\"");;
+	                "app") rule_args+=("app=\"$rule_parm\"")
 	                    ;; # app[!]=<REGEX>                    Name of application. If ! is present, invert the match.
 	                "title")
 	                    ;; # title[!]=<REGEX>                  Title of window. If ! is present, invert the match.
@@ -405,22 +399,23 @@ rule() {
 	                    ;; # native-fullscreen=<BOOL_SEL>      Window should enter native macOS fullscreen mode.
 	                "grid") # add argument to array
 	                    ;; # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>       Set window frame based on a self-defined grid.
-	                # *) echo default
-	                    # ;;
-	                esac
-                done
+	                *) echo default
+	                    ;;
+	            esac
+            done
+	        call "$yabai_domain --$yabai_cmd ${rule_args[@]}"
 
-	        elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
-                # yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
-                echo "rule remove"
+	    elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
+            # yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
+            # TODO: rule selection
+            echo "rule remove"
 
-	        elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
-                # yabai -m rule --list                    Output list of registered rules.
-                echo "rule list"
+	    elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
+            # yabai -m rule --list                    Output list of registered rules.
+            echo "rule list"
 
 	    fi
 
-	    call ""
     else
         echo "linux todo..."
     fi
@@ -516,7 +511,7 @@ events() {
 }
 
 case "$action" in
-    "reload" | "r") reload;;
+    "reload" | "x") reload;;
     "config_global" | "cg") config_global;;
     "config_space" | "cs") config_space;;
     "space" | "s") space;;
