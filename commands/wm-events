@@ -2,18 +2,23 @@
 
 # @param command
 # @param command
-# yabai -m signal --add event=<EVENT> action=<ACTION> /// [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
-# --add event=<EVENT> action=<ACTION> [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
+
 ! test -z "${1-}" || exit 1
+
 cmd=$1
+
 if is-mac; then
+
     ypre="yabai -m signal"
     ycmd=""
+
     if test "$cmd" = "add" -o "$cmd" = "a"; then
+
         ycmd="add"
         event=$2
         action=$3 # Arbitrary command executed through /usr/bin/env sh -c
         ybie="" # yabai event name
+
         case "$event" in
             "a_l")         ybie="application_launched";;
             "a_k")         ybie="application_terminated";;
@@ -51,8 +56,21 @@ if is-mac; then
             "dmon_msg")   ybie="daemon_message";;
             *) echo "NO_MATCH";;
         esac
-        # TODO: events label and titel
-        echo "$ypre $ycmd event=$ybie action=$action"
+
+        # TODO: app[!] title[!]
+        for i in ${@:4}; do
+            pre=${i%=*}
+            post=${i#*=}
+            if test "$pre" = "label"; then
+                yl="$pre=$post"
+            elif test "$pre" = "app"; then
+                ya="$pre=$post"
+            elif test "$pre" = "title"; then
+                yt="$pre=$post"
+            fi
+        done
+
+        echo "$ypre $ycmd event=$ybie action=$action $yl $ya $yt"
 
 	elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
         rm_sel=$2

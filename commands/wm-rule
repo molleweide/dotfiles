@@ -30,7 +30,7 @@ if is-mac; then
 	            *) echo "NO_MATCH";;
 	        esac
         done
-	    call "$ypre --$yabai_cmd ${rule_args[@]}"
+	    echo "$ypre --$yabai_cmd ${rule_args[@]}"
 	elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
         echo "rule remove" # TODO: rule selection | yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
 	elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
