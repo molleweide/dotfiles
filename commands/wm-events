@@ -62,15 +62,15 @@ if is-mac; then
             pre=${i%=*}
             post=${i#*=}
             if test "$pre" = "label"; then
-                yl="$pre=$post"
+                yl="$pre=\"$post\""
             elif test "$pre" = "app"; then
-                ya="$pre=$post"
+                ya="$pre=\"$post\""
             elif test "$pre" = "title"; then
-                yt="$pre=$post"
+                yt="$pre=\"$post\""
             fi
         done
 
-        echo "$ypre $ycmd event=$ybie action=$action $yl $ya $yt"
+        echo "$ypre $ycmd event=$ybie action=\"$action\" $yl $ya $yt"
 
 	elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
         rm_sel=$2

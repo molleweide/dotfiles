@@ -64,3 +64,4 @@ wm r a
 # "dmon_msg")   ybie="daemon_message";;
 echo-segment --g1="### events | e ###"
 wm e a dk_dr
+wm-events a sys_wk "echo some command=xst" label="myname" app="someapp" title="mytitle"

@@ -7,30 +7,30 @@ cmd=$1
 if is-mac; then
     ypre="yabai -m rule"
     yabai_cmd=""
-    rule_args=()
+    rules=()
     if test "$cmd" = "add" -o "$cmd" = "a"; then
         yabai_cmd="add"
         for i in ${fn_args:3}; do # NOTE: why wrapping fn_args in string doesn't work?
             local rule_name=${i%=*}
             local rule_parm=${i#*=}
 	        case "$rule_name" in
-	            "label") rule_args+=("label=\"$rule_parm\"");; # Label used to identify the rule with a unique name
-	            "app") rule_args+=("app=\"$rule_parm\"") ;; # app[!]=<REGEX>
-	            "title") ;; # title[!]=<REGEX>
-	            "display") ;; # display=[^]<DISPLAY_SEL>
-	            "space") ;; # space=[^]<SPACE_SEL>
-	            "manage") ;; # manage=<BOOL_SEL>
-	            "sticky") ;; # sticky=<BOOL_SEL>
-	            "mouse_follows_focus") ;; # mouse_follows_focus=<BOOL_SEL>
-	            "layer") ;; # layer=<LAYER>
-	            "opacity") ;; # opacity=<FLOAT_SEL>
-	            "border") ;; # border=<BOOL_SEL>
-	            "native-fullscreen") ;; # native-fullscreen=<BOOL_SEL>
-	            "grid") ;; # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+	            "label" | "l")   rules+=("label=\"$rule_parm\"");; # Label used to identify the rule with a unique name
+	            "app" | "a")     rules+=("app=\"$rule_parm\"") ;; # app[!]=<REGEX>
+	            "title" | "t")   rules+=("title=\"$rule_parm\"");; # title[!]=<REGEX>
+	            "display" | "d") rules+=("display=\"$rule_parm\"");; # display=[^]<DISPLAY_SEL>
+	            "space" | "s")   rules+=("space=\"$rule_parm\"");; # space=[^]<SPACE_SEL>
+	            "manage" | "mg") rules+=("manage=\"$rule_parm\"");; # manage=<BOOL_SEL>
+	            "sticky" | "st") rules+=("sticky=\"$rule_parm\"");; # sticky=<BOOL_SEL>
+	            "msff")          rules+=("mouse_follows_focus=\"$rule_parm\"");; # mouse_follows_focus=<BOOL_SEL>
+	            "layer" | "ly")  rules+=("layer=\"$rule_parm\"");; # layer=<LAYER>
+	            "opacity" | "o") rules+=("opacity=\"$rule_parm\"");; # opacity=<FLOAT_SEL>
+	            "border" | "b")  rules+=("border=\"$rule_parm\"");; # border=<BOOL_SEL>
+	            "nf")            rules+=("native-fullscreen=\"$rule_parm\"");; # native-fullscreen=<BOOL_SEL>
+	            "grid" | "g")    rules+=("grid=\"$rule_parm\"");; # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
 	            *) echo "NO_MATCH";;
 	        esac
         done
-	    echo "$ypre --$yabai_cmd ${rule_args[@]}"
+	    echo "$ypre --$yabai_cmd ${rules[@]}"
 	elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
         echo "rule remove" # TODO: rule selection | yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
 	elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
