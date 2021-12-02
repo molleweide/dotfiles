@@ -19,7 +19,10 @@
 fn_args=$@
 
 action="${1-}"
-! test -z "${action}" || exit 1
+
+# if no args -> reload
+! test -z "${action}" || $action="reload"
+
 arg1="${2-}"
 arg2="${3-}"
 arg3="${4-}"
@@ -42,79 +45,102 @@ reload() {
 
 # @param setting
 # @param value
-config_global() {
+config() {
     ! test -z "${arg1-}" -a "${arg2-}" || exit 1
-    local setting=$arg1
-    local value=$arg2
+    local cfg_type=$arg1 # global | space
+    local setting=$arg2
+    local value=$arg3
+    local sel=$arg4
+    local space_sel
+    ! test -z "${arg4}" && $space_sel="--space $sel"
+
     if is-mac; then
-        local yabai_domain="yabai -m config"
-        local yabai_setting
-        case "$setting" in
-            "debug") yabai_setting="debug_output";;               # [<BOOL_SEL>]
-            "bar")   yabai_setting="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
-            "msff")  yabai_setting="mouse_follows_focus";;        # [<BOOL_SEL>]
-            "ffms")  yabai_setting="focus_follows_mouse";;        # [autofocus|autoraise|off]
-            "wp")    yabai_setting="window_placement";;           # [first_child|second_child]
-            "wtm")   yabai_setting="window_topmost";;             # [<BOOL_SEL>]
-            "wsh")   yabai_setting="window_shadow";;              # [<BOOL_SEL>|float]
-            "wop")   yabai_setting="window_opacity";;             # [<BOOL_SEL>]
-            "wopd")  yabai_setting="window_opacity_duration";;    # [<floating point number>]
-            "waop")  yabai_setting="active_window_opacity";;      # [<FLOAT_SEL>]
-            "wnop")  yabai_setting="normal_window_opacity";;      # [<FLOAT_SEL>]
-            "wb")    yabai_setting="window_border";;              # [<BOOL_SEL>]
-            "wbw")   yabai_setting="window_border_width";;        # [<even integer number>]
-            "wabc")  yabai_setting="active_window_border_color";; # [0xAARRGGBB]
-            "wnbc")  yabai_setting="normal_window_border_color";; # [0xAARRGGBB]
-            "ifkc")  yabai_setting="insert_feedback_color";;     # [0xAARRGGBB]
-            "spltr") yabai_setting="split_ratio";;               # [<FLOAT_SEL>]
-            "autob") yabai_setting="auto_balance";;                       # [<BOOL_SEL>]
-            "msm")   yabai_setting="mouse_modifier";;                       # [cmd|alt|shift|ctrl|fn]
-            "ms1")   yabai_setting="mouse_action1";;                       # [move|resize]
-            "ms2")   yabai_setting="mouse_action2";;                       # [move|resize]
-            "msd")   yabai_setting="mouse_drop_action";;                      # [swap|stack]
-            *) echo "NO_MATCH";;
-        esac
-        call "$yabai_domain $yabai_setting $value"
+        if test "$cfg_type" = "global" -o "$cfg_type" = "g"; then
+            # CONFIG GLOBAL
+            local ypre="yabai -m config"
+            local yconf
+            case "$setting" in
+                "debug") yconf="debug_output";;               # [<BOOL_SEL>]
+                "bar")   yconf="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
+                "msff")  yconf="mouse_follows_focus";;        # [<BOOL_SEL>]
+                "ffms")  yconf="focus_follows_mouse";;        # [autofocus|autoraise|off]
+                "wp")    yconf="window_placement";;           # [first_child|second_child]
+                "wtm")   yconf="window_topmost";;             # [<BOOL_SEL>]
+                "wsh")   yconf="window_shadow";;              # [<BOOL_SEL>|float]
+                "wop")   yconf="window_opacity";;             # [<BOOL_SEL>]
+                "wopd")  yconf="window_opacity_duration";;    # [<floating point number>]
+                "waop")  yconf="active_window_opacity";;      # [<FLOAT_SEL>]
+                "wnop")  yconf="normal_window_opacity";;      # [<FLOAT_SEL>]
+                "wb")    yconf="window_border";;              # [<BOOL_SEL>]
+                "wbw")   yconf="window_border_width";;        # [<even integer number>]
+                "wabc")  yconf="active_window_border_color";; # [0xAARRGGBB]
+                "wnbc")  yconf="normal_window_border_color";; # [0xAARRGGBB]
+                "ifkc")  yconf="insert_feedback_color";;     # [0xAARRGGBB]
+                "spltr") yconf="split_ratio";;               # [<FLOAT_SEL>]
+                "autob") yconf="auto_balance";;                       # [<BOOL_SEL>]
+                "msm")   yconf="mouse_modifier";;                       # [cmd|alt|shift|ctrl|fn]
+                "ms1")   yconf="mouse_action1";;                       # [move|resize]
+                "ms2")   yconf="mouse_action2";;                       # [move|resize]
+                "msd")   yconf="mouse_drop_action";;                      # [swap|stack]
+                *) echo "NO_MATCH";;
+            esac
+            call "$ypre $yconf $value"
+
+	    elif test "$cfg_type" = 'space' -o "$cfg_type" = 's'; then
+            # CONFIG SPACE
+            local ypre="yabai -m config --space"
+            local yconf
+            case "$setting" in
+                "layout" | "lt")    yconf="layout";;           # [bsp|stack|float]
+                "pad_top" | "pt")   yconf="top_padding";;      # [<integer number>]
+                "pad_btm" | "pb")   yconf="bottom_padding";;   # [<integer number>]
+                "pad_left" | "pl")  yconf="left_padding";;     # [<integer number>]
+                "pad_right" | "pr") yconf="right_padding";;    # [<integer number>]
+                "win_gap" | "gp")   yconf="window_gap";;       # [<integer number>]
+                *) echo "NO_MATCH";;
+            esac
+            call "$ypre  $space_sel $yconf $value"
+	    fi
     else
         echo "linux todo..."
     fi
 }
 
-# @param setting
-# @param value
-# @param space_selection
-config_space() {
-    ! test -z "${arg1-}" -a "${arg2-}" || exit 1
-    local setting=$arg1
-    local value=$arg2
-    local sel=$arg3
-    local space_sel
-    ! test -z "${arg3}" && $space_sel="--space $sel"
-    if is-mac; then
-        local yabai_domain="yabai -m config --space"
-        local yabai_setting
-        case "$setting" in
-            "layout" | "lt")    yabai_setting="layout";;           # [bsp|stack|float]
-            "pad_top" | "pt")   yabai_setting="top_padding";;      # [<integer number>]
-            "pad_btm" | "pb")   yabai_setting="bottom_padding";;   # [<integer number>]
-            "pad_left" | "pl")  yabai_setting="left_padding";;     # [<integer number>]
-            "pad_right" | "pr") yabai_setting="right_padding";;    # [<integer number>]
-            "win_gap" | "gp")   yabai_setting="window_gap";;       # [<integer number>]
-            *) echo "NO_MATCH";;
-        esac
-        call "$yabai_domain  $space_sel $yabai_setting $value"
-    else
-        echo "linux todo..."
-    fi
-}
+# # @param setting
+# # @param value
+# # @param space_selection
+# config_space() {
+#     ! test -z "${arg1-}" -a "${arg2-}" || exit 1
+#     local setting=$arg1
+#     local value=$arg2
+#     local sel=$arg3
+#     local space_sel
+#     ! test -z "${arg3}" && $space_sel="--space $sel"
+#     if is-mac; then
+#         local ypre="yabai -m config --space"
+#         local yconf
+#         case "$setting" in
+#             "layout" | "lt")    yconf="layout";;           # [bsp|stack|float]
+#             "pad_top" | "pt")   yconf="top_padding";;      # [<integer number>]
+#             "pad_btm" | "pb")   yconf="bottom_padding";;   # [<integer number>]
+#             "pad_left" | "pl")  yconf="left_padding";;     # [<integer number>]
+#             "pad_right" | "pr") yconf="right_padding";;    # [<integer number>]
+#             "win_gap" | "gp")   yconf="window_gap";;       # [<integer number>]
+#             *) echo "NO_MATCH";;
+#         esac
+#         call "$ypre  $space_sel $yconf $value"
+#     else
+#         echo "linux todo..."
+#     fi
+# }
 
 # @param display_selection
 monitor() {
     ! test -z "${arg1-}" || exit 1
     local display_sel=$arg1
     if is-mac; then
-        local yabai_domain="yabai -m display --focus"
-        call "$yabai_domain $display_sel"
+        local ypre="yabai -m display --focus"
+        call "$ypre $display_sel"
     else
         echo "linux"
     fi
@@ -130,7 +156,7 @@ space() {
     local space_sel
     ! test -z "${arg3}" && $space_sel="--space $arg3"
     if is-mac; then
-        local yabai_domain="yabai -m space"
+        local ypre="yabai -m space"
         local yabai_cmd
         case "$cmd" in
             "focus" | "fc")    yabai_cmd="--focus" ;; # <SPACE_SEL>
@@ -149,7 +175,7 @@ space() {
             "label" | "lb")     yabai_cmd="--label" ;; # [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
             *) echo "NO_MATCH";;
         esac
-        call "$yabai_domain $space_sel $yabai_cmd $value"
+        call "$ypre $space_sel $yabai_cmd $value"
     else
         echo "linux todo..."
     fi
@@ -165,7 +191,7 @@ window() {
     local win_sel
     ! test -z "${arg3}" && $win_sel="--window $arg3"
     if is-mac; then
-        local yabai_domain="yabai -m window"
+        local ypre="yabai -m window"
         local yabai_cmd
         case "$cmd" in
             "focus" | "foc") yabai_cmd="focus";; # <WINDOW_SEL>
@@ -187,7 +213,7 @@ window() {
             "close" | "zz") yabai_cmd="close" ;;
             *) echo "NO_MATCH";;
         esac
-        call "$yabai_domain $win_sel --$yabai_cmd $arg"
+        call "$ypre $win_sel --$yabai_cmd $arg"
     else
         echo "linux todo..."
     fi
@@ -227,7 +253,7 @@ rule() {
     ! test -z "${arg1-}" || exit 1
     local cmd=$arg1
     if is-mac; then
-        local yabai_domain="yabai -m rule"
+        local ypre="yabai -m rule"
         local yabai_cmd
         local rule_args=()
         if test "$cmd" = "add" -o "$cmd" = "a"; then
@@ -252,7 +278,7 @@ rule() {
 	                *) echo "NO_MATCH";;
 	            esac
             done
-	        call "$yabai_domain --$yabai_cmd ${rule_args[@]}"
+	        call "$ypre --$yabai_cmd ${rule_args[@]}"
 	    elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
             echo "rule remove" # TODO: rule selection | yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
 	    elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
@@ -323,7 +349,7 @@ events() {
 	    elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
             call "$ypre --list"
 	    fi
-        call "$yabai_domain $yabai_cmd $arg"
+        call "$ypre $yabai_cmd $arg"
     else
         echo "linux todo..."
     fi
@@ -331,8 +357,7 @@ events() {
 
 case "$action" in
     "reload" | "x") reload;;
-    "config_global" | "cg") config_global;;
-    "config_space" | "cs") config_space;;
+    "config" | "cfg" | "c") config;;
     "space" | "s") space;;
     "window" | "w") window;;
     "monitor" | "m") monitor;;
