@@ -4,13 +4,11 @@
 # @param value
 # @param space_selection
 test -z "${1-}" && exit 1
-cmd=$1
-value=$2
-test -z "${3-}" || space_sel="--space $3"
+test -z "${3-}" || yss="--space $3"
 if is-mac; then
     local ypre="yabai -m space"
     local yabai_cmd
-    case "$cmd" in
+    case "$1" in
         "focus" | "fc")    yabai_cmd="--focus" ;; # <SPACE_SEL>
         "create" | "nw")   yabai_cmd="--create" ;;
         "destroy" | "rm")  yabai_cmd="--destroy" ;;
@@ -27,7 +25,7 @@ if is-mac; then
         "label" | "lb")     yabai_cmd="--label" ;; # [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
         *) echo "NO_MATCH";;
     esac
-    call "$ypre $space_sel $yabai_cmd $value"
+    call "$ypre $yss $yabai_cmd $2"
 else
     echo "linux todo..."
 fi

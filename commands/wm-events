@@ -1,63 +1,53 @@
 #!/usr/bin/env bash
 
+# TODO: app[!] title[!]
+
 # @param command
 # @param command
 
-! test -z "${1-}" || exit 1
-
-cmd=$1
+test -z "${1-}" && exit 1
 
 if is-mac; then
-
-    ypre="yabai -m signal"
-    ycmd=""
-
-    if test "$cmd" = "add" -o "$cmd" = "a"; then
-
-        ycmd="add"
+    if test "$1" = "add" -o "$1" = "a"; then
         event=$2
         action=$3 # Arbitrary command executed through /usr/bin/env sh -c
-        ybie="" # yabai event name
-
         case "$event" in
-            "a_l")         ybie="application_launched";;
-            "a_k")         ybie="application_terminated";;
-            "a_fs")        ybie="application_front_switched";;
-            "a_ac")        ybie="application_activated";;
-            "a_da")        ybie="application_deactivated";;
-            "a_vi")        ybie="application_visible";;
-            "a_hi")        ybie="application_hidden";;
-            "w_c")       ybie="window_created";;
-            "w_k")       ybie="window_destroyed";;
-            "w_f")       ybie="window_focused";;
-            "w_mv")       ybie="window_moved";;
-            "w_rz")       ybie="window_resized";;
-            "w_mi")       ybie="window_minimized";;
-            "w_dm")       ybie="window_deminimized";;
-            "w_tc")       ybie="window_title_changed";;
+            "aac")        ybie="application_activated";;
+            "ada")        ybie="application_deactivated";;
+            "afs")        ybie="application_front_switched";;
+            "ahi")        ybie="application_hidden";;
+            "ak")         ybie="application_terminated";;
+            "al")         ybie="application_launched";;
+            "avi")        ybie="application_visible";;
+            "dkdcp")     ybie="dock_did_change_pref";;
+            "dkdr")      ybie="dock_did_restart";;
+            "dmonmsg")   ybie="daemon_message";;
+            "dsad")      ybie="display_added";;
+            "dsch")      ybie="display_changed";;
+            "dsmv")      ybie="display_moved";;
+            "dsrm")      ybie="display_removed";;
+            "dsrz")      ybie="display_resized";;
+            "micfx")  ybie="mission_control_check_for_exit";;
+            "mie")     ybie="mission_control_enter";;
+            "mix")    ybie="mission_control_exit";;
+            "msdn")        ybie="mouse_down";;
+            "msdr")        ybie="mouse_dragged";;
+            "msmv")        ybie="mouse_moved";;
+            "msup")        ybie="mouse_up";;
+            "mubhc")     ybie="menu_bar_hidden_changed";;
+            "muo")       ybie="menu_opened";;
             "sch")          ybie="space_changed";;
-            "ds_ad")      ybie="display_added";;
-            "ds_rm")      ybie="display_removed";;
-            "ds_mv")      ybie="display_moved";;
-            "ds_rz")      ybie="display_resized";;
-            "ds_ch")      ybie="display_changed";;
-            "ms_dn")        ybie="mouse_down";;
-            "ms_up")        ybie="mouse_up";;
-            "ms_dr")        ybie="mouse_dragged";;
-            "ms_mv")        ybie="mouse_moved";;
-            "msc_e")     ybie="mission_control_enter";;
-            "msc_cfx")  ybie="mission_control_check_for_exit";;
-            "msc_x")    ybie="mission_control_exit";;
-            "dk_dr")      ybie="dock_did_restart";;
-            "dk_dcp")     ybie="dock_did_change_pref";;
-            "mu_o")       ybie="menu_opened";;
-            "mu_bhc")     ybie="menu_bar_hidden_changed";;
-            "sys_wk")     ybie="system_woke";;
-            "dmon_msg")   ybie="daemon_message";;
-            *) echo "NO_MATCH";;
+            "syswk")     ybie="system_woke";;
+            "wc")       ybie="window_created";;
+            "wdm")       ybie="window_deminimized";;
+            "wf")       ybie="window_focused";;
+            "wk")       ybie="window_destroyed";;
+            "wmi")       ybie="window_minimized";;
+            "wmv")       ybie="window_moved";;
+            "wrz")       ybie="window_resized";;
+            "wtc")       ybie="window_title_changed";;
+            *) echo "NO_MATCH" && exit 1;;
         esac
-
-        # TODO: app[!] title[!]
         for i in ${@:4}; do
             pre=${i%=*}
             post=${i#*=}
@@ -69,15 +59,11 @@ if is-mac; then
                 yt="$pre=\"$post\""
             fi
         done
-
-        echo "$ypre $ycmd event=$ybie action=\"$action\" $yl $ya $yt"
-
-	elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
-        rm_sel=$2
-        echo "$ypre --remove $rm_sel"
-
-	elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
-        echo "$ypre --list"
+        echo "yabai -m signal --add event=$ybie action=\"$action\" $yl $ya $yt"
+	elif test "$1" = 'remove' -o "$1" = 'rm'; then
+        echo "yabai -m signal --remove $2"
+	elif test "$1" = 'list' -o "$1" = 'ls'; then
+        echo "yabai -m signal --list"
 	fi
 else
     echo "linux todo..."

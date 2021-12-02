@@ -7,13 +7,12 @@
 test -z "${1-}" && exit 1
 cmd=$1
 if is-mac; then
-    ypre="yabai -m rule"
-    rules=()
     if test "$cmd" = "add" -o "$cmd" = "a"; then
+        rules=()
         yabai_cmd="add"
         for i in ${fn_args:3}; do # NOTE: why wrapping fn_args in string doesn't work?
-            local rule_name=${i%=*}
-            local rule_parm=${i#*=}
+            rule_name=${i%=*}
+            rule_parm=${i#*=}
 	        case "$rule_name" in
 	            "label" | "l")   rules+=("label=\"$rule_parm\"");; # Label used to identify the rule with a unique name
 	            "app" | "a")     rules+=("app=\"$rule_parm\"") ;; # app[!]=<REGEX>
@@ -31,11 +30,11 @@ if is-mac; then
 	            *) echo "NO_MATCH";;
 	        esac
         done
-	    echo "$ypre --$yabai_cmd ${rules[@]}"
+	    echo "yabai -m rule --$yabai_cmd ${rules[@]}"
 	elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
-        echo "$ypre --remove"
+        echo "yabai -m rule --remove"
 	elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
-        echo "$ypre --list"
+        echo "yabai -m rule --list"
 	fi
 else
     echo "linux todo..."
