@@ -1,0 +1,131 @@
+#!/usr/bin/env bash
+
+# "debug")      yabai_setting="debug_output";;               # [<BOOL_SEL>]
+# "bar")        yabai_setting="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
+# "msff")     yabai_setting="mouse_follows_focus";;        # [<BOOL_SEL>]
+# "ffms")     yabai_setting="focus_follows_mouse";;        # [autofocus|autoraise|off]
+# "win_place")  yabai_setting="window_placement";;           # [first_child|second_child]
+# "win_topm")   yabai_setting="window_topmost";;             # [<BOOL_SEL>]
+# "win_sh")     yabai_setting="window_shadow";;              # [<BOOL_SEL>|float]
+# "win_op")     yabai_setting="window_opacity";;             # [<BOOL_SEL>]
+# "win_op_dur") yabai_setting="window_opacity_duration";;    # [<floating point number>]
+# "win_act_op") yabai_setting="active_window_opacity";;      # [<FLOAT_SEL>]
+# "win_nrm_op") yabai_setting="normal_window_opacity";;      # [<FLOAT_SEL>]
+# "win_b")      yabai_setting="window_border";;              # [<BOOL_SEL>]
+# "win_bw")     yabai_setting="window_border_width";;        # [<even integer number>]
+# "win_act_bc") yabai_setting="active_window_border_color";; # [0xAARRGGBB]
+# "win_nrm_bc") yabai_setting="normal_window_border_color";; # [0xAARRGGBB]
+# "ifdbkc")  yabai_setting="insert_feedback_color";;     # [0xAARRGGBB]
+# "splitr")    yabai_setting="split_ratio";;               # [<FLOAT_SEL>]
+# "autob")   yabai_setting="auto_balance";;                       # [<BOOL_SEL>]
+# "msm")     yabai_setting="mouse_modifier";;                       # [cmd|alt|shift|ctrl|fn]
+# "msx1")     yabai_setting="mouse_action1";;                       # [move|resize]
+# "msx2")     yabai_setting="mouse_action2";;                       # [move|resize]
+# "msdx")     yabai_setting="mouse_drop_action";;                      # [swap|stack]
+echo-segment --g1="### config_global | cg ###"
+wm cg debug
+wm cg ms_fcf on
+echo
+
+echo-segment --g1="### config_space | cs ###"
+wm cs lt bsp
+wm cs pl 5
+wm cs wg 15
+echo
+
+# "focus" | "foc")    yabai_cmd="--focus" ;; # <SPACE_SEL>
+# "create" | "new")   yabai_cmd="--create" ;;
+# "destroy" | "del")  yabai_cmd="--destroy" ;;
+# "move" | "mv")      yabai_cmd="--move" ;; # <SPACE_SEL>                        Move position of the selected space to the position of the given space. The selected space and given space must both belong to the same display.
+# "swap" | "sw")      yabai_cmd="--swap" ;; # <SPACE_SEL>                        Swap the selected space with the given space. The selected space and given space must both belong to the same display.
+# "display" | "dsp")  yabai_cmd="--display" ;; # <DISPLAY_SEL>                           Send the selected space to the given display.
+# "balance" | "bl")   yabai_cmd="--balance" ;; # Adjust the split ratios of the selected space so that all windows occupy the same area.
+# "mirror" | "mir")   yabai_cmd="--mirror" ;; # x-axis|y-axis                            Flip the tree of the selected space.
+# "rotate" | "rot")   yabai_cmd="--rotate" ;; # 90|180|270                               Rotate the tree of the selected space.
+# "padding" | "pad")  yabai_cmd="--padding" ;; # abs|rel:<top>:<bottom>:<left>:<right>   Padding added at the sides of the selected space.
+# "gap")              yabai_cmd="--gap" ;; # abs|rel:<gap>                               Size of the gap that separates windows on the selected space.
+# "toggle" | "tg")    yabai_cmd="--toggle" ;; # padding|gap|mission-control|show-desktop Toggle space setting on or off for the selected space.
+# "layout" | "lt")    yabai_cmd="--layout" ;; # bsp|stack|float                          Set the layout of the selected space.
+# "label" | "lb")     yabai_cmd="--label" ;; # [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
+echo-segment --g1="### space | s ###"
+wm s foc next
+wm s move east
+wm s balance
+wm s rot 90
+wm s toggle mission-control
+wm s lb my_space_name
+echo
+
+# "focus" | "foc") yabai_cmd="focus";; # <WINDOW_SEL>
+# "swap" | "sw") yabai_cmd="swap";; # <WINDOW_SEL>
+# "warp" | "wrp") yabai_cmd="warp";; # <WINDOW_SEL>
+# "stack" | "stk") yabai_cmd="stack";; # <WINDOW_SEL>
+# "insert" | "zz") yabai_cmd="insert";; # <DIR_SEL>|stack
+# "grid" | "zz") yabai_cmd="grid";; # <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+# "move" | "zz") yabai_cmd="move";; # abs|rel:<dx>:<dy>
+# "resize" | "zz") yabai_cmd="resize";; # top|left|bottom|right|top_left|top_right|bottom_right|bottom_left|abs:<dx>:<dy>
+# "ratio" | "zz") yabai_cmd="ratio";; # rel|abs:<dr>
+# "toggle" | "zz") yabai_cmd="toggle";; # float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose
+# "layer" | "zz") yabai_cmd="layer";; # <LAYER>
+# "opacity" | "zz") yabai_cmd="opacity";; # <floating point number>
+# "display" | "zz") yabai_cmd="display";; # <DISPLAY_SEL>
+# "space" | "zz") yabai_cmd="space";; # <SPACE_SEL>
+# "minimize" | "zz") yabai_cmd="minimize";;
+# "deminimize" | "zz") yabai_cmd="deminimize";;
+# "close" | "zz") yabai_cmd="close" ;;
+echo-segment --g1="### window | w ###"
+wm w f next
+wm w insert stack
+wm w close
+echo
+
+echo-segment --g1="### monitor | m ###"
+wm m prev
+wm m last
+wm m south
+echo
+
+echo-segment --g1="### query | q ###"
+wm q d
+wm q d d
+wm q s s
+wm q w s
+echo
+
+# "label") rule_args+=("label=\"$rule_parm\"");; # Label used to identify the rule with a unique name
+# "app") rule_args+=("app=\"$rule_parm\"") ;; # app[!]=<REGEX>
+# "title") ;; # title[!]=<REGEX>
+# "display") ;; # display=[^]<DISPLAY_SEL>
+# "space") ;; # space=[^]<SPACE_SEL>
+# "manage") ;; # manage=<BOOL_SEL>
+# "sticky") ;; # sticky=<BOOL_SEL>
+# "mouse_follows_focus") ;; # mouse_follows_focus=<BOOL_SEL>
+# "layer") ;; # layer=<LAYER>
+# "opacity") ;; # opacity=<FLOAT_SEL>
+# "border") ;; # border=<BOOL_SEL>
+# "native-fullscreen") ;; # native-fullscreen=<BOOL_SEL>
+# "grid") ;; # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+echo-segment --g1="### rule | r ###"
+echo
+
+# "ds_mv")      ybie="display_moved";;
+# "ds_rz")      ybie="display_resized";;
+# "ds_ch")      ybie="display_changed";;
+# "ms_dn")        ybie="mouse_down";;
+# "ms_up")        ybie="mouse_up";;
+# "ms_dr")        ybie="mouse_dragged";;
+# "ms_mv")        ybie="mouse_moved";;
+# "msc_e")     ybie="mission_control_enter";;
+# "msc_cfx")  ybie="mission_control_check_for_exit";;
+# "msc_x")    ybie="mission_control_exit";;
+# "dk_dr")      ybie="dock_did_restart";;
+# "dk_dcp")     ybie="dock_did_change_pref";;
+# "mu_o")       ybie="menu_opened";;
+# "mu_bhc")     ybie="menu_bar_hidden_changed";;
+# "sys_wk")     ybie="system_woke";;
+# "dmon_msg")   ybie="daemon_message";;
+echo-segment --g1="### events | e ###"
+echo
+
+
+

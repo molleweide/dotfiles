@@ -26,6 +26,7 @@ arg3="${4-}"
 arg4="${5-}"
 
 call() {
+    # echo "${fn_args[@]}  ->  $@"
     echo "$@"
     # ($1)
 }
@@ -49,28 +50,28 @@ config_global() {
         local yabai_domain="yabai -m config"
         local yabai_setting
         case "$setting" in
-            "debug")            $yabai_setting="debug_output";;               # [<BOOL_SEL>]
-            "ext_bar" | "bar")  $yabai_setting="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
-            "ms_flw_fc")        $yabai_setting="mouse_follows_focus";;        # [<BOOL_SEL>]
-            "fc_flw_ms")        $yabai_setting="focus_follows_mouse";;        # [autofocus|autoraise|off]
-            "win_place")        $yabai_setting="window_placement";;           # [first_child|second_child]
-            "win_topm")         $yabai_setting="window_topmost";;             # [<BOOL_SEL>]
-            "win_sh")           $yabai_setting="window_shadow";;              # [<BOOL_SEL>|float]
-            "win_op")           $yabai_setting="window_opacity";;             # [<BOOL_SEL>]
-            "win_op_dur")       $yabai_setting="window_opacity_duration";;    # [<floating point number>]
-            "act_win_op")       $yabai_setting="active_window_opacity";;      # [<FLOAT_SEL>]
-            "nrm_win_op")       $yabai_setting="normal_window_opacity";;      # [<FLOAT_SEL>]
-            "win_b")            $yabai_setting="window_border";;              # [<BOOL_SEL>]
-            "window_bw")        $yabai_setting="window_border_width";;        # [<even integer number>]
-            "act_win_bc")       $yabai_setting="active_window_border_color";; # [0xAARRGGBB]
-            "nrm_win_bc")       $yabai_setting="normal_window_border_color";; # [0xAARRGGBB]
-            "ins_fdbkc")        $yabai_setting="insert_feedback_color" ;;     # [0xAARRGGBB]
-            "split_r")          $yabai_setting="split_ratio" ;;               # [<FLOAT_SEL>]
-            "auto_balance")     $yabai_setting="fff" ;;                       # [<BOOL_SEL>]
-            "mouse_modifier")   $yabai_setting="fff" ;;                       # [cmd|alt|shift|ctrl|fn]
-            "mouse_action1")    $yabai_setting="fff" ;;                       # [move|resize]
-            "mouse_action2")    $yabai_setting="fff" ;;                       # [move|resize]
-            "mouse_drop_action") $yabai_setting="fff" ;;                      # [swap|stack]
+            "debug")      yabai_setting="debug_output";;               # [<BOOL_SEL>]
+            "bar")        yabai_setting="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
+            "msff")     yabai_setting="mouse_follows_focus";;        # [<BOOL_SEL>]
+            "ffms")     yabai_setting="focus_follows_mouse";;        # [autofocus|autoraise|off]
+            "win_place")  yabai_setting="window_placement";;           # [first_child|second_child]
+            "win_topm")   yabai_setting="window_topmost";;             # [<BOOL_SEL>]
+            "win_sh")     yabai_setting="window_shadow";;              # [<BOOL_SEL>|float]
+            "win_op")     yabai_setting="window_opacity";;             # [<BOOL_SEL>]
+            "win_op_dur") yabai_setting="window_opacity_duration";;    # [<floating point number>]
+            "win_act_op") yabai_setting="active_window_opacity";;      # [<FLOAT_SEL>]
+            "win_nrm_op") yabai_setting="normal_window_opacity";;      # [<FLOAT_SEL>]
+            "win_b")      yabai_setting="window_border";;              # [<BOOL_SEL>]
+            "win_bw")     yabai_setting="window_border_width";;        # [<even integer number>]
+            "win_act_bc") yabai_setting="active_window_border_color";; # [0xAARRGGBB]
+            "win_nrm_bc") yabai_setting="normal_window_border_color";; # [0xAARRGGBB]
+            "ifdbkc")  yabai_setting="insert_feedback_color";;     # [0xAARRGGBB]
+            "splitr")    yabai_setting="split_ratio";;               # [<FLOAT_SEL>]
+            "autob")   yabai_setting="auto_balance";;                       # [<BOOL_SEL>]
+            "msm")     yabai_setting="mouse_modifier";;                       # [cmd|alt|shift|ctrl|fn]
+            "msx1")     yabai_setting="mouse_action1";;                       # [move|resize]
+            "msx2")     yabai_setting="mouse_action2";;                       # [move|resize]
+            "msdx")     yabai_setting="mouse_drop_action";;                      # [swap|stack]
             *) echo "NO_MATCH";;
         esac
         call "$yabai_domain $yabai_setting $value"
@@ -93,12 +94,12 @@ config_space() {
         local yabai_domain="yabai -m config --space"
         local yabai_setting
         case "$setting" in
-            "layout" | "lt")    $yabai_setting="layout";;           # [bsp|stack|float]
-            "pad_top" | "pt")   $yabai_setting="top_padding";;      # [<integer number>]
-            "pad_btm" | "pb")   $yabai_setting="bottom_padding";;   # [<integer number>]
-            "pad_left" | "pl")  $yabai_setting="left_padding";;     # [<integer number>]
-            "pad_right" | "pr") $yabai_setting="right_padding";;    # [<integer number>]
-            "win_gap" | "wg")   $yabai_setting="window_gap";;       # [<integer number>]
+            "layout" | "lt")    yabai_setting="layout";;           # [bsp|stack|float]
+            "pad_top" | "pt")   yabai_setting="top_padding";;      # [<integer number>]
+            "pad_btm" | "pb")   yabai_setting="bottom_padding";;   # [<integer number>]
+            "pad_left" | "pl")  yabai_setting="left_padding";;     # [<integer number>]
+            "pad_right" | "pr") yabai_setting="right_padding";;    # [<integer number>]
+            "win_gap" | "wg")   yabai_setting="window_gap";;       # [<integer number>]
             *) echo "NO_MATCH";;
         esac
         call "$yabai_domain  $space_sel $yabai_setting $value"
@@ -132,20 +133,20 @@ space() {
         local yabai_domain="yabai -m space"
         local yabai_cmd
         case "$cmd" in
-            "focus" | "foc")    $yabai_cmd="--focus" ;; # <SPACE_SEL>
-            "create" | "new")   $yabai_cmd="--create" ;;
-            "destroy" | "del")  $yabai_cmd="--destroy" ;;
-            "move" | "mv")      $yabai_cmd="--move" ;; # <SPACE_SEL>                        Move position of the selected space to the position of the given space. The selected space and given space must both belong to the same display.
-            "swap" | "sw")      $yabai_cmd="--swap" ;; # <SPACE_SEL>                        Swap the selected space with the given space. The selected space and given space must both belong to the same display.
-            "display" | "dsp")  $yabai_cmd="--display" ;; # <DISPLAY_SEL>                           Send the selected space to the given display.
-            "balance" | "bl")   $yabai_cmd="--balance" ;; # Adjust the split ratios of the selected space so that all windows occupy the same area.
-            "mirror" | "mir")      $yabai_cmd="--mirror" ;; # x-axis|y-axis                            Flip the tree of the selected space.
-            "rotate" | "rot")      $yabai_cmd="--rotate" ;; # 90|180|270                               Rotate the tree of the selected space.
-            "padding" | "pad")  $yabai_cmd="--padding" ;; # abs|rel:<top>:<bottom>:<left>:<right>   Padding added at the sides of the selected space.
-            "gap")              $yabai_cmd="--gap" ;; # abs|rel:<gap>                               Size of the gap that separates windows on the selected space.
-            "toggle" | "tg")    $yabai_cmd="--toggle" ;; # padding|gap|mission-control|show-desktop Toggle space setting on or off for the selected space.
-            "layout" | "lt")    $yabai_cmd="--layout" ;; # bsp|stack|float                          Set the layout of the selected space.
-            "label" | "lb")     $yabai_cmd="--label" ;; # [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
+            "focus" | "foc")    yabai_cmd="--focus" ;; # <SPACE_SEL>
+            "create" | "new")   yabai_cmd="--create" ;;
+            "destroy" | "del")  yabai_cmd="--destroy" ;;
+            "move" | "mv")      yabai_cmd="--move" ;; # <SPACE_SEL>                        Move position of the selected space to the position of the given space. The selected space and given space must both belong to the same display.
+            "swap" | "sw")      yabai_cmd="--swap" ;; # <SPACE_SEL>                        Swap the selected space with the given space. The selected space and given space must both belong to the same display.
+            "display" | "dsp")  yabai_cmd="--display" ;; # <DISPLAY_SEL>                           Send the selected space to the given display.
+            "balance" | "bl")   yabai_cmd="--balance" ;; # Adjust the split ratios of the selected space so that all windows occupy the same area.
+            "mirror" | "mir")   yabai_cmd="--mirror" ;; # x-axis|y-axis                            Flip the tree of the selected space.
+            "rotate" | "rot")   yabai_cmd="--rotate" ;; # 90|180|270                               Rotate the tree of the selected space.
+            "padding" | "pad")  yabai_cmd="--padding" ;; # abs|rel:<top>:<bottom>:<left>:<right>   Padding added at the sides of the selected space.
+            "gap")              yabai_cmd="--gap" ;; # abs|rel:<gap>                               Size of the gap that separates windows on the selected space.
+            "toggle" | "tg")    yabai_cmd="--toggle" ;; # padding|gap|mission-control|show-desktop Toggle space setting on or off for the selected space.
+            "layout" | "lt")    yabai_cmd="--layout" ;; # bsp|stack|float                          Set the layout of the selected space.
+            "label" | "lb")     yabai_cmd="--label" ;; # [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
             *) echo "NO_MATCH";;
         esac
         call "$yabai_domain $space_sel $yabai_cmd $value"
@@ -199,7 +200,6 @@ query() {
     local cmd=$arg1
     local arg=$arg2
     if is-mac; then
-        yabai -m query $cmd $arg
         local ypre="yabai -m query"
         local ycmd
         local yarg
@@ -315,6 +315,7 @@ events() {
                 "dmon_msg")   ybie="daemon_message";;
                 *) echo "NO_MATCH";;
             esac
+            # TODO: events label and titel
             call "$ypre $ycmd event=$ybie action=$action"
 	    elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
             local rm_sel=$arg2
@@ -334,7 +335,7 @@ case "$action" in
     "config_space" | "cs") config_space;;
     "space" | "s") space;;
     "window" | "w") window;;
-    "monitor" | "d") monitor;;
+    "monitor" | "m") monitor;;
     "query" | "q") query;;
     "rule" | "r") rule;;
     "events" | "e") events;;
