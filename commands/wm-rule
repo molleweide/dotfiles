@@ -4,36 +4,36 @@
 
 # @param command
 # @param [ add_arg1 | add_arg2 | ... | add_argN ] OR [ rm_rule ]
+
 test -z "${1-}" && exit 1
-cmd=$1
+
 if is-mac; then
-    if test "$cmd" = "add" -o "$cmd" = "a"; then
+    if test "$1" = "add" -o "$1" = "a"; then
         rules=()
-        yabai_cmd="add"
         for i in ${fn_args:3}; do # NOTE: why wrapping fn_args in string doesn't work?
-            rule_name=${i%=*}
-            rule_parm=${i#*=}
-	        case "$rule_name" in
-	            "label" | "l")   rules+=("label=\"$rule_parm\"");; # Label used to identify the rule with a unique name
-	            "app" | "a")     rules+=("app=\"$rule_parm\"") ;; # app[!]=<REGEX>
-	            "title" | "t")   rules+=("title=\"$rule_parm\"");; # title[!]=<REGEX>
-	            "display" | "d") rules+=("display=\"$rule_parm\"");; # display=[^]<DISPLAY_SEL>
-	            "space" | "s")   rules+=("space=\"$rule_parm\"");; # space=[^]<SPACE_SEL>
-	            "manage" | "mg") rules+=("manage=\"$rule_parm\"");; # manage=<BOOL_SEL>
-	            "sticky" | "st") rules+=("sticky=\"$rule_parm\"");; # sticky=<BOOL_SEL>
-	            "msff")          rules+=("mouse_follows_focus=\"$rule_parm\"");; # mouse_follows_focus=<BOOL_SEL>
-	            "layer" | "ly")  rules+=("layer=\"$rule_parm\"");; # layer=<LAYER>
-	            "opacity" | "o") rules+=("opacity=\"$rule_parm\"");; # opacity=<FLOAT_SEL>
-	            "border" | "b")  rules+=("border=\"$rule_parm\"");; # border=<BOOL_SEL>
-	            "nf")            rules+=("native-fullscreen=\"$rule_parm\"");; # native-fullscreen=<BOOL_SEL>
-	            "grid" | "g")    rules+=("grid=\"$rule_parm\"");; # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+            rn=${i%=*} # rule name
+            ra=${i#*=} # rule argument
+	        case "$rn" in
+	            "label" | "l")   rules+=("label=\"$ra\"");; # Label used to identify the rule with a unique name
+	            "app" | "a")     rules+=("app=\"$ra\"") ;; # app[!]=<REGEX>
+	            "title" | "t")   rules+=("title=\"$ra\"");; # title[!]=<REGEX>
+	            "display" | "d") rules+=("display=\"$ra\"");; # display=[^]<DISPLAY_SEL>
+	            "space" | "s")   rules+=("space=\"$ra\"");; # space=[^]<SPACE_SEL>
+	            "manage" | "mg") rules+=("manage=\"$ra\"");; # manage=<BOOL_SEL>
+	            "sticky" | "st") rules+=("sticky=\"$ra\"");; # sticky=<BOOL_SEL>
+	            "msff")          rules+=("mouse_follows_focus=\"$ra\"");; # mouse_follows_focus=<BOOL_SEL>
+	            "layer" | "ly")  rules+=("layer=\"$ra\"");; # layer=<LAYER>
+	            "opacity" | "o") rules+=("opacity=\"$ra\"");; # opacity=<FLOAT_SEL>
+	            "border" | "b")  rules+=("border=\"$ra\"");; # border=<BOOL_SEL>
+	            "nf")            rules+=("native-fullscreen=\"$ra\"");; # native-fullscreen=<BOOL_SEL>
+	            "grid" | "g")    rules+=("grid=\"$ra\"");; # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
 	            *) echo "NO_MATCH";;
 	        esac
         done
-	    echo "yabai -m rule --$yabai_cmd ${rules[@]}"
-	elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
+	    echo "yabai -m rule --add ${rules[@]}"
+	elif test "$1" = 'remove' -o "$1" = 'rm'; then
         echo "yabai -m rule --remove"
-	elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
+	elif test "$1" = 'list' -o "$1" = 'ls'; then
         echo "yabai -m rule --list"
 	fi
 else
