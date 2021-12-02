@@ -7,7 +7,7 @@
 # LABEL       := arbitrary string/text used as an identifier
 # LAYER       := below | normal | above
 # BOOL_SEL    := on | off
-# FLOAT_SEL   := 0 < <value> <= 1.0
+# FLOAT_SEL   := 0 < <val> <= 1.0
 # RULE_SEL    := <index> | LABEL
 # SIGNAL_SEL  := <index> | LABEL
 # DIR_SEL     := north | east | south | west
@@ -17,14 +17,14 @@
 # SPACE_SEL   := prev | next | first | last | recent | mouse | <mission-control index (1-based)> | LABEL
 
 # @param setting
-# @param value
+# @param val
 
 ! test -z "${1-}" -a "${2-}" || exit 1
 setting=$1
-value=$2
+val=$2
 if is-mac; then
     ypre="yabai -m config"
-    yc=""
+    yc="" # rm this line
     case "$setting" in
         "autob") yc="auto_balance";;               # [<BOOL_SEL>]
         "bar")   yc="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
@@ -56,14 +56,14 @@ if is-mac; then
         "wtm")   yc="window_topmost";;             # [<BOOL_SEL>]
         *) echo "NO_MATCH";;
     esac
-    yss=""
+    ys=""
     if ! test -z ${3-}; then
         space_sel_compat=( "layout" "top_padding" "bottom_padding" "left_padding" "right_padding" "window_gap" )
         for i in ${space_sel_compat[@]}; do
-            test "$yc" = "${i}" && yss="--space $3"
+            test "$yc" = "${i}" && ys="--space $3"
         done
     fi
-    echo "$ypre $yss $yc $value"
+    echo "$ypre $ys $yc $val"
 else
     echo "linux todo..."
 fi
