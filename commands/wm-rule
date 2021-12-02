@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
+ # TODO: rule selection | yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
+
 # @param command
 # @param [ add_arg1 | add_arg2 | ... | add_argN ] OR [ rm_rule ]
 test -z "${1-}" && exit 1
 cmd=$1
 if is-mac; then
     ypre="yabai -m rule"
-    yabai_cmd=""
     rules=()
     if test "$cmd" = "add" -o "$cmd" = "a"; then
         yabai_cmd="add"
@@ -32,9 +33,9 @@ if is-mac; then
         done
 	    echo "$ypre --$yabai_cmd ${rules[@]}"
 	elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
-        echo "rule remove" # TODO: rule selection | yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
+        echo "$ypre --remove"
 	elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
-        echo "rule list" # yabai -m rule --list                    Output list of registered rules.
+        echo "$ypre --list"
 	fi
 else
     echo "linux todo..."
