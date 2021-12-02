@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+# https://github.com/koekeishiya/yabai
+# https://dwm.suckless.org/
+
+# REGEX       := POSIX extended regular expression syntax <https://www.gnu.org/software/findutils/manual/html_node/find_html/posix_002dextended-regular-expression-syntax.html>
+# LABEL       := arbitrary string/text used as an identifier
+# LAYER       := below | normal | above
+# BOOL_SEL    := on | off
+# FLOAT_SEL   := 0 < <value> <= 1.0
+# RULE_SEL    := <index> | LABEL
+# SIGNAL_SEL  := <index> | LABEL
+# DIR_SEL     := north | east | south | west
+# STACK_SEL   := stack.prev | stack.next | stack.first | stack.last | stack.recent
+# WINDOW_SEL  := prev | next | first | last | recent | mouse | largest | smallest | STACK_SEL | DIR_SEL | <window id>
+# DISPLAY_SEL := prev | next | first | last | recent | mouse | DIR_SEL | <arrangement index (1-based)>
+# SPACE_SEL   := prev | next | first | last | recent | mouse | <mission-control index (1-based)> | LABEL
+
+# @param setting
+# @param value
+
+! test -z "${1-}" -a "${2-}" || exit 1
+setting=$1
+value=$2
+if is-mac; then
+    ypre="yabai -m config"
+    yc=""
+    case "$setting" in
+        "autob") yc="auto_balance";;               # [<BOOL_SEL>]
+        "bar")   yc="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
+        "debug") yc="debug_output";;               # [<BOOL_SEL>]
+        "ffms")  yc="focus_follows_mouse";;        # [autofocus|autoraise|off]
+        "ifkc")  yc="insert_feedback_color";;      # [0xAARRGGBB]
+        "layout" | "lt")    yc="layout";;           # [bsp|stack|float]
+        "ms1")   yc="mouse_action1";;              # [move|resize]
+        "ms2")   yc="mouse_action2";;              # [move|resize]
+        "msd")   yc="mouse_drop_action";;          # [swap|stack]
+        "msff")  yc="mouse_follows_focus";;        # [<BOOL_SEL>]
+        "msm")   yc="mouse_modifier";;             # [cmd|alt|shift|ctrl|fn]
+        "padb" | "pb")   yc="bottom_padding";;   # [<integer number>]
+        "padl" | "pl")  yc="left_padding";;     # [<integer number>]
+        "padr" | "pr") yc="right_padding";;    # [<integer number>]
+        "padt" | "pt")   yc="top_padding";;      # [<integer number>]
+        "spltr") yc="split_ratio";;                # [<FLOAT_SEL>]
+        "wabc")  yc="active_window_border_color";; # [0xAARRGGBB]
+        "waop")  yc="active_window_opacity";;      # [<FLOAT_SEL>]
+        "wb")    yc="window_border";;              # [<BOOL_SEL>]
+        "wbw")   yc="window_border_width";;        # [<even integer number>]
+        "gap" | "gp")   yc="window_gap";;       # [<integer number>]
+        "wnbc")  yc="normal_window_border_color";; # [0xAARRGGBB]
+        "wnop")  yc="normal_window_opacity";;      # [<FLOAT_SEL>]
+        "wop")   yc="window_opacity";;             # [<BOOL_SEL>]
+        "wopd")  yc="window_opacity_duration";;    # [<floating point number>]
+        "wp")    yc="window_placement";;           # [first_child|second_child]
+        "wsh")   yc="window_shadow";;              # [<BOOL_SEL>|float]
+        "wtm")   yc="window_topmost";;             # [<BOOL_SEL>]
+        *) echo "NO_MATCH";;
+    esac
+    yss=""
+    if ! test -z ${3-}; then
+        space_sel_compat=( "layout" "top_padding" "bottom_padding" "left_padding" "right_padding" "window_gap" )
+        for i in ${space_sel_compat[@]}; do
+            test "$yc" = "${i}" && yss="--space $3"
+        done
+    fi
+    echo "$ypre $yss $yc $value"
+else
+    echo "linux todo..."
+fi

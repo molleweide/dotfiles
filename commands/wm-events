@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+# @param command
+# @param command
+# yabai -m signal --add event=<EVENT> action=<ACTION> /// [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
+# --add event=<EVENT> action=<ACTION> [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
+! test -z "${1-}" || exit 1
+cmd=$1
+if is-mac; then
+    ypre="yabai -m signal"
+    ycmd=""
+    if test "$cmd" = "add" -o "$cmd" = "a"; then
+        ycmd="add"
+        event=$2
+        action=$3 # Arbitrary command executed through /usr/bin/env sh -c
+        ybie="" # yabai event name
+        case "$event" in
+            "a_l")         ybie="application_launched";;
+            "a_k")         ybie="application_terminated";;
+            "a_fs")        ybie="application_front_switched";;
+            "a_ac")        ybie="application_activated";;
+            "a_da")        ybie="application_deactivated";;
+            "a_vi")        ybie="application_visible";;
+            "a_hi")        ybie="application_hidden";;
+            "w_c")       ybie="window_created";;
+            "w_k")       ybie="window_destroyed";;
+            "w_f")       ybie="window_focused";;
+            "w_mv")       ybie="window_moved";;
+            "w_rz")       ybie="window_resized";;
+            "w_mi")       ybie="window_minimized";;
+            "w_dm")       ybie="window_deminimized";;
+            "w_tc")       ybie="window_title_changed";;
+            "sch")          ybie="space_changed";;
+            "ds_ad")      ybie="display_added";;
+            "ds_rm")      ybie="display_removed";;
+            "ds_mv")      ybie="display_moved";;
+            "ds_rz")      ybie="display_resized";;
+            "ds_ch")      ybie="display_changed";;
+            "ms_dn")        ybie="mouse_down";;
+            "ms_up")        ybie="mouse_up";;
+            "ms_dr")        ybie="mouse_dragged";;
+            "ms_mv")        ybie="mouse_moved";;
+            "msc_e")     ybie="mission_control_enter";;
+            "msc_cfx")  ybie="mission_control_check_for_exit";;
+            "msc_x")    ybie="mission_control_exit";;
+            "dk_dr")      ybie="dock_did_restart";;
+            "dk_dcp")     ybie="dock_did_change_pref";;
+            "mu_o")       ybie="menu_opened";;
+            "mu_bhc")     ybie="menu_bar_hidden_changed";;
+            "sys_wk")     ybie="system_woke";;
+            "dmon_msg")   ybie="daemon_message";;
+            *) echo "NO_MATCH";;
+        esac
+        # TODO: events label and titel
+        echo "$ypre $ycmd event=$ybie action=$action"
+
+	elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
+        rm_sel=$2
+        echo "$ypre --remove $rm_sel"
+
+	elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
+        echo "$ypre --list"
+	fi
+else
+    echo "linux todo..."
+fi

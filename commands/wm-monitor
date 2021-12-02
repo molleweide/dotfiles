@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# @param display_selection
+
+! test -z "${$1-}" || exit 1
+
+display_sel=$1
+
+if is-mac; then
+    local ypre="yabai -m display --focus"
+    call "$ypre $display_sel"
+else
+    echo "linux"
+fi

@@ -12,6 +12,7 @@ wm c msff on
 wm c lt bsp
 wm c pl 5
 wm c gp 15 next
+wm-config pr 15 next
 
 # "rotate" | "rot")   yabai_cmd="--rotate" ;; # 90|180|270                               Rotate the tree of the selected space.
 # "padding" | "pad")  yabai_cmd="--padding" ;; # abs|rel:<top>:<bottom>:<left>:<right>   Padding added at the sides of the selected space.

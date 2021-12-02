@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# @param command
+# @param value
+# @param space_selection
+test -z "${1-}" && exit 1
+cmd=$1
+value=$2
+test -z "${3-}" || space_sel="--space $3"
+if is-mac; then
+    local ypre="yabai -m space"
+    local yabai_cmd
+    case "$cmd" in
+        "focus" | "fc")    yabai_cmd="--focus" ;; # <SPACE_SEL>
+        "create" | "nw")   yabai_cmd="--create" ;;
+        "destroy" | "rm")  yabai_cmd="--destroy" ;;
+        "move" | "mv")      yabai_cmd="--move" ;; # <SPACE_SEL>                        Move position of the selected space to the position of the given space. The selected space and given space must both belong to the same display.
+        "swap" | "sw")      yabai_cmd="--swap" ;; # <SPACE_SEL>                        Swap the selected space with the given space. The selected space and given space must both belong to the same display.
+        "display" | "dsp")  yabai_cmd="--display" ;; # <DISPLAY_SEL>                           Send the selected space to the given display.
+        "balance" | "bl")   yabai_cmd="--balance" ;; # Adjust the split ratios of the selected space so that all windows occupy the same area.
+        "mirror" | "mir")   yabai_cmd="--mirror" ;; # x-axis|y-axis                            Flip the tree of the selected space.
+        "rotate" | "rot")   yabai_cmd="--rotate" ;; # 90|180|270                               Rotate the tree of the selected space.
+        "padding" | "pad")  yabai_cmd="--padding" ;; # abs|rel:<top>:<bottom>:<left>:<right>   Padding added at the sides of the selected space.
+        "gap" | "gp")       yabai_cmd="--gap" ;; # abs|rel:<gap>                               Size of the gap that separates windows on the selected space.
+        "toggle" | "tg")    yabai_cmd="--toggle" ;; # padding|gap|mission-control|show-desktop Toggle space setting on or off for the selected space.
+        "layout" | "lt")    yabai_cmd="--layout" ;; # bsp|stack|float                          Set the layout of the selected space.
+        "label" | "lb")     yabai_cmd="--label" ;; # [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
+        *) echo "NO_MATCH";;
+    esac
+    call "$ypre $space_sel $yabai_cmd $value"
+else
+    echo "linux todo..."
+fi

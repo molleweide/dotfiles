@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if is-mac; then
+    brew services restart yabai
+    brew services restart skhd
+    limelight # there is a wierd err msg but it works...
+else
+	echo 'reload linux wm...'
+fi

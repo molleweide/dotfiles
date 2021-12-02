@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# @param command
+# @param [ value ]
+# @param [ window_selection ]
+test -z "${1-}" && exit 1
+cmd=$arg1
+arg=$arg2
+win_sel
+test -z "${3}" || win_sel="--window $3"
+if is-mac; then
+    local ypre="yabai -m window"
+    local yabai_cmd
+    case "$cmd" in
+        "focus" | "foc") yabai_cmd="focus";; # <WINDOW_SEL>
+        "swap" | "sw") yabai_cmd="swap";; # <WINDOW_SEL>
+        "warp" | "wrp") yabai_cmd="warp";; # <WINDOW_SEL>
+        "stack" | "stk") yabai_cmd="stack";; # <WINDOW_SEL>
+        "insert" | "zz") yabai_cmd="insert";; # <DIR_SEL>|stack
+        "grid" | "zz") yabai_cmd="grid";; # <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+        "move" | "zz") yabai_cmd="move";; # abs|rel:<dx>:<dy>
+        "resize" | "zz") yabai_cmd="resize";; # top|left|bottom|right|top_left|top_right|bottom_right|bottom_left|abs:<dx>:<dy>
+        "ratio" | "zz") yabai_cmd="ratio";; # rel|abs:<dr>
+        "toggle" | "zz") yabai_cmd="toggle";; # float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose
+        "layer" | "zz") yabai_cmd="layer";; # <LAYER>
+        "opacity" | "zz") yabai_cmd="opacity";; # <floating point number>
+        "display" | "zz") yabai_cmd="display";; # <DISPLAY_SEL>
+        "space" | "zz") yabai_cmd="space";; # <SPACE_SEL>
+        "minimize" | "zz") yabai_cmd="minimize";;
+        "deminimize" | "zz") yabai_cmd="deminimize";;
+        "close" | "zz") yabai_cmd="close" ;;
+        *) echo "NO_MATCH";;
+    esac
+    call "$ypre $win_sel --$yabai_cmd $arg"
+else
+    echo "linux todo..."
+fi

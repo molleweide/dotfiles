@@ -18,15 +18,15 @@
 
 fn_args=$@
 
-# action="${1-}"
+action="${1-}"
 
 # if no args -> reload
 ! test -z "${action}" || $action="reload"
 
-# arg1="${2-}"
-# arg2="${3-}"
-# arg3="${4-}"
-# arg4="${5-}"
+arg1="${2-}"
+arg2="${3-}"
+arg3="${4-}"
+arg4="${5-}"
 
 # util func so I can echo all commands instead of running
 call() {
