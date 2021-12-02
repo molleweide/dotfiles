@@ -274,7 +274,7 @@ events() {
         local ypre="yabai -m signal"
         local ycmd
         if test "$cmd" = "add" -o "$cmd" = "a"; then
-            $ycmd="add"
+            ycmd="add"
             local event=$arg2
             local action=$arg3 # Arbitrary command executed through /usr/bin/env sh -c
             local ybie # yabai event name

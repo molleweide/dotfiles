@@ -106,6 +106,7 @@ echo
 # "native-fullscreen") ;; # native-fullscreen=<BOOL_SEL>
 # "grid") ;; # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
 echo-segment --g1="### rule | r ###"
+wm r a
 echo
 
 # "ds_mv")      ybie="display_moved";;
@@ -125,7 +126,5 @@ echo
 # "sys_wk")     ybie="system_woke";;
 # "dmon_msg")   ybie="daemon_message";;
 echo-segment --g1="### events | e ###"
+wm e a dk_dr
 echo
-
-
-
