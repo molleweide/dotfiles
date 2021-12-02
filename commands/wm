@@ -28,6 +28,7 @@ arg2="${3-}"
 arg3="${4-}"
 arg4="${5-}"
 
+# util func so I can echo all commands instead of running
 call() {
     # echo "${fn_args[@]}  ->  $@"
     echo "$@"
@@ -45,62 +46,55 @@ reload() {
 
 # @param setting
 # @param value
+
+# TODO: if arg4 > check if correct yc > add space selection
+
 config() {
     ! test -z "${arg1-}" -a "${arg2-}" || exit 1
-    local cfg_type=$arg1 # global | space
-    local setting=$arg2
-    local value=$arg3
-    local sel=$arg4
-    local space_sel
-    ! test -z "${arg4}" && $space_sel="--space $sel"
-
+    local setting=$arg1
+    local value=$arg2
     if is-mac; then
-        if test "$cfg_type" = "global" -o "$cfg_type" = "g"; then
-            # CONFIG GLOBAL
-            local ypre="yabai -m config"
-            local yconf
-            case "$setting" in
-                "debug") yconf="debug_output";;               # [<BOOL_SEL>]
-                "bar")   yconf="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
-                "msff")  yconf="mouse_follows_focus";;        # [<BOOL_SEL>]
-                "ffms")  yconf="focus_follows_mouse";;        # [autofocus|autoraise|off]
-                "wp")    yconf="window_placement";;           # [first_child|second_child]
-                "wtm")   yconf="window_topmost";;             # [<BOOL_SEL>]
-                "wsh")   yconf="window_shadow";;              # [<BOOL_SEL>|float]
-                "wop")   yconf="window_opacity";;             # [<BOOL_SEL>]
-                "wopd")  yconf="window_opacity_duration";;    # [<floating point number>]
-                "waop")  yconf="active_window_opacity";;      # [<FLOAT_SEL>]
-                "wnop")  yconf="normal_window_opacity";;      # [<FLOAT_SEL>]
-                "wb")    yconf="window_border";;              # [<BOOL_SEL>]
-                "wbw")   yconf="window_border_width";;        # [<even integer number>]
-                "wabc")  yconf="active_window_border_color";; # [0xAARRGGBB]
-                "wnbc")  yconf="normal_window_border_color";; # [0xAARRGGBB]
-                "ifkc")  yconf="insert_feedback_color";;     # [0xAARRGGBB]
-                "spltr") yconf="split_ratio";;               # [<FLOAT_SEL>]
-                "autob") yconf="auto_balance";;                       # [<BOOL_SEL>]
-                "msm")   yconf="mouse_modifier";;                       # [cmd|alt|shift|ctrl|fn]
-                "ms1")   yconf="mouse_action1";;                       # [move|resize]
-                "ms2")   yconf="mouse_action2";;                       # [move|resize]
-                "msd")   yconf="mouse_drop_action";;                      # [swap|stack]
-                *) echo "NO_MATCH";;
-            esac
-            call "$ypre $yconf $value"
-
-	    elif test "$cfg_type" = 'space' -o "$cfg_type" = 's'; then
-            # CONFIG SPACE
-            local ypre="yabai -m config --space"
-            local yconf
-            case "$setting" in
-                "layout" | "lt")    yconf="layout";;           # [bsp|stack|float]
-                "pad_top" | "pt")   yconf="top_padding";;      # [<integer number>]
-                "pad_btm" | "pb")   yconf="bottom_padding";;   # [<integer number>]
-                "pad_left" | "pl")  yconf="left_padding";;     # [<integer number>]
-                "pad_right" | "pr") yconf="right_padding";;    # [<integer number>]
-                "win_gap" | "gp")   yconf="window_gap";;       # [<integer number>]
-                *) echo "NO_MATCH";;
-            esac
-            call "$ypre  $space_sel $yconf $value"
-	    fi
+        local ypre="yabai -m config"
+        local yc
+        case "$setting" in
+            "autob") yc="auto_balance";;               # [<BOOL_SEL>]
+            "bar")   yc="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
+            "debug") yc="debug_output";;               # [<BOOL_SEL>]
+            "ffms")  yc="focus_follows_mouse";;        # [autofocus|autoraise|off]
+            "ifkc")  yc="insert_feedback_color";;      # [0xAARRGGBB]
+            "layout" | "lt")    yc="layout";;           # [bsp|stack|float]
+            "ms1")   yc="mouse_action1";;              # [move|resize]
+            "ms2")   yc="mouse_action2";;              # [move|resize]
+            "msd")   yc="mouse_drop_action";;          # [swap|stack]
+            "msff")  yc="mouse_follows_focus";;        # [<BOOL_SEL>]
+            "msm")   yc="mouse_modifier";;             # [cmd|alt|shift|ctrl|fn]
+            "padb" | "pb")   yc="bottom_padding";;   # [<integer number>]
+            "padl" | "pl")  yc="left_padding";;     # [<integer number>]
+            "padr" | "pr") yc="right_padding";;    # [<integer number>]
+            "padt" | "pt")   yc="top_padding";;      # [<integer number>]
+            "spltr") yc="split_ratio";;                # [<FLOAT_SEL>]
+            "wabc")  yc="active_window_border_color";; # [0xAARRGGBB]
+            "waop")  yc="active_window_opacity";;      # [<FLOAT_SEL>]
+            "wb")    yc="window_border";;              # [<BOOL_SEL>]
+            "wbw")   yc="window_border_width";;        # [<even integer number>]
+            "gap" | "gp")   yc="window_gap";;       # [<integer number>]
+            "wnbc")  yc="normal_window_border_color";; # [0xAARRGGBB]
+            "wnop")  yc="normal_window_opacity";;      # [<FLOAT_SEL>]
+            "wop")   yc="window_opacity";;             # [<BOOL_SEL>]
+            "wopd")  yc="window_opacity_duration";;    # [<floating point number>]
+            "wp")    yc="window_placement";;           # [first_child|second_child]
+            "wsh")   yc="window_shadow";;              # [<BOOL_SEL>|float]
+            "wtm")   yc="window_topmost";;             # [<BOOL_SEL>]
+            *) echo "NO_MATCH";;
+        esac
+        local yss
+        if ! test -z $arg3; then
+            space_sel_compat=( "layout" "top_padding" "bottom_padding" "left_padding" "right_padding" "window_gap" )
+            for i in ${space_sel_compat[@]}; do
+                test "$yc" = "${i}" && yss="--space ${arg3}"
+            done
+        fi
+        call "$ypre $yss $yc $value"
     else
         echo "linux todo..."
     fi
