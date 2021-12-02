@@ -106,34 +106,6 @@ config() {
     fi
 }
 
-# # @param setting
-# # @param value
-# # @param space_selection
-# config_space() {
-#     ! test -z "${arg1-}" -a "${arg2-}" || exit 1
-#     local setting=$arg1
-#     local value=$arg2
-#     local sel=$arg3
-#     local space_sel
-#     ! test -z "${arg3}" && $space_sel="--space $sel"
-#     if is-mac; then
-#         local ypre="yabai -m config --space"
-#         local yconf
-#         case "$setting" in
-#             "layout" | "lt")    yconf="layout";;           # [bsp|stack|float]
-#             "pad_top" | "pt")   yconf="top_padding";;      # [<integer number>]
-#             "pad_btm" | "pb")   yconf="bottom_padding";;   # [<integer number>]
-#             "pad_left" | "pl")  yconf="left_padding";;     # [<integer number>]
-#             "pad_right" | "pr") yconf="right_padding";;    # [<integer number>]
-#             "win_gap" | "gp")   yconf="window_gap";;       # [<integer number>]
-#             *) echo "NO_MATCH";;
-#         esac
-#         call "$ypre  $space_sel $yconf $value"
-#     else
-#         echo "linux todo..."
-#     fi
-# }
-
 # @param display_selection
 monitor() {
     ! test -z "${arg1-}" || exit 1
