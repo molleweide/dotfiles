@@ -1,36 +1,36 @@
 #!/usr/bin/env bash
 
-# "debug")      yabai_setting="debug_output";;               # [<BOOL_SEL>]
-# "bar")        yabai_setting="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
-# "msff")     yabai_setting="mouse_follows_focus";;        # [<BOOL_SEL>]
-# "ffms")     yabai_setting="focus_follows_mouse";;        # [autofocus|autoraise|off]
-# "win_place")  yabai_setting="window_placement";;           # [first_child|second_child]
-# "win_topm")   yabai_setting="window_topmost";;             # [<BOOL_SEL>]
-# "win_sh")     yabai_setting="window_shadow";;              # [<BOOL_SEL>|float]
-# "win_op")     yabai_setting="window_opacity";;             # [<BOOL_SEL>]
-# "win_op_dur") yabai_setting="window_opacity_duration";;    # [<floating point number>]
-# "win_act_op") yabai_setting="active_window_opacity";;      # [<FLOAT_SEL>]
-# "win_nrm_op") yabai_setting="normal_window_opacity";;      # [<FLOAT_SEL>]
-# "win_b")      yabai_setting="window_border";;              # [<BOOL_SEL>]
-# "win_bw")     yabai_setting="window_border_width";;        # [<even integer number>]
-# "win_act_bc") yabai_setting="active_window_border_color";; # [0xAARRGGBB]
-# "win_nrm_bc") yabai_setting="normal_window_border_color";; # [0xAARRGGBB]
-# "ifdbkc")  yabai_setting="insert_feedback_color";;     # [0xAARRGGBB]
-# "splitr")    yabai_setting="split_ratio";;               # [<FLOAT_SEL>]
-# "autob")   yabai_setting="auto_balance";;                       # [<BOOL_SEL>]
-# "msm")     yabai_setting="mouse_modifier";;                       # [cmd|alt|shift|ctrl|fn]
-# "msx1")     yabai_setting="mouse_action1";;                       # [move|resize]
-# "msx2")     yabai_setting="mouse_action2";;                       # [move|resize]
-# "msdx")     yabai_setting="mouse_drop_action";;                      # [swap|stack]
+# "debug") yabai_setting="debug_output";;               # [<BOOL_SEL>]
+# "bar")   yabai_setting="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
+# "msff")  yabai_setting="mouse_follows_focus";;        # [<BOOL_SEL>]
+# "ffms")  yabai_setting="focus_follows_mouse";;        # [autofocus|autoraise|off]
+# "wp")    yabai_setting="window_placement";;           # [first_child|second_child]
+# "wtm")   yabai_setting="window_topmost";;             # [<BOOL_SEL>]
+# "wsh")   yabai_setting="window_shadow";;              # [<BOOL_SEL>|float]
+# "wop")   yabai_setting="window_opacity";;             # [<BOOL_SEL>]
+# "wopd")  yabai_setting="window_opacity_duration";;    # [<floating point number>]
+# "waop")  yabai_setting="active_window_opacity";;      # [<FLOAT_SEL>]
+# "wnop")  yabai_setting="normal_window_opacity";;      # [<FLOAT_SEL>]
+# "wb")    yabai_setting="window_border";;              # [<BOOL_SEL>]
+# "wbw")   yabai_setting="window_border_width";;        # [<even integer number>]
+# "wabc")  yabai_setting="active_window_border_color";; # [0xAARRGGBB]
+# "wnbc")  yabai_setting="normal_window_border_color";; # [0xAARRGGBB]
+# "ifkc")  yabai_setting="insert_feedback_color";;     # [0xAARRGGBB]
+# "spltr") yabai_setting="split_ratio";;               # [<FLOAT_SEL>]
+# "autob") yabai_setting="auto_balance";;                       # [<BOOL_SEL>]
+# "msm")   yabai_setting="mouse_modifier";;                       # [cmd|alt|shift|ctrl|fn]
+# "msx1")  yabai_setting="mouse_action1";;                       # [move|resize]
+# "msx2")  yabai_setting="mouse_action2";;                       # [move|resize]
+# "msdx")  yabai_setting="mouse_drop_action";;                      # [swap|stack]
 echo-segment --g1="### config_global | cg ###"
 wm cg debug
-wm cg ms_fcf on
+wm cg msff on
 echo
 
 echo-segment --g1="### config_space | cs ###"
 wm cs lt bsp
 wm cs pl 5
-wm cs wg 15
+wm cs gp 15
 echo
 
 # "focus" | "foc")    yabai_cmd="--focus" ;; # <SPACE_SEL>
@@ -127,4 +127,3 @@ echo
 # "dmon_msg")   ybie="daemon_message";;
 echo-segment --g1="### events | e ###"
 wm e a dk_dr
-echo
