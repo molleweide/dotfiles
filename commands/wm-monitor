@@ -2,7 +2,7 @@
 
 # @param display_selection
 
-! test -z "${$1-}" || exit 1
+! test -z "${1-}" || exit 1
 
 if is-mac; then
     echo "yabai -m display --focus $1"

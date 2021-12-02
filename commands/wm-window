@@ -3,11 +3,11 @@
 # @param command
 # @param [ value ]
 # @param [ window_selection ]
+
 test -z "${1-}" && exit 1
 test -z "${3}" || yws="--window $3"
+
 if is-mac; then
-    local ypre="yabai -m window"
-    local yabai_cmd
     case "$1" in
         "focus" | "foc") yabai_cmd="focus";; # <WINDOW_SEL>
         "swap" | "sw") yabai_cmd="swap";; # <WINDOW_SEL>
@@ -28,7 +28,7 @@ if is-mac; then
         "close" | "zz") yabai_cmd="close" ;;
         *) echo "NO_MATCH";;
     esac
-    call "$ypre $yws --$yabai_cmd $2"
+    echo "yabai -m window $yws --$yabai_cmd $2"
 else
     echo "linux todo..."
 fi

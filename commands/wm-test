@@ -27,6 +27,7 @@ wm s balance
 wm s rot 90
 wm s toggle mission-control
 wm s lb my_space_name
+wm-space lb my_space_name XXX
 
 # "toggle" | "zz") yabai_cmd="toggle";; # float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose
 # "layer" | "zz") yabai_cmd="layer";; # <LAYER>
@@ -38,17 +39,20 @@ echo-segment --g1="### window | w ###"
 wm w f next
 wm w insert stack
 wm w close
+wm-window display 1
 
 echo-segment --g1="### monitor | m ###"
 wm m prev
 wm m last
 wm m south
+wm-monitor 2
 
 echo-segment --g1="### query | q ###"
 wm q d
 wm q d d
 wm q s s
 wm q w s
+wm-query w s
 
 # "opacity") ;; # opacity=<FLOAT_SEL>
 # "border") ;; # border=<BOOL_SEL>
@@ -56,6 +60,7 @@ wm q w s
 # "grid") ;; # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
 echo-segment --g1="### rule | r ###"
 wm r a
+wm-rule a
 
 # "dk_dcp")     ybie="dock_did_change_pref";;
 # "mu_o")       ybie="menu_opened";;
