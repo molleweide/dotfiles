@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-# TODO: app[!] title[!]
-
-# @param command
-# @param command
-
 test -z "${1-}" && exit 1
 
 if is-mac; then
@@ -51,12 +46,12 @@ if is-mac; then
         for i in ${@:4}; do
             pre=${i%=*}
             post=${i#*=}
-            if test "$pre" = "label"; then
-                yl="$pre=\"$post\""
-            elif test "$pre" = "app"; then
-                ya="$pre=\"$post\""
-            elif test "$pre" = "title"; then
-                yt="$pre=\"$post\""
+            if test "$pre" = "label" -o "$pre" = "l"; then
+                yl="label=\"$post\""
+            elif test "$pre" = "app" -o "$pre" = "a"; then
+                ya="app=\"$post\""
+            elif test "$pre" = "title" -o "$pre" = "t"; then
+                yt="title=\"$post\""
             fi
         done
         echo "yabai -m signal --add event=$ybie action=\"$action\" $yl $ya $yt"

@@ -23,7 +23,14 @@ wm-query w s
 wm-query d d
 
 wm-rule a l="mpv" a="^mpv\$" mg="off"
+wm-rule a l="iTerm2" a="^iTerm2$" manage=off
+wm-rule a l="Google Chrome" a="^Google Chrome$" space=^1
+wm-rule a l="Firefox" a="^Firefox$" s=^1
+wm-rule a l="Code" a="^Code$" s=^2
+wm-rule a l="Sequel Ace" a="^Sequel Ace" s=^2
+wm-rule a l="Slack" a="^Slack$" s=^3
+wm-rule a l="Skype" a="^Skype$" s=^3
 
-wm-events a dkdr "computer-sleep"
-wm-events a syswk "echo some command=xst" label="myname" app="someapp" title="mytitle"
-wm-events a wk "osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
+wm-events add dkdr "computer-sleep"
+wm-events add syswk "echo some command=xst" label="myname" a="someapp" title="mytitle"
+wm-events add wk "osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
