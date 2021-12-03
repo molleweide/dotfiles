@@ -7,6 +7,8 @@
 	version: 0.1
 @end
 
+* sync markdown notes mamma / pappa
+
 * mouse
  ** "git@github.com:molleweide/mouse.git"
  ** `sudo pip install mouse`

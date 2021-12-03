@@ -82,6 +82,7 @@ HOMEBREW_INSTALL=(
 	"tree-sitter --HEAD"
 	ack
 	aria2
+	appflowy            # notion alternative open source
 	blueutil
 	cabal-install       # haskell pkg manager
 	calcurse
@@ -134,7 +135,9 @@ HOMEBREW_INSTALL=(
 	neofetch
 	neomutt
 	ninja
-	nnn # filebrowser
+	nnn                 # filebrowser
+	# notion          # notes
+	obsidian        # note
 	openssh
 	pandoc
 	pass
@@ -152,6 +155,7 @@ HOMEBREW_INSTALL=(
 	ripgrep
 	sc-im # spreadsheets
 	screen
+	# simplenote          # notes
 	sl
 	sox
 	spotify-tui
