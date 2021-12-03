@@ -31,7 +31,7 @@ if is-mac; then
         "debug") yc="debug_output";;               # [<BOOL_SEL>]
         "ffms")  yc="focus_follows_mouse";;        # [autofocus|autoraise|off]
         "ifkc")  yc="insert_feedback_color";;      # [0xAARRGGBB]
-        "layout" | "lt")    yc="layout";;           # [bsp|stack|float]
+        "layout" | "ly")    yc="layout";;           # [bsp|stack|float]
         "ms1")   yc="mouse_action1";;              # [move|resize]
         "ms2")   yc="mouse_action2";;              # [move|resize]
         "msd")   yc="mouse_drop_action";;          # [swap|stack]

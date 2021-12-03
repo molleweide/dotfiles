@@ -1,72 +1,29 @@
 #!/usr/bin/env bash
 
-# "ifkc")  yabai_setting="insert_feedback_color";;     # [0xAARRGGBB]
-# "spltr") yabai_setting="split_ratio";;               # [<FLOAT_SEL>]
-# "autob") yabai_setting="auto_balance";;                       # [<BOOL_SEL>]
-# "msm")   yabai_setting="mouse_modifier";;                       # [cmd|alt|shift|ctrl|fn]
-# "msx2")  yabai_setting="mouse_action2";;                       # [move|resize]
-# "msdx")  yabai_setting="mouse_drop_action";;                      # [swap|stack]
-echo-segment --g1="### config | c ###"
-wm c debug
-wm c msff on
-wm c lt bsp
-wm c pl 5
-wm c gp 15 next
+# echo-segment --g1="### window | w ###"
+
+wm-config bar main:5:5
+wm-config ly stack
+wm-config ly stack 5
 wm-config pr 15 next
 
-# "rotate" | "rot")   yabai_cmd="--rotate" ;; # 90|180|270                               Rotate the tree of the selected space.
-# "padding" | "pad")  yabai_cmd="--padding" ;; # abs|rel:<top>:<bottom>:<left>:<right>   Padding added at the sides of the selected space.
-# "gap")              yabai_cmd="--gap" ;; # abs|rel:<gap>                               Size of the gap that separates windows on the selected space.
-# "toggle" | "tg")    yabai_cmd="--toggle" ;; # padding|gap|mission-control|show-desktop Toggle space setting on or off for the selected space.
-# "layout" | "lt")    yabai_cmd="--layout" ;; # bsp|stack|float                          Set the layout of the selected space.
-# "label" | "lb")     yabai_cmd="--label" ;; # [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
-echo-segment --g1="### space | s ###"
-wm s foc next
-wm s move east
-wm s balance
-wm s rot 90
-wm s toggle mission-control
-wm s lb my_space_name
-wm-space lb my_space_name XXX
+wm-space lb my_space_name 2
+wm-space rot 90
+wm-space pad rel:1:2:3:4
 
-# "toggle" | "zz") yabai_cmd="toggle";; # float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose
-# "layer" | "zz") yabai_cmd="layer";; # <LAYER>
-# "opacity" | "zz") yabai_cmd="opacity";; # <floating point number>
-# "display" | "zz") yabai_cmd="display";; # <DISPLAY_SEL>
-# "space" | "zz") yabai_cmd="space";; # <SPACE_SEL>
-# "close" | "zz") yabai_cmd="close" ;;
-echo-segment --g1="### window | w ###"
-wm w f next
-wm w insert stack
-wm w close
-wm-window display 1
+wm-window d 1
+wm-window rz abs:80:60
+wm-window ly 2
+wm-window mz
 
-echo-segment --g1="### monitor | m ###"
-wm m prev
-wm m last
-wm m south
 wm-monitor 2
+wm-monitor prev
 
-echo-segment --g1="### query | q ###"
-wm q d
-wm q d d
-wm q s s
-wm q w s
 wm-query w s
+wm-query d d
 
-# "opacity") ;; # opacity=<FLOAT_SEL>
-# "border") ;; # border=<BOOL_SEL>
-# "native-fullscreen") ;; # native-fullscreen=<BOOL_SEL>
-# "grid") ;; # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
-echo-segment --g1="### rule | r ###"
-wm r a
-wm-rule a
+wm-rule a l="mpv" a="^mpv\$" mg="off"
 
-# "dk_dcp")     ybie="dock_did_change_pref";;
-# "mu_o")       ybie="menu_opened";;
-# "mu_bhc")     ybie="menu_bar_hidden_changed";;
-# "sys_wk")     ybie="system_woke";;
-# "dmon_msg")   ybie="daemon_message";;
-echo-segment --g1="### events | e ###"
-wm e a dk_dr
-wm-events a sys_wk "echo some command=xst" label="myname" app="someapp" title="mytitle"
+wm-events a dkdr "computer-sleep"
+wm-events a syswk "echo some command=xst" label="myname" app="someapp" title="mytitle"
+wm-events a wk "osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"

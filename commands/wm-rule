@@ -10,25 +10,25 @@ test -z "${1-}" && exit 1
 if is-mac; then
     if test "$1" = "add" -o "$1" = "a"; then
         rules=()
-        for i in ${fn_args:3}; do # NOTE: why wrapping fn_args in string doesn't work?
-            rn=${i%=*} # rule name
+        for i in "${@:2}"; do
             ra=${i#*=} # rule argument
-	        case "$rn" in
-	            "label" | "l")   rules+=("label=\"$ra\"");; # Label used to identify the rule with a unique name
-	            "app" | "a")     rules+=("app=\"$ra\"") ;; # app[!]=<REGEX>
-	            "title" | "t")   rules+=("title=\"$ra\"");; # title[!]=<REGEX>
-	            "display" | "d") rules+=("display=\"$ra\"");; # display=[^]<DISPLAY_SEL>
-	            "space" | "s")   rules+=("space=\"$ra\"");; # space=[^]<SPACE_SEL>
-	            "manage" | "mg") rules+=("manage=\"$ra\"");; # manage=<BOOL_SEL>
-	            "sticky" | "st") rules+=("sticky=\"$ra\"");; # sticky=<BOOL_SEL>
-	            "msff")          rules+=("mouse_follows_focus=\"$ra\"");; # mouse_follows_focus=<BOOL_SEL>
-	            "layer" | "ly")  rules+=("layer=\"$ra\"");; # layer=<LAYER>
-	            "opacity" | "o") rules+=("opacity=\"$ra\"");; # opacity=<FLOAT_SEL>
-	            "border" | "b")  rules+=("border=\"$ra\"");; # border=<BOOL_SEL>
-	            "nf")            rules+=("native-fullscreen=\"$ra\"");; # native-fullscreen=<BOOL_SEL>
-	            "grid" | "g")    rules+=("grid=\"$ra\"");; # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+	        case "${i%=*}" in # get all before `=`
+	            "label" | "l")   rules+=("label=\"$ra\"");;                 # Label used to identify the rule with a unique name
+	            "app" | "a")     rules+=("app=\"$ra\"") ;;                  # app[!]=<REGEX>
+	            "title" | "t")   rules+=("title=\"$ra\"");;                 # title[!]=<REGEX>
+	            "display" | "d") rules+=("display=\"$ra\"");;               # display=[^]<DISPLAY_SEL>
+	            "space" | "s")   rules+=("space=\"$ra\"");;                 # space=[^]<SPACE_SEL>
+	            "manage" | "mg") rules+=("manage=\"$ra\"");;                # manage=<BOOL_SEL>
+	            "sticky" | "st") rules+=("sticky=\"$ra\"");;                # sticky=<BOOL_SEL>
+	            "msff")          rules+=("mouse_follows_focus=\"$ra\"");;   # mouse_follows_focus=<BOOL_SEL>
+	            "layer" | "ly")  rules+=("layer=\"$ra\"");;                 # layer=<LAYER>
+	            "opacity" | "o") rules+=("opacity=\"$ra\"");;               # opacity=<FLOAT_SEL>
+	            "border" | "b")  rules+=("border=\"$ra\"");;                # border=<BOOL_SEL>
+	            "nf")            rules+=("native-fullscreen=\"$ra\"");;     # native-fullscreen=<BOOL_SEL>
+	            "grid" | "g")    rules+=("grid=\"$ra\"");;                  # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
 	            *) echo "NO_MATCH";;
 	        esac
+	        # rules+=("label=\"$ra\"")
         done
 	    echo "yabai -m rule --add ${rules[@]}"
 	elif test "$1" = 'remove' -o "$1" = 'rm'; then
