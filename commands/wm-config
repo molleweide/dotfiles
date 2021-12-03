@@ -1,24 +1,5 @@
 #!/usr/bin/env bash
 
-# https://github.com/koekeishiya/yabai
-# https://dwm.suckless.org/
-
-# REGEX       := POSIX extended regular expression syntax <https://www.gnu.org/software/findutils/manual/html_node/find_html/posix_002dextended-regular-expression-syntax.html>
-# LABEL       := arbitrary string/text used as an identifier
-# LAYER       := below | normal | above
-# BOOL_SEL    := on | off
-# FLOAT_SEL   := 0 < <val> <= 1.0
-# RULE_SEL    := <index> | LABEL
-# SIGNAL_SEL  := <index> | LABEL
-# DIR_SEL     := north | east | south | west
-# STACK_SEL   := stack.prev | stack.next | stack.first | stack.last | stack.recent
-# WINDOW_SEL  := prev | next | first | last | recent | mouse | largest | smallest | STACK_SEL | DIR_SEL | <window id>
-# DISPLAY_SEL := prev | next | first | last | recent | mouse | DIR_SEL | <arrangement index (1-based)>
-# SPACE_SEL   := prev | next | first | last | recent | mouse | <mission-control index (1-based)> | LABEL
-
-# @param setting
-# @param val
-
 ! test -z "${1-}" -a "${2-}" || exit 1
 setting=$1
 val=$2
@@ -26,9 +7,9 @@ if is-mac; then
     ypre="yabai -m config"
     yc="" # rm this line
     case "$setting" in
-        "autob") yc="auto_balance";;               # [<BOOL_SEL>]
-        "bar")   yc="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
-        "debug") yc="debug_output";;               # [<BOOL_SEL>]
+        "auto_balance" | "ab")  yc="auto_balance";;               # [<BOOL_SEL>]
+        "external_bar" | "bar") yc="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
+        "debug_output" | "do") yc="debug_output";;               # [<BOOL_SEL>]
         "ffms")  yc="focus_follows_mouse";;        # [autofocus|autoraise|off]
         "ifkc")  yc="insert_feedback_color";;      # [0xAARRGGBB]
         "layout" | "ly")    yc="layout";;           # [bsp|stack|float]
@@ -56,14 +37,16 @@ if is-mac; then
         "wtm")   yc="window_topmost";;             # [<BOOL_SEL>]
         *) echo "NO_MATCH";;
     esac
-    ys=""
+
     if ! test -z ${3-}; then
         space_sel_compat=( "layout" "top_padding" "bottom_padding" "left_padding" "right_padding" "window_gap" )
         for i in ${space_sel_compat[@]}; do
             test "$yc" = "${i}" && ys="--space $3"
         done
     fi
+
     echo "$ypre $ys $yc $val"
+
 else
     echo "linux todo..."
 fi
