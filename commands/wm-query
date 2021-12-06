@@ -18,7 +18,7 @@ if is-mac; then
         "win" | "w") yarg="window";;
         *) echo "NO_MATCH";;
     esac
-    echo "yabai -m query --$ycmd --$yarg"
+    yabai -m query --$ycmd --$yarg
 else
     echo "linux todo..."
 fi

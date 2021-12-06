@@ -48,7 +48,9 @@ if is-mac; then
         done
     fi
 
-    echo "$ypre $ys $yc $val"
+    # execute yabai command
+    echo "!!"
+    $ypre $ys $yc $val
 
 else
     echo "linux todo..."

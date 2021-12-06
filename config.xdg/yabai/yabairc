@@ -50,19 +50,21 @@ yabai -m config mouse_action2                resize
 # ---       general settings       ---
 # ------------------------------------
 
-yabai -m config layout                       bsp
-yabai -m config top_padding                  6
-yabai -m config bottom_padding               6
-yabai -m config left_padding                 6
-yabai -m config right_padding                6
-yabai -m config window_gap                   6
-# yabai -m config layout			                 stack # bsp
-# yabai -m config top_padding                  28
-# yabai -m config bottom_padding               28
-# yabai -m config left_padding                 28
-# yabai -m config right_padding                28
-# yabai -m config window_gap                   20
-yabai -m config external_bar                 all:28:0
+wm-config ly    bsp
+wm-config pt    6
+wm-config pb    6
+wm-config pl    6
+wm-config pr    6
+wm-config gap   6
+wm-config bar   off # all:28:0
+
+# yabai -m config layout                       bsp
+# yabai -m config top_padding                  6
+# yabai -m config bottom_padding               6
+# yabai -m config left_padding                 6
+# yabai -m config right_padding                6
+# yabai -m config window_gap                   6
+# yabai -m config external_bar                 all:28:0
 
 # ---------------------------------------------
 # ---       spaces naming & behaviour       ---

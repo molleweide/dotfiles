@@ -2,25 +2,25 @@
 
 # echo-segment --g1="### window | w ###"
 
-wm-config bar main:5:5
-wm-config ly stack
-wm-config ly stack 5
-wm-config pr 15 next
+# wm-config bar main:5:5
+# wm-config ly stack
+# wm-config ly stack 5
+# wm-config pr 15 next
 
-wm-space lb my_space_name 2
-wm-space rot 90
-wm-space pad rel:1:2:3:4
+# wm-space lb my_space_name 2
+# wm-space rot 90
+# wm-space pad rel:1:2:3:4
 
-wm-window d 1
-wm-window rz abs:80:60
-wm-window ly 2
-wm-window mz
+# wm-window d 1
+# wm-window rz abs:80:60
+# wm-window ly 2
+# wm-window mz
 
-wm-monitor 2
-wm-monitor prev
+# wm-monitor 2
+# wm-monitor prev
 
-wm-query w s
-wm-query d d
+# wm-query w s
+# wm-query d d
 
 wm-rule a l="mpv" a="^mpv\$" mg="off"
 wm-rule a l="iTerm2" a="^iTerm2$" manage=off
