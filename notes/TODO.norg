@@ -9,9 +9,7 @@
 
 * test `wm` commands
 
-* kmonad
-  macos screenshot
-  `screencapture -x "$(date "+DATE%Y-%m-%d--%H-%M-%S")"`
+* kmonad > screenshot
 
 * nvim
   ~ migrate to latest development branch.
