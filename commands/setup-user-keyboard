@@ -6,6 +6,7 @@ echo-header "KEYBOARD"
 # - linux
 
 arch="$(get-arch)"
+github_user=$(git config github.user)
 
 # QMK
 
