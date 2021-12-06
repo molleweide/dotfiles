@@ -27,13 +27,13 @@ if is-mac; then
 	        esac
 	        # rules+=("label=\"$ra\"")
         done
-	    echo "yabai -m rule --add ${rules[@]}"
+	    yabai -m rule --add ${rules[@]}
 
 	elif test "$1" = 'remove' -o "$1" = 'rm'; then
         echo "yabai -m rule --remove $2"
 
 	elif test "$1" = 'list' -o "$1" = 'ls'; then
-        echo "yabai -m rule --list"
+        yabai -m rule --list
 
 	fi
 else

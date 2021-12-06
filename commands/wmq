@@ -7,18 +7,18 @@ test -z "${1-}" && exit 1
 
 if is-mac; then
     case "$1" in
-        "dsp" | "d") ycmd="displays";;
-        "spc" | "s") ycmd="spaces";;
-        "win" | "w") ycmd="windows";;
+        "dsp" | "d") ycmd="--displays";;
+        "spc" | "s") ycmd="--spaces";;
+        "win" | "w") ycmd="--windows";;
         *) echo "NO_MATCH" && exit 1;;
     esac
     case "$2" in
-        "dsp" | "d") yarg="display";;
-        "spc" | "s") yarg="space";;
-        "win" | "w") yarg="window";;
+        "dsp" | "d") yarg="--display";;
+        "spc" | "s") yarg="--space";;
+        "win" | "w") yarg="--window";;
         *) echo "NO_MATCH";;
     esac
-    yabai -m query --$ycmd --$yarg
+    yabai -m query $ycmd $yarg
 else
     echo "linux todo..."
 fi

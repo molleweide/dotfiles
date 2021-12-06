@@ -5,7 +5,6 @@
 # @param space_selection
 
 test -z "${1-}" && exit 1
-test -z "${3-}" || yss="--space $3"
 
 if is-mac; then
     case "$1" in
@@ -25,7 +24,7 @@ if is-mac; then
         "label" | "lb")    ycmd="--label" ;; # [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
         *) echo "NO_MATCH";;
     esac
-    yabai -m space $yss $ycmd $2
+    yabai -m space $ycmd $2
 else
     echo "linux todo..."
 fi

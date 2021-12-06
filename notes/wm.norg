@@ -1,0 +1,13 @@
+@document.meta
+    title: wm
+    description:
+    author: hjalmarjakobsson
+    categories:
+    created: 2021-12-06
+    version: 0.0.8
+@end
+
+
+~ create two spaces
+~ add mult windows
+~ test space configs
