@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# https://github.com/randomthought/xmonad-config
+# https://github.com/vicfryzel/xmonad-config
+
 ! test -z "${1-}" -a "${2-}" || exit 1
 setting=$1
 val=$2
