@@ -7,12 +7,11 @@
 	version: 0.1
 @end
 
-* move kmonad layout command to commands.
-
 * test `wm` commands
 
 * kmonad
   macos screenshot
+  `screencapture -x "$(date "+DATE%Y-%m-%d--%H-%M-%S")"`
 
 * nvim
   ~ migrate to latest development branch.

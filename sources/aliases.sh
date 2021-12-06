@@ -384,7 +384,7 @@ alias gpge="gpg --edit-keys"
 alias rh="runhaskell"
 
 #----------------------------
-#---       OSX ---
+#---     macos / OSX      ---
 #----------------------------
 
 # https://apple.stackexchange.com/questions/178313/change-accessibility-setting-on-mac-using-terminal
@@ -394,6 +394,8 @@ alias rh="runhaskell"
 # https://apple.stackexchange.com/questions/65794/how-do-you-access-network-preferences-from-the-terminal
 # https://itectec.com/askdifferent/macos-how-to-change-mission-control-shortcuts-from-the-command-line/
 # https://apple.stackexchange.com/questions/398561/how-to-set-system-keyboard-shortcuts-via-command-line
+
+alias ss="screenshot"
 
 alias defd="defaults domains | tr ',' '\n'"
 
