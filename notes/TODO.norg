@@ -7,6 +7,8 @@
 	version: 0.1
 @end
 
+* test `wm` commands
+
 * kmonad
   macos screenshot
 
@@ -14,7 +16,7 @@
   ~ migrate to latest development branch.
   ~ docker
 
-* mouse
+* kmo > mouse layer
  ** "git@github.com:molleweide/mouse.git"
  ** `sudo pip install mouse`
 
