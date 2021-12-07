@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# mouse: https://github.com/boppreh/mouse#mouse.MoveEvent
+#
+# call py fn from cli script: https://stackoverflow.com/questions/3987041/run-function-from-the-command-line
+
 import mouse
 
 x, y = mouse.get_position()
