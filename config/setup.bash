@@ -286,6 +286,7 @@ PYTHON_INSTALL=(
 	# bitcoinlib
 	# cairosvg
 	# PyPDF2  # python 2 only
+	mouse
 	neovim
 )
 if "$DOROTHY/commands/is-ubuntu"; then

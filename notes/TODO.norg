@@ -7,6 +7,13 @@
 	version: 0.1
 @end
 
+* kmo > mouse layer
+ ** "git@github.com:molleweide/mouse.git"
+ ** `sudo pip install mouse`
+ ** hold left thumb > tap right thumb > enter mouse layer.
+
+* system preferences diff trick
+
 * test `wm` commands
 
 * kmonad > screenshot
@@ -14,10 +21,6 @@
 * nvim
   ~ migrate to latest development branch.
   ~ docker
-
-* kmo > mouse layer
- ** "git@github.com:molleweide/mouse.git"
- ** `sudo pip install mouse`
 
 * add to path > https://github.com/jez/vim-superman
 
