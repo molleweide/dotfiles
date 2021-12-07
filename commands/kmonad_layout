@@ -3,8 +3,9 @@
 # index a string in bash
 # https://unix.stackexchange.com/questions/303960/index-a-string-in-bash
 
-script_path=$(realpath $0)
-config_kmonad_dir=$(dirname $script_path)
+# script_path=$(realpath $0)
+# config_kmonad_dir=$(dirname $script_path)
+config_kmonad_dir="$XDG_CONFIG_HOME/kmonad"
 # config_kmonad_dir2="${BASH_SOURCE%/*}"
 
 user_hardwares_list=(

@@ -351,7 +351,7 @@ alias krb="open -a /Applications/Karabiner-Elements.app"
 kmonad=~/.local/bin/kmonad
 layouts=~/code/tools/kmonad/keymap/user/molleweide
 
-alias kmo="$XDG_CONFIG_HOME/dorothy/commands/kmonad_layout"
+alias kmo="kmonad_layout"
 alias kmor="kmo -r"
 
 # old
