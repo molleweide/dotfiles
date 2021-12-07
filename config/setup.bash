@@ -286,7 +286,8 @@ PYTHON_INSTALL=(
 	# bitcoinlib
 	# cairosvg
 	# PyPDF2  # python 2 only
-	mouse
+	pyobjc-framework-Quartz                     # mouse dependency for macos
+	git+https://github.com/boppreh/mouse.git    # generate mouse events with python
 	neovim
 )
 if "$DOROTHY/commands/is-ubuntu"; then

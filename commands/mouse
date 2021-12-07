@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+
+import mouse
+
+x, y = mouse.get_position()
+mouse.move(x+50, y)
