@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# echo-header "SETTING UP NEOVIM..."
+# [ ! brew tap | grep -q "neovim/neovim" ] && brew tap neovim/neovim
+# rvm default do gem install neovim
+# # if ! command-exists "proximity-sort" ; then
+# cargo install proximity-sort # --force
+# # fi
+# pyenv activate py2neovim
+# # this command is obsolete
+# nvim +PlugInstall +qall
+
+
