@@ -6,6 +6,7 @@ echo-header "KEYBOARD"
 # - linux
 
 arch="$(get-arch)"
+github_user=$(git config github.user)
 
 # QMK
 
@@ -18,30 +19,26 @@ git_clone_recursive     \
 # ---------------------------------------------------------------------
 #
 # KMONAD
+
+# TODO:
 #
-# 1. install included dext.
-#      `/Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Manager activate`
-#          latest versions of kmonad don't work. >> need version 1.15. current is 1.22..
-#
-# 2. set permisions
-#
-#
-# 3. this is what I have in my `user/sources/aliases.sh`
-#
-# # ======== KMONAD ========
-# kmonad=~/.local/bin/kmonad # stack default install location
-# layouts=$HOME/code/tools/kmonad/keymap/user/molleweide
-#  # above if you run my installer
-# kmonump()  { sudo $kmonad $layouts/demo-numpad.kbd; }
-#
-# you can use a launch daemon for running kmonad but I am actively
-# developing my layout and therefore it is super risky to do that.
-# in case you create a dead end in a layer that you cannot get out of..
+#   1. check for github_user=$(git config github.user)
+#       if user has fork
+#       else clone upstream
+
 # ---------------------------------------------------------------------
 
+function macos_install_dext(){
+    dext_path="c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/dist/Karabiner-DriverKit-VirtualHIDDevice-1.15.0.dmg"
+    dext_path=$(defaults read /Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/Info.plist CFBundleVersion | grep 1.15.0)
+    if test -z "$check_dext"; then
+        sudo installer -pkg "$dext_path" -target /Applications
+    else
+        echo-color --green "dext v1.15.0 already installed"
+    fi
+    /Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Manager activate
+}
 
-# TODO: dorothy > check if user gith exists > else clone upstream.
-# check for github_user=$(git config github.user)
 code_tools_path=$HOME/code/tools
 git_clone_recursive  \
     $code_tools_path \
@@ -49,10 +46,19 @@ git_clone_recursive  \
     git@github.com:molleweide/kmonad.git
 
 pushd $code_tools_path/kmonad > /dev/null 2>&1
-# stack clean
-if test "$arch" = 'a64'; then
-    stack install --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+# stack clean / redo complete build
+if is-mac; then
+    # macos_install_dext # TODO: needs testing first
+    if test "$arch" = 'a64'; then
+        stack install --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+    else
+        stack install --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+    fi
 else
-    stack install --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+    echo "linux todo.."
+    # stack install # Check `stack path`. Should install to `$USER/.local/bin`.
+    # or
+    # aur: https://aur.archlinux.org/packages/kmonad-bin
+
 fi
 popd > /dev/null 2>&1

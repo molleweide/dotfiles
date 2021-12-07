@@ -12,7 +12,7 @@ if is-mac; then
     brew install ncurses gnuplot libxml2 libzip # added to generic setup utils
 
     install_dir=$HOME/code/apps
-    dotlib_git_clone_recursive  \
+    git-clone-recursive  \
         $install_dir            \
         "sc-im"           \
         git@github.com:molleweide/sc-im.git

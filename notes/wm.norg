@@ -1,0 +1,36 @@
+@document.meta
+    title: wm
+    description:
+    author: hjalmarjakobsson
+    categories:
+    created: 2021-12-06
+    version: 0.0.8
+@end
+
+
+~ create two spaces
+~ add mult windows
+~ test space configs
+4
+
+* SIP
+  https://github.com/koekeishiya/yabai/wiki/Disabling-System-Integrity-Protection
+  https://github.com/koekeishiya/yabai/issues/13
+
+* sys pref
+    get the commands for mission control
+    auto set for yabai
+
+
+--------
+
+* CANNOT CREATE SPACE
+
+
+https://github.com/koekeishiya/yabai/issues/400
+
+yabai-v3.3.10
+
+cannot create space due to an error with the scripting-addition.
+
+

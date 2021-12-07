@@ -11,10 +11,17 @@
   get it to run in firefox also??
 
 * reload extensions
-    https://github.com/arikw/chrome-extensions-reloader
+  https://github.com/arikw/chrome-extensions-reloader
 
 * build firenvim
   *** https://github.com/glacambre/firenvim/blob/master/CONTRIBUTING.md
 
       get it running in firefox and brave.
       vivaldi?
+
+*  nyxt
+   test all ways mentionned in the issues
+
+* qutebrowser
+
+

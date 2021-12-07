@@ -7,6 +7,40 @@
 	version: 0.1
 @end
 
+* kmo > mouse layer
+ ** "git@github.com:molleweide/mouse.git"
+ ** `sudo pip install mouse`
+ ** hold left thumb > tap right thumb > enter mouse layer.
+
+* system preferences diff trick
+
+* test `wm` commands
+
+* kmonad > screenshot
+
+* nvim
+  ~ migrate to latest development branch.
+  ~ docker
+
+* add to path > https://github.com/jez/vim-superman
+
+https://github.com/rothgar/awesome-tuis#messaging
+
+* make sure all local builds are put unders
+  `.local/bin`
+
+* ghq > discordo
+  https://github.com/ayntgl/discordo
+  https://github.com/Thesourtimes/fort
+
+* telescope-molleweide
+
+* OS
+  ~ rm cmd-w prevent acc close window.
+  ~ rm cmd-q
+
+* landchad tutorial: https://www.youtube.com/watch?v=3dIVesHEAzct
+
 * brew err:
   https://github.com/ansible/ansible/issues/33975
   https://stackoverflow.com/questions/18555378/brew-installation-error-appears-homebrew-is-already-installed
@@ -15,23 +49,14 @@
   https://github.com/buo/homebrew-cask-upgrade/issues/57
 
 * doom_config -> term
-    https://github.com/akinsho/toggleterm.nvim#termexec
+  https://github.com/akinsho/toggleterm.nvim#termexec
     create PR
-
-* chrome extensinos
-    https://github.com/arikw/chrome-extensions-reloader
-    build firenvim
-  *** https://github.com/glacambre/firenvim/blob/master/CONTRIBUTING.md
-
-      get it running in firefox and brave.
-      vivaldi?
 
 * `man zshmisc`
 
 * OS
   ~ rm cmd-w prevent acc close window.
   ~ rm cmd-q
-
 
 * yabai script commands https://github.com/koekeishiya/yabai/discussions/1050
 
@@ -56,14 +81,14 @@
 * map yank commands to leader k (kopy)
 
 * lightspeed
-  do these defaults mean that there is no conflict with vim surround out of the box?
+  ~ do these defaults mean that there is no conflict with vim surround out of the box?
   Because I had already mapped vim-surround to z in favor of `sneak/lightspeed`.
+  ~ i am actually unsure of how to use light speed because there are multiple hints showing
 
 * neorg workspaces config add ??
   dorothy master
   dorothy user
   doom
-
 
 * tmux
   create session
@@ -73,7 +98,7 @@
 
 * man pages add `se rnu nu`
 
-https://github.com/feinoujc/gh-search-cli <<<<<??????????
+  https://github.com/feinoujc/gh-search-cli <<<<<??????????
 
 * adam wagmer stackline / uberbar
   1. comment out everything from hammerspoon that I am not using.

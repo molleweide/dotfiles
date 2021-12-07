@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+ # TODO: rule selection | yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
+
+test -z "${1-}" && exit 1
+
+if is-mac; then
+    if test "$1" = "add" -o "$1" = "a"; then
+        rules=()
+        for i in "${@:2}"; do
+            ra=${i#*=} # rule argument
+	        case "${i%=*}" in # get all before `=`
+	            "app" | "a")     rules+=("app=\"$ra\"") ;;                  # app[!]=<REGEX>
+	            "border" | "b")  rules+=("border=\"$ra\"");;                # border=<BOOL_SEL>
+	            "display" | "d") rules+=("display=\"$ra\"");;               # display=[^]<DISPLAY_SEL>
+	            "fmsf")          rules+=("mouse_follows_focus=\"$ra\"");;   # mouse_follows_focus=<BOOL_SEL>
+	            "grid" | "g")    rules+=("grid=\"$ra\"");;                  # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+	            "label" | "l")   rules+=("label=\"$ra\"");;                 # Label used to identify the rule with a unique name
+	            "layer" | "ly")  rules+=("layer=\"$ra\"");;                 # layer=<LAYER>
+	            "manage" | "mg") rules+=("manage=\"$ra\"");;                # manage=<BOOL_SEL>
+	            "nf")            rules+=("native-fullscreen=\"$ra\"");;     # native-fullscreen=<BOOL_SEL>
+	            "opacity" | "o") rules+=("opacity=\"$ra\"");;               # opacity=<FLOAT_SEL>
+	            "space" | "s")   rules+=("space=\"$ra\"");;                 # space=[^]<SPACE_SEL>
+	            "sticky" | "st") rules+=("sticky=\"$ra\"");;                # sticky=<BOOL_SEL>
+	            "title" | "t")   rules+=("title=\"$ra\"");;                 # title[!]=<REGEX>
+	            *) echo "NO_MATCH";;
+	        esac
+	        # rules+=("label=\"$ra\"")
+        done
+	    yabai -m rule --add ${rules[@]}
+
+	elif test "$1" = 'remove' -o "$1" = 'rm'; then
+        echo "yabai -m rule --remove $2"
+
+	elif test "$1" = 'list' -o "$1" = 'ls'; then
+        yabai -m rule --list
+
+	fi
+else
+    echo "linux todo..."
+fi

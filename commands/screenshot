@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 if is-mac; then
-  osascript -e 'tell application "Finder" to sleep'
+    screencapture -x $(date "+DATE%Y-%m-%d--%H-%M-%S")
 else
     echo "linux todo.."
 fi
-

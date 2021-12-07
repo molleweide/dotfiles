@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+# https://github.com/randomthought/xmonad-config
+# https://github.com/vicfryzel/xmonad-config
+
+! test -z "${1-}" -a "${2-}" || exit 1
+setting=$1
+val=$2
+if is-mac; then
+    ypre="yabai -m config"
+    yc="" # rm this line
+    case "$setting" in
+        "auto_balance" | "ab")  yc="auto_balance";;               # [<BOOL_SEL>]
+        "debug_output" | "do")  yc="debug_output";;               # [<BOOL_SEL>]
+        "external_bar" | "bar") yc="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
+        "ffms")                 yc="focus_follows_mouse";;        # [autofocus|autoraise|off]
+        "fmsf")                 yc="mouse_follows_focus";;        # [<BOOL_SEL>]
+        "gap" | "gp")           yc="window_gap";;       # [<integer number>]
+        "ifc")                  yc="insert_feedback_color";;      # [0xAARRGGBB]
+        "layout" | "ly")        yc="layout";;           # [bsp|stack|float]
+        "ms1")                  yc="mouse_action1";;              # [move|resize]
+        "ms2")                  yc="mouse_action2";;              # [move|resize]
+        "msda")                 yc="mouse_drop_action";;          # [swap|stack]
+        "msm")                  yc="mouse_modifier";;             # [cmd|alt|shift|ctrl|fn]
+        "padb" | "pb")          yc="bottom_padding";;   # [<integer number>]
+        "padl" | "pl")          yc="left_padding";;     # [<integer number>]
+        "padr" | "pr")          yc="right_padding";;    # [<integer number>]
+        "padt" | "pt")          yc="top_padding";;      # [<integer number>]
+        "sr")                   yc="split_ratio";;                # [<FLOAT_SEL>]
+        "wabc")                 yc="active_window_border_color";; # [0xAARRGGBB]
+        "waop")                 yc="active_window_opacity";;      # [<FLOAT_SEL>]
+        "wb")                   yc="window_border";;              # [<BOOL_SEL>]
+        "wbw")                  yc="window_border_width";;        # [<even integer number>]
+        "wnbc")                 yc="normal_window_border_color";; # [0xAARRGGBB]
+        "wnop")                 yc="normal_window_opacity";;      # [<FLOAT_SEL>]
+        "wop")                  yc="window_opacity";;             # [<BOOL_SEL>]
+        "wopd")                 yc="window_opacity_duration";;    # [<floating point number>]
+        "wp")                   yc="window_placement";;           # [first_child|second_child]
+        "ws")                   yc="window_shadow";;              # [<BOOL_SEL>|float]
+        "wtm")                  yc="window_topmost";;             # [<BOOL_SEL>]
+        *) echo "NO_MATCH";;
+    esac
+
+    if ! test -z ${3-}; then
+        space_sel_compat=( "layout" "top_padding" "bottom_padding" "left_padding" "right_padding" "window_gap" )
+        for i in ${space_sel_compat[@]}; do
+            test "$yc" = "${i}" && ys="--space $3"
+        done
+    fi
+
+    # execute yabai command
+    echo "!!"
+    $ypre $ys $yc $val
+
+else
+    echo "linux todo..."
+fi

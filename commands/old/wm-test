@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+# echo-segment --g1="### window | w ###"
+
+# wm-config bar main:5:5
+# wm-config ly stack
+# wm-config ly stack 5
+# wm-config pr 15 next
+
+# wm-space lb my_space_name 2
+# wm-space rot 90
+# wm-space pad rel:1:2:3:4
+
+# wm-window d 1
+# wm-window rz abs:80:60
+# wm-window ly 2
+# wm-window mz
+
+# wm-monitor 2
+# wm-monitor prev
+
+# wm-query w s
+# wm-query d d
+
+wm-rule a l="mpv" a="^mpv\$" mg="off"
+wm-rule a l="iTerm2" a="^iTerm2$" manage=off
+wm-rule a l="Google Chrome" a="^Google Chrome$" space=^1
+wm-rule a l="Firefox" a="^Firefox$" s=^1
+wm-rule a l="Code" a="^Code$" s=^2
+wm-rule a l="Sequel Ace" a="^Sequel Ace" s=^2
+wm-rule a l="Slack" a="^Slack$" s=^3
+wm-rule a l="Skype" a="^Skype$" s=^3
+
+wm-events add dkdr "computer-sleep"
+wm-events add syswk "echo some command=xst" label="myname" a="someapp" title="mytitle"
+wm-events add wk "osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"

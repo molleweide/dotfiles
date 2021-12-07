@@ -1,0 +1,334 @@
+#!/usr/bin/env bash
+
+# https://github.com/koekeishiya/yabai
+# https://dwm.suckless.org/
+
+# REGEX       := POSIX extended regular expression syntax <https://www.gnu.org/software/findutils/manual/html_node/find_html/posix_002dextended-regular-expression-syntax.html>
+# LABEL       := arbitrary string/text used as an identifier
+# LAYER       := below | normal | above
+# BOOL_SEL    := on | off
+# FLOAT_SEL   := 0 < <value> <= 1.0
+# RULE_SEL    := <index> | LABEL
+# SIGNAL_SEL  := <index> | LABEL
+# DIR_SEL     := north | east | south | west
+# STACK_SEL   := stack.prev | stack.next | stack.first | stack.last | stack.recent
+# WINDOW_SEL  := prev | next | first | last | recent | mouse | largest | smallest | STACK_SEL | DIR_SEL | <window id>
+# DISPLAY_SEL := prev | next | first | last | recent | mouse | DIR_SEL | <arrangement index (1-based)>
+# SPACE_SEL   := prev | next | first | last | recent | mouse | <mission-control index (1-based)> | LABEL
+
+fn_args=$@
+
+action="${1-}"
+
+# if no args -> reload
+! test -z "${action}" || $action="reload"
+
+arg1="${2-}"
+arg2="${3-}"
+arg3="${4-}"
+arg4="${5-}"
+
+# util func so I can echo all commands instead of running
+call() {
+    # echo "${fn_args[@]}  ->  $@"
+    echo "$@"
+    # ($1)
+}
+reload() {
+    if is-mac; then
+        brew services restart yabai
+        brew services restart skhd
+        limelight # there is a wierd err msg but it works...
+    else
+	    echo 'reload linux wm...'
+    fi
+}
+
+# @param setting
+# @param value
+
+# TODO: if arg4 > check if correct yc > add space selection
+
+config() {
+    ! test -z "${arg1-}" -a "${arg2-}" || exit 1
+    local setting=$arg1
+    local value=$arg2
+    if is-mac; then
+        local ypre="yabai -m config"
+        local yc
+        case "$setting" in
+            "autob") yc="auto_balance";;               # [<BOOL_SEL>]
+            "bar")   yc="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
+            "debug") yc="debug_output";;               # [<BOOL_SEL>]
+            "ffms")  yc="focus_follows_mouse";;        # [autofocus|autoraise|off]
+            "ifkc")  yc="insert_feedback_color";;      # [0xAARRGGBB]
+            "layout" | "lt")    yc="layout";;           # [bsp|stack|float]
+            "ms1")   yc="mouse_action1";;              # [move|resize]
+            "ms2")   yc="mouse_action2";;              # [move|resize]
+            "msd")   yc="mouse_drop_action";;          # [swap|stack]
+            "msff")  yc="mouse_follows_focus";;        # [<BOOL_SEL>]
+            "msm")   yc="mouse_modifier";;             # [cmd|alt|shift|ctrl|fn]
+            "padb" | "pb")   yc="bottom_padding";;   # [<integer number>]
+            "padl" | "pl")  yc="left_padding";;     # [<integer number>]
+            "padr" | "pr") yc="right_padding";;    # [<integer number>]
+            "padt" | "pt")   yc="top_padding";;      # [<integer number>]
+            "spltr") yc="split_ratio";;                # [<FLOAT_SEL>]
+            "wabc")  yc="active_window_border_color";; # [0xAARRGGBB]
+            "waop")  yc="active_window_opacity";;      # [<FLOAT_SEL>]
+            "wb")    yc="window_border";;              # [<BOOL_SEL>]
+            "wbw")   yc="window_border_width";;        # [<even integer number>]
+            "gap" | "gp")   yc="window_gap";;       # [<integer number>]
+            "wnbc")  yc="normal_window_border_color";; # [0xAARRGGBB]
+            "wnop")  yc="normal_window_opacity";;      # [<FLOAT_SEL>]
+            "wop")   yc="window_opacity";;             # [<BOOL_SEL>]
+            "wopd")  yc="window_opacity_duration";;    # [<floating point number>]
+            "wp")    yc="window_placement";;           # [first_child|second_child]
+            "wsh")   yc="window_shadow";;              # [<BOOL_SEL>|float]
+            "wtm")   yc="window_topmost";;             # [<BOOL_SEL>]
+            *) echo "NO_MATCH";;
+        esac
+        local yss
+        if ! test -z $arg3; then
+            space_sel_compat=( "layout" "top_padding" "bottom_padding" "left_padding" "right_padding" "window_gap" )
+            for i in ${space_sel_compat[@]}; do
+                test "$yc" = "${i}" && yss="--space ${arg3}"
+            done
+        fi
+        call "$ypre $yss $yc $value"
+    else
+        echo "linux todo..."
+    fi
+}
+
+# @param display_selection
+monitor() {
+    ! test -z "${arg1-}" || exit 1
+    local display_sel=$arg1
+    if is-mac; then
+        local ypre="yabai -m display --focus"
+        call "$ypre $display_sel"
+    else
+        echo "linux"
+    fi
+}
+
+# @param command
+# @param value
+# @param space_selection
+space() {
+    ! test -z "${arg1-}" || exit 1
+    local cmd=$arg1
+    local value=$arg2 # if arg2 is empty that is not a problem
+    local space_sel
+    ! test -z "${arg3}" && $space_sel="--space $arg3"
+    if is-mac; then
+        local ypre="yabai -m space"
+        local yabai_cmd
+        case "$cmd" in
+            "focus" | "fc")    yabai_cmd="--focus" ;; # <SPACE_SEL>
+            "create" | "nw")   yabai_cmd="--create" ;;
+            "destroy" | "rm")  yabai_cmd="--destroy" ;;
+            "move" | "mv")      yabai_cmd="--move" ;; # <SPACE_SEL>                        Move position of the selected space to the position of the given space. The selected space and given space must both belong to the same display.
+            "swap" | "sw")      yabai_cmd="--swap" ;; # <SPACE_SEL>                        Swap the selected space with the given space. The selected space and given space must both belong to the same display.
+            "display" | "dsp")  yabai_cmd="--display" ;; # <DISPLAY_SEL>                           Send the selected space to the given display.
+            "balance" | "bl")   yabai_cmd="--balance" ;; # Adjust the split ratios of the selected space so that all windows occupy the same area.
+            "mirror" | "mir")   yabai_cmd="--mirror" ;; # x-axis|y-axis                            Flip the tree of the selected space.
+            "rotate" | "rot")   yabai_cmd="--rotate" ;; # 90|180|270                               Rotate the tree of the selected space.
+            "padding" | "pad")  yabai_cmd="--padding" ;; # abs|rel:<top>:<bottom>:<left>:<right>   Padding added at the sides of the selected space.
+            "gap" | "gp")       yabai_cmd="--gap" ;; # abs|rel:<gap>                               Size of the gap that separates windows on the selected space.
+            "toggle" | "tg")    yabai_cmd="--toggle" ;; # padding|gap|mission-control|show-desktop Toggle space setting on or off for the selected space.
+            "layout" | "lt")    yabai_cmd="--layout" ;; # bsp|stack|float                          Set the layout of the selected space.
+            "label" | "lb")     yabai_cmd="--label" ;; # [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
+            *) echo "NO_MATCH";;
+        esac
+        call "$ypre $space_sel $yabai_cmd $value"
+    else
+        echo "linux todo..."
+    fi
+}
+
+# @param command
+# @param [ value ]
+# @param [ window_selection ]
+window() {
+    ! test -z "${arg1-}" || exit 1
+    local cmd=$arg1
+    local arg=$arg2
+    local win_sel
+    ! test -z "${arg3}" && $win_sel="--window $arg3"
+    if is-mac; then
+        local ypre="yabai -m window"
+        local yabai_cmd
+        case "$cmd" in
+            "focus" | "foc") yabai_cmd="focus";; # <WINDOW_SEL>
+            "swap" | "sw") yabai_cmd="swap";; # <WINDOW_SEL>
+            "warp" | "wrp") yabai_cmd="warp";; # <WINDOW_SEL>
+            "stack" | "stk") yabai_cmd="stack";; # <WINDOW_SEL>
+            "insert" | "zz") yabai_cmd="insert";; # <DIR_SEL>|stack
+            "grid" | "zz") yabai_cmd="grid";; # <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+            "move" | "zz") yabai_cmd="move";; # abs|rel:<dx>:<dy>
+            "resize" | "zz") yabai_cmd="resize";; # top|left|bottom|right|top_left|top_right|bottom_right|bottom_left|abs:<dx>:<dy>
+            "ratio" | "zz") yabai_cmd="ratio";; # rel|abs:<dr>
+            "toggle" | "zz") yabai_cmd="toggle";; # float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose
+            "layer" | "zz") yabai_cmd="layer";; # <LAYER>
+            "opacity" | "zz") yabai_cmd="opacity";; # <floating point number>
+            "display" | "zz") yabai_cmd="display";; # <DISPLAY_SEL>
+            "space" | "zz") yabai_cmd="space";; # <SPACE_SEL>
+            "minimize" | "zz") yabai_cmd="minimize";;
+            "deminimize" | "zz") yabai_cmd="deminimize";;
+            "close" | "zz") yabai_cmd="close" ;;
+            *) echo "NO_MATCH";;
+        esac
+        call "$ypre $win_sel --$yabai_cmd $arg"
+    else
+        echo "linux todo..."
+    fi
+}
+
+# @param command        Retrieve information about command.
+# @param [ argument ]   Constrain matches to argument.
+query() {
+    ! test -z "${arg1-}" || exit 1
+    local cmd=$arg1
+    local arg=$arg2
+    if is-mac; then
+        local ypre="yabai -m query"
+        local ycmd
+        local yarg
+        case "$cmd" in
+            "dsp" | "d") ycmd="displays";;
+            "spc" | "s") ycmd="spaces";;
+            "win" | "w") ycmd="windows";;
+            *) echo "NO_MATCH";;
+        esac
+        case "$arg" in
+            "dsp" | "d") yarg="display";;
+            "spc" | "s") yarg="space";;
+            "win" | "w") yarg="window";;
+            *) echo "NO_MATCH";;
+        esac
+        call "$ypre --$ycmd --$yarg"
+    else
+        echo "linux todo..."
+    fi
+}
+
+# @param command
+# @param [ add_arg1 | add_arg2 | ... | add_argN ] OR [ rm_rule ]
+rule() {
+    ! test -z "${arg1-}" || exit 1
+    local cmd=$arg1
+    if is-mac; then
+        local ypre="yabai -m rule"
+        local yabai_cmd
+        local rule_args=()
+        if test "$cmd" = "add" -o "$cmd" = "a"; then
+            yabai_cmd="add"
+            for i in ${fn_args:3}; do # NOTE: why wrapping fn_args in string doesn't work?
+                local rule_name=${i%=*}
+                local rule_parm=${i#*=}
+	            case "$rule_name" in
+	                "label") rule_args+=("label=\"$rule_parm\"");; # Label used to identify the rule with a unique name
+	                "app") rule_args+=("app=\"$rule_parm\"") ;; # app[!]=<REGEX>
+	                "title") ;; # title[!]=<REGEX>
+	                "display") ;; # display=[^]<DISPLAY_SEL>
+	                "space") ;; # space=[^]<SPACE_SEL>
+	                "manage") ;; # manage=<BOOL_SEL>
+	                "sticky") ;; # sticky=<BOOL_SEL>
+	                "mouse_follows_focus") ;; # mouse_follows_focus=<BOOL_SEL>
+	                "layer") ;; # layer=<LAYER>
+	                "opacity") ;; # opacity=<FLOAT_SEL>
+	                "border") ;; # border=<BOOL_SEL>
+	                "native-fullscreen") ;; # native-fullscreen=<BOOL_SEL>
+	                "grid") ;; # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+	                *) echo "NO_MATCH";;
+	            esac
+            done
+	        call "$ypre --$yabai_cmd ${rule_args[@]}"
+	    elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
+            echo "rule remove" # TODO: rule selection | yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
+	    elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
+            echo "rule list" # yabai -m rule --list                    Output list of registered rules.
+	    fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+# @param command
+# @param command
+# yabai -m signal --add event=<EVENT> action=<ACTION> /// [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
+# --add event=<EVENT> action=<ACTION> [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
+events() {
+    ! test -z "${arg1-}" || exit 1
+    local cmd=$arg1
+    if is-mac; then
+        local ypre="yabai -m signal"
+        local ycmd
+        if test "$cmd" = "add" -o "$cmd" = "a"; then
+            ycmd="add"
+            local event=$arg2
+            local action=$arg3 # Arbitrary command executed through /usr/bin/env sh -c
+            local ybie # yabai event name
+            case "$event" in
+                "a_l")         ybie="application_launched";;
+                "a_k")         ybie="application_terminated";;
+                "a_fs")        ybie="application_front_switched";;
+                "a_ac")        ybie="application_activated";;
+                "a_da")        ybie="application_deactivated";;
+                "a_vi")        ybie="application_visible";;
+                "a_hi")        ybie="application_hidden";;
+                "w_c")       ybie="window_created";;
+                "w_k")       ybie="window_destroyed";;
+                "w_f")       ybie="window_focused";;
+                "w_mv")       ybie="window_moved";;
+                "w_rz")       ybie="window_resized";;
+                "w_mi")       ybie="window_minimized";;
+                "w_dm")       ybie="window_deminimized";;
+                "w_tc")       ybie="window_title_changed";;
+                "sch")          ybie="space_changed";;
+                "ds_ad")      ybie="display_added";;
+                "ds_rm")      ybie="display_removed";;
+                "ds_mv")      ybie="display_moved";;
+                "ds_rz")      ybie="display_resized";;
+                "ds_ch")      ybie="display_changed";;
+                "ms_dn")        ybie="mouse_down";;
+                "ms_up")        ybie="mouse_up";;
+                "ms_dr")        ybie="mouse_dragged";;
+                "ms_mv")        ybie="mouse_moved";;
+                "msc_e")     ybie="mission_control_enter";;
+                "msc_cfx")  ybie="mission_control_check_for_exit";;
+                "msc_x")    ybie="mission_control_exit";;
+                "dk_dr")      ybie="dock_did_restart";;
+                "dk_dcp")     ybie="dock_did_change_pref";;
+                "mu_o")       ybie="menu_opened";;
+                "mu_bhc")     ybie="menu_bar_hidden_changed";;
+                "sys_wk")     ybie="system_woke";;
+                "dmon_msg")   ybie="daemon_message";;
+                *) echo "NO_MATCH";;
+            esac
+            # TODO: events label and titel
+            call "$ypre $ycmd event=$ybie action=$action"
+	    elif test "$cmd" = 'remove' -o "$cmd" = 'rm'; then
+            local rm_sel=$arg2
+            call "$ypre --remove $rm_sel"
+	    elif test "$cmd" = 'list' -o "$cmd" = 'ls'; then
+            call "$ypre --list"
+	    fi
+        call "$ypre $yabai_cmd $arg"
+    else
+        echo "linux todo..."
+    fi
+}
+
+case "$action" in
+    "reload" | "x") reload;;
+    "config" | "cfg" | "c") config;;
+    "space" | "s") space;;
+    "window" | "w") window;;
+    "monitor" | "m") monitor;;
+    "query" | "q") query;;
+    "rule" | "r") rule;;
+    "events" | "e") events;;
+    *) exit 1;;
+esac

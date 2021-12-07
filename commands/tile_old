@@ -1,0 +1,827 @@
+#!/usr/bin/env bash
+
+action="${1-}"
+
+if test -z "${action-}"; then
+    exit 1
+fi
+
+arg1="${2-}"
+arg2="${3-}"
+arg3="${4-}"
+
+call() {
+    echo "$1"
+    # ($1)
+}
+
+call_yabai() {
+    local yabai_cmd="sudo -u hjalmarjakobsson bash -cl 'yabai $1'"
+    echo "$yabai_cmd"
+    # ($yabai_cmd)
+}
+
+call_dwm() {
+    echo "call dwm"
+}
+
+
+# ------------------------
+# ---       TODO       ---
+# ------------------------
+
+# - split into commands
+# - can I merge both config functions?
+
+
+# -------------------------------------
+# ---       YABAI DEFINITIONS       ---
+# -------------------------------------
+
+# REGEX       :=
+# POSIX extended regular expression syntax <https://www.gnu.org/software/findutils/manual/html_node/find_html/posix_002dextended-regular-expression-syntax.html>
+
+# LABEL       := arbitrary string/text used as an identifier
+
+# LAYER       := below | normal | above
+
+# BOOL_SEL    := on | off
+
+# FLOAT_SEL   := 0 < <value> <= 1.0
+
+# RULE_SEL    := <index> | LABEL
+
+# SIGNAL_SEL  := <index> | LABEL
+
+# DIR_SEL     := north | east | south | west
+
+# STACK_SEL   := stack.prev | stack.next | stack.first | stack.last | stack.recent
+
+# WINDOW_SEL  := prev | next | first | last | recent | mouse | largest | smallest | STACK_SEL | DIR_SEL | <window id>
+
+# DISPLAY_SEL := prev | next | first | last | recent | mouse | DIR_SEL | <arrangement index (1-based)>
+
+# SPACE_SEL   := prev | next | first | last | recent | mouse | <mission-control index (1-based)> | LABEL
+
+# -----------------------------------
+# ---       GLOBAL SETTINGS       ---
+# -----------------------------------
+
+# :: setting / value
+
+cfg() {
+
+    echo "config global"
+
+    if test -z "${arg1-}" -a "${arg2-}"; then
+        exit 1
+    fi
+
+    local setting=$arg1
+    local value=$arg2
+
+    if is-mac; then
+
+        local yabai_domain="yabai -m config"
+        local yabai_setting
+
+        case "$setting" in
+            "debug") $yabai_setting="debug_output"
+                ;; # [<BOOL_SEL>]         Enable output of debug information to stdout.
+            "ext_bar" | "bar") $yabai_setting="external_bar"
+                ;; # [<main|all|off>:<top_padding>:<bottom_padding>]    Specify top and bottom padding for a potential custom bar that you may be running. main: Apply the given padding only to spaces located on the main display. all:  Apply the given padding to all spaces regardless of their display. off:  Do not apply any special padding.
+            "mouse_follows_focus") $yabai_setting="fff"
+                ;; # [<BOOL_SEL>]              When focusing a window, put the mouse at its center.
+            "focus_follows_mouse") $yabai_setting="fff"
+                ;; # [autofocus|autoraise|off] Automatically focus the window under the mouse.
+            "window_placement") $yabai_setting="fff"
+                ;; # [first_child|second_child]   Specify whether managed windows should become the first or second leaf-node.
+            "window_topmost") $yabai_setting="fff"
+                ;; # [<BOOL_SEL>]                   Make floating windows stay on top.
+            "window_shadow") $yabai_setting="fff"
+                ;; # [<BOOL_SEL>|float]              Draw shadow for windows.
+            "window_opacity") $yabai_setting="fff"
+                ;; # [<BOOL_SEL>]                   Enable opacity for windows.
+            "window_opacity_duration") $yabai_setting="fff"
+                ;; # [<floating point number>] Duration of transition between active / normal opacity.
+            "active_window_opacity") $yabai_setting="fff"
+                ;; # [<FLOAT_SEL>]               Opacity of the focused window.
+            "normal_window_opacity") $yabai_setting="fff"
+                ;; # [<FLOAT_SEL>]               Opacity of an unfocused window.
+            "window_border") $yabai_setting="fff"
+                ;; # [<BOOL_SEL>]                    Draw border for windows.
+            "window_border_width") $yabai_setting="fff"
+                ;; # [<even integer number>]   Width of window borders. If the given width is an odd number, it will be incremented by 1.
+            "active_window_border_color") $yabai_setting="fff"
+                ;; # [0xAARRGGBB]       Color of the border of the focused window.
+            "normal_window_border_color") $yabai_setting="fff"
+                ;; # [0xAARRGGBB]       Color of the border of an unfocused window.
+            "insert_feedback_color") $yabai_setting="fff"
+                ;; # [0xAARRGGBB]            Color of the window --insert message selection.
+            "split_ratio") $yabai_setting="fff"
+                ;; # [<FLOAT_SEL>]                     Default split ratio.
+            "auto_balance") $yabai_setting="fff"
+                ;; # [<BOOL_SEL>]                     Balance the window tree upon change, so that all windows occupy the same area.
+            "mouse_modifier") $yabai_setting="fff"
+                ;; # [cmd|alt|shift|ctrl|fn]        Keyboard modifier used for moving and resizing windows.
+            "mouse_action1") $yabai_setting="fff"
+                ;; # [move|resize]                   Action performed when pressing mouse_modifier + button1.
+            "mouse_action2") $yabai_setting="fff"
+                ;; # [move|resize]                   Action performed when pressing mouse_modifier + button2.
+            "mouse_drop_action") $yabai_setting="fff"
+                ;; # [swap|stack]                Action performed when a bsp-managed window is dropped in the center of some other bsp-managed window.
+            *) echo default
+                ;;
+        esac
+
+        call "$yabai_domain $yabai_setting $value"
+    else
+        echo "linux todo..."
+    fi
+}
+
+# ----------------------------------
+# ---       SPACE SETTINGS       ---
+# ----------------------------------
+
+# :: selection / setting / value
+
+cfs() {
+
+    echo "config space"
+
+    if test -z "${arg1-}" -a "${arg2-}"; then
+        exit 1
+    fi
+
+    local setting=$arg1
+    local value=$arg2
+    # local sel=??
+
+    if is-mac; then
+
+        yabai -m config --space $setting $value
+
+        local yabai_domain="yabai -m config --space"
+        local yabai_setting
+
+        case "$setting" in
+            "layout" | "lt") $yabai_setting="layout"
+                ;; # [bsp|stack|float]       Set the layout of the selected space.
+            "pad_top" | "pt") $yabai_setting="top_padding"
+                ;; # [<integer number>]      Padding added at the upper side of the selected space.
+            "pad_btm" | "pb") $yabai_setting="bottom_padding"
+                ;; # [<integer number>]      Padding added at the lower side of the selected space.
+            "pad_left" | "pl") $yabai_setting="left_padding"
+                ;; # [<integer number>]      Padding added at the left side of the selected space.
+            "pad_right" | "pr") $yabai_setting="right_padding"
+                ;; # [<integer number>]      Padding added at the right side of the selected space.
+            "win_gap" | "wg") $yabai_setting="window_gap"
+                ;; # [<integer number>]      Size of the gap that separates windows for the selected space.
+            *) echo default
+                ;;
+        esac
+
+        call "$yabai_domain $yabai_setting $value"
+    else
+        echo "linux todo..."
+    fi
+}
+
+# ---------------------------
+# ---       DISPLAY       ---
+# ---------------------------
+
+# DISPLAY_SEL := prev | next | first | last | recent | mouse | DIR_SEL | <arrangement index (1-based)>
+
+# --focus <DISPLAY_SEL>
+#     Focus the given display.
+
+dsp() {
+    if test -z "${arg2-}"; then
+        exit 1
+    fi
+
+    local arg=$arg1
+
+    if is-mac; then
+        local yabai_cmd="yabai -m display --focus $arg"
+        call $yabai_cmd
+    else
+        echo "linux todo..."
+    fi
+}
+
+# -------------------------
+# ---       SPACE       ---
+# -------------------------
+
+spc() {
+    if test -z "${arg1-}"; then
+        exit 1
+    fi
+
+    local cmd=$arg1
+    local arg=$arg2 # if arg2 is empty that is not a problem
+
+    if is-mac; then
+
+        local yabai_domain="yabai -m space"
+        local yabai_cmd
+
+        case "$cmd" in
+            "focus" | "foc")    $yabai_cmd="--focus"
+                ;; # <SPACE_SEL>
+            "create" | "new")   $yabai_cmd="--create"
+                ;;                                      # Create a new space on the display of the selected space.
+            "destroy" | "del")  $yabai_cmd="--destroy"
+                ;; # Remove the selected space.
+            "move" | "mv")      $yabai_cmd="--move"
+                ;; # <SPACE_SEL>                        Move position of the selected space to the position of the given space. The selected space and given space must both belong to the same display.
+            "swap" | "sw")      $yabai_cmd="--swap"
+                ;; # <SPACE_SEL>                        Swap the selected space with the given space. The selected space and given space must both belong to the same display.
+            "display" | "dsp")  $yabai_cmd="--display"
+                ;; # <DISPLAY_SEL>                           Send the selected space to the given display.
+            "balance" | "bl")   $yabai_cmd="--balance"
+                ;; # Adjust the split ratios of the selected space so that all windows occupy the same area.
+            "mirror" | "mir")      $yabai_cmd="--mirror"
+                ;; # x-axis|y-axis                            Flip the tree of the selected space.
+            "rotate" | "rot")      $yabai_cmd="--rotate"
+                ;; # 90|180|270                               Rotate the tree of the selected space.
+            "padding" | "pad")  $yabai_cmd="--padding"
+                ;; # abs|rel:<top>:<bottom>:<left>:<right>   Padding added at the sides of the selected space.
+            "gap")              $yabai_cmd="--gap"
+                ;; # abs|rel:<gap>                               Size of the gap that separates windows on the selected space.
+            "toggle" | "tg")    $yabai_cmd="--toggle"
+                ;; # padding|gap|mission-control|show-desktop Toggle space setting on or off for the selected space.
+            "layout" | "lt")    $yabai_cmd="--layout"
+                ;; # bsp|stack|float                          Set the layout of the selected space.
+            "label" | "lb")     $yabai_cmd="--label"
+                ;; # [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
+            *) echo default
+                ;;
+        esac
+
+        call "$yabai_domain $yabai_cmd $arg"
+    else
+        echo "linux todo..."
+    fi
+}
+
+# --------------------------
+# ---       WINDOW       ---
+# --------------------------
+
+win() {
+    if test -z "${arg1-}"; then
+        exit 1
+    fi
+
+    local cmd=$arg1
+    local arg=$arg2 # if arg2 is empty that is not a problem
+
+    if is-mac; then
+        local yabai_domain="yabai -m window"
+        local yabai_cmd
+
+        # --move abs|rel:<dx>:<dy>                                      If type is rel the selected window is moved by dx pixels horizontally and dy pixels vertically, otherwise dx and dy will become its new position.
+        # --resize top|left|bottom|right|top_left|top_right|bottom_right|bottom_left|abs:<dx>:<dy>
+        #     Resize the selected window by moving the given handle dx pixels horizontally and dy pixels vertically. If handle is abs the
+        #     new size will be dx width and dy height and cannot be used on managed windows.
+        # --ratio rel|abs:<dr>          If type is rel the split ratio of the selected window is changed by dr, otherwise dr will become the new split ratio. A positive/negative delta will increase/decrease the size of the left-child.
+        # --toggle float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose
+        #     Toggle the given property of the selected window.
+        # --layer <LAYER>                       Set the stacking layer of the selected window.
+        # --opacity <floating point number>     Set the opacity of the selected window. The window will no longer be eligible for automatic change in opacity upon focus change. Specify the value 0.0 to reset back to full opacity OR have it be automatically managed through focus changes.
+        # --display <DISPLAY_SEL>               Send the selected window to the given display.
+        # --minimize                            Minimizes the selected window. Only works on windows that provide a minimize button in its titlebar.
+        # --deminimize                          Restores the selected window, if it is minimized. The window will only get focus if the owning application has focus. Note that you can also --focus a minimized window to restore it as the focused window.
+
+        case "$cmd" in
+            "focus" | "foc") $yabai_cmd="--focus"
+                ;; # <WINDOW_SEL>
+            "swap" | "sw") $yabai_cmd="--swap"
+                ;; # <WINDOW_SEL>                   Swap position of the selected window and the given window.
+            "warp" | "wrp") $yabai_cmd="--warp"
+                ;; # <WINDOW_SEL>                   Re-insert the selected window, splitting the given window.
+            "stack" | "stk") $yabai_cmd="--stack"
+                ;; # <WINDOW_SEL>                   Stack the given window on top of the selected window. Any kind of warp operation performed on a stacked window will unstack it.
+            "insert" | "zz") $yabai_cmd="--insert"
+                ;; # <DIR_SEL>|stack                Set the splitting mode of the selected window. If the current splitting mode matches the selected mode, the action will be undone.
+            "grid" | "zz") $yabai_cmd="--grid"
+                ;; # <rows>:<cols>:<start-x>:<start-y>:<width>:<height>     Set the frame of the selected window based on a self-defined grid.
+            "move" | "zz") $yabai_cmd="--move"
+                ;;
+            "resize" | "zz") $yabai_cmd="--resize"
+                ;;
+            "ratio" | "zz") $yabai_cmd="--ratio"
+                ;;
+            "toggle" | "zz") $yabai_cmd="--toggle"
+                ;;
+            "layer" | "zz") $yabai_cmd="--layer"
+                ;;
+            "opacity" | "zz") $yabai_cmd="--opacity"
+                ;;
+            "display" | "zz") $yabai_cmd="--display"
+                ;;
+            "space" | "zz") $yabai_cmd="--space"
+                ;; # <SPACE_SEL> | Send the selected window to the given space.
+            "minimize" | "zz") $yabai_cmd="--minimize"  #
+                ;;
+            "deminimize" | "zz") $yabai_cmd="--deminimize"  #
+                ;;
+            "close" | "zz") $yabai_cmd="--close"
+                ;; # Closes the selected window. Only works on windows that provide a close button in its titlebar.
+            *) echo default
+                ;;
+        esac
+
+        call "$yabai_domain $yabai_cmd $arg"
+
+    else
+        echo "linux todo..."
+    fi
+}
+
+# -------------------------
+# ---       QUERY       ---
+# -------------------------
+
+# query     | yabai -m query <COMMAND> [<ARGUMENT>]
+
+# --displays        Retrieve information about displays.
+# --spaces          Retrieve information about spaces.
+# --windows         Retrieve information about windows.
+
+# --display [<DISPLAY_SEL>]     Constrain matches to the selected display.
+# --space [<SPACE_SEL>]         Constrain matches to the selected space.
+# --window [<WINDOW_SEL>]       Constrain matches to the selected window.
+
+qry() {
+    if test -z "${arg1-}"; then
+        exit 1
+    fi
+
+    local cmd=$arg1
+    local arg=$arg2 # if arg2 is empty that is not a problem
+
+    if is-mac; then
+        yabai -m query $cmd $arg
+    else
+        echo "linux todo..."
+    fi
+}
+
+
+# ------------------------
+# ---       RULE       ---
+# ------------------------
+
+# yabai -m rule <COMMAND>
+
+# --add [<ARGUMENT>]        Add a new rule.
+# --remove <RULE_SEL>       Remove an existing rule with the given index or label.
+# --list                    Output list of registered rules.
+
+# ARGUMENTS
+
+# label=<LABEL>                     Label used to identify the rule with a unique name
+# app[!]=<REGEX>                    Name of application. If ! is present, invert the match.
+# title[!]=<REGEX>                  Title of window. If ! is present, invert the match.
+# display=[^]<DISPLAY_SEL>          Send window to display. If ^ is present, follow focus.
+# space=[^]<SPACE_SEL>              Send window to space. If ^ is present, follow focus.
+# manage=<BOOL_SEL>                 Window should be managed (tile vs float).
+# sticky=<BOOL_SEL>                 Window appears on all spaces.
+# mouse_follows_focus=<BOOL_SEL>    When focusing the window, put the mouse at its center. Overrides the global mouse_follows_focus setting.
+# layer=<LAYER>                     Window is ordered within the given stacking layer.
+# opacity=<FLOAT_SEL>               Set window opacity. The window will no longer be eligible for automatic change in opacity upon focus change.
+# border=<BOOL_SEL>                 Window should draw border.
+# native-fullscreen=<BOOL_SEL>      Window should enter native macOS fullscreen mode.
+
+# grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>       Set window frame based on a self-defined grid.
+
+rle() {
+    echo "rule"
+
+    if test -z "${arg1-}"; then
+        exit 1
+    fi
+
+    local cmd=$arg1
+    local arg=$arg2 # if arg2 is empty that is not a problem
+
+    if is-mac; then
+        yabai -m rule $cmd $arg
+    else
+        echo "linux todo..."
+    fi
+}
+
+# --------------------------
+# ---       SIGNAL       ---
+# --------------------------
+
+# signal    | yabai -m signal <COMMAND>
+
+# --add event=<EVENT> action=<ACTION> [label=<LABEL>] [app[!]=<REGEX>] [title[!]=<REGEX>]
+#     Add an optionally labelled signal to execute an action after processing an event of the given type.
+#     Some signals can be specified to trigger based on the application name and/or window title.
+# --remove <SIGNAL_SEL>
+#     Remove an existing signal with the given index or label.
+# --list
+#     Output list of registered signals.
+
+# EVENTS
+
+# application_launched
+#     Triggered when a new application is launched.
+#     Eligible for app filter.
+#     Passes one argument: $YABAI_PROCESS_ID
+# application_terminated
+#     Triggered when an application is terminated.
+#     Eligible for app filter.
+#     Passes one argument: $YABAI_PROCESS_ID
+# application_front_switched
+#     Triggered when the front-most application changes.
+#     Passes two arguments: $YABAI_PROCESS_ID, $YABAI_RECENT_PROCESS_ID
+# application_activated
+#     Triggered when an application is activated.
+#     Eligible for app filter.
+#     Passes one argument: $YABAI_PROCESS_ID
+# application_deactivated
+#     Triggered when an application is deactivated.
+#     Eligible for app filter.
+#     Passes one argument: $YABAI_PROCESS_ID
+# application_visible
+#     Triggered when an application is unhidden.
+#     Eligible for app filter.
+#     Passes one argument: $YABAI_PROCESS_ID
+# application_hidden
+#     Triggered when an application is hidden.
+#     Eligible for app filter.
+#     Passes one argument: $YABAI_PROCESS_ID
+# window_created
+#     Triggered when a window is created.
+#     Eligible for both app and title filter.
+#     Passes one argument: $YABAI_WINDOW_ID
+# window_destroyed
+#     Triggered when a window is destroyed.
+#     Passes one argument: $YABAI_WINDOW_ID
+# window_focused
+#     Triggered when a window becomes the key-window for its application.
+#     Eligible for both app and title filter.
+#     Passes one argument: $YABAI_WINDOW_ID
+# window_moved
+#     Triggered when a window changes position.
+#     Eligible for both app and title filter.
+#     Passes one argument: $YABAI_WINDOW_ID
+# window_resized
+#     Triggered when a window changes dimensions.
+#     Eligible for both app and title filter.
+#     Passes one argument: $YABAI_WINDOW_ID
+# window_minimized
+#     Triggered when a window has been minimized.
+#     Eligible for both app and title filter.
+#     Passes one argument: $YABAI_WINDOW_ID
+# window_deminimized
+#     Triggered when a window has been deminimized.
+#     Eligible for both app and title filter.
+#     Passes one argument: $YABAI_WINDOW_ID
+# window_title_changed
+#     Triggered when a window changes its title.
+#     Eligible for both app and title filter.
+#     Passes one argument: $YABAI_WINDOW_ID
+# space_changed
+#     Triggered when the active space has changed.
+#     Passes two arguments: $YABAI_SPACE_ID, $YABAI_RECENT_SPACE_ID
+# display_added
+#     Triggered when a new display has been added.
+#     Passes one argument: $YABAI_DISPLAY_ID
+# display_removed
+#     Triggered when a display has been removed.
+#     Passes one argument: $YABAI_DISPLAY_ID
+# display_moved
+#     Triggered when a change has been made to display arrangement.
+#     Passes one argument: $YABAI_DISPLAY_ID
+# display_resized
+#     Triggered when a display has changed resolution.
+#     Passes one argument: $YABAI_DISPLAY_ID
+# display_changed
+#     Triggered when the active display has changed.
+#     Passes two arguments: $YABAI_DISPLAY_ID, $YABAI_RECENT_DISPLAY_ID
+# mouse_down
+#     Triggered when a mouse button has been pressed.
+#     Passes two arguments: $YABAI_BUTTON, $YABAI_POINT
+# mouse_up
+#     Triggered when a mouse button has been released.
+#     Passes two arguments: $YABAI_BUTTON, $YABAI_POINT
+# mouse_dragged
+#     Triggered when the mouse is moved with one of its buttons pressed.
+#     Passes two arguments: $YABAI_BUTTON, $YABAI_POINT
+# mouse_moved
+#     Triggered when the mouse is moved.
+#     Passes two arguments: $YABAI_BUTTON, $YABAI_POINT
+# mission_control_enter
+#     Triggered when mission-control activates.
+# mission_control_check_for_exit
+#     Triggered periodically while mission-control is active.
+# mission_control_exit
+#     Triggered when mission-control deactivates.
+# dock_did_restart
+#     Triggered when Dock.app restarts.
+# menu_opened
+#     Triggered when a menu is opened.
+# menu_bar_hidden_changed
+#     Triggered when the macOS menubar autohide setting changes.
+# dock_did_change_pref
+#     Triggered when the macOS Dock preferences changes.
+# system_woke
+#     Triggered when macOS wakes from sleep.
+# daemon_message
+#     Triggered when yabai receives a message on its socket.
+
+sig() {
+    echo "signal"
+
+    if test -z "${arg1-}"; then
+        exit 1
+    fi
+
+    local cmd=$arg1
+    local arg=$arg2 # if arg2 is empty that is not a problem
+
+    if is-mac; then
+        yabai -m rule $cmd $arg
+    else
+        echo "linux todo..."
+    fi
+}
+
+# -----------------------------
+# ---       BASIC API       ---
+# -----------------------------
+
+# only create an api that is easy to eas here
+# no fancy combos.
+#
+# only make it easy to call the window managers here and then
+# create custom combos that achieve specific tasks below
+# under compound tasks
+
+reload() {
+    if is-mac; then
+        brew services restart yabai
+        brew services restart skhd
+        limelight # there is a wierd err msg but it works...
+    else
+	    echo 'reload linux wm...'
+    fi
+}
+
+# yabai         west | south | north | east
+window_focus() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m window --focus $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+# yabai         recent | prev | next
+window_focus_hist() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m space --focus $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+# yabai         west | south | north | east
+window_swap() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m window --swap $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+# yabai         west | south | north | east
+window_warp() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m window --warp $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+# yabai         rel:{n}:{m}
+window_move() {
+    if is-mac; then
+        if ! test -z "${arg1-}" -a "{arg2-}"; then
+            call_yabai "-m window --move rel:$arg1:$arg2"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+# yabai         bsp | stack | float
+# dwm
+layout() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m space --layout $arg1"
+        fi
+    else
+        echo "linux cmd todo..."
+    fi
+}
+
+## Create space (requires SIP disabled)
+# yabai -m space --create
+
+# # Create space, moved focused app, and focus space (requires SIP disabled) - uses jq for parsing json (brew install jq)
+# ctrl + shift - w : yabai -m space --create && \
+#   index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
+#   yabai -m window --space "${index}" && \
+#   yabai -m space --focus "${index}"
+
+# yabai -m window --space recent && yabai -m space --focus recent
+# yabai -m window --space next && yabai -m space --focus next
+# yabai -m window --space prev && yabai -m space --focus prev
+# yabai -m window --space  1 && yabai -m space --focus 1
+# yabai -m window --space  2 && yabai -m space --focus 2
+# yabai -m window --space  3 && yabai -m space --focus 3
+# yabai -m window --space  4 && yabai -m space --focus 4
+# yabai -m window --space  5 && yabai -m space --focus 5
+# yabai -m window --space  6 && yabai -m space --focus 6
+# yabai -m window --space  7 && yabai -m space --focus 7
+# yabai -m window --space  8 && yabai -m space --focus 8
+# yabai -m window --space  9 && yabai -m space --focus 9
+# yabai -m window --space 10 && yabai -m space --focus 10
+
+space() {
+    if is-mac; then
+        echo "spaces"
+        # CREATE
+        # FOCUS | -m window --space 10 && yabai -m space --focus 10
+    else
+        echo "linux todo..."
+    fi
+}
+
+# yabai         --resize { left|bottom|top|right }:{n}:{m}
+window_resize() {
+    if is-mac; then
+        if ! test -z "${arg1-}" -a "{arg2-}" -a "{arg3-}"; then
+            call_yabai "-m window --resize $arg1:$arg2:$arg3"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+balance() {
+    if is-mac; then
+        call_yabai "-m space --balance"
+    else
+        echo "linux todo..."
+    fi
+}
+
+# yabai             x | y
+mirror() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m space --mirror $arg1-axis"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+# yabai         90 | 180 | 270
+rotate() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m space --rotate $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
+
+}
+
+toggle_gap() {
+    if is-mac; then
+        call_yabai "-m space --toggle padding; yabai -m space --toggle gap"
+    else
+        echo "linux todo..."
+    fi
+}
+
+toggle_border() {
+    if is-mac; then
+        call_yabai "-m window --toggle border"
+    else
+        echo "linux todo..."
+    fi
+}
+
+toggle_zoom_parent() {
+    if is-mac; then
+        call_yabai "-m window --toggle zoom-parent"
+    else
+        echo "linux todo..."
+    fi
+}
+
+toggle_fullscreen() {
+    if is-mac; then
+        call_yabai "-m window --toggle zoom-fullscreen"
+    else
+        echo "linux todo..."
+    fi
+}
+
+toggle_fullscreen_native() {
+    if is-mac; then
+        call_yabai "-m window --toggle native-fullscreen"
+    else
+        echo "linux todo..."
+    fi
+}
+
+toggle_win_split() {
+    if is-mac; then
+        call_yabai "-m window --toggle split"
+    else
+        echo "linux todo..."
+    fi
+}
+
+# float / unfloat window and center on screen
+toggle_float_center() {
+    if is-mac; then
+        call_yabai "-m window --toggle float"
+        call_yabai "-m window --grid 4:4:1:1:2:2"
+    else
+        echo "linux todo..."
+    fi
+}
+
+toggle_sticky() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+	        if test "$arg1" = '1'; then
+                call_yabai "-m window --toggle sticky"
+	        elif test "$arg" = '2'; then
+                # toggle sticky, float and resize to picture-in-picture size
+                # TODO: mv to compound..
+                call_yabai "-m window --toggle sticky"
+                call_yabai "-m window --grid 5:5:4:0:1:1"
+	        fi
+        fi
+    else
+        echo "linux todo..."
+    fi
+
+}
+
+# yabai         west | south | north | east
+win_insert() {
+    if is-mac; then
+        if ! test -z "${arg1-}"; then
+            call_yabai "-m window --insert $arg1"
+        fi
+    else
+        echo "linux todo..."
+    fi
+}
+
+# ----------------------------------
+# ---       COMPOUND CALLS       ---
+# ----------------------------------
+
+# put combos here that achieve certain goals
+
+#############################################################################
+
+case "$action" in
+    "reload" | "r") reload
+        ;;
+    "layout" | "l") layout
+        ;;
+    "ratio") ratio
+        ;;
+    *) exit 1 # no options -> return err
+        ;;
+esac
