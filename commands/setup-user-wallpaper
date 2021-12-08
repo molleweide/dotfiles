@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo-style --h1 --red "SETTING UP WALLPAPER.."
+echo-style --h1+red="SETTING UP WALLPAPER.."
 # https://apple.stackexchange.com/questions/75081/automatically-change-os-x-desktop-background-for-all-desktops-monitors
 # https://stackoverflow.com/questions/5550895/shell-script-changing-desktop-wallpaper
 # https://www.howtogeek.com/258461/how-to-use-a-screensaver-as-your-background-on-os-x/
