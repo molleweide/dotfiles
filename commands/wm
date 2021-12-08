@@ -1,55 +1,42 @@
 #!/usr/bin/env bash
 
-# cmd + alt + ctrl - 0x18     : yabai -m space --padding rel:2:2:2:2 && yabai -m space --gap rel:2;       # window gaps (plus)
-# cmd + alt + ctrl - 0x1B     : yabai -m space --padding rel:-2:-2:-2:-2 && yabai -m space --gap rel:-2;  # window gaps (minus)
-
+gap_resize() { wms p rel:$1:$1:$1:$1 && wms g rel:$1; } # +/- integer
 
 # ## Destroy space (requires SIP disabled)
-# ctrl - q: yabai -m space --focus prev; yabai -m space recent --destroy
-
-
+# wms f prev; wms recent --destroy # how do I handle --destroy recent syntax
 
 # # send window to monitor and follow focus
-# fn + cmd - x  : yabai -m window --display recent; yabai -m display --focus recent
-# fn + cmd - z  : yabai -m window --display prev; yabai -m display --focus prev
-# fn + cmd - c  : yabai -m window --display next; yabai -m display --focus next
-# fn + cmd - 1  : yabai -m window --display 1; yabai -m display --focus 1
-# fn + cmd - 2  : yabai -m window --display 2; yabai -m display --focus 2
-# fn + cmd - 3  : yabai -m window --display 3; yabai -m display --focus 3
-
-
+# wmw d recent; wmd recent
+# wmw d prev;   wmd prev
+# wmw d next;   wmd next
+# wmw d 1;      wmd 1
+# wmw d 2;      wmd 2
+# wmw d 3;      wmd 3
 
 # # send window to desktop and follow focus
-# fn + cmd - x : yabai -m window --space recent; yabai -m space --focus recent
-# fn + cmd - z : yabai -m window --space prev; yabai -m space --focus prev
-# fn + cmd - c : yabai -m window --space next; yabai -m space --focus next
-# fn + cmd - 1 : yabai -m window --space  1; yabai -m space --focus 1
-# fn + cmd - 2 : yabai -m window --space  2; yabai -m space --focus 2
-# fn + cmd - 3 : yabai -m window --space  3; yabai -m space --focus 3
-# fn + cmd - 4 : yabai -m window --space  4; yabai -m space --focus 4
-# fn + cmd - 5 : yabai -m window --space  5; yabai -m space --focus 5
-# fn + cmd - 6 : yabai -m window --space  6; yabai -m space --focus 6
-# fn + cmd - 7 : yabai -m window --space  7; yabai -m space --focus 7
-# fn + cmd - 8 : yabai -m window --space  8; yabai -m space --focus 8
-# fn + cmd - 9 : yabai -m window --space  9; yabai -m space --focus 9
-# fn + cmd - 0 : yabai -m window --space 10; yabai -m space --focus 10
+# wmw s recent; wms f recent
+# wmw s prev;   wms f prev
+# wmw s next;   wms f next
+# wmw s  1;     wms f 1
+# wmw s  2;     wms f 2
+# wmw s  3;     wms f 3
+# wmw s  4;     wms f 4
+# wmw s  5;     wms f 5
+# wmw s  6;     wms f 6
+# wmw s  7;     wms f 7
+# wmw s  8;     wms f 8
+# wmw s  9;     wms f 9
+# wmw s 10;     wms f 10
 
+toggle_desktop_offset() { wms t padding && wms t gap }
 
-
-# # toggle desktop offset
-# # alt - a : yabai -m space --toggle padding && yabai -m space --toggle gap
-# fn - a : yabai -m space --toggle padding; yabai -m space --toggle gap
-
-# # create desktop, move window and follow focus
-# alt + cmd - n : yabai -m space --create;\
-#                   id=$(yabai -m query --displays --display | grep "spaces");\
-#                   yabai -m window --space $(echo ${id:10:${#id}-10});\
-#                   yabai -m space --focus $(echo ${id:10:${#id}-10})
-
-# # create desktop and follow focus
-# cmd + shift - n : yabai -m space --create;\
-#                 id=$(yabai -m query --displays --display | grep "spaces");\
-#                 yabai -m space --focus $(echo ${id:10:${#id}-10})
+create_desktop() {
+    # create desktop, move window and follow focus
+    wms c
+    id=$(wmq d d | grep "spaces")
+    wmw s $(echo ${id:10:${#id}-10})
+    wms f $(echo ${id:10:${#id}-10})
+}
 
 # # create desktop, move window and follow focus - uses jq for parsing json (brew install jq)
 # shift + cmd - n : yabai -m space --create && \
@@ -64,13 +51,12 @@
 #                 yabai -m space --focus "${index}"
 
 # # float / unfloat window and center on screen
-# fn - t : yabai -m window --toggle float;\
-#           yabai -m window --grid 4:4:1:1:2:2
+# wmw t float && wmw g 4:4:1:1:2:2
 
-toggle_float_restore
+# toggle_float_restore() {}
 # # float / unfloat window and restore position
-# # alt - t : yabai -m window --toggle float && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
-# alt - t : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2
+# wmw t float && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
+# wmw t float && wmw g 4:4:1:1:2:2
 
 toggle_layout_float() {
     # # change layout of desktop | nice toggle function
@@ -79,7 +65,7 @@ toggle_layout_float() {
     wms y $(wmq s s | jq -r 'if .type == "bsp" then "float" else "bsp" end')
 }
 
-toggle_pict_in_pict() { wmw t border && wmw t pip }
+toggle_pict_in_pict() { wmw t border && wmw t pip; }
 
 # # toggle sticky, float and resize to picture-in-picture size
 # fn - p : yabai -m window --toggle sticky;\

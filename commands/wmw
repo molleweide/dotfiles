@@ -5,30 +5,31 @@
 # @param [ window_selection ]
 
 test -z "${1-}" && exit 1
-test -z "${3}" || yws="--window $3"
+# test -z "${3}" || yws="$3"
 
 if is-mac; then
     case "$1" in
-        "focus" | "fc") yabai_cmd="focus";; # <WINDOW_SEL>
-        "swap" | "sw") yabai_cmd="swap";; # <WINDOW_SEL>
-        "warp" | "wrp") yabai_cmd="warp";; # <WINDOW_SEL>
-        "stack" | "stk") yabai_cmd="stack";; # <WINDOW_SEL>
-        "insert" | "in") yabai_cmd="insert";; # <DIR_SEL>|stack
-        "grid" | "gr") yabai_cmd="grid";; # <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
-        "move" | "mv") yabai_cmd="move";; # abs|rel:<dx>:<dy>
-        "resize" | "rz") yabai_cmd="resize";; # top|left|bottom|right|top_left|top_right|bottom_right|bottom_left|abs:<dx>:<dy>
-        "ratio" | "rt") yabai_cmd="ratio";; # rel|abs:<dr>
-        "toggle" | "t") yabai_cmd="toggle";; # float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose
-        "layer" | "ly") yabai_cmd="layer";; # <LAYER>
-        "opacity" | "o") yabai_cmd="opacity";; # <floating point number>
-        "display" | "d") yabai_cmd="display";; # <DISPLAY_SEL>
-        "space" | "s") yabai_cmd="space";; # <SPACE_SEL>
-        "minimize" | "mz") yabai_cmd="minimize";;
-        "deminimize" | "dmz") yabai_cmd="deminimize";;
-        "close" | "c") yabai_cmd="close" ;;
+        "focus" | "fc")         yabai_cmd="--focus";; # <WINDOW_SEL>
+        "swap" | "sw")          yabai_cmd="--swap";; # <WINDOW_SEL>
+        "warp" | "wrp")         yabai_cmd="--warp";; # <WINDOW_SEL>
+        "stack" | "stk")        yabai_cmd="--stack";; # <WINDOW_SEL>
+        "insert" | "in")        yabai_cmd="--insert";; # <DIR_SEL>|stack
+        "grid" | "g")          yabai_cmd="--grid";; # <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+        "move" | "mv")          yabai_cmd="--move";; # abs|rel:<dx>:<dy>
+        "resize" | "rz")        yabai_cmd="--resize";; # top|left|bottom|right|top_left|top_right|bottom_right|bottom_left|abs:<dx>:<dy>
+        "ratio" | "rt")         yabai_cmd="--ratio";; # rel|abs:<dr>
+        "toggle" | "t")         yabai_cmd="--toggle";; # float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose
+        "layer" | "ly")         yabai_cmd="--layer";; # <LAYER>
+        "opacity" | "o")        yabai_cmd="--opacity";; # <floating point number>
+        "display" | "d")        yabai_cmd="--display";; # <DISPLAY_SEL>
+        "space" | "s")          yabai_cmd="--space";; # <SPACE_SEL>
+        "minimize" | "mz")      yabai_cmd="--minimize";;
+        "deminimize" | "dmz")   yabai_cmd="--deminimize";;
+        "close" | "c")          yabai_cmd="--close" ;;
         *) echo "NO_MATCH";;
     esac
-    yabai -m window $yws --$yabai_cmd $2
+    # yabai -m window $yws --$yabai_cmd $2
+    yabai -m window $yws $yabai_cmd $2
 else
     echo "linux todo..."
 fi
