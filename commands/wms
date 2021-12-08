@@ -20,7 +20,7 @@ if is-mac; then
         "padding" | "pad") ycmd="--padding" ;; # abs|rel:<top>:<bottom>:<left>:<right>   Padding added at the sides of the selected space.
         "gap" | "gp")      ycmd="--gap" ;; # abs|rel:<gap>                               Size of the gap that separates windows on the selected space.
         "toggle" | "tg")   ycmd="--toggle" ;; # padding|gap|mission-control|show-desktop Toggle space setting on or off for the selected space.
-        "layout" | "lt")   ycmd="--layout" ;; # bsp|stack|float                          Set the layout of the selected space.
+        "layout" | "y")   ycmd="--layout" ;; # bsp|stack|float                          Set the layout of the selected space.
         "label" | "n")    ycmd="--label" ;; # [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
         *) echo "NO_MATCH";;
     esac

@@ -18,7 +18,7 @@ if is-mac; then
         "move" | "mv") yabai_cmd="move";; # abs|rel:<dx>:<dy>
         "resize" | "rz") yabai_cmd="resize";; # top|left|bottom|right|top_left|top_right|bottom_right|bottom_left|abs:<dx>:<dy>
         "ratio" | "rt") yabai_cmd="ratio";; # rel|abs:<dr>
-        "toggle" | "tg") yabai_cmd="toggle";; # float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose
+        "toggle" | "t") yabai_cmd="toggle";; # float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose
         "layer" | "ly") yabai_cmd="layer";; # <LAYER>
         "opacity" | "o") yabai_cmd="opacity";; # <floating point number>
         "display" | "d") yabai_cmd="display";; # <DISPLAY_SEL>

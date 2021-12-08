@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if is-mac; then
+    # macos_install_dext # TODO: needs testing first
+    if test "$arch" = 'a64'; then
+        stack install --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+    else
+        stack install --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+    fi
+else
+    echo "linux todo.."
+    # stack install # Check `stack path`. Should install to `$USER/.local/bin`.
+    # or
+    # aur: https://aur.archlinux.org/packages/kmonad-bin
+
+fi
