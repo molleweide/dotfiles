@@ -12,7 +12,7 @@ force="${FORCE_LINK:-"$(get-flag-value force --missing=no -- "$@")"}"
 # 1. check if symlink already is a link. if true force create new link
 if test -L "$symlink"; then
     if test "$force" = 'yes' || confirm-bool "Symlink already exists at $symlink, recreate it to point to $existing?"; then
-        echo-color --blue "Re-linking: $(basename $existing) -> $symlink"
+        echo-style --blue "Re-linking: $(basename $existing) -> $symlink"
         rm -rf "$symlink" # be carefull;
         ln -s "$existing" "$symlink"
     else
@@ -21,11 +21,11 @@ if test -L "$symlink"; then
 
 # 2. check if $symlink already is file/dir
 elif test -d "$symlink" -o -f "$symlink"; then
-    echo-color --red "Cannot link: \`$(basename $existing)\` is a regular file/dir and needs to be removed manually first..."
+    echo-style --red "Cannot link: \`$(basename $existing)\` is a regular file/dir and needs to be removed manually first..."
 
 # 3. if not link, and not file/dir > create new symlink
 else
-    echo-color --green "Symlinking: $(basename $existing) -> $symlink"
+    echo-style --green "Symlinking: $(basename $existing) -> $symlink"
 
     # create dirs up until $symlink in case
     # $symlink is a file and in a completely new

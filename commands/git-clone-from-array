@@ -7,37 +7,37 @@ array=($@)
 
 i=0
 for arr_val in "${array[@]}"; do
-    mod2=$(( $i % 2 == 0 ))
+    mod2=$(($i % 2 == 0))
 
     if [ $i == 0 ]; then
         # TODO: validate is file/dir
         install_dir=$arr_val
-        echo-color --dim="INSTALL DIR: \`$install_dir\`\n"
-        mkdir -p $install_dir > /dev/null
-        pushd $install_dir > /dev/null 2>&1
+        echo-style --dim="INSTALL DIR: \`$install_dir\`\n"
+        mkdir -p $install_dir >/dev/null
+        pushd $install_dir >/dev/null 2>&1
 
-    elif (( ! $mod2 )); then
+    elif ((!$mod2)); then
         # TODO: validate is string name and NOT git url
         alt_name=$arr_val
 
     else
         # TODO: validate is github url
         repo_url=$arr_val
-        # echo-color "@b@blue[[ @green$alt_name <- @magenta$repo_url]]"
+        # echo-style "@b@blue[[ @green$alt_name <- @magenta$repo_url]]"
         git-clone-recursive \
             $install_dir \
             $alt_name \
             $repo_url
     fi
 
-    i=$((i+1))
+    i=$((i + 1))
 done
 
-popd > /dev/null 2>&1
+popd >/dev/null 2>&1
 
 # function install_each_gem {
 # 	local name version
-# 	echo-color --h2="Installing $# ruby gems..."
+# 	echo-style --h2="Installing $# ruby gems..."
 # 	for arg in "$@"; do
 # 		name="${arg% *}"
 # 		version="${arg#* }" # will be the same as name, if no version was provided
@@ -46,5 +46,5 @@ popd > /dev/null 2>&1
 # 		fi
 # 		env NAME="gem:$name" GEM="$name" GEM_VERSION="$version" setup-util gem
 # 	done
-# 	echo-color --g2="Installed $# ruby gems."
+# 	echo-style --g2="Installed $# ruby gems."
 # }

@@ -3,7 +3,7 @@
 echo-header --h1 "SETTING UP TERMINAL.."
 if is-mac; then
     if command-exists "alacritty"; then
-        echo-color --blue "[[+ Installing Alacritty terminfo ]]"
+        echo-style --blue "[[+ Installing Alacritty terminfo ]]"
         git clone https://github.com/alacritty/alacritty.git /tmp/alacritty
         cd /tmp/alacritty
         sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
@@ -12,5 +12,3 @@ if is-mac; then
     fi
     xattr -r -d com.apple.quarantine /Applications/Alacritty.app
 fi
-
-

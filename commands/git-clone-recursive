@@ -4,7 +4,7 @@ install_dir=$1
 alt_name=$2
 repo_url=$3
 
-echo-color \
+echo-style \
     --yellow "$alt_name" \
     --blue " <- " \
     --magenta "$repo_url"
@@ -12,11 +12,11 @@ echo-color \
 mkdir -p $install_dir
 
 if [ ! -d "$install_dir/$alt_name" ]; then
-    echo-color --green "Doesn't exist. Installing... \n]]"
+    echo-style --green "Doesn't exist. Installing... \n]]"
     git clone $repo_url $alt_name
-    pushd $install_dir/$alt_name > /dev/null 2>&1
+    pushd $install_dir/$alt_name >/dev/null 2>&1
     git submodule update --init --recursive
-    popd > /dev/null 2>&1
+    popd >/dev/null 2>&1
 else
-    echo-color --red "Already exists. \n"
+    echo-style --red "Already exists. \n"
 fi

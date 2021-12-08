@@ -5,7 +5,7 @@ url=$2
 
 app="$(get-app "$name")"
 if test -n "$app"; then
-    echo-color "@blue@b[[+ Installing $name]]"
+    echo-style "@blue@b[[+ Installing $name]]"
 
     zip_path=$(installer_download "$url" "$name.zip")
 

@@ -22,4 +22,3 @@ done
 # for filepath in "$DOROTHY/user/sources/"!(~.*).sh; do
 #     source "$filepath"
 # done
-

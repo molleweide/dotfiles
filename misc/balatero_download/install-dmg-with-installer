@@ -6,7 +6,7 @@ installer_path=$3
 
 app="$(get-app "$name")"
 if test -n "$app"; then
-    echo-color "@blue@b[[+ Installing $name]]"
+    echo-style "@blue@b[[+ Installing $name]]"
 
     downloading_msg "$name"
 

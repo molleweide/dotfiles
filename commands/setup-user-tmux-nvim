@@ -25,7 +25,6 @@ npm install -g vim-node-rpc
 cargo install proximity-sort # --force
 # fi
 # mkdir -p ~/.local/share/nvim/plugged
-# echo-color "@b@blue[[+ Installing nvim plugins]]"
+# echo-style "@b@blue[[+ Installing nvim plugins]]"
 pyenv activate py2neovim
 nvim +PlugInstall +qall
-

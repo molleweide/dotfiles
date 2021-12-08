@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if is-mac; then
-    echo-color --h1 "Setting up HAMMERSPOON.."
+    echo-style --h1="Setting up HAMMERSPOON.."
     # brew install --cask hammerspoon # --appdir=/Applications
     url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
     destination=/tmp/SpoonInstall.spoon.zip

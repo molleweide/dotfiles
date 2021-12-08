@@ -9,8 +9,7 @@ source "$DOROTHY/sources/strict.bash"
 #     symlink-file "$f" "$config_dst_dir/$(basename $f)"
 # done
 
-
-echo-color --h1 --green "LINK USER CONFIGS.."
+echo-style --h1 --green "LINK USER CONFIGS.."
 export FORCE_LINK='yes'
 config_src_dir="$DOROTHY/user/config.xdg"
 config_dst_dir=$HOME/.config

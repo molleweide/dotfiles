@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-echo-color "SETTING UP SURFINGKEYS"
+echo-style "SETTING UP SURFINGKEYS"
 
-git-clone-recursive  \
-    $HOME/code/web          \
-    "Surfingkeys"           \
+git-clone-recursive \
+    $HOME/code/web \
+    "Surfingkeys" \
     git@github.com:molleweide/Surfingkeys.git
 
-pushd $HOME/code/web/Surfingkeys > /dev/null 2>&1
+pushd $HOME/code/web/Surfingkeys >/dev/null 2>&1
 git checkout molleweide
 npm install
 npm run build
-popd > /dev/null 2>&1
+popd >/dev/null 2>&1

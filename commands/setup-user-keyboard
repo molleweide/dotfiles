@@ -11,9 +11,9 @@ github_user=$(git config github.user)
 # QMK
 
 # TODO: check for github_user=$(git config github.user)
-git_clone_recursive     \
+git_clone_recursive \
     $HOME/code/firmware \
-    "qmk-firmware"      \
+    "qmk-firmware" \
     git@github.com:molleweide/qmk_firmware.git
 
 # ---------------------------------------------------------------------
@@ -28,24 +28,24 @@ git_clone_recursive     \
 
 # ---------------------------------------------------------------------
 
-function macos_install_dext(){
+function macos_install_dext() {
     dext_path="c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/dist/Karabiner-DriverKit-VirtualHIDDevice-1.15.0.dmg"
     dext_path=$(defaults read /Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/Info.plist CFBundleVersion | grep 1.15.0)
     if test -z "$check_dext"; then
         sudo installer -pkg "$dext_path" -target /Applications
     else
-        echo-color --green "dext v1.15.0 already installed"
+        echo-style --green "dext v1.15.0 already installed"
     fi
     /Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Manager activate
 }
 
 code_tools_path=$HOME/code/tools
-git_clone_recursive  \
+git_clone_recursive \
     $code_tools_path \
-    "kmonad"         \
+    "kmonad" \
     git@github.com:molleweide/kmonad.git
 
-pushd $code_tools_path/kmonad > /dev/null 2>&1
+pushd $code_tools_path/kmonad >/dev/null 2>&1
 # stack clean / redo complete build
 if is-mac; then
     # macos_install_dext # TODO: needs testing first
@@ -61,4 +61,4 @@ else
     # aur: https://aur.archlinux.org/packages/kmonad-bin
 
 fi
-popd > /dev/null 2>&1
+popd >/dev/null 2>&1

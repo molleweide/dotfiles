@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo-color --h1 "SETTING UP UBERSICHT.."
+echo-style --h1 "SETTING UP UBERSICHT.."
 
 mac_uber_dir="$HOME/Library/Application Support/Übersicht/widgets"
 # https://github.com/Mortennn/Dozer
@@ -13,7 +13,6 @@ mac_uber_dir="$HOME/Library/Application Support/Übersicht/widgets"
 # https://github.com/Jean-Tinland/simple-bar
 # https://github.com/kkga/nibar
 
-
 # local user=$1
 # local name=$2
 # local url="https://github.com/$user/$name.git"
@@ -21,7 +20,6 @@ mac_uber_dir="$HOME/Library/Application Support/Übersicht/widgets"
 # local full_name=$prefix-$name.widget
 # local dest=$HOME/code/$full_name
 # not working form me
-
 
 # function uber_widget() {
 #     local alt_name=$1
@@ -36,7 +34,6 @@ mac_uber_dir="$HOME/Library/Application Support/Übersicht/widgets"
 
 #     create-symlink $install_dir/$alt_name $WIDGET_DIR/$alt_name
 # }
-
 
 # if is-mac; then
 #     brew install ubersicht
@@ -57,8 +54,7 @@ mac_uber_dir="$HOME/Library/Application Support/Übersicht/widgets"
 #     # uber_widget "uber-collection" "git@github.com:molleweide/uebersicht-widgets.git"
 # fi
 
-
-echo-color --h1 --cyan "WIDGET: BAR"
+echo-style --h1 --cyan "WIDGET: BAR"
 if is-mac; then
     symlink-dir "$HOME/code/widgets/simple-bar" $mac_uber_dir
     # https://github.com/molleweide/spacebar     <<<------ C
@@ -67,4 +63,3 @@ else
     # https://github.com/polybar/polybar
     # https://github.com/LukeSmithxyz/dwmblocks.git
 fi
-

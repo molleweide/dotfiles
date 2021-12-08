@@ -2,6 +2,8 @@
 # shellcheck disable=SC2034
 # do not use `export` keyword in this file
 
+source "$DOROTHY/config/setup.bash"
+
 APK_INSTALL=(
 	# gocryptfs: use `setup-util-gocryptfs` instead, as this version lags behind
 	aria2
@@ -61,205 +63,165 @@ else
 	)
 fi
 
-# HOMEBREW_ARCH="x86_64"
-HOMEBREW_INSTALL=(
-	# azure-cli
-	# balena-cli
-	# basictex
-	# blackbox
-	# hashicorp/tap/boundary
-	# hashicorp/tap/consul
-	# hashicorp/tap/nomad
-	# hashicorp/tap/terraform
-	# hashicorp/tap/vault
-	# heroku
-	# https://github.com/tmux-plugins/tmux-urlview
-	# kryptco/tap/kr
-	# librsvg
-	# yarn
-	"luajit --HEAD"
-	"neovim --HEAD"
-	"tree-sitter --HEAD"
-	ack
-	aria2
-	appflowy            # notion alternative open source
-	blueutil
-	cabal-install       # haskell pkg manager
-	calcurse
-	code-minimap
-	cointop
-	coreutils
-	coreutils
-	curl
-	deno
-	diff-so-fancy
-	direnv
-	fasd
-	fd
-	fff # filebrowser
-	ffmpeg
-	figlet    # http://www.figlet.org/examples.html
-	findutils # eg. unix `locate` command
-	homebrew/cask-fonts/font-inconsolata-go-nerd-font
-	homebrew/cask-fonts/font-jetbrains-mono-nerd-font
-	fzf
-	gh
-	ghc
-	ghq # remote repo management
-	git
-	git-extras
-	git-lfs
-	gnu-tar
-	gnuplot
-	gpg
-	gpg-tui
-	heroku/brew/heroku
-	ImageMagick
-	irssi
-	isync
-	koekeishiya/formulae/skhd
-	koekeishiya/formulae/yabai
-	lazygit
-	lf # filebrowser
-	libxml2
-	libzip
-	llvm
-	lua
-	luarocks
-	mas
-	micro
-	most
-	mps-youtube
-	msmtp
-	ncurses
-	neofetch
-	neomutt
-	ninja
-	nnn                 # filebrowser
-	# notion          # notes
-	obsidian        # note
-	openssh
-	pandoc
-	pass
-	pass
-	pass-otp
-	paul-nameless/homebrew-repo/tg # telegram tui
-	pinentry-mac
-	pkg-config
-	podman
-	postgres
-	ranger # filebrowser
-	readline
-	reattach-to-user-namespace # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
-	redis
-	ripgrep
-	sc-im # spreadsheets
-	screen
-	# simplenote          # notes
-	sl
-	sox
-	spotify-tui
-	terminal-notifier
-	tg # telegram tui
-	the_silver_searcher
-	tmux
-	tmuxinator
-	tree
-	universal-ctags
-	urlview # https://github.com/sigpipe/urlview
-	vim
-	watch
-	watchman
-	wget
-	wget
-	wp-cli
-	xz # general-purpose data compression with high compression ratio
+# fzf
+# gnuplot
+# libxml2
+# libzip
+# lua
+# luarocks
+# ncurses
+# neofetch
+# zsh-completions
+HOMEBREW_FORMULAS=(
+	'ack'
+	'blueutil'
+	'cabal-install'
+	'calcurse'
+	'code-minimap'
+	'cointop'
+	'diff-so-fancy'
+	'direnv'
+	'fasd'
+	'fff'
+	'figlet'
+	'findutils'
+	'fzf'
+	'gcc'
+	'ghc'
+	'ghq'
+	'git-extras'
+	'gnu-tar'
+	'gnuplot'
+	'gpg-tui'
+	'heroku/brew/heroku'
+	'hub'
+	'imagemagick'
+	'irssi'
+	'isync'
+	'koekeishiya/formulae/skhd'
+	'koekeishiya/formulae/yabai'
+	'lazygit'
+	'lf'
+	'libxml2'
+	'libzip'
+	'lua'
+	'luarocks'
+	'most'
+	'mps-youtube'
+	'msmtp'
+	'ncurses'
+	'neofetch'
+	'neomutt'
+	'ninja'
+	'nnn'
+	'pandoc'
+	'pass'
+	'pass-otp'
+	'paul-nameless/repo/tg'
+	'pinentry-mac'
+	'podman'
+	'postgresql'
+	'ranger'
+	'readline'
+	'reattach-to-user-namespace'
+	'redis'
+	'sc-im'
+	'sd'
+	'sl'
+	'sox'
+	'spotify-tui'
+	'subversion'
+	'terminal-notifier'
+	'the_silver_searcher'
+	'tmux'
+	'tmuxinator'
+	'tree'
+	'universal-ctags'
+	'urlview'
+	'watch'
+	'watchman'
+	'wp-cli'
+	'xz'
 )
-HOMEBREW_INSTALL_SLOW=(
+HOMEBREW_SLOW_FORMULAS=(
 	gpg
 	shellcheck
 )
-HOMEBREW_INSTALL_CASK=(
-	aerial # screensaver
-	# 1password-cli
-	# acorn
-	# adguard
-	# airparrot
-	# appzapper
-	# atom
-	# audio-hijack
-	# backblaze
-	# bartender
-	brave
-	# burn
-	# caption
-	# ccleaner
-	# contexts
-	# dat
-	# devdocs
-	dmenu-mac
-	# fantastical
-	# firefox
-	# freedom
-	alacritty # terminal
-	kitty     # terminal
-	# geekbench
-	# github-desktop
-	# gitter
-	# google-chrome
-	# google-hangouts
-	hammerspoon
-	# jaikoz
-	# java
-	# julia
-	# keybase
-	# kodi
-	licecap
-	# little-snitch
-	# loopback
-	# micro-snitch
-	mpv
-	mullvadvpn
-	# numi
-	# opera
-	# paragon-ntfs
-	# plex-media-server
-	# pomello
-	# reflector
-	qtpass
-	qutebrowser
-	# screenflow
-	signal
-	# chromedriver
-	# sketch
-	# skype
-	# soundsource
-	spotify
-	supercollider # audio engine
-	# teamviewer
-	# toggldesktop
-	# torbrowser
-	# tower
-	# transmission
-	# transmit
-	# tunnelbear
-	# tunnelblick
-	ubersicht
-	# undercover
-	# usage
-	# visual-studio-code
-	# vlc
-	# vmware-fusion
-	# webtorrent
-	# windscribe
-	# workflowy
-	# xld
-	# calibre
+
+# 1password-cli
+# acorn
+# adguard
+# airparrot
+# appzapper
+# atom
+# audio-hijack
+# backblaze
+# bartender
+# burn
+# caption
+# ccleaner
+# contexts
+# dat
+# devdocs
+# fantastical
+# firefox
+# freedom
+# geekbench
+# github-desktop
+# gitter
+# google-chrome
+# google-hangouts
+# jaikoz
+# java
+# julia
+# keybase
+# kodi
+# little-snitch
+# loopback
+# micro-snitch
+# numi
+# opera
+# paragon-ntfs
+# plex-media-server
+# pomello
+# reflector
+# screenflow
+# chromedriver
+# sketch
+# skype
+# soundsource
+# undercover
+# usage
+# visual-studio-code
+# vlc
+# vmware-fusion
+# webtorrent
+# windscribe
+# workflowy
+# xld
+# calibre
+HOMEBREW_CASKS=(
+	'aerial'
+	'alacritty'
+	'appflowy'
+	'brave-browser'
+	'dmenu-mac'
+	'hammerspoon'
+	'kitty'
+	'licecap'
+	'mpv'
+	'mullvadvpn'
+	'notion'
+	'obsidian'
+	'qtpass'
+	'qutebrowser'
+	'spotify'
+	'supercollider'
+	'ubersicht'
 )
 
 # gems
-RUBY_VERSION="2.7"
-RUBY_INSTALL=(
+GEM_INSTALL=(
 	awesome_print
 	bundler
 	cani
@@ -282,20 +244,16 @@ RUBY_INSTALL=(
 # - https://github.com/pymupdf/PyMuPDF
 # - https://github.com/pikepdf/pikepdf
 # - https://github.com/pdfminer/pdfminer.six
-PYTHON_INSTALL=(
+PIPX_INSTALL=(
 	# bitcoinlib
 	# cairosvg
 	# PyPDF2  # python 2 only
-	pyobjc-framework-Quartz                     # mouse dependency for macos
-	git+https://github.com/boppreh/mouse.git    # generate mouse events with python
+	pyobjc-framework-Quartz                  # mouse dependency for macos
+	git+https://github.com/boppreh/mouse.git # generate mouse events with python
 	neovim
 )
-if "$DOROTHY/commands/is-ubuntu"; then
-	PYTHON_INSTALL+=('youtube_dl')
-fi
 
-# npm/yarn
-NODE_INSTALL=(
+NPM_INSTALL=(
 	# bevry
 	# "@bevry/testen"
 	# boundation
@@ -343,53 +301,55 @@ NODE_INSTALL=(
 # rust/cargo/crates.io
 # --locked: Require Cargo.lock is up to date
 # as rust packages can be supported by many package managers, and as cargo requires downloading every dependency, most rust packages are better installed via SETUP_UTILS
-RUST_INSTALL=(
+CARGO_INSTALL=(
 	# cargo install --git https://github.com/boxdot/gurk-rs
 	proximity-sort
 	ttyper
 )
 
-# utilities
-# setup-util-*
 SETUP_UTILS=(
-	bandwich
-	bash
-	bat
-	bottom
-	delta
-	# direnv        # FIX: (**) somekind of error when running this one.
-	dust
-	exa
-	# fasd          # same also err (**)
-	fd
-	fish
-	# fzf           # (**)
-	gh
-	# gnuplot
-	gocryptfs
-	grex
-	httpie
-	hyperfine
-	jq
-	# libxml2       # (**)
-	# libzip        # (**)
-	# lua           # (**) eg, setup-util-lua
-	# luarocks      # (**)
-	# ncurses       # (**)
-	# neofetch      # (**)
-	procs
-	ripgrep
-	rmesg
-	sd
-	tealdeer
-	tokei
-	zoxide
-	# zsh-completions
+	'aria2'
+	'bandwhich'
+	'bash'
+	'bat'
+	'bottom'
+	'curl'
+	'delta'
+	'deno'
+	'devel'
+	'dust'
+	'exa'
+	'fd'
+	'fish'
+	'gh'
+	'git'
+	'glab'
+	'gocryptfs'
+	'grex'
+	'httpie'
+	'hyperfine'
+	'jq'
+	'mas'
+	'micro'
+	'neovim'
+	'procs'
+	'ripgrep'
+	'rmesg'
+	'screen'
+	'sd'
+	'shellcheck'
+	'signal'
+	'tealdeer'
+	'tokei'
+	'vim'
+	'vscode'
+	'wget'
+	'zoxide'
 )
 
 # heroku plugins:install heroku-repo
 
-# MAC_APPS_INSTALL=(
+# MAS_INSTALL=(
 # 937984704      # "Amphetamine"
 # 425264550      # "Blackmagic Disk Speed Test"
 # 948176063      # "Boom 2"
@@ -417,3 +377,23 @@ SETUP_UTILS=(
 STACK_INSTALL=(
 	"yesod-bin --install-ghc"
 )
+HOMEBREW_ENCODING_INSTALL=no
+HOMEBREW_FONTS=(
+	'font-cantarell'
+	'font-cascadia-code'
+	'font-fira-code'
+	'font-fira-code-nerd-font'
+	'font-fira-mono'
+	'font-fira-mono-nerd-font'
+	'font-hack'
+	'font-hasklig'
+	'font-ibm-plex'
+	'font-inconsolata-go-nerd-font'
+	'font-inter'
+	'font-jetbrains-mono'
+	'font-jetbrains-mono-nerd-font'
+	'font-lato'
+	'font-maven-pro'
+	'font-monoid'
+)
+GO_LINTING_INSTALL=no

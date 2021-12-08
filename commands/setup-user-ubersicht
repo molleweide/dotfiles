@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo-color --h1 "SETTING UP UBERSICHT.."
+echo-style --h1 "SETTING UP UBERSICHT.."
 
 # https://github.com/Mortennn/Dozer
 # https://github.com/exelban/stats
@@ -12,7 +12,6 @@ echo-color --h1 "SETTING UP UBERSICHT.."
 # https://github.com/Jean-Tinland/simple-bar
 # https://github.com/kkga/nibar
 
-
 # local user=$1
 # local name=$2
 # local url="https://github.com/$user/$name.git"
@@ -20,7 +19,6 @@ echo-color --h1 "SETTING UP UBERSICHT.."
 # local full_name=$prefix-$name.widget
 # local dest=$HOME/code/$full_name
 # not working form me
-
 
 # function uber_widget() {
 #     local alt_name=$1
@@ -35,7 +33,6 @@ echo-color --h1 "SETTING UP UBERSICHT.."
 
 #     create-symlink $install_dir/$alt_name $WIDGET_DIR/$alt_name
 # }
-
 
 # if is-mac; then
 #     brew install ubersicht
@@ -56,15 +53,12 @@ echo-color --h1 "SETTING UP UBERSICHT.."
 #     # uber_widget "uber-collection" "git@github.com:molleweide/uebersicht-widgets.git"
 # fi
 
-
-
 if is-mac; then
-    echo-color --h1 --cyan "LINK UBER WIDGETS.."
+    echo-style --h1 --cyan "LINK UBER WIDGETS.."
     symlink-dir \
         "$HOME/code/widgets" \
         "$HOME/Library/Application Support/Übersicht/widgets"
 fi
-
 
 # if is-mac; then
 #     # macos_install_dext # TODO: needs testing first

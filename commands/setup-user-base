@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# echo-color --h1 --red "SETTING UP WALLPAPER.."
+# echo-style --h1 --red "SETTING UP WALLPAPER.."
 # # https://apple.stackexchange.com/questions/75081/automatically-change-os-x-desktop-background-for-all-desktops-monitors
 # # https://stackoverflow.com/questions/5550895/shell-script-changing-desktop-wallpaper
 # # https://www.howtogeek.com/258461/how-to-use-a-screensaver-as-your-background-on-os-x/
@@ -9,18 +9,16 @@
 # osascript -e \
 #     "tell application \"Finder\" to set desktop picture to POSIX file \"$WALLPAPER\""
 
-
-# echo-color --h1 "SETUP USER ZSH..."
+# echo-style --h1 "SETUP USER ZSH..."
 # symlink-file "${ADOTDIR}/bundles/chriskempson/base16-shell/scripts/base16-oceanicnext.sh" ~/.base16_theme
 # [ ! -f $HOME/.fzf.zsh ] && $(brew --prefix)/opt/fzf/install --no-update-rc --key-bindings --completion
 # antigen_file="${ADOTDIR}/antigen.zsh"
 # [ ! -f $antigen_file ] && ( echo "Installing antigen" && curl -L git.io/antigen > $antigen_file )
 
-
 # echo-header --h1 "SETTING UP TERMINAL.."
 # if is-mac; then
 #     if command-exists "alacritty"; then
-#         echo-color --blue "[[+ Installing Alacritty terminfo ]]"
+#         echo-style --blue "[[+ Installing Alacritty terminfo ]]"
 #         git clone https://github.com/alacritty/alacritty.git /tmp/alacritty
 #         cd /tmp/alacritty
 #         sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
@@ -29,7 +27,6 @@
 #     fi
 #     xattr -r -d com.apple.quarantine /Applications/Alacritty.app
 # fi
-
 
 # echo-header --h1 "SETTING UP TILING.."
 # if is-mac; then
@@ -47,7 +44,6 @@
 #     # TODO: uebersicht yabai
 # fi
 
-
 # echo-header --h1 "SETTING UP GIT..."
 # if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" ]; then
 #     printf "What is your GitHub username? > "
@@ -61,18 +57,15 @@
 #     git config -f "${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user" user.email "$git_email"
 # fi
 
-
 # echo-header "SETTING UP NODE.."
 # [ ! -d $NVM_DIR ] && curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
 # # [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 # nvm install stable
 
-
 # echo-header  "SETTING UP RUBY..."
 # [ ! -e ~/.rvm ] && \curl -L https://get.rvm.io | bash -s -- --ignore-dotfiles
 # [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
 # rvm install ruby --latest
-
 
 # echo-header "SETTING UP PYTHON..."
 # arch="$(get-arch)"
@@ -101,7 +94,6 @@
 #     pyenv activate py3neovim
 # fi
 
-
 # echo-header "SETTING UP LUA.."
 # luarocks install loop
 # luarocks install dkjson
@@ -113,7 +105,7 @@
 # lspdir="$HOME/.local/nvim/lsp"
 # location="$lspdir/lua-language-server"
 # if [ ! -d "$location" ]; then
-#     echo-color "@b@blue[[+ Installing sumneko Lua LSP]]"
+#     echo-style "@b@blue[[+ Installing sumneko Lua LSP]]"
 #     mkdir -p "$lspdir"
 #     git clone https://github.com/sumneko/lua-language-server "$location"
 #     cd "$location" || exit 1
@@ -125,12 +117,10 @@
 #     ./3rd/luamake/luamake rebuild
 # fi
 
-
 # echo-header "SETTING UP HASKELL.."
 # test ! $(which stack) && curl -sSL https://get.haskellstack.org/ | sh
 # stack upgrade
 # # stack install yesod-bin --install-ghc
-
 
 # echo-header "SETTING UP TMUX..."
 # # https://github.com/tmux-plugins/tmux-urlview
@@ -140,8 +130,6 @@
 # [ ! -d $tmux_plug_dir ] && git clone git@github.com:tmux-plugins/tpm.git $tmux_plug_dir
 # # install_script="$HOME/.tmux/plugins/tpm/bin/install_plugins"
 # # [ -x $install_script ] && $install_script
-
-
 
 # echo-header "SETTING UP NEOVIM..."
 # [ ! brew tap | grep -q "neovim/neovim" ] && brew tap neovim/neovim
@@ -153,9 +141,8 @@
 # # this command is obsolete
 # nvim +PlugInstall +qall
 
-
 # if is-mac; then
-#     echo-color --h1 "Setting up HAMMERSPOON.."
+#     echo-style --h1 "Setting up HAMMERSPOON.."
 #     # brew install --cask hammerspoon # --appdir=/Applications
 #     url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
 #     destination=/tmp/SpoonInstall.spoon.zip
@@ -165,9 +152,8 @@
 #     defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 # fi
 
-
 # if is-mac; then
-#     echo-color --h1 --cyan "LINK UBER WIDGETS.."
+#     echo-style --h1 --cyan "LINK UBER WIDGETS.."
 #     symlink-dir \
 #         "$HOME/code/widgets" \
 #         "$HOME/Library/Application Support/Übersicht/widgets"

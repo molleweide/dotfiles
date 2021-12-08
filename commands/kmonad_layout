@@ -17,9 +17,8 @@ user_hardwares_list=(
 # select which hardware you want to run kmonad on.
 hw="$(choose-option --confirm --question='Select hardware to run kmonad for.' -- "${user_hardwares_list[@]}")"
 
-
 # if test -z ${1-}; then
-#     # echo-color --error='[setup-mac] is only intended to be run on macOS systems...'
+#     # echo-style --error='[setup-mac] is only intended to be run on macOS systems...'
 #     echo "No input specified. You need to specify what key board"
 #     echo "you want to run kmonad for."
 #     echo "(ergo|air|pro)"
@@ -91,8 +90,7 @@ compile_layout() {
 }
 
 tmp_file="$(mktemp /tmp/kmonad-XXX)"
-compile_layout > $tmp_file
-
+compile_layout >$tmp_file
 
 ### RUN KMONAD ###
 
@@ -100,13 +98,13 @@ mode="d" # run
 
 # check how to run
 for arg in "$@"; do
-	if test "$arg" = '--cat' -o "$arg" = '-c'; then
+    if test "$arg" = '--cat' -o "$arg" = '-c'; then
         mode="c"
-	elif test "$arg" = '--write' -o "$arg" = '-w'; then
-	    mode="w" # TODO
-	elif test "$arg" = '--run' -o "$arg" = '-r'; then
-	    mode="r"
-	fi
+    elif test "$arg" = '--write' -o "$arg" = '-w'; then
+        mode="w" # TODO
+    elif test "$arg" = '--run' -o "$arg" = '-r'; then
+        mode="r"
+    fi
 done
 
 if test "$mode" = "r"; then

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo-color --h1 "SETTING UP LUA.."
+echo-style --h1 "SETTING UP LUA.."
 luarocks install loop
 luarocks install dkjson
 luarocks install inspect
@@ -11,7 +11,7 @@ luarocks install lcf
 lspdir="$HOME/.local/nvim/lsp"
 location="$lspdir/lua-language-server"
 if [ ! -d "$location" ]; then
-    echo-color "@b@blue[[+ Installing sumneko Lua LSP]]"
+    echo-style "@b@blue[[+ Installing sumneko Lua LSP]]"
     mkdir -p "$lspdir"
     git clone https://github.com/sumneko/lua-language-server "$location"
     cd "$location" || exit 1
@@ -22,5 +22,3 @@ if [ ! -d "$location" ]; then
     cd ../.. || exit 1
     ./3rd/luamake/luamake rebuild
 fi
-
-

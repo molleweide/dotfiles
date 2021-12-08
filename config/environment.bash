@@ -9,7 +9,7 @@ export NVM_DIR HOMEBREW_ARCH BROWSER PAGER TERMINAL TZ LANG LANGUAGE LC_ALL PYTH
 # HOMEBREW_ARCH='x86_64' # 'arm64e'
 
 BROWSER="brave"
-PAGER='less' # alt. `most`
+PAGER='less'         # alt. `most`
 TERMINAL="Alacritty" # or kitty | linux >> "st"
 
 # timezone
@@ -24,17 +24,7 @@ is-linux && PYTHON_CONFIGURE_OPTS="--enable-shared"
 PYENV_VIRTUALENV_DISABLE_PROMPT=1
 # echo_and_eval_var_set PATH "$PYENV_ROOT/bin:$PATH"
 
-
 # https://github.com/HaleTom/dotfiles/blob/master/bash/.config/bash/xdg
-
-# xdg
-# https://wiki.archlinux.org/title/XDG_Base_Directory
-XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
-XDG_CACHE_HOME="${XDG_CACHE_HOME:-"$HOME/.cache"}"
-XDG_DATA_HOME="${XDG_DATA_HOME:-"$HOME/.local/share"}"
-XDG_STATE_HOME="${XDG_STATE_HOME:-"$HOME/.local/state"}"
-XDG_DATA_DIRS="${XDG_DATA_DIRS:-"$XDG_DATA_HOME:/usr/local/share:/usr/share"}"
-XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-"$XDG_CONFIG_HOME:/etc/xdg"}"
 
 # mac
 if is-mac; then
@@ -88,8 +78,8 @@ ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 HISTFILE="$XDG_DATA_HOME/history"
 LESSHISTFILE="-"
 if test "$shell" = 'zsh'; then
-	HISTFILE="$XDG_STATE_HOME/zsh/history"
+    HISTFILE="$XDG_STATE_HOME/zsh/history"
     mkdir -p "$XDG_STATE_HOME/zsh"
     touch "$HISTFILE"
 fi
-RUBY_VERSION='default'
+HOMEBREW_RUBY_VERSION='default'

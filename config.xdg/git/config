@@ -103,7 +103,7 @@
 [merge]
   summary = true
   verbosity = 1
-	tool = opendiff
+	tool = meld
 
 [apply]
   whitespace = nowarn
@@ -137,7 +137,7 @@
   # instead of a/b/c/d as prefixes for patches
   mnemonicprefix = true
   algorithm = patience
-	tool = opendiff
+	tool = meld
 
 [rerere]
   # Remember my merges
@@ -177,3 +177,7 @@
 	protocol = ssh
 [gpg]
 	program = /usr/local/bin/gpg
+[git]
+	protocol = ssh
+[gitlab]
+	user = molleweide
