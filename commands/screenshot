@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
+screenshot_dir="$HOME/Documents/Screenshots"
+
+mkdir -p $screenshot_dir
+
 if is-mac; then
-    screencapture -x $(date "+DATE%Y-%m-%d--%H-%M-%S")
+    screencapture -x "$HOME/Documents/Screenshots/$(date "+DATE-%Y-%m-%d-TIME-%H-%M-%S")"
 else
     echo "linux todo.."
 fi
