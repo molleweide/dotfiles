@@ -11,6 +11,8 @@
  ** "git@github.com:molleweide/mouse.git"
  ** `sudo pip install mouse`
  ** hold left thumb > tap right thumb > enter mouse layer.
+  *** thumb layers
+      is it a good idea to put hold-layers on thumb keys
 
 * system preferences diff trick
 
@@ -99,15 +101,6 @@ https://github.com/rothgar/awesome-tuis#messaging
 * man pages add `se rnu nu`
 
   https://github.com/feinoujc/gh-search-cli <<<<<??????????
-
-* adam wagmer stackline / uberbar
-  1. comment out everything from hammerspoon that I am not using.
-  3. look into folkes hammerspoon
-
-* ubersicht bar
-  yabai > stack mode
-  wiki > https://github.com/koekeishiya/yabai/wiki/Configuration#configuration-file
-
 
 * todo: run pitch machine project.
 
