@@ -11,7 +11,7 @@ if is-mac; then
     case "$1" in
         "focus" | "f")    ycmd="--focus" ;; # <SPACE_SEL>
         "create" | "c" | "+")   ycmd="--create" ;;
-        "destroy" | "rm")  ycmd="--destroy";;
+        "destroy" | "rm")  ycmd="--destroy"; yss=$2 ;; # NOTE: space needs to come before here?!
         "move" | "mv")     ycmd="--move" ;; # <SPACE_SEL>                        Move position of the selected space to the position of the given space. The selected space and given space must both belong to the same display.
         "swap" | "sw")     ycmd="--swap" ;; # <SPACE_SEL>                        Swap the selected space with the given space. The selected space and given space must both belong to the same display.
         "display" | "dsp") ycmd="--display" ;; # <DISPLAY_SEL>                           Send the selected space to the given display.
