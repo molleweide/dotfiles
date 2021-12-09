@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
- # TODO: rule selection | yabai -m rule --remove <RULE_SEL>       Remove an existing rule with the given index or label.
-
 test -z "${1-}" && exit 1
 
 if is-mac; then
@@ -29,10 +27,10 @@ if is-mac; then
 	        # rules+=("label=\"$ra\"")
         done
         # echo ${rules[@]}
-	    eval "yabai -m rule --add ${rules[@]}" # TODO: whitespace in rules doesn't work
+	    eval "yabai -m rule --add ${rules[@]}"
 
 	elif test "$1" = 'remove' -o "$1" = 'rm'; then
-        eval "yabai -m rule --remove $2"
+        eval "yabai -m rule --remove $2" # index or label string
 
 	elif test "$1" = 'list' -o "$1" = 'ls'; then
         yabai -m rule --list

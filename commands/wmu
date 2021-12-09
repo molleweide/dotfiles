@@ -85,22 +85,23 @@ wms n misc 4
 # ---       RULES       ---
 # -------------------------
 
-rules_count=$(wmr ls | jq  'length')
+# clean out rules
+rules_count=$(wmr ls | jq 'length')
 for i in $(seq 1 $rules_count); do wmr rm 0; done
 
 # --- APPS NOT MANAGED ---
 
-wmr a n="System Preferences" a="^System Preferences$" mg=off
-wmr a n="Finder" a="^Finder$" mg=off
-wmr a n="Hammerspoon" a="^Hammerspoon$" mg=off
-wmr a n="Colorpicker" a="^Colorpicker$" mg=off
-wmr a n="Activity_Monitor" a="^Activity_Monitor$" mg=off
-wmr a n="App Store" a="^App Store$" mg=off
-wmr a n="Calculator" a="^Calculator$" mg=off
-wmr a n="Dictionary" a="^Dictionary$" mg=off
-wmr a n="The Unarchiver" a="^The Unarchiver$" mg=off
-wmr a n="iTerm2 settings" a="^iTerm2$" title="^Preferences" mg=off
-wmr a n="Transmission" a="^Transmission$" mg=off
+wmr a n="System Preferences" a="^System Preferences$"           mg=off
+wmr a n="Finder"             a="^Finder$"                       mg=off
+wmr a n="Hammerspoon"        a="^Hammerspoon$"                  mg=off
+wmr a n="Colorpicker"        a="^Colorpicker$"                  mg=off
+wmr a n="Activity_Monitor"   a="^Activity_Monitor$"             mg=off
+wmr a n="App Store"          a="^App Store$"                    mg=off
+wmr a n="Calculator"         a="^Calculator$"                   mg=off
+wmr a n="Dictionary"         a="^Dictionary$"                   mg=off
+wmr a n="The Unarchiver"     a="^The Unarchiver$"               mg=off
+wmr a n="iTerm2 settings"    a="^iTerm2$" title="^Preferences"  mg=off
+wmr a n="Transmission"       a="^Transmission$"                 mg=off
 # yabai -m rule --add label="mpv" app="^mpv$" mg=off
 # yabai -m rule --add label="Spark" app="^Spark$" title!="^Spark" mg=off
 # yabai -m rule --add label="SSH Tunnel Manager" app="^SSH Tunnel Manager$" mg=off
@@ -122,12 +123,11 @@ wmr a n="Transmission" a="^Transmission$" mg=off
 # -------------------------
 
 # configure to work with custom launcher under .local/bin
-
 wmr a n="cust_launch" t='bin_custom_launcher' mg=off st=on y=above b=off
 
 # kill any existing limelight process if one exists, before we launch a new one
 killall limelight &>/dev/null
 limelight &>/dev/null &
 
-echo "yabai configuration loaded.."
+# echo "yabai configuration loaded.."
 
