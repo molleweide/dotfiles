@@ -23,6 +23,11 @@ windows:
       panes:
         -
         -
+  - code:
+      root: ~/code
+      panes:
+        -
+        -
   # - surf:
   #     root: ~/code/Surfingkeys
   #     panes:

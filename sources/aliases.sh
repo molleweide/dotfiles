@@ -396,12 +396,13 @@ alias rh="runhaskell"
 # https://apple.stackexchange.com/questions/398561/how-to-set-system-keyboard-shortcuts-via-command-line
 
 alias ss="screenshot"
+alias sl="computer-sleep"
 
 alias defd="defaults domains | tr ',' '\n'"
 
-sl() {
-  osascript -e 'tell application "Finder" to sleep'
-}
+# sl() {
+#   osascript -e 'tell application "Finder" to sleep'
+# }
 
 # network
 alias netwl="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s"
