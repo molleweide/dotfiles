@@ -4,19 +4,13 @@
 # https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)
 # https://github.com/koekeishiya/yabai/wiki/Disabling-System-Integrity-Protection
 
-# ::: NOTE: IN ORDER TO USE ALL FEATURES :::
-
-# sudo yabai --install-sa
-# sudo yabai --load-sa
-
-# BIG SUR below
-
-# sudo visudo -f /private/etc/sudoers.d/yabai
+# ::: NOTE: LOAD _SCRIPTING_ADDITION_ :::
+# THIS IS NECESSARY FOR FULL FEATURES
+# sudo yabai --install-sa && sudo yabai --load-sa
+# BIG SUR REQUIRES MANUAL LOADING OF `SA`
 # # replace <user> with your username (output of: whoami).
-# <user> ALL = (root) NOPASSWD: /usr/local/bin/yabai --load-sa
-
+# sudo visudo -f /private/etc/sudoers.d/yabai <<< `<user> ALL = (root) NOPASSWD: /usr/local/bin/yabai --load-sa`
 # ::: NOTE: UPDATING YABAI :::
-
 # brew services stop yabai
 # brew upgrade yabai
 # sudo yabai --uninstall-sa
