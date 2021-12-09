@@ -70,7 +70,6 @@ wmc bar   off # all:28:0
 # ---       spaces naming & behaviour       ---
 # ---------------------------------------------
 
-wms c
 wms n web 1
 wms n dev 2
 wms n social 3

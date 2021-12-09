@@ -9,7 +9,7 @@ existing="${1:-"$(ask --question="What is the existing path that you want to sym
 symlink="${2:-"$(ask --question="What is the new path that you want to redirect?" --required)"}"
 force="${FORCE_LINK:-"$(get-flag-value force --missing=no -- "$@")"}"
 
-echo ">>> $symlink"
+# echo ">>> $symlink"
 
 # 1. check if symlink already is a link. if true force create new link
 if test -L "$symlink"; then
