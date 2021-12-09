@@ -3,6 +3,7 @@
 echo-style --h1 "SETTING UP UBERSICHT.."
 
 mac_uber_dir="$HOME/Library/Application Support/Übersicht/widgets"
+
 # https://github.com/Mortennn/Dozer
 # https://github.com/exelban/stats
 # https://github.com/matryer/xbar
@@ -13,50 +14,23 @@ mac_uber_dir="$HOME/Library/Application Support/Übersicht/widgets"
 # https://github.com/Jean-Tinland/simple-bar
 # https://github.com/kkga/nibar
 
-# local user=$1
-# local name=$2
-# local url="https://github.com/$user/$name.git"
-# local prefix="ubersicht"
-# local full_name=$prefix-$name.widget
-# local dest=$HOME/code/$full_name
-# not working form me
+function uber_widget() {
+    local alt_name=$1
+    local uber_repo=$2
+    local install_dir=$HOME/code/widgets
+    local WIDGET_DIR="$HOME/Library/Application Support/Übersicht/widgets"
+    git-clone-recursive  \
+        $install_dir     \
+        $alt_name        \
+        $uber_repo
 
-# function uber_widget() {
-#     local alt_name=$1
-#     local uber_repo=$2
-#     local install_dir=$HOME/code/widgets
-#     local WIDGET_DIR="$HOME/Library/Application Support/Übersicht/widgets"
-
-#     git_clone_recursive  \
-#         $install_dir     \
-#         $alt_name        \
-#         $uber_repo
-
-#     create-symlink $install_dir/$alt_name $WIDGET_DIR/$alt_name
-# }
-
-# if is-mac; then
-#     brew install ubersicht
-#     echo-header "LINK UBER WIDGETS.."
-#     export FORCE_LINK='yes'
-#     src_dir="$HOME/code/widgets"
-#     # config_dst_dir=$HOME/.config
-#     dst_dir="$HOME/Library/Application Support/Übersicht/widgets"
-#     for f in $src_dir/*; do
-#         # echo "$f"
-#         # echo "$(basename $f)"
-#         # echo "$config_dst_dir/$(basename $f)"
-#         # https://stackoverflow.com/questions/3362920/get-just-the-filename-from-a-path-in-a-bash-script
-#         symlink-file "$f" "$dst_dir/$(basename $f)"
-#     done
-#     # uber_widget "uber-yabai-bar"  "git@github.com:molleweide/yabai-uberbar.git"
-#     # uber_widget "uber-weather"    "git@github.com:molleweide/weather-widget.git"
-#     # uber_widget "uber-collection" "git@github.com:molleweide/uebersicht-widgets.git"
-# fi
+    symlink-file "$install_dir/$alt_name" "$WIDGET_DIR/$alt_name"
+}
 
 echo-style --h1 --cyan "WIDGET: BAR"
 if is-mac; then
-    symlink-dir "$HOME/code/widgets/simple-bar" $mac_uber_dir
+    uber_widget "simple-bar"  "git@github.com:molleweide/simple-bar.git"
+    # symlink-dir "$HOME/code/widgets/simple-bar" $mac_uber_dir
     # https://github.com/molleweide/spacebar     <<<------ C
 else
     echo "linux todo: polybar"

@@ -10,23 +10,24 @@ if is-mac; then
         for i in "${@:2}"; do
             ra=${i#*=} # rule argument
 	        case "${i%=*}" in # get all before `=`
-	            "app" | "a")     rules+=("app=\"$ra\"") ;;                  # app[!]=<REGEX>
-	            "border" | "b")  rules+=("border=\"$ra\"");;                # border=<BOOL_SEL>
+	            "app" | "a")     rules+=("app=$ra") ;;                  # app[!]=<REGEX>
+	            "border" | "b")  rules+=("border=$ra");;                # border=<BOOL_SEL>
 	            "display" | "d") rules+=("display=\"$ra\"");;               # display=[^]<DISPLAY_SEL>
 	            "fmsf")          rules+=("mouse_follows_focus=\"$ra\"");;   # mouse_follows_focus=<BOOL_SEL>
 	            "grid" | "g")    rules+=("grid=\"$ra\"");;                  # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
-	            "label" | "l")   rules+=("label=\"$ra\"");;                 # Label used to identify the rule with a unique name
-	            "layer" | "ly")  rules+=("layer=\"$ra\"");;                 # layer=<LAYER>
-	            "manage" | "mg") rules+=("manage=\"$ra\"");;                # manage=<BOOL_SEL>
+	            "label" | "n")   rules+=("label=\"$ra\"");;                 # Label used to identify the rule with a unique name
+	            "layer" | "y")  rules+=("layer=$ra");;                 # layer=<LAYER>
+	            "manage" | "mg") rules+=("manage=$ra");;                # manage=<BOOL_SEL>
 	            "nf")            rules+=("native-fullscreen=\"$ra\"");;     # native-fullscreen=<BOOL_SEL>
 	            "opacity" | "o") rules+=("opacity=\"$ra\"");;               # opacity=<FLOAT_SEL>
 	            "space" | "s")   rules+=("space=\"$ra\"");;                 # space=[^]<SPACE_SEL>
-	            "sticky" | "st") rules+=("sticky=\"$ra\"");;                # sticky=<BOOL_SEL>
+	            "sticky" | "st") rules+=("sticky=$ra");;                # sticky=<BOOL_SEL>
 	            "title" | "t")   rules+=("title=\"$ra\"");;                 # title[!]=<REGEX>
 	            *) echo "NO_MATCH";;
 	        esac
 	        # rules+=("label=\"$ra\"")
         done
+        echo "yabai -m rule --add ${rules[@]}"
 	    yabai -m rule --add ${rules[@]}
 
 	elif test "$1" = 'remove' -o "$1" = 'rm'; then

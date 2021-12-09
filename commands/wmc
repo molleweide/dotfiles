@@ -17,7 +17,7 @@ if is-mac; then
         "fmsf")                 yc="mouse_follows_focus";;        # [<BOOL_SEL>]
         "gap" | "gp")           yc="window_gap";;       # [<integer number>]
         "ifc")                  yc="insert_feedback_color";;      # [0xAARRGGBB]
-        "layout" | "ly")        yc="layout";;           # [bsp|stack|float]
+        "layout" | "y")        yc="layout";;           # [bsp|stack|float]
         "ms1")                  yc="mouse_action1";;              # [move|resize]
         "ms2")                  yc="mouse_action2";;              # [move|resize]
         "msda")                 yc="mouse_drop_action";;          # [swap|stack]
@@ -49,7 +49,6 @@ if is-mac; then
     fi
 
     # execute yabai command
-    echo "!!"
     $ypre $ys $yc $val
 
 else

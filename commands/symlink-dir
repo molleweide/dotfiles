@@ -9,9 +9,10 @@ existing_dir="${1:-"$(ask --question="What is the existing DIR PATH that you wan
 symlink_dir="${2:-"$(ask --question="What is the new DIR PATH that you want to redirect MULTIPLE FILES to?" --required)"}"
 
 for f in $existing_dir/*; do
-    # echo "$f"
-    # echo "$(basename $f)"
-    # echo "$symlink_dir/$(basename $f)"
-    # echo
+    echo "!!!!!!!!!"
+    echo "$f"
+    echo "$(basename $f)"
+    echo "$symlink_dir/$(basename $f)"
+    echo
     symlink-file "$f" "$symlink_dir/$(basename $f)"
 done

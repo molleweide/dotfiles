@@ -1,50 +1,32 @@
 #!/usr/bin/env sh
 
+# USER CONFIGS
+
 # sudo yabai --load-sa
 
 # -----------------------------------
 # ---       global settings       ---
 # -----------------------------------
 
-yabai -m config mouse_follows_focus off
-yabai -m config focus_follows_mouse off
-yabai -m config window_placement second_child
-yabai -m config window_topmost off
-yabai -m config window_shadow on
-yabai -m config window_opacity on
-yabai -m config window_opacity_duration 0.0
-yabai -m config active_window_opacity 1.0
-yabai -m config normal_window_opacity 0.90
-yabai -m config window_border off
-yabai -m config window_border_width 12
-yabai -m config active_window_border_color 0xff775759
-yabai -m config normal_window_border_color 0xff555555
-yabai -m config insert_feedback_color 0xffd75f5f
-yabai -m config split_ratio 0.50
-yabai -m config auto_balance off
-yabai -m config mouse_modifier fn
-yabai -m config mouse_action1 move
-yabai -m config mouse_action2 resize
-# yabai -m config mouse_follows_focus          off
-# yabai -m config focus_follows_mouse          off
-# yabai -m config window_placement             second_child
-
-# yabai -m config window_shadow                off
-
-# yabai -m config window_border 		           off
-# yabai -m config window_border_width          3
-# yabai -m config normal_window_border_color   0xff39456E
-# yabai -m config active_window_border_color   0xffffd484
-
-# yabai -m config window_opacity               off
-# yabai -m config active_window_opacity        1.0
-# yabai -m config normal_window_opacity        1.0
-
-# yabai -m config split_ratio                  0.50
-# yabai -m config auto_balance                 off
-# yabai -m config mouse_modifier               fn
-# yabai -m config mouse_action1                move
-# yabai -m config mouse_action2                resize
+wmc     fmsf    off
+wmc     ffms    off
+wmc     wp      second_child
+wmc     wtm     off
+wmc     ws      on
+wmc     wop     on
+wmc     wopd    0.0
+wmc     waop    1.0
+wmc     wnop    0.90
+wmc     wb      off
+wmc     wbw     12
+wmc     wabc    0xff775759
+wmc     wnbc    0xff555555
+wmc     ifc     0xffd75f5f
+wmc     sr      0.50
+wmc     ab      off
+wmc     msm     fn
+wmc     ms1     move
+wmc     ms2     resize
 
 # ------------------------------------
 # ---       general settings       ---
@@ -58,30 +40,15 @@ wmc pr    6
 wmc gap   6
 wmc bar   off # all:28:0
 
-# yabai -m config layout bsp
-# yabai -m config top_padding 6
-# yabai -m config bottom_padding 6
-# yabai -m config left_padding 6
-# yabai -m config right_padding 6
-# yabai -m config window_gap 6
-# yabai -m config external_bar off # all:28:0
-
 # ---------------------------------------------
 # ---       spaces naming & behaviour       ---
 # ---------------------------------------------
 
-wms c
 wms n web 1
 wms n dev 2
 wms n social 3
 wmc y bsp 3
 wms n misc 4
-
-# yabai -m space 1 --label web
-# yabai -m space 2 --label dev
-# yabai -m space 3 --label social
-# yabai -m config --space 3 layout bsp
-# yabai -m space 4 --label misc
 
 # ---------------------------
 # ---       signals       ---
@@ -119,8 +86,8 @@ wms n misc 4
 # -------------------------
 
 # # apps not managed
-# yabai -m rule --add label="System Preferences" app="^System Preferences$" manage=off
-# yabai -m rule --add label="Finder" app="^Finder$" manage=off
+wmr a n="sys_pref" t="sys_pref" a="Preferences$" mg=off
+wmr a n="Finder" a="^Finder$" mg=off
 # yabai -m rule --add label="App Store" app="^App Store$" manage=off
 # yabai -m rule --add label="Activity Monitor" app="^Activity Monitor$" manage=off
 # yabai -m rule --add label="Calculator" app="^Calculator$" manage=off
@@ -151,10 +118,13 @@ wms n misc 4
 # -------------------------
 
 # configure to work with custom launcher under .local/bin
-# yabai -m rule --add title='bin_custom_launcher' manage=off sticky=on layer=above border=off
+
+# todo: if string "" contains whitespace then check double quote start -> find next...
+wmr a n="cust_launch" t='bin_custom_launcher' mg=off st=on y=above b=off
 
 # kill any existing limelight process if one exists, before we launch a new one
 killall limelight &>/dev/null
 limelight &>/dev/null &
 
 echo "yabai configuration loaded.."
+
