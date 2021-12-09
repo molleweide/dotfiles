@@ -5,7 +5,7 @@
 # sudo yabai --load-sa
 
 # -----------------------------------
-# ---       global settings       ---
+# ---       GLOBAL SETTINGS       ---
 # -----------------------------------
 
 wmc     fmsf    off
@@ -41,7 +41,7 @@ wmc gap   6
 wmc bar   off # all:28:0
 
 # ---------------------------------------------
-# ---       spaces naming & behaviour       ---
+# ---       SPACES NAMING & BEHAVIOUR       ---
 # ---------------------------------------------
 
 wms n web 1
@@ -50,9 +50,15 @@ wms n social 3
 wmc y bsp 3
 wms n misc 4
 
-# ---------------------------
-# ---       signals       ---
-# ---------------------------
+# --------------------------
+# ---       EVENTS       ---
+# --------------------------
+
+for i in $(seq 1 $(wme ls | jq 'length')); do wme rm 0; done # refresh event listeners
+
+# # Refresh process widget when current window title changes
+wme a wtc "osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'" \
+    a="wtc" t="wtc" n="wtc"
 
 # # Refresh spaces widget on space change
 # yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
@@ -78,16 +84,11 @@ wms n misc 4
 # # Refresh spaces widget on when an application window is closed
 # yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
 
-# # Refresh process widget when current window title changes
-# yabai -m signal --add event=window_title_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-
 # -------------------------
 # ---       RULES       ---
 # -------------------------
 
-# clean out rules
-rules_count=$(wmr ls | jq 'length')
-for i in $(seq 1 $rules_count); do wmr rm 0; done
+for i in $(seq 1 $(wmr ls | jq 'length')); do wmr rm 0; done # refresh rules
 
 # --- APPS NOT MANAGED ---
 
@@ -110,6 +111,7 @@ wmr a n="Transmission"       a="^Transmission$"                 mg=off
 # yabai -m rule --add label="Pika" app="^Pika$" mg=off
 
 # --- APPS SPECIAL RULES ---
+
 # yabai -m rule --add label="iTerm2" app="^iTerm2$" mg=off
 # yabai -m rule --add label="Google Chrome" app="^Google Chrome$" space=^1
 # yabai -m rule --add label="Firefox" app="^Firefox$" space=^1
@@ -119,7 +121,7 @@ wmr a n="Transmission"       a="^Transmission$"                 mg=off
 # yabai -m rule --add label="Skype" app="^Skype$" space=^3
 
 # -------------------------
-# ---       other       ---
+# ---       OTHER       ---
 # -------------------------
 
 # configure to work with custom launcher under .local/bin

@@ -7,46 +7,46 @@ if is-mac; then
         event=$2
         action=$3 # Arbitrary command executed through /usr/bin/env sh -c
         case "$event" in
-            "aac")        ybie="application_activated";;
-            "ada")        ybie="application_deactivated";;
-            "afs")        ybie="application_front_switched";;
-            "ahi")        ybie="application_hidden";;
-            "ak")         ybie="application_terminated";;
-            "al")         ybie="application_launched";;
-            "avi")        ybie="application_visible";;
-            "dkdcp")     ybie="dock_did_change_pref";;
-            "dkdr")      ybie="dock_did_restart";;
-            "dmonmsg")   ybie="daemon_message";;
-            "dsad")      ybie="display_added";;
-            "dsch")      ybie="display_changed";;
-            "dsmv")      ybie="display_moved";;
-            "dsrm")      ybie="display_removed";;
-            "dsrz")      ybie="display_resized";;
-            "micfx")  ybie="mission_control_check_for_exit";;
-            "mie")     ybie="mission_control_enter";;
-            "mix")    ybie="mission_control_exit";;
-            "msdn")        ybie="mouse_down";;
-            "msdr")        ybie="mouse_dragged";;
-            "msmv")        ybie="mouse_moved";;
-            "msup")        ybie="mouse_up";;
-            "mubhc")     ybie="menu_bar_hidden_changed";;
-            "muo")       ybie="menu_opened";;
-            "sch")          ybie="space_changed";;
-            "syswk")     ybie="system_woke";;
-            "wc")       ybie="window_created";;
-            "wdm")       ybie="window_deminimized";;
-            "wf")       ybie="window_focused";;
-            "wk")       ybie="window_destroyed";;
-            "wmi")       ybie="window_minimized";;
-            "wmv")       ybie="window_moved";;
-            "wrz")       ybie="window_resized";;
-            "wtc")       ybie="window_title_changed";;
+            "aac")        ye="application_activated";;
+            "ada")        ye="application_deactivated";;
+            "afs")        ye="application_front_switched";;
+            "ahi")        ye="application_hidden";;
+            "ak")         ye="application_terminated";;
+            "al")         ye="application_launched";;
+            "avi")        ye="application_visible";;
+            "dkdcp")     ye="dock_did_change_pref";;
+            "dkdr")      ye="dock_did_restart";;
+            "dmonmsg")   ye="daemon_message";;
+            "dsad")      ye="display_added";;
+            "dsch")      ye="display_changed";;
+            "dsmv")      ye="display_moved";;
+            "dsrm")      ye="display_removed";;
+            "dsrz")      ye="display_resized";;
+            "micfx")  ye="mission_control_check_for_exit";;
+            "mie")     ye="mission_control_enter";;
+            "mix")    ye="mission_control_exit";;
+            "msdn")        ye="mouse_down";;
+            "msdr")        ye="mouse_dragged";;
+            "msmv")        ye="mouse_moved";;
+            "msup")        ye="mouse_up";;
+            "mubhc")     ye="menu_bar_hidden_changed";;
+            "muo")       ye="menu_opened";;
+            "sch")          ye="space_changed";;
+            "syswk")     ye="system_woke";;
+            "wc")       ye="window_created";;
+            "wdm")       ye="window_deminimized";;
+            "wf")       ye="window_focused";;
+            "wk")       ye="window_destroyed";;
+            "wmi")       ye="window_minimized";;
+            "wmv")       ye="window_moved";;
+            "wrz")       ye="window_resized";;
+            "wtc")       ye="window_title_changed";;
             *) echo "NO_MATCH" && exit 1;;
         esac
         for i in ${@:4}; do
             pre=${i%=*}
             post=${i#*=}
-            if test "$pre" = "label" -o "$pre" = "l"; then
+            if test "$pre" = "label" -o "$pre" = "n"; then
                 yl="label=\"$post\""
             elif test "$pre" = "app" -o "$pre" = "a"; then
                 ya="app=\"$post\""
@@ -54,11 +54,11 @@ if is-mac; then
                 yt="title=\"$post\""
             fi
         done
-        echo "yabai -m signal --add event=$ybie action=\"$action\" $yl $ya $yt"
+        eval "yabai -m signal --add event=$ye action=\"$action\" $yl $ya $yt"
 	elif test "$1" = 'remove' -o "$1" = 'rm'; then
-        echo "yabai -m signal --remove $2"
+        eval "yabai -m signal --remove $2"
 	elif test "$1" = 'list' -o "$1" = 'ls'; then
-        echo "yabai -m signal --list"
+        eval "yabai -m signal --list"
 	fi
 else
     echo "linux todo..."
