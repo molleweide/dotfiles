@@ -87,6 +87,11 @@ wms n misc 4
 
 # ->>rm all rules ??
 
+for i in {0..10}; do
+    wmr rm 0
+done
+
+
 # --- APPS NOT MANAGED ---
 # TODO: if string "" contains whitespace then check double quote start -> find next...
 #       or if app contains underscore replace with space?
@@ -99,19 +104,20 @@ wms n misc 4
 #
 #       i need to see how the arguments are sent
 #       - can I esc he ws??
-wmr a n="sys_pref" t="sys_pref" a="^System\ Preferences$" mg=off
-wmr a n="Finder" a="^Finder$" mg=off
-# yabai -m rule --add label="App Store" app="^App Store$" manage=off
-wmr n="Activity_Monitor" a="^Activity_Monitor$" mg=off
+wmr a t="System Preferences" a="^System Preferences$" mg=off
+# wmr a n="Finder" a="^Finder$" mg=off
+# wmr a n="Hammerspoon" a="^Hammerspoon$" mg=off
+# wmr a n="Colorpicker" a="^Colorpicker$" mg=off
+# wmr n="Activity_Monitor" a="^Activity_Monitor$" mg=off
+wmr a t="App Store" app="^App Store$" mg=off
+
 # yabai -m rule --add label="Calculator" app="^Calculator$" manage=off
 # yabai -m rule --add label="Dictionary" app="^Dictionary$" manage=off
 # yabai -m rule --add label="mpv" app="^mpv$" manage=off
 # yabai -m rule --add label="The Unarchiver" app="^The Unarchiver$" manage=off
 # yabai -m rule --add label="Transmission" app="^Transmission$" manage=off
-wmr a n="Colorpicker" a="^Colorpicker$" mg=off
 # yabai -m rule --add label="iTerm2 settings" app="^iTerm2$" title="^Preferences" manage=off
 # yabai -m rule --add label="Spark" app="^Spark$" title!="^Spark" manage=off
-wmr a n="Hammerspoon" a="^Hammerspoon$" mg=off
 # yabai -m rule --add label="SSH Tunnel Manager" app="^SSH Tunnel Manager$" manage=off
 # yabai -m rule --add label="ImageOptim" app="^ImageOptim$" manage=off
 # yabai -m rule --add label="AppCleaner" app="^AppCleaner$" manage=off

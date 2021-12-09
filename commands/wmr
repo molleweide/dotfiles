@@ -8,6 +8,7 @@ if is-mac; then
     if test "$1" = "add" -o "$1" = "a"; then
         rules=()
         for i in "${@:2}"; do
+            # echo "${i%=*} --> ${i#*=}"
             ra=${i#*=} # rule argument
 	        case "${i%=*}" in # get all before `=`
 	            "app" | "a")     rules+=("app=\"$ra\"") ;;                  # app[!]=<REGEX>
@@ -16,7 +17,7 @@ if is-mac; then
 	            "fmsf")          rules+=("mouse_follows_focus=\"$ra\"");;   # mouse_follows_focus=<BOOL_SEL>
 	            "grid" | "g")    rules+=("grid=\"$ra\"");;                  # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
 	            "label" | "n")   rules+=("label=\"$ra\"");;                 # Label used to identify the rule with a unique name
-	            "layer" | "y")  rules+=("layer=$ra");;                 # layer=<LAYER>
+	            "layer" | "y")   rules+=("layer=$ra");;                 # layer=<LAYER>
 	            "manage" | "mg") rules+=("manage=$ra");;                # manage=<BOOL_SEL>
 	            "nf")            rules+=("native-fullscreen=\"$ra\"");;     # native-fullscreen=<BOOL_SEL>
 	            "opacity" | "o") rules+=("opacity=\"$ra\"");;               # opacity=<FLOAT_SEL>
@@ -27,11 +28,11 @@ if is-mac; then
 	        esac
 	        # rules+=("label=\"$ra\"")
         done
-        echo "yabai -m rule --add ${rules[@]}"
-	    yabai -m rule --add ${rules[@]}
+        # echo ${rules[@]}
+	    eval "yabai -m rule --add ${rules[@]}" # TODO: whitespace in rules doesn't work
 
 	elif test "$1" = 'remove' -o "$1" = 'rm'; then
-        echo "yabai -m rule --remove $2"
+        eval "yabai -m rule --remove $2"
 
 	elif test "$1" = 'list' -o "$1" = 'ls'; then
         yabai -m rule --list
