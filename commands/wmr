@@ -10,7 +10,7 @@ if is-mac; then
         for i in "${@:2}"; do
             ra=${i#*=} # rule argument
 	        case "${i%=*}" in # get all before `=`
-	            "app" | "a")     rules+=("app=$ra") ;;                  # app[!]=<REGEX>
+	            "app" | "a")     rules+=("app=\"$ra\"") ;;                  # app[!]=<REGEX>
 	            "border" | "b")  rules+=("border=$ra");;                # border=<BOOL_SEL>
 	            "display" | "d") rules+=("display=\"$ra\"");;               # display=[^]<DISPLAY_SEL>
 	            "fmsf")          rules+=("mouse_follows_focus=\"$ra\"");;   # mouse_follows_focus=<BOOL_SEL>
