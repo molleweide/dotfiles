@@ -4,71 +4,41 @@
 # https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)
 # https://github.com/koekeishiya/yabai/wiki/Disabling-System-Integrity-Protection
 
-# ::: IN ORDER TO USE ALL FEATURES :::
+# ::: NOTE: IN ORDER TO USE ALL FEATURES :::
 
-# install the scripting addition
 # sudo yabai --install-sa
-# if macOS Big Sur, load the scripting addition manually; follow instructions below to automate on startup
 # sudo yabai --load-sa
 
-# ::: BIG SUR MANUALLY LOAD SCRIPT ADDITION :::
+# BIG SUR below
 
-# https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#macos-big-sur---automatically-load-scripting-addition-on-startup
+# sudo visudo -f /private/etc/sudoers.d/yabai
+# # replace <user> with your username (output of: whoami).
+# <user> ALL = (root) NOPASSWD: /usr/local/bin/yabai --load-sa
 
-# ::: UPDATING YABAI :::
+# ::: NOTE: UPDATING YABAI :::
 
-# # stop, and upgrade yabai
 # brew services stop yabai
 # brew upgrade yabai
-
-# # uninstall the scripting addition
 # sudo yabai --uninstall-sa
-
-# # installing the scripting addition will restart Dock.app
 # sudo yabai --install-sa
-
-# # finally, start yabai
 # brew services start yabai
 
 # ::::::::::::::::::::::::::::::::::::
-
 
 gap_set() { wms p abs:$1:$1:$1:$1 && wms g abs:$1; }
 
 gap_resize() { wms p rel:$1:$1:$1:$1 && wms g rel:$1; } # +/- integer
 
-# toggle_gap() {}
+toggle_gap() { wms t padding && wms t gap; }
 
-# ## Destroy space (requires SIP disabled)
-# wms f prev; wms recent --destroy # how do I handle --destroy recent syntax
+space_kill() { wms f prev; wms --destroy recent; }
 
-# # send window to monitor and follow focus
-# wmw d recent; wmd recent
-# wmw d prev;   wmd prev
-# wmw d next;   wmd next
-# wmw d 1;      wmd 1
-# wmw d 2;      wmd 2
-# wmw d 3;      wmd 3
+move_win_to_monitor() { wmw d $1; wmd $1; } # <DISPLAY_SEL>
 
-# # send window to desktop and follow focus
-# wmw s recent; wms f recent
-# wmw s prev;   wms f prev
-# wmw s next;   wms f next
-# wmw s  1;     wms f 1
-# wmw s  2;     wms f 2
-# wmw s  3;     wms f 3
-# wmw s  4;     wms f 4
-# wmw s  5;     wms f 5
-# wmw s  6;     wms f 6
-# wmw s  7;     wms f 7
-# wmw s  8;     wms f 8
-# wmw s  9;     wms f 9
-# wmw s 10;     wms f 10
+move_win_to_space() { wmw s $1; wms f $1; } # <SPACE_SEL>
 
-toggle_desktop_offset() { wms t padding && wms t gap }
-
+# create desktop, move window and follow focus
 create_desktop() {
-    # create desktop, move window and follow focus
     wms c
     id=$(wmq d d | grep "spaces")
     wmw s $(echo ${id:10:${#id}-10})
@@ -88,12 +58,13 @@ create_desktop() {
 #                 yabai -m space --focus "${index}"
 
 # # float / unfloat window and center on screen
-# wmw t float && wmw g 4:4:1:1:2:2
+toggle_float_center() { wmw t float && wmw g 4:4:1:1:2:2; }
 
-# toggle_float_restore() {}
 # # float / unfloat window and restore position
-# wmw t float && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
-# wmw t float && wmw g 4:4:1:1:2:2
+toggle_float_restore() {
+    wmw t float && /tmp/yabai-restore/$(wmq w w | jq -re '.id').restore 2>/dev/null || true
+    wmw t float && wmw g 4:4:1:1:2:2
+}
 
 toggle_layout_float() {
     # # change layout of desktop | nice toggle function
@@ -105,45 +76,15 @@ toggle_layout_float() {
 toggle_pict_in_pict() { wmw t border && wmw t pip; }
 
 # # toggle sticky, float and resize to picture-in-picture size
-# fn - p : yabai -m window --toggle sticky;\
-#           yabai -m window --grid 5:5:4:0:1:1
+toggle_sticky_float_pic_in_pic() { wmw t st; wmw g 5:5:4:0:1:1; }
 
 
-
-
-
-# # open terminal
+# # command for open terminal
 # cmd - return : /Applications/Kitty.app/Contents/MacOS/kitty --single-instance -d ~
 
-# # focus window
-# fn - j : yabai -m window --focus west
-# fn - k : yabai -m window --focus south
-# fn - i : yabai -m window --focus north
-# fn - l : yabai -m window --focus east
-
-# # swap window
-# shift + alt - j : yabai -m window --swap west
-# shift + alt - k : yabai -m window --swap south
-# shift + alt - i : yabai -m window --swap north
-# shift + alt - l : yabai -m window --swap east
-
-# # move window
-# alt + fn - j : yabai -m window --warp west
-# alt + fn - k : yabai -m window --warp south
-# alt + fn - i : yabai -m window --warp north
-# alt + fn - l : yabai -m window --warp east
-
-# # balance size of windows
-# yabai -m space --balance
-
-# # make floating window fill screen
-# # shift + alt - up     : yabai -m window --grid 1:1:0:0:1:1
-
-# # make floating window fill left-half of screen
-# # shift + alt - left   : yabai -m window --grid 1:2:0:0:1:1
-
-# # make floating window fill right-half of screen
-# # shift + alt - right  : yabai -m window --grid 1:2:1:0:1:1
+# wmw g 1:1:0:0:1:1 # make floating window fill screen
+# wmw g 1:2:0:0:1:1 # make floating window fill left-half of screen
+# wmw g 1:2:1:0:1:1 # make floating window fill right-half of screen
 
 # # destroy desktop
 # #cmd + alt - w : yabai -m space --destroy
@@ -303,15 +244,6 @@ toggle_pict_in_pict() { wmw t border && wmw t pip; }
 # ctrl + cmd - 4 : yabai -m space --focus 4
 # ctrl + cmd - 5 : yabai -m space --focus 5
 
-# # send window to desktop and follow focus
-# cmd + alt - left : yabai -m window --space prev; yabai -m space --focus prev
-# cmd + alt - right : yabai -m window --space next; yabai -m space --focus next
-# cmd + alt - 1 : yabai -m window --space 1; yabai -m space --focus 1
-# cmd + alt - 2 : yabai -m window --space 2; yabai -m space --focus 2
-# cmd + alt - 3 : yabai -m window --space 3; yabai -m space --focus 3
-# cmd + alt - 4 : yabai -m window --space 4; yabai -m space --focus 4
-# cmd + alt - 5 : yabai -m window --space 5; yabai -m space --focus 5
-
 # # focus monitor
 # # TODO: test
 # # cmd + f1  : yabai -m display --focus 1
@@ -379,8 +311,6 @@ toggle_pict_in_pict() { wmw t border && wmw t pip; }
 # cmd + alt - s               : yabai -m config layout stack                              # spaces: Set the layout of the selected space to stacking
 # cmd + alt - x               : yabai -m space --balance                                  # window ratios: Adjust the split ratios of the selected space so that all windows occupy the same area.
 
-# cmd + alt + ctrl - 0x18     : yabai -m space --padding rel:2:2:2:2 && yabai -m space --gap rel:2;       # window gaps (plus)
-# cmd + alt + ctrl - 0x1B     : yabai -m space --padding rel:-2:-2:-2:-2 && yabai -m space --gap rel:-2;  # window gaps (minus)
 # cmd + alt + ctrl - h        : yabai -m window --warp west                               # window: reinsert window by splitting window to the left.
 # cmd + alt + ctrl - j        : yabai -m window --warp south                              # window: reinsert window by splitting window below.
 # cmd + alt + ctrl - k        : yabai -m window --warp north                              # window: reinsert window by splitting window above.
@@ -632,20 +562,6 @@ toggle_pict_in_pict() { wmw t border && wmw t pip; }
 # cmd + alt - w : yabai -m space --destroy
 
 # # Move focus container to workspace
-# #ctrl + alt - m : yabai -m window --space last; yabai -m space --focus last
-# cmd + ctrl - z : yabai -m window --space prev; yabai -m space --focus prev
-# cmd + ctrl - x : yabai -m window --space next; yabai -m space --focus next
-# cmd + ctrl - 1 : yabai -m window --space 1; yabai -m space --focus 1
-# cmd + ctrl - 2 : yabai -m window --space 2; yabai -m space --focus 2
-# cmd + ctrl - 3 : yabai -m window --space 3; yabai -m space --focus 3
-# cmd + ctrl - 4 : yabai -m window --space 4; yabai -m space --focus 4
-# cmd + ctrl - 5 : yabai -m window --space 5; yabai -m space --focus 5
-# cmd + ctrl - 6 : yabai -m window --space 6; yabai -m space --focus 6
-# cmd + ctrl - 7 : yabai -m window --space 7; yabai -m space --focus 7
-# cmd + ctrl - 8 : yabai -m window --space 8; yabai -m space --focus 8
-# cmd + ctrl - 9 : yabai -m window --space 9; yabai -m space --focus 9
-
-# # Move focus container to workspace
 # cmd - z : yabai -m space --focus prev
 # cmd - x : yabai -m space --focus next
 # cmd - 1 : yabai -m space --focus 1
@@ -663,11 +579,6 @@ toggle_pict_in_pict() { wmw t border && wmw t pip; }
 # ctrl + shift - o  : yabai -m display --focus next
 # #ctrl + shift - 1  : yabai -m display --focus 1
 # #ctrl + shift - 2  : yabai -m display --focus 2
-
-# # send window to monitor and follow focus
-# #ctrl + alt - c  : yabai -m window --display recent; yabai -m display --focus recent
-# ctrl + alt - p  : yabai -m space --display prev; yabai -m display --focus prev
-# ctrl + alt - o  : yabai -m space --display next; yabai -m display --focus next
 
 # # move window
 # #shift + ctrl - a : yabai -m window --move rel:-20:0
