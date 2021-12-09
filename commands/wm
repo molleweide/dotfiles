@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
+gap_set() { wms p abs:$1:$1:$1:$1 && wms g abs:$1; }
+
 gap_resize() { wms p rel:$1:$1:$1:$1 && wms g rel:$1; } # +/- integer
+
+# toggle_gap() {}
 
 # ## Destroy space (requires SIP disabled)
 # wms f prev; wms recent --destroy # how do I handle --destroy recent syntax
