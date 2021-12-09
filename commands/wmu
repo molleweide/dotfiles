@@ -85,46 +85,31 @@ wms n misc 4
 # ---       RULES       ---
 # -------------------------
 
-# ->>rm all rules ??
-
-for i in {0..10}; do
-    wmr rm 0
-done
-
+rules_count=$(wmr ls | jq  'length')
+for i in $(seq 1 $rules_count); do wmr rm 0; done
 
 # --- APPS NOT MANAGED ---
-# TODO: if string "" contains whitespace then check double quote start -> find next...
-#       or if app contains underscore replace with space?
-#
-#       https://stackoverflow.com/questions/2871181/replacing-some-characters-in-a-string-with-another-character
-#       https://stackoverflow.com/questions/53672192/replace-hyphens-with-underscores-in-bash-script?noredirect=1&lq=1
-#
-#       https://stackoverflow.com/questions/428109/extract-substring-in-bash
-#       https://www.landoflinux.com/linux_bash_scripting_substring_tests.html
-#
-#       i need to see how the arguments are sent
-#       - can I esc he ws??
-wmr a t="System Preferences" a="^System Preferences$" mg=off
-# wmr a n="Finder" a="^Finder$" mg=off
-# wmr a n="Hammerspoon" a="^Hammerspoon$" mg=off
-# wmr a n="Colorpicker" a="^Colorpicker$" mg=off
-# wmr n="Activity_Monitor" a="^Activity_Monitor$" mg=off
-wmr a t="App Store" app="^App Store$" mg=off
 
-# yabai -m rule --add label="Calculator" app="^Calculator$" manage=off
-# yabai -m rule --add label="Dictionary" app="^Dictionary$" manage=off
-# yabai -m rule --add label="mpv" app="^mpv$" manage=off
-# yabai -m rule --add label="The Unarchiver" app="^The Unarchiver$" manage=off
-# yabai -m rule --add label="Transmission" app="^Transmission$" manage=off
-# yabai -m rule --add label="iTerm2 settings" app="^iTerm2$" title="^Preferences" manage=off
-# yabai -m rule --add label="Spark" app="^Spark$" title!="^Spark" manage=off
-# yabai -m rule --add label="SSH Tunnel Manager" app="^SSH Tunnel Manager$" manage=off
-# yabai -m rule --add label="ImageOptim" app="^ImageOptim$" manage=off
-# yabai -m rule --add label="AppCleaner" app="^AppCleaner$" manage=off
-# yabai -m rule --add label="Pika" app="^Pika$" manage=off
+wmr a n="System Preferences" a="^System Preferences$" mg=off
+wmr a n="Finder" a="^Finder$" mg=off
+wmr a n="Hammerspoon" a="^Hammerspoon$" mg=off
+wmr a n="Colorpicker" a="^Colorpicker$" mg=off
+wmr a n="Activity_Monitor" a="^Activity_Monitor$" mg=off
+wmr a n="App Store" a="^App Store$" mg=off
+wmr a n="Calculator" a="^Calculator$" mg=off
+wmr a n="Dictionary" a="^Dictionary$" mg=off
+wmr a n="The Unarchiver" a="^The Unarchiver$" mg=off
+wmr a n="iTerm2 settings" a="^iTerm2$" title="^Preferences" mg=off
+wmr a n="Transmission" a="^Transmission$" mg=off
+# yabai -m rule --add label="mpv" app="^mpv$" mg=off
+# yabai -m rule --add label="Spark" app="^Spark$" title!="^Spark" mg=off
+# yabai -m rule --add label="SSH Tunnel Manager" app="^SSH Tunnel Manager$" mg=off
+# yabai -m rule --add label="ImageOptim" app="^ImageOptim$" mg=off
+# yabai -m rule --add label="AppCleaner" app="^AppCleaner$" mg=off
+# yabai -m rule --add label="Pika" app="^Pika$" mg=off
 
 # --- APPS SPECIAL RULES ---
-# yabai -m rule --add label="iTerm2" app="^iTerm2$" manage=off
+# yabai -m rule --add label="iTerm2" app="^iTerm2$" mg=off
 # yabai -m rule --add label="Google Chrome" app="^Google Chrome$" space=^1
 # yabai -m rule --add label="Firefox" app="^Firefox$" space=^1
 # yabai -m rule --add label="Code" app="^Code$" space=^2
