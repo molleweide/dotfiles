@@ -88,6 +88,12 @@ wms n misc 4
 # --- APPS NOT MANAGED ---
 # TODO: if string "" contains whitespace then check double quote start -> find next...
 #       or if app contains underscore replace with space?
+#
+#       https://stackoverflow.com/questions/2871181/replacing-some-characters-in-a-string-with-another-character
+#       https://stackoverflow.com/questions/53672192/replace-hyphens-with-underscores-in-bash-script?noredirect=1&lq=1
+#
+#       https://stackoverflow.com/questions/428109/extract-substring-in-bash
+#       https://www.landoflinux.com/linux_bash_scripting_substring_tests.html
 wmr a n="sys_pref" t="sys_pref" a="Preferences$" mg=off
 wmr a n="Finder" a="^Finder$" mg=off
 # yabai -m rule --add label="App Store" app="^App Store$" manage=off
