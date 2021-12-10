@@ -23,10 +23,20 @@
 # sudo yabai --install-sa
 # brew services start yabai
 
-# ::::::::::::::::::::::::::::::::::::
+# ::: HELPERS :::::::::::::::::::::::::::::::::
 
 jq_w_sel_by_app(){ wmq w | jq "map(select(.\"app\" == \"$1\"))"; }
 # jq_w_sel_by_key(){ wmq w | jq "map(select(.\"app\" == \"$1\")).$2"; }
+
+# wmw t float && /tmp/yabai-restore/$(wmq w w | jq -re '.id').restore 2>/dev/null || true
+
+# index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
+
+# toggle active window
+# wmq s s | jq -r 'if .type == "bsp" then "float" else "bsp" end')
+
+# ::: WINDOW FUNCTIONS :::::::::::::::::::::::::::::::::
+
 
 gap_set() { wms p abs:$1:$1:$1:$1 && wms g abs:$1; }
 
@@ -84,21 +94,65 @@ toggle_sticky_float_pic_in_pic() { wmw t sticky; wmw g 5:5:4:0:1:1; }
 
 fill_screen() { wmw g 1:1:0:0:1:1; }
 
-fill_half() {
-    # wmw g 1:2:0:0:1:1 # make floating window fill left-half of screen
-    # wmw g 1:2:1:0:1:1 # make floating window fill right-half of screen
+fill_2_by_2() {
     case "$1" in
         "l") wmw g 1:2:0:0:1:1;;
-        "u") wmw g 1:2:0:0:1:1;;
-        "d") wmw g 1:2:0:0:1:1;;
-        "r") wmw g 1:2:0:0:1:1;;
+        "u") wmw g 2:1:0:0:1:1;;
+        "d") wmw g 2:1:1:1:1:1;;
+        "r") wmw g 1:2:1:0:1:1;;
+        "ul") wmw g 2:2:0:0:1:1;;
+        "ur") wmw g 2:2:1:0:1:1;;
+        "dl") wmw g 2:2:0:1:1:1;;
+        "dr") wmw g 2:2:1:1:1:1;;
         *) echo "NO_MATCH";;
     esac
 }
 
-# 1/3 GRIDS
+fill_2_by_3() {
+    case "$1" in
+        "l") wmw g 1:3:0:0:1:1;;
+        "l2") wmw g 1:3:0:0:2:1;; # two wide
+        "m") wmw g 1:3:1:0:1:1;;
+        "r") wmw g 1:3:2:0:1:1;;
+        "r2") wmw g 1:3:1:0:2:1;; # two wide
 
-# 1/4 GRIDS
+        "1") wmw g 2:3:0:0:1:1;;
+        "2") wmw g 2:3:1:0:1:1;;
+        "3") wmw g 2:3:2:0:1:1;;
+        "4") wmw g 2:3:0:1:1:1;;
+        "5") wmw g 2:3:1:1:1:1;;
+        "6") wmw g 2:3:2:1:1:1;;
+
+        "ul") wmw g 2:3:0:0:2:1;;
+        "ur") wmw g 2:3:1:0:2:1;;
+        "dl") wmw g 2:3:0:1:2:1;;
+        "dr") wmw g 2:3:1:1:2:1;;
+
+        *) echo "NO_MATCH";;
+    esac
+}
+
+# --grid <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+fill_3_by_3() {
+    case "$1" in
+        "11") wmw g 3:3:0:0:1:1;;
+        "12") wmw g 3:3:1:0:1:1;;
+        "22") wmw g 3:3:1:1:1:1;;
+        "33") wmw g 3:3:2:2:1:1;;
+
+        "ul") wmw g 3:3:0:0:2:2;;
+        "ur") wmw g 3:3:1:0:2:2;;
+        "dl") wmw g 3:3:0:1:2:2;;
+        "dr") wmw g 3:3:1:1:2:2;;
+
+        "ul") wmw g 3:3:0:0:2:2;;
+        "ur") wmw g 3:3:1:0:2:2;;
+        "dl") wmw g 3:3:0:1:2:2;;
+        "dr") wmw g 3:3:1:1:2:2;;
+
+        *) echo "NO_MATCH";;
+    esac
+}
 
 # 1/6 GRIDS
 # -> 1/6 + 1/4 grids makes eg. 5 windos
@@ -107,6 +161,10 @@ fill_half() {
 
 case "$1" in
     "jqwsa") jq_w_sel_by_app $2;;
+    "fh") fill_half $2;; # l u d r
+    "22") fill_2_by_2 $2;; # l u d r
+    "23") fill_2_by_3 $2;; # l u d r
+    "33") fill_3_by_3 $2;;
     "fs") fill_screen;;
     "tfc") toggle_float_center;;
     "tfr") toggle_float_restore;;
