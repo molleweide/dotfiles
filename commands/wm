@@ -25,14 +25,8 @@
 
 # ::::::::::::::::::::::::::::::::::::
 
-test_jq(){
-    # yabai -m query --windows | jq 'map(select(."app" == "Signal"))'
-    # echo "!!!"
-    # wmq w | jq -r '.[1]'
-    # yabai -m query --windows | jq '.app'
-    wmq w | jq 'map(."app" == "Signal")'
-    # wmq s s | jq -r 'if .type == "bsp" then "float" else "bsp" end'
-}
+jq_w_sel_by_app(){ wmq w | jq "map(select(.\"app\" == \"$1\"))"; }
+# jq_w_sel_by_key(){ wmq w | jq "map(select(.\"app\" == \"$1\")).$2"; }
 
 gap_set() { wms p abs:$1:$1:$1:$1 && wms g abs:$1; }
 
@@ -112,7 +106,7 @@ fill_half() {
 ############################################################
 
 case "$1" in
-    "tj") test_jq;;
+    "jqwsa") jq_w_sel_by_app $2;;
     "fs") fill_screen;;
     "tfc") toggle_float_center;;
     "tfr") toggle_float_restore;;
