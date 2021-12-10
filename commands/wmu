@@ -45,7 +45,9 @@ wmc pb    6
 wmc pl    6
 wmc pr    6
 wmc gap   6
-wmc bar   off # all:28:0
+# wmc bar   off # all:28:0
+# SPACEBAR_HEIGHT=$(spacebar -m config height)
+wmc bar all:$(spacebar -m config height):0
 
 # ---------------------------------------------
 # ---       SPACES NAMING & BEHAVIOUR       ---
@@ -99,7 +101,7 @@ wmr a n="System Preferences" a="^System Preferences$"           mg=off
 wmr a n="Finder"             a="^Finder$"                       mg=off
 wmr a n="Hammerspoon"        a="^Hammerspoon$"                  mg=off
 wmr a n="Colorpicker"        a="^Colorpicker$"                  mg=off
-wmr a n="Activity_Monitor"   a="^Activity_Monitor$"             mg=off
+wmr a n="Activity Monitor"   a="^Activity Monitor$"             mg=off
 wmr a n="App Store"          a="^App Store$"                    mg=off
 wmr a n="Calculator"         a="^Calculator$"                   mg=off
 wmr a n="Dictionary"         a="^Dictionary$"                   mg=off

@@ -25,6 +25,15 @@
 
 # ::::::::::::::::::::::::::::::::::::
 
+test_jq(){
+    # yabai -m query --windows | jq 'map(select(."app" == "Signal"))'
+    # echo "!!!"
+    # wmq w | jq -r '.[1]'
+    # yabai -m query --windows | jq '.app'
+    wmq w | jq 'map(."app" == "Signal")'
+    # wmq s s | jq -r 'if .type == "bsp" then "float" else "bsp" end'
+}
+
 gap_set() { wms p abs:$1:$1:$1:$1 && wms g abs:$1; }
 
 gap_resize() { wms p rel:$1:$1:$1:$1 && wms g rel:$1; } # +/- integer
@@ -45,9 +54,12 @@ create_desktop() {
     wms f $(echo ${id:10:${#id}-10})
 }
 
+
+# wmq w | jq 'map(select(."is-native-fullscreen" == false))[-1].index'
+
 # # create desktop, move window and follow focus - uses jq for parsing json (brew install jq)
 # shift + cmd - n : yabai -m space --create && \
-#                   index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
+                  # index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
 #                   yabai -m window --space "${index}" && \
 #                   yabai -m space --focus "${index}" && \
 #                   spacebar -m config spaces on
@@ -100,6 +112,7 @@ fill_half() {
 ############################################################
 
 case "$1" in
+    "tj") test_jq;;
     "fs") fill_screen;;
     "tfc") toggle_float_center;;
     "tfr") toggle_float_restore;;

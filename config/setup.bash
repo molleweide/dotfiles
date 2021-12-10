@@ -79,6 +79,7 @@ HOMEBREW_FORMULAS=(
 	'calcurse'
 	'code-minimap'
 	'cointop'
+	'cmacrae/formulae/spacebar'
 	'diff-so-fancy'
 	'direnv'
 	'fasd'

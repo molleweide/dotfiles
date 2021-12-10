@@ -16,7 +16,7 @@ if is-mac; then
         "dsp" | "d") yarg="--display";;
         "spc" | "s") yarg="--space";;
         "win" | "w") yarg="--window";;
-        *) echo "NO_MATCH";;
+        *) echo "";;
     esac
     yabai -m query $ycmd $yarg
 else

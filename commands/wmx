@@ -3,6 +3,7 @@
 if is-mac; then
     brew services restart yabai
     brew services restart skhd
+    brew services restart spacebar
     limelight # there is a wierd err msg but it works...
 else
 	echo 'reload linux wm...'
