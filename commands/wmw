@@ -5,7 +5,7 @@
 # @param [ window_selection ]
 
 test -z "${1-}" && exit 1
-# test -z "${3}" || yws="$3"
+test -z "${3}" || yws="$3"
 
 if is-mac; then
     case "$1" in
@@ -29,7 +29,7 @@ if is-mac; then
         *) echo "NO_MATCH";;
     esac
     # yabai -m window $yws --$yabai_cmd $2
-    yabai -m window $yws $yabai_cmd $2
+    eval "yabai -m window $yws $yabai_cmd $2"
 else
     echo "linux todo..."
 fi
