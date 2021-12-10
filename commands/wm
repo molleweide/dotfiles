@@ -188,6 +188,7 @@ apply_grid() {
             y=$(echo "$1" | cut -c 4)
             w=$(echo "$1" | cut -c 5)
             h=$(echo "$1" | cut -c 6)
+            echo "wmw g $r:$c:$x:$y:$w:$h $2"
             wmw g $r:$c:$x:$y:$w:$h $2
             ;;
     esac
@@ -195,36 +196,19 @@ apply_grid() {
 }
 
 test_setup_terminal() {
-
-    # TODO: 5 terminals
-
-    # 1. search list of terminals # kitty / alacritty
     aid=($(jq_w_ids_by_app_name "$1"))
-    # aidtr=($(echo $aid | tr -d '[],"'))
 
     echo "${#aid[@]}"
 
-    # for i in $(seq 1 $(wme ls | jq 'length')); do wme rm 0; done # refresh event listeners
-    # local c=1
-    # for i in "$(seq 1 ${!aid[@]})"; do
     for i in ${!aid[@]}; do
         # echo "$c > $i"
         echo "aid $i = ${aid[i]}"
-
         case $i in
-            # "0> aid $i = ${aid[i]}" &&
-            # "1> aid $i = ${aid[i]}" &&
             "0" )  apply_grid 330013 "${aid[i]}";;
             "1" )  apply_grid 332023 "${aid[i]}";;
             *) echo "* $i";;
         esac
-
-        # echo "ccc >> $c"
-        # c=$((c + 1))
     done
-
-    # wmw g 541255 $id
-
 
     # 2 add new terminals
     # /Applications/Kitty.app/Contents/MacOS/kitty --single-instance -d ~
