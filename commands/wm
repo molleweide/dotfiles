@@ -12,7 +12,7 @@
 
 # ::: NOTE: LOAD _SCRIPTING_ADDITION_ :::
 # THIS IS NECESSARY FOR FULL FEATURES
-# sudo yabai --install-sa && sudo yabai --load-sa
+# sudo yabai --install-sa && yabai --load-sa
 # BIG SUR REQUIRES MANUAL LOADING OF `SA`
 # # replace <user> with your username (output of: whoami).
 # sudo visudo -f /private/etc/sudoers.d/yabai <<< `<user> ALL = (root) NOPASSWD: /usr/local/bin/yabai --load-sa`
