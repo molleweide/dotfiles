@@ -57,6 +57,7 @@
 
 # - windows ration cmd >> modulate ratio
 
+
 # ::: HELPERS :::::::::::::::::::::::::::::::::
 
 jq_w_filter_keys(){ wmq w | jq "map(.\"$1\")"; }
@@ -221,6 +222,16 @@ fill_3_by_3() {
     esac
 }
 
+cfg_wp() {
+    if test $1 = "1"; then
+        wmc wp "first_child"
+    elif test $1 = "2"; then
+        wmc wp "second_child"
+    fi
+
+}
+
+# wm cwp 4 2
 
 get_key() {
     # echo "!"
@@ -248,15 +259,51 @@ alacritty_num_grid() {
     apply_grid $2 $wid
 }
 
+# @param wp sr num_new
+terms_add() {
+    local aid=($(jq_w_ids_by_app_name "Alacritty"))
+    local aid_ct=${#aid[@]}
+    local aid_ct_new=$(($aid_ct + 1))
+    local new_name="Alacritty"
+
+    local new_num=$1
+    cfg_wp $2
+    wmc sr "abs:${3-0.5}"
+
+    inst_ceiling=$(( $aid_ct + $new_num))
+
+    echo "!!!T"
+
+    for (( c=$aid_ct_new; c<=$inst_ceiling; c++ )); do
+        local title="${new_name}_${c}"
+        echo "title: $title"
+        open -n -a "/Applications/Alacritty.app" --args -t "${title}"
+        # wmr rm 0;
+    done # refresh rules
+    # fi
+}
+
+terms_remove() {
+    echo "todo"
+}
+
+
+# @param fraction multiplier
+terms_mod_ratio() {
+    # inst_ceiling=$(( 1/$2 + $new_num))
+    wmw rt "abs:$1"
+}
+# wmw rb  d
+
 # specify how many terminal instances I want
 # @param n
 set_term_inst_num() {
-    aid=($(jq_w_ids_by_app_name "Alacritty"))
-    aid_ct=${#aid[@]}
-    aid_ct_new=$(($aid_ct + 1))
+    local aid=($(jq_w_ids_by_app_name "Alacritty"))
+    local aid_ct=${#aid[@]}
+    local aid_ct_new=$(($aid_ct + 1))
     # new_title="Alacritty_$aid_ct_new"
-    new_name="Alacritty"
-    inst_ceiling=$1
+    local new_name="Alacritty"
+    local inst_ceiling=$1
     echo "${#aid[@]} >>> ( ${aid[@]} )"
 
     if [ "$aid_ct" -lt $inst_ceiling ]; then
@@ -311,7 +358,10 @@ case "$1" in
     "layout_1") grid_big_left_double_right;;
     "wsa") jq_w_sel_by_app $2;;
     "wtba") jq_w_titles_by_app $2;;
-    "at") set_term_inst_num $2;;
+    "tn") set_term_inst_num $2;;
+    "ta") terms_add $2 $3 $4;;
+    "r") terms_mod_ratio $2;;
+    # "trm") terms_add $2;;
     "ts") alacritty_num_grid $2 $3;;
     "tt") test_setup_terminal $2;;
     "fan") focus_app_name $2;;
