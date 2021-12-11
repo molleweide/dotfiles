@@ -232,15 +232,15 @@ focus_app_name() {
 add_term() {
     aid=($(jq_w_ids_by_app_name "Alacritty"))
     aid_ct=${#aid[@]}
-    aid_new_idx=$(($aid_ct + 1))
-    new_title="Alacritty_$aid_new_idx"
+    aid_ct_new=$(($aid_ct + 1))
+    new_title="Alacritty_$aid_ct_new"
     new_name="Alacritty"
 
     echo "${#aid[@]} >>> ( ${aid[@]} )"
     # get last instance
 
     # more than one instance exists
-    if test "$aid_count" > 1; then
+    if test "$aid_ct" = 1; then
         echo "more than 1"
     fi
 
@@ -249,9 +249,8 @@ add_term() {
         echo "aid $i = ${aid[i]}"
     done
 
-
-    echo "NEW TITLE: $new_title"
-    open -n -a "/Applications/Alacritty.app"
+    # echo "NEW TITLE: $new_title"
+    open -n -a "/Applications/Alacritty.app" --args -t "${new_title}" # new instance w/title
 
     # alacritty -t "${TITLE}"
     # -o window.position.x="${X}" -o window.position.y="${Y}" \
