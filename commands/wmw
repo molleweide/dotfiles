@@ -9,7 +9,7 @@ test -z "${3}" || yws="$3"
 
 if is-mac; then
     case "$1" in
-        "focus" | "fc")         yabai_cmd="--focus";; # <WINDOW_SEL>
+        "focus" | "f")         yabai_cmd="--focus";; # <WINDOW_SEL>
         "swap" | "sw")          yabai_cmd="--swap";; # <WINDOW_SEL>
         "warp" | "wrp")         yabai_cmd="--warp";; # <WINDOW_SEL>
         "stack" | "stk")        yabai_cmd="--stack";; # <WINDOW_SEL>

@@ -25,8 +25,12 @@
 
 # ::: HELPERS :::::::::::::::::::::::::::::::::
 
+jq_w_filter_keys(){ wmq w | jq "map(.\"$1\")"; }
+
 jq_w_sel_by_app(){ wmq w | jq "map(select(.\"app\" == \"$1\"))"; }
+
 jq_w_ids_by_app_name(){  wmq w | jq "map(select(.\"app\" == \"$1\").id)" | tr -d '[],"'; }
+
 # aidtr=($(echo $aid | tr -d '[],"'))
 
 # jq_w_sel_by_key(){ wmq w | jq "map(select(.\"app\" == \"$1\")).$2"; }
@@ -94,70 +98,13 @@ toggle_pict_in_pict() { wmw t border && wmw t pip; }
 
 toggle_sticky_float_pic_in_pic() { wmw t sticky; wmw g 5:5:4:0:1:1; }
 
-
 fill_screen() { wmw g 1:1:0:0:1:1; }
 
-fill_2_by_2() {
-    case "$1" in
-        "l") wmw g 1:2:0:0:1:1;;
-        "u") wmw g 2:1:0:0:1:1;;
-        "d") wmw g 2:1:1:1:1:1;;
-        "r") wmw g 1:2:1:0:1:1;;
-        "ul") wmw g 2:2:0:0:1:1;;
-        "ur") wmw g 2:2:1:0:1:1;;
-        "dl") wmw g 2:2:0:1:1:1;;
-        "dr") wmw g 2:2:1:1:1:1;;
-        *) echo "NO_MATCH";;
-    esac
-}
-
-fill_2_by_3() {
-    case "$1" in
-
-        "1") wmw g 2:3:0:0:1:1;;
-        "2") wmw g 2:3:1:0:1:1;;
-        "3") wmw g 2:3:2:0:1:1;;
-        "4") wmw g 2:3:0:1:1:1;;
-        "5") wmw g 2:3:1:1:1:1;;
-        "6") wmw g 2:3:2:1:1:1;;
-
-        "ul") wmw g 2:3:0:0:2:1;;
-        "ur") wmw g 2:3:1:0:2:1;;
-        "dl") wmw g 2:3:0:1:2:1;;
-        "dr") wmw g 2:3:1:1:2:1;;
-
-        *) echo "NO_MATCH";;
-    esac
-}
-
-# --grid <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
 fill_3_by_3() {
     echo "> $@"
     case "$1" in
-        "1h3") wmw g 1:3:0:0:1:1;;
-        "1h3w2") wmw g 1:3:0:0:2:1;; # two wide
-        "m") wmw g 1:3:1:0:1:1;;
-        "r") wmw g 1:3:2:0:1:1;;
-        "r2") wmw g 1:3:1:0:2:1;; # two wide
-
-        "11") wmw g 3:3:0:0:1:1;;
-        "12") wmw g 3:3:1:0:1:1;;
-        "22") wmw g 3:3:1:1:1:1;;
-        "33") wmw g 3:3:2:2:1:1;;
-
-        "ul") wmw g 3:3:0:0:2:2;;
-        "ur") wmw g 3:3:1:0:2:2;;
-        "dl") wmw g 3:3:0:1:2:2;;
-        "dr") wmw g 3:3:1:1:2:2;;
-
-        "ul") wmw g 3:3:0:0:2:2;;
-        "ur") wmw g 3:3:1:0:2:2;;
-        "dl") wmw g 3:3:0:1:2:2;;
-        "dr") wmw g 3:3:1:1:2:2;;
-
         "r1") wmw g "3:3:$2:$3:2:1";;
         "c1") wmw g "3:3:$2:$3:1:2";;
-
         *) echo "NO_MATCH";;
     esac
 }
@@ -181,7 +128,33 @@ apply_grid() {
         "dl") wmw g 2:2:0:1:1:1 $2;;
         "dr") wmw g 2:2:1:1:1:1 $2;;
 
-        *)
+        "23a") wmw g 2:3:0:0:1:1;;
+        "23b") wmw g 2:3:1:0:1:1;;
+        "23c") wmw g 2:3:2:0:1:1;;
+        "23d") wmw g 2:3:0:1:1:1;;
+        "23e") wmw g 2:3:1:1:1:1;;
+        "23f") wmw g 2:3:2:1:1:1;;
+
+        "23ul") wmw g 2:3:0:0:2:1;;
+        "23ur") wmw g 2:3:1:0:2:1;;
+        "23dl") wmw g 2:3:0:1:2:1;;
+        "23dr") wmw g 2:3:1:1:2:1;;
+
+        "33cl") wmw g 1:3:0:0:1:1;;
+        "33cl2") wmw g 1:3:0:0:2:1;; # two wide
+        "33cm") wmw g 1:3:1:0:1:1;;
+        "33cr") wmw g 1:3:2:0:1:1;;
+        "33cr2") wmw g 1:3:1:0:2:1;; # two wide
+
+        "33ul") wmw g 3:3:0:0:2:2;;
+        "33ur") wmw g 3:3:1:0:2:2;;
+        "33dl") wmw g 3:3:0:1:2:2;;
+        "33dr") wmw g 3:3:1:1:2:2;;
+
+        # "r1") wmw g "3:3:$2:$3:2:1";;
+        # "c1") wmw g "3:3:$2:$3:1:2";;
+
+        *) # custom setting
             r=$(echo "$1" | cut -c 1)
             c=$(echo "$1" | cut -c 2)
             x=$(echo "$1" | cut -c 3)
@@ -195,25 +168,37 @@ apply_grid() {
 
 }
 
+get_key() {
+    # echo "!"
+    jq_w_filter_keys $1
+}
+
+# here string is broken at whitespace.
+focus_app_name() {
+    name="$@" # prevent input string to bli split by whitespace defalt
+    aid=($(jq_w_ids_by_app_name "$name"))
+    wmw f "${aid[0]}"
+}
+
+# WHY THIS DOESN'T WORK??
 test_setup_terminal() {
     aid=($(jq_w_ids_by_app_name "$1"))
-
     echo "${#aid[@]}"
-
     for i in ${!aid[@]}; do
         # echo "$c > $i"
         echo "aid $i = ${aid[i]}"
+
+        # apply_grid 332023 1672
+
         case $i in
             "0" )  apply_grid 330013 "${aid[i]}";;
             "1" )  apply_grid 332023 "${aid[i]}";;
             *) echo "* $i";;
         esac
-    done
 
+    done
     # 2 add new terminals
     # /Applications/Kitty.app/Contents/MacOS/kitty --single-instance -d ~
-
-    # apply_grid
 }
 
 ############################################################
@@ -221,8 +206,10 @@ test_setup_terminal() {
 case "$1" in
     "jqwsa") jq_w_sel_by_app $2;;
     "tt") test_setup_terminal $2;;
+    "fan") focus_app_name $2;;
     "h") fill_half $2;; # l u d r
     "a") fill_screen;;
+    "gk") get_key $2;;
     # "b") win_set_grid_22 $2 $3 $4 $5;;
     # "c")  win_set_grid_33 $2 $3 $4 $5;;
     "g")  apply_grid $2 $3;;
@@ -233,7 +220,7 @@ case "$1" in
     "tfl") toggle_layout_float;;
     "tpip") toggle_pict_in_pict;;
     "tsfpip") toggle_sticky_float_pic_in_pic;;
-    *) echo "NO_MATCH";;
+    *) fill_screen;;
 esac
 
 ############################################################
