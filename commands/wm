@@ -48,6 +48,10 @@
 
 # ::: QUESTIONS :::::::
 
+# - how us split to slip window into smaller and smaller chunks.
+
+# - change split ration of managed windows
+
 # ::: HELPERS :::::::::::::::::::::::::::::::::
 
 jq_w_filter_keys(){ wmq w | jq "map(.\"$1\")"; }
