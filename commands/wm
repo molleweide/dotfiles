@@ -239,7 +239,9 @@ alacritty_num_grid() {
     apply_grid $2 $wid
 }
 
-add_term() {
+# specify how many terminal instances I want
+# @param n
+set_term_inst_num() {
     aid=($(jq_w_ids_by_app_name "Alacritty"))
     aid_ct=${#aid[@]}
     aid_ct_new=$(($aid_ct + 1))
@@ -257,20 +259,19 @@ add_term() {
             # wmr rm 0;
         done # refresh rules
     fi
-
-    # for i in ${!aid[@]}; do
-    #     # echo "$c > $i"
-    #     echo "aid $i = ${aid[i]}"
-    # done
-
-    # echo "NEW TITLE: $new_title"
-    # open -n -a "/Applications/Alacritty.app" --args -t "${new_title}" # new instance w/title
-
     # alacritty -t "${TITLE}"
     # -o window.position.x="${X}" -o window.position.y="${Y}" \
     #   -o window.dimensions.lines=35 -o window.dimensions.columns=80 \
     #   -o window.decorations=none --working-directory "$(pwd)" -e "$1" \
     #   -o colors.primary.background="#74B573" # customizing colors is not working for me
+}
+
+grid_big_left_double_right() {
+    num_inst=3
+    set_term_inst_num $num_inst
+    alacritty_num_grid 1 230022
+    alacritty_num_grid 2 232011
+    alacritty_num_grid 3 232111
 }
 
 # WHY THIS DOESN'T WORK??
@@ -298,9 +299,10 @@ test_setup_terminal() {
 ############################################################
 
 case "$1" in
+    "layout_1") grid_big_left_double_right;;
     "wsa") jq_w_sel_by_app $2;;
     "wtba") jq_w_titles_by_app $2;;
-    "at") add_term $2;;
+    "at") set_term_inst_num $2;;
     "ts") alacritty_num_grid $2 $3;;
     "tt") test_setup_terminal $2;;
     "fan") focus_app_name $2;;
