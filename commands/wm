@@ -259,6 +259,20 @@ alacritty_num_grid() {
     apply_grid $2 $wid
 }
 
+# TODO:
+
+# if prev num == 0
+
+term_new() {
+    local start=$1
+    local end=$2
+    for (( c=$start; c<=$end; c++ )); do
+        local title="${new_name}_${c}"
+        echo "title: $title"
+        open -n -a "/Applications/Alacritty.app" --args -t "${title}"
+    done # refresh rules
+}
+
 # @param wp sr num_new
 terms_add() {
     local aid=($(jq_w_ids_by_app_name "Alacritty"))
@@ -268,19 +282,9 @@ terms_add() {
 
     local new_num=$1
     cfg_wp $2
-    wmc sr "abs:${3-0.5}"
-
+    wmc sr "${3-0.5}"
     inst_ceiling=$(( $aid_ct + $new_num))
-
-    echo "!!!T"
-
-    for (( c=$aid_ct_new; c<=$inst_ceiling; c++ )); do
-        local title="${new_name}_${c}"
-        echo "title: $title"
-        open -n -a "/Applications/Alacritty.app" --args -t "${title}"
-        # wmr rm 0;
-    done # refresh rules
-    # fi
+    term_new $aid_ct_new $inst_ceiling
 }
 
 terms_remove() {
@@ -307,20 +311,12 @@ set_term_inst_num() {
     echo "${#aid[@]} >>> ( ${aid[@]} )"
 
     if [ "$aid_ct" -lt $inst_ceiling ]; then
-        num_init=$(( 3 - $aid_ct ))
-        for (( c=$aid_ct_new; c<=$inst_ceiling; c++ )); do
-            local title="${new_name}_${c}"
-            echo "title: $title"
-            open -n -a "/Applications/Alacritty.app" --args -t "${title}"
-            # wmr rm 0;
-        done # refresh rules
+        # num_init=$(( 3 - $aid_ct ))
+        term_new $aid_ct_new $inst_ceiling
+    # elif [ "$aid_ct" -lt $inst_ceiling ]; then
+    #     echo "todo rm instances.."
     fi
-    # alacritty -t "${TITLE}"
-    # -o window.position.x="${X}" -o window.position.y="${Y}" \
-    #   -o window.dimensions.lines=35 -o window.dimensions.columns=80 \
-    #   -o window.decorations=none --working-directory "$(pwd)" -e "$1" \
-    #   -o colors.primary.background="#74B573" # customizing colors is not working for me
-}
+ }
 
 grid_big_left_double_right() {
     num_inst=3
@@ -330,26 +326,23 @@ grid_big_left_double_right() {
     alacritty_num_grid 3 232111
 }
 
-# WHY THIS DOESN'T WORK??
-test_setup_terminal() {
-    aid=($(jq_w_ids_by_app_name "$1"))
-    echo "${#aid[@]}"
-    for i in ${!aid[@]}; do
-        # echo "$c > $i"
-        echo "aid $i = ${aid[i]}"
-
-        # apply_grid 332023 1672
-
-        case $i in
-            "0" )  apply_grid 330013 "${aid[i]}";;
-            "1" )  apply_grid 332023 "${aid[i]}";;
-            *) echo "* $i";;
-        esac
-
-    done
-    # 2 add new terminals
-    # /Applications/Kitty.app/Contents/MacOS/kitty --single-instance -d ~
-}
+# # WHY THIS DOESN'T WORK??
+# test_setup_terminal() {
+#     aid=($(jq_w_ids_by_app_name "$1"))
+#     echo "${#aid[@]}"
+#     for i in ${!aid[@]}; do
+#         # echo "$c > $i"
+#         echo "aid $i = ${aid[i]}"
+#         # apply_grid 332023 1672
+#         case $i in
+#             "0" )  apply_grid 330013 "${aid[i]}";;
+#             "1" )  apply_grid 332023 "${aid[i]}";;
+#             *) echo "* $i";;
+#         esac
+#     done
+#     # 2 add new terminals
+#     # /Applications/Kitty.app/Contents/MacOS/kitty --single-instance -d ~
+# }
 
 
 ############################################################
