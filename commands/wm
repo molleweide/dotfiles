@@ -46,78 +46,6 @@ jq_w_ids_by_app_name(){  wmq w | jq "map(select(.\"app\" == \"$1\").id)" | tr -d
 
 # ::: WINDOW FUNCTIONS :::::::::::::::::::::::::::::::::
 
-# gap functions
-
-gap_set() { wms p abs:$1:$1:$1:$1 && wms g abs:$1; }
-
-gap_resize() { wms p rel:$1:$1:$1:$1 && wms g rel:$1; } # +/- integer
-
-toggle_gap() { wms t padding && wms t gap; }
-# test "${1-}" = "gt" && toggle_gap
-
-case "$1" in
-    "gs") gap_set $2;;
-    "gr") gap_resize $2;;
-esac
-
-space_kill() { wms f prev; wms --destroy recent; }
-
-move_win_to_monitor() { wmw d $1; wmd $1; } # <DISPLAY_SEL>
-
-move_win_to_space() { wmw s $1; wms f $1; } # <SPACE_SEL>
-
-# create desktop, move window and follow focus
-create_desktop() {
-    wms c
-    id=$(wmq d d | grep "spaces")
-    wmw s $(echo ${id:10:${#id}-10})
-    wms f $(echo ${id:10:${#id}-10})
-}
-
-
-# wmq w | jq 'map(select(."is-native-fullscreen" == false))[-1].index'
-
-# # create desktop, move window and follow focus - uses jq for parsing json (brew install jq)
-# shift + cmd - n : yabai -m space --create && \
-# index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
-#                   yabai -m window --space "${index}" && \
-#                   yabai -m space --focus "${index}" && \
-#                   spacebar -m config spaces on
-
-# # create desktop and follow focus - uses jq for parsing json (brew install jq)
-# cmd + alt - n : yabai -m space --create && \
-#                 index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
-#                 yabai -m space --focus "${index}"
-
-toggle_float_center() { wmw t float && wmw g 4:4:1:1:2:2; }
-
-toggle_float_restore() {
-    wmw t float && /tmp/yabai-restore/$(wmq w w | jq -re '.id').restore 2>/dev/null || true
-    wmw t float && wmw g 4:4:1:1:2:2
-}
-
-toggle_layout_float() {
-    # # change layout of desktop | nice toggle function
-    # ctrl + alt - a : yabai -m space --layout bsp
-    # ctrl + alt - d : yabai -m space --layout float
-    wms y $(wmq s s | jq -r 'if .type == "bsp" then "float" else "bsp" end')
-}
-
-toggle_pict_in_pict() { wmw t border && wmw t pip; }
-
-toggle_sticky_float_pic_in_pic() { wmw t sticky; wmw g 5:5:4:0:1:1; }
-
-fill_screen() { wmw g 1:1:0:0:1:1; }
-
-fill_3_by_3() {
-    echo "> $@"
-    case "$1" in
-        "r1") wmw g "3:3:$2:$3:2:1";;
-        "c1") wmw g "3:3:$2:$3:1:2";;
-        *) echo "NO_MATCH";;
-    esac
-}
-
 apply_grid() {
     case "$1" in
 
@@ -176,6 +104,87 @@ apply_grid() {
     esac
 
 }
+# gap functions
+
+gap_set() { wms p abs:$1:$1:$1:$1 && wms g abs:$1; }
+
+gap_resize() { wms p rel:$1:$1:$1:$1 && wms g rel:$1; } # +/- integer
+
+toggle_gap() { wms t padding && wms t gap; }
+# test "${1-}" = "gt" && toggle_gap
+
+case "$1" in
+    "gs") gap_set $2;;
+    "gr") gap_resize $2;;
+esac
+
+space_kill() { wms f prev; wms --destroy recent; }
+
+move_win_to_monitor() { wmw d $1; wmd $1; } # <DISPLAY_SEL>
+
+move_win_to_space() { wmw s $1; wms f $1; } # <SPACE_SEL>
+
+# create desktop, move window and follow focus
+create_desktop() {
+    wms c
+    id=$(wmq d d | grep "spaces")
+    wmw s $(echo ${id:10:${#id}-10})
+    wms f $(echo ${id:10:${#id}-10})
+}
+
+
+# wmq w | jq 'map(select(."is-native-fullscreen" == false))[-1].index'
+
+# # create desktop, move window and follow focus - uses jq for parsing json (brew install jq)
+# shift + cmd - n : yabai -m space --create && \
+# index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
+#                   yabai -m window --space "${index}" && \
+#                   yabai -m space --focus "${index}" && \
+#                   spacebar -m config spaces on
+
+# # create desktop and follow focus - uses jq for parsing json (brew install jq)
+# cmd + alt - n : yabai -m space --create && \
+#                 index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
+#                 yabai -m space --focus "${index}"
+
+toggle_float_center() { wmw t float && wmw g 4:4:1:1:2:2; }
+
+toggle_float_restore() {
+    wmw t float && /tmp/yabai-restore/$(wmq w w | jq -re '.id').restore 2>/dev/null || true
+    wmw t float && wmw g 4:4:1:1:2:2
+}
+
+toggle_layout_float() {
+    current_layout=$(wmq s s | jq -r '.type')
+    grid_opt=$1
+    if test "$current_layout" = "bsp"; then
+        wms y "float"
+        apply_grid "$grid_opt"
+    else
+        wms y "bsp"
+    fi
+}
+
+toggle_pict_in_pict() { wmw t border && wmw t pip; }
+
+toggle_sticky_float_pic_in_pic() { wmw t sticky; wmw g 5:5:4:0:1:1; }
+
+case "$1" in
+    "ty") toggle_layout_float $2;;
+    # "gr") gap_resize $2;;
+esac
+
+fill_screen() { wmw g 1:1:0:0:1:1; }
+
+fill_3_by_3() {
+    echo "> $@"
+    case "$1" in
+        "r1") wmw g "3:3:$2:$3:2:1";;
+        "c1") wmw g "3:3:$2:$3:1:2";;
+        *) echo "NO_MATCH";;
+    esac
+}
+
 
 get_key() {
     # echo "!"
@@ -216,8 +225,8 @@ case "$1" in
     "jqwsa") jq_w_sel_by_app $2;;
     "tt") test_setup_terminal $2;;
     "fan") focus_app_name $2;;
-    "h") fill_half $2;; # l u d r
-    "a") fill_screen;;
+    # "h") apply_grid "cf";; # l u d R
+    "a") apply_grid "cf";;
     "gk") get_key $2;;
     # "b") win_set_grid_22 $2 $3 $4 $5;;
     # "c")  win_set_grid_33 $2 $3 $4 $5;;
@@ -229,7 +238,7 @@ case "$1" in
     "tfl") toggle_layout_float;;
     "tpip") toggle_pict_in_pict;;
     "tsfpip") toggle_sticky_float_pic_in_pic;;
-    *) fill_screen;;
+    # *) apply_grid "cf";;
 esac
 
 ############################################################
