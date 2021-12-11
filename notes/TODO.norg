@@ -7,6 +7,10 @@
 	version: 0.1
 @end
 
+* reaper leader key
+  make leader keys show in bottom of reaper
+  make it show on the bottom just like with regular whick key
+
 * toe heel up turn
 
 * fix `echo-style` = signs

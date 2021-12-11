@@ -52,6 +52,11 @@
 
 # - change split ration of managed windows
 
+# - use window_placement to determin how new windows are
+    # positionned.
+
+# - windows ration cmd >> modulate ratio
+
 # ::: HELPERS :::::::::::::::::::::::::::::::::
 
 jq_w_filter_keys(){ wmq w | jq "map(.\"$1\")"; }

@@ -29,7 +29,7 @@ if is-mac; then
         *) echo "NO_MATCH";;
     esac
     # yabai -m window $yws --$yabai_cmd $2
-    echo "yabai -m window $yws $yabai_cmd $2"
+    # echo "yabai -m window $yws $yabai_cmd $2"
     eval "yabai -m window $yws $yabai_cmd $2"
 else
     echo "linux todo..."
