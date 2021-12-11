@@ -23,6 +23,8 @@
 # sudo yabai --install-sa
 # brew services start yabai
 
+# ::: QUESTIONS :::::::
+
 # ::: HELPERS :::::::::::::::::::::::::::::::::
 
 jq_w_filter_keys(){ wmq w | jq "map(.\"$1\")"; }
@@ -44,12 +46,19 @@ jq_w_ids_by_app_name(){  wmq w | jq "map(select(.\"app\" == \"$1\").id)" | tr -d
 
 # ::: WINDOW FUNCTIONS :::::::::::::::::::::::::::::::::
 
+# gap functions
 
 gap_set() { wms p abs:$1:$1:$1:$1 && wms g abs:$1; }
 
 gap_resize() { wms p rel:$1:$1:$1:$1 && wms g rel:$1; } # +/- integer
 
 toggle_gap() { wms t padding && wms t gap; }
+# test "${1-}" = "gt" && toggle_gap
+
+case "$1" in
+    "gs") gap_set $2;;
+    "gr") gap_resize $2;;
+esac
 
 space_kill() { wms f prev; wms --destroy recent; }
 
@@ -112,7 +121,7 @@ fill_3_by_3() {
 apply_grid() {
     case "$1" in
 
-        "cf") wmw g 1:1:0:0:1:1 $2;;
+        "cf") wmc y float; wmw g 1:1:0:0:1:1 $2;;
         "cb") wmw g 8:8:1:1:6:6 $2;;
         "cm") wmw g 4:4:1:1:2:2 $2;;
         "cs") wmw g 3:3:1:1:1:1 $2;;
