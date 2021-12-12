@@ -104,8 +104,37 @@ case "$1" in
     "cwp") grid_big_left_double_right;;
 esac
 # ---------------------------------- #
-#         ALTER SPACE PARAMS         #
+#           SPACE COMMANDS           #
 # ---------------------------------- #
+
+# "focus" | "f")    ycmd="--focus" ;; # <SPACE_SEL>
+# space_focus() {}
+# "destroy" | "rm")  ycmd="--destroy"; yss=$2 ;; # NOTE: space needs to come before here?!
+# "move" | "mv")     ycmd="--move" ;; # <SPACE_SEL>                        Move position of the selected space to the position of the given space. The selected space and given space must both belong to the same display.
+# space_move() {}
+# "swap" | "sw")     ycmd="--swap" ;; # <SPACE_SEL>                        Swap the selected space with the given space. The selected space and given space must both belong to the same display.
+# space_swap() {}
+# "display" | "dsp") ycmd="--display" ;; # <DISPLAY_SEL>                           Send the selected space to the given display.
+# "balance" | "bl")  ycmd="--balance" ;; # Adjust the split ratios of the selected space so that all windows occupy the same area.
+space_mirror() {
+    case "$1" in
+        "x") wms mir "x-axis" $2;;
+        "y") wms mir "y-axis" $2;;
+    esac
+}
+
+space_rotate() {
+    case "$1" in
+        "1" | "+")  wms rot 90  $2;;
+        "2" | "++") wms rot 180 $2;;
+        "3" | "-")  wms rot 270 $2;;
+    esac
+}
+
+# "toggle" | "t")   ycmd="--toggle" ;; # padding|gap|mission-control|show-desktop Toggle space setting on or off for the selected space.
+# "layout" | "y")   ycmd="--layout" ;; # bsp|stack|float                          Set the layout of the selected space.
+# "label" | "n")    ycmd="--label" ;; # [<LABEL>]                                 Label the selected space, allowing that label to be used as an alias in commands that take a SPACE_SEL parameter. If the command is called without an argument it will try to remove a previously assigned label.
+
 
 set_gap() {
     # test $1 = "a" && wms g abs:$2 || test $1 = "r" && wms g rel:$2;
@@ -127,6 +156,8 @@ case "$1" in
     "sp") set_pad $2 $3;;
     "ss") set_spacing $2 $3;;
     "sst") toggle_spacing $2;;
+    "sr") space_rotate $2 $3;;
+    "sm") space_mirror $2 $3;;
     # "gr") gap_resize $2;;
 esac
 
@@ -158,6 +189,28 @@ create_desktop() {
 # cmd + alt - n : yabai -m space --create && \
 #                 index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
 #                 yabai -m space --focus "${index}"
+
+# ------------------------------------------- #
+#               WINDOW COMMANDS               #
+# ------------------------------------------- #
+
+# "focus" | "f")         yabai_cmd="--focus";; # <WINDOW_SEL>
+# "swap" | "sw")          yabai_cmd="--swap";; # <WINDOW_SEL>
+# "warp" | "wrp")         yabai_cmd="--warp";; # <WINDOW_SEL>
+# "stack" | "stk")        yabai_cmd="--stack";; # <WINDOW_SEL>
+# "insert" | "in")        yabai_cmd="--insert";; # <DIR_SEL>|stack
+# "grid" | "g")          yabai_cmd="--grid";; # <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+# "move" | "mv")          yabai_cmd="--move";; # abs|rel:<dx>:<dy>
+# "resize" | "rz")        yabai_cmd="--resize";; # top|left|bottom|right|top_left|top_right|bottom_right|bottom_left|abs:<dx>:<dy>
+# "ratio" | "rt")         yabai_cmd="--ratio";; # rel|abs:<dr>
+# "toggle" | "t")         yabai_cmd="--toggle";; # float|sticky|topmost|pip|shadow|border|split|zoom-parent|zoom-fullscreen|native-fullscreen|expose
+# "layer" | "ly")         yabai_cmd="--layer";; # <LAYER>
+# "opacity" | "o")        yabai_cmd="--opacity";; # <floating point number>
+# "display" | "d")        yabai_cmd="--display";; # <DISPLAY_SEL>
+# "space" | "s")          yabai_cmd="--space";; # <SPACE_SEL>
+# "minimize" | "mz")      yabai_cmd="--minimize";;
+# "deminimize" | "dmz")   yabai_cmd="--deminimize";;
+# "close" | "c")          yabai_cmd="--close" ;;
 
 # ---------------------------------- #
 #       WINDOW TOGGLE FLOATS         #
@@ -341,11 +394,11 @@ wm_custom_launcher() {
     open -n -a "/Applications/Alacritty.app" \
         --args -t "${TITLE}" \
         -e "launcher-filter" # todo: atm this is another script. how do ri get LAUNCH_FILTER to work??
-        # -e $LAUNCH_FILTER # not working yet
-        # --working-directory "$(pwd)"
-    #   -o window.dimensions.lines=35 -o window.dimensions.columns=80 \
-    #   -o window.decorations=none --working-directory "$(pwd)" -e "launcher-filter" \
-    #   -o colors.primary.background="#74B573" # customizing colors is not working for me
+            # -e $LAUNCH_FILTER # not working yet
+            # --working-directory "$(pwd)"
+            #   -o window.dimensions.lines=35 -o window.dimensions.columns=80 \
+            #   -o window.decorations=none --working-directory "$(pwd)" -e "launcher-filter" \
+            #   -o colors.primary.background="#74B573" # customizing colors is not working for me
 
     # APPLY FLOAT CENTER LAYOUT
     local wid="$(jq_win_ids_by_key "title" "$title")"
@@ -380,7 +433,7 @@ wm_custom_launcher() {
 # create new floating window and run program XXX
 
 # use bsp layers -> put new prog in top layer???
-    # add custom gap to layer > split windows???
+# add custom gap to layer > split windows???
 
 
 
