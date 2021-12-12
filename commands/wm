@@ -25,25 +25,7 @@
 
 # ::: LAUNCHER POPUP ::::::
 
-# WMU
-# wmr a n="cust_launch" t='bin_custom_launcher' mg=off st=on y=above b=off
 
-# # LAUNCHER FILTER
-# find /System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities -maxdepth 1 -name "*.app" | fzf | xargs -I {} open "{}"
-
-# # LAUNCHER POPUP
-# TITLE=bin_custom_launcher # ignore this title in yabairc
-# SCREEN_WIDTH=`yabai -m query --displays --display | jq .frame.w*2`
-# SCREEN_HEIGHT=`yabai -m query --displays --display | jq .frame.h*2`
-# TERM_WIDTH=1280
-# TERM_HEIGHT=1260
-# let "X=SCREEN_WIDTH/2-TERM_WIDTH/2"
-# let "Y=SCREEN_HEIGHT/2-TERM_HEIGHT/2"
-# alacritty \
-#   -t "${TITLE}" -o window.position.x="${X}" -o window.position.y="${Y}" \
-#   -o window.dimensions.lines=35 -o window.dimensions.columns=80 \
-#   -o window.decorations=none --working-directory "$(pwd)" -e "$1" \
-#   -o colors.primary.background="#74B573" # customizing colors is not working for me
 
 
 # ::: QUESTIONS :::::::
@@ -349,16 +331,36 @@ case "$1" in
 esac
 
 # ---------------------------------- #
-#          NEW APP / WINDOW          #
+#          CUSTOM LAUNCHER           #
 # ---------------------------------- #
 
-# SINGLE NEW WINDOW
+# - custom launcher || predefined app command, eg. term_new
+# - how open next window ( win place && split ratio )
+# - pass filter to terminal and rename title
+# - apply_grid center float to window with title
 
-# 1. custom launcher || predefined app command, eg. term_new
-# 2. center float search
-# 3. specify where / how to open next window
-#   -> win place
-#   -> split ratio
+# NOTE: i believe that filter is passed as an arg to popup
+# SKHDRC LAUNCHER   | ~/launcher-popup ~/launcher-filter
+
+# WM CONFIG         | wmr a n="cust_launch" t='bin_custom_launcher' mg=off st=on y=above b=off
+
+# LAUNCHER FILTER   | find /System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities -maxdepth 1 -name "*.app" | fzf | xargs -I {} open "{}"
+
+# # LAUNCHER POPUP
+
+# TITLE=bin_custom_launcher # ignore this title in yabairc
+# SCREEN_WIDTH=`yabai -m query --displays --display | jq .frame.w*2`
+# SCREEN_HEIGHT=`yabai -m query --displays --display | jq .frame.h*2`
+# TERM_WIDTH=1280
+# TERM_HEIGHT=1260
+# let "X=SCREEN_WIDTH/2-TERM_WIDTH/2"
+# let "Y=SCREEN_HEIGHT/2-TERM_HEIGHT/2"
+# alacritty \
+#   -t "${TITLE}" -o window.position.x="${X}" -o window.position.y="${Y}" \
+#   -o window.dimensions.lines=35 -o window.dimensions.columns=80 \
+#   -o window.decorations=none --working-directory "$(pwd)" -e "$1" \
+#   -o colors.primary.background="#74B573" # customizing colors is not working for me
+
 
 # ---------------------------------- #
 #          FLOAT SYS ADMIN           #
