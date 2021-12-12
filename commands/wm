@@ -140,43 +140,26 @@ esac
 #         ALTER SPACE PARAMS         #
 # ---------------------------------- #
 
-# TODO: test create mult new windows wit ratios
-
-
-# both + | - | abs
-# gap  + | - | abs
-# pad  + | - | abs
-
-gap_set() {
-
-    # abs n
-    # abs +=n
-    # abs -=n
-    wms p abs:$1:$1:$1:$1 && wms g abs:$1;
-
-    # rel n
-    # rel +=n
-    # rel -=n
-    # wms p rel:$1:$1:$1:$1 && wms g rel:$1;
+set_gap() {
+    test $1 = "a" && wms g abs:$2
+    test $1 = "r" && wms g rel:$2
 }
 
 set_pad() {
-    echo "set pad"
-    # wms p abs:$1:$1:$1:$1 && wms g abs:$1;
+    test $1 = "a" && wms p abs:$2:$2:$2:$2
+    test $1 = "r" && wms p rel:$2:$2:$2:$2
 }
 
-set_gap_and_pad() {
-    echo "g p"
-}
+set_spacing() { set_pad $1 $2; set_gap $1 $2; }
 
-gap_resize() { wms p rel:$1:$1:$1:$1 && wms g rel:$1; } # +/- integer
-
-toggle_gap() { wms t padding && wms t gap; }
-# test "${1-}" = "gt" && toggle_gap
+toggle_spacing() { wms t padding && wms t gap; }
 
 case "$1" in
-    "sg") gap_set $2;;
-    "gr") gap_resize $2;;
+    "sg") set_gap $2 $3;;
+    "sp") set_pad $2 $3;;
+    "ss") set_spacing $2 $3;;
+    "sst") toggle_spacing $2;;
+    # "gr") gap_resize $2;;
 esac
 
 space_kill() { wms f prev; wms --destroy recent; }
@@ -309,9 +292,10 @@ apply_grid() {
 }
 
 # @param fraction multiplier
-term_set_ratio() {
+win_set_ratio() {
     # inst_ceiling=$(( 1/$2 + $new_num))
-    wmw rt "abs:$1"
+    test $1 = "a" && wmw rt "abs:$1"
+    test $1 = "r" && wmw rt "rel:$1"
     # todo: if k >> increase
     # todo: if j >> decrease
 }
@@ -361,7 +345,7 @@ alacritty_num_grid() {
 
 case "$1" in
     "wf") win_focus $2;;
-    "wr") term_set_ratio $2;;
+    "wr") win_set_ratio $2 $3;;
 esac
 
 # ---------------------------------- #
