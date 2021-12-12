@@ -8,10 +8,12 @@
 @end
 
 * kmonad rename executable >> add branch_name
-  ~ rename current kmonad executable
-  ~ rename kmonad script `setup-util-kmonad`
-        split current command
-  ~ pass argument
+  ~ rename current kmonad executable >> get branch name
+  ~ split `setup-user-keyboard`
+        - touch `setup-util-kmonad`
+        - touch `setup-util-qmk`
+  ~ pass argument to setup-util-kmonad
+  4 kmor >> pass branch name to test..
 
   `pass name arg to setup-util-kmonad`
   https://stackoverflow.com/questions/51352885/how-do-you-set-the-executable-output-location-for-a-haskell-project-built-with-s
