@@ -54,6 +54,8 @@ jq_win_ids_by_key(){ wmq w | jq "map(select(.\"$1\" == \"$2\").id)" | tr -d '[],
 
 jq_w_ids_by_app_name(){  wmq w | jq "map(select(.\"app\" == \"$1\").id)" | tr -d '[],"'; }
 
+jq_w_ids_by_title(){  wmq w | jq "map(select(.\"title\" == \"$1\").id)" | tr -d '[],"'; }
+
 # ---------
 
 get_key() {
@@ -334,17 +336,25 @@ esac
 #          CUSTOM LAUNCHER           #
 # ---------------------------------- #
 
-# - custom launcher || predefined app command, eg. term_new
-# - how open next window ( win place && split ratio )
-# - pass filter to terminal and rename title
-# - apply_grid center float to window with title
-
 # NOTE: i believe that filter is passed as an arg to popup
 # SKHDRC LAUNCHER   | ~/launcher-popup ~/launcher-filter
 
 # WM CONFIG         | wmr a n="cust_launch" t='bin_custom_launcher' mg=off st=on y=above b=off
 
-# LAUNCHER FILTER   | find /System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities -maxdepth 1 -name "*.app" | fzf | xargs -I {} open "{}"
+# - custom launcher || predefined app command, eg. term_new
+wm_custom_launcher() {
+    local launch_filter='find /System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities -maxdepth 1 -name "*.app" | fzf | xargs -I {} open "{}"'
+    local title="wm_custom_launcher"
+
+    open -n -a "/Applications/Alacritty.app" --args -t "${title}" -e "$launch_filter"
+
+    apply_grid "cb" "$(jq_win_ids_by_key "title" "$title")"
+
+    # - how open next window ( win place && split ratio )
+    cfg_wp $1
+    wmc sr "${2-0.5}"
+
+}
 
 # # LAUNCHER POPUP
 
@@ -474,6 +484,7 @@ case "$1" in
     "layout_1") grid_big_left_double_right;;
     "wsa") jq_w_sel_by_app $2;;
     "wtba") jq_w_titles_by_app $2;;
+    "l") wm_custom_launcher $2 $3;;
     "tn") set_term_inst_num $2;;
     "ta") terms_add $2 $3 $4;;
     # "trm") terms_add $2;;
