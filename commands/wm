@@ -364,6 +364,27 @@ case "$1" in
     "wr") term_set_ratio $2;;
 esac
 
+# ---------------------------------- #
+#          NEW APP / WINDOW          #
+# ---------------------------------- #
+
+# SINGLE NEW WINDOW
+
+# 1. custom launcher || predefined app command, eg. term_new
+# 2. center float search
+# 3. specify where / how to open next window
+#   -> win place
+#   -> split ratio
+
+# ---------------------------------- #
+#          FLOAT SYS ADMIN           #
+# ---------------------------------- #
+
+# create new floating window and run program XXX
+
+# use bsp layers -> put new prog in top layer???
+    # add custom gap to layer > split windows???
+
 
 
 # ---------------------------------- #
