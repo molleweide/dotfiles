@@ -166,7 +166,7 @@ set_pad() {
 }
 
 set_gap_and_pad() {
-
+    echo "g p"
 }
 
 gap_resize() { wms p rel:$1:$1:$1:$1 && wms g rel:$1; } # +/- integer
