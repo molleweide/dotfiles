@@ -343,17 +343,33 @@ esac
 
 # - custom launcher || predefined app command, eg. term_new
 wm_custom_launcher() {
-    local launch_filter='find /System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities -maxdepth 1 -name "*.app" | fzf | xargs -I {} open "{}"'
-    local title="wm_custom_launcher"
+    local LAUNCH_FILTER='find /System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities -maxdepth 1 -name "*.app" | fzf | xargs -I {} open "{}"'
+    # local LAUNCH_FILTER="find /System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities -maxdepth 1 -name \"*.app\" | fzf | xargs -I {} open \"{}\""
+    local TITLE=wm_custom_launcher # ignore this title in yabairc
+    # local SCREEN_WIDTH=`yabai -m query --displays --display | jq .frame.w*2`
+    # local SCREEN_HEIGHT=`yabai -m query --displays --display | jq .frame.h*2`
+    # local TERM_WIDTH=1280
+    # local TERM_HEIGHT=1260
+    # let "X=SCREEN_WIDTH/2-TERM_WIDTH/2"
+    # let "Y=SCREEN_HEIGHT/2-TERM_HEIGHT/2"
 
-    open -n -a "/Applications/Alacritty.app" --args -t "${title}" -e "$launch_filter"
+    open -n -a "/Applications/Alacritty.app" \
+        --args -t "${TITLE}" \
+        -e "launcher-filter"
+        # -e $LAUNCH_FILTER # not working yet
+        # --working-directory "$(pwd)"
+    #   -o window.dimensions.lines=35 -o window.dimensions.columns=80 \
+    #   -o window.decorations=none --working-directory "$(pwd)" -e "launcher-filter" \
+    #   -o colors.primary.background="#74B573" # customizing colors is not working for me
 
-    apply_grid "cb" "$(jq_win_ids_by_key "title" "$title")"
+    # APPLY FLOAT CENTER LAYOUT
+    local wid="$(jq_win_ids_by_key "title" "$title")"
+    wmc y "float" $wid
+    apply_grid "cb" $wid
 
-    # - how open next window ( win place && split ratio )
-    cfg_wp $1
-    wmc sr "${2-0.5}"
-
+    # SET OPEN NEXT WIN OPTIONS
+    # cfg_wp $1
+    # wmc sr "${2-0.5}"
 }
 
 # # LAUNCHER POPUP
