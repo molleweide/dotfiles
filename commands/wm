@@ -423,12 +423,23 @@ esac
 #           dorothy command >> param-quoted??
 #
 # Example:
+#
+# EX 1
+#
 #   Search for "br" and it returns "Brave Browser.app"
 #   get id based on name string app/title/label
 #   send to destination
 #   follow focus
 #   apply layout
 #       do whatever...
+#
+# EX 2
+#
+# Use terminal as a global popup > capture inputed string into variable
+# >>> WHY???
+# Well, this would make it possible to supply text strings to kmonad command processes??
+#       That would be pretty cool, because then you could bind launch command to kmonad key
+#       and then process further.
 
 # NOTE: i believe that filter is passed as an arg to popup
 # SKHDRC LAUNCHER   | ~/launcher-popup ~/launcher-filter
