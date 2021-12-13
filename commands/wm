@@ -421,6 +421,8 @@ esac
 #       https://stackoverflow.com/questions/2005192/how-to-execute-a-bash-command-stored-as-a-string-with-quotes-and-asterisk#32280085
 #       http://mywiki.wooledge.org/BashFAQ/050
 # 2. how would I get the return value from this??
+#       https://unix.stackexchange.com/questions/65618/bash-script-wait-for-processes-and-get-return-code
+#       https://stackoverflow.com/questions/356100/how-to-wait-in-bash-for-several-subprocesses-to-finish-and-return-exit-code-0
 # 3. preserve string param
 #       interesting thread -> https://stackoverflow.com/questions/1668649/how-to-keep-quotes-in-bash-arguments
 #           dorothy command >> param-quoted??
