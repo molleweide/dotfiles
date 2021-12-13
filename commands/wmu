@@ -61,7 +61,9 @@ wms n misc 4
 # --------------------------
 # ---       EVENTS       ---
 # --------------------------
-for i in $(seq 1 $(wme ls | jq 'length')); do wme rm 0; done # refresh event listeners
+
+reset_all_events
+# for i in $(seq 1 $(wme ls | jq 'length')); do wme rm 0; done # refresh event listeners
 
 # # Refresh process widget when current window title changes
 wme a wtc "osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'" \
@@ -94,7 +96,9 @@ wme a wtc "osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh 
 # -------------------------
 # ---       RULES       ---
 # -------------------------
-for i in $(seq 1 $(wmr ls | jq 'length')); do wmr rm 0; done # refresh rules
+
+rules_reset_all
+# for i in $(seq 1 $(wmr ls | jq 'length')); do wmr rm 0; done # refresh rules
 
 # --- APPS NOT MANAGED ---
 wmr a n="System Preferences" a="^System Preferences$"           mg=off
