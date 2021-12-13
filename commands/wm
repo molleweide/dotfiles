@@ -437,9 +437,12 @@ esac
 #
 # Use terminal as a global popup > capture inputed string into variable
 # >>> WHY???
-# Well, this would make it possible to supply text strings to kmonad command processes??
+#       Make possible to supply text strings to kmonad command process since tty is not
+#           possible here, ie. we need to open a new term window.
+#
 #       That would be pretty cool, because then you could bind launch command to kmonad key
 #       and then process further.
+
 
 # NOTE: i believe that filter is passed as an arg to popup
 # SKHDRC LAUNCHER   | ~/launcher-popup ~/launcher-filter
