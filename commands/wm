@@ -357,8 +357,8 @@ apply_grid() {
 # @param fraction multiplier
 win_set_ratio() {
     # inst_ceiling=$(( 1/$2 + $new_num))
-    test $1 = "a" && wmw rt "abs:$1"
-    test $1 = "r" && wmw rt "rel:$1"
+    test $1 = "a" && wmw rt "abs:$2"
+    test $1 = "r" && wmw rt "rel:$2"
     # todo: if k >> increase
     # todo: if j >> decrease
 }
@@ -527,7 +527,17 @@ terms_add() {
 
     local new_num=$1
     cfg_wp $2
-    wmc sr "${3-0.5}"
+
+    local ratio
+    if test $2 = "1"; then
+        ratio=$3
+    elif test $2 = "2"; then
+        ratio=$(bc <<< "scale=2; 1-${3}")
+    fi
+
+    # echo "wmc sr ${ratio:-.5}"
+    wmc sr "${ratio:-.5}"
+
     inst_ceiling=$(( $aid_ct + $new_num))
     term_new $aid_ct_new $inst_ceiling
 }
@@ -619,7 +629,8 @@ case "$1" in
     "wtba") jq_w_titles_by_app $2;;
     "l") wm_custom_launcher $2 $3;;
     "tn") set_term_inst_num $2;;
-    "ta") terms_add $2 $3 $4;;
+    # "ta") terms_add $2 $3 $4;;
+    "ta") terms_add ${@:2};;
     # "trm") terms_add $2;;
     "ts") alacritty_num_grid $2 $3;;
     "tt") test_setup_terminal $2;;
