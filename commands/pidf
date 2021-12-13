@@ -1,0 +1,2 @@
+#!/bin/sh
+ps axc | grep -i $1 | awk "{ print \$1}";

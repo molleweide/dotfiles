@@ -423,6 +423,7 @@ esac
 # 2. how would I get the return value from this??
 #       https://unix.stackexchange.com/questions/65618/bash-script-wait-for-processes-and-get-return-code
 #       https://stackoverflow.com/questions/356100/how-to-wait-in-bash-for-several-subprocesses-to-finish-and-return-exit-code-0
+#       https://unix.stackexchange.com/questions/642845/spawn-a-terminal-and-redirect-its-stdout-to-original-process
 # 3. preserve string param
 #       interesting thread -> https://stackoverflow.com/questions/1668649/how-to-keep-quotes-in-bash-arguments
 #           dorothy command >> param-quoted??
@@ -450,16 +451,45 @@ esac
 
 launch_filter() {
     cmd=( find /System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities -maxdepth 1 -name "*.app" "|" fzf "|" xargs -I {} open "{}")
-    echo "${cmd[@]}"
+    # echo "${cmd[@]}"
+    # tmp_file="$(mktemp /tmp/kmonad-XXX)"
+    # compile_layout >$tmp_file
 }
 
 # - custom launcher || predefined app command, eg. term_new
 wm_custom_launcher() {
     local TITLE=wm_custom_launcher # ignore this title in yabairc
+
     open -n -a "/Applications/Alacritty.app" \
         --args -t "${TITLE}" \
-        -e "launcher-filter" # todo: atm this is another script. how do ri get LAUNCH_FILTER to work??
+        -e "launcher-filter" "${TITLE}" & # todo: atm this is another script. how do ri get LAUNCH_FILTER to work??
         # -e launch_filter
+
+
+    # # customizing colors is not working for me
+    # local test=$(alacritty \
+    #     -t "${TITLE}" -e "launcher-filter" "${TITLE}")
+    #   # -o window.dimensions.lines=35 -o window.dimensions.columns=80 \
+    #   # -o window.decorations=none --working-directory "$(pwd)" -e "$1" \
+    #   # -o colors.primary.background="#74B573"
+
+    echo "test: $test"
+
+    # echo "PID: $$" # (i)
+    # echo "another way $!" # This gives you the PID of the last job run in background
+
+
+    # ps ax|grep "launcher-filter"
+    # ps ax|grep "fzf"
+    # ps ax|grep "xargs"
+    # pgrep -f "launcher-filter"
+
+    # pidf fzf
+
+    wait
+
+    local fzf_data=$(cat "/tmp/${TITLE}")
+    echo "/tmp/ -> $fzf_data"
 
     # APPLY FLOAT CENTER LAYOUT
     local wid="$(jq_win_ids_by_key "title" "$title")"
