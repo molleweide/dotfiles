@@ -36,7 +36,10 @@
 
 jq_w_filter_keys(){ wmq w | jq "map(.\"$1\")"; }
 
-jq_w_sel_by_app(){ wmq w | jq "map(select(.\"app\" == \"$1\"))"; }
+jq_w_sel_by_app(){
+    input_str="$1"
+    echo ">>>>>> $input_str"
+    wmq w | jq "map(select(.\"app\" == \"$input_str\"))"; }
 
 jq_w_titles_by_app(){ wmq w | jq "map(select(.\"app\" == \"$1\").title)" | tr -d '[],"'; }
 
@@ -120,7 +123,7 @@ esac
 # SIGNAL_SEL  := <index> | LABEL
 # DIR_SEL     := north | east | south | west
 # STACK_SEL   := stack.prev | stack.next | stack.first | stack.last | stack.recent
-sel_helper() {
+sel() {
     echo "sel help"
     # WINDOW_SEL  := prev | next | first | last | recent | mouse | largest | smallest | STACK_SEL | DIR_SEL | <window id>
     # DISPLAY_SEL :=                                             | DIR_SEL | <arrangement index (1-based)>
@@ -411,6 +414,22 @@ esac
 #          CUSTOM LAUNCHER           #
 # ---------------------------------- #
 
+# TODO: BALUPTON QUESTION
+#
+# 1. how can I pass the launcher command string to alacritty
+# 2. how would I get the return value from this??
+# 3. preserve string param
+#       interesting thread -> https://stackoverflow.com/questions/1668649/how-to-keep-quotes-in-bash-arguments
+#           dorothy command >> param-quoted??
+#
+# Example:
+#   Search for "br" and it returns "Brave Browser.app"
+#   get id based on name string app/title/label
+#   send to destination
+#   follow focus
+#   apply layout
+#       do whatever...
+
 # NOTE: i believe that filter is passed as an arg to popup
 # SKHDRC LAUNCHER   | ~/launcher-popup ~/launcher-filter
 
@@ -587,7 +606,7 @@ reset_all_events() { for i in $(seq 1 $(wme ls | jq 'length')); do wme rm 0; don
 
 case "$1" in
     "layout_1") grid_big_left_double_right;;
-    "wsa") jq_w_sel_by_app $2;;
+    "wsa") jq_w_sel_by_app "$2";;
     "wtba") jq_w_titles_by_app $2;;
     "l") wm_custom_launcher $2 $3;;
     "tn") set_term_inst_num $2;;
