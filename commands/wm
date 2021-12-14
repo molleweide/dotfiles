@@ -470,9 +470,12 @@ esac
 # - custom launcher || predefined app command, eg. term_new
 launch_do() {
     local TITLE="wm_custom_launcher"
+    local rt
     # tmp_file="$(mktemp /tmp/$TITLE-XXX)" # NOTE: can this be used somehow?
 
-    open -n -a "/Applications/Alacritty.app" --args -t "${TITLE}" -e "launcher-filter" "${tmp_file}" # -e launch_filter # -e bash -c launch_filter
+    open -n -a "/Applications/Alacritty.app" \
+        --args -t "${TITLE}" \
+        -e "launcher-filter" "${TITLE}" # -e launch_filter # -e bash -c launch_filter
 
     local ect=0
     fswatch -0 /tmp/$TITLE | while read -d "" event
@@ -480,12 +483,29 @@ launch_do() {
         ect=$(( $ect + 1 ))
         # echo "e$ect: ${event}"
         if test "$ect" = "2"; then
-            local rt=$(cat "/tmp/${TITLE}")
-            # echo "rt: $rt"
+            rt=$(cat "/tmp/${TITLE}")
             local pid_fswatch=$(ps ax | awk "\$7 ~ /${TITLE}/ { print \$1 }") # make this into command
+
+            ### do stuff START
+
+            echo "$rt"
+
+            ### do stuff END
+
             kill $pid_fswatch #$(pgrep fswatch) # https://unix.stackexchange.com/questions/336894/kill-the-parent-of-a-child-pipe-process
         fi
     done
+}
+
+# dummy example > search app and set focus
+focus_app() {
+    local ld=$(launch_do)
+    local bld=$(basename "$ld")
+    local nwo_ext=$(echo "$bld" | cut -f 1 -d '.')
+
+    # echo "name: $name"
+    win_focus $nwo_ext
+
 
     # # APPLY FLOAT CENTER LAYOUT
     # local wid="$(jq_win_ids_by_key "title" "$title")"
@@ -495,27 +515,6 @@ launch_do() {
     # # SET OPEN NEXT WIN OPTIONS
     # cfg_wp "${1-1}"
     # wmc sr "${2-0.5}"
-
-    # echo "PID: $$" # (i)
-    # echo "another way $!" # This gives you the PID of the last job run in background
-    # ps ax|grep "launcher-filter"
-    # ps ax|grep "fzf"
-    # ps ax|grep "xargs"
-    # pgrep -f "launcher-filter"
-    # pidf fzf
-    # wait
-    # local fzf_data=$(cat "/tmp/${TITLE}")
-    # echo "/tmp/ -> $fzf_data"
-}
-
-ftn() {
-
-    # call launcher with search command
-    # local ld=launch_do
-    # get string
-    echo "launch_do: $ld"
-    # focus string
-
 }
 
 # # LAUNCHER POPUP
@@ -691,5 +690,6 @@ case "$1" in
     # "c")  win_set_grid_33 $2 $3 $4 $5;;
     "g")  apply_grid $2 $3;;
     "lcb") launch_cb ${@:2};;
+    "fa") focus_app;;
     # *) apply_grid "cf";;
 esac
