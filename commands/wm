@@ -115,30 +115,36 @@ cfg_wp() {
 case "$1" in
     "cwp") grid_big_left_double_right;;
 esac
+
 # ---------------------------------- #
-#           SPACE COMMANDS           #
+#            SELECT HELPER           #
 # ---------------------------------- #
 
-# LABEL       := arbitrary string/text used as an identifier
 # LAYER       := below | normal | above
 # RULE_SEL    := <index> | LABEL
 # SIGNAL_SEL  := <index> | LABEL
 # DIR_SEL     := north | east | south | west
 # STACK_SEL   := stack.prev | stack.next | stack.first | stack.last | stack.recent
 sel() {
+    # does it even make sense to have this function?
     echo "sel help"
     # WINDOW_SEL  := prev | next | first | last | recent | mouse | largest | smallest | STACK_SEL | DIR_SEL | <window id>
     # DISPLAY_SEL :=                                             | DIR_SEL | <arrangement index (1-based)>
     # SPACE_SEL   :=                                             | <mission-control index (1-based)> | LABEL
 
-    # $1= w | d | s
-
+    # DOMAIN -> $1= w | d | s | r | e | S
+    # SELECTION $2=
     # base              p n f l rc m lg sm
     # stack sel         sp sn sf sl sr
     # dir sel           l u d r
     # wid/arridx/mcidx  if number
     # title/label ??          other string
 }
+
+# ---------------------------------- #
+#           SPACE COMMANDS           #
+# ---------------------------------- #
+
 
 # create desktop, move window andK follow focus - uses jq for parsing json (brew install jq)
 # shift + cmd - n : yabai -m space --create && \
@@ -151,7 +157,7 @@ space_focus() {
     #
     wms f $1
 }
-# "destroy" | "rm")  ycmd="--destroy"; yss=$2 ;; # NOTE: space needs to come before here?!
+# "destroy" | "rm")  ycmd="--destroy"; yss=$2 ;; # NOTE: space needs to come after here?!
 # "move" | "mv")     ycmd="--move" ;; # <SPACE_SEL>                        Move position of the selected space to the position of the given space. The selected space and given space must both belong to the same display.
 # space_move() {}
 # "swap" | "sw")     ycmd="--swap" ;; # <SPACE_SEL>                        Swap the selected space with the given space. The selected space and given space must both belong to the same display.
@@ -166,8 +172,8 @@ space_mirror() {
 }
 
 space_rotate() {
-    case "$1" in
-        "1" | "+")  wms rot 90  $2;;
+    case "${1-}" in
+        "" | "1" | "+")  wms rot 90  $2;;
         "2" | "++") wms rot 180 $2;;
         "3" | "-")  wms rot 270 $2;;
     esac
