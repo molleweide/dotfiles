@@ -502,7 +502,7 @@ launch_do() {
 
 # dummy example > search app and set focus
 focus_app() {
-    local ld=$(launch_do)
+    local ld=$(launch_do) # TODO: pass search query `wmq ...`
     local bld=$(basename "$ld")
     local nwo_ext=$(echo "$bld" | cut -f 1 -d '.')
     win_focus $nwo_ext
@@ -517,6 +517,9 @@ focus_app() {
 # get_user_input() {
 # }
 
+# pass search titles into launcher
+# select
+# change focuse
 
 # # LAUNCHER POPUP
 
