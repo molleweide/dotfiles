@@ -454,10 +454,12 @@ esac
 #     cmd=( find /System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities -maxdepth 1 -name '"*.app"' "|" fzf "|" xargs -I {} echo '"{}"' ">" '"/tmp/$1"')
 #     echo "${cmd[@]}"
 # }
+# export -f launch_filter # NOTE: does not work with alacritty -e ...
 
 # launch_cb() {
 #     echo "cb: $@"
 # }
+# export -f launch_cb # NOTE: this works with xargs
 
 # functions
 
@@ -466,24 +468,39 @@ esac
 
 
 # - custom launcher || predefined app command, eg. term_new
-wm_custom_launcher() {
-    local TITLE=wm_custom_launcher # ignore this title in yabairc
+launch_do() {
+    local TITLE="wm_custom_launcher"
     # tmp_file="$(mktemp /tmp/$TITLE-XXX)"
-
+    # launch_filter
     open -n -a "/Applications/Alacritty.app" \
         --args -t "${TITLE}" \
-        -e "launcher-filter" "${TITLE}" # todo: atm this is another script. how do ri get LAUNCH_FILTER to work??
-
-    # fswatch  /tmp/$TITLE | xargs -I{} $callback {} # callback needs to be exported in order to be accessible
-
+        -e "launcher-filter" "${TITLE}" # -e launch_filter # -e bash -c launch_filter
+    # fswatch  /tmp/$TITLE | xargs -I{} bash -c "launch_cb {}" # callback needs to be exported in order to be accessible
     local ect=0
     fswatch -0 /tmp/$TITLE | while read -d "" event
       do \
-
         ect=$(( $ect + 1 ))
-        # echo "e$ect: ${event}"
-        test "$ect" = "2" && cat "/tmp/${TITLE}"
+        echo "e$ect: ${event}"
+        if test "$ect" = "2"; then
+            local rt=$(cat "/tmp/${TITLE}")
+            echo "rt: $rt"
+            # ps ax|
+            # TODO: I want this: https://stackoverflow.com/questions/17001849/awk-partly-string-match-if-column-word-partly-matches
+            # local str="fswatch"
+            local pid_fswatch=$(ps ax | awk "\$7 ~ /${TITLE}/ { print \$1 }") # make this into command
+
+            # echo "ps_ax: \`$ps_ax\`"
+            # ps ax |grep "${str}"
+            # ps axc|awk "{if (\$5==\"$1\") print \$1}";
+
+            # echo "--------"
+            kill $pid_fswatch #$(pgrep fswatch) # https://unix.stackexchange.com/questions/336894/kill-the-parent-of-a-child-pipe-process
+            # break
+            # exit
+        fi
     done
+
+    echo "outside..."
 
     # # APPLY FLOAT CENTER LAYOUT
     # local wid="$(jq_win_ids_by_key "title" "$title")"
@@ -504,6 +521,16 @@ wm_custom_launcher() {
     # wait
     # local fzf_data=$(cat "/tmp/${TITLE}")
     # echo "/tmp/ -> $fzf_data"
+}
+
+ftn() {
+
+    # call launcher with search command
+    # local ld=launch_do
+    # get string
+    echo "launch_do: $ld"
+    # focus string
+
 }
 
 # # LAUNCHER POPUP
@@ -664,7 +691,7 @@ case "$1" in
     "layout_1") grid_big_left_double_right;;
     "wsa") jq_w_sel_by_app "$2";; # make sure argument is sent as quoted string
     "wtba") jq_w_titles_by_app $2;;
-    "l") wm_custom_launcher $2 $3;;
+    "l") launch_do $2 $3;;
     "tn") set_term_inst_num $2;;
     # "ta") terms_add $2 $3 $4;;
     "ta") terms_add ${@:2};;
