@@ -463,8 +463,8 @@ esac
 
 # functions
 
-# 1. run_launcher $name $callback
-# 2. create function open_app
+# 1. pass search function.
+# how can I tell launcher to just pass the string I have written back, ie. stdin, i beieve??
 
 
 # - custom launcher || predefined app command, eg. term_new
@@ -476,6 +476,12 @@ launch_do() {
     open -n -a "/Applications/Alacritty.app" \
         --args -t "${TITLE}" \
         -e "launcher-filter" "${TITLE}" # -e launch_filter # -e bash -c launch_filter
+
+    local wid="$(jq_win_ids_by_key "title" "$title")"
+    wmc y "float" $wid
+    apply_grid "cb" $wid
+
+    # NOTE: what if I exit with ^C >> will this stay in the background forever then???!!
 
     local ect=0
     fswatch -0 /tmp/$TITLE | while read -d "" event
@@ -502,15 +508,7 @@ focus_app() {
     local ld=$(launch_do)
     local bld=$(basename "$ld")
     local nwo_ext=$(echo "$bld" | cut -f 1 -d '.')
-
-    # echo "name: $name"
     win_focus $nwo_ext
-
-
-    # # APPLY FLOAT CENTER LAYOUT
-    # local wid="$(jq_win_ids_by_key "title" "$title")"
-    # wmc y "float" $wid
-    # apply_grid "cb" $wid
 
     # # SET OPEN NEXT WIN OPTIONS
     # cfg_wp "${1-1}"
