@@ -11,7 +11,7 @@ if is-mac; then
     yc="" # rm this line
     case "$setting" in
         "auto_balance" | "ab")  yc="auto_balance";;               # [<BOOL_SEL>]
-        "debug_output" | "do")  yc="debug_output";;               # [<BOOL_SEL>]
+        "debug_output" | "do")  yc="debug_output";;               # [<BOOL_SEL>]grid_big_left_double_right
         "external_bar" | "bar") yc="external_bar";;               # [<main|all|off>:<top_padding>:<bottom_padding>]
         "ffms")                 yc="focus_follows_mouse";;        # [autofocus|autoraise|off]
         "fmsf")                 yc="mouse_follows_focus";;        # [<BOOL_SEL>]

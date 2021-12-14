@@ -473,11 +473,7 @@ launch_do() {
     local rt
     # tmp_file="$(mktemp /tmp/$TITLE-XXX)" # NOTE: can this be used somehow?
 
-    open -n -a "/Applications/Alacritty.app" \
-        --args -t "${TITLE}" \
-        -e "launcher-filter" "${TITLE}" # only works if last line writes to tmp file?!
-
-    # echo "!!!"
+    open -n -a "/Applications/Alacritty.app" --args -t "${TITLE}" -e "launcher-filter" "${TITLE}" # only works if last line writes to tmp file?!
     local wid="$(jq_win_ids_by_key "title" "$TITLE")"
     wmc y "float" $wid
     apply_grid "cb" $wid
@@ -487,15 +483,11 @@ launch_do() {
     fswatch -0 /tmp/$TITLE | while read -d "" event
     do \
         ect=$(( $ect + 1 ))
-        # echo "e$ect: ${event} | $(cat "/tmp/${TITLE}")"
-        if test "$ect" = "2"; then
+        if test "$ect" = "1"; then
             rt=$(cat "/tmp/${TITLE}")
-            local pid_fswatch=$(ps ax | awk "\$7 ~ /${TITLE}/ { print \$1 }") # make this into command
-
-            ### do stuff START
-            echo "$rt"
-            ### do stuff END
-            kill $pid_fswatch #$(pgrep fswatch) # https://unix.stackexchange.com/questions/336894/kill-the-parent-of-a-child-pipe-process
+            local pid_fswatch=$(pid-get-match 2 $TITLE)
+            echo "$rt" # RETURN...
+            kill $(pid-get-match 2 $TITLE)
         fi
     done
 }
@@ -580,6 +572,8 @@ terms_add() {
     local new_num=$1
     cfg_wp $2
 
+    wmc y bsp # resets ratio / bug
+
     local ratio
     if test $2 = "1"; then
         ratio=$3
@@ -587,7 +581,6 @@ terms_add() {
         ratio=$(bc <<< "scale=2; 1-${3}")
     fi
 
-    # echo "wmc sr ${ratio:-.5}"
     wmc sr "${ratio:-.5}"
 
     inst_ceiling=$(( $aid_ct + $new_num))
