@@ -472,32 +472,24 @@ launch_do() {
     local TITLE="wm_custom_launcher"
     local rt
     # tmp_file="$(mktemp /tmp/$TITLE-XXX)" # NOTE: can this be used somehow?
-
-    open -n -a "/Applications/Alacritty.app" \
-        --args -t "${TITLE}" \
-        -e "launcher-filter" "${TITLE}" # -e launch_filter # -e bash -c launch_filter
-
+    open -n -a "/Applications/Alacritty.app" --args -t "${TITLE}" -e "launcher-filter" "${TITLE}"
     local wid="$(jq_win_ids_by_key "title" "$title")"
     wmc y "float" $wid
     apply_grid "cb" $wid
-
     # NOTE: what if I exit with ^C >> will this stay in the background forever then???!!
 
     local ect=0
     fswatch -0 /tmp/$TITLE | while read -d "" event
       do \
         ect=$(( $ect + 1 ))
-        # echo "e$ect: ${event}"
+        echo "e$ect: ${event} | $(cat "/tmp/${TITLE}")"
         if test "$ect" = "2"; then
             rt=$(cat "/tmp/${TITLE}")
             local pid_fswatch=$(ps ax | awk "\$7 ~ /${TITLE}/ { print \$1 }") # make this into command
 
             ### do stuff START
-
             echo "$rt"
-
             ### do stuff END
-
             kill $pid_fswatch #$(pgrep fswatch) # https://unix.stackexchange.com/questions/336894/kill-the-parent-of-a-child-pipe-process
         fi
     done
@@ -514,6 +506,10 @@ focus_app() {
     # cfg_wp "${1-1}"
     # wmc sr "${2-0.5}"
 }
+
+# get_user_input() {
+# }
+
 
 # # LAUNCHER POPUP
 
