@@ -25,6 +25,7 @@
 
 
 
+test -z "${1-}" && echo "empty"
 
 
 
@@ -449,56 +450,60 @@ esac
 #       That would be pretty cool, because then you could bind launch command to kmonad key
 #       and then process further.
 
-launch_filter() {
-    cmd=( find /System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities -maxdepth 1 -name "*.app" "|" fzf "|" xargs -I {} open "{}")
-    # echo "${cmd[@]}"
-    # tmp_file="$(mktemp /tmp/kmonad-XXX)"
-    # compile_layout >$tmp_file
-}
+# launch_filter() {
+#     cmd=( find /System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities -maxdepth 1 -name '"*.app"' "|" fzf "|" xargs -I {} echo '"{}"' ">" '"/tmp/$1"')
+#     echo "${cmd[@]}"
+# }
+
+# launch_cb() {
+#     echo "cb: $@"
+# }
+
+# functions
+
+# 1. run_launcher $name $callback
+# 2. create function open_app
+
 
 # - custom launcher || predefined app command, eg. term_new
 wm_custom_launcher() {
     local TITLE=wm_custom_launcher # ignore this title in yabairc
+    # tmp_file="$(mktemp /tmp/$TITLE-XXX)"
 
     open -n -a "/Applications/Alacritty.app" \
         --args -t "${TITLE}" \
-        -e "launcher-filter" "${TITLE}" & # todo: atm this is another script. how do ri get LAUNCH_FILTER to work??
-        # -e launch_filter
+        -e "launcher-filter" "${TITLE}" # todo: atm this is another script. how do ri get LAUNCH_FILTER to work??
 
+    # fswatch  /tmp/$TITLE | xargs -I{} $callback {} # callback needs to be exported in order to be accessible
 
-    # # customizing colors is not working for me
-    # local test=$(alacritty \
-    #     -t "${TITLE}" -e "launcher-filter" "${TITLE}")
-    #   # -o window.dimensions.lines=35 -o window.dimensions.columns=80 \
-    #   # -o window.decorations=none --working-directory "$(pwd)" -e "$1" \
-    #   # -o colors.primary.background="#74B573"
+    local ect=0
+    fswatch -0 /tmp/$TITLE | while read -d "" event
+      do \
 
-    echo "test: $test"
+        ect=$(( $ect + 1 ))
+        # echo "e$ect: ${event}"
+        test "$ect" = "2" && cat "/tmp/${TITLE}"
+    done
+
+    # # APPLY FLOAT CENTER LAYOUT
+    # local wid="$(jq_win_ids_by_key "title" "$title")"
+    # wmc y "float" $wid
+    # apply_grid "cb" $wid
+
+    # # SET OPEN NEXT WIN OPTIONS
+    # cfg_wp "${1-1}"
+    # wmc sr "${2-0.5}"
 
     # echo "PID: $$" # (i)
     # echo "another way $!" # This gives you the PID of the last job run in background
-
-
     # ps ax|grep "launcher-filter"
     # ps ax|grep "fzf"
     # ps ax|grep "xargs"
     # pgrep -f "launcher-filter"
-
     # pidf fzf
-
-    wait
-
-    local fzf_data=$(cat "/tmp/${TITLE}")
-    echo "/tmp/ -> $fzf_data"
-
-    # APPLY FLOAT CENTER LAYOUT
-    local wid="$(jq_win_ids_by_key "title" "$title")"
-    wmc y "float" $wid
-    apply_grid "cb" $wid
-
-    # SET OPEN NEXT WIN OPTIONS
-    cfg_wp "${1-1}"
-    wmc sr "${2-0.5}"
+    # wait
+    # local fzf_data=$(cat "/tmp/${TITLE}")
+    # echo "/tmp/ -> $fzf_data"
 }
 
 # # LAUNCHER POPUP
@@ -673,5 +678,6 @@ case "$1" in
     # "b") win_set_grid_22 $2 $3 $4 $5;;
     # "c")  win_set_grid_33 $2 $3 $4 $5;;
     "g")  apply_grid $2 $3;;
+    "lcb") launch_cb ${@:2};;
     # *) apply_grid "cf";;
 esac

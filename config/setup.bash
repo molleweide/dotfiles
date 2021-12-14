@@ -86,6 +86,7 @@ HOMEBREW_FORMULAS=(
 	'fff'
 	'figlet'
 	'findutils'
+	'fswatch'
 	'fzf'
 	'gcc'
 	'ghc'
