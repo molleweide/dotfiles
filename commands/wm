@@ -128,17 +128,38 @@ esac
 sel() {
     # does it even make sense to have this function?
     echo "sel help"
+    local sel
     # WINDOW_SEL  := prev | next | first | last | recent | mouse | largest | smallest | STACK_SEL | DIR_SEL | <window id>
     # DISPLAY_SEL :=                                             | DIR_SEL | <arrangement index (1-based)>
     # SPACE_SEL   :=                                             | <mission-control index (1-based)> | LABEL
 
     # DOMAIN -> $1= w | d | s | r | e | S
     # SELECTION $2=
-    # base              p n f l rc m lg sm
-    # stack sel         sp sn sf sl sr
-    # dir sel           l u d r
     # wid/arridx/mcidx  if number
     # title/label ??          other string
+    case "$1" in
+        # base              p n f l rc m lg sm
+        "p") sel="prev";;
+        "n") next;;
+        "f") first;;
+        "l") last;;
+        "z") recent;;
+        "m") mouse;;
+        # window
+        "wg") largest;;
+        "ws") smallest;;
+        "sp") stack.prev;;
+        "sn") stack.next;;
+        "sf") stack.first;;
+        "sl") stack.last;;
+        "sr") stack.recent;;
+        # dir sel           l u d r
+        "dl") west;;
+        "du") north;;
+        "dd") south;;
+        "dr") east;;
+    esac
+    echo "$sel"
 }
 
 # ---------------------------------- #
