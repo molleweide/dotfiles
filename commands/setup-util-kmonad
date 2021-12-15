@@ -1,34 +1,13 @@
 #!/usr/bin/env bash
 
-echo-header "KEYBOARD"
+echo-style --g3="KMONAD"
 
-# TODO:
-# - linux
-
-arch="$(get-arch)"
-github_user=$(git config github.user)
-
-# QMK | move this into its own `setup-user-qmk`
-
-# TODO: check for github_user=$(git config github.user)
-git_clone_recursive \
-    $HOME/code/firmware \
-    "qmk-firmware" \
-    git@github.com:molleweide/qmk_firmware.git
-
-
-
-# ---------------------------------------------------------------------
-#
-# KMONAD
-
-# TODO:
-#
 #   1. check for github_user=$(git config github.user)
 #       if user has fork
 #       else clone upstream
 
-# ---------------------------------------------------------------------
+arch="$(get-arch)"
+github_user=$(git config github.user)
 
 function macos_install_dext() {
     dext_path="c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/dist/Karabiner-DriverKit-VirtualHIDDevice-1.15.0.dmg"

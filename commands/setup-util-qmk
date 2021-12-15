@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+echo-style --g3="SETUP UTIL QMK"
+
+arch="$(get-arch)"
+github_user=$(git config github.user)
+
+if is-mac; then
+    # if test "$arch" = 'a64'; then
+    # else
+    # fi
+    # TODO: check for github_user=$(git config github.user)
+    git_clone_recursive \
+        $HOME/code/firmware \
+        "qmk-firmware" \
+        git@github.com:molleweide/qmk_firmware.git
+
+
+
+else
+    echo "linux todo.."
+    # stack install # Check `stack path`. Should install to `$USER/.local/bin`.
+    # or
+    # aur: https://aur.archlinux.org/packages/kmonad-bin
+
+fi
