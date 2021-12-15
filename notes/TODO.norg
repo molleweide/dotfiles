@@ -15,16 +15,11 @@
 * dark color chromium extension | take from intel
 
 * kmonad rename executable >> add branch_name
-  ~ pass argument to setup-util-kmonad
-    - build exec > only builds to kmonad repo dir
-    - get branch name
-        `git rev-parse --abbrev-ref HEAD`
-        `git branch --show-current` <--- latest
-    - copy with rename add branch name
-      `cp "$(stack path --local-install-root)/bin/name-of-my-exe" ~/.local/bin/name-of-my-exe`
   ~ kmor
     - check which kmonad execs exist
     - select name
+    - select device
+    - run
 
   `pass name arg to setup-util-kmonad`
   https://stackoverflow.com/questions/51352885/how-do-you-set-the-executable-output-location-for-a-haskell-project-built-with-s
