@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+# # current branch sed: (HEAD detached at upstream/tinker)
+# # current branch abbr: HEAD
+# # current branch: 060e509
+
+# DETACHED
+# * (HEAD detached at upstream/tinker)
+#   master
+#   moll-intel
+#   molleweide
+#   tmp
+
+# if detached HEAD how get branch name
+current_branch_abbr=$(git rev-parse --abbrev-ref HEAD)
+echo "current branch abbr: ${current_branch_abbr}"
+echo
+
+
+
+
+checked_out_branch_name=""
+ref_sha=""
+detached="false"
+current_branch=$( git symbolic-ref HEAD 2> /dev/null )
+
+remote=""
+
+#if empty -> detached head
+if test -z "$current_branch"; then
+    detached="true"
+
+    # string holding branch name
+    detach_str=$(git branch | sed -n '/\* /s///p' | grep -o '[0-9A-Za-z]*/[0-9A-Za-z]*')
+    remote="${detach_str%\/*}"
+    branch="${detach_str#*\/}"
+
+    if test -z "$before_slash" -a -z "$after_slash"; then
+        echo "DETACHED LOCAL"
+        remote="no_branch"
+    fi
+
+    # will now be a SHA
+    # ref_sha=$( git rev-parse --short HEAD 2> "/dev/null" | sed "s#refs/heads/##")
+fi
+
+
+
+echo "DETACHED: $detached"
+echo "REMOTE: $remote "
+echo "BRANCH: $branch"
+echo "CURRENT BRANCH: ${current_branch}"
+
+current_branch_rev_parse=$( git rev-parse --short HEAD 2> "/dev/null")
+echo "SHA: ${current_branch_rev_parse}"
+
+
+
+echo $checked_out_branch_name $ref_sha

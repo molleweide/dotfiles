@@ -307,6 +307,7 @@ alias frk="gh repo fork"
 alias lg="lazygit"
 alias prdev="gh pr create --base develop"
 alias prmst="gh pr create --base master"
+alias gcbn="git-get-checked-out-branch-name"
 
 # 1 = branch, 2 = sub path, 3 = new repo url
 alias gbrkout="git-subdir-make-into-module"

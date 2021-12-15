@@ -21,20 +21,29 @@ function macos_install_dext() {
 }
 
 code_tools_path=$HOME/code/tools
-git_clone_recursive \
+git-clone-recursive \
     $code_tools_path \
     "kmonad" \
     git@github.com:molleweide/kmonad.git
 
+
+# ---------------------------------- #
+#                BUILD               #
+# ---------------------------------- #
+
 pushd $code_tools_path/kmonad >/dev/null 2>&1
-# stack clean / redo complete build
+
+# stack clean -> completely reset build
 if is-mac; then
+    echo "kmonad mac..."
     # macos_install_dext # TODO: needs testing first
-    if test "$arch" = 'a64'; then
-        stack install --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
-    else
-        stack install --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
-    fi
+
+    # if test "$arch" = 'a64'; then
+    #     stack build --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+    # else
+    #     stack build --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+    # fi
+
 else
     echo "linux todo.."
     # stack install # Check `stack path`. Should install to `$USER/.local/bin`.
@@ -42,4 +51,29 @@ else
     # aur: https://aur.archlinux.org/packages/kmonad-bin
 
 fi
+
+# ---------------------------------- #
+#           GET GIT BRANCH           #
+# ---------------------------------- #
+
+# if detached HEAD how get branch name
+# current_branch_abbr=$(git rev-parse --abbrev-ref HEAD)
+# current_branch_sed=$(git branch | sed -n '/\* /s///p')
+echo "current branch sed: ${current_branch_sed}"
+# echo "current branch abbr: ${current_branch_abbr}"
+# echo "current branch: ${current_branch}"
+
+current_branch=$( git symbolic-ref HEAD 2> /dev/null )
+if test -z "$current_branch"; then
+    echo ">>> EMPTY !!!!!!!!!!!!!!!!!!"
+    current_branch=$( git rev-parse --short HEAD 2> "/dev/null" | sed "s#refs/heads/##")
+fi
+
+# ---------------------------------- #
+#                CP BIN              #
+# ---------------------------------- #
+
+echo "from: $(stack path --local-install-root)/bin/kmonad -> to: ~/.local/bin/kmonad-${current_branch}}"
+# `cp "$(stack path --local-install-root)/bin/name-of-my-exe" ~/.local/bin/name-of-my-exe`
+
 popd >/dev/null 2>&1
