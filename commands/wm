@@ -23,8 +23,6 @@
 # sudo yabai --install-sa
 # brew services start yabai
 
-
-
 test -z "${1-}" && echo "empty"
 
 
@@ -323,9 +321,8 @@ esac
 #               WINDOW               #
 # ---------------------------------- #
 
-apply_grid() {
+win_apply_grid() {
     case "$1" in
-
         "cf" | "") wmc y float; wmw g 1:1:0:0:1:1 $2;;
         "cb") wmw g 8:8:1:1:6:6 $2;;
         "cm") wmw g 4:4:1:1:2:2 $2;;
@@ -382,6 +379,23 @@ apply_grid() {
 
 }
 
+win_resize() {
+    x=$2
+    y=$3
+    case "$1" in
+        "t") ax="top"; x=0; y=$2;;
+        "l") ax="left"; x=$2; y=0;;
+        "b") ax="bottom"; x=0; y=$2;;
+        "r") ax="right"; x=$2; y=0;;
+        "tl") ax="top_left";;
+        "tr") ax="top_right";;
+        "br") ax="bottom_right";;
+        "bl") ax="bottom_left";;
+        "a") ax="abs";;
+    esac
+    wmw z "$ax:$x:$y"
+}
+
 # @param fraction multiplier
 win_set_ratio() {
     # inst_ceiling=$(( 1/$2 + $new_num))
@@ -414,29 +428,28 @@ win_warp() {
 # abs / rel
 # x / y
 win_move() {
-    # abs|rel:<dx>:<dy>
-    wmw mv
+    wmc y float
+    test "${1}" = "1" && local type="abs" || local type="rel"
+    x=$2
+    y=$3
+    case "$2" in
+        "l") x=-$3; y=0;;
+        "r") x=$3; y=0;;
+        "u") x=0; y=-$3;;
+        "d") x=0; y=$3;;
+    esac
+
+    wmw mv "$type:$x:$y"
 }
 
 
-
-# TODO:
-#
-# get window by title
-#   set layout for window to float
-#       apply_grid
-
-alacritty_num_grid() {
-    test "${1}" = "1" && local num="" || local num="_${1}"
-    title="Alacritty${num}"
-    echo "tt: $title"
-    wid=$(jq_win_ids_by_key "title" "$title")
-    apply_grid $2 $wid
-}
 
 case "$1" in
-    "wf") win_focus $2;;
-    "wr") win_set_ratio $2 $3;;
+    "wf") _f=win_focus;;
+    "wg") _f=win_apply_grid;;
+    "wr") _f=win_set_ratio;;
+    "wm") _f=win_move;;
+    "wz") _f=win_resize;;
 esac
 
 # ---------------------------------- #
@@ -575,12 +588,12 @@ focus_app() {
 
 # if prev num == 0
 
+# @param start count
+# @param end count
 term_new() {
-    local start=$1
-    local end=$2
-    for (( c=$start; c<=$end; c++ )); do
-        local title="${new_name}_${c}"
-        echo "title: $title"
+    echo "$1 | $2 | $3"
+    for (( c=${2}; c<=${3}; c++ )); do
+        local title="${1}_${c}"
         open -n -a "/Applications/Alacritty.app" --args -t "${title}"
     done # refresh rules
 }
@@ -595,26 +608,19 @@ terms_add() {
     local aid_ct=${#aid[@]}
     local aid_ct_new=$(($aid_ct + 1))
     local new_name="Alacritty"
-
     local new_num=$1
     cfg_wp $2
-
     wmc y bsp # resets ratio / bug
-
     local ratio
     if test $2 = "1"; then
         ratio=$3
     elif test $2 = "2"; then
         ratio=$(bc <<< "scale=2; 1-${3}")
     fi
-
     wmc sr "${ratio:-.5}"
-
     inst_ceiling=$(( $aid_ct + $new_num))
-    term_new $aid_ct_new $inst_ceiling
+    term_new $new_name $aid_ct_new $inst_ceiling
 }
-
-# wmw rb  d
 
 # specify how many terminal instances I want
 # @param n
@@ -627,12 +633,11 @@ set_term_inst_num() {
     local inst_ceiling=$1
     echo "${#aid[@]} >>> ( ${aid[@]} )"
 
-
     if [ "$aid_ct" -lt $inst_ceiling ]; then
 
         # TODO: if too few > then add
         # num_init=$(( 3 - $aid_ct ))
-        term_new $aid_ct_new $inst_ceiling
+        term_new $new_name $aid_ct_new $inst_ceiling
 
         # TODO: too many terminals > remove
         # elif [ "$aid_ct" -lt $inst_ceiling ]; then
@@ -645,13 +650,36 @@ set_term_inst_num() {
 #           CUSTOM LAYOUTS           #
 # ---------------------------------- #
 
+# TODO:
+#
+# get window by title
+#   set layout for window to float
+#       apply_grid
+alacritty_num_grid() {
+    test "${1}" = "1" && local num="" || local num="_${1}"
+    title="Alacritty${num}"
+    echo "tt: $title"
+    wid=$(jq_win_ids_by_key "title" "$title")
+    win_apply_grid $2 $wid
+}
+
+
 # done with grid
 grid_big_left_double_right() {
-    num_inst=3
+    wmc y float
+    num_inst=4
     set_term_inst_num $num_inst
-    alacritty_num_grid 1 230022
-    alacritty_num_grid 2 232011
-    alacritty_num_grid 3 232111
+    alacritty_num_grid 1 451033
+    alacritty_num_grid 2 450013
+    alacritty_num_grid 3 454013
+    alacritty_num_grid 4 450351
+    # alacritty_num_grid 5 452111
+}
+
+term_complex_layout_bsp() {
+    terms_add 1 1 .2
+    wmw f $(jq_w_ids_by_title "Alacritty")
+    # terms_add 1 2 .2
 }
 
 # # WHY THIS DOESN'T WORK??
@@ -696,24 +724,20 @@ reset_all_events() { for i in $(seq 1 $(wme ls | jq 'length')); do wme rm 0; don
 ############################################################
 
 case "$1" in
-    "layout_1") grid_big_left_double_right;;
-    "wsa") jq_w_sel_by_app "$2";; # make sure argument is sent as quoted string
-    "wtba") jq_w_titles_by_app $2;;
-    "l") launch_do $2 $3;;
-    "tn") set_term_inst_num $2;;
-    # "ta") terms_add $2 $3 $4;;
-    "ta") terms_add ${@:2};;
-    # "trm") terms_add $2;;
-    "ts") alacritty_num_grid $2 $3;;
-    "tt") test_setup_terminal $2;;
-    # "h") apply_grid "cf";; # l u d R
-    "ag") apply_grid $2 $3;;
-    "fs") apply_grid "cf";;
-    "gk") get_key $2;;
-    # "b") win_set_grid_22 $2 $3 $4 $5;;
-    # "c")  win_set_grid_33 $2 $3 $4 $5;;
-    "g")  apply_grid $2 $3;;
-    "lcb") launch_cb ${@:2};;
-    "fa") focus_app;;
+    "ly1")   _f=grid_big_left_double_right;;
+    "wsa")   _f=jq_w_sel_by_app ;; # make sure argument is sent as quoted string
+    "wtba")  _f=jq_w_titles_by_app;;
+    "l")     _f=launch_do;;
+    "tn")    _f=set_term_inst_num;;
+    "ta")    _f=terms_add;;
+    "tcplx") _f=term_complex_layout_bsp;;
+    "ts")    _f=alacritty_num_grid;;
+    "tt")    _f=test_setup_terminal;;
+    "gk")    _f=get_key;;
+    "lcb")   _f=launch_cb;;
+    "fa")    _f=focus_app;;
     # *) apply_grid "cf";;
 esac
+
+# call each function
+$_f ${@:2}
