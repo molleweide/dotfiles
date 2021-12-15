@@ -712,15 +712,6 @@ reset_all_rules() { for i in $(seq 1 $(wmr ls | jq 'length')); do wmr rm 0; done
 
 reset_all_events() { for i in $(seq 1 $(wme ls | jq 'length')); do wme rm 0; done; }
 
-
-############################################################
-
-# expand-q() { for i; do echo ${*@Q}; done; }
-# expand-q $2
-# echo "qq> ${2@Q}"
-# echo "2 > $2"
-# echo "3 > $3"
-
 ############################################################
 
 case "$1" in
