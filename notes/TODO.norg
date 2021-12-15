@@ -17,15 +17,10 @@
 * kmonad rename executable >> add branch_name
   ~ kmor
     - check which kmonad execs exist
-    - select name
+        `find "~/.local/bin" | grep "kmonad"`
+    - send names into `choose`
     - select device
     - run
-
-  `pass name arg to setup-util-kmonad`
-  https://stackoverflow.com/questions/51352885/how-do-you-set-the-executable-output-location-for-a-haskell-project-built-with-s
-  https://github.com/kmonad/kmonad/discussions/439
-  cp "$(stack path --local-install-root)/bin/name-of-my-exe" ~/.local/bin/name-of-my-exe
-
 
 * reaper leader key
   make leader keys show in bottom of reaper
