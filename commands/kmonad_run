@@ -5,8 +5,17 @@
 
 # script_path=$(realpath $0)
 # config_kmonad_dir=$(dirname $script_path)
-config_kmonad_dir="$XDG_CONFIG_HOME/kmonad"
 # config_kmonad_dir2="${BASH_SOURCE%/*}"
+config_kmonad_dir="$XDG_CONFIG_HOME/kmonad"
+bin_dir="$HOME/.local/bin"
+
+# --------------------------
+# ---       CHOOSE       ---
+# --------------------------
+
+# use exec path to run.
+bin_exec_paths=($(find $bin_dir | grep "kmonad"))
+kmo_exec_path="$(choose-option --confirm --question='Select executable name.' -- "${bin_exec_paths[@]}")"
 
 user_hardwares_list=(
     "ergo"
@@ -109,7 +118,7 @@ done
 
 if test "$mode" = "r"; then
     # bash
-    sudo kmonad $tmp_file --allow-cmd
+    sudo $kmo_exec_path $tmp_file --allow-cmd
     # sudo kmonad <(compile_layout) # doesn't work
     # -f doesn't accept `false`. Complains about invalid...
     # kmonad <(compile_layout) -f $fallthrough -i $input -o $output -d
@@ -124,5 +133,5 @@ elif test "$mode" = 'w'; then
     echo "write layout -> todo..."
 
 elif test "$mode" = 'd'; then
-    kmonad $tmp_file -d
+    $kmo_exec_path $tmp_file -d
 fi

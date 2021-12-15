@@ -17,7 +17,9 @@
 * kmonad rename executable >> add branch_name
   ~ kmor
     - check which kmonad execs exist
+        echo this...
         `find "~/.local/bin" | grep "kmonad"`
+        `basename trim beginning`
     - send names into `choose`
     - select device
     - run
