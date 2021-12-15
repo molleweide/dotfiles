@@ -56,24 +56,26 @@ fi
 #           GET GIT BRANCH           #
 # ---------------------------------- #
 
-# if detached HEAD how get branch name
-# current_branch_abbr=$(git rev-parse --abbrev-ref HEAD)
-# current_branch_sed=$(git branch | sed -n '/\* /s///p')
-echo "current branch sed: ${current_branch_sed}"
-# echo "current branch abbr: ${current_branch_abbr}"
-# echo "current branch: ${current_branch}"
 
-current_branch=$( git symbolic-ref HEAD 2> /dev/null )
-if test -z "$current_branch"; then
-    echo ">>> EMPTY !!!!!!!!!!!!!!!!!!"
-    current_branch=$( git rev-parse --short HEAD 2> "/dev/null" | sed "s#refs/heads/##")
-fi
-
+# current_branch=$( git symbolic-ref HEAD 2> /dev/null )
+# if test -z "$current_branch"; then
+#     echo ">>> EMPTY !!!!!!!!!!!!!!!!!!"
+#     current_branch=$( git rev-parse --short HEAD 2> "/dev/null" | sed "s#refs/heads/##")
+# fi
+branch_name=$(git-get-checked-out-branch-name | tr -d '[],"')
+# branch_data=(${branch_data[@]})
+# echo ">>> ${branch_info}"
+# sha="${branch_info[0]}"
+# branch_name="${branch_info[1]}"
+# echo "brr: $branch_name"
+# name_tag="${sha}-${branch_name}"
+# echo $name_tag
 # ---------------------------------- #
 #                CP BIN              #
 # ---------------------------------- #
 
-echo "from: $(stack path --local-install-root)/bin/kmonad -> to: ~/.local/bin/kmonad-${current_branch}}"
-# `cp "$(stack path --local-install-root)/bin/name-of-my-exe" ~/.local/bin/name-of-my-exe`
+echo "from: $(stack path --local-install-root)/bin/kmonad -> to: ~/.local/bin/kmonad-$branch_name"
+# ask for overwrite
+# `cp -i "$(stack path --local-install-root)/bin/name-of-my-exe" ~/.local/bin/name-of-my-exe`
 
 popd >/dev/null 2>&1

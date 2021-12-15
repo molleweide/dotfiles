@@ -12,33 +12,32 @@
 #   tmp
 
 # if detached HEAD how get branch name
-current_branch_abbr=$(git rev-parse --abbrev-ref HEAD)
-echo "current branch abbr: ${current_branch_abbr}"
-echo
-
-
-
+# echo "current branch abbr: ${current_branch_abbr}"
+# echo
 
 checked_out_branch_name=""
-ref_sha=""
+branch_name=""
+branch_remote=""
+current_ref_sha=$(git rev-parse --short HEAD)
 detached="false"
-current_branch=$( git symbolic-ref HEAD 2> /dev/null )
 
-remote=""
+branch_name=$(git rev-parse --abbrev-ref HEAD)
 
-#if empty -> detached head
-if test -z "$current_branch"; then
+empty_if_detached=$( git symbolic-ref HEAD 2> /dev/null )
+if test -z "$empty_if_detached"; then
     detached="true"
 
-    # string holding branch name
+    # string holding branch name TODO: include dashes `-`
     detach_str=$(git branch | sed -n '/\* /s///p' | grep -o '[0-9A-Za-z]*/[0-9A-Za-z]*')
-    remote="${detach_str%\/*}"
-    branch="${detach_str#*\/}"
+    detach_remote="${detach_str%\/*}"
+    detach_branch="${detach_str#*\/}"
+    branch_name=$detach_branch
+    branch_remote=$detach_remote
 
-    if test -z "$before_slash" -a -z "$after_slash"; then
-        echo "DETACHED LOCAL"
-        remote="no_branch"
-    fi
+    # echo "$branch_name | $branch_remote"
+
+    test -z "$detach_branch" && branch_name="detached"
+    test -z "$detach_remote" && branch_remote="detached"
 
     # will now be a SHA
     # ref_sha=$( git rev-parse --short HEAD 2> "/dev/null" | sed "s#refs/heads/##")
@@ -46,14 +45,12 @@ fi
 
 
 
-echo "DETACHED: $detached"
-echo "REMOTE: $remote "
-echo "BRANCH: $branch"
-echo "CURRENT BRANCH: ${current_branch}"
+# echo "DETACHED: $detached"
+# echo "REMOTE: $remote "
+# echo "BRANCH: $branch"
+# echo "SHA: $current_ref_sha"
+# echo "BRANCH NAME: ${branch_name}"
 
-current_branch_rev_parse=$( git rev-parse --short HEAD 2> "/dev/null")
-echo "SHA: ${current_branch_rev_parse}"
+# echo $current_ref_sha $branch_name $branch_remote
+echo $branch_name
 
-
-
-echo $checked_out_branch_name $ref_sha
