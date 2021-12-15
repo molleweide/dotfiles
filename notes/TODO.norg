@@ -13,10 +13,6 @@
 ------
 
 * fix nvim
-  put all of my stuff into modules!!
-  ~ clone molldev branch
-  ~ open new dev
-  ~ add my old configs
   ~ S n R -> `https://github.com/s1n7ax/nvim-search-and-replace`
 
 * dark color chromium extension | take from intel
