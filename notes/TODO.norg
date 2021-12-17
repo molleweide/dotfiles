@@ -8,20 +8,20 @@
 @end
 
 * nvim | need to be compatible with stable / use stable as starting point
- ** save molldev && create migrate command
-    `nvim-pull-molldev-conf` // vpmc
-    `nvim-compile-migr-dir`
-    `setup-neovim-develop`
-    `v` / `vh` / `vdock`
- ** test config compat
-    ~ checkout main_gco && gco configs from molldev
-        - IMPORTANT /
+    ~ save molldev
+    ~ pull configs into main
+        start making main into my base branch that I am working on
+        make sure everything works in main
+    ~ look at docker
+        create main-docker
+
     ~ checkout develop_gco && gco configs
  ** docker develop | on develop branch
     https://github.com/NTBBloodbath/doom-nvim/tree/main/contribute
 
 * GHQ
  ** `GHQ_ROOT`
+ ** ``
 
 * reading | cont.
  ** https://www.gnu.org/software/bash/manual/html_node/What-is-Bash_003f.html

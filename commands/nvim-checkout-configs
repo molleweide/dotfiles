@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+# shouldn't contain core files
+files_nvim_doom_configs_personal=(
+
+    after/
+    ftdetect/
+    keymap/
+    syntax/
+    plugin/keymaps.vim
+
+    lua/examples/
+    lua/snippets/
+    lua/testing/
+
+    doom_config.lua
+    doom_modules.lua
+    doom_userplugins.lua
+)
+
+dir_migr="$XDG_CONFIG_HOME/doom-nvim/migrate"
+
+
+# for i in $dirs_dirty[@]; do
+# # add recursive dirs flag
+#     cp $i # into $dir_dest/$i
+# done
+
+collect_config_files_in_migr() {
+    mkdir -p $dir_migr
+
+}
+
+# config_files_list=(
+
+#     )
+
+# $1 = from_branch
+checkout_files_from_migr_dir() {
+for i in ${files_nvim_doom_configs_personal[@]}; do
+    cp $i # into $dir_dest/$i
+    git checkout $1 -- $i
+done
+}
+
+case "$1" in
+    "cpmig") collect_config_files_in_migr;;
+     "gcocfg") checkout_files_from_migr_dir;
+    # *) apply_grid "cf";;
+esac
+
+$_f ${@:2}
