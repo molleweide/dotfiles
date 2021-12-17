@@ -7,22 +7,30 @@
 	version: 0.1
 @end
 
+* nvim | need to be compatible with stable / use stable as starting point
+ ** save molldev && create migrate command
+    `nvim-pull-molldev-conf` // vpmc
+    `nvim-compile-migr-dir`
+    `setup-neovim-develop`
+    `v` / `vh` / `vdock`
+ ** test config compat
+    ~ checkout main_gco && gco configs from molldev
+        - IMPORTANT /
+    ~ checkout develop_gco && gco configs
+ ** docker develop | on develop branch
+    https://github.com/NTBBloodbath/doom-nvim/tree/main/contribute
+
+* GHQ
+ ** `GHQ_ROOT`
+
 * reading | cont.
  ** https://www.gnu.org/software/bash/manual/html_node/What-is-Bash_003f.html
 
 ------
 
-* dark color chromium extension | take from intel
+* run haskell hello world projects and see which one runs.
 
-* kmonad rename executable >> add branch_name
-  ~ kmor
-    - check which kmonad execs exist
-        echo this...
-        `find "~/.local/bin" | grep "kmonad"`
-        `basename trim beginning`
-    - send names into `choose`
-    - select device
-    - run
+* dark color chromium extension | take from intel
 
 * reaper leader key
   make leader keys show in bottom of reaper

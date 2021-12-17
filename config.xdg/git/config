@@ -181,3 +181,10 @@
 	protocol = ssh
 [gitlab]
 	user = molleweide
+[ghq]
+    root = ~/code/ghq
+# [ghq "import"]
+#     pocket = !pocket list --domain github.com --format '{{.URL}}'
+#     starred = !github-list-starred
+# [ghq "https://svn.code.sf.net"]
+#     vcs = git-svn

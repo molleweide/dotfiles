@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# list files
+#       in array? ( aaa bbbb ccs/ dddd/ eeff/ )
+
+# dest migr dir
+
+
+
+#  ** copy config files into migrate dir
+#     pull then into new branch
+
+# @code bash
+#   gco molldev_m1 -- \
+#     after/ ftdetect/ keymap/ syntax/ plugin/keymaps.vim
+#     lua/examples/ lua/snippets/ lua/testing/ \
+#     migrate
+# @end
+
+

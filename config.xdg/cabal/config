@@ -9,8 +9,8 @@
 --
 -- This config file was generated using the following versions
 -- of Cabal and cabal-install:
--- Cabal library version: 3.4.0.0
--- cabal-install version: 3.4.0.0
+-- Cabal library version: 3.6.2.0
+-- cabal-install version: 3.6.2.0
 
 
 repository hackage.haskell.org
@@ -24,9 +24,9 @@ repository hackage.haskell.org
 -- http-transport:
 -- nix: False
 -- local-no-index-repo:
-remote-repo-cache: /Users/hjalmarjakobsson/.cabal/packages
--- logs-dir: /Users/hjalmarjakobsson/.cabal/logs
-world-file: /Users/hjalmarjakobsson/.cabal/world
+remote-repo-cache: /Users/hjalmarjakobsson/.cache/cabal/packages
+-- logs-dir: /Users/hjalmarjakobsson/.cache/cabal/logs
+world-file: /Users/hjalmarjakobsson/.cache/cabal/world
 -- store-dir:
 -- active-repositories:
 -- verbose: 1
@@ -62,7 +62,7 @@ world-file: /Users/hjalmarjakobsson/.cabal/world
 -- cid:
 -- extra-lib-dirs:
 -- extra-framework-dirs:
-extra-prog-path: /Users/hjalmarjakobsson/.cabal/bin
+extra-prog-path: /Users/hjalmarjakobsson/.cache/cabal/bin
 -- instantiate-with:
 -- tests: False
 -- coverage: False
@@ -81,6 +81,7 @@ extra-prog-path: /Users/hjalmarjakobsson/.cabal/bin
 -- write-ghc-environment-files:
 -- documentation: False
 -- doc-index-file: $datadir/doc/$arch-$os-$compiler/index.html
+-- only-download: False
 -- target-package-db:
 -- max-backjumps: 4000
 -- reorder-goals: False
@@ -99,7 +100,7 @@ extra-prog-path: /Users/hjalmarjakobsson/.cabal/bin
 -- index-state:
 -- root-cmd:
 -- symlink-bindir:
-build-summary: /Users/hjalmarjakobsson/.cabal/logs/build.log
+build-summary: /Users/hjalmarjakobsson/.cache/cabal/logs/build.log
 -- build-log:
 remote-build-reporting: none
 -- report-planning-failure: False
@@ -113,7 +114,7 @@ jobs: $ncpus
 -- package-env:
 -- overwrite-policy:
 -- install-method:
-installdir: /Users/hjalmarjakobsson/.cabal/bin
+installdir: /Users/hjalmarjakobsson/.cache/cabal/bin
 -- username:
 -- password:
 -- password-command:
@@ -147,7 +148,7 @@ init
   -- source-dir: src
 
 install-dirs user
-  -- prefix: /Users/hjalmarjakobsson/.cabal
+  -- prefix: /Users/hjalmarjakobsson/.cache/cabal
   -- bindir: $prefix/bin
   -- libdir: $prefix/lib
   -- libsubdir: $abi/$libname
