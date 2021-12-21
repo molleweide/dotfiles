@@ -7,21 +7,24 @@
 	version: 0.1
 @end
 
-* nvim | need to be compatible with stable / use stable as starting point
-    ~ save molldev
-    ~ pull configs into main
-        start making main into my base branch that I am working on
-        make sure everything works in main
-    ~ look at docker
-        create main-docker
+* syncthing > audio files
+  https://docs.syncthing.net/intro/getting-started.html
 
-    ~ checkout develop_gco && gco configs
+* config/git variable exports are not recognized or taking effect.
+
+* nvim docker
+
  ** docker develop | on develop branch
     https://github.com/NTBBloodbath/doom-nvim/tree/main/contribute
 
-* GHQ
- ** `GHQ_ROOT`
- ** ``
+* wm float > network preferences
+  open floating win.
+  tty set network stuff
+  `https://sharmank.medium.com/how-to-connect-to-wifi-using-mac-os-command-line-3a76c2e6669c`
+  `https://www.mattcrampton.com/blog/managing_wifi_connections_using_the_mac_osx_terminal_command_line/`
+  `https://discussions.apple.com/thread/2359806`
+
+* test GHQ
 
 * reading | cont.
  ** https://www.gnu.org/software/bash/manual/html_node/What-is-Bash_003f.html

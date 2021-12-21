@@ -45,9 +45,9 @@ wmc pb    6
 wmc pl    6
 wmc pr    6
 wmc gap   6
-# wmc bar   off # all:28:0
+wmc bar   off # all:28:0
 # SPACEBAR_HEIGHT=$(spacebar -m config height)
-wmc bar all:$(spacebar -m config height):0
+# wmc bar all:$(spacebar -m config height):0
 
 # ---------------------------------------------
 # ---       SPACES NAMING & BEHAVIOUR       ---
@@ -62,7 +62,7 @@ wms n misc 4
 # ---       EVENTS       ---
 # --------------------------
 
-reset_all_events
+wm reset_all_events
 # for i in $(seq 1 $(wme ls | jq 'length')); do wme rm 0; done # refresh event listeners
 
 # # Refresh process widget when current window title changes
@@ -97,7 +97,7 @@ wme a wtc "osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh 
 # ---       RULES       ---
 # -------------------------
 
-rules_reset_all
+wm rules_reset_all
 # for i in $(seq 1 $(wmr ls | jq 'length')); do wmr rm 0; done # refresh rules
 
 # --- APPS NOT MANAGED ---

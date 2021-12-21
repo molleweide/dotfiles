@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
+# create new main branch
+# enter main_new
+# `nvim-checkout-configs gco molldev_m1`
+
 # shouldn't contain core files
 files_nvim_doom_configs_personal=(
+
+    notes/
 
     after/
     ftdetect/
@@ -12,6 +18,10 @@ files_nvim_doom_configs_personal=(
     lua/examples/
     lua/snippets/
     lua/testing/
+
+)
+
+doom_configs=(
 
     doom_config.lua
     doom_modules.lua
@@ -27,7 +37,8 @@ dir_migr="$XDG_CONFIG_HOME/doom-nvim/migrate"
 # done
 
 collect_config_files_in_migr() {
-    mkdir -p $dir_migr
+    echo "collect"
+    # mkdir -p $dir_migr
 
 }
 
@@ -37,15 +48,21 @@ collect_config_files_in_migr() {
 
 # $1 = from_branch
 checkout_files_from_migr_dir() {
-for i in ${files_nvim_doom_configs_personal[@]}; do
-    cp $i # into $dir_dest/$i
-    git checkout $1 -- $i
-done
+    for i in ${files_nvim_doom_configs_personal[@]}; do
+        git checkout $1 -- $i
+    done
+}
+
+everything_else() {
+    for i in ${doom_configs[@]}; do
+        git checkout $1 -- $i
+    done
 }
 
 case "$1" in
-    "cpmig") collect_config_files_in_migr;;
-     "gcocfg") checkout_files_from_migr_dir;
+    "cpmig") _f=collect_config_files_in_migr;;
+    "gco")  _f=checkout_files_from_migr_dir;;
+    "ee") _f=everything_else;;
     # *) apply_grid "cf";;
 esac
 

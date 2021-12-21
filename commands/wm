@@ -173,7 +173,6 @@ sel() {
 
 # "focus" | "f")    ycmd="--focus" ;; # <SPACE_SEL>
 space_focus() {
-    #
     wms f $1
 }
 # "destroy" | "rm")  ycmd="--destroy"; yss=$2 ;; # NOTE: space needs to come after here?!
@@ -727,6 +726,8 @@ case "$1" in
     "gk")    _f=get_key;;
     "lcb")   _f=launch_cb;;
     "fa")    _f=focus_app;;
+    "reset_all_rules") reset_all_rules;;
+    "reset_all_events") reset_all_events;;
     # *) apply_grid "cf";;
 esac
 
