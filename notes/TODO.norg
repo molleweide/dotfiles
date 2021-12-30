@@ -7,12 +7,24 @@
 	version: 0.1
 @end
 
-* syncthing > audio files
+* what is DAO | distributed autonomous organization
+
+* walk through | `https://github.com/rothgar/awesome-tuis`
+
+* reaper
+  notes where??
+  sync reaper projects
+  to test folder > then move the projects into reaper.
+
+* syncthing > audio files + reaper
   https://docs.syncthing.net/intro/getting-started.html
+  `sncth`
+  config > `https://docs.syncthing.net/users/config.html`
 
 * config/git variable exports are not recognized or taking effect.
 
 * nvim docker
+  docker app > aliases
 
  ** docker develop | on develop branch
     https://github.com/NTBBloodbath/doom-nvim/tree/main/contribute
