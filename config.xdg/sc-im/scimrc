@@ -1,21 +1,127 @@
-# A ########################################
+# ----------------------------
+# ---       SETTINGS       ---
+# ----------------------------
 
-# # Recalculate values automatically
-# set autocalc=1
-#
-# # Enable half-page scrolling
-# half_page_scroll
-#
-# # Ignore case while searching using '/'
+# # Long strings/values overlap the next cells instead of turning into asterisks
+# set overlap
+
+# set numeric
+# set numeric_decimal=0
+# set overlap
+# set xlsx_readformulas
+
+
+
+# set numeric
+# set numeric_decimal=0
+# set xlsx_readformulas
 # set ignorecase
-#
-# # Do not move cursor after entering data in a cell
-# set newline_action = 0
-#
-# # Do not overlap if cell contents is wider than the cell
-# set overlap=0
 
-# B ########################################
+
+
+# Place the input bar at the bottom of the screen
+set input_bar_bottom=1
+
+# Display current filename in status-line
+set filename_with_mode=1
+
+# Set content to be cut off at the end of the cell
+set truncate=1
+
+# Auto-backup sc-im every n seconds
+set autobackup=30
+
+# Recalculate values automatically
+set autocalc=1
+
+# Enable half-page scrolling
+set half_page_scroll
+
+# Ignore case while searching using '/'
+set ignorecase
+
+# Do not move cursor after entering data in a cell
+set newline_action=0
+# set newline_action=j
+
+# Do not overlap if cell contents is wider than the cell
+set overlap=0
+
+set numeric
+set numeric_decimal=0
+
+set xlsx_readformulas
+
+# set numeric=1
+# set numeric_decimal=0
+# set overlap
+# set xlsx_readformulas
+
+
+
+# # Number key behaviour
+# # 1 = number keys will start writing a numeric value to the cell
+# # 0 = act as a command multiplier (e.g.: 4j will go down 4 cells)
+# set numeric=1
+#
+# # zero key will start writing a 0 numeric value to the cell
+# set numeric_zero=1
+#
+#
+# # Move the cursor down after an entry
+# set newline_action=j
+#
+# # Case insensitive search
+# set ignorecase
+
+# ----------------------------
+# ---       MAPPINGS       ---
+# ----------------------------
+
+# Exit Insert mode and enter Normal mode
+# imap "jk" "<ESC>"
+# cmap "jk" "<ESC>"
+#
+# # help
+# nnoremap "?" ":help<CR>"
+#
+# # edit text value (cursor at the end)
+# nnoremap "A" "Ea"
+#
+# # edit text value (cursor at the beginning)
+# nnoremap "I" "E0i"
+#
+# # quick movement
+# nnoremap "J" "<C-f>"
+# nnoremap "K" "<C-b>"
+# nnoremap "H" "0"
+# nnoremap "L" "$"
+# nnoremap "Q" ":q!<CR>"
+# nnoremap "<CR>" "\"
+# nnoremap "y" ":ccopy<cr>"
+# nnoremap "p" ":cpaste<cr>"
+# nnoremap "<C-w>" ":wq "
+# nnoremap "ZZ" ":x<cr>"
+# nnoremap "ZQ" ":q!<cr>"
+#
+# nmap "J" "<C-j>"
+# nmap "fi" ":format \"0\"<cr>"
+# nmap "B" "Vir"
+# nmap " " "E<cr>k"
+
+
+# --------------------------------------------------------------------------
+# AUTO COMMANDS
+# --------------------------------------------------------------------------
+
+# Auto-resize the column or column range to fit their contents.
+autojus A:Z
+
+# --------------------------------
+# ---       COLOR THEMES       ---
+# --------------------------------
+
+# theme 1
 
 # color "type=HEADINGS fg=WHITE bg=BLACK"
 # color "type=HEADINGS_ODD fg=WHITE bg=BLACK"
@@ -40,8 +146,7 @@
 # color "type=INPUT fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
 # color "type=HELP_HIGHLIGHT fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
 
-
-# C ########################################
+# theme 2
 
 # REDEFINE_COLOR "WHITE" 248 248 242
 # REDEFINE_COLOR "BLACK" 34 33 34
@@ -79,48 +184,9 @@
 # # To not italicize strings, replace italic=1 with italic=0 on following line
 # color "type=STRG fg=CYAN bg=BLACK bold=0 italic=0"
 # color "type=DATEF fg=YELLOW bg=BLACK"
-#
-# set autocalc
-# set numeric
-# set numeric_decimal=0
-# set overlap
-# set xlsx_readformulas
 
+# theme 3
 
-# D ###########################################################
-
-###########################################################
-# => SC-IM CONFIGURATION
-###########################################################
-
-###########################################################
-# => General Settings
-###########################################################
-# # Move the cursor to a new line after an entry
-# set newline_action=j
-# # Display current filename in status-line
-# set filename_with_mode=1
-# # Allow cell content to overflow into the next column
-# set overlap=0
-# # Place the input bar at the bottom of the screen
-# set input_bar_bottom=1
-# # Set content to be cut off at the end of the cell
-# set truncate=1
-# # Ignore case in searches done with '/' command
-# set ignorecase=1
-# # Auto-backup sc-im every n seconds
-# set autobackup=15
-
-###########################################################
-# => Mappings
-###########################################################
-# # Exit Insert mode and enter Normal mode
-# imap "jk" "<ESC>"
-# cmap "jk" "<ESC>"
-
-###########################################################
-# => Theme Colours
-###########################################################
 # color "type=HEADINGS fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
 # color "type=HEADINGS_ODD fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
 # color "type=MODE fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
@@ -143,68 +209,8 @@
 # color "type=NORMAL fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
 # color "type=INPUT fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
 
+# theme 4
 
-# E ##########
-
-# #                               _
-# #  ___ _ __   ___ _ __ ___   __| |
-# # / __| '_ \ / __| '_ ` _ \ / _` |
-# # \__ | |_) | (__| | | | | | (_| |
-# # |___| .__/ \___|_| |_| |_|\__,_|
-# #     |_|
-# # https://github.com/spcmd
-#
-# # --------------------------------------------------------------------------
-# # Settings
-# # --------------------------------------------------------------------------
-#
-# # Number key behaviour
-# # 1 = number keys will start writing a numeric value to the cell
-# # 0 = act as a command multiplier (e.g.: 4j will go down 4 cells)
-# set numeric=1
-#
-# # zero key will start writing a 0 numeric value to the cell
-# set numeric_zero=1
-#
-# # Recalculate values automatically (don't wait until pressing the @ key)
-# set autocalc=1
-#
-# # Move the cursor down after an entry
-# set newline_action=j
-#
-# # Case insensitive search
-# set ignorecase
-#
-# # --------------------------------------------------------------------------
-# # Auto commands
-# # --------------------------------------------------------------------------
-#
-# # Auto-resize the column or column range to fit their contents.
-# autojus A:Z
-#
-# # --------------------------------------------------------------------------
-# # Key mappings
-# # --------------------------------------------------------------------------
-#
-# # help
-# nnoremap "?" ":help<CR>"
-#
-# # edit text value (cursor at the end)
-# nnoremap "A" "Ea"
-#
-# # edit text value (cursor at the beginning)
-# nnoremap "I" "E0i"
-#
-# # quick movement
-# nnoremap "J" "<C-f>"
-# nnoremap "K" "<C-b>"
-# nnoremap "H" "0"
-# nnoremap "L" "$"
-#
-# # --------------------------------------------------------------------------
-# # Color definitons
-# # --------------------------------------------------------------------------
-#
 # # Redefine colors - use this instead of the default ncurses colors (this will also change the colors in the current terminal window!)
 # # Info: http://stackoverflow.com/questions/28401332/ncurses-why-is-the-rgb-color-value-range-from-0-1000
 # # https://stackoverflow.com/questions/43710131/how-does-ncurses-init-color-function-translate-to-traditional-rbg-colors
@@ -213,28 +219,26 @@
 # REDEFINE_COLOR "RED" 700 100 100
 # REDEFINE_COLOR "GREEN" 0 500 120
 # REDEFINE_COLOR "WHITE" 957 957 957
-#
-# # DARK THEME
-# #color "type=DEFAULT fg=WHITE bg=BLACK"
-# #color "type=HEADINGS fg=WHITE bg=BLUE"
-# #color "type=WELCOME fg=BLUE bg=BLACK bold=1"
-# #color "type=CELL_SELECTION fg=BLACK bg=WHITE bold=1"
-# #color "type=CELL_SELECTION_SC fg=BLACK bg=WHITE"
-# #color "type=NUMB fg=WHITE bg=BLACK"
-# #color "type=STRG fg=WHITE bg=BLACK"
-# #color "type=DATEF fg=CYAN bg=BLACK"
-# #color "type=EXPRESSION fg=CYAN bg=BLACK"
-# #color "type=INFO_MSG fg=GREEN bg=BLACK"
-# #color "type=ERROR_MSG fg=RED bg=BLACK"
-# #color "type=MODE fg=WHITE bg=BLACK"
-# #color "type=CELL_ID fg=GREEN bg=BLACK"
-# #color "type=CELL_FORMAT fg=WHITE bg=BLACK bold=1"
-# #color "type=CELL_CONTENT fg=GREEN bg=BLACK bold=1"
-# #color "type=INPUT fg=WHITE bg=BLACK"
-# #color "type=NORMAL fg=WHITE bg=BLACK"
-# #color "type=CELL_ERROR fg=RED bg=BLACK"
-# #color "type=CELL_NEGATIVE fg=GREEN bg=BLACK"
-#
+# DARK THEME
+#color "type=DEFAULT fg=WHITE bg=BLACK"
+#color "type=HEADINGS fg=WHITE bg=BLUE"
+#color "type=WELCOME fg=BLUE bg=BLACK bold=1"
+#color "type=CELL_SELECTION fg=BLACK bg=WHITE bold=1"
+#color "type=CELL_SELECTION_SC fg=BLACK bg=WHITE"
+#color "type=NUMB fg=WHITE bg=BLACK"
+#color "type=STRG fg=WHITE bg=BLACK"
+#color "type=DATEF fg=CYAN bg=BLACK"
+#color "type=EXPRESSION fg=CYAN bg=BLACK"
+#color "type=INFO_MSG fg=GREEN bg=BLACK"
+#color "type=ERROR_MSG fg=RED bg=BLACK"
+#color "type=MODE fg=WHITE bg=BLACK"
+#color "type=CELL_ID fg=GREEN bg=BLACK"
+#color "type=CELL_FORMAT fg=WHITE bg=BLACK bold=1"
+#color "type=CELL_CONTENT fg=GREEN bg=BLACK bold=1"
+#color "type=INPUT fg=WHITE bg=BLACK"
+#color "type=NORMAL fg=WHITE bg=BLACK"
+#color "type=CELL_ERROR fg=RED bg=BLACK"
+#color "type=CELL_NEGATIVE fg=GREEN bg=BLACK"
 # # WHITE THEME
 # #color "type=DEFAULT fg=BLACK bg=WHITE"
 # #color "type=HEADINGS fg=WHITE bg=BLUE"
@@ -256,58 +260,14 @@
 # #color "type=CELL_ERROR fg=RED bg=WHITE"
 # #color "type=CELL_NEGATIVE fg=GREEN bg=WHITE"
 
-
-# F ###############
-
-# nnoremap "Q" ":q!<CR>"
-# nnoremap "<CR>" "\"
-# nnoremap "y" ":ccopy<cr>"
-# nnoremap "p" ":cpaste<cr>"
-# nnoremap "<C-w>" ":wq "
-
-# G ##########################################
-
-# set autocalc
-# set numeric=1
-# set numeric_decimal=0
-# set overlap
-# set xlsx_readformulas
-
-# H ##########################################
-
-# My scimrc file :
-
-# Base :
-
-# set autocalc
-# set numeric
-# set xlsx_readformulas
-#
-# # Aliases :
-#
-# nnoremap "ZZ" ":x<cr>"
-# nnoremap "ZQ" ":q!<cr>"
-
-# set autocalc
-# set numeric
-# set numeric_decimal=0
-# set xlsx_readformulas
-# set ignorecase
-
+# theme 5
 # color "{HEADINGS}={green}"
-
 # color "type=HEADINGS bold=1 fg=WHITE bg=RED"
-
-# # Long strings/values overlap the next cells instead of turning into asterisks
-# set overlap
-#
 # # Custom colors
 # define_color "AZUL" 0 135 255
 # define_color "ROJO" 255 0 0
 # define_color "VERDE" 79 255 0
 # define_color "NARANJA" 255 119 0
-
-
 # # Color scheme
 # color "type=HEADINGS fg=ROJO bg=BLACK bold=1
 # color "type=HEADINGS_ODD fg=ROJO bg=BLACK bold=1
@@ -316,15 +276,7 @@
 # color "type=CELL_SELECTION fg=AZUL bg=BLACK bold=1
 # color "type=CELL_SELECTION_SC fg=AZUL bg=BLACK bold=1
 
-
-
-
-
-
-
-# # show content that exceeds column width
-# set truncate
-#
+# theme 6
 # DEFINE_COLOR "fg" 255 255 255
 # DEFINE_COLOR "bg" 0 0 0
 # DEFINE_COLOR "axis_even_bg" 30 30 30
@@ -361,16 +313,7 @@
 # #color "type=CELL_ERROR fg=RED bg=DEFAULT_COLOR"
 # #color "type=CELL_NEGATIVE fg=GREEN bg=DEFAULT_COLOR"
 
-
-
-
-
-# set autocalc
-# set numeric
-# set numeric_decimal=0
-# set overlap
-# set xlsx_readformulas
-#
+# theme 7
 # color "type=HEADINGS fg=WHITE bg=BLACK bold=0 dim=0 standout=0 reverse=0"
 # color "type=CELL_SELECTION_SC fg=WHITE bg=BLACK bold=1 dim=0 standout=1"
 # color "type=CELL_SELECTION fg=WHITE bg=BLACK bold=1 dim=0 standout=1"
@@ -378,9 +321,3 @@
 # color "type=NUMB fg=BLUE bg=BLACK bold=0 dim=1"
 # color "type=EXPRESSION fg=GREEN bg=BLACK bold=0 dim=1"
 # color "type=CELL_NEGATIVE fg=RED bg=BLACK bold=0 dim=1"
-#
-# nmap "J" "<C-j>"
-# nmap "fi" ":format \"0\"<cr>"
-# nmap "B" "Vir"
-# nmap " " "E<cr>k"
-
