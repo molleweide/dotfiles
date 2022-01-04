@@ -1,3 +1,13 @@
+# reload aliases
+function reload_aliases() {
+    source $DOROTHY/user/sources/aliases.sh
+    source $DOROTHY/user/sources/nvim.sh
+    # source $XDG_CONFIG_HOME/dorothy/sources/aliases.sh
+    # source $XDG_CONFIG_HOME/dorothy/sources/nvim.sh
+}
+alias ralias="reload_aliases"
+alias rl="ralias"
+
 #------------------------
 #---       TODO       ---
 #------------------------
@@ -70,8 +80,7 @@
 # 	xq="xbps-query" \
 # 	# z="zathura" # linux
 
-alias ralias="source $DOROTHY/user/sources/aliases.sh"
-alias rl="ralias"
+
 # alias xx="zsh -il"
 alias xx="exec zsh"
 alias e="fg"

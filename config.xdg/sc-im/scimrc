@@ -1,6 +1,12 @@
+# IMPORTS
+# /home/boret/src/sc-im/themes/dracula.sc
+
+
 # ----------------------------
 # ---       SETTINGS       ---
 # ----------------------------
+
+# export TERM=xterm-256color
 
 # # Long strings/values overlap the next cells instead of turning into asterisks
 # set overlap
@@ -78,37 +84,37 @@ set xlsx_readformulas
 # ---       MAPPINGS       ---
 # ----------------------------
 
-# Exit Insert mode and enter Normal mode
-# imap "jk" "<ESC>"
-# cmap "jk" "<ESC>"
-#
-# # help
-# nnoremap "?" ":help<CR>"
-#
-# # edit text value (cursor at the end)
-# nnoremap "A" "Ea"
-#
-# # edit text value (cursor at the beginning)
-# nnoremap "I" "E0i"
-#
-# # quick movement
-# nnoremap "J" "<C-f>"
-# nnoremap "K" "<C-b>"
+nnoremap " v" ":w!<CR>"
+nnoremap " m" ":w!<CR>"
+nnoremap " ff" ":load "
+imap "zm" "<ESC>"
+cmap "zm" "<ESC>"
+nnoremap "?" ":help<CR>"
+nnoremap "A" "Ea"
+nnoremap "I" "E0i"
+nnoremap "J" "<C-f>"
+nnoremap "K" "<C-b>"
 # nnoremap "H" "0"
 # nnoremap "L" "$"
-# nnoremap "Q" ":q!<CR>"
-# nnoremap "<CR>" "\"
+nnoremap "<CR>" "\"
 # nnoremap "y" ":ccopy<cr>"
 # nnoremap "p" ":cpaste<cr>"
-# nnoremap "<C-w>" ":wq "
-# nnoremap "ZZ" ":x<cr>"
-# nnoremap "ZQ" ":q!<cr>"
-#
-# nmap "J" "<C-j>"
-# nmap "fi" ":format \"0\"<cr>"
-# nmap "B" "Vir"
+nnoremap "ZZ" ":x<cr>"
+nnoremap "ZQ" ":q!<cr>"
+nmap "fi" ":format \"0\"<cr>"
+nmap "B" "Vir"
 # nmap " " "E<cr>k"
 
+# # Swapping these mappings makes more sense to me:
+# # use gg/G to jump within a column
+# # Unfortunately, there's no mappings for visual mode
+# nnoremap "gg" "^"
+# nnoremap "^" "gg"
+# nnoremap "G" "#"
+# nnoremap "#" "G"
+# inoremap "<C-l>" "<tab>"
+# inoremap "<tab>" "<cr>kl"
+# nnoremap "<tab>" ":autojus<cr>"
 
 # --------------------------------------------------------------------------
 # AUTO COMMANDS
@@ -321,3 +327,41 @@ autojus A:Z
 # color "type=NUMB fg=BLUE bg=BLACK bold=0 dim=1"
 # color "type=EXPRESSION fg=GREEN bg=BLACK bold=0 dim=1"
 # color "type=CELL_NEGATIVE fg=RED bg=BLACK bold=0 dim=1"
+
+#############################################################################
+#############################################################################
+#############################################################################
+#############################################################################
+#############################################################################
+
+# # Looks really nice with Solarized color scheme
+# color "type=HEADINGS fg=DEFAULT_COLOR bg=BLACK bold=0"
+# color "type=CELL_SELECTION fg=WHITE bg=GREEN bold=1"
+# Custom colors
+# define_color "headings_fg"    128 128 128
+# define_color "str_val_fg"     204 204 204
+# define_color "num_val_fg"     204 204 204
+# define_color "row_col_sel_fg" 175  95 255
+# define_color "cell_sel_fg"    204 204 204
+# define_color "cell_sel_bg"     42  42  42
+
+# # Color scheme
+# color "type=HEADINGS           fg=headings_fg     bg=BLACK        bold=0"
+# color "type=HEADINGS_ODD       fg=headings_fg     bg=BLACK        bold=0"
+# color "type=STRG               fg=str_val_fg      bg=BLACK        bold=0"
+# color "type=NUMB               fg=num_val_fg      bg=BLACK        bold=0"
+# color "type=CELL_SELECTION     fg=row_col_sel_fg  bg=BLACK        bold=1"
+# color "type=CELL_SELECTION_SC  fg=cell_sel_fg     bg=cell_sel_bg  bold=0"
+
+# nnoremap ";" ":"
+# set autocalc
+
+# # Number, zero, decimal point begins entry
+# set numeric = 0
+# set filename_with_mode
+# set ignorecase
+
+# # Truncate text overflow, otherwise gets asterisked
+# set truncate
+
+# set newline_action = 0

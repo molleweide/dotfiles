@@ -26,4 +26,5 @@ alias vNC="nvim -u NORC"
 alias vh="nvim -headless"
 alias vp="nvim --cmd \"set rtp+=\$(pwd)\""
 
-
+# create plugin from template / requires boilit
+alias nvp="boilit -p $HOME/code/plugins/nvim"

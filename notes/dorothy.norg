@@ -11,15 +11,4 @@
 
 --------------------------
 
-* manage forks / clones
- ** categories
-    programs
-    firmware
-    web
-
-* store / recall macos system preferences / shortcuts etc.
-  please comment on this
-
-* python path > python.bash
-  dunno what I meant with this lol
-
+* git default branch not recognized

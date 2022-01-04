@@ -52,7 +52,7 @@ SNAP_INSTALL=(
 if "$DOROTHY/commands/is-mac"; then
 	GO_INSTALL=(
 		changkun.de/x/rmtrash
-		github.com/gennaro-tedesco/boilit
+		github.com/gennaro-tedesco/boilit # manual install -> `go get -u -v github.com/gennaro-tedesco/boilit`
 		# github.com/cloudflare/utahfs/cmd/utahfs-client
 	)
 else

@@ -7,6 +7,10 @@
     version: 0.0.8
 @end
 
+* wifi -> floating window
+  test pass first command that is run when calling alacritty.
+  open center > list wifi
+
 
 ~ create two spaces
 ~ add mult windows
