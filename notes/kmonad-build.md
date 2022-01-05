@@ -1,4 +1,0 @@
-# KMONAD BUILD ERRORS
-
-## command
-
