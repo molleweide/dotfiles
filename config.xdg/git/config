@@ -182,7 +182,14 @@
 [gitlab]
 	user = molleweide
 [ghq]
+    root = ~/ghq
     root = ~/code/ghq
+    root = ~/code/var
+    root = ~/code/apps
+    root = ~/code/learn
+    root = ~/code/plugins/nvim
+    root = ~/code/scripts
+    root = ~/code/web
 # [ghq "import"]
 #     pocket = !pocket list --domain github.com --format '{{.URL}}'
 #     starred = !github-list-starred
