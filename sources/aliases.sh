@@ -573,8 +573,14 @@ alias speedtest="wget -O /dev/null http://speed.transip.nl/10mb.bin"
 
 
 
-
-
+# -----------------------
+# ---       GHQ       ---
+# -----------------------
+alias ghc="ghq create"
+alias ghl="ghq list"
+alias ghg="ghq get"
+alias ghr="ghq root"
+alias ghh="ghq help"
 
 
 
