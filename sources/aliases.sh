@@ -312,7 +312,8 @@ alias gcreb="git add --all && git commit -m 'REBASE ME!!!'"
 alias gcun="git add notes/ && git commit -m 'user(molleweide): notes'"
 alias sv="git add --all && git commit -m 'save'"
 alias svp="git add --all && git commit -m 'save' && git push"
-alias frk="gh repo fork"
+alias ghfk="gh repo fork"
+alias ghrc="gh repo create"
 alias lg="lazygit"
 alias prdev="gh pr create --base develop"
 alias prmst="gh pr create --base master"
@@ -321,6 +322,16 @@ alias gcbn="git-get-checked-out-branch-name"
 # 1 = branch, 2 = sub path, 3 = new repo url
 alias gbrkout="git-subdir-make-into-module"
 alias gsmv="git-submodule-mv"
+
+# -----------------------
+# ---       GHQ       ---
+# -----------------------
+
+alias ghg="ghq get -p"
+alias ghc="ghq create"
+alias ghl="ghq list"
+alias ghr="ghq root"
+alias ghh="ghq help"
 
 #----------------------------------
 #---       COMMUNICATIONS       ---
@@ -572,15 +583,6 @@ alias speedtest="wget -O /dev/null http://speed.transip.nl/10mb.bin"
 # alias autorotate="jhead -autorot"
 
 
-
-# -----------------------
-# ---       GHQ       ---
-# -----------------------
-alias ghc="ghq create"
-alias ghl="ghq list"
-alias ghg="ghq get"
-alias ghr="ghq root"
-alias ghh="ghq help"
 
 
 
