@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# paths used
+cv_src="/Users/hjalmarjakobsson/code/var/pandoc_resume_cv"
+cv_dst="$XDG_CONFIG_HOME/ghq/github.com/molleweide/molleweide.github.io"
+
+# build
+pushd $cv_src >/dev/null 2>&1
+make
+popd >/dev/null 2>&1
+
+# copy html and css into user.
+cp "$cv_src/output/resume.html" "$cv_dst/index.html"
+
+# push
+pushd $cv_dst >/dev/null 2>&1
+git add index.html
+git commit -m "update cv"
+git push
+popd >/dev/null 2>&1
