@@ -182,14 +182,11 @@
 [gitlab]
 	user = molleweide
 [ghq]
-    root = ~/ghq
-    root = ~/code/ghq
-    root = ~/code/var
-    root = ~/code/apps
-    root = ~/code/learn
-    root = ~/code/plugins/nvim
-    root = ~/code/scripts
-    root = ~/code/web
+    root = ~/code/repos
+[ghq "https://github.com/molleweide/neorg_user"]
+    root = ~/neorg
+# [ghq "https://svn.code.sf.net"]
+#     vcs = git-svn
 # [ghq "import"]
 #     pocket = !pocket list --domain github.com --format '{{.URL}}'
 #     starred = !github-list-starred
