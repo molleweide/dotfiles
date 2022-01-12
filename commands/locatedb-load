@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# https://egeek.me/2020/04/18/enabling-locate-on-osx/
+gupdatedb --localpaths=$HOME --prunepaths=/Volumes --output=$HOME/locatedb
+

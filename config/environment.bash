@@ -85,3 +85,6 @@ if test "$shell" = 'zsh'; then
     touch "$HISTFILE"
 fi
 HOMEBREW_RUBY_VERSION='default'
+
+[[ -f "$HOME/locatedb" ]] && export LOCATE_PATH="$HOME/locatedb"
+
