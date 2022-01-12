@@ -523,15 +523,15 @@ alias cpi='cp -i'
 alias mvi='mv -i'
 alias rmi='rm -i'
 # Verbosity and settings that you pretty much just always are going to want.
-alias \
-	cp="cp -iv" \
-	mv="mv -iv" \
-	rm="rm -vI" \
-	bc="bc -ql" \
-	mkd="mkdir -pv" \
-	yt="youtube-dl --add-metadata -i" \
-	yta="yt -x -f bestaudio/best" \
-	ffmpeg="ffmpeg -hide_banner"
+# alias \
+# 	cp="cp -iv" \
+# 	mv="mv -iv" \
+# 	rm="rm -vI" \
+# 	bc="bc -ql" \
+# 	mkd="mkdir -pv" \
+# 	yt="youtube-dl --add-metadata -i" \
+# 	yta="yt -x -f bestaudio/best" \
+# 	ffmpeg="ffmpeg -hide_banner"
 
 # # single character shortcuts - be sparing!
 # alias _='sudo'
