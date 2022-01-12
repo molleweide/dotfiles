@@ -154,6 +154,7 @@
 
 [commit]
   template = ~/.config/git/message
+	gpgsign = true
 
 [filter "lfs"]
 	process = git-lfs filter-process
@@ -167,6 +168,7 @@
 [user]
 	name = hjalmar jakobsson
 	email = hjalmar.jakobsson@telia.com
+	signingkey = F75A27C9E590009BB65EC918BE4CDD65C9053F9C
 [github]
 	user = molleweide
 [credential]
@@ -192,3 +194,5 @@
 #     starred = !github-list-starred
 # [ghq "https://svn.code.sf.net"]
 #     vcs = git-svn
+[tag]
+	gpgsign = true
