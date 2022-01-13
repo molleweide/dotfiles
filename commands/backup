@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# todo
+#
+#   usage: `backup <file/dir>`
+#
+#   backup whatever to a centralized dir.
+#   prefix with date.
+#
+#   add environment var $DOROTHY_BACKUP_DIR
+#
+#
+#   # usage: `backup --clean`
+#
+#   interactively walk through (starting with oldest) content and
+#   prompt user `permanently remove xyz???`
