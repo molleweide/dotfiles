@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# note: temporary solution
+#
+# basename `git rev-parse --show-toplevel`
+
+git remote add moll "git@github.com:molleweide/$(basename `git rev-parse --show-toplevel`).git"
+# git fetch --all
+
+# git remote set-url moll molleweide
