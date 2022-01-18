@@ -1,19 +1,21 @@
 #!/usr/bin/env bash
 
 # paths used
-cv_src="/Users/hjalmarjakobsson/code/var/pandoc_resume_cv"
-cv_dst="$XDG_CONFIG_HOME/ghq/github.com/molleweide/molleweide.github.io"
+# cv_src_repo="/Users/hjalmarjakobsson/code/var/pandoc_resume_cv"
+cv_src_repo="$HOME/code/repos/github.com/mszep/pandoc_resume"
+cv_dst_moll_gh_io="$HOME/code/repos/github.com/molleweide/molleweide.github.io"
 
 # build
-pushd $cv_src >/dev/null 2>&1
+pushd $cv_src_repo >/dev/null 2>&1
 make
 popd >/dev/null 2>&1
 
 # copy html and css into user.
-cp "$cv_src/output/resume.html" "$cv_dst/index.html"
+cp "$cv_src_repo/output/resume.html" "$cv_dst_moll_gh_io/index.html"
 
 # push
-pushd $cv_dst >/dev/null 2>&1
+pushd $cv_dst_moll_gh_io >/dev/null 2>&1
+echo "pwd >> $PWD"
 git add index.html
 git commit -m "update cv"
 git push
