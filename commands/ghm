@@ -36,12 +36,13 @@
 # gh repo create my-project --private --source=. --remote=upstream
 
 repo_name=$1
-ghq_moll_path="/Users/hjalmarjakobsson/code/repos/github.com/molleweide/"
+github_user=$(git config github.user)
+ghq_gh_user_path="/Users/hjalmarjakobsson/code/repos/github.com/$github_user/"
 
-ghq create "molleweide/$1" || exit 1
+ghq create "$github_user/$1" || exit 1
 
 # build
-pushd $ghq_moll_path/$1 >/dev/null 2>&1
+pushd $ghq_gh_user_path/$1 >/dev/null 2>&1
 echo "# $1" > README.md
 git add --all && git commit -m 'first'
 gh repo create --source=. --public --push
