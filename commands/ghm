@@ -35,6 +35,9 @@
 # # create a remote repository from the current directory
 # gh repo create my-project --private --source=. --remote=upstream
 
+# 1. TODO: nvim plugins with boilit
+
+
 repo_name=$1
 github_user=$(git config github.user)
 ghq_gh_user_path="/Users/hjalmarjakobsson/code/repos/github.com/$github_user/"
@@ -47,6 +50,8 @@ echo "# $1" > README.md
 git add --all && git commit -m 'first'
 gh repo create --source=. --public --push
 popd >/dev/null 2>&1
+
+loaddb
 
 # # help
 # function help() {
