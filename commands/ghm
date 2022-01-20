@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+
+# -- flag private.
+
+# USAGE
+# gh repo create [<name>] [flags]
+
+# FLAGS
+# -c, --clone                 Clone the new repository to the current directory
+# -d, --description string    Description of the repository
+# --disable-issues        Disable issues in the new repository
+# --disable-wiki          Disable wiki in the new repository
+# -g, --gitignore string      Specify a gitignore template for the repository
+# -h, --homepage URL          Repository home page URL
+# --internal              Make the new repository internal
+# -l, --license string        Specify an Open Source License for the repository
+# --private               Make the new repository private
+# --public                Make the new repository public
+# --push                  Push local commits to the new repository
+# -r, --remote string         Specify remote name for the new repository
+# -s, --source string         Specify path to local repository to use as source
+# -t, --team name             The name of the organization team to be granted access
+# -p, --template repository   Make the new repository based on a template repository
+
+# INHERITED FLAGS
+# --help   Show help for command
+
+# EXAMPLES
+# # create a repository interactively
+# gh repo create
+
+# # create a new remote repository and clone it locally
+# gh repo create my-project --public --clone
+
+# # create a remote repository from the current directory
+# gh repo create my-project --private --source=. --remote=upstream
+
+# 1. TODO: nvim plugins with boilit
+
+
+repo_name=$1
+github_user=$(git config github.user)
+ghq_gh_user_path="/Users/hjalmarjakobsson/code/repos/github.com/$github_user/"
+
+ghq create "$github_user/$1" || exit 1
+
+# build
+pushd $ghq_gh_user_path/$1 >/dev/null 2>&1
+echo "# $1" > README.md
+git add --all && git commit -m 'first'
+gh repo create --source=. --public --push
+popd >/dev/null 2>&1
+
+loaddb
+
+# # help
+# function help() {
+# 	cat <<-EOF >/dev/stderr
+# 		USAGE:
+# 		sharebox [--configure] <action> -- [...args]
+
+# 		FLAGS:
+# 		--configure            Configuration guide.
+
+# 		ACTIONS:
+# 		chown -- <path>        Have the sharebox user take ownership of the specified path.
+# 		info                   Dumps various information about the sharebox.
+# 		mount                  Mounts the sharebox drive and vault.
+# 		pause                  Pause the sharebox services.
+# 		reboot                 Stop the sharebox and reboots the machine safely.
+# 		run -- <command...>    Runs a command as the sharebox user.
+# 		setup                  Setup the sharebox dependencies, user, and services.
+# 		shutdown               Stop the sharebox and powers off the machine safely.
+# 		size                   Gets the size of the sharebox drive.
+# 		start                  Mounts the sharebox and starts its services.
+# 		stop                   Stops the sharebox serviecs and unmounts its vault and drive.
+# 		unmount                Unmounts the sharebox drive and vault.
+# 		upgrade                Upgrade the services of the sharebox.
+# 	EOF
+# 	if test "$#" -ne 0; then
+# 		echo-style $'\n' --error="ERROR:" $'\n' --red="$(echo-lines -- "$@")" >/dev/stderr
+# 	fi
+# 	return 22 # Invalid argument
+# }
+
+# # process
+# action=''
+# reconfigure='no'
+# action_args=()
+# while test "$#" -ne 0; do
+# 	item="$1"
+# 	shift
+# 	case "$item" in
+# 	'--help' | '-h') help ;;
+# 	'--action='*) action="${item:9}" ;;
+# 	'--no-configure'* | '--configure'*)
+# 		reconfigure="$(get-flag-value configure --missing="$reconfigure" -- "$item" | echo-affirmative)"
+# 		;;
+# 	'--')
+# 		action_args+=("$@")
+# 		shift $#
+# 		break
+# 		;;
+# 	'--'*) help "An unrecognised flag was provided: $item" ;;
+# 	*)
+# 		if test -z "$action"; then
+# 			action="$item"
+# 		else
+# 			help "An unrecognised argument was provided: $item"
+# 		fi
+# 		;;
+# 	esac
+# done
