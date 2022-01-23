@@ -18,3 +18,7 @@ hammerspoon/Vim2
 commands.local/
 config.local/
 *.log
+
+# custom to my user configuration
+!*.local/
+# ^ handled by strongbox
