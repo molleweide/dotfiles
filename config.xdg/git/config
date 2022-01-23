@@ -196,3 +196,9 @@
 #     vcs = git-svn
 [tag]
 	gpgsign = true
+[filter "strongbox"]
+	clean = strongbox -clean %f
+	smudge = strongbox -smudge %f
+	required = true
+[diff "strongbox"]
+	textconv = strongbox -diff
