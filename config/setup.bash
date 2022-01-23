@@ -53,12 +53,14 @@ if "$DOROTHY/commands/is-mac"; then
 	GO_INSTALL=(
 		changkun.de/x/rmtrash
 		github.com/gennaro-tedesco/boilit # manual install -> `go get -u -v github.com/gennaro-tedesco/boilit`
+		github.com/uw-labs/strongbox
 		# github.com/cloudflare/utahfs/cmd/utahfs-client
 	)
 else
 	GO_INSTALL=(
 		changkun.de/x/rmtrash
 		github.com/gennaro-tedesco/boilit
+		github.com/uw-labs/strongbox
 		# github.com/rfjakob/gocryptfs: use `setup-util-gocryptfs` instead, as this version lags behind
 	)
 fi
@@ -217,6 +219,7 @@ HOMEBREW_CASKS=(
 	'licecap'
 	'mpv'
 	'mullvadvpn'
+	'native-access'
 	'notion'
 	'obsidian'
 	'qtpass'
