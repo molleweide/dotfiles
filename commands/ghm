@@ -48,7 +48,7 @@ ghq create "$github_user/$1" || exit 1
 pushd $ghq_gh_user_path/$1 >/dev/null 2>&1
 echo "# $1" > README.md
 git add --all && git commit -m 'first'
-gh repo create --source=. --public --push
+gh repo create --source=. --private --push
 popd >/dev/null 2>&1
 
 loaddb

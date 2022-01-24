@@ -207,6 +207,7 @@ HOMEBREW_SLOW_FORMULAS=(
 # xld
 # calibre
 HOMEBREW_CASKS=(
+    '1password'
 	'aerial'
 	'alacritty'
 	'appflowy'
@@ -358,7 +359,6 @@ SETUP_UTILS=(
 
 # heroku plugins:install heroku-repo
 
-# MAS_INSTALL=(
 # 937984704      # "Amphetamine"
 # 425264550      # "Blackmagic Disk Speed Test"
 # 948176063      # "Boom 2"
@@ -372,6 +372,7 @@ SETUP_UTILS=(
 # 803453959      # "Slack"
 # 402592703      # "Timeout"
 # 425424353      # "The Unarchiver"
+# MAS_INSTALL=(
 # )
 
 # LUA_ROCKS_INSTALL=(
