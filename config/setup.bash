@@ -101,6 +101,8 @@ HOMEBREW_FORMULAS=(
 	'gpg-tui'
 	'heroku/brew/heroku'
 	'hub'
+	'signal-cli'
+	'dbus'
 	'imagemagick'
 	'irssi'
 	'isync'
