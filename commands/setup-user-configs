@@ -3,20 +3,29 @@ source "$DOROTHY/sources/strict.bash"
 
 # echo-header "LINK USER CONFIGS.."
 # export FORCE_LINK='yes'
-# config_src_dir="$DOROTHY/user/config.xdg"
-# config_dst_dir=$HOME/.config
-# for f in $config_src_dir/*; do
-#     symlink-file "$f" "$config_dst_dir/$(basename $f)"
+# config_xdg_src_dir="$DOROTHY/user/config.xdg"
+# config_xdg_dst_dir=$HOME/.config
+# for f in $config_xdg_src_dir/*; do
+#     symlink-file "$f" "$config_xdg_dst_dir/$(basename $f)"
 # done
 
 echo-style --h1 --green "LINK USER CONFIGS.."
 export FORCE_LINK='yes'
-config_src_dir="$DOROTHY/user/config.xdg"
-config_dst_dir=$HOME/.config
-for f in $config_src_dir/*; do
+
+config_xdg_src_dir="$DOROTHY/user/config.xdg"
+# config_xdg_src_dir_local="$DOROTHY/user/config.local/xdg"
+config_xdg_dst_dir=$HOME/.config
+
+# CONFIG.XDG
+for f in $config_xdg_src_dir/*; do
     # echo "$f"
     # echo "$(basename $f)"
-    # echo "$config_dst_dir/$(basename $f)"
+    # echo "$config_xdg_dst_dir/$(basename $f)"
     # https://stackoverflow.com/questions/3362920/get-just-the-filename-from-a-path-in-a-bash-script
-    symlink-file "$f" "$config_dst_dir/$(basename $f)"
+    symlink-file "$f" "$config_xdg_dst_dir/$(basename $f)"
 done
+
+# # CONFIG.LOCAL
+# for f in $config_xdg_src_dir_local/*; do
+#     symlink-file "$f" "$config_xdg_dst_dir/$(basename $f)"
+# done
