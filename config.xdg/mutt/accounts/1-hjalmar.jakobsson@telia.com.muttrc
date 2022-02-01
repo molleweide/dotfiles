@@ -9,7 +9,6 @@ set header_cache = /Users/hjalmarjakobsson/.cache/mutt-wizard/hjalmar.jakobsson@
 set message_cachedir = /Users/hjalmarjakobsson/.cache/mutt-wizard/hjalmar.jakobsson@telia.com/bodies
 set mbox_type = Maildir
 
-
 bind index,pager gg noop
 bind index,pager g noop
 bind index,pager M noop

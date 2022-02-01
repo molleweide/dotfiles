@@ -29,3 +29,7 @@ done
 # for f in $config_xdg_src_dir_local/*; do
 #     symlink-file "$f" "$config_xdg_dst_dir/$(basename $f)"
 # done
+
+
+## special snowflakes
+ln -s ~/.config/mbsync/config ~/.mbsyncrc
