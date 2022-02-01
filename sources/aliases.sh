@@ -314,8 +314,8 @@ alias svp="git add --all && git commit -m 'save' && git push"
 alias ghfk="gh repo fork"
 alias ghrc="gh repo create"
 alias lg="lazygit"
-alias prdev="gh pr create --base develop"
-alias prmst="gh pr create --base master"
+alias ghprdev="gh pr create --base develop"
+alias ghprmst="gh pr create --base master"
 alias gcbn="git-get-checked-out-branch-name"
 
 # 1 = branch, 2 = sub path, 3 = new repo url
@@ -427,6 +427,13 @@ alias defd="defaults domains | tr ',' '\n'"
 # network
 alias netwl="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s"
 alias netws="networksetup -setairportnetwork en0" # <SSID_OF_NETWORK> <PASSWORD>
+
+
+# ----------------------------
+# ---       CRONJOBS       ---
+# ----------------------------
+alias cronbak="crontab -l > $DOROTHY/user/crontab.bak"
+alias cronuse="crontab $DOROTHY/user/crontab.bak"
 
 #------------------------------
 #---       MACOS APPS       ---

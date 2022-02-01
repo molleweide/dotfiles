@@ -1,0 +1,2 @@
+1 * * * *   gupdatedb --localpaths=$HOME --prunepaths=/Volumes --output=$HOME/locatedb &&
+
