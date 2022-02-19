@@ -16,29 +16,6 @@ function help() {
 		cpr [...flags] -- <source> <destination>
 		cpr [...flags] [--source=<source>] [--destination=<destination>]
 
-		<source> and <destination> can be a local path on your current machine, or a remote path.
-
-		If a remote path, it should be in the format of:
-		    [username@hostname:/path] for files
-		    [username@hostname:/path/] for directories
-		The [hostname] is the hostname or IP address of a valid SSH server.
-		If you the remote machine is macOS, you can enable this in System Preferences > Sharing > Remote Login.
-
-		FLAGS:
-		[--action=copy|verify] if specified, skips action prompt.
-		[--tool=...] if specified, skips tool prompt. Available tools on this machine are:
-		    for copy: $(echo-join ', ' -- "${copy_tools[@]}")
-		    for verify: $(echo-join ', ' -- "${verify_tools[@]}")
-		[--dry] if enabled, only output the determined command, do not run it.
-		[--sudo] if enabled, runt he determined command as the sudo user.
-
-		RSYNC FLAGS:
-		[--owner=<user>:<group>] if specified, uses this value for the ownership of copied files.
-		[--remove] if enabled, remove source files as they are successfully copied to the target.
-		[--checksum] if enabled, files are compared by their checksums, instead of the default quicker date and size comparison.
-		[--[no-]linux] if enabled, increases compatibility with linux systems.
-		[--slashes=adjust|ignore|exit] if specified, skips guidance prompt regarding trailing slashes in paths.
-		[--spaces=adjust|ignore|exit] if specified, skips guidance prompt regarding spaces in paths.
 	EOF
 	if test "$#" -ne 0; then
 		echo-style $'\n' --error="ERROR:" $'\n' --red="$(echo-lines -- "$@")" >/dev/stderr
@@ -49,16 +26,7 @@ function help() {
 # # process
 # action=''
 # tool=''
-# option_source=''
-# option_destination=''
 # option_dry='no'
-# option_sudo='no'
-# option_checksum='' # ask, as otherwise contrived testing can fail
-# option_remove=''   # ask
-# option_linux=''    # ask
-# option_owner=''    # manual
-# option_slashes=''  # ask
-# option_spaces=''   # ask
 # while test "$#" -ne 0; do
 # 	item="$1"
 # 	shift
