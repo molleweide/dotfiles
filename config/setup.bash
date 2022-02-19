@@ -209,10 +209,16 @@ HOMEBREW_SLOW_FORMULAS=(
 # xld
 # calibre
 HOMEBREW_CASKS=(
+    'timer'
+    'alinoftimer'
+    'michaelvillar-timer'
+    'breaktimer'
+    'minitimer'
     '1password'
 	'aerial'
 	'alacritty'
 	'appflowy'
+	'autodesk-fusion360'
 	'docker'
 	'syncthing'
 	'brave-browser'
