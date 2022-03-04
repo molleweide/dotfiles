@@ -202,7 +202,7 @@ fgr() {
 # tm [SESSION_NAME | FUZZY PATTERN] - create new tmux session, or switch to existing one.
 # Running `tm` will let you fuzzy-find a session mame
 # Passing an argument to `ftm` will switch to that session if it exists or create it otherwise
-ftm() {
+fs() {
   [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
   if [ $1 ]; then
     tmux $change -t "$1" 2>/dev/null || \
@@ -215,12 +215,19 @@ ftm() {
 # tm [SESSION_NAME | FUZZY PATTERN] - delete tmux session
 # Running `tm` will let you fuzzy-find a session mame to delete
 # Passing an argument to `ftm` will delete that session if it exists
-ftmk() {
+fak() {
   if [ $1 ]; then
     tmux kill-session -t "$1"; return
   fi
   session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) \
       &&  tmux kill-session -t "$session" || echo "No session found to delete."
+}
+
+# tm [window name | fuzzy pattern]
+# so that I can focus on building tmuxinator sessions, which I then can
+# search windows. sometimes there are many windows
+ftw() {
+
 }
 
 alias tm="tmux"

@@ -1,2 +1,2 @@
-1 * * * *   gupdatedb --localpaths=$HOME --prunepaths=/Volumes --output=$HOME/locatedb &&
+*/15 * * * *   gupdatedb --localpaths=$HOME --prunepaths=/Volumes --output=$HOME/locatedb && echo "$(date)" >> $HOME/Documents/cron_log.txt
 

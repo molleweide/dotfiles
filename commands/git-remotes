@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# easy manage git remots so that I don't have to manually readd them
+# after having cloned again.
+#
+# https://github.com/juanpabloaj/git-remote-init

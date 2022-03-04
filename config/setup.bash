@@ -115,6 +115,7 @@ HOMEBREW_FORMULAS=(
 	'lua'
 	'luarocks'
 	'most'
+	'mongocli'
 	'mps-youtube'
 	'msmtp'
 	'ncurses'
