@@ -1,0 +1,20 @@
+# ~/.tmuxinator/vim.yml
+
+#
+# pitch machine dev environment.
+
+name: pm
+
+windows:
+  - tg:
+      root: ~/code/tg
+      panes:
+        -
+  - sg:
+      root: ~/code/gurk-js
+      panes:
+
+  - imess:
+      root: ~/code/imessageclient
+      panes:
+        -
