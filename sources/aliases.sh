@@ -199,6 +199,12 @@ fgr() {
 # ---       TMUX       ---
 # ------------------------
 
+# https://github.com/isuryanarayanan/tmuxinator-fzf-helper/blob/main/tmuxinator-helper.sh
+# https://github.com/camspiers/tmuxinator-fzf-start
+# https://github.com/danielpieper/telescope-tmuxinator.nvim
+# https://github.com/Bajena/TmuxinatorMultiLaunch
+
+
 # tm [SESSION_NAME | FUZZY PATTERN] - create new tmux session, or switch to existing one.
 # Running `tm` will let you fuzzy-find a session mame
 # Passing an argument to `ftm` will switch to that session if it exists or create it otherwise
