@@ -199,9 +199,11 @@ fgr() {
 # ---       TMUX       ---
 # ------------------------
 
+# https://github.com/tmux-plugins
+# https://github.com/tmux-plugins/list
+
 # https://github.com/sainnhe/tmux-fzf
 # https://github.com/wfxr/tmux-fzf-url
-# https://github.com/sainnhe/tmux-fzf
 # https://github.com/Aloxaf/fzf-tab
 # https://github.com/yardnsm/tmux-1password
 # https://github.com/isuryanarayanan/tmuxinator-fzf-helper/blob/main/tmuxinator-helper.sh
@@ -213,6 +215,7 @@ fgr() {
 # https://github.com/rafi/tmux-pass
 # https://github.com/tomhoule/gitmoji-selector
 # https://programmer.ink/think/creating-an-efficient-front-end-working-environment-tmuxinator.html
+# https://github.com/drmad/tmux-git
 
 # how to save current session?
 # https://stackoverflow.com/questions/16752088/how-to-save-tmux-session-to-tmuxinator-project
@@ -224,7 +227,8 @@ fgr() {
 # tmux tips
 # https://www.sitepoint.com/10-killer-tmux-tips/
 
-
+# tmux configs
+# https://github.com/search?q=tmux+configuration
 
 # tm [SESSION_NAME | FUZZY PATTERN] - create new tmux session, or switch to existing one.
 # Running `tm` will let you fuzzy-find a session mame
