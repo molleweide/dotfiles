@@ -199,10 +199,19 @@ fgr() {
 # ---       TMUX       ---
 # ------------------------
 
+# https://github.com/sainnhe/tmux-fzf
+# https://github.com/wfxr/tmux-fzf-url
+# https://github.com/sainnhe/tmux-fzf
+# https://github.com/Aloxaf/fzf-tab
+# https://github.com/yardnsm/tmux-1password
 # https://github.com/isuryanarayanan/tmuxinator-fzf-helper/blob/main/tmuxinator-helper.sh
 # https://github.com/camspiers/tmuxinator-fzf-start
 # https://github.com/danielpieper/telescope-tmuxinator.nvim
 # https://github.com/Bajena/TmuxinatorMultiLaunch
+# https://github.com/ethagnawl/rmuxinator
+# https://github.com/roosta/tmux-fuzzback
+# https://github.com/rafi/tmux-pass
+# https://github.com/tomhoule/gitmoji-selector
 
 
 # tm [SESSION_NAME | FUZZY PATTERN] - create new tmux session, or switch to existing one.
