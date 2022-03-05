@@ -212,6 +212,18 @@ fgr() {
 # https://github.com/roosta/tmux-fuzzback
 # https://github.com/rafi/tmux-pass
 # https://github.com/tomhoule/gitmoji-selector
+# https://programmer.ink/think/creating-an-efficient-front-end-working-environment-tmuxinator.html
+
+# how to save current session?
+# https://stackoverflow.com/questions/16752088/how-to-save-tmux-session-to-tmuxinator-project
+# https://forum.upcase.com/t/save-and-reopen-tmux-session/5224/2
+# https://github.com/search?q=tmux+save
+# https://github.com/ynishi/tmux-save
+# https://www.reddit.com/r/commandline/comments/2ocqw3/dont_you_wish_you_could_save_and_load_tmux/
+
+# tmux tips
+# https://www.sitepoint.com/10-killer-tmux-tips/
+
 
 
 # tm [SESSION_NAME | FUZZY PATTERN] - create new tmux session, or switch to existing one.
