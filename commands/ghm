@@ -5,18 +5,26 @@
 # =====================================
 # Arguments
 
+# prepare
+actions=(
+    backup
+	get
+	new
+	vim
+)
+
 # help
 function help() {
 	cat <<-EOF >/dev/stderr
-		ABOUT:
-		Copy everything from one location to another, features:
-		- preserves attributes
-		- progress updates
-		- local and remote sources
+	ABOUT:
+	Copy everything from one location to another, features:
+	- preserves attributes
+	- progress updates
+	- local and remote sources
 
-		USAGE:
-		cpr [...flags] -- <source> <destination>
-		cpr [...flags] [--source=<source>] [--destination=<destination>]
+	USAGE:
+	cpr [...flags] -- <source> <destination>
+	cpr [...flags] [--source=<source>] [--destination=<destination>]
 
 	EOF
 	if test "$#" -ne 0; then
@@ -25,52 +33,54 @@ function help() {
 	return 22 # Invalid argument
 }
 
-# # process
-# action=''
-# tool=''
+# process
+action=''
+args=()
 # option_dry='no'
-# while test "$#" -ne 0; do
-# 	item="$1"
-# 	shift
-# 	case "$item" in
-# 	'help' | '--help' | '-h') help ;;
-# 	'--action='*) action="${item:9}" ;;
-# 	'--tool='*) tool="${item:7}" ;;
-# 	'--source='*) option_source="${item:9}" ;;
-# 	'--destination='*) option_destination="${item:14}" ;;
-# 	'--owner='*) option_owner="${item:8}" ;;
-# 	'--no-dry'* | '--dry'*)
-# 		option_dry="$(get-flag-value dry --missing="$option_dry" -- "$item" | echo-affirmative)"
-# 		;;
-# 	'--no-sudo'* | '--sudo'*)
-# 		option_sudo="$(get-flag-value sudo --missing="$option_sudo" -- "$item" | echo-affirmative)"
-# 		;;
-# 	'--no-checksum'* | '--checksum'*)
-# 		option_checksum="$(get-flag-value checksum --missing="$option_checksum" -- "$item" | echo-affirmative)"
-# 		;;
-# 	'--no-remove'* | '--remove'*)
-# 		option_remove="$(get-flag-value remove --missing="$option_remove" -- "$item" | echo-affirmative)"
-# 		;;
-# 	'--no-linux'* | '--linux'*)
-# 		option_linux="$(get-flag-value linux --missing="$option_linux" -- "$item" | echo-affirmative)"
-# 		;;
-# 	'--slashes='*) option_slashes="${item:10}" ;;
-# 	'--spaces='*) option_spaces="${item:9}" ;;
-# 	'--') ;;
-# 	'--'*) help "An unrecognised flag was provided: $item" ;;
-# 	*)
-# 		if test -z "$item"; then
-# 			help "Empty path argument provided."
-# 		elif test -z "$option_source"; then
-# 			option_source="$item"
-# 		elif test -z "$option_destination"; then
-# 			option_destination="$item"
-# 		else
-# 			help "An unrecognised argument was provided: $item"
-# 		fi
-# 		;;
-# 	esac
-# done
+while test "$#" -ne 0; do
+	item="$1"
+	shift
+	case "$item" in
+	    'help' | '--help' | '-h') help ;;
+	    # '--action='*) action="${item:9}" ;;
+	    # '--action='*) action="${item:9}" ;;
+	    # '--tool='*) tool="${item:7}" ;;
+	    # '--source='*) option_source="${item:9}" ;;
+	    # '--destination='*) option_destination="${item:14}" ;;
+	    # '--owner='*) option_owner="${item:8}" ;;
+	    # '--no-dry'* | '--dry'*)
+    	# 	option_dry="$(get-flag-value dry --missing="$option_dry" -- "$item" | echo-affirmative)"
+    	# 	;;
+	    # '--no-sudo'* | '--sudo'*)
+    	# 	option_sudo="$(get-flag-value sudo --missing="$option_sudo" -- "$item" | echo-affirmative)"
+    	# 	;;
+	    # '--no-checksum'* | '--checksum'*)
+    	# 	option_checksum="$(get-flag-value checksum --missing="$option_checksum" -- "$item" | echo-affirmative)"
+    	# 	;;
+	    # '--no-remove'* | '--remove'*)
+    	# 	option_remove="$(get-flag-value remove --missing="$option_remove" -- "$item" | echo-affirmative)"
+    	# 	;;
+	    # '--no-linux'* | '--linux'*)
+    	# 	option_linux="$(get-flag-value linux --missing="$option_linux" -- "$item" | echo-affirmative)"
+    	# 	;;
+	    # '--slashes='*) option_slashes="${item:10}" ;;
+	    # '--spaces='*) option_spaces="${item:9}" ;;
+	    '--') ;;
+	    '--'*) help "An unrecognised flag was provided: $item" ;;
+	    *)
+		    if test -z "$action"; then
+			    action="$item"
+		        # elif test -z "$args"; then
+		    else
+    			args+=("$item")
+    		# elif test -z "$item"; then
+    		# 	help "Empty path argument provided."
+    		# else
+    		# 	args+=("$item")
+    		fi
+    		;;
+    esac
+done
 
 # # ensure valid
 # action="$(
@@ -143,80 +153,63 @@ function help() {
 # # create a remote repository from the current directory
 # gh repo create my-project --private --source=. --remote=upstream
 
+# ----------------------------------
+# ---       CUSTOM GHQ GET       ---
+# ----------------------------------
 
+# 1. after ghq has been run > immediately export the new list into doro user.
+
+function backup() {
+    ghq list > $DOROTHY/user/backups/ghq.bak
+}
+
+# get and backup
+function get() {
+    ghq get -p $1
+    backup
+}
+
+# create and backup
+function create() {
+    repo_name=$1
+    github_user=$(git config github.user)
+    ghq_gh_user_path="/Users/hjalmarjakobsson/code/repos/github.com/$github_user/"
+    ghq create "$github_user/$1" || exit 1
+    backup
+
+    # build
+    pushd $ghq_gh_user_path/$1 >/dev/null 2>&1
+    echo "# $1" > README.md
+    git add --all && git commit -m 'first'
+    gh repo create --source=. --private --push
+    popd >/dev/null 2>&1
+
+    loaddb
+}
+
+# -------------------------------------
+# ---       CREATE NEW REMOTE       ---
+# -------------------------------------
+
+# --------------------------------------
+# ---       CREATE NVIM PLUGIN       ---
+# --------------------------------------
 
 # 1. TODO: nvim plugins with boilit
 
-repo_name=$1
-github_user=$(git config github.user)
-ghq_gh_user_path="/Users/hjalmarjakobsson/code/repos/github.com/$github_user/"
+# =====================================
+# Act
 
-ghq create "$github_user/$1" || exit 1
+# if test "$(type -t "act_$action")" = 'function'; then
+# 	"act_$action"
+# 	exit "$?"
+# else
+# 	echo-style --error="Action [$action] not yet implemented." >/dev/stderr
+# 	exit 78 # Function not implemented
+# fi
 
-# build
-pushd $ghq_gh_user_path/$1 >/dev/null 2>&1
-echo "# $1" > README.md
-git add --all && git commit -m 'first'
-gh repo create --source=. --private --push
-popd >/dev/null 2>&1
+# echo "${args[@]}"
 
-loaddb
-
-# # help
-# function help() {
-# 	cat <<-EOF >/dev/stderr
-# 		USAGE:
-# 		sharebox [--configure] <action> -- [...args]
-
-# 		FLAGS:
-# 		--configure            Configuration guide.
-
-# 		ACTIONS:
-# 		chown -- <path>        Have the sharebox user take ownership of the specified path.
-# 		info                   Dumps various information about the sharebox.
-# 		mount                  Mounts the sharebox drive and vault.
-# 		pause                  Pause the sharebox services.
-# 		reboot                 Stop the sharebox and reboots the machine safely.
-# 		run -- <command...>    Runs a command as the sharebox user.
-# 		setup                  Setup the sharebox dependencies, user, and services.
-# 		shutdown               Stop the sharebox and powers off the machine safely.
-# 		size                   Gets the size of the sharebox drive.
-# 		start                  Mounts the sharebox and starts its services.
-# 		stop                   Stops the sharebox serviecs and unmounts its vault and drive.
-# 		unmount                Unmounts the sharebox drive and vault.
-# 		upgrade                Upgrade the services of the sharebox.
-# 	EOF
-# 	if test "$#" -ne 0; then
-# 		echo-style $'\n' --error="ERROR:" $'\n' --red="$(echo-lines -- "$@")" >/dev/stderr
-# 	fi
-# 	return 22 # Invalid argument
-# }
-
-# # process
-# action=''
-# reconfigure='no'
-# action_args=()
-# while test "$#" -ne 0; do
-# 	item="$1"
-# 	shift
-# 	case "$item" in
-# 	'--help' | '-h') help ;;
-# 	'--action='*) action="${item:9}" ;;
-# 	'--no-configure'* | '--configure'*)
-# 		reconfigure="$(get-flag-value configure --missing="$reconfigure" -- "$item" | echo-affirmative)"
-# 		;;
-# 	'--')
-# 		action_args+=("$@")
-# 		shift $#
-# 		break
-# 		;;
-# 	'--'*) help "An unrecognised flag was provided: $item" ;;
-# 	*)
-# 		if test -z "$action"; then
-# 			action="$item"
-# 		else
-# 			help "An unrecognised argument was provided: $item"
-# 		fi
-# 		;;
-# 	esac
-# done
+# echo ">>> $action ${args[@]}"
+"$action" "${args[@]}"
+exit "$?"

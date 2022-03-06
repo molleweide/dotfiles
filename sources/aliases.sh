@@ -470,8 +470,8 @@ alias netws="networksetup -setairportnetwork en0" # <SSID_OF_NETWORK> <PASSWORD>
 # ----------------------------
 # ---       CRONJOBS       ---
 # ----------------------------
-alias cronbak="crontab -l > $DOROTHY/user/crontab.bak"
-alias cronuse="crontab $DOROTHY/user/crontab.bak"
+alias cronbak="crontab -l > $DOROTHY/user/backups/crontab.bak"
+alias cronuse="crontab $DOROTHY/user/backups/crontab.bak"
 
 #------------------------------
 #---       MACOS APPS       ---
