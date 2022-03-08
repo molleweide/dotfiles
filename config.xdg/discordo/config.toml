@@ -1,8 +1,8 @@
 [Keybindings]
-  FocusGuildsList = "Alt+Rune[g]"
-  FocusChannelsTreeView = "Alt+Rune[t]"
-  FocusMessagesTextView = "Alt+Rune[m]"
-  FocusMessageInputField = "Alt+Rune[i]"
+  FocusGuildsList = "Alt+Rune[d]"
+  FocusChannelsTreeView = "Alt+Rune[c]"
+  FocusMessagesTextView = "Alt+Rune[t]"
+  FocusMessageInputField = "Alt+Rune[e]"
   FocusMessageActionsList = "Alt+Rune[a]"
   SelectPreviousMessage = "Up"
   SelectNextMessage = "Down"

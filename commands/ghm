@@ -157,20 +157,17 @@ done
 # ---       CUSTOM GHQ GET       ---
 # ----------------------------------
 
-# 1. after ghq has been run > immediately export the new list into doro user.
-
 function backup() {
     ghq list > $DOROTHY/user/backups/ghq.bak
+    loaddb
 }
 
-# get and backup
-function get() {
+function clone() {
     ghq get -p $1
     backup
 }
 
-# create and backup
-function create() {
+function new_empty() {
     repo_name=$1
     github_user=$(git config github.user)
     ghq_gh_user_path="/Users/hjalmarjakobsson/code/repos/github.com/$github_user/"
@@ -183,19 +180,12 @@ function create() {
     git add --all && git commit -m 'first'
     gh repo create --source=. --private --push
     popd >/dev/null 2>&1
-
-    loaddb
 }
 
-# -------------------------------------
-# ---       CREATE NEW REMOTE       ---
-# -------------------------------------
-
-# --------------------------------------
-# ---       CREATE NVIM PLUGIN       ---
-# --------------------------------------
-
-# 1. TODO: nvim plugins with boilit
+function new_nvim() {
+    # spawn a new neovim plugin and push it.
+    # boilit
+}
 
 # =====================================
 # Act

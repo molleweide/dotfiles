@@ -1,0 +1,69 @@
+pane	chat	1	1	:*	1	:/Users/hjalmarjakobsson/.config/dorothy	1	zsh	:
+pane	chat	2	0	:	1	:/Users/hjalmarjakobsson/.config/dorothy	1	zsh	:
+pane	chat	3	0	:-	1	:/Users/hjalmarjakobsson/.config/dorothy	1	zsh	:
+pane	doro	1	1	:*Z	1	:/Users/hjalmarjakobsson/.config/dorothy	1	nvim	:nvim
+pane	doro	1	1	:*Z	2	:/Users/hjalmarjakobsson/.config/dorothy	0	zsh	:
+pane	doro	2	0	:##-	1	:/Users/hjalmarjakobsson/.local/share/dorothy	1	nvim	:nvim
+pane	kmo	1	1	:*	1	:/Users/hjalmarjakobsson	0	bash	:bash /Users/hjalmarjakobsson/.local/share/dorothy/user/commands/kmonad_layout -r
+pane	kmo	1	1	:*	2	:/Users/hjalmarjakobsson/.config/dorothy	1	zsh	:
+pane	learn	1	1	:*Z	1	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/cli/go	1	zsh	:
+pane	learn	1	1	:*Z	2	:/Users/hjalmarjakobsson/code/repos/github.com/mmcgrana/gobyexample	0	zsh	:
+pane	learn	2	0	:-Z	1	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/cli/rust	1	zsh	:
+pane	learn	2	0	:-Z	2	:/Users/hjalmarjakobsson/code/repos/github.com/rust-lang/rust-by-example	0	zsh	:
+pane	learn	3	0	:Z	1	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/cli/haskell	1	zsh	:
+pane	learn	3	0	:Z	2	:/Users/hjalmarjakobsson/code/repos/github.com/lotz84/haskellbyexample	0	zsh	:
+pane	learn	4	0	:	1	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/cli	1	zsh	:
+pane	learn	5	0	:	1	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/cli	1	zsh	:
+pane	main	1	0	:##Z	1	:/Users/hjalmarjakobsson/neorg	1	nvim	:nvim
+pane	main	1	0	:##Z	2	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/pitch-machine	0	zsh	:
+pane	main	1	0	:##Z	3	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/pitch-machine/client	0	zsh	:nvim
+npm run client   
+pane	main	2	0	:	1	:/Users/hjalmarjakobsson/code/test/glacial-dusk-19210/client	1	zsh	:
+pane	main	3	1	:*	1	:/Users/hjalmarjakobsson/neorg	1	nvim	:nvim
+pane	main	4	0	:-	1	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/cv-single-page	1	nvim	:nvim
+pane	main	5	0	:	1	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/apps.mollewei.de	1	zsh	:
+pane	main	6	0	:	1	:/Users/hjalmarjakobsson/neorg	1	zsh	:
+pane	moll	1	1	:##*	1	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/apps.mollewei.de	1	zsh	:nvim README.md
+pane	pm	1	1	:*Z	1	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/pitch-machine	1	zsh	:nvim
+pane	pm	1	1	:*Z	2	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/pitch-machine	0	node	:npm run server   
+pane	pm	1	1	:*Z	3	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/pitch-machine	0	node	:npm run client   
+pane	rpp	1	1	:*	1	:/Users/hjalmarjakobsson/reaper/app/reaper	1	zsh	:zsh -il
+pane	rpp	2	0	:-	1	:/Users/hjalmarjakobsson/reaper/app/reaper	1	zsh	:
+pane	rpp	3	0	:	1	:/Users/hjalmarjakobsson/reaper/app/reaper	1	zsh	:
+pane	rpp	4	0	:	1	:/Users/hjalmarjakobsson/reaper/app/reaper	1	zsh	:
+pane	test	1	1	:##*	1	:/Users/hjalmarjakobsson/.local/share/dorothy	1	zsh	:
+pane	vim	1	0	:-	1	:/Users/hjalmarjakobsson/code/repos/github.com/TimUntersberger/neogit	1	zsh	:
+pane	vim	2	0	:	1	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/moll-utils.nvim	1	nvim	:nvim
+pane	vim	3	0	:	1	:/Users/hjalmarjakobsson/code/repos/github.com/nvim-neorg/neorg	1	nvim	:nvim
+pane	vim	4	0	:	1	:/Users/hjalmarjakobsson/code/repos/github.com/nvim-telescope/telescope-packer.nvim	1	zsh	:
+pane	vim	5	1	:*	1	:/Users/hjalmarjakobsson/code/repos/github.com/ayntgl/discordo	1	nvim	:nvim
+window	chat	1	:discord	1	:*	3060,151x45,0,0,194	off
+window	chat	2	:signal	0	:	3061,151x45,0,0,195	off
+window	chat	3	:telegram	0	:-	3062,151x45,0,0,196	off
+window	doro	1	:user	1	:*Z	9a9a,151x45,0,0{75x45,0,0,166,75x45,76,0,167}	off
+window	doro	2	:dorothy	0	:##-	b062,151x45,0,0,168	off
+window	kmo	1	:kmor	1	:*	5894,151x45,0,0{77x45,0,0,0,73x45,78,0,2}	off
+window	learn	1	:go	1	:*Z	3a99,151x45,0,0{75x45,0,0,197,75x45,76,0,202}	off
+window	learn	2	:rust	0	:-Z	ba9a,151x45,0,0{75x45,0,0,198,75x45,76,0,203}	off
+window	learn	3	:haskell	0	:Z	3a9c,151x45,0,0{75x45,0,0,199,75x45,76,0,204}	off
+window	learn	4	:lisp	0	:	f057,151x45,0,0,200	off
+window	learn	5	:ts	0	:	f058,151x45,0,0,201	off
+window	main	1	:dot	0	:##Z	7d02,151x45,0,0{78x45,0,0,133,72x45,79,0[72x22,79,0,130,72x22,79,23,131]}	off
+window	main	2	:test	0	:	305d,151x45,0,0,134	off
+window	main	3	:neorg	1	:*	305a,151x45,0,0,150	off
+window	main	4	:cv	0	:-	305e,151x45,0,0,154	off
+window	main	5	:zsh	0	:	305f,151x45,0,0,155	off
+window	main	6	:zsh	0	:	b05b,151x45,0,0,180	:
+window	moll	1	:moll	1	:##*	3060,151x45,0,0,156	off
+window	pm	1	:pm	1	:*Z	93fd,151x45,0,0{75x45,0,0,141,75x45,76,0[75x22,76,0,190,75x22,76,23,191]}	off
+window	rpp	1	:rpp	1	:*	b059,151x45,0,0,140	off
+window	rpp	2	:rk	0	:-	305b,151x45,0,0,151	off
+window	rpp	3	:theme	0	:	305c,151x45,0,0,152	off
+window	rpp	4	:jsfx	0	:	305d,151x45,0,0,153	off
+window	test	1	:zsh	1	:##*	305c,151x45,0,0,171	:
+window	vim	1	:neogit	0	:-	b061,151x45,0,0,148	off
+window	vim	2	:mollutils.nvim	0	:	3062,151x45,0,0,177	off
+window	vim	3	:neorg-dev	0	:	3063,151x45,0,0,178	off
+window	vim	4	:tpack.nvim	0	:	b05c,151x45,0,0,181	off
+window	vim	5	:doom	1	:*	b064,151x45,0,0,189	off
+state	vim	learn

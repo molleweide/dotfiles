@@ -36,6 +36,7 @@ github.com/deedy/Deedy-Resume
 github.com/derricw/siggo
 github.com/dexterleng/vimac
 github.com/elentok/togglr.vim
+github.com/fedeizzo/nvim-printer
 github.com/folke/tokyonight.nvim
 github.com/folke/which-key.nvim
 github.com/gennaro-tedesco/boilit
@@ -61,6 +62,7 @@ github.com/koekeishiya/yabai
 github.com/ldelossa/litee.nvim
 github.com/lodash/lodash
 github.com/lotz84/haskellbyexample
+github.com/madskjeldgaard/reaper-nvim
 github.com/martinburger/bash-common-helpers
 github.com/max-niederman/ttyper
 github.com/mgalgs/fuzzy_bash_completion
