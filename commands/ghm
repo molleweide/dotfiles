@@ -167,24 +167,35 @@ function clone() {
     backup
 }
 
-function new_empty() {
+function new() {
     repo_name=$1
     github_user=$(git config github.user)
     ghq_gh_user_path="/Users/hjalmarjakobsson/code/repos/github.com/$github_user/"
-    ghq create "$github_user/$1" || exit 1
+    ghq create "$github_user/$repo_name" || exit 1
     backup
 
     # build
-    pushd $ghq_gh_user_path/$1 >/dev/null 2>&1
+    pushd $ghq_gh_user_path/$repo_name >/dev/null 2>&1
+    >/dev/null 2>&1
     echo "# $1" > README.md
     git add --all && git commit -m 'first'
     gh repo create --source=. --private --push
     popd >/dev/null 2>&1
 }
 
-function new_nvim() {
-    # spawn a new neovim plugin and push it.
-    # boilit
+function nvim() {
+    repo_name="$1.nvim"
+    github_user=$(git config github.user)
+    ghq_gh_user_path="/Users/hjalmarjakobsson/code/repos/github.com/$github_user/"
+    boilit -p "$ghq_gh_user_path" "$repo_name" || exit 1
+
+    # boilit >> need to fix it so that it strips the `.nvim` string within the plugin/code
+
+    pushd $ghq_gh_user_path/$repo_name >/dev/null 2>&1
+    git init
+    git add --all && git commit -m 'first'
+    gh repo create --source=. --private --push
+    popd >/dev/null 2>&1
 }
 
 # =====================================
