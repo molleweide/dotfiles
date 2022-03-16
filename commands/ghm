@@ -153,21 +153,42 @@ done
 # # create a remote repository from the current directory
 # gh repo create my-project --private --source=. --remote=upstream
 
-# ----------------------------------
-# ---       CUSTOM GHQ GET       ---
-# ----------------------------------
 
-function backup() {
-    ghq list > $DOROTHY/user/backups/ghq.bak
-    loaddb
+# ---------------------------
+# ---       HELPERS       ---
+# ---------------------------
+
+GHQ_GITHUB="/Users/hjalmarjakobsson/code/repos/github.com"
+
+load_locate() {
+  # https://egeek.me/2020/04/18/enabling-locate-on-osx/
+  gupdatedb --localpaths=$HOME --prunepaths=/Volumes --output=$HOME/locatedb
 }
 
-function clone() {
+# input github ssh string -> return name, user
+get_repo_name_and_user() {
+  # trim ".git"
+  # get last name string after /
+  # strip /
+  # get user after the second last /
+}
+
+# ---------------------------
+# ---       ACTIONS       ---
+# ---------------------------
+
+backup() {
+    ghq list > $DOROTHY/user/backups/ghq.bak
+    locatedb-load
+}
+
+clone() {
     ghq get -p $1
     backup
 }
 
-function new() {
+# new empty repo
+new() {
     repo_name=$1
     github_user=$(git config github.user)
     ghq_gh_user_path="/Users/hjalmarjakobsson/code/repos/github.com/$github_user/"
@@ -183,7 +204,8 @@ function new() {
     popd >/dev/null 2>&1
 }
 
-function nvim() {
+# new clean nvim plugin
+nvim() {
     repo_name="$1.nvim"
     github_user=$(git config github.user)
     ghq_gh_user_path="/Users/hjalmarjakobsson/code/repos/github.com/$github_user/"
@@ -197,6 +219,26 @@ function nvim() {
     gh repo create --source=. --private --push
     popd >/dev/null 2>&1
 }
+
+fork() {
+    # repo_name=$1 # TODO: how do I get the repo name from the ssh string
+    # repo_user=
+    ghq get -p $1
+    backup
+    #
+    pushd "$GHQ_GITHUB/$repo_user/$repo_name" >/dev/null 2>&1
+    # 1. gh repo fork
+    # 2. create molleweide branch
+    # 3. push
+    popd >/dev/null 2>&1
+}
+
+# add remote and store it to my repos / db so that I can recall all remotes on
+# a new machine
+add_remote() {
+
+}
+
 
 # =====================================
 # Act

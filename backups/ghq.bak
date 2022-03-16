@@ -16,6 +16,7 @@ github.com/NTBBloodbath/cheovim
 github.com/NTBBloodbath/rest.nvim
 github.com/Pocco81/Catppuccino.nvim
 github.com/Simre1/neorg-haskell-parser
+github.com/ThePrimeagen/refactoring.nvim
 github.com/ThePrimeagen/vim-be-good
 github.com/Thesmader/ghcli.nvim
 github.com/TimUntersberger/neogit
@@ -49,7 +50,13 @@ github.com/hrsh7th/cmp-path
 github.com/hrsh7th/nvim-cmp
 github.com/iliaspoulakis/Reaper-Tools
 github.com/javier-lopez/learn
+github.com/jbyuki/dash.nvim
 github.com/jbyuki/instant.nvim
+github.com/jbyuki/nabla.nvim
+github.com/jbyuki/one-small-step-for-vimkind
+github.com/jbyuki/quickmath.nvim
+github.com/jbyuki/vcd-viewer.nvim
+github.com/jbyuki/venn.nvim
 github.com/jdhao/better-escape.vim
 github.com/jesseduffield/lazygit
 github.com/jetli/awesome-yew
@@ -69,7 +76,6 @@ github.com/mgalgs/fuzzy_bash_completion
 github.com/milianw/shell-helpers
 github.com/mmcgrana/gobyexample
 github.com/molleweide/LuaSnip-snippets.nvim
-github.com/molleweide/ZZZ
 github.com/molleweide/cli
 github.com/molleweide/colors.nvim
 github.com/molleweide/cv-overleaf-letter
@@ -87,10 +93,8 @@ github.com/molleweide/molleweide.github.io
 github.com/molleweide/msc_thesis
 github.com/molleweide/pitch-machine
 github.com/molleweide/qmk_firmware
+github.com/molleweide/rpp-client.nvim
 github.com/molleweide/scim.nvim
-github.com/molleweide/teeeeeeest
-github.com/molleweide/testN
-github.com/molleweide/testagain
 github.com/molleweide/tmux-molleweide
 github.com/molleweide/wmx
 github.com/molleweide/wordpress-gulp
