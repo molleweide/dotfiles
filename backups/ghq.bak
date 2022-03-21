@@ -78,9 +78,11 @@ github.com/mmcgrana/gobyexample
 github.com/molleweide/LuaSnip-snippets.nvim
 github.com/molleweide/cli
 github.com/molleweide/colors.nvim
+github.com/molleweide/config_hammerspoon
 github.com/molleweide/cv-overleaf-letter
 github.com/molleweide/cv-single-page
 github.com/molleweide/cv-single-page_backup
+github.com/molleweide/doom-nvim
 github.com/molleweide/ghq
 github.com/molleweide/hjajak_msc_thesis_overleaf
 github.com/molleweide/lazy.nvim
@@ -91,6 +93,7 @@ github.com/molleweide/mollewei.de
 github.com/molleweide/molleweide
 github.com/molleweide/molleweide.github.io
 github.com/molleweide/msc_thesis
+github.com/molleweide/personal
 github.com/molleweide/pitch-machine
 github.com/molleweide/qmk_firmware
 github.com/molleweide/rpp-client.nvim
@@ -99,6 +102,7 @@ github.com/molleweide/tmux-molleweide
 github.com/molleweide/wmx
 github.com/molleweide/wordpress-gulp
 github.com/molleweide/workout
+github.com/molleweide/xdg_configs
 github.com/mszep/pandoc_resume
 github.com/neomutt/neomutt
 github.com/neovim/neovim

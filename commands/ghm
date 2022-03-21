@@ -165,13 +165,13 @@ load_locate() {
   gupdatedb --localpaths=$HOME --prunepaths=/Volumes --output=$HOME/locatedb
 }
 
-# input github ssh string -> return name, user
-get_repo_name_and_user() {
-  # trim ".git"
-  # get last name string after /
-  # strip /
-  # get user after the second last /
-}
+# # input github ssh string -> return name, user
+# get_repo_name_and_user() {
+#   # trim ".git"
+#   # get last name string after /
+#   # strip /
+#   # get user after the second last /
+# }
 
 # ---------------------------
 # ---       ACTIONS       ---
@@ -233,11 +233,10 @@ fork() {
     popd >/dev/null 2>&1
 }
 
-# add remote and store it to my repos / db so that I can recall all remotes on
-# a new machine
-add_remote() {
-
-}
+# # add remote and store it to my repos / db so that I can recall all remotes on
+# # a new machine
+# add_remote() {
+# }
 
 
 # =====================================

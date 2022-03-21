@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+source "$DOROTHY/sources/strict.bash"
+
+# echo-header "LINK USER CONFIGS.."
+# export FORCE_LINK='yes'
+# config_xdg_src_dir="$DOROTHY/user/config.xdg"
+# config_xdg_dst_dir=$HOME/.config
+# for f in $config_xdg_src_dir/*; do
+#     symlink-file "$f" "$config_xdg_dst_dir/$(basename $f)"
+# done
+
+echo-style --h1 --green "LINK USER CONFIGS.."
+export FORCE_LINK='yes'
+
+ghq_molleweide="$HOME/code/repos/github.com/molleweide"
+
+# CONFIG SOURCES
+config_xdg_src_dir="$DOROTHY/user/config.xdg"
+src_dotfiles="$ghq_molleweide/xdg_configs"
+src_hs="$ghq_molleweide/config_hammerspoon"
+
+# config_xdg_src_dir_local="$DOROTHY/user/config.local/xdg"
+config_xdg_dst_dir=$HOME/.config
+
+# CONFIG.XDG
+# for f in $config_xdg_src_dir/*; do
+for f in $src_dotfiles/*; do # <<<<<<<<<<<<<<<<<<<<<<<< NEW
+   # echo "$f"
+    # echo "$(basename $f)"
+    # echo "$config_xdg_dst_dir/$(basename $f)"
+    # https://stackoverflow.com/questions/3362920/get-just-the-filename-from-a-path-in-a-bash-script
+    # symlink-file "$f" "$config_xdg_dst_dir/$(basename $f)"
+    symlink-file "$f" "$HOME/.config/$(basename $f)"
+done
+
+# # CONFIG.LOCAL
+# for f in $config_xdg_src_dir_local/*; do
+#     symlink-file "$f" "$config_xdg_dst_dir/$(basename $f)"
+# done
+
+# nvim
+# symlink-file "$ghq_molleweide/doom-nvim" "$HOME/.config/nvim"
+# symlink-file "$HOME/code/repos/github.com/molleweide/doom-nvim" "$HOME/.config/nvim"
+
+# hammerspoon
+# symlink-file "$ghq_molleweide/config_hammerspoon" "$HOME/.config/hammerspoon"
+
+## special snowflakes
+# ln -s ~/.config/mbsync/config ~/.mbsyncrc
