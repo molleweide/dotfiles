@@ -12,6 +12,7 @@ github.com/LukeSmithxyz/emailwiz
 github.com/LukeSmithxyz/mutt-wizard
 github.com/LukeSmithxyz/st
 github.com/LukeSmithxyz/voidrice
+github.com/MunifTanjim/nui.nvim
 github.com/NTBBloodbath/cheovim
 github.com/NTBBloodbath/rest.nvim
 github.com/Pocco81/Catppuccino.nvim
@@ -83,6 +84,7 @@ github.com/molleweide/cv-overleaf-letter
 github.com/molleweide/cv-single-page
 github.com/molleweide/cv-single-page_backup
 github.com/molleweide/doom-nvim
+github.com/molleweide/doom-nvim.bak-pre-reorg
 github.com/molleweide/ghq
 github.com/molleweide/hjajak_msc_thesis_overleaf
 github.com/molleweide/lazy.nvim
