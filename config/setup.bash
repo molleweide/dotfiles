@@ -327,6 +327,7 @@ CARGO_INSTALL=(
 	# cargo install --git https://github.com/boxdot/gurk-rs
 	proximity-sort
 	ttyper
+	stylua
 )
 
 SETUP_UTILS=(
