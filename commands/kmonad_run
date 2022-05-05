@@ -48,53 +48,53 @@ function help() {
 	return 22 # Invalid argument
 }
 
-# process
-action=''
-config_path=''
-option_dry='no'
-while test "$#" -ne 0; do
-	item="$1"
-	shift
-	case "$item" in
-	'help' | '--help' | '-h') help ;;
-	# '--='*) action="${item:9}" ;;
-	'--dry-run'* | '-d'*) action="dry" ;;
-	'--run'*     | '-r')  action="run" ;;
-	'--print'*     | '-l')  action="run" ;;
-	'--path='*     | '-p')  config_path="run" ;;
-	# '--owner='*) option_owner="${item:8}" ;;
-	# '--no-dry'* | '--dry'*)
-	# 	option_dry="$(get-flag-value dry --missing="$option_dry" -- "$item" | echo-affirmative)"
-	# 	;;
-	# '--no-sudo'* | '--sudo'*)
-	# 	option_sudo="$(get-flag-value sudo --missing="$option_sudo" -- "$item" | echo-affirmative)"
-	# 	;;
-	# '--no-checksum'* | '--checksum'*)
-	# 	option_checksum="$(get-flag-value checksum --missing="$option_checksum" -- "$item" | echo-affirmative)"
-	# 	;;
-	# '--no-remove'* | '--remove'*)
-	# 	option_remove="$(get-flag-value remove --missing="$option_remove" -- "$item" | echo-affirmative)"
-	# 	;;
-	# '--no-linux'* | '--linux'*)
-	# 	option_linux="$(get-flag-value linux --missing="$option_linux" -- "$item" | echo-affirmative)"
-	# 	;;
-	# '--slashes='*) option_slashes="${item:10}" ;;
-	# '--spaces='*) option_spaces="${item:9}" ;;
-	'--') ;;
-	'--'*) help "An unrecognised flag was provided: $item" ;;
-	*)
-		if test -z "$item"; then
-			help "Empty path argument provided."
-		elif test -z "$option_source"; then
-			option_source="$item"
-		elif test -z "$option_destination"; then
-			option_destination="$item"
-		else
-			help "An unrecognised argument was provided: $item"
-		fi
-		;;
-	esac
-done
+# # process
+# action=''
+# config_path=''
+# option_dry='no'
+# while test "$#" -ne 0; do
+# 	item="$1"
+# 	shift
+# 	case "$item" in
+# 	'help' | '--help' | '-h') help ;;
+# 	# '--='*) action="${item:9}" ;;
+# 	'--dry-run'* | '-d'*) action="dry" ;;
+# 	'--run'*     | '-r')  action="run" ;;
+# 	'--print'*     | '-l')  action="run" ;;
+# 	'--path='*     | '-p')  config_path="run" ;;
+# 	# '--owner='*) option_owner="${item:8}" ;;
+# 	# '--no-dry'* | '--dry'*)
+# 	# 	option_dry="$(get-flag-value dry --missing="$option_dry" -- "$item" | echo-affirmative)"
+# 	# 	;;
+# 	# '--no-sudo'* | '--sudo'*)
+# 	# 	option_sudo="$(get-flag-value sudo --missing="$option_sudo" -- "$item" | echo-affirmative)"
+# 	# 	;;
+# 	# '--no-checksum'* | '--checksum'*)
+# 	# 	option_checksum="$(get-flag-value checksum --missing="$option_checksum" -- "$item" | echo-affirmative)"
+# 	# 	;;
+# 	# '--no-remove'* | '--remove'*)
+# 	# 	option_remove="$(get-flag-value remove --missing="$option_remove" -- "$item" | echo-affirmative)"
+# 	# 	;;
+# 	# '--no-linux'* | '--linux'*)
+# 	# 	option_linux="$(get-flag-value linux --missing="$option_linux" -- "$item" | echo-affirmative)"
+# 	# 	;;
+# 	# '--slashes='*) option_slashes="${item:10}" ;;
+# 	# '--spaces='*) option_spaces="${item:9}" ;;
+# 	'--') ;;
+# 	'--'*) help "An unrecognised flag was provided: $item" ;;
+# 	*)
+# 		if test -z "$item"; then
+# 			help "Empty path argument provided."
+# 		elif test -z "$option_source"; then
+# 			option_source="$item"
+# 		elif test -z "$option_destination"; then
+# 			option_destination="$item"
+# 		else
+# 			help "An unrecognised argument was provided: $item"
+# 		fi
+# 		;;
+# 	esac
+# done
 
 # # ensure valid
 # action="$(
@@ -253,6 +253,7 @@ done
 
 if test "$mode" = "r"; then
     # bash
+    echo "run"
     sudo $kmo_exec_path $tmp_file --allow-cmd
     # sudo kmonad <(compile_layout) # doesn't work
     # -f doesn't accept `false`. Complains about invalid...
