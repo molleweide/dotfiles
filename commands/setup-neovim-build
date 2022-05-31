@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# i am not user if this is necessary but this would be
+# a script for building neovim so that I can start contributing to the core program.
+
