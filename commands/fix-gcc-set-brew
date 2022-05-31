@@ -2,6 +2,8 @@
 
 # switch default gcc to brew installed one.
 
+# https://github.com/NTBBloodbath/doom-nvim/issues/246
+
 brew install gcc
 mv /usr/local/bin/gcc /usr/local/bin/gcc_old
 ln -s /usr/local/Cellar/gcc/11.2.0_1/bin/gcc-11 /usr/local/bin/gcc
