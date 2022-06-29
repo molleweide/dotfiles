@@ -793,3 +793,9 @@ alias speedtest="wget -O /dev/null http://speed.transip.nl/10mb.bin"
 
 # alias clang-ast-dump="clang -cc1 -ast-dump"
 
+#--------------------------
+#---       heroku       ---
+#-------------------------
+
+
+alias her="heroku"

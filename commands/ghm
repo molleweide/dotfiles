@@ -238,6 +238,13 @@ fork() {
 # add_remote() {
 # }
 
+remove_repo() {
+  echo "todo"
+  # remove repo from ghq.
+}
+
+# capture_remotes() {
+# }
 
 # =====================================
 # Act
