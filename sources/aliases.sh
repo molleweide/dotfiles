@@ -799,3 +799,4 @@ alias speedtest="wget -O /dev/null http://speed.transip.nl/10mb.bin"
 
 
 alias her="heroku"
+alias herl="heroku local web"

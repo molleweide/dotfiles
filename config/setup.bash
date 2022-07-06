@@ -144,6 +144,7 @@ HOMEBREW_FORMULAS=(
 	'syncthing'
 	'terminal-notifier'
 	'the_silver_searcher'
+	'thefuck'
 	'tmux'
 	'tmuxinator'
 	'tree'
