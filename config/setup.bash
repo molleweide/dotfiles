@@ -144,7 +144,6 @@ HOMEBREW_FORMULAS=(
 	'syncthing'
 	'terminal-notifier'
 	'the_silver_searcher'
-	'thefuck'
 	'tmux'
 	'tmuxinator'
 	'tree'
@@ -239,7 +238,9 @@ HOMEBREW_CASKS=(
 	'qutebrowser'
 	'spotify'
 	'supercollider'
+	'thefuck'
 	'ubersicht'
+	'xquartz'
 )
 
 # gems
