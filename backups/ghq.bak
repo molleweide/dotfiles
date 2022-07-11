@@ -84,6 +84,8 @@ github.com/lotz84/haskellbyexample
 github.com/madskjeldgaard/reaper-nvim
 github.com/martinburger/bash-common-helpers
 github.com/max-niederman/ttyper
+github.com/max397574/neorg-kanban
+github.com/max397574/tomato.nvim
 github.com/mgalgs/fuzzy_bash_completion
 github.com/milianw/shell-helpers
 github.com/mmcgrana/gobyexample
@@ -107,6 +109,7 @@ github.com/molleweide/mollewei.de
 github.com/molleweide/molleweide
 github.com/molleweide/molleweide.github.io
 github.com/molleweide/msc_thesis
+github.com/molleweide/node-js-getting-started
 github.com/molleweide/personal
 github.com/molleweide/pitch-machine
 github.com/molleweide/qmk_firmware
@@ -133,6 +136,7 @@ github.com/nvim-neorg/tree-sitter-norg
 github.com/nvim-neorg/tree-sitter-norg-meta
 github.com/nvim-neorg/tree-sitter-norg-table
 github.com/nvim-pack/nvim-spectre
+github.com/nvim-plugnplay/database
 github.com/nvim-telescope/telescope-arecibo.nvim
 github.com/nvim-telescope/telescope-file-browser.nvim
 github.com/nvim-telescope/telescope-fzf-native.nvim
@@ -167,6 +171,7 @@ github.com/tree-sitter/tree-sitter
 github.com/tree-sitter/tree-sitter-haskell
 github.com/vigoux/architext.nvim
 github.com/vigoux/complementree.nvim
+github.com/vsedov/NeorgBot
 github.com/windwp/nvim-autopairs
 github.com/windwp/nvim-ts-autotag
 github.com/x-motemen/ghq

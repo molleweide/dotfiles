@@ -233,6 +233,8 @@ HOMEBREW_CASKS=(
 	'mullvadvpn'
 	'native-access'
 	'notion'
+	'utm'
+	'logseq'
 	'obsidian'
 	'qtpass'
 	'qutebrowser'
@@ -387,8 +389,8 @@ SETUP_UTILS=(
 # 803453959      # "Slack"
 # 402592703      # "Timeout"
 # 425424353      # "The Unarchiver"
-# MAS_INSTALL=(
-# )
+MAS_INSTALL=(
+)
 
 # LUA_ROCKS_INSTALL=(
 # loop
