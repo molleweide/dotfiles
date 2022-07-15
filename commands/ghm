@@ -177,17 +177,23 @@ load_locate() {
 # ---       ACTIONS       ---
 # ---------------------------
 
+# BACKUP ALL REPOS TO A FILE IN YOUR DOTFILES
+
 backup() {
     ghq list > $DOROTHY/user/backups/ghq.bak
     locatedb-load
 }
 
+# CLONE A REPO
+
+# @param repo url
 clone() {
     ghq get -p $1
     backup
 }
 
-# new empty repo
+# NEW EMPTY REPO
+
 new() {
     repo_name=$1
     github_user=$(git config github.user)
@@ -204,7 +210,42 @@ new() {
     popd >/dev/null 2>&1
 }
 
-# new clean nvim plugin
+# FORK REPO
+
+# @param repo url
+#
+fork() {
+  repo_url=$1
+
+  if [[ "$1" =~ ^git@.* ]]; then
+    # ssh
+    repo_url=$(echo $1 | cut -f2 -d":")
+  fi
+
+  repo_user=$(basename $(dirname $repo_url))
+  repo_name_str=$( basename $repo_url )
+  repo_name=${repo_name_str%.*}
+
+  # echo $repo_user $repo_name
+
+  ghq get -p $repo_url
+  backup
+
+  pushd "$GHQ_GITHUB/$repo_user/$repo_name" >/dev/null 2>&1
+
+  echo $PWD
+  gh repo fork
+
+  # 2. create molleweide branch
+  # 3. push
+
+  popd >/dev/null 2>&1
+
+}
+
+
+# NEW NVIM PLUGIN
+
 nvim() {
     repo_name="$1.nvim"
     github_user=$(git config github.user)
@@ -217,19 +258,6 @@ nvim() {
     git init
     git add --all && git commit -m 'first'
     gh repo create --source=. --private --push
-    popd >/dev/null 2>&1
-}
-
-fork() {
-    # repo_name=$1 # TODO: how do I get the repo name from the ssh string
-    # repo_user=
-    ghq get -p $1
-    backup
-    #
-    pushd "$GHQ_GITHUB/$repo_user/$repo_name" >/dev/null 2>&1
-    # 1. gh repo fork
-    # 2. create molleweide branch
-    # 3. push
     popd >/dev/null 2>&1
 }
 
