@@ -349,16 +349,34 @@ alias gcreb="git add --all && git commit -m 'REBASE ME!!!'"
 alias gcun="git add notes/ && git commit -m 'user(molleweide): notes'"
 alias sv="git add --all && git commit -m 'save'"
 alias svp="git add --all && git commit -m 'save' && git push"
-alias ghfk="gh repo fork"
-alias ghrc="gh repo create"
 alias lg="lazygit"
-alias ghprdev="gh pr create --base develop"
-alias ghprmst="gh pr create --base master"
 alias gcbn="git-get-checked-out-branch-name"
 
 # 1 = branch, 2 = sub path, 3 = new repo url
 alias gbrkout="git-subdir-make-into-module"
 alias gsmv="git-submodule-mv"
+
+#-----------------------
+#---       GITHUB       ---
+#-----------------------
+
+# add this to `ghm`
+alias ghfk="gh repo fork"
+alias ghprdev="gh pr create --base develop"
+
+# todo: if not main then check for master..
+alias ghprmst="gh pr create --base master"
+
+
+# @param repo name
+# @param description
+function ghrc() {
+  gh repo create $1 --public
+}
+function ghrcc() {
+  gh repo create $1 --public -c
+}
+
 
 # -----------------------
 # ---       GHQ       ---

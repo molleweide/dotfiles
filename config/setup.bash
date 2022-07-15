@@ -96,6 +96,7 @@ HOMEBREW_FORMULAS=(
 	'ghc'
 	'ghq'
 	'git-extras'
+	'himalaya'
 	'gnu-tar'
 	'gnuplot'
 	'google-cloud-sdk'
