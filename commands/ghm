@@ -217,32 +217,30 @@ new() {
 fork() {
   repo_url=$1
 
+  # if url is an ssh string
   if [[ "$1" =~ ^git@.* ]]; then
-    # ssh
     repo_url=$(echo $1 | cut -f2 -d":")
   fi
 
+  # extract names
   repo_user=$(basename $(dirname $repo_url))
   repo_name_str=$( basename $repo_url )
   repo_name=${repo_name_str%.*}
 
-  # echo $repo_user $repo_name
-
+  # ghq
   ghq get -p $repo_url
   backup
 
+  # enter repo and perform actions
   pushd "$GHQ_GITHUB/$repo_user/$repo_name" >/dev/null 2>&1
-
   echo $PWD
   gh repo fork
 
-  # 2. create molleweide branch
-  # 3. push
+  # TODO: molleweide branch; first push;
 
   popd >/dev/null 2>&1
 
 }
-
 
 # NEW NVIM PLUGIN
 
