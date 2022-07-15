@@ -90,10 +90,13 @@ github.com/mgalgs/fuzzy_bash_completion
 github.com/milianw/shell-helpers
 github.com/mmcgrana/gobyexample
 github.com/molleweide/LuaSnip-snippets.nvim
+github.com/molleweide/apps.mollewei.de
 github.com/molleweide/cli
 github.com/molleweide/cli-elixir
+github.com/molleweide/cli-fnl
 github.com/molleweide/cli-go
 github.com/molleweide/cli-haskell
+github.com/molleweide/cli-python
 github.com/molleweide/cli-rust
 github.com/molleweide/cli-ts
 github.com/molleweide/colors.nvim
@@ -117,7 +120,9 @@ github.com/molleweide/msc_thesis
 github.com/molleweide/node-js-getting-started
 github.com/molleweide/personal
 github.com/molleweide/pitch-machine
+github.com/molleweide/pitch-machine-landing
 github.com/molleweide/qmk_firmware
+github.com/molleweide/reaper-web-ui
 github.com/molleweide/rpp-client.nvim
 github.com/molleweide/scim.nvim
 github.com/molleweide/test
