@@ -91,6 +91,11 @@ github.com/milianw/shell-helpers
 github.com/mmcgrana/gobyexample
 github.com/molleweide/LuaSnip-snippets.nvim
 github.com/molleweide/cli
+github.com/molleweide/cli-elixir
+github.com/molleweide/cli-go
+github.com/molleweide/cli-haskell
+github.com/molleweide/cli-rust
+github.com/molleweide/cli-ts
 github.com/molleweide/colors.nvim
 github.com/molleweide/config_hammerspoon
 github.com/molleweide/cv-overleaf-letter
@@ -123,6 +128,7 @@ github.com/molleweide/workout
 github.com/molleweide/xdg_configs
 github.com/mrjones2014/legendary.nvim
 github.com/mszep/pandoc_resume
+github.com/neo-sh/neosh
 github.com/neomutt/neomutt
 github.com/neovim/neovim
 github.com/neovim/nvim-lspconfig
