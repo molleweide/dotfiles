@@ -173,9 +173,24 @@ load_locate() {
 #   # get user after the second last /
 # }
 
+# todo...
+ghq_do() {
+
+    ghq create "$github_user/$repo_name" || exit 1
+    backup
+
+}
+
 # ---------------------------
 # ---       ACTIONS       ---
 # ---------------------------
+
+# TODO:
+#
+# - bootstrap apps
+# -
+
+
 
 # BACKUP ALL REPOS TO A FILE IN YOUR DOTFILES
 
@@ -200,6 +215,7 @@ new() {
     github_user=$(git config github.user)
     ghq_gh_user_path="/Users/hjalmarjakobsson/code/repos/github.com/$github_user/"
 
+    # put into function
     ghq create "$github_user/$repo_name" || exit 1
     backup
 
@@ -219,6 +235,8 @@ new() {
 fork() {
   repo_url=$1
 
+  # TODO: refactor the user strings into function above `get_repo_name_and_user`
+
   # if url is an ssh string
   if [[ "$1" =~ ^git@.* ]]; then
     repo_url=$(echo $1 | cut -f2 -d":")
@@ -235,7 +253,8 @@ fork() {
 
   # enter repo and perform actions
   pushd "$GHQ_GITHUB/$repo_user/$repo_name" >/dev/null 2>&1
-  echo $PWD
+  # echo $PWD
+  # TODO: ADD FLAGS
   gh repo fork
 
   # TODO: molleweide branch; first push;
