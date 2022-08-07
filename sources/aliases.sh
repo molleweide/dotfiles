@@ -816,6 +816,30 @@ alias speedtest="wget -O /dev/null http://speed.transip.nl/10mb.bin"
 #---       heroku       ---
 #-------------------------
 
-
 alias her="heroku"
 alias herl="heroku local web"
+
+
+#--------------------------------------------
+#---       CHECK SYSTEM INFORMATION       ---
+#--------------------------------------------
+
+# linux equivalents on macos
+if is-mac; then
+  # display free memory / linux `free` equiv https://superuser.com/questions/521681/what-is-the-mac-osx-equivalent-of-free-m
+  freem() { echo $(( $(sysctl -a | awk '/memsize/{print $2}') / 2**30 )) }
+
+  # dmidecode
+
+  # lshw
+
+  # hwinfo
+
+  # lscpu
+
+  # lspci
+
+  # /proc/cpuinfo
+
+fi
+
