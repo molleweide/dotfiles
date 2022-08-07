@@ -2,6 +2,7 @@
 github.com/AdamWagner/stackline
 github.com/AdamWagner/yabai-uberbar
 github.com/Bastardkb/Skeletyl
+github.com/EdenEast/nightfox.nvim
 github.com/Iron-E/nvim-libmodal
 github.com/JoosepAlviste/nvim-ts-context-commentstring
 github.com/L3MON4D3/LuaSnip
@@ -81,6 +82,7 @@ github.com/ldelossa/litee-symboltree.nvim
 github.com/ldelossa/litee.nvim
 github.com/lodash/lodash
 github.com/lotz84/haskellbyexample
+github.com/madskjeldgaard/ReaCollider
 github.com/madskjeldgaard/reaper-nvim
 github.com/martinburger/bash-common-helpers
 github.com/max-niederman/ttyper
@@ -92,11 +94,14 @@ github.com/mmcgrana/gobyexample
 github.com/molleweide/LuaSnip-snippets.nvim
 github.com/molleweide/apps.mollewei.de
 github.com/molleweide/cli
+github.com/molleweide/cli-cpp
 github.com/molleweide/cli-elixir
 github.com/molleweide/cli-fnl
 github.com/molleweide/cli-go
 github.com/molleweide/cli-haskell
+github.com/molleweide/cli-lisp
 github.com/molleweide/cli-python
+github.com/molleweide/cli-ruby
 github.com/molleweide/cli-rust
 github.com/molleweide/cli-ts
 github.com/molleweide/colors.nvim
@@ -110,6 +115,11 @@ github.com/molleweide/doom-nvim.bak-pre-reorg
 github.com/molleweide/ghq
 github.com/molleweide/hjajak_msc_thesis_overleaf
 github.com/molleweide/lazy.nvim
+github.com/molleweide/learn-bunjs
+github.com/molleweide/learn-denojs
+github.com/molleweide/learn-svelte
+github.com/molleweide/learn-vue
+github.com/molleweide/learn-yesod
 github.com/molleweide/lookup.nvim
 github.com/molleweide/moll-snippets.nvim
 github.com/molleweide/moll-utils.nvim
