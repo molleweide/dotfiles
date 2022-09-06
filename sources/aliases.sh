@@ -257,9 +257,9 @@ fak() {
 # tm [window name | fuzzy pattern]
 # so that I can focus on building tmuxinator sessions, which I then can
 # search windows. sometimes there are many windows
-ftw() {
 
-}
+# ftw() {
+# }
 
 alias tm="tmux"
 alias tk="tmux kill-session"
@@ -354,7 +354,10 @@ alias gcbn="git-get-checked-out-branch-name"
 
 # 1 = branch, 2 = sub path, 3 = new repo url
 alias gbrkout="git-subdir-make-into-module"
-alias gsmv="git-submodule-mv"
+# alias gsmv="git-submodule-mv"
+
+# list branches by last date modified
+alias gbld="git for-each-ref --sort=committerdate refs/heads/ --format='%(color: red)%(committerdate:short) %(color: cyan)%(refname:short)'"
 
 #-----------------------
 #---       GITHUB       ---
@@ -819,6 +822,9 @@ alias speedtest="wget -O /dev/null http://speed.transip.nl/10mb.bin"
 alias her="heroku"
 alias herl="heroku local web"
 
+
+
+# https://www.golinuxcloud.com/linux-commands-cheat-sheet/
 
 #--------------------------------------------
 #---       CHECK SYSTEM INFORMATION       ---

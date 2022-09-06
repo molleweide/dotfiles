@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# FIX: EXTERNAL DISPLAYS ARE NOT INCLUDED
+
 screenshot_dir="$HOME/Documents/Screenshots"
 
 mkdir -p $screenshot_dir

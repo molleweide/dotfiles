@@ -224,7 +224,7 @@ HOMEBREW_CASKS=(
 	'appflowy'
 	'autodesk-fusion360'
 	'docker'
-  'fig'
+  # 'fig'
 	'syncthing'
 	'brave-browser'
 	'dmenu-mac'

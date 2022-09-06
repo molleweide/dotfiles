@@ -25,6 +25,7 @@ github.com/ThePrimeagen/refactoring.nvim
 github.com/ThePrimeagen/vim-be-good
 github.com/Thesmader/ghcli.nvim
 github.com/TimUntersberger/neogit
+github.com/ViperX7/norg2html
 github.com/VonHeikemen/searchbox.nvim
 github.com/akinsho/toggleterm.nvim
 github.com/alacritty/alacritty
@@ -106,6 +107,7 @@ github.com/molleweide/cli-rust
 github.com/molleweide/cli-ts
 github.com/molleweide/colors.nvim
 github.com/molleweide/config_hammerspoon
+github.com/molleweide/css-mona-lisa
 github.com/molleweide/cv-overleaf-letter
 github.com/molleweide/cv-single-page
 github.com/molleweide/cv-single-page_backup
@@ -147,6 +149,7 @@ github.com/neo-sh/neosh
 github.com/neomutt/neomutt
 github.com/neovim/neovim
 github.com/neovim/nvim-lspconfig
+github.com/nvim-colortils/colortils.nvim
 github.com/nvim-lua/plenary.nvim
 github.com/nvim-neorg/dev-notes
 github.com/nvim-neorg/example_workspaces
@@ -181,6 +184,7 @@ github.com/remix-run/remix
 github.com/rockerBOO/awesome-neovim
 github.com/rudism/telescope-dict.nvim
 github.com/rust-lang/rust-by-example
+github.com/rvaiya/warpd
 github.com/s1n7ax/nvim-search-and-replace
 github.com/sindrets/diffview.nvim
 github.com/starship/starship
@@ -190,6 +194,7 @@ github.com/tjdevries/nlua.nvim
 github.com/tonaljs/tonal
 github.com/tree-sitter/tree-sitter
 github.com/tree-sitter/tree-sitter-haskell
+github.com/vhyrro/taurivim
 github.com/vigoux/architext.nvim
 github.com/vigoux/complementree.nvim
 github.com/vsedov/NeorgBot
