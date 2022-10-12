@@ -19,6 +19,7 @@ github.com/MunifTanjim/nui.nvim
 github.com/NTBBloodbath/cheovim
 github.com/NTBBloodbath/norg-fmt
 github.com/NTBBloodbath/rest.nvim
+github.com/NvChad/NvChad
 github.com/Pocco81/Catppuccino.nvim
 github.com/Simre1/neorg-haskell-parser
 github.com/ThePrimeagen/refactoring.nvim
@@ -30,6 +31,7 @@ github.com/VonHeikemen/searchbox.nvim
 github.com/akinsho/toggleterm.nvim
 github.com/alacritty/alacritty
 github.com/andmarti1424/sc-im
+github.com/anuvyklack/hydra.nvim
 github.com/ashok-khanna/lisp-notes
 github.com/ayntgl/discordo
 github.com/ayr-ton/awesome-geek-podcasts
@@ -88,7 +90,9 @@ github.com/madskjeldgaard/reaper-nvim
 github.com/martinburger/bash-common-helpers
 github.com/max-niederman/ttyper
 github.com/max397574/neorg-kanban
+github.com/max397574/omega-nvim
 github.com/max397574/tomato.nvim
+github.com/mfussenegger/nvim-dap
 github.com/mgalgs/fuzzy_bash_completion
 github.com/milianw/shell-helpers
 github.com/mmcgrana/gobyexample
@@ -156,6 +160,7 @@ github.com/nvim-neorg/example_workspaces
 github.com/nvim-neorg/library-of-norgxandria
 github.com/nvim-neorg/neorg
 github.com/nvim-neorg/neorg-telescope
+github.com/nvim-neorg/norg-specs
 github.com/nvim-neorg/tree-sitter-norg
 github.com/nvim-neorg/tree-sitter-norg-meta
 github.com/nvim-neorg/tree-sitter-norg-table
@@ -179,6 +184,7 @@ github.com/oberblastmeister/nvim-rooter
 github.com/projekt0n/github-nvim-theme
 github.com/pwntester/octo.nvim
 github.com/ramda/ramda
+github.com/ray-x/web-tools.nvim
 github.com/rebelot/heirline.nvim
 github.com/remix-run/remix
 github.com/rockerBOO/awesome-neovim
@@ -198,6 +204,9 @@ github.com/vhyrro/taurivim
 github.com/vigoux/architext.nvim
 github.com/vigoux/complementree.nvim
 github.com/vsedov/NeorgBot
+github.com/vsedov/nvim
+github.com/williamboman/mason-lspconfig.nvim
+github.com/williamboman/mason.nvim
 github.com/windwp/nvim-autopairs
 github.com/windwp/nvim-ts-autotag
 github.com/x-motemen/ghq

@@ -77,6 +77,7 @@ fi
 HOMEBREW_FORMULAS=(
 	'ack'
 	'blueutil'
+	'podman'
 	'cabal-install'
 	'calcurse'
 	'cloudflare/cloudflare/cloudflared'
@@ -94,6 +95,7 @@ HOMEBREW_FORMULAS=(
 	'fzf'
 	'gcc'
 	'ghc'
+	'ghcup'
 	'ghq'
 	'git-extras'
 	'himalaya'
@@ -115,6 +117,7 @@ HOMEBREW_FORMULAS=(
 	'lua'
 	'luarocks'
 	'mongocli'
+	'zstd'
 	'most'
 	'mps-youtube'
 	'msmtp'
@@ -213,6 +216,7 @@ HOMEBREW_SLOW_FORMULAS=(
 # xld
 # calibre
 HOMEBREW_CASKS=(
+  'obs'
     'timer'
     'alinoftimer'
     'michaelvillar-timer'
