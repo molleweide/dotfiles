@@ -2,6 +2,7 @@
 function reload_aliases() {
     source $DOROTHY/user/sources/aliases.sh
     source $DOROTHY/user/sources/nvim.sh
+    # source $DOROTHY/user/sources/asdf.bash
     # source $XDG_CONFIG_HOME/dorothy/sources/aliases.sh
     # source $XDG_CONFIG_HOME/dorothy/sources/nvim.sh
 }
@@ -233,7 +234,8 @@ fgr() {
 # tm [SESSION_NAME | FUZZY PATTERN] - create new tmux session, or switch to existing one.
 # Running `tm` will let you fuzzy-find a session mame
 # Passing an argument to `ftm` will switch to that session if it exists or create it otherwise
-fs() {
+
+tfs() {
   [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
   if [ $1 ]; then
     tmux $change -t "$1" 2>/dev/null || \
@@ -246,7 +248,7 @@ fs() {
 # tm [SESSION_NAME | FUZZY PATTERN] - delete tmux session
 # Running `tm` will let you fuzzy-find a session mame to delete
 # Passing an argument to `ftm` will delete that session if it exists
-fak() {
+tks() {
   if [ $1 ]; then
     tmux kill-session -t "$1"; return
   fi
@@ -386,7 +388,7 @@ function ghrcc() {
 # -----------------------
 
 alias ghg="ghq get -p"
-alias ghc="ghq create"
+alias ghC="ghq create"
 alias ghl="ghq list"
 alias ghr="ghq root"
 alias ghh="ghq help"

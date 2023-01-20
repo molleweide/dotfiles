@@ -6,4 +6,4 @@
 
 brew install gcc
 mv /usr/local/bin/gcc /usr/local/bin/gcc_old
-ln -s /usr/local/Cellar/gcc/11.2.0_1/bin/gcc-11 /usr/local/bin/gcc
+ln -s /usr/local/Cellar/gcc/11.3.0_1/bin/gcc-11 /usr/local/bin/gcc

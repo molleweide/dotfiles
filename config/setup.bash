@@ -55,6 +55,7 @@ if "$DOROTHY/commands/is-mac"; then
 		github.com/gennaro-tedesco/boilit # manual install -> `go get -u -v github.com/gennaro-tedesco/boilit`
 		github.com/uw-labs/strongbox
 		# github.com/cloudflare/utahfs/cmd/utahfs-client
+		# https://github.com/maaslalani/nap # cli snippets manager
 	)
 else
 	GO_INSTALL=(
@@ -76,6 +77,7 @@ fi
 # zsh-completions
 HOMEBREW_FORMULAS=(
 	'ack'
+	'asdf'
 	'blueutil'
 	'podman'
 	'cabal-install'
@@ -217,6 +219,7 @@ HOMEBREW_SLOW_FORMULAS=(
 # calibre
 HOMEBREW_CASKS=(
   'obs'
+  'gimp'
     'timer'
     'alinoftimer'
     'michaelvillar-timer'
@@ -337,7 +340,7 @@ CARGO_INSTALL=(
 	proximity-sort
 	ttyper
 	stylua
-  # --git https://github.com/MordechaiHadad/bob.git # neovim version manager
+	bob-nvim
 )
 
 SETUP_UTILS=(
