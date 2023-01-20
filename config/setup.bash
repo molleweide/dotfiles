@@ -256,20 +256,19 @@ HOMEBREW_CASKS=(
 
 # gems
 GEM_INSTALL=(
-	awesome_print
-	bundler
-	cani
-	compass
-	ffi
-	git-up
-	hirb
-	neovim
-	pry
-	sass
-	tmuxinator
-	twurl
-	yard
-	zeus
+	'awesome_print'
+	'bundler'
+	'cani'
+	'compass'
+	'ffi'
+	'git-up'
+	'hirb'
+	'pry'
+	'sass'
+	'tmuxinator'
+	'twurl'
+	'yard'
+	'zeus'
 )
 
 # pip
@@ -279,57 +278,18 @@ GEM_INSTALL=(
 # - https://github.com/pikepdf/pikepdf
 # - https://github.com/pdfminer/pdfminer.six
 PIPX_INSTALL=(
-	# bitcoinlib
-	# cairosvg
-	# PyPDF2  # python 2 only
-	pyobjc-framework-Quartz                  # mouse dependency for macos
-	git+https://github.com/boppreh/mouse.git # generate mouse events with python
-	neovim
+	'git+https://github.com/boppreh/mouse.git'
+	'pyobjc-framework-Quartz'
 )
 
 NPM_INSTALL=(
-	# bevry
-	# "@bevry/testen"
-	# boundation
-
-	# servers
-	# browser-refresh
-	# live-server
-	# serve
-
-	# database
-	# fauna-shell
-
-	# ecosystems
-	# "@stencil/core"
-	# @cloudflare/wrangler
-	# apollo
-	# ember-cli
-	# firebase-tools
-	# ionic
-	# lasso-cli
-	# marko-cli
-	# marko-starter
-	# netlify-cli
-	# now
-
-	# tooling
-	# tldr: replaced with tealdeer
-	# typescript@next
-	eslint
-	gulp-cli
-	json
-	prettier
-	typescript
-
-	bash-language-server
-	tern
-	neovim
-	vim-node-rpc
-
-	# cryptocurrency
-	# cartera
-	# coinmon
+	'bash-language-server'
+	'eslint'
+	'gulp-cli'
+	'json'
+	'tern'
+	'typescript'
+	'vim-node-rpc'
 )
 
 # rust/cargo/crates.io
@@ -368,6 +328,7 @@ SETUP_UTILS=(
 	'mas'
 	'micro'
 	'neovim'
+	'prettier'
 	'procs'
 	'ripgrep'
 	'rmesg'

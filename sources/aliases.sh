@@ -1,10 +1,10 @@
 # reload aliases
 function reload_aliases() {
-    source $DOROTHY/user/sources/aliases.sh
-    source $DOROTHY/user/sources/nvim.sh
-    # source $DOROTHY/user/sources/asdf.bash
-    # source $XDG_CONFIG_HOME/dorothy/sources/aliases.sh
-    # source $XDG_CONFIG_HOME/dorothy/sources/nvim.sh
+  source $DOROTHY/user/sources/aliases.sh
+  source $DOROTHY/user/sources/nvim.sh
+  # source $DOROTHY/user/sources/asdf.bash
+  # source $XDG_CONFIG_HOME/dorothy/sources/aliases.sh
+  # source $XDG_CONFIG_HOME/dorothy/sources/nvim.sh
 }
 alias ralias="reload_aliases"
 alias rl="ralias"
@@ -14,7 +14,6 @@ alias rl="ralias"
 #------------------------
 
 # make alias XXX="arstqarstast" SNIPPET
-
 
 # https://github.com/alebcay/awesome-shell#command-line-productivity
 
@@ -81,7 +80,6 @@ alias rl="ralias"
 # 	xq="xbps-query" \
 # 	# z="zathura" # linux
 
-
 # alias xx="zsh -il"
 alias xx="exec zsh"
 alias e="fg"
@@ -97,7 +95,7 @@ alias less="less -r"
 # alias emacs="TERM=xterm-24bit emacs -nw"
 alias cl="calcurse"
 alias ei="cointop"
-alias duu="diskutil" # list commands
+alias duu="diskutil"      # list commands
 alias dul="diskutil list" # list drives
 alias tst="testing-shell"
 alias ctgr="ctags -R"
@@ -141,9 +139,9 @@ alias suc="setup-user-configs"
 #--------------------------
 
 function reload_tiling() {
-    brew services restart yabai
-    brew services restart skhd
-    limelight # there is a wierd err msg but it works...
+  brew services restart yabai
+  brew services restart skhd
+  limelight # there is a wierd err msg but it works...
 }
 
 alias rtile="reload_tiling"
@@ -153,7 +151,7 @@ alias rtile="reload_tiling"
 #--------------------------
 
 # https://egeek.me/2020/04/18/enabling-locate-on-osx/
-if which glocate > /dev/null; then
+if which glocate >/dev/null; then
   alias locate="glocate -d $HOME/locatedb"
 fi
 alias loaddb="locatedb-load"
@@ -190,9 +188,8 @@ fgr() {
 
   read -r file line <<<"$(rg --no-heading --line-number $@ | fzf -0 -1 | awk -F: '{print $1, $2}')"
 
-  if [[ -n $file ]]
-  then
-     vim $file +$line
+  if [[ -n $file ]]; then
+    vim $file +$line
   fi
 }
 
@@ -238,11 +235,12 @@ fgr() {
 tfs() {
   [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
   if [ $1 ]; then
-    tmux $change -t "$1" 2>/dev/null || \
-        (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+    tmux $change -t "$1" 2>/dev/null ||
+      (tmux new-session -d -s $1 && tmux $change -t "$1")
+    return
   fi
-  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) \
-      &&  tmux $change -t "$session" || echo "No sessions found."
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&
+    tmux $change -t "$session" || echo "No sessions found."
 }
 
 # tm [SESSION_NAME | FUZZY PATTERN] - delete tmux session
@@ -250,10 +248,11 @@ tfs() {
 # Passing an argument to `ftm` will delete that session if it exists
 tks() {
   if [ $1 ]; then
-    tmux kill-session -t "$1"; return
+    tmux kill-session -t "$1"
+    return
   fi
-  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) \
-      &&  tmux kill-session -t "$session" || echo "No session found to delete."
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&
+    tmux kill-session -t "$session" || echo "No session found to delete."
 }
 
 # tm [window name | fuzzy pattern]
@@ -286,19 +285,19 @@ alias fn="nnn"
 
 # switch cwd on exit
 function ranger {
-    local IFS=$'\t\n'
-    local tempfile="$(mktemp -t tmp.XXXXXX)"
-    local ranger_cmd=(
-        command
-        ranger
-        --cmd="map Q chain shell echo %d > "$tempfile"; quitall"
-    )
+  local IFS=$'\t\n'
+  local tempfile="$(mktemp -t tmp.XXXXXX)"
+  local ranger_cmd=(
+    command
+    ranger
+    --cmd="map Q chain shell echo %d > "$tempfile"; quitall"
+  )
 
-    ${ranger_cmd[@]} "$@"
-    if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]]; then
-        cd -- "$(cat "$tempfile")" || return
-    fi
-    command rm -f -- "$tempfile" 2>/dev/null
+  ${ranger_cmd[@]} "$@"
+  if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n $(pwd))" ]]; then
+    cd -- "$(cat "$tempfile")" || return
+  fi
+  command rm -f -- "$tempfile" 2>/dev/null
 }
 
 # #-----------------------
@@ -324,13 +323,13 @@ function ranger {
 #-----------------------
 
 function fco() {
-  git checkout $(git branch -a --sort=-committerdate | \
-      cut -c 3- | \
-      sed 's/^remotes\/[^/]*\///' | \
-      sort | \
-      uniq | \
-      grep -v HEAD | \
-      fzf-tmux -d 20)
+  git checkout $(git branch -a --sort=-committerdate |
+    cut -c 3- |
+    sed 's/^remotes\/[^/]*\///' |
+    sort |
+    uniq |
+    grep -v HEAD |
+    fzf-tmux -d 20)
 }
 
 # fbr [FUZZY PATTERN] - Checkout specified branch
@@ -338,9 +337,9 @@ function fco() {
 fgb() {
   local branches branch
   branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
-  branch=$(echo "$branches" |
-           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+    branch=$(echo "$branches" |
+      fzf-tmux -d $((2 + $(wc -l <<<"$branches"))) +m) &&
+    git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
 alias gs='git status -sb'
@@ -372,7 +371,6 @@ alias ghprdev="gh pr create --base develop"
 # todo: if not main then check for master..
 alias ghprmst="gh pr create --base master"
 
-
 # @param repo name
 # @param description
 function ghrc() {
@@ -381,7 +379,6 @@ function ghrc() {
 function ghrcc() {
   gh repo create $1 --public -c
 }
-
 
 # -----------------------
 # ---       GHQ       ---
@@ -436,12 +433,12 @@ alias kmo="kmonad_run"
 alias kmor="kmo -r"
 
 # old
-kmopro()  { sudo $kmonad $layouts/macbook_pro_2012.kbd; }
-kmoair()  { sudo $kmonad $layouts/macbook_air_2021_m1.kbd; }
-kmoez()   { sudo $kmonad $layouts/ergodox_ez.kbd; }
-kmoproT() { sudo $kmonad $layouts/macbook_pro_2012.kbd      -l debug; }
-kmoairT() { sudo $kmonad $layouts/macbook_air_2021_m1.kbd   -l debug; }
-kmoezT()  { sudo $kmonad $layouts/ergodox_ez.kbd            -l debug; }
+kmopro() { sudo $kmonad $layouts/macbook_pro_2012.kbd; }
+kmoair() { sudo $kmonad $layouts/macbook_air_2021_m1.kbd; }
+kmoez() { sudo $kmonad $layouts/ergodox_ez.kbd; }
+kmoproT() { sudo $kmonad $layouts/macbook_pro_2012.kbd -l debug; }
+kmoairT() { sudo $kmonad $layouts/macbook_air_2021_m1.kbd -l debug; }
+kmoezT() { sudo $kmonad $layouts/ergodox_ez.kbd -l debug; }
 
 #-------------------------
 #---       MEDIA       ---
@@ -489,7 +486,6 @@ alias defd="defaults domains | tr ',' '\n'"
 alias netwl="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s"
 alias netws="networksetup -setairportnetwork en0" # <SSID_OF_NETWORK> <PASSWORD>
 
-
 # ----------------------------
 # ---       CRONJOBS       ---
 # ----------------------------
@@ -503,7 +499,6 @@ alias cronuse="crontab $DOROTHY/user/backups/crontab.bak"
 # OS X apps
 alias md="open -a Markoff $@"
 
-
 #--------------------------
 #---       OTHERS       ---
 #-------------------------
@@ -514,8 +509,8 @@ function pgrefresh() {
 }
 
 function sslcert() {
-  echo | \
-    openssl s_client -showcerts -servername $1 -connect $1:443 2>/dev/null | \
+  echo |
+    openssl s_client -showcerts -servername $1 -connect $1:443 2>/dev/null |
     openssl x509 -inform pem -noout -text
 }
 
@@ -528,8 +523,6 @@ function opendir() {
   local dir=$(dirname "$file")
   open "$dir"
 }
-
-
 
 #---------------------------------
 #---       OTHER ALIASES       ---
@@ -555,7 +548,7 @@ if [[ -n ${ZSH_VERSION-} ]]; then
   alias 8='cd -8'
   alias 9='cd -9'
 
-  alias    ..='cd ..'
+  alias ..='cd ..'
   alias -g ..2='../..'
   alias -g ..3='../../..'
   alias -g ..4='../../../..'
@@ -650,13 +643,6 @@ alias speedtest="wget -O /dev/null http://speed.transip.nl/10mb.bin"
 # # auto-orient images based on exif tags
 # alias autorotate="jhead -autorot"
 
-
-
-
-
-
-
-
 # # Shortcuts
 
 # alias reload="source ~/.bash_profile"
@@ -733,13 +719,6 @@ alias speedtest="wget -O /dev/null http://speed.transip.nl/10mb.bin"
 # alias week="date +%V"
 # alias speedtest="wget -O /dev/null http://speed.transip.nl/100mb.bin"
 # alias grip="grip -b"
-
-
-
-
-
-
-
 
 # #!/bin/bash
 
@@ -824,8 +803,6 @@ alias speedtest="wget -O /dev/null http://speed.transip.nl/10mb.bin"
 alias her="heroku"
 alias herl="heroku local web"
 
-
-
 # https://www.golinuxcloud.com/linux-commands-cheat-sheet/
 
 #--------------------------------------------
@@ -835,7 +812,9 @@ alias herl="heroku local web"
 # linux equivalents on macos
 if is-mac; then
   # display free memory / linux `free` equiv https://superuser.com/questions/521681/what-is-the-mac-osx-equivalent-of-free-m
-  freem() { echo $(( $(sysctl -a | awk '/memsize/{print $2}') / 2**30 )) }
+  function freem() {
+    echo $(($(sysctl -a | awk '/memsize/{print $2}') / 2 ** 30))
+  }
 
   # dmidecode
 
@@ -850,4 +829,3 @@ if is-mac; then
   # /proc/cpuinfo
 
 fi
-

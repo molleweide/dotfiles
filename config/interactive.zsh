@@ -2,6 +2,9 @@
 # shellcheck disable=SC2034
 # use inline `export VAR=...` statements, for fish compatibility`
 
+# load defaults
+source "$DOROTHY/config/interactive.zsh"
+
 for f in "$DOROTHY/user/sources/"*.zsh; do
     source "$f"
 done

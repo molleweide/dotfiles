@@ -2,7 +2,8 @@
 # shellcheck disable=2034,1091
 # use inline `export VAR=...` statements, for fish compatibility`
 
-source "$DOROTHY/config/shell.bash"
+# load defaults
+source "$DOROTHY/config/interactive.bash"
 
 for f in "$DOROTHY/user/sources/"*.bash; do
   source "$f"
