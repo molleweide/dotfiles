@@ -18,9 +18,10 @@ TERMINAL_EDITORS=(
    'ne'                       # setup-util-ne (300 stars)
 )
 GUI_EDITORS=(
-   'code -w' # setup-util-vscode
-   'atom -w'
-   'subl -w'
+  'nvim'
+   'code' # setup-util-vscode
+   'atom'
+   'subl'
    'gedit' # commonly bundled
 )
 
