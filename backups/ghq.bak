@@ -1,6 +1,9 @@
 .
+github.com/7PH/poweraudio
 github.com/AdamWagner/stackline
 github.com/AdamWagner/yabai-uberbar
+github.com/Arction/lcjs-showcase-audio
+github.com/Aubert-Antoine/loudness-visualizer
 github.com/Bastardkb/Skeletyl
 github.com/EdenEast/nightfox.nvim
 github.com/Iron-E/nvim-libmodal
@@ -28,6 +31,8 @@ github.com/ThePrimeagen/refactoring.nvim
 github.com/ThePrimeagen/vim-be-good
 github.com/Thesmader/ghcli.nvim
 github.com/TimUntersberger/neogit
+github.com/Tonejs/Tone.js
+github.com/UltiRequiem/audio-visualizer
 github.com/ViperX7/norg2html
 github.com/VonHeikemen/searchbox.nvim
 github.com/akinsho/toggleterm.nvim
@@ -38,6 +43,7 @@ github.com/ashok-khanna/lisp-notes
 github.com/ayntgl/discordo
 github.com/ayr-ton/awesome-geek-podcasts
 github.com/boppreh/mouse
+github.com/brandongregoryscott/beets
 github.com/brookhong/Surfingkeys
 github.com/changyuheng/fz
 github.com/cli/cli
@@ -160,6 +166,7 @@ github.com/neo-sh/neosh
 github.com/neomutt/neomutt
 github.com/neovim/neovim
 github.com/neovim/nvim-lspconfig
+github.com/notakamihe/REAW
 github.com/nvim-colortils/colortils.nvim
 github.com/nvim-lua/plenary.nvim
 github.com/nvim-neorg/dev-notes
@@ -202,6 +209,7 @@ github.com/s1n7ax/nvim-search-and-replace
 github.com/sindrets/diffview.nvim
 github.com/starship/starship
 github.com/tailwindlabs/tailwindcss
+github.com/tamton-aquib/nvim
 github.com/tanvirtin/vgit.nvim
 github.com/tjdevries/config_manager
 github.com/tjdevries/nlua.nvim
