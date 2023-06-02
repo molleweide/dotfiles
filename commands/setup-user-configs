@@ -9,8 +9,16 @@ conf_dst=$HOME/.config
 
 # CONFIG.XDG
 for f in $ghq_user/xdg_configs/*; do
-    symlink-file "$f" "$conf_dst/$(basename $f)"
+
+	if test "$(basename $f)" = "_"; then
+		echo ">>>>>>> $f"
+		continue # Ignore the folder and move to the next iteration of the loop
+	fi
+
+	symlink-file "$f" "$conf_dst/$(basename $f)"
 done
+
+# NON XDG CONFIGS BELOW...
 
 # NEOVIM / DOOM
 symlink-file "$ghq_user/doom-nvim" "$conf_dst/nvim"
@@ -18,6 +26,17 @@ symlink-file "$ghq_user/doom-nvim" "$conf_dst/nvim"
 
 # HAMMERSPOON
 symlink-file "$ghq_user/config_hammerspoon" "$conf_dst/hammerspoon"
+
+# OBS STUDIO
+# ~/Library/Application Support/obs-studio/
+# ~/.config/obs-studio/
+if is-mac; then
+	echo "a"
+	# symlink-file "$ghq_user/config_hammerspoon" "$conf_dst/hammerspoon"
+else
+	echo "b"
+# symlink-file "$ghq_user/config_hammerspoon" "$conf_dst/hammerspoon"
+fi
 
 ## SPECIAL SNOWFLAKES
 # ln -s ~/.config/mbsync/config ~/.mbsyncrc

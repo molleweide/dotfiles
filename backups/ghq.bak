@@ -24,6 +24,7 @@ github.com/MunifTanjim/nui.nvim
 github.com/NTBBloodbath/cheovim
 github.com/NTBBloodbath/norg-fmt
 github.com/NTBBloodbath/rest.nvim
+github.com/Nutlope/aicommits
 github.com/NvChad/NvChad
 github.com/Pocco81/Catppuccino.nvim
 github.com/Simre1/neorg-haskell-parser
@@ -70,6 +71,7 @@ github.com/glacambre/firenvim
 github.com/hrsh7th/cmp-path
 github.com/hrsh7th/nvim-cmp
 github.com/iliaspoulakis/Reaper-Tools
+github.com/jackMort/ChatGPT.nvim
 github.com/javier-lopez/learn
 github.com/jbyuki/dash.nvim
 github.com/jbyuki/instant.nvim
@@ -81,6 +83,7 @@ github.com/jbyuki/venn.nvim
 github.com/jdhao/better-escape.vim
 github.com/jesseduffield/lazygit
 github.com/jetli/awesome-yew
+github.com/jonasschmedtmann/advanced-css-course
 github.com/josephsdavid/neovim2
 github.com/kdheepak/lazygit.nvim
 github.com/kentcdodds/kentcdodds.com
@@ -144,6 +147,8 @@ github.com/molleweide/mollewei.de
 github.com/molleweide/molleweide
 github.com/molleweide/molleweide.github.io
 github.com/molleweide/msc_thesis
+github.com/molleweide/next_with_shadcn
+github.com/molleweide/nextjs-blog
 github.com/molleweide/node-js-getting-started
 github.com/molleweide/personal
 github.com/molleweide/pitch-machine
@@ -206,9 +211,11 @@ github.com/rudism/telescope-dict.nvim
 github.com/rust-lang/rust-by-example
 github.com/rvaiya/warpd
 github.com/s1n7ax/nvim-search-and-replace
+github.com/shadcn/ui
 github.com/sindrets/diffview.nvim
 github.com/starship/starship
 github.com/tailwindlabs/tailwindcss
+github.com/tailwindlabs/tailwindcss.com
 github.com/tamton-aquib/nvim
 github.com/tanvirtin/vgit.nvim
 github.com/tjdevries/config_manager
