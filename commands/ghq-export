@@ -1,60 +1,60 @@
 #!/usr/bin/env bash
 
-# help
-function help() {
-	cat <<-EOF >/dev/stderr
-		USAGE:
-		sharebox [--configure] <action> -- [...args]
-
-		FLAGS:
-		--configure            Configuration guide.
-
-		ACTIONS:
-		chown -- <path>        Have the sharebox user take ownership of the specified path.
-		info                   Dumps various information about the sharebox.
-		mount                  Mounts the sharebox drive and vault.
-		pause                  Pause the sharebox services.
-		reboot                 Stop the sharebox and reboots the machine safely.
-		run -- <command...>    Runs a command as the sharebox user.
-		setup                  Setup the sharebox dependencies, user, and services.
-		shutdown               Stop the sharebox and powers off the machine safely.
-		size                   Gets the size of the sharebox drive.
-		start                  Mounts the sharebox and starts its services.
-		stop                   Stops the sharebox serviecs and unmounts its vault and drive.
-		unmount                Unmounts the sharebox drive and vault.
-		upgrade                Upgrade the services of the sharebox.
-	EOF
-	if test "$#" -ne 0; then
-		echo-style $'\n' --error="ERROR:" $'\n' --red="$(echo-lines -- "$@")" >/dev/stderr
-	fi
-	return 22 # Invalid argument
-}
-
-# process
-action=''
-reconfigure='no'
-action_args=()
-while test "$#" -ne 0; do
-	item="$1"
-	shift
-	case "$item" in
-	'--help' | '-h') help ;;
-	'--action='*) action="${item:9}" ;;
-	'--no-configure'* | '--configure'*)
-		reconfigure="$(get-flag-value configure --missing="$reconfigure" -- "$item" | echo-affirmative)"
-		;;
-	'--')
-		action_args+=("$@")
-		shift $#
-		break
-		;;
-	'--'*) help "An unrecognised flag was provided: $item" ;;
-	*)
-		if test -z "$action"; then
-			action="$item"
-		else
-			help "An unrecognised argument was provided: $item"
-		fi
-		;;
-	esac
-done
+# # help
+# function help() {
+# 	cat <<-EOF >/dev/stderr
+# 		USAGE:
+# 		sharebox [--configure] <action> -- [...args]
+#
+# 		FLAGS:
+# 		--configure            Configuration guide.
+#
+# 		ACTIONS:
+# 		chown -- <path>        Have the sharebox user take ownership of the specified path.
+# 		info                   Dumps various information about the sharebox.
+# 		mount                  Mounts the sharebox drive and vault.
+# 		pause                  Pause the sharebox services.
+# 		reboot                 Stop the sharebox and reboots the machine safely.
+# 		run -- <command...>    Runs a command as the sharebox user.
+# 		setup                  Setup the sharebox dependencies, user, and services.
+# 		shutdown               Stop the sharebox and powers off the machine safely.
+# 		size                   Gets the size of the sharebox drive.
+# 		start                  Mounts the sharebox and starts its services.
+# 		stop                   Stops the sharebox serviecs and unmounts its vault and drive.
+# 		unmount                Unmounts the sharebox drive and vault.
+# 		upgrade                Upgrade the services of the sharebox.
+# 	EOF
+# 	if test "$#" -ne 0; then
+# 		echo-style $'\n' --error="ERROR:" $'\n' --red="$(echo-lines -- "$@")" >/dev/stderr
+# 	fi
+# 	return 22 # Invalid argument
+# }
+#
+# # process
+# action=''
+# reconfigure='no'
+# action_args=()
+# while test "$#" -ne 0; do
+# 	item="$1"
+# 	shift
+# 	case "$item" in
+# 	'--help' | '-h') help ;;
+# 	'--action='*) action="${item:9}" ;;
+# 	'--no-configure'* | '--configure'*)
+# 		reconfigure="$(get-flag-value configure --missing="$reconfigure" -- "$item" | echo-affirmative)"
+# 		;;
+# 	'--')
+# 		action_args+=("$@")
+# 		shift $#
+# 		break
+# 		;;
+# 	'--'*) help "An unrecognised flag was provided: $item" ;;
+# 	*)
+# 		if test -z "$action"; then
+# 			action="$item"
+# 		else
+# 			help "An unrecognised argument was provided: $item"
+# 		fi
+# 		;;
+# 	esac
+# done

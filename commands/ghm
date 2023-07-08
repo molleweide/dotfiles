@@ -59,6 +59,19 @@ backup() {
 	locatedb-load
 }
 
+# for each repo store the remotes as space separated entries on the same line
+# ^<repo> <remote> <remote> <remote>
+store_remotes() {
+  echo "store remotes"
+
+}
+
+# loop over repos and remove non-existing repos from user/backup
+clean() {
+  echo "clean"
+}
+
+# ======================
 
 clone() {
   local repo=$1

@@ -1,3 +1,5 @@
+.DS_Store
+
 env.sh
 vim/backups
 vim/view
