@@ -10,4 +10,6 @@ GPG_TTY=$(tty)
 ##
 #
 #
-# arstarst arst
+# arstarst arst AAAAA
+#
+# BBBB
