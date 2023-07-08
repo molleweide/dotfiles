@@ -94,6 +94,4 @@ HOMEBREW_RUBY_VERSION='default'
 
 [[ -f "$HOME/locatedb" ]] && export LOCATE_PATH="$HOME/locatedb"
 
-GPG_TTY="tty"
-
 PHONE_NUMBER="+46702281490"
