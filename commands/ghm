@@ -53,17 +53,30 @@ jump_to_repo_and_do() {
 
 # BACKUP ALL REPOS TO A FILE IN YOUR DOTFILES
 
+# TODO: needs to be passed the repo as arg instead so that we can append it to
+# the backup file.
+
 backup() {
-	# TODO: check if already exists > skip backup and don't call locatedb (it takes way to long)
 	ghq list >$DOROTHY/user/backups/ghq.bak
-	locatedb-load
+
+	locatedb_load
 }
 
 # for each repo store the remotes as space separated entries on the same line
 # ^<repo> <remote> <remote> <remote>
-store_remotes() {
-  echo "store remotes"
+verify_all_remotes_are_backed_up() {
+  echo "todo..."
 
+  # loop over all repos
+  # check that all remotes are listed in the backup file
+  # for each repo
+
+  # 1. for each host
+  # 2. for each user
+  # 3. for each repo
+  # 4. find corresponding LINE in backup file
+  # 5. get entries by space/tab
+  # 6. check that list of remotes
 }
 
 # loop over repos and remove non-existing repos from user/backup
@@ -160,6 +173,8 @@ nvim() {
 remove_repo() {
 	echo "todo"
 	# remove repo from ghq.
+	# 1. remove repo with ghq
+	# 2. find repo in backup file and remove entry.
 }
 
 # capture_remotes() {
