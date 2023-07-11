@@ -82,23 +82,6 @@ install_reaper_custom() {
 	fi
 }
 
-function example_install_dmg() {
-    set -x
-    tempd=$(mktemp -d)
-    curl $1 > "$tempd/pkg.dmg"
-    listing=$(sudo hdiutil attach "$tempd/pkg.dmg" | grep Volumes)
-    volume=$(echo "$listing" | cut -f 3)
-    if [ -e "$volume"/*.app ]; then
-      sudo cp -rf "$volume"/*.app /Applications
-    elif [ -e "$volume"/*.pkg ]; then
-      package=$(ls -1 "$volume" | grep .pkg | head -1)
-      sudo installer -pkg "$volume"/"$package" -target /
-    fi
-    sudo hdiutil detach "$(echo "$listing" | cut -f 1)"
-    rm -rf "$tempd"
-    set +x
-}
-
 install_packages() {
 	echo-style --g3="Install third party packages to $REAPER_DIR/packages"
 	arch="$(get-arch)"
@@ -106,59 +89,60 @@ install_packages() {
 	# NOTE: install reaper keys
 	echo-style --g3="Installing [reaper-keys] to $REAPER_PACKAGES_DIR"
 
-	# todo: how do I clone reaper keys to a custom path?
+	# TODO: how do I clone reaper keys to a custom path?
 
 	# NOTE: install SWS
-
-	# TODO:
-	# 1. put base url into variable
-	# 2. put the dmg package name into variable for each
-	# 3. download dmg with `curl -o`
-	# 4. mount dmg
-	# x. unmount dmg
-	# >>>> look at example above
 
 	local sws_url="https://www.sws-extension.org/download/featured/"
 	local sws_pgk_name
 
-  # mac uses dmg
 	if is-mac; then
-		echo "macos"
 		if test "$arch" = 'a64'; then
 			sws_pgk_name="sws-2.12.1.3-Darwin-arm64.dmg"
-			echo-style --g3="Installing SWS [$sws_pgk_name] for Arm64 to $REAPER_PACKAGES_DIR"
 		elif test "$arch" = 'x64'; then
 			sws_pgk_name="sws-2.12.1.3-Darwin-x86_64.dmg"
-			echo-style --g3="Installing SWS [$sws_pgk_name] to $REAPER_PACKAGES_DIR"
 		fi
+
+		echo-style --g3="Installing SWS [$sws_pgk_name] to $REAPER_PACKAGES_DIR"
+
+		# set -x
+		# tempd=$(mktemp -d)
+		# curl "$sws_url/$sws_pgk_name" >"$tempd/$sws_pgk_name"
+		# listing=$(sudo hdiutil attach "$tempd/$sws_pgk_name" | grep Volumes/sws)
+		# # removes the first to info columns and only echos the volume name path
+		# volume=$(echo "$listing" | cut -f 3)
+		# # local sws_dylib_file=$(find "$volume" -name "reaper*.dylib" -maxdepth 1 -print -quit)
+		# cp -rf "$volume/*.dylib" $REAPER_PACKAGES_DIR
+		# sudo hdiutil detach "$(echo "$listing" | cut -f 1)"
+		# rm -rf "$tempd"
+		# # Since the SWS Extension is not codesigned nor notarized
+		# xattr -d com.apple.quarantine "$REAPER_PACKAGES_DIR/reaper_sws-*.dylib"
+		# set +x
 	fi
 
-	# linux uses tar
 	if is-linux; then
-		echo "linux"
 		if test "$arch" = 'a64'; then
 			sws_pgk_name="sws-2.12.1.3-Linux-aarch64.tar.xz"
-			echo-style --g3="Installing SWS [$sws_pgk_name] to $REAPER_PACKAGES_DIR"
-
 		elif test "$arch" = 'a32'; then
 			sws_pgk_name="sws-2.12.1.3-Linux-armv7l.tar.xz"
-			echo-style --g3="Installing SWS [$sws_pgk_name] to $REAPER_PACKAGES_DIR"
-
 		elif test "$arch" = 'x64'; then
 			sws_pgk_name="sws-2.12.1.3-Linux-x86_64.tar.xz"
-			echo-style --g3="Installing SWS [$sws_pgk_name] for x86_64 to $REAPER_PACKAGES_DIR"
-
 		elif test "$arch" = 'x32'; then
 			sws_pgk_name="sws-2.12.1.3-Linux-i686.tar.xz"
-			echo-style --g3="Installing SWS [$sws_pgk_name] for i686 to $REAPER_PACKAGES_DIR"
 		fi
+
+		echo-style --g3="Installing SWS [$sws_pgk_name] to $REAPER_PACKAGES_DIR"
+
+		# tempd=$(mktemp -d)
+		# curl "$sws_url/$sws_pgk_name" >"$tempd/$sws_pgk_name"
+		# tar -xf "$sws_pgk_name" -C $REAPER_PACKAGES_DIR
+		# rm -rf "$tempd"
 	fi
 
-	# windows uses exe
 	if is-wsl; then
 		echo "windows"
-		# https://www.sws-extension.org/download/featured/sws-2.12.1.3-Windows-x86.exe
-		# https://www.sws-extension.org/download/featured/sws-2.12.1.3-Windows-x64.exe
+		# sws-2.12.1.3-Windows-x86.exe
+		# sws-2.12.1.3-Windows-x64.exe
 	fi
 }
 
