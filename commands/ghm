@@ -3,6 +3,10 @@
 # NAME: GIT HELP MOLLEWEIDE
 
 # uses `ghm` and `gh` to manage repos smoothly
+#
+# NOTE:
+# - use ChatGPT to ask questions
+# - use dorothy as reference
 
 # =====================================
 # Todo
@@ -18,6 +22,7 @@
 # =====================================
 # Helpers
 
+# todo: replace with $HOME/
 GHQ_GITHUB="/Users/hjalmarjakobsson/code/repos/github.com"
 
 load_locate() {
@@ -77,6 +82,10 @@ verify_all_remotes_are_backed_up() {
   # 4. find corresponding LINE in backup file
   # 5. get entries by space/tab
   # 6. check that list of remotes
+}
+
+clone_repos_from_backup() {
+  echo "todo"
 }
 
 # loop over repos and remove non-existing repos from user/backup
