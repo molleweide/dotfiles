@@ -67,7 +67,8 @@ install_reaper_default() {
 install_reaper_custom() {
 	# prompt user for install or exit
 	if test -d "$install_path"; then
-		echo-style --g3="Reaper already exists at '$install_path'. \ You can install a new instance by 'setup-util-reaper <name>'."
+		echo-style --g3="Reaper already exists at '$install_path'.
+                \ You can install a new instance by 'setup-util-reaper <name>'."
 		exit 1
 	else
 		if confirm --bool --ppid=$$ -- "Do you want to install Reaper to [$install_path]?"; then
@@ -82,19 +83,26 @@ install_reaper_custom() {
 	fi
 }
 
+# TODO: rework dorothy `unziptar` into `open-and-get-stuff`
+#   look into dorothy:
+#     down
+#     setup-util download strategy
+#   setup-util -> down -> unziptar
+
 install_packages() {
 	echo-style --g3="Install third party packages to $REAPER_DIR/packages"
 	arch="$(get-arch)"
 
-	# NOTE: install reaper keys
+  # reaper keys
 	echo-style --g3="Installing [reaper-keys] to $REAPER_PACKAGES_DIR"
+	set -x
+	git clone git@github.com:molleweide/reaper-keys.git "$REAPER_PACKAGES_DIR/reaper-keys"
+	set +x
 
-	# TODO: how do I clone reaper keys to a custom path?
-
-	# NOTE: install SWS
-
+  # sws
 	local sws_url="https://www.sws-extension.org/download/featured/"
 	local sws_pgk_name
+	local sws_dylib
 
 	if is-mac; then
 		if test "$arch" = 'a64'; then
@@ -105,19 +113,17 @@ install_packages() {
 
 		echo-style --g3="Installing SWS [$sws_pgk_name] to $REAPER_PACKAGES_DIR"
 
-		# set -x
-		# tempd=$(mktemp -d)
-		# curl "$sws_url/$sws_pgk_name" >"$tempd/$sws_pgk_name"
-		# listing=$(sudo hdiutil attach "$tempd/$sws_pgk_name" | grep Volumes/sws)
-		# # removes the first to info columns and only echos the volume name path
-		# volume=$(echo "$listing" | cut -f 3)
-		# # local sws_dylib_file=$(find "$volume" -name "reaper*.dylib" -maxdepth 1 -print -quit)
-		# cp -rf "$volume/*.dylib" $REAPER_PACKAGES_DIR
-		# sudo hdiutil detach "$(echo "$listing" | cut -f 1)"
-		# rm -rf "$tempd"
-		# # Since the SWS Extension is not codesigned nor notarized
-		# xattr -d com.apple.quarantine "$REAPER_PACKAGES_DIR/reaper_sws-*.dylib"
-		# set +x
+		set -x
+		tempd=$(mktemp -d)
+		down --directory="$tempd" "$sws_url/$sws_pgk_name"
+		listing=$(sudo hdiutil attach "$tempd/$sws_pgk_name" | grep "Volumes/$(fs-filename $sws_pgk_name)")
+		volume=$(echo "$listing" | cut -f 3)
+		sws_dylib=$(find "$volume" -name "reaper*.dylib" -maxdepth 1 -print -quit)
+		cp -RLf "$sws_dylib" "$REAPER_PACKAGES_DIR"
+		sudo hdiutil detach "$volume" #"$(echo "$listing" | cut -f 1)"
+		rm -rf "$tempd"
+		xattr -d com.apple.quarantine "$REAPER_PACKAGES_DIR/$(basename "$sws_dylib")"
+		set +x
 	fi
 
 	if is-linux; then
@@ -132,6 +138,8 @@ install_packages() {
 		fi
 
 		echo-style --g3="Installing SWS [$sws_pgk_name] to $REAPER_PACKAGES_DIR"
+
+		# TODO: dorothy unziptar
 
 		# tempd=$(mktemp -d)
 		# curl "$sws_url/$sws_pgk_name" >"$tempd/$sws_pgk_name"
