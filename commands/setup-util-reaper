@@ -9,9 +9,6 @@ echo-style --g1="SETUP REAPER"
 # - look at reaper update utility.
 #   can this one be used / compatible with branches
 
-# TODO: REVIEW DOROTHY INSTALLER SCRIPT FOR REAPER.
-#   ~ symlink packages into UserPlugins and Scripts
-
 # export REAPER_CLI=$REAPER_APP_DIR/reaper-latest
 # export PATH="$PATH:$REAPER_APP_DIR"
 export REAPER_DIR=$HOME/reaper
@@ -21,6 +18,12 @@ REAPER_PACKAGES_DIR="$REAPER_DIR/packages"
 REAPER_PROJECTS_DIR="$REAPER_DIR/projects"
 REAPER_TMP_DIR="$REAPER_DIR/tmp"
 REAPER_BACKUP_DIR="$REAPER_DIR/backup"
+
+# TODO:
+# put UserPlugins under packages/UserPlugins
+# put Scripts under packages/Scripts
+# put Effects under packages/Effects
+# color themes...
 
 mkdir -p "$REAPER_APP_DIR"
 mkdir -p "$REAPER_PACKAGES_DIR"
@@ -52,6 +55,24 @@ install_reaper_default() {
 	fi
 }
 
+find_existing_sws() {
+	find "$REAPER_PACKAGES_DIR" -type f -name "*sws*.dylib" -print -quit
+}
+
+symlink_packages() {
+	local sws sws_basename
+	symlink-helper --existing="$REAPER_PACKAGES_DIR/reaper-keys" --symlink="$INSTALL_PATH/Scripts/reaper-keys"
+	symlink-helper --existing="$REAPER_PACKAGES_DIR/reaper-fuzzy" --symlink="$INSTALL_PATH/Scripts/reaper-fuzzy"
+	symlink-helper --existing="$REAPER_PACKAGES_DIR/reaper-jsfx" --symlink="$INSTALL_PATH/Effects/reaper-jsfx"
+	symlink-helper --existing="$REAPER_PACKAGES_DIR/CColorThemes" --symlink="$INSTALL_PATH/ColorThemes"
+	sws=$(find_existing_sws)
+	sws_basename=$(basename "$sws")
+	if test -f "$sws"; then
+		symlink-helper --existing="$sws" --symlink="$INSTALL_PATH/UserPlugins/$sws_basename"
+		# symlink-helper --existing="$HOME/reaper/packages/reaper_sws-arm64.dylib" --symlink="$HOME/reaper/app/reaper/UserPlugins/reaper_sws-arm64.dylib"
+	fi
+}
+
 install_reaper_custom() {
 	if test -d "$INSTALL_PATH"; then
 		echo-style --g3="Reaper already exists at '$INSTALL_PATH'.
@@ -60,7 +81,6 @@ install_reaper_custom() {
 		if confirm --bool --ppid=$$ -- "Do you want to install Reaper to [$INSTALL_PATH]?"; then
 			echo-style --green="Installing Reaper with custom config to $INSTALL_PATH"
 
-			set -x
 			if test -n "$github_user"; then
 				reaperConfig="git@github.com:$github_user/reaper-config.git"
 				if ! confirm --bool --ppid=$$ -- "Does this repository house your Reaper configuration? [$reaperConfig]"; then
@@ -79,9 +99,7 @@ install_reaper_custom() {
 				echo-style --magenta="checkout branch ($GIT_DEFAULT_BRANCH)!!"
 				pushd "$INSTALL_PATH" >/dev/null 2>&1
 				git checkout $GIT_DEFAULT_BRANCH
-				# TODO: move away from using submodules.
-				#   >>> instead put all packages under `reaper/packages` and symlink
-				git submodule update --init --recursive
+				# git submodule update --init --recursive
 				# cd Scripts/reaper-keys && git checkout molleweide && cd ../..
 				# cd Effects/molleweide && git checkout molleweide && cd ../..
 				# cd ColorThemes && git checkout molleweide && cd ..
@@ -91,15 +109,10 @@ install_reaper_custom() {
 			echo-style --g2="Downloading the reaper executable."
 			brew install --cask reaper --appdir="$INSTALL_PATH" --force
 			$(mv "$INSTALL_PATH/REAPER.app" "$INSTALL_PATH/$app_name")
+
+			symlink_packages
 		fi
 
-		exit 1
-		# TODO: install packages has to be done first since symlinking depends
-		# on their existence
-
-		# symlink-helper --existing="arst" --symlink="arst"
-
-		# TODO: symlink packages
 	fi
 }
 
@@ -127,6 +140,16 @@ install_packages() {
 		git clone git@github.com:molleweide/reaper-keys.git "$REAPER_PACKAGES_DIR/reaper-keys"
 	fi
 
+	if ! test -d "$REAPER_PACKAGES_DIR/ColorThemes"; then
+		echo-style --g3="Installing [ColorThemes] to $REAPER_PACKAGES_DIR"
+		git clone git@github.com:molleweide/ColorThemes.git "$REAPER_PACKAGES_DIR/ColorThemes"
+	fi
+
+	if ! test -d "$REAPER_PACKAGES_DIR/reaper-auto-syntax"; then
+		echo-style --g3="Installing [reaper-auto-syntax] to $REAPER_PACKAGES_DIR"
+		git clone git@github.com:molleweide/reaper-auto-syntax.git "$REAPER_PACKAGES_DIR/reaper-auto-syntax"
+	fi
+
 	if ! test -d "$REAPER_PACKAGES_DIR/reaper-fuzzy"; then
 		echo-style --g3="Installing [fast fx finder] to $REAPER_PACKAGES_DIR"
 		# https://forums.cockos.com/showthread.php?t=229807
@@ -138,7 +161,7 @@ install_packages() {
 		git clone git@github.com:molleweide/reaper-jsfx.git "$REAPER_PACKAGES_DIR/reaper-jsfx"
 	fi
 
-  # TODO: can I find the latest version number somehow
+	# TODO: can I find the latest version number somehow
 	if ! find "$REAPER_PACKAGES_DIR" -type f -name "*sws*.dylib" -print -quit | grep -q .; then
 		echo-style --g3="Installing [SWS] to $REAPER_PACKAGES_DIR"
 		local sws_url="https://www.sws-extension.org/download/featured/"
@@ -186,5 +209,5 @@ install_packages() {
 }
 
 install_packages
-install_reaper_default
-install_reaper_custom
+# install_reaper_default
+# install_reaper_custom
