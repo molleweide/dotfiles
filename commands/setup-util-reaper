@@ -10,12 +10,7 @@ echo-style --g1="SETUP REAPER"
 #   can this one be used / compatible with branches
 
 # TODO: REVIEW DOROTHY INSTALLER SCRIPT FOR REAPER.
-#   ~ ensure the ~/reaper dir structure is setup correctly
-#   ~
-#   ~ include alternative to install default reaper installetion in same app dir
-#   ~
-#   ~ install reaper-keys && SWS to ~/reaper/packages/reaper-keys && symlink
-#   ~   how does dorothy install dmg files??
+#   ~ symlink packages into UserPlugins and Scripts
 
 # export REAPER_CLI=$REAPER_APP_DIR/reaper-latest
 # export PATH="$PATH:$REAPER_APP_DIR"
@@ -27,17 +22,10 @@ REAPER_PROJECTS_DIR="$REAPER_DIR/projects"
 REAPER_TMP_DIR="$REAPER_DIR/tmp"
 REAPER_BACKUP_DIR="$REAPER_DIR/backup"
 
-# this is where app installations are kept
 mkdir -p "$REAPER_APP_DIR"
-
-# this is where third party packages are installed, eg reaper-key and SWS
 mkdir -p "$REAPER_PACKAGES_DIR"
-
-# this is where user projects are located
 mkdir -p "$REAPER_PROJECTS_DIR"
-
 mkdir -p "$REAPER_TMP_DIR"
-
 mkdir -p "$REAPER_BACKUP_DIR"
 
 export GIT_DEFAULT_BRANCH="molleweide" # rm...
@@ -45,39 +33,72 @@ export GIT_DEFAULT_BRANCH="molleweide" # rm...
 github_user=$(git config github.user)
 
 # if no first positional parameter then default to app/reaper
-install_path="$REAPER_APP_DIR/${1-reaper}"
+INSTALL_PATH="$REAPER_APP_DIR/${1-reaper}"
 
-# prepare custom name for app file
 app_name="${1-reaper}.app"
 
 checkout_default_branch() {
 	echo "todo"
 }
 
-# TODO: First, do you want to install a default version of reaper to /Applications/
-
 install_reaper_default() {
 	if confirm --bool --ppid=$$ -- "Do you want to install Reaper with default configs to /Applications?"; then
 		echo-style --g2="Installing..."
-		# brew install --cask reaper --appdir="$install_path" --force
-		# $(mv "$install_path/REAPER.app" "$install_path/$app_name")
+		if is-mac; then
+			brew install --cask reaper
+			# TODO: test this
+			# mv "/Applications/REAPER.app" "/Applications/REAPER_DEFAULT.app"
+		fi
 	fi
 }
 
 install_reaper_custom() {
-	# prompt user for install or exit
-	if test -d "$install_path"; then
-		echo-style --g3="Reaper already exists at '$install_path'.
+	if test -d "$INSTALL_PATH"; then
+		echo-style --g3="Reaper already exists at '$INSTALL_PATH'.
                 \ You can install a new instance by 'setup-util-reaper <name>'."
-		exit 1
 	else
-		if confirm --bool --ppid=$$ -- "Do you want to install Reaper to [$install_path]?"; then
-			#     install-reaper
-			echo-style --green="Installing Reaper with custom config to $install_path"
-			# else
+		if confirm --bool --ppid=$$ -- "Do you want to install Reaper to [$INSTALL_PATH]?"; then
+			echo-style --green="Installing Reaper with custom config to $INSTALL_PATH"
+
+			set -x
+			if test -n "$github_user"; then
+				reaperConfig="git@github.com:$github_user/reaper-config.git"
+				if ! confirm --bool --ppid=$$ -- "Does this repository house your Reaper configuration? [$reaperConfig]"; then
+					reaperConfig=''
+				fi
+			fi
+
+			echo-style --purple="Cloning the Reaper configuration into $INSTALL_PATH"
+			if ! git clone "$reaperConfig" "$INSTALL_PATH"; then
+				echo-style --orange="The clone of the repository [$reaperConfig] to [$INSTALL_PATH] failed. \
+				    Setting up a clean install with git init."
+				pushd "$INSTALL_PATH" >/dev/null || exit 1
+				silent git init
+				popd >/dev/null || exit 1
+			else
+				echo-style --magenta="checkout branch ($GIT_DEFAULT_BRANCH)!!"
+				pushd "$INSTALL_PATH" >/dev/null 2>&1
+				git checkout $GIT_DEFAULT_BRANCH
+				# TODO: move away from using submodules.
+				#   >>> instead put all packages under `reaper/packages` and symlink
+				git submodule update --init --recursive
+				# cd Scripts/reaper-keys && git checkout molleweide && cd ../..
+				# cd Effects/molleweide && git checkout molleweide && cd ../..
+				# cd ColorThemes && git checkout molleweide && cd ..
+				popd >/dev/null 2>&1
+			fi
+
+			echo-style --g2="Downloading the reaper executable."
+			brew install --cask reaper --appdir="$INSTALL_PATH" --force
+			$(mv "$INSTALL_PATH/REAPER.app" "$INSTALL_PATH/$app_name")
 		fi
 
+		exit 1
+		# TODO: install packages has to be done first since symlinking depends
+		# on their existence
 		install_packages
+
+		# symlink-helper --existing="arst" --symlink="arst"
 
 		# TODO: symlink packages
 	fi
@@ -88,31 +109,46 @@ install_reaper_custom() {
 #     down
 #     setup-util download strategy
 #   setup-util -> down -> unziptar
+#
+
+# NOTE: OLD MODULES FILE
+# [submodule "Scripts/reaper-auto-syntax"]
+# 	path = Scripts/reaper-auto-syntax
+# 	url = git@github.com:molleweide/reaper-auto-syntax
+# [submodule "ColorThemes"]
+# 	path = ColorThemes
+# 	url = git@github.com:molleweide/ColorThemes
 
 install_packages() {
 	echo-style --g3="Install third party packages to $REAPER_DIR/packages"
 	arch="$(get-arch)"
 
-  # reaper keys
-	echo-style --g3="Installing [reaper-keys] to $REAPER_PACKAGES_DIR"
-	set -x
-	git clone git@github.com:molleweide/reaper-keys.git "$REAPER_PACKAGES_DIR/reaper-keys"
-	set +x
+	# TODO: check if packages exist already??
+	# if test -d ""$REAPER_PACKAGES_DIR/reaper-keys""; then
+	# fi
 
-  # sws
+	echo-style --g3="Installing [reaper-keys] to $REAPER_PACKAGES_DIR"
+	git clone git@github.com:molleweide/reaper-keys.git "$REAPER_PACKAGES_DIR/reaper-keys"
+
+	echo-style --g3="Installing [fast fx finder] to $REAPER_PACKAGES_DIR"
+	# https://forums.cockos.com/showthread.php?t=229807
+	git clone git@github.com:molleweide/reaper-fuzzy.git "$REAPER_PACKAGES_DIR/reaper-fuzzy"
+
+	echo-style --g3="Installing [reaper-jsfx] to $REAPER_PACKAGES_DIR"
+	git clone git@github.com:molleweide/reaper-jsfx.git "$REAPER_PACKAGES_DIR/reaper-jsfx"
+
+	echo-style --g3="Installing [SWS] to $REAPER_PACKAGES_DIR"
+	# TODO: check if exists / reinstall??
+	# could I find the release number/version from github somehow?
 	local sws_url="https://www.sws-extension.org/download/featured/"
 	local sws_pgk_name
 	local sws_dylib
-
 	if is-mac; then
 		if test "$arch" = 'a64'; then
 			sws_pgk_name="sws-2.12.1.3-Darwin-arm64.dmg"
 		elif test "$arch" = 'x64'; then
 			sws_pgk_name="sws-2.12.1.3-Darwin-x86_64.dmg"
 		fi
-
-		echo-style --g3="Installing SWS [$sws_pgk_name] to $REAPER_PACKAGES_DIR"
-
 		set -x
 		tempd=$(mktemp -d)
 		down --directory="$tempd" "$sws_url/$sws_pgk_name"
@@ -125,7 +161,6 @@ install_packages() {
 		xattr -d com.apple.quarantine "$REAPER_PACKAGES_DIR/$(basename "$sws_dylib")"
 		set +x
 	fi
-
 	if is-linux; then
 		if test "$arch" = 'a64'; then
 			sws_pgk_name="sws-2.12.1.3-Linux-aarch64.tar.xz"
@@ -136,17 +171,12 @@ install_packages() {
 		elif test "$arch" = 'x32'; then
 			sws_pgk_name="sws-2.12.1.3-Linux-i686.tar.xz"
 		fi
-
-		echo-style --g3="Installing SWS [$sws_pgk_name] to $REAPER_PACKAGES_DIR"
-
 		# TODO: dorothy unziptar
-
 		# tempd=$(mktemp -d)
 		# curl "$sws_url/$sws_pgk_name" >"$tempd/$sws_pgk_name"
 		# tar -xf "$sws_pgk_name" -C $REAPER_PACKAGES_DIR
 		# rm -rf "$tempd"
 	fi
-
 	if is-wsl; then
 		echo "windows"
 		# sws-2.12.1.3-Windows-x86.exe
@@ -156,45 +186,3 @@ install_packages() {
 
 install_reaper_default
 install_reaper_custom
-
-exit 1
-
-if ! test -d "$install_path"; then
-
-	echo-style --green="Installing latest version of Reaper to $install_path"
-
-	if test -n "$github_user"; then
-		reaperConfig="git@github.com:$github_user/reaper-config.git"
-		if ! confirm-bool --ppid=$$ -- "Does this repository house your Reaper configuration? [$reaperConfig]"; then
-			reaperConfig=''
-		fi
-	fi
-
-	echo-style --purple="Cloning the Reaper configuration into $install_path"
-
-	if ! git clone "$reaperConfig" "$install_path"; then
-		echo-style --orange="The clone of the repository [$reaperConfig] to [$install_path] failed."
-		pushd "$install_path" >/dev/null || exit 1
-		silent git init
-		popd >/dev/null || exit 1
-
-	else
-		echo-style --magenta="checkout branch ($GIT_DEFAULT_BRANCH)!!"
-
-		pushd "$install_path" >/dev/null 2>&1
-		git checkout $GIT_DEFAULT_BRANCH
-
-		# TODO: move away from using submodules.
-		#   >>> instead put all packages under `reaper/packages` and symlink
-
-		git submodule update --init --recursive
-		# cd Scripts/reaper-keys && git checkout molleweide && cd ../..
-		# cd Effects/molleweide && git checkout molleweide && cd ../..
-		# cd ColorThemes && git checkout molleweide && cd ..
-		popd >/dev/null 2>&1
-	fi
-
-	echo-style --g2="Downloading the reaper executable."
-	brew install --cask reaper --appdir="$install_path" --force
-	$(mv "$install_path/REAPER.app" "$install_path/$app_name")
-fi
