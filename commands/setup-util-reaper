@@ -96,7 +96,6 @@ install_reaper_custom() {
 		exit 1
 		# TODO: install packages has to be done first since symlinking depends
 		# on their existence
-		install_packages
 
 		# symlink-helper --existing="arst" --symlink="arst"
 
@@ -120,69 +119,72 @@ install_reaper_custom() {
 # 	url = git@github.com:molleweide/ColorThemes
 
 install_packages() {
-	echo-style --g3="Install third party packages to $REAPER_DIR/packages"
+	echo-style --g3="Checking if any 3rd party packages need be installed to $REAPER_DIR/packages"
 	arch="$(get-arch)"
 
-	# TODO: check if packages exist already??
-	# if test -d ""$REAPER_PACKAGES_DIR/reaper-keys""; then
-	# fi
+	if ! test -d "$REAPER_PACKAGES_DIR/reaper-keys"; then
+		echo-style --g3="Installing [reaper-keys] to $REAPER_PACKAGES_DIR"
+		git clone git@github.com:molleweide/reaper-keys.git "$REAPER_PACKAGES_DIR/reaper-keys"
+	fi
 
-	echo-style --g3="Installing [reaper-keys] to $REAPER_PACKAGES_DIR"
-	git clone git@github.com:molleweide/reaper-keys.git "$REAPER_PACKAGES_DIR/reaper-keys"
+	if ! test -d "$REAPER_PACKAGES_DIR/reaper-fuzzy"; then
+		echo-style --g3="Installing [fast fx finder] to $REAPER_PACKAGES_DIR"
+		# https://forums.cockos.com/showthread.php?t=229807
+		git clone git@github.com:molleweide/reaper-fuzzy.git "$REAPER_PACKAGES_DIR/reaper-fuzzy"
+	fi
 
-	echo-style --g3="Installing [fast fx finder] to $REAPER_PACKAGES_DIR"
-	# https://forums.cockos.com/showthread.php?t=229807
-	git clone git@github.com:molleweide/reaper-fuzzy.git "$REAPER_PACKAGES_DIR/reaper-fuzzy"
+	if ! test -d "$REAPER_PACKAGES_DIR/reaper-jsfx"; then
+		echo-style --g3="Installing [reaper-jsfx] to $REAPER_PACKAGES_DIR"
+		git clone git@github.com:molleweide/reaper-jsfx.git "$REAPER_PACKAGES_DIR/reaper-jsfx"
+	fi
 
-	echo-style --g3="Installing [reaper-jsfx] to $REAPER_PACKAGES_DIR"
-	git clone git@github.com:molleweide/reaper-jsfx.git "$REAPER_PACKAGES_DIR/reaper-jsfx"
-
-	echo-style --g3="Installing [SWS] to $REAPER_PACKAGES_DIR"
-	# TODO: check if exists / reinstall??
-	# could I find the release number/version from github somehow?
-	local sws_url="https://www.sws-extension.org/download/featured/"
-	local sws_pgk_name
-	local sws_dylib
-	if is-mac; then
-		if test "$arch" = 'a64'; then
-			sws_pgk_name="sws-2.12.1.3-Darwin-arm64.dmg"
-		elif test "$arch" = 'x64'; then
-			sws_pgk_name="sws-2.12.1.3-Darwin-x86_64.dmg"
+  # TODO: can I find the latest version number somehow
+	if ! find "$REAPER_PACKAGES_DIR" -type f -name "*sws*.dylib" -print -quit | grep -q .; then
+		echo-style --g3="Installing [SWS] to $REAPER_PACKAGES_DIR"
+		local sws_url="https://www.sws-extension.org/download/featured/"
+		local sws_pgk_name
+		local sws_dylib
+		if is-mac; then
+			if test "$arch" = 'a64'; then
+				sws_pgk_name="sws-2.12.1.3-Darwin-arm64.dmg"
+			elif test "$arch" = 'x64'; then
+				sws_pgk_name="sws-2.12.1.3-Darwin-x86_64.dmg"
+			fi
+			tempd=$(mktemp -d)
+			down --directory="$tempd" "$sws_url/$sws_pgk_name"
+			listing=$(sudo hdiutil attach "$tempd/$sws_pgk_name" | grep "Volumes/$(fs-filename $sws_pgk_name)")
+			volume=$(echo "$listing" | cut -f 3)
+			sws_dylib=$(find "$volume" -name "reaper*.dylib" -maxdepth 1 -print -quit)
+			cp -RLf "$sws_dylib" "$REAPER_PACKAGES_DIR"
+			sudo hdiutil detach "$volume" #"$(echo "$listing" | cut -f 1)"
+			rm -rf "$tempd"
+			xattr -d com.apple.quarantine "$REAPER_PACKAGES_DIR/$(basename "$sws_dylib")"
 		fi
-		set -x
-		tempd=$(mktemp -d)
-		down --directory="$tempd" "$sws_url/$sws_pgk_name"
-		listing=$(sudo hdiutil attach "$tempd/$sws_pgk_name" | grep "Volumes/$(fs-filename $sws_pgk_name)")
-		volume=$(echo "$listing" | cut -f 3)
-		sws_dylib=$(find "$volume" -name "reaper*.dylib" -maxdepth 1 -print -quit)
-		cp -RLf "$sws_dylib" "$REAPER_PACKAGES_DIR"
-		sudo hdiutil detach "$volume" #"$(echo "$listing" | cut -f 1)"
-		rm -rf "$tempd"
-		xattr -d com.apple.quarantine "$REAPER_PACKAGES_DIR/$(basename "$sws_dylib")"
-		set +x
-	fi
-	if is-linux; then
-		if test "$arch" = 'a64'; then
-			sws_pgk_name="sws-2.12.1.3-Linux-aarch64.tar.xz"
-		elif test "$arch" = 'a32'; then
-			sws_pgk_name="sws-2.12.1.3-Linux-armv7l.tar.xz"
-		elif test "$arch" = 'x64'; then
-			sws_pgk_name="sws-2.12.1.3-Linux-x86_64.tar.xz"
-		elif test "$arch" = 'x32'; then
-			sws_pgk_name="sws-2.12.1.3-Linux-i686.tar.xz"
+		if is-linux; then
+			if test "$arch" = 'a64'; then
+				sws_pgk_name="sws-2.12.1.3-Linux-aarch64.tar.xz"
+			elif test "$arch" = 'a32'; then
+				sws_pgk_name="sws-2.12.1.3-Linux-armv7l.tar.xz"
+			elif test "$arch" = 'x64'; then
+				sws_pgk_name="sws-2.12.1.3-Linux-x86_64.tar.xz"
+			elif test "$arch" = 'x32'; then
+				sws_pgk_name="sws-2.12.1.3-Linux-i686.tar.xz"
+			fi
+			# TODO: dorothy unziptar
+			# tempd=$(mktemp -d)
+			# curl "$sws_url/$sws_pgk_name" >"$tempd/$sws_pgk_name"
+			# tar -xf "$sws_pgk_name" -C $REAPER_PACKAGES_DIR
+			# rm -rf "$tempd"
 		fi
-		# TODO: dorothy unziptar
-		# tempd=$(mktemp -d)
-		# curl "$sws_url/$sws_pgk_name" >"$tempd/$sws_pgk_name"
-		# tar -xf "$sws_pgk_name" -C $REAPER_PACKAGES_DIR
-		# rm -rf "$tempd"
+		if is-wsl; then
+			echo "windows"
+			# sws-2.12.1.3-Windows-x86.exe
+			# sws-2.12.1.3-Windows-x64.exe
+		fi
 	fi
-	if is-wsl; then
-		echo "windows"
-		# sws-2.12.1.3-Windows-x86.exe
-		# sws-2.12.1.3-Windows-x64.exe
-	fi
+
 }
 
+install_packages
 install_reaper_default
 install_reaper_custom
