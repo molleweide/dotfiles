@@ -95,3 +95,5 @@ HOMEBREW_RUBY_VERSION='default'
 [[ -f "$HOME/locatedb" ]] && export LOCATE_PATH="$HOME/locatedb"
 
 PHONE_NUMBER="+46702281490"
+
+# CC=$(which gcc-12)

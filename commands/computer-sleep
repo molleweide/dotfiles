@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# TODO:
+# ~ "wait" 3 sec before sleeping.
+# ~ screensaver
+
 if is-mac; then
   osascript -e 'tell application "Finder" to sleep'
 else
