@@ -30,6 +30,8 @@ mkdir -p "$REAPER_PACKAGES_DIR"
 mkdir -p "$REAPER_PROJECTS_DIR"
 mkdir -p "$REAPER_TMP_DIR"
 mkdir -p "$REAPER_BACKUP_DIR"
+# TODO: SAMPLES DIR
+# mkdir -p "$REAPER_SAMPLES_DIR"
 
 export GIT_DEFAULT_BRANCH="molleweide" # rm...
 
@@ -64,13 +66,15 @@ symlink_packages() {
 	symlink-helper --existing="$REAPER_PACKAGES_DIR/reaper-keys" --symlink="$INSTALL_PATH/Scripts/reaper-keys"
 	symlink-helper --existing="$REAPER_PACKAGES_DIR/reaper-fuzzy" --symlink="$INSTALL_PATH/Scripts/reaper-fuzzy"
 	symlink-helper --existing="$REAPER_PACKAGES_DIR/reaper-jsfx" --symlink="$INSTALL_PATH/Effects/reaper-jsfx"
-	symlink-helper --existing="$REAPER_PACKAGES_DIR/CColorThemes" --symlink="$INSTALL_PATH/ColorThemes"
+	symlink-helper --existing="$REAPER_PACKAGES_DIR/ColorThemes" --symlink="$INSTALL_PATH/ColorThemes"
 	sws=$(find_existing_sws)
 	sws_basename=$(basename "$sws")
 	if test -f "$sws"; then
 		symlink-helper --existing="$sws" --symlink="$INSTALL_PATH/UserPlugins/$sws_basename"
 		# symlink-helper --existing="$HOME/reaper/packages/reaper_sws-arm64.dylib" --symlink="$HOME/reaper/app/reaper/UserPlugins/reaper_sws-arm64.dylib"
 	fi
+
+	# todo: symlink `js_ReascriptAPI`
 }
 
 install_reaper_custom() {
