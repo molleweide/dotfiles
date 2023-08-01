@@ -63,10 +63,14 @@ find_existing_sws() {
 
 symlink_packages() {
 	local sws sws_basename
+
+  # scripts from github
 	symlink-helper --existing="$REAPER_PACKAGES_DIR/reaper-keys" --symlink="$INSTALL_PATH/Scripts/reaper-keys"
 	symlink-helper --existing="$REAPER_PACKAGES_DIR/reaper-fuzzy" --symlink="$INSTALL_PATH/Scripts/reaper-fuzzy"
 	symlink-helper --existing="$REAPER_PACKAGES_DIR/reaper-jsfx" --symlink="$INSTALL_PATH/Effects/reaper-jsfx"
 	symlink-helper --existing="$REAPER_PACKAGES_DIR/ColorThemes" --symlink="$INSTALL_PATH/ColorThemes"
+
+  # sws
 	sws=$(find_existing_sws)
 	sws_basename=$(basename "$sws")
 	if test -f "$sws"; then
@@ -74,7 +78,11 @@ symlink_packages() {
 		# symlink-helper --existing="$HOME/reaper/packages/reaper_sws-arm64.dylib" --symlink="$HOME/reaper/app/reaper/UserPlugins/reaper_sws-arm64.dylib"
 	fi
 
-	# todo: symlink `js_ReascriptAPI`
+	# js_reascript_api
+	for f in "$REAPER_PACKAGES_DIR/js_reascript_api"/*; do
+		symlink-helper --existing="$f" --symlink="$INSTALL_PATH/UserPlugins/$(basename "$f")"
+  done
+
 }
 
 install_reaper_custom() {
@@ -165,6 +173,16 @@ install_packages() {
 		git clone git@github.com:molleweide/reaper-jsfx.git "$REAPER_PACKAGES_DIR/reaper-jsfx"
 	fi
 
+	rm -r "$REAPER_PACKAGES_DIR/js_reascript_api"
+	if ! test -d "$REAPER_PACKAGES_DIR/js_reascript_api"; then
+		echo-style --g3="Installing [js reascript api (c++ lua extension)] to $REAPER_PACKAGES_DIR"
+		js_ext_version="v1.310"
+		github-download --slug="juliansader/ReaExtensions" \
+		        --ref="master" \
+		        --unzip-filter="js_ReaScriptAPI/$js_ext_version/reaper_js_*" \
+		        --directory="$REAPER_PACKAGES_DIR/js_reascript_api"
+	fi
+
 	# TODO: can I find the latest version number somehow
 	if ! find "$REAPER_PACKAGES_DIR" -type f -name "*sws*.dylib" -print -quit | grep -q .; then
 		echo-style --g3="Installing [SWS] to $REAPER_PACKAGES_DIR"
@@ -212,6 +230,7 @@ install_packages() {
 
 }
 
-install_packages
+# install_packages
 # install_reaper_default
 # install_reaper_custom
+symlink_packages
