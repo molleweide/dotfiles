@@ -11,8 +11,8 @@ echo-style --g1="SETUP REAPER"
 
 # export REAPER_CLI=$REAPER_APP_DIR/reaper-latest
 # export PATH="$PATH:$REAPER_APP_DIR"
-export REAPER_DIR=$HOME/reaper
-export REAPER_APP_DIR=$REAPER_DIR/app
+export REAPER_DIR="$HOME/reaper"
+export REAPER_APP_DIR="$REAPER_DIR/app"
 
 REAPER_PACKAGES_DIR="$REAPER_DIR/packages"
 REAPER_PROJECTS_DIR="$REAPER_DIR/projects"
@@ -82,7 +82,6 @@ symlink_packages() {
 	for f in "$REAPER_PACKAGES_DIR/js_reascript_api"/*; do
 		symlink-helper --existing="$f" --symlink="$INSTALL_PATH/UserPlugins/$(basename "$f")"
   done
-
 }
 
 install_reaper_custom() {
