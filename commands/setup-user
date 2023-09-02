@@ -1,11 +1,20 @@
 #!/usr/bin/env bash
 source "$DOROTHY/sources/strict.bash"
 
+home_config_dir=$HOME/.config
+
+
 # pull
 pushd $DOROTHY/user >/dev/null 2>&1
 echo "doro user pwd: $PWD"
-# git submodule update --init --recursive || exit 1
 popd >/dev/null 2>&1
+
+# neovim config
+doom_nvim_dir="$HOME/code/doom-nvim"
+if [ ! -d "$HOME/code/doom-nvim" ]; then
+	git clone git@github.com:molleweide/doom-nvim.git "$doom_nvim_dir"
+fi
+symlink-file "$doom_nvim_dir" "$home_config_dir/nvim"
 
 if is-mac; then
 	# setup-user-osx
@@ -13,10 +22,6 @@ if is-mac; then
 fi
 
 # setup-user-config
-
-# setup-user-base
-
-# setup-user-keyboard
 
 # setup-user-surfingkeys
 
