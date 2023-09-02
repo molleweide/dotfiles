@@ -1,0 +1,13 @@
+;;#| ---------------------------------------------------------------
+;;
+;; DISABLE KEYBOARD LAYER
+;;
+;;--------------------------------------------------------------- |#
+
+(deflayer DISABLE_KEYBOARD
+  XX   XX   XX   XX   XX        XX   XX  XX   XX   XX
+  XX   XX   XX   XX   XX        XX   XX  XX   XX   XX
+  XX   XX   XX   XX   XX        XX   XX  XX   XX   XX
+            @BQ  XX        XX        XX   @BQ
+)
+

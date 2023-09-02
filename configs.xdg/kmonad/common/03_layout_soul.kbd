@@ -1,0 +1,45 @@
+;;#| ---------------------------------------------------------------
+;;
+;; BASE LAYER | SOUL LAYOUT | https://kennetchaz.github.io/symmetric-typing/soul.html
+;;
+;;--------------------------------------------------------------- |#
+
+(defalias
+  z00 q
+  z01 w
+  z02 (tap-hold-next-release 500 l @NUM)
+  z03 d
+  z04 p
+  z05 k
+  z06 m
+  z07 (tap-hold-next-release 500 u @NUM)
+  z08 y
+  z09 (tap-hold-next-release 500 ; @OSK)
+  z10 (tap-hold-next-release 500 a lctl)
+  z11 (tap-hold-next-release 500 s lsft)
+  z12 (tap-hold-next-release 500 r lalt)
+  z13 (tap-hold-next-release 500 t lmet)
+  z14 (tap-hold-next-release 500 g @OSK)
+  z15 (tap-hold-next-release 500 f @OSK)
+  z16 (tap-hold-next-release 500 n lmet)
+  z17 (tap-hold-next-release 500 e lalt)
+  z18 (tap-hold-next-release 500 i lsft)
+  z19 (tap-hold-next-release 500 o lctl)
+  z20 (tap-hold-next-release 500 z @FUN)
+  z21 (tap-hold-next-release 500 x @NUM)
+  z22 c
+  z23 (tap-hold-next-release 500 v @OSK)
+  z24 j
+  z25 b
+  z26 (tap-hold-next-release 500 h @OSK)
+  z27 ,
+  z28 (tap-hold-next-release 500 . @NUM)
+  z29 (tap-hold-next-release 500 / @FUN)
+)
+
+(deflayer BASE_LAYER_SOUL
+  @z00 @z01 @z02 @z03 @z04      @z05 @z06 @z07 @z08 @z09
+  @z10 @z11 @z12 @z13 @z14      @z15 @z16 @z17 @z18 @z19
+  @z20 @z21 @z22 @z23 @z24      @z25 @z26 @z27 @z28 @z29
+            @BQ  @tl2      @spc      @tr2 @BQ
+)

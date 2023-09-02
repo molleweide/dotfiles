@@ -7,35 +7,37 @@ export FORCE_LINK='yes'
 ghq_user="$HOME/code/repos/github.com/molleweide"
 conf_dst=$HOME/.config
 
-# CONFIG.XDG
-for f in $ghq_user/xdg_configs/*; do
+# NOTE: CONFIG.XDG
 
-	if test "$(basename $f)" = "_"; then
+for f in "$ghq_user"/xdg_configs/*; do
+
+	if test "$(basename "$f")" = "_"; then
 		echo ">>>>>>> $f"
 		continue # Ignore the folder and move to the next iteration of the loop
 	fi
 
-	symlink-file "$f" "$conf_dst/$(basename $f)"
+	symlink-file "$f" "$conf_dst/$(basename "$f")"
 done
 
-# NON XDG CONFIGS BELOW...
+# NOTE: NEOVIM / DOOM
 
-# NEOVIM / DOOM
 symlink-file "$ghq_user/doom-nvim" "$conf_dst/nvim"
 # symlink-file "$HOME/code/repos/github.com/molleweide/doom-nvim" "$conf_dst/nvim"
 
-# HAMMERSPOON
+# NOTE: HAMMERSPOON
+
 symlink-file "$ghq_user/config_hammerspoon" "$conf_dst/hammerspoon"
 
-# OBS STUDIO
+# NOTE: OBS STUDIO
+
 # ~/Library/Application Support/obs-studio/
 # ~/.config/obs-studio/
 if is-mac; then
-	echo "a"
 	# symlink-file "$ghq_user/config_hammerspoon" "$conf_dst/hammerspoon"
-else
-	echo "b"
-# symlink-file "$ghq_user/config_hammerspoon" "$conf_dst/hammerspoon"
+	:
+elif is-linux; then
+	# symlink-file "$ghq_user/config_hammerspoon" "$conf_dst/hammerspoon"
+	:
 fi
 
 ## SPECIAL SNOWFLAKES

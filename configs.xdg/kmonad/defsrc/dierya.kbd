@@ -1,0 +1,9 @@
+;; DIERYA 60% CHEAP DUMMY KEYBOARD.
+
+(defsrc
+  q    w    e    r    t         y    u    i    o    p
+  a    s    d    f    g         h    j    k    l    ;
+  lsft z    x    c    v         n    m    ,    .    /
+            lalt lmet      spc       rmet ralt
+)
+

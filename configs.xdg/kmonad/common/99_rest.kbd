@@ -1,0 +1,46 @@
+;;#| ---------------------------------------------------------------
+;;
+;; TUTORIAL_TESTING_LAYER LAYER
+;;
+;;  for the tutorial etc and other testing purposes
+;;
+;;--------------------------------------------------------------- |#
+
+(defalias
+
+  C- (around lctl X)
+  A- (around lalt X)
+  M- (around lmet X)
+  S- (around lsft X)
+  ;; ssc (around
+  ;;      (sticky-key 500 lmet)
+  ;;      (sticky-key 500 lsft)
+  ;;      (sticky-key 500 lalt))
+  mc1 #(K M o n a d)
+
+  u10 XX
+  u11 C-c
+  u12 M-c
+  u13 C-spc  ;; ctrl + space
+  u14 (around spc v) ;; first space and then v
+
+  u15 @mc1
+  u16 #(M-spc P100 a P100 b P100 c P100  e P100  f P100 g)
+  u17 XX
+  u18 XX
+  u19 (layer-delay 3000 TUTORIAL_TESTING_SECONDARY)
+)
+(deflayer TUTORIAL_TESTING_LAYER
+  XX   XX   XX   XX   XX        XX   XX   XX   XX   XX
+  @u10 @u11 @u12 @u13 @u14      @u15 @u16 @u17 @u18 @u19
+  XX   XX   XX   XX   XX        XX   XX   XX   XX   XX
+            @BQ  XX        XX        XX   @BQ
+)
+
+(deflayer TUTORIAL_TESTING_SECONDARY
+  XX   XX   XX   XX   XX        XX   XX   a    XX   XX
+  XX   XX   XX   XX   XX        XX   XX   XX   XX   XX
+  XX   XX   XX   XX   XX        XX   XX   XX   XX   XX
+            @BQ  XX        XX        XX   @BQ
+)
+

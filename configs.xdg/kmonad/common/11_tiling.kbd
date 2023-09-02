@@ -1,0 +1,64 @@
+;;#| ---------------------------------------------------------------
+;;
+;; tiling
+;;
+;;--------------------------------------------------------------- |#
+
+;; testing template
+;; (cmd-button "sudo -u hjalmarjakobsson bash -cl \'\'")
+
+(defalias
+  T11 XX
+  T12 XX
+  T13 XX
+  T14 XX
+  T15 XX
+
+  T21 XX
+  T22 XX
+  T23 (cmd-button "mouse")
+  T24 XX
+  T25 XX
+
+  T31 XX
+  T32 XX
+  T33 XX
+  T34 (cmd-button "tile layout bsp")
+  ;; T34 (cmd-button "sudo -u hjalmarjakobsson bash -cl \'yabai-bsp\'")
+  ;; sudo -u <current_username> bash -lc '<shell commands>'
+  T35 XX
+
+  T41 XX
+  T42 (cmd-button "tile layout stack")
+  ;; T42 (cmd-button "sudo -u hjalmarjakobsson bash -cl \'yabai-stack\'")
+  T43 XX
+  T44 XX
+  T45 XX
+
+  T51 XX
+  T52 XX
+  T53 XX
+  T54 XX
+  T55 XX
+
+  T61 XX
+  T62 XX
+  T63 XX
+  T64 XX
+  T65 XX
+
+  ;; THUMBS
+  T70 XX
+  T71 XX
+  T72 (cmd-button "yabai -m window --toggle zoom-fullscreen")
+  T73 XX  ;; second double space...only QMK boards
+  T74 XX
+  T75 XX
+)
+
+(deflayer TILING
+  @T11 @T12 @T13 @T14 @T15      @T21 @T22 @T23 @T24 @T25
+  @T31 @T32 @T33 @T34 @T35      @T41 @T42 @T43 @T44 @T45
+  @T51 @T52 @T53 @T54 @T55      @T61 @T62 @T63 @T64 @T65
+            @BQ  @T71      @T72      @T74 @BQ
+)

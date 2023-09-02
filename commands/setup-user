@@ -2,31 +2,26 @@
 source "$DOROTHY/sources/strict.bash"
 
 # pull
-pushd $DOROTHY/user > /dev/null 2>&1
+pushd $DOROTHY/user >/dev/null 2>&1
 echo "doro user pwd: $PWD"
-git submodule update --init --recursive || exit 1
-popd > /dev/null 2>&1
+# git submodule update --init --recursive || exit 1
+popd >/dev/null 2>&1
 
-# TODO: arg doro
-# # # --- doro ------------
-# setup-bin
-# setup-git
-# setup-rust
-# setup-node
-# setup-go
-# setup-ruby
-# setup-python
-# setup-bin
-# setup-utils
+if is-mac; then
+	# setup-user-osx
+	:
+fi
 
-# TODO: arg moll
-# # --- moll ------------
-# setup-personal-repos
-# setup-user-osx
 # setup-user-config
+
 # setup-user-base
-# # setup-user-keyboard
-# # setup-user-surfingkeys
-# # setup-user-neomutt
-# # setup-user-scim
+
+# setup-user-keyboard
+
+# setup-user-surfingkeys
+
+# setup-user-neomutt
+
+# setup-user-scim
+
 # # setup-reaper

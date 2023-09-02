@@ -1,0 +1,4 @@
+this dir contains configs that don't adhere to XDG.
+They have to be managed on a custom basis.
+See my `dorothy/user/commands/setup-user-configs` script for further details on
+how i load my configs
