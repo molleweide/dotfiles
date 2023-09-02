@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 source "$DOROTHY/sources/strict.bash"
 
-# NOTE: put each self contained setup within a function.
-# This makes it easy to separate all different installer tasks.
+# NOTE: !!!
+# !!
+# Now that I have gotten my GHM command to work properly almost I can begin
+# to rethink how I should do this because now I could just keep everything
+# in the ghm tree and then pull anything from there. that would actually be
+# quite smart in thi s caes .
 #
-#
+# This means that a big part of my own config is dependent on the fact that
+# I have ghm setup and running so that I can load all of my repos with this.
 
 DORO_USER_XDG="$DOROTHY/user/config.xdg"
 
@@ -77,6 +82,6 @@ function setup_obs() {
 # RUN TASKS.........
 
 # pull_molleweide_latest
-setup_symlink_configs
-setup_neovim
+# setup_symlink_configs
+# setup_neovim
 # setup_osx

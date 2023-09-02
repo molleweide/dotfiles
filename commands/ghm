@@ -179,13 +179,8 @@ function ghm() (
 			exit
 		fi
 
-		# The string to check
 		ghq_root_string=$(ghq root)
-
-		# The pattern to search for
 		pattern="code/repos"
-
-		# Check if the string contains the pattern
 		if [[ ! "$ghq_root_string" == *"$pattern"* ]]; then
 			echo "ghq root/config hasn't been setup to [ code/repos ]. Exiting..."
 			exit
@@ -197,21 +192,16 @@ function ghm() (
 		fi
 
 		while IFS= read -r line; do
-
 			entries=("$line")
-
 			the_repo_url="${entries[0]}"
-			echo "repo: $the_repo_url"
-
-			ghq get -p "$the_repo_url"
+      # test: use silent here, since we are downloading many repos.
+			ghq get -p -s "$the_repo_url"
 
 			# for entry in "${entries[@]}"; do
 			# 	# Process each entry here
 			# 	echo "Entry: $entry"
 			# done
-
 		done <"$GHQ_BACKUP_FILE"
-
 	}
 
 	# for each repo store the remotes as space separated entries on the same line
