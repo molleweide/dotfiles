@@ -1,32 +1,82 @@
 #!/usr/bin/env bash
 source "$DOROTHY/sources/strict.bash"
 
-home_config_dir=$HOME/.config
+# NOTE: put each self contained setup within a function.
+# This makes it easy to separate all different installer tasks.
+#
+#
 
+DORO_USER_XDG="$DOROTHY/user/config.xdg"
 
-# pull
-pushd $DOROTHY/user >/dev/null 2>&1
-echo "doro user pwd: $PWD"
-popd >/dev/null 2>&1
+function pull_molleweide_latest() {
+	pushd $DOROTHY/user >/dev/null 2>&1
+	echo "doro user pwd: $PWD"
+	popd >/dev/null 2>&1
+}
 
-# neovim config
-doom_nvim_dir="$HOME/code/doom-nvim"
-if [ ! -d "$HOME/code/doom-nvim" ]; then
-	git clone git@github.com:molleweide/doom-nvim.git "$doom_nvim_dir"
-fi
-symlink-file "$doom_nvim_dir" "$home_config_dir/nvim"
+function setup_symlink_configs() {
+	for f in "$DORO_USER_XDG"/*; do
+		if test "$(basename "$f")" = "_"; then
+			continue
+		fi
+		symlink-helper --existing="$f" --symlink="$XDG_CONFIG_HOME/$(basename "$f")"
+	done
+}
 
-if is-mac; then
+function setup_neovim() {
+	doom_nvim_dir="$HOME/code/doom-nvim"
+	if [ ! -d "$HOME/code/doom-nvim" ]; then
+		git clone git@github.com:molleweide/doom-nvim.git "$doom_nvim_dir"
+	fi
+	symlink-helper --existing="$doom_nvim_dir" --symlink="$XDG_CONFIG_HOME/nvim"
+}
+
+function setup_osx() {
 	# setup-user-osx
 	:
-fi
+}
 
-# setup-user-config
+function setup_hammerspoon() {
+	if is-mac; then
+		HAMMERSPOON_CONFIG_DIR="$HOME/code/config_hammerspoon"
 
-# setup-user-surfingkeys
+		if [ ! -d "$HOME/code/config_hammerspoon" ]; then
+			git clone git@github.com:molleweide/config_hammerspoon.git "$HAMMERSPOON_CONFIG_DIR"
+		fi
 
-# setup-user-neomutt
+		github.com/molleweide/config_hammerspoon
 
-# setup-user-scim
+		echo-style --h1="Setting up HAMMERSPOON.."
 
-# # setup-reaper
+		# brew install --cask hammerspoon # --appdir=/Applications
+
+		url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
+		destination=/tmp/SpoonInstall.spoon.zip
+		spoons_dir=$HOME/.config/hammerspoon/Spoons
+
+		if [ ! -d "$spoons_dir/SpoonInstall.spoon" ]; then
+			wget -nv $url -O $destination && unzip -d "$spoons_dir" "$destination"
+		fi
+
+		defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
+
+		# fix: how should I manage the hammerspoon config
+		symlink-helper --existing="$doom_nvim_dir" --symlink="$XDG_CONFIG_HOME/nvim"
+		symlink-file "$ghq_user/config_hammerspoon" "$XDG_CONFIG_HOME/hammerspoon"
+
+		:
+	fi
+}
+
+function setup_obs() {
+	# ~/Library/Application Support/obs-studio/
+	# ~/.config/obs-studio/
+	:
+}
+
+# RUN TASKS.........
+
+# pull_molleweide_latest
+setup_symlink_configs
+setup_neovim
+# setup_osx
