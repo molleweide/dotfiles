@@ -6,14 +6,11 @@
 # It makes sure that information about what repos your are using are backed
 # up properly to your dorothy user config.
 
-# TODO: i need to create a function that returns the repo HOST, USER and REPO
-# so the backing up repos isn't reliant on the GHQ list command.
-
 function ghm() (
 	GHQ_BACKUP_FILE="$DOROTHY/user/backups/ghq.bak"
 
 	# =====================================
-	# Act
+	# ??
 
 	actions=(
 		restore
@@ -32,29 +29,6 @@ function ghm() (
 		shift
 		case "$item" in
 		'help' | '--help' | '-h') help ;;
-			# '--action='*) action="${item:9}" ;;
-			# '--action='*) action="${item:9}" ;;
-			# '--tool='*) tool="${item:7}" ;;
-			# '--source='*) option_source="${item:9}" ;;
-			# '--destination='*) option_destination="${item:14}" ;;
-			# '--owner='*) option_owner="${item:8}" ;;
-			# '--no-dry'* | '--dry'*)
-			# 	option_dry="$(get-flag-value dry --missing="$option_dry" -- "$item" | echo-affirmative)"
-			# 	;;
-			# '--no-sudo'* | '--sudo'*)
-			# 	option_sudo="$(get-flag-value sudo --missing="$option_sudo" -- "$item" | echo-affirmative)"
-			# 	;;
-			# '--no-checksum'* | '--checksum'*)
-			# 	option_checksum="$(get-flag-value checksum --missing="$option_checksum" -- "$item" | echo-affirmative)"
-			# 	;;
-			# '--no-remove'* | '--remove'*)
-			# 	option_remove="$(get-flag-value remove --missing="$option_remove" -- "$item" | echo-affirmative)"
-			# 	;;
-			# '--no-linux'* | '--linux'*)
-			# 	option_linux="$(get-flag-value linux --missing="$option_linux" -- "$item" | echo-affirmative)"
-			# 	;;
-			# '--slashes='*) option_slashes="${item:10}" ;;
-			# '--spaces='*) option_spaces="${item:9}" ;;
 		'--') ;;
 		'--'*) help "An unrecognised flag was provided: $item" ;;
 		*)
@@ -73,71 +47,13 @@ function ghm() (
 		esac
 	done
 
-	# ---------------------------
-	# ---       gh help       ---
-	# ---------------------------
-
-	# -- flag private.
-
-	# USAGE
-	# gh repo create [<name>] [flags]
-
-	# FLAGS
-	# -c, --clone                 Clone the new repository to the current directory
-	# -d, --description string    Description of the repository
-	# --disable-issues        Disable issues in the new repository
-	# --disable-wiki          Disable wiki in the new repository
-	# -g, --gitignore string      Specify a gitignore template for the repository
-	# -h, --homepage URL          Repository home page URL
-	# --internal              Make the new repository internal
-	# -l, --license string        Specify an Open Source License for the repository
-	# --private               Make the new repository private
-	# --public                Make the new repository public
-	# --push                  Push local commits to the new repository
-	# -r, --remote string         Specify remote name for the new repository
-	# -s, --source string         Specify path to local repository to use as source
-	# -t, --team name             The name of the organization team to be granted access
-	# -p, --template repository   Make the new repository based on a template repository
-
-	# INHERITED FLAGS
-	# --help   Show help for command
-
-	# EXAMPLES
-	# # create a repository interactively
-	# gh repo create
-
-	# # create a new remote repository and clone it locally
-	# gh repo create my-project --public --clone
-
-	# # create a remote repository from the current directory
-	# gh repo create my-project --private --source=. --remote=upstream
-
-	# if test "$(type -t "act_$action")" = 'function'; then
-	# 	"act_$action"
-	# 	exit "$?"
-	# else
-	# 	echo-style --error="Action [$action] not yet implemented." >/dev/stderr
-	# 	exit 78 # Function not implemented
-	# fi
-
-	# echo "${args[@]}"
-
-	# =====================================
-	# Todo
-	#
-
-	# rename this command to `repos` so that it can be a more general purpose app manager that uses ghm to manage repos
-
-	# bootstrap apps for the user
-
-	# allow ssh strings in all commands
-
 	# =====================================
 	# Helpers
 
-	# todo: replace with $HOME/
+	# TODO: replace with $HOME/
 	GHQ_GITHUB="/Users/hjalmarjakobsson/code/repos/github.com"
 
+	# this has been moved to its own command?
 	load_locate() {
 		# https://egeek.me/2020/04/18/enabling-locate-on-osx/
 		gupdatedb --localpaths=$HOME --prunepaths=/Volumes --output=$HOME/locatedb
@@ -171,35 +87,50 @@ function ghm() (
 
 	# BACKUP ALL REPOS TO A FILE IN YOUR DOTFILE
 
-	# TODO: needs to be passed the repo as arg instead so that we can append it to
-	# the backup file.
-	#
+	# get host, user, and repo from a repo url.
+	# This function is a bit hacky.
+	function get_parts() {
+		url="$1"
 
-	get_vcs_host() {
-		:
-	}
-	get_vcs_user() {
-		:
-	}
-	get_vcs_repo_name() {
-		echo "xxxx"
-		:
+		git_trimmed=${url%.git}
+		REPO_NAME="${git_trimmed##*/}"
+
+		repo_trimmed="${git_trimmed%/*}"
+		USER_NAME=$(echo "$repo_trimmed" | sed -E 's/.*[:\/]([^\/]*)$/\1/')
+
+		left="${repo_trimmed%?$USER_NAME}"
+		HOST_NAME="${left##*[\/@]}"
+
+		# echo "$REPO_NAME, $repo_trimmed  >> $USER_NAME >>>>> $left"
+		echo "$HOST_NAME" "$USER_NAME" "$REPO_NAME"
 	}
 
-	# TODO: I need to retrieve the HOST, USER, and REPO name for backup so that
-	# I know that I store each part specifically as the first three whitespace
-	# separated entries in the backup file
-	backup() {
-		if [ -z "$1" ]; then
-			# FIX: remove this later when I know how to get the proper repo string
-			# for each repo later so that I can just append each repo instead
-			ghq list >$DOROTHY/user/backups/ghq.bak
+	function testing() {
+		result_array=($(get_parts "$1"))
+		echo "${result_array[0]}/${result_array[1]}/${result_array[2]}"
+	}
+
+	function backup() {
+		local repo_url=$1
+		local already_prepared=$2
+
+		if [ -z "$repo_url" ]; then
+			echo "No repo was provided to [ghm backup]"
 		else
-			$1 >>$DOROTHY/user/backups/ghq.bak
+
+			if test "$already_prepared" = "true"; then
+
+				"$repo_url" >>"$DOROTHY/user/backups/ghq.bak"
+			else
+				local result_array=($(get_parts "$repo_url"))
+
+				"${result_array[0]}/${result_array[1]}/${result_array[2]}" >>"$DOROTHY/user/backups/ghq.bak"
+			fi
+
+			# NOTE: what does this really do??
+			locatedb_load
 		fi
 
-		# NOTE: what does this really do??
-		locatedb_load
 	}
 
 	# remove repo from ghq tree and from backup file
@@ -233,32 +164,54 @@ function ghm() (
 	# TODO: use dorothy tty to prompt user with the current ghq root so that
 	# user can be sure that things are installed to the right location.
 	restore_repos() {
-		if command-exists "ghq"; then
 
-			if [ ! -f "$GHQ_BACKUP_FILE" ]; then
-				echo "user/backups/ghq.bak doesn't exist"
-				exit 1
+		# install ghq
+		if ! command-exists ghq; then
+			if is-mac; then
+				brew install ghq
+			else
+				go install github.com/x-motemen/ghq@latest
 			fi
-
-			while IFS= read -r line; do
-
-				entries=($line)
-
-				the_repo_url="${entries[0]}"
-				echo "repo: $the_repo_url"
-
-				# TODO: get repos
-				ghq get -p $the_repo_url
-
-				# for entry in "${entries[@]}"; do
-				# 	# Process each entry here
-				# 	echo "Entry: $entry"
-				# done
-
-			done <"$GHQ_BACKUP_FILE"
-
-			:
 		fi
+
+		# still if installing didn't work exit
+		if ! command-exists ghq; then
+			exit
+		fi
+
+		# The string to check
+		ghq_root_string=$(ghq root)
+
+		# The pattern to search for
+		pattern="code/repos"
+
+		# Check if the string contains the pattern
+		if [[ ! "$ghq_root_string" == *"$pattern"* ]]; then
+			echo "ghq root/config hasn't been setup to [ code/repos ]. Exiting..."
+			exit
+		fi
+
+		if [ ! -f "$GHQ_BACKUP_FILE" ]; then
+			echo "user/backups/ghq.bak doesn't exist"
+			exit 1
+		fi
+
+		while IFS= read -r line; do
+
+			entries=("$line")
+
+			the_repo_url="${entries[0]}"
+			echo "repo: $the_repo_url"
+
+			ghq get -p "$the_repo_url"
+
+			# for entry in "${entries[@]}"; do
+			# 	# Process each entry here
+			# 	echo "Entry: $entry"
+			# done
+
+		done <"$GHQ_BACKUP_FILE"
+
 	}
 
 	# for each repo store the remotes as space separated entries on the same line
@@ -276,7 +229,6 @@ function ghm() (
 		# 4. find corresponding LINE in backup file
 		# 5. get entries by space/tab
 		# 6. check that list of remotes
-
 
 		# NOTE: this is how I can find each repo line and add the additional string
 		# at the end
@@ -302,34 +254,46 @@ function ghm() (
 		echo "clean"
 	}
 
+	function inti_github_remote() {
+		pushd $ghq_gh_user_path/$repo_name >/dev/null 2>&1
+		>/dev/null 2>&1
+		echo "# $1" >README.md
+		git add --all && git commit -m 'first'
+		gh repo create --source=. --private --push
+		popd >/dev/null 2>&1
+	}
+
 	# ======================
 
 	function clone() {
 		local repo=$1
 		ghq get -p $repo
 
-		backup
+		backup $repo
 	}
 
 	function new() {
 		repo_name=$1
+
+		# FIX: move these to the top of the `ghm` function, so I don't have to keep
+		# redoing these.
+
 		github_user=$(git config github.user)
 		ghq_gh_user_path="/Users/hjalmarjakobsson/code/repos/github.com/$github_user/"
 
 		# put into function
 		# don't exit. just if already exists. so that we can move on to the next stage
 		ghq create "$github_user/$repo_name" || exit 1
-		backup
+
+		backup "github.com/$github_user/$repo_name" true
 
 		# build
+		# FIX: replace this with `inti_github_remote`
 		pushd $ghq_gh_user_path/$repo_name >/dev/null 2>&1
 		>/dev/null 2>&1
 		echo "# $1" >README.md
 		git add --all && git commit -m 'first'
 		gh repo create --source=. --private --push
-
-		# TODO: here I want to get the repo url from
-
 		popd >/dev/null 2>&1
 	}
 
@@ -344,13 +308,13 @@ function ghm() (
 		fi
 
 		# extract names
-		repo_user=$(basename $(dirname $repo_url))
-		repo_name_str=$(basename $repo_url)
+		repo_user=$(basename $(dirname "$repo_url"))
+		repo_name_str=$(basename "$repo_url")
 		repo_name=${repo_name_str%.*}
 
 		# ghq
-		ghq get -p $repo_url
-		backup
+		ghq get -p "$repo_url"
+		backup "$repo_url"
 
 		# enter repo and perform actions
 		pushd "$GHQ_GITHUB/$repo_user/$repo_name" >/dev/null 2>&1
@@ -361,12 +325,11 @@ function ghm() (
 		# TODO: molleweide branch; first push;
 
 		popd >/dev/null 2>&1
-
 	}
 
+	# create new nvim plugin w/ boilit
+	# TODO: needs backup
 	function nvim() {
-		# create new nvim plugin w/ boilit
-
 		if ! command-exists boilit; then
 			echo "This command requires $(boilit) package." >/dev/stderr
 			return 1
@@ -385,60 +348,34 @@ function ghm() (
 		git add --all && git commit -m 'first'
 		gh repo create --source=. --private --push
 		popd >/dev/null 2>&1
-	}
 
-	# echo ">>> $action ${args[@]}"
+		backup "github.com/$github_user/$repo_name" true
+	}
 
 	# =====================================
 	# Act
 
-	if test "$action" = "restore_repos"; then
+	# echo ">>> $action ${args[@]}"
+
+	if test "$action" = "test"; then
+		testing "${args[@]}"
+	elif test "$action" = "restore_repos"; then
 		restore_repos
 	elif test "$action" = 'remove_repo'; then
 		remove_repo "${args[@]}"
 	elif test "$action" = 'nvim'; then
 		nvim "${args[@]}"
+	elif test "$action" = 'gp'; then
+		get_parts "${args[@]}"
+	elif test "$action" = 'new'; then
+		new "${args[@]}"
+	elif test "$action" = 'clone'; then
+		clone "${args[@]}"
+	elif test "$action" = 'fork'; then
+		fork "${args[@]}"
 	fi
 
-	# "$action" "${args[@]}"
 	exit "$?"
-
-	# if test "$action" = 'install'; then
-	# 	setup-util-1password-cli --upgrade
-	# elif test "$action" = 'login'; then
-	# 	secret_signout --quiet >/dev/stderr
-	# 	# trunk-ignore(shellcheck/SC2119)
-	# 	secret_signin
-	# elif test "$action" = 'logout'; then
-	# 	secret_signout
-	# elif test "$action" = 'map'; then
-	# 	secret_map "${args[@]}"
-	# elif test "$action" = 'env'; then
-	# 	secret_env "${args[@]}"
-	# elif test "$action" = 'get'; then
-	# 	if test -n "${args[*]}"; then
-	# 		secret_get "${args[@]}"
-	# 	else
-	# 		help "get action requires <name> argument"
-	# 	fi
-	# elif test "$action" = 'invalidate'; then
-	# 	if test -n "${args[*]}"; then
-	# 		cache_delete "${args[@]}"
-	# 	else
-	# 		cache_clear
-	# 	fi
-	# elif test "$action" = 'unmap'; then
-	# 	secret_unmap "${args[@]}"
-	# elif test "$action" = 'fetch'; then
-	# 	secret_fetch "${args[@]}"
-	# elif test "$action" = 'https'; then
-	# 	secret_https "${args[@]}"
-	# elif test "$action" = 'help'; then
-	# 	help
-	# else
-	# 	help 'Invalid <action>'
-	# fi
-
 )
 
 # fire if invoked standalone
