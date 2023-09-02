@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# exec > "/Users/hjalmarjakobsson/.config/dorothy/commands/launcher-filter.log" 2>&1
 
+find /System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities -maxdepth 1 -name "*.app" | /usr/local/bin/fzf # | xargs -I {} open "{}"
 # find /System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities -maxdepth 1 -name "*.app" | fzf | xargs -I {} open "{}"
-find /System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities -maxdepth 1 -name "*.app" | fzf | xargs -I {} echo "{}" > "/tmp/$1"
+# find /System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities -maxdepth 1 -name "*.app" | fzf | xargs -I {} echo "{}" > "/tmp/$1"
