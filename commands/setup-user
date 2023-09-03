@@ -1,32 +1,91 @@
 #!/usr/bin/env bash
 source "$DOROTHY/sources/strict.bash"
 
-# pull
-pushd $DOROTHY/user > /dev/null 2>&1
-echo "doro user pwd: $PWD"
-git submodule update --init --recursive || exit 1
-popd > /dev/null 2>&1
+# NOTE: ORDER of install
+# ~ dorothy
+# ~ symlink user configs
+# ~ make sure GHQ_ROOT exists
+# ~ clone GHQ
+# ~ strongbox?
 
-# TODO: arg doro
-# # # --- doro ------------
-# setup-bin
-# setup-git
-# setup-rust
-# setup-node
-# setup-go
-# setup-ruby
-# setup-python
-# setup-bin
-# setup-utils
+# TEST: what is the difference btw export vars from environment.bash or
+# source/some_script?
 
-# TODO: arg moll
-# # --- moll ------------
-# setup-personal-repos
-# setup-user-osx
-# setup-user-config
-# setup-user-base
-# # setup-user-keyboard
-# # setup-user-surfingkeys
-# # setup-user-neomutt
-# # setup-user-scim
-# # setup-reaper
+DORO_USER_XDG="$DOROTHY/user/config.xdg"
+GHQ_ROOT_GH_USER="$GHQ_ROOT/github.com/molleweide"
+
+function pull_molleweide_latest() {
+	pushd $DOROTHY/user >/dev/null 2>&1
+	echo "doro user pwd: $PWD"
+	popd >/dev/null 2>&1
+}
+
+# I can't keep my xdg configs inside of GHQ because GHQ depends on my XDG
+# configs to know where to install all my repos. therefore simple configs
+# should be kept here in the doro user dir.
+function setup_basic_xdg_config_symlinks() {
+	for f in "$DORO_USER_XDG"/*; do
+		if test "$(basename "$f")" = "_"; then
+			continue
+		fi
+		symlink-helper --existing="$f" --symlink="$XDG_CONFIG_HOME/$(basename "$f")"
+	done
+}
+
+function setup_neovim() {
+	# doom_nvim_dir="$HOME/code/doom-nvim"
+	# if [ ! -d "$HOME/code/doom-nvim" ]; then
+	# 	git clone git@github.com:molleweide/doom-nvim.git "$doom_nvim_dir"
+	# fi
+	symlink-helper --existing="$GHQ_ROOT_GH_USER/doom-nvim" --symlink="$XDG_CONFIG_HOME/nvim"
+}
+
+function setup_osx() {
+	# setup-user-osx
+	:
+}
+
+function setup_hammerspoon() {
+	if is-mac; then
+		HAMMERSPOON_CONFIG_DIR="$HOME/code/config_hammerspoon"
+
+		if [ ! -d "$HOME/code/config_hammerspoon" ]; then
+			git clone git@github.com:molleweide/config_hammerspoon.git "$HAMMERSPOON_CONFIG_DIR"
+		fi
+
+		github.com/molleweide/config_hammerspoon
+
+		echo-style --h1="Setting up HAMMERSPOON.."
+
+		# brew install --cask hammerspoon # --appdir=/Applications
+
+		url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
+		destination=/tmp/SpoonInstall.spoon.zip
+		spoons_dir=$HOME/.config/hammerspoon/Spoons
+
+		if [ ! -d "$spoons_dir/SpoonInstall.spoon" ]; then
+			wget -nv $url -O $destination && unzip -d "$spoons_dir" "$destination"
+		fi
+
+		defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
+
+		# fix: how should I manage the hammerspoon config
+		symlink-helper --existing="$doom_nvim_dir" --symlink="$XDG_CONFIG_HOME/nvim"
+		symlink-file "$ghq_user/config_hammerspoon" "$XDG_CONFIG_HOME/hammerspoon"
+
+		:
+	fi
+}
+
+function setup_obs() {
+	# ~/Library/Application Support/obs-studio/
+	# ~/.config/obs-studio/
+	:
+}
+
+# RUN TASKS.........
+
+# pull_molleweide_latest
+# setup_basic_xdg_config_symlinks
+# setup_neovim
+# setup_osx

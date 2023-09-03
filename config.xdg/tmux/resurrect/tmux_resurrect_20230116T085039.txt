@@ -1,0 +1,6 @@
+pane	kmonad	1	1	:*	1	:/Users/hjalmarjakobsson	0	bash	:bash /Users/hjalmarjakobsson/.local/share/dorothy/user/commands/kmonad_run -r
+pane	kmonad	1	1	:*	2	:/Users/hjalmarjakobsson	1	zsh	:
+pane	main	1	1	:*	1	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/doom-nvim	1	nvim	:nvim
+window	kmonad	1	:zsh	1	:*	10ff,213x53,0,0{107x53,0,0,1,105x53,108,0,2}	:
+window	main	1	:main	1	:*	ba60,213x53,0,0,3	off
+state	main	kmonad

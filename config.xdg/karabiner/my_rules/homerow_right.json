@@ -1,0 +1,57 @@
+{
+    "description": "HOMEROW RIGHT",
+    "manipulators": [
+        {
+            "type": "basic",
+            "from": {
+                "key_code": "semicolon"
+            },
+            "to_if_held_down": [
+                {
+                    "repeat": false,
+                    "key_code": "left_control",
+                    "lazy": true
+                }
+            ]
+        },
+        {
+            "type": "basic",
+            "from": {
+                "key_code": "l"
+            },
+            "to_if_held_down": [
+                {
+                    "repeat": false,
+                    "key_code": "left_shift",
+                    "lazy": true
+                }
+            ]
+        },
+        {
+            "type": "basic",
+            "from": {
+                "key_code": "k"
+            },
+            "to_if_held_down": [
+                {
+                    "repeat": false,
+                    "key_code": "left_option",
+                    "lazy": true
+                }
+            ]
+        },
+        {
+            "type": "basic",
+            "from": {
+                "key_code": "j"
+            },
+            "to_if_held_down": [
+                {
+                    "repeat": false,
+                    "key_code": "left_gui",
+                    "lazy": true
+                }
+            ]
+        }
+    ]
+}

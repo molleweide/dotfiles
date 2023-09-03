@@ -1,0 +1,13 @@
+user_number: "+46702281490"
+user_name: self
+save_messages: false
+desktop_notifications: false
+desktop_notifications_show_message: false
+desktop_notifications_show_avatar: false
+terminal_bell_notifications: false
+max_coversation_length: 0
+hide_panel_titles: false
+hide_phone_numbers: false
+contact_colors: {}
+contact_aliases: {}
+log_file: ""

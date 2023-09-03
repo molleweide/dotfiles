@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-# echo-header  "SETTING UP RUBY..."
-# [ ! -e ~/.rvm ] && \curl -L https://get.rvm.io | bash -s -- --ignore-dotfiles
-# [ -f ~/.rvm/scripts/rvm ] && source ~/.rvm/scripts/rvm
-# rvm install ruby --latest
-
-

@@ -1,0 +1,367 @@
+# IMPORTS
+# /home/boret/src/sc-im/themes/dracula.sc
+
+
+# ----------------------------
+# ---       SETTINGS       ---
+# ----------------------------
+
+# export TERM=xterm-256color
+
+# # Long strings/values overlap the next cells instead of turning into asterisks
+# set overlap
+
+# set numeric
+# set numeric_decimal=0
+# set overlap
+# set xlsx_readformulas
+
+
+
+# set numeric
+# set numeric_decimal=0
+# set xlsx_readformulas
+# set ignorecase
+
+
+
+# Place the input bar at the bottom of the screen
+set input_bar_bottom=1
+
+# Display current filename in status-line
+set filename_with_mode=1
+
+# Set content to be cut off at the end of the cell
+set truncate=1
+
+# Auto-backup sc-im every n seconds
+set autobackup=30
+
+# Recalculate values automatically
+set autocalc=1
+
+# Enable half-page scrolling
+set half_page_scroll
+
+# Ignore case while searching using '/'
+set ignorecase
+
+# Do not move cursor after entering data in a cell
+set newline_action=0
+# set newline_action=j
+
+# Do not overlap if cell contents is wider than the cell
+set overlap=0
+
+set numeric
+set numeric_decimal=0
+
+set xlsx_readformulas
+
+# set numeric=1
+# set numeric_decimal=0
+# set overlap
+# set xlsx_readformulas
+
+
+
+# # Number key behaviour
+# # 1 = number keys will start writing a numeric value to the cell
+# # 0 = act as a command multiplier (e.g.: 4j will go down 4 cells)
+# set numeric=1
+#
+# # zero key will start writing a 0 numeric value to the cell
+# set numeric_zero=1
+#
+#
+# # Move the cursor down after an entry
+# set newline_action=j
+#
+# # Case insensitive search
+# set ignorecase
+
+# ----------------------------
+# ---       MAPPINGS       ---
+# ----------------------------
+
+nnoremap " v" ":w!<CR>"
+nnoremap " m" ":w!<CR>"
+nnoremap " ff" ":load "
+imap "zm" "<ESC>"
+cmap "zm" "<ESC>"
+nnoremap "?" ":help<CR>"
+nnoremap "A" "Ea"
+nnoremap "I" "E0i"
+nnoremap "J" "<C-f>"
+nnoremap "K" "<C-b>"
+# nnoremap "H" "0"
+# nnoremap "L" "$"
+nnoremap "<CR>" "\"
+# nnoremap "y" ":ccopy<cr>"
+# nnoremap "p" ":cpaste<cr>"
+nnoremap "ZZ" ":x<cr>"
+nnoremap "ZQ" ":q!<cr>"
+nmap "fi" ":format \"0\"<cr>"
+nmap "B" "Vir"
+# nmap " " "E<cr>k"
+
+# # Swapping these mappings makes more sense to me:
+# # use gg/G to jump within a column
+# # Unfortunately, there's no mappings for visual mode
+# nnoremap "gg" "^"
+# nnoremap "^" "gg"
+# nnoremap "G" "#"
+# nnoremap "#" "G"
+# inoremap "<C-l>" "<tab>"
+# inoremap "<tab>" "<cr>kl"
+# nnoremap "<tab>" ":autojus<cr>"
+
+# --------------------------------------------------------------------------
+# AUTO COMMANDS
+# --------------------------------------------------------------------------
+
+# Auto-resize the column or column range to fit their contents.
+autojus A:Z
+
+# --------------------------------
+# ---       COLOR THEMES       ---
+# --------------------------------
+
+# theme 1
+
+# color "type=HEADINGS fg=WHITE bg=BLACK"
+# color "type=HEADINGS_ODD fg=WHITE bg=BLACK"
+# color "type=MODE fg=YELLOW bg=DEFAULT_COLOR bold=0"
+# color "type=NUMB fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=STRG fg=DEFAULT_COLOR bg=DEFAULT_COLOR bold=0"
+# color "type=DATEF fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=EXPRESSION fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=GRID_EVEN fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=GRID_ODD fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=CELL_ERROR fg=RED bg=DEFAULT_COLOR bold=0"
+# color "type=CELL_NEGATIVE fg=GREEN bg=DEFAULT_COLOR"
+# color "type=CELL_SELECTION fg=BLUE bg=DEFAULT_COLOR standout=1"
+# color "type=CELL_SELECTION_SC fg=DEFAULT_COLOR bg=BLACK"
+# color "type=INFO_MSG fg=BLUE bg=DEFAULT_COLOR bold=0"
+# color "type=ERROR_MSG fg=RED bg=DEFAULT_COLOR bold=0"
+# color "type=CELL_ID fg=WHITE bg=DEFAULT_COLOR bold=0"
+# color "type=CELL_FORMAT fg=WHITE bg=DEFAULT_COLOR bold=0"
+# color "type=CELL_CONTENT fg=BLUE bg=DEFAULT_COLOR bold=0"
+# color "type=WELCOME fg=WHITE bg=DEFAULT_COLOR bold=0"
+# color "type=NORMAL fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=INPUT fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=HELP_HIGHLIGHT fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+
+# theme 2
+
+# REDEFINE_COLOR "WHITE" 248 248 242
+# REDEFINE_COLOR "BLACK" 34 33 34
+# REDEFINE_COLOR "RED" 255 149 128
+# REDEFINE_COLOR "GREEN" 138 255 128
+# REDEFINE_COLOR "YELLOW" 255 255 128
+# REDEFINE_COLOR "BLUE" 128 255 234
+# REDEFINE_COLOR "CYAN" 128 255 234
+# REDEFINE_COLOR "MAGENTA" 255 128 191
+# DEFINE_COLOR "comment" 121 112 169
+# DEFINE_COLOR "altbackground" 63 63 63
+# color "type=DEFAULT fg=WHITE bg=BLACK bold=0 italic=0"
+# color "type=NORMAL fg=YELLOW bg=BLACK bold=0 italic=0"
+# color "type=WELCOME fg=comment bg=BLACK bold=0"
+# color "type=MODE fg=GREEN bg=BLACK bold=0"
+# color "type=GRID_EVEN fg=WHITE bg=BLACK"
+# color "type=GRID_ODD fg=WHITE bg=BLACK"
+# color "type=CELL_ID fg=WHITE bg=BLACK bold=0"
+# color "type=CELL_FORMAT fg=comment bg=BLACK bold=0"
+# color "type=CELL_CONTENT fg=WHITE bg=BLACK bold=0"
+# color "type=INFO_MSG fg=GREEN bg=BLACK bold=0"
+# color "type=ERROR_MSG fg=BLACK bg=RED bold=1"
+# color "type=INPUT fg=CYAN bg=BLACK"
+# color "type=CELL_ERROR fg=BLACK bg=RED bold=1"
+# color "type=HEADINGS fg=comment bg=BLACK bold=0"
+# color "type=HEADINGS_ODD fg=comment bg=BLACK bold=0"
+# color "type=CELL_SELECTION fg=WHITE bg=altbackground bold=0"
+# color "type=CELL_SELECTION_SC fg=WHITE bg=altbackground bold=1"
+# color "type=NUMB fg=MAGENTA bg=BLACK bold=0"
+# color "type=CELL_NEGATIVE fg=RED bg=BLACK bold=0"
+# color "type=EXPRESSION fg=YELLOW bg=BLACK bold=0"
+# # color "type=SHEET fg=comment bg=BLACK bold=0"
+# # color "type=CURRENT_SHEET fg=CYAN bg=BLACK bold=1"
+# # color "type=FILENM fg=YELLOW bg=BLACK bold=0"
+# # To not italicize strings, replace italic=1 with italic=0 on following line
+# color "type=STRG fg=CYAN bg=BLACK bold=0 italic=0"
+# color "type=DATEF fg=YELLOW bg=BLACK"
+
+# theme 3
+
+# color "type=HEADINGS fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=HEADINGS_ODD fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=MODE fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=NUMB fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=STRG fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=DATEF fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=CELL_SELECTION bold=1 fg=DEFAULT_COLOR bg=WHITE"
+# color "type=CELL_SELECTION_SC bold=1 fg=DEFAULT_COLOR bg=WHITE"
+# color "type=GRID_EVEN fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=GRID_ODD fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=EXPRESSION fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=CELL_ERROR fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=CELL_NEGATIVE fg=YELLOW bg=DEFAULT_COLOR"
+# color "type=INFO_MSG fg=YELLOW bg=DEFAULT_COLOR"
+# color "type=ERROR_MSG fg=RED bg=DEFAULT_COLOR"
+# color "type=CELL_ID fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=CELL_FORMAT fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=CELL_CONTENT fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=WELCOME fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=NORMAL fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+# color "type=INPUT fg=DEFAULT_COLOR bg=DEFAULT_COLOR"
+
+# theme 4
+
+# # Redefine colors - use this instead of the default ncurses colors (this will also change the colors in the current terminal window!)
+# # Info: http://stackoverflow.com/questions/28401332/ncurses-why-is-the-rgb-color-value-range-from-0-1000
+# # https://stackoverflow.com/questions/43710131/how-does-ncurses-init-color-function-translate-to-traditional-rbg-colors
+# # (n) * 1000 / 256
+# # white is hex:f5f5f5 = rgb:245 245 245 = ncurses:957 957 957
+# REDEFINE_COLOR "RED" 700 100 100
+# REDEFINE_COLOR "GREEN" 0 500 120
+# REDEFINE_COLOR "WHITE" 957 957 957
+# DARK THEME
+#color "type=DEFAULT fg=WHITE bg=BLACK"
+#color "type=HEADINGS fg=WHITE bg=BLUE"
+#color "type=WELCOME fg=BLUE bg=BLACK bold=1"
+#color "type=CELL_SELECTION fg=BLACK bg=WHITE bold=1"
+#color "type=CELL_SELECTION_SC fg=BLACK bg=WHITE"
+#color "type=NUMB fg=WHITE bg=BLACK"
+#color "type=STRG fg=WHITE bg=BLACK"
+#color "type=DATEF fg=CYAN bg=BLACK"
+#color "type=EXPRESSION fg=CYAN bg=BLACK"
+#color "type=INFO_MSG fg=GREEN bg=BLACK"
+#color "type=ERROR_MSG fg=RED bg=BLACK"
+#color "type=MODE fg=WHITE bg=BLACK"
+#color "type=CELL_ID fg=GREEN bg=BLACK"
+#color "type=CELL_FORMAT fg=WHITE bg=BLACK bold=1"
+#color "type=CELL_CONTENT fg=GREEN bg=BLACK bold=1"
+#color "type=INPUT fg=WHITE bg=BLACK"
+#color "type=NORMAL fg=WHITE bg=BLACK"
+#color "type=CELL_ERROR fg=RED bg=BLACK"
+#color "type=CELL_NEGATIVE fg=GREEN bg=BLACK"
+# # WHITE THEME
+# #color "type=DEFAULT fg=BLACK bg=WHITE"
+# #color "type=HEADINGS fg=WHITE bg=BLUE"
+# #color "type=WELCOME fg=BLACK bg=WHITE bold=1"
+# color "type=CELL_SELECTION fg=WHITE bg=GREEN"
+# color "type=CELL_SELECTION_SC fg=WHITE bg=GREEN"
+# color "type=NUMB fg=BLUE bg=WHITE"
+# color "type=STRG fg=BLACK bg=WHITE bold=0"
+# #color "type=DATEF fg=MAGENTA bg=WHITE"
+# #color "type=EXPRESSION fg=MAGENTA bg=WHITE"
+# #color "type=INFO_MSG fg=GREEN bg=WHITE"
+# #color "type=ERROR_MSG fg=RED bg=WHITE"
+# #color "type=MODE fg=BLACK bg=WHITE"
+# #color "type=CELL_ID fg=BLACK bg=WHITE"
+# #color "type=CELL_FORMAT fg=BLACK bg=WHITE"
+# #color "type=CELL_CONTENT fg=GREEN bg=WHITE"
+# color "type=INPUT fg=BLACK bg=WHITE"
+# #color "type=NORMAL fg=BLACK bg=WHITE"
+# #color "type=CELL_ERROR fg=RED bg=WHITE"
+# #color "type=CELL_NEGATIVE fg=GREEN bg=WHITE"
+
+# theme 5
+# color "{HEADINGS}={green}"
+# color "type=HEADINGS bold=1 fg=WHITE bg=RED"
+# # Custom colors
+# define_color "AZUL" 0 135 255
+# define_color "ROJO" 255 0 0
+# define_color "VERDE" 79 255 0
+# define_color "NARANJA" 255 119 0
+# # Color scheme
+# color "type=HEADINGS fg=ROJO bg=BLACK bold=1
+# color "type=HEADINGS_ODD fg=ROJO bg=BLACK bold=1
+# color "type=STRG fg=VERDE bg=BLACK bold=1
+# color "type=NUMB fg=NARANJA bg=BLACK bold=1
+# color "type=CELL_SELECTION fg=AZUL bg=BLACK bold=1
+# color "type=CELL_SELECTION_SC fg=AZUL bg=BLACK bold=1
+
+# theme 6
+# DEFINE_COLOR "fg" 255 255 255
+# DEFINE_COLOR "bg" 0 0 0
+# DEFINE_COLOR "axis_even_bg" 30 30 30
+# DEFINE_COLOR "axis_odd_bg" 50 50 50
+# DEFINE_COLOR "axis_selected_bg" 80 80 80
+# DEFINE_COLOR "cell_selected_bg" 80 80 80
+#
+# color "type=DEFAULT fg=fg bg=bg"
+#
+# # axis
+# color "type=HEADINGS       fg=fg bg=axis_even_bg"
+# color "type=HEADINGS_ODD   fg=fg bg=axis_odd_bg"
+# color "type=CELL_SELECTION fg=bg bg=axis_selected_bg"
+#
+# # cell
+# color "type=CELL_SELECTION_SC fg=fg      bg=cell_selected_bg"
+# color "type=NUMB              fg=CYAN    bg=DEFAULT_COLOR"
+# color "type=STRG              fg=fg      bg=DEFAULT_COLOR"
+# color "type=DATEF             fg=YELLOW  bg=DEFAULT_COLOR"
+# color "type=EXPRESSION        fg=RED     bg=DEFAULT_COLOR"
+#
+# #color "type=GRID_EVEN fg=WHITE bg=DEFAULT_COLOR"
+# #color "type=GRID_ODD fg=WHITE bg=DEFAULT_COLOR"
+# #color "type=WELCOME fg=YELLOW bg=DEFAULT_COLOR"
+#
+# #color "type=INFO_MSG fg=CYAN bg=DEFAULT_COLOR"
+# #color "type=ERROR_MSG fg=WHITE bg=RED"
+# #color "type=MODE fg=WHITE bg=DEFAULT_COLOR"
+# #color "type=CELL_ID fg=WHITE bg=DEFAULT_COLOR"
+# #color "type=CELL_FORMAT fg=RED bg=DEFAULT_COLOR"
+# #color "type=CELL_CONTENT fg=BLACK bg=DEFAULT_COLOR"
+# #color "type=INPUT fg=WHITE bg=DEFAULT_COLOR"
+# #color "type=NORMAL fg=BLACK bg=DEFAULT_COLOR"
+# #color "type=CELL_ERROR fg=RED bg=DEFAULT_COLOR"
+# #color "type=CELL_NEGATIVE fg=GREEN bg=DEFAULT_COLOR"
+
+# theme 7
+# color "type=HEADINGS fg=WHITE bg=BLACK bold=0 dim=0 standout=0 reverse=0"
+# color "type=CELL_SELECTION_SC fg=WHITE bg=BLACK bold=1 dim=0 standout=1"
+# color "type=CELL_SELECTION fg=WHITE bg=BLACK bold=1 dim=0 standout=1"
+# color "type=STRG fg=WHITE bg=BLACK bold=0 dim=1"
+# color "type=NUMB fg=BLUE bg=BLACK bold=0 dim=1"
+# color "type=EXPRESSION fg=GREEN bg=BLACK bold=0 dim=1"
+# color "type=CELL_NEGATIVE fg=RED bg=BLACK bold=0 dim=1"
+
+#############################################################################
+#############################################################################
+#############################################################################
+#############################################################################
+#############################################################################
+
+# # Looks really nice with Solarized color scheme
+# color "type=HEADINGS fg=DEFAULT_COLOR bg=BLACK bold=0"
+# color "type=CELL_SELECTION fg=WHITE bg=GREEN bold=1"
+# Custom colors
+# define_color "headings_fg"    128 128 128
+# define_color "str_val_fg"     204 204 204
+# define_color "num_val_fg"     204 204 204
+# define_color "row_col_sel_fg" 175  95 255
+# define_color "cell_sel_fg"    204 204 204
+# define_color "cell_sel_bg"     42  42  42
+
+# # Color scheme
+# color "type=HEADINGS           fg=headings_fg     bg=BLACK        bold=0"
+# color "type=HEADINGS_ODD       fg=headings_fg     bg=BLACK        bold=0"
+# color "type=STRG               fg=str_val_fg      bg=BLACK        bold=0"
+# color "type=NUMB               fg=num_val_fg      bg=BLACK        bold=0"
+# color "type=CELL_SELECTION     fg=row_col_sel_fg  bg=BLACK        bold=1"
+# color "type=CELL_SELECTION_SC  fg=cell_sel_fg     bg=cell_sel_bg  bold=0"
+
+# nnoremap ";" ":"
+# set autocalc
+
+# # Number, zero, decimal point begins entry
+# set numeric = 0
+# set filename_with_mode
+# set ignorecase
+
+# # Truncate text overflow, otherwise gets asterisked
+# set truncate
+
+# set newline_action = 0

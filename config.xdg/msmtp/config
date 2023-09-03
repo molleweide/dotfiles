@@ -1,0 +1,11 @@
+account acct0
+host mailout.telia.com
+port 587
+protocol smtp
+auth on
+# passwordeval sh msmtppass.sh get
+from hjalmar.jakobsson@telia.com
+user hjalmar.jakobsson@telia.com
+tls on
+
+account default: acct0

@@ -2,13 +2,22 @@
 
 if is-mac; then
     echo-style --h1="Setting up HAMMERSPOON.."
+
     # brew install --cask hammerspoon # --appdir=/Applications
+
     url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
     destination=/tmp/SpoonInstall.spoon.zip
     spoons_dir=$HOME/.config/hammerspoon/Spoons
+
     [ ! -d "$spoons_dir/SpoonInstall.spoon" ] \
-        && wget -nv $url -O $destination && unzip -d $spoons_dir $destination
+        && wget -nv $url -O $destination && unzip -d "$spoons_dir" "$destination"
+
     defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
+
+    # FIX: replace with symlink-helper
+    symlink-file "$ghq_user/config_hammerspoon" "$conf_dst/hammerspoon"
 fi
+
+
 
 

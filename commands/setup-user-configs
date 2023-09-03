@@ -1,42 +1,40 @@
 #!/usr/bin/env bash
-source "$DOROTHY/sources/strict.bash"
 
-echo-style --h1 --green "LINK USER CONFIGS.."
-export FORCE_LINK='yes'
+function setup_user_symlinks() {
+	source "$DOROTHY/sources/strict.bash"
 
-ghq_user="$HOME/code/repos/github.com/molleweide"
-conf_dst=$HOME/.config
+	echo-style --h1 --green "LINK USER CONFIGS.."
+	export FORCE_LINK='yes'
 
-# CONFIG.XDG
-for f in $ghq_user/xdg_configs/*; do
+	GHQ_ROOT_GH_USER="$GHQ_ROOT/github.com/molleweide"
 
-	if test "$(basename $f)" = "_"; then
-		echo ">>>>>>> $f"
-		continue # Ignore the folder and move to the next iteration of the loop
+	for f in "$GHQ_ROOT_GH_USER"/xdg_configs/*; do
+		if test "$(basename "$f")" = "_"; then
+			# echo ">>>>>>> $f"
+			continue # Ignore the folder and move to the next iteration of the loop
+		fi
+		symlink-file "$f" "$XDG_CONFIG_HOME/$(basename "$f")"
+	done
+
+	# symlink-file "$GHQ_ROOT_GH_USER/doom-nvim" "$XDG_CONFIG_HOME/nvim"
+	# # symlink-file "$HOME/code/repos/github.com/molleweide/doom-nvim" "$XDG_CONFIG_HOME/nvim"
+
+	if is-mac; then
+		# ~/Library/Application Support/obs-studio/
+		# symlink-file "$GHQ_ROOT_GH_USER/config_hammerspoon" "$XDG_CONFIG_HOME/hammerspoon"
+		:
+	elif is-linux; then
+		# ~/.config/obs-studio/
+		# symlink-file "$GHQ_ROOT_GH_USER/config_hammerspoon" "$XDG_CONFIG_HOME/hammerspoon"
+		:
 	fi
 
-	symlink-file "$f" "$conf_dst/$(basename $f)"
-done
+	## SPECIAL SNOWFLAKES
+	# ln -s ~/.config/mbsync/config ~/.mbsyncrc
 
-# NON XDG CONFIGS BELOW...
+}
 
-# NEOVIM / DOOM
-symlink-file "$ghq_user/doom-nvim" "$conf_dst/nvim"
-# symlink-file "$HOME/code/repos/github.com/molleweide/doom-nvim" "$conf_dst/nvim"
-
-# HAMMERSPOON
-symlink-file "$ghq_user/config_hammerspoon" "$conf_dst/hammerspoon"
-
-# OBS STUDIO
-# ~/Library/Application Support/obs-studio/
-# ~/.config/obs-studio/
-if is-mac; then
-	echo "a"
-	# symlink-file "$ghq_user/config_hammerspoon" "$conf_dst/hammerspoon"
-else
-	echo "b"
-# symlink-file "$ghq_user/config_hammerspoon" "$conf_dst/hammerspoon"
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	setup_user_symlinks "$@"
 fi
-
-## SPECIAL SNOWFLAKES
-# ln -s ~/.config/mbsync/config ~/.mbsyncrc

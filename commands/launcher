@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+# exec > "/Users/hjalmarjakobsson/.config/dorothy/commands/launcher.log" 2>&1
+#
+
+TITLE="custom launcher"
+launcher_filter="/Users/hjalmarjakobsson/.config/dorothy/commands/launcher-filter"
+
+# temp_file=$(mktemp)
+
+fifo="/tmp/alacritty_closed"
+mkfifo "$fifo"
+
+# selection=$(open -n -a "/Applications/Alacritty.app" --args -t "$TITLE" -e "$launcher_filter") # "$TITLE" # only works if last line writes to tmp file?!
+
+(open -n -a "/Applications/Alacritty.app" --args -t "$TITLE" -e "find /Applications -maxdepth 1 -name \"*.app\" | fzf > \"$tmpfile\"; echo \$? > \"$fifo\"" &)
+
+wait
+
+exitcode=$(cat "$fifo")
+
+# Remove the named pipe (FIFO)
+rm "$fifo"
+
+echo "Alacritty closed with exit code: $exitcode"
+
+
+# search_locations="/System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities"
+# cmd="find /Applications -maxdepth 1 -name \"*.app\" | /usr/local/bin/fzf > \"$temp_file\""
+# (open -n -a "/Applications/Alacritty.app" --args -t "$TITLE" \
+#     -e "find /Applications -maxdepth 1 -name \"*.app\" | /usr/local/bin/fzf > \"$temp_file\"")
+
+
+# alacritty_pid=$!
+
+# fifo="/tmp/selection_fifo"
+# mkfifo "$fifo"
+# (open -n -a "/Applications/Alacritty.app" --args -t "$TITLE" -e "$launcher_filter" > "$fifo" &)
+# coproc { wait "${COPROC[0]}"; }
+# selection=$(cat "$fifo")
+# exec {COPROC[0]}>&-
+# rm "$fifo"
+
+
+# selection=$(cat "$fifo")
+
+# echo "sel: $selection"
+# echo "$selection" >"/Users/hjalmarjakobsson/reaper/tmp/cli/launcher.txt"

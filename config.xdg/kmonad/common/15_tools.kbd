@@ -1,0 +1,60 @@
+;;#| ---------------------------------------------------------------
+;;
+;; tools
+;;
+;;--------------------------------------------------------------- |#
+
+;; (cmd-button "")
+
+(defalias
+  tls11 XX
+  tls12 XX
+  tls13 XX
+  tls14 XX
+  tls15 XX
+
+  tls21 XX
+  tls22 XX
+  tls23 XX
+  tls24 XX
+  tls25 XX
+
+  tls31 XX
+  tls32 (cmd-button "screenshot")
+  tls33 XX
+  tls34 XX
+  tls35 XX
+
+  tls41 XX
+  tls42 XX
+  tls43 XX
+  tls44 XX
+  tls45 XX
+
+  tls51 XX
+  tls52 XX
+  tls53 XX
+  tls54 XX
+  tls55 XX
+
+  tls61 XX
+  tls62 XX
+  tls63 XX
+  tls64 XX
+  tls65 XX
+
+  ;; THUMBS
+  tls70 XX
+  tls71 XX
+  tls72 XX
+  tls73 XX  ;; second double space...only QMK boards
+  tls74 XX
+  tls75 XX
+)
+
+(deflayer TOOLS
+  @tls11 @tls12 @tls13 @tls14 @tls15        @tls21 @tls22 @tls23 @tls24 @tls25
+  @tls31 @tls32 @tls33 @tls34 @tls35        @tls41 @tls42 @tls43 @tls44 @tls45
+  @tls51 @tls52 @tls53 @tls54 @tls55        @tls61 @tls62 @tls63 @tls64 @tls65
+                @BQ    @tls71        @tls72        @tls74 @BQ
+)
