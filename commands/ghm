@@ -9,6 +9,11 @@
 function ghm() (
 	GHQ_BACKUP_FILE="$DOROTHY/user/backups/ghq.bak"
 
+	function testing() {
+		result_array=($(get_parts "$1"))
+		echo "${result_array[0]}/${result_array[1]}/${result_array[2]}"
+	}
+
 	# =====================================
 	# ??
 
@@ -59,33 +64,28 @@ function ghm() (
 		gupdatedb --localpaths=$HOME --prunepaths=/Volumes --output=$HOME/locatedb
 	}
 
-	# # input github ssh string -> return name, user
-	# get_repo_name_and_user() {
-	#   # trim ".git"
-	#   # get last name string after /
-	#   # strip /
-	#   # get user after the second last /
-	# }
-
-	# todo...
+	# ???
 	ghq_do() {
-
-		ghq create "$github_user/$repo_name" || exit 1
-		backup
-
+		# ghq create "$github_user/$repo_name" || exit 1
+		# backup
+		:
 	}
 
 	jump_to_repo_and_do() {
-		echo "todo.."
 		# the idea is to pass an array of the commands necessary and then
 		# jump to the dir and run them so that I don't have to repeart push/pop
 		# in every function below.
+		:
 	}
 
-	# =====================================
-	# Actions
-
-	# BACKUP ALL REPOS TO A FILE IN YOUR DOTFILE
+	# TODO: initial check
+	# ~ ghq exists?
+	# ~ ghq root is what?
+	# ~ i can obtain my github user?
+	# ~ and find the path in ghq
+	initial_check() {
+		:
+	}
 
 	# get host, user, and repo from a repo url.
 	# This function is a bit hacky.
@@ -103,11 +103,6 @@ function ghm() (
 
 		# echo "$REPO_NAME, $repo_trimmed  >> $USER_NAME >>>>> $left"
 		echo "$HOST_NAME" "$USER_NAME" "$REPO_NAME"
-	}
-
-	function testing() {
-		result_array=($(get_parts "$1"))
-		echo "${result_array[0]}/${result_array[1]}/${result_array[2]}"
 	}
 
 	function backup() {
@@ -131,6 +126,17 @@ function ghm() (
 			locatedb_load
 		fi
 
+	}
+
+	function backup_all() {
+		# loop over all ghq repos and verify that they are backed up properly.
+		:
+	}
+
+	# if repo from backup does not exist/hasn't been cloned, then remove
+	# that repo. Ask before??
+	function clean() {
+		:
 	}
 
 	# remove repo from ghq tree and from backup file
@@ -194,7 +200,7 @@ function ghm() (
 		while IFS= read -r line; do
 			entries=("$line")
 			the_repo_url="${entries[0]}"
-      # test: use silent here, since we are downloading many repos.
+			# test: use silent here, since we are downloading many repos.
 			ghq get -p -s "$the_repo_url"
 
 			# for entry in "${entries[@]}"; do
@@ -205,10 +211,8 @@ function ghm() (
 	}
 
 	# for each repo store the remotes as space separated entries on the same line
-	# ^<repo> <remote> <remote> <remote>
+	# ^<repo> <remoteName> <remoteUrl> <remoteName> <remoteUrl> ...
 	verify_all_remotes_are_backed_up() {
-		echo "todo..."
-
 		# loop over all repos
 		# check that all remotes are listed in the backup file
 		# for each repo
@@ -239,15 +243,12 @@ function ghm() (
 
 	}
 
-	# loop over repos and remove non-existing repos from user/backup
-	function clean() {
-		echo "clean"
-	}
+	function init_github_remote() {
+		local ghq_gh_user_path=$1
+		local repo_name=$2
 
-	function inti_github_remote() {
 		pushd $ghq_gh_user_path/$repo_name >/dev/null 2>&1
-		>/dev/null 2>&1
-		echo "# $1" >README.md
+		echo "# $repo_name" >README.md
 		git add --all && git commit -m 'first'
 		gh repo create --source=. --private --push
 		popd >/dev/null 2>&1
@@ -257,9 +258,8 @@ function ghm() (
 
 	function clone() {
 		local repo=$1
-		ghq get -p $repo
-
-		backup $repo
+		ghq get -p "$repo"
+		backup "$repo"
 	}
 
 	function new() {
@@ -271,20 +271,11 @@ function ghm() (
 		github_user=$(git config github.user)
 		ghq_gh_user_path="/Users/hjalmarjakobsson/code/repos/github.com/$github_user/"
 
-		# put into function
-		# don't exit. just if already exists. so that we can move on to the next stage
 		ghq create "$github_user/$repo_name" || exit 1
 
 		backup "github.com/$github_user/$repo_name" true
 
-		# build
-		# FIX: replace this with `inti_github_remote`
-		pushd $ghq_gh_user_path/$repo_name >/dev/null 2>&1
-		>/dev/null 2>&1
-		echo "# $1" >README.md
-		git add --all && git commit -m 'first'
-		gh repo create --source=. --private --push
-		popd >/dev/null 2>&1
+		init_github_remote "$ghq_gh_user_path" "$repo_name"
 	}
 
 	function fork() {
@@ -320,6 +311,9 @@ function ghm() (
 	# create new nvim plugin w/ boilit
 	# TODO: needs backup
 	function nvim() {
+
+		# initial check
+
 		if ! command-exists boilit; then
 			echo "This command requires $(boilit) package." >/dev/stderr
 			return 1
@@ -333,11 +327,7 @@ function ghm() (
 		# boilit >> need to fix it so that it strips the `.nvim` string within the plugin/code
 		boilit -p "$ghq_gh_user_path" "$repo_name" || exit 1
 
-		pushd $ghq_gh_user_path/$repo_name >/dev/null 2>&1
-		git init
-		git add --all && git commit -m 'first'
-		gh repo create --source=. --private --push
-		popd >/dev/null 2>&1
+		init_github_remote "$ghq_gh_user_path" "$repo_name"
 
 		backup "github.com/$github_user/$repo_name" true
 	}

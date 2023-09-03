@@ -1,15 +1,12 @@
 #!/usr/bin/env bash
 source "$DOROTHY/sources/strict.bash"
 
-# NOTE: !!!
-# !!
-# Now that I have gotten my GHM command to work properly almost I can begin
-# to rethink how I should do this because now I could just keep everything
-# in the ghm tree and then pull anything from there. that would actually be
-# quite smart in thi s caes .
-#
-# This means that a big part of my own config is dependent on the fact that
-# I have ghm setup and running so that I can load all of my repos with this.
+# NOTE: ORDER of install
+# ~ dorothy
+# ~ symlink user configs
+# ~ make sure GHQ_ROOT exists
+# ~ clone GHQ
+# ~
 
 DORO_USER_XDG="$DOROTHY/user/config.xdg"
 
@@ -19,7 +16,11 @@ function pull_molleweide_latest() {
 	popd >/dev/null 2>&1
 }
 
-function setup_symlink_configs() {
+
+# I can't keep my xdg configs inside of GHQ because GHQ depends on my XDG
+# configs to know where to install all my repos. therefore simple configs
+# should be kept here in the doro user dir.
+function setup_basic_xdg_config_symlinks() {
 	for f in "$DORO_USER_XDG"/*; do
 		if test "$(basename "$f")" = "_"; then
 			continue
@@ -82,6 +83,6 @@ function setup_obs() {
 # RUN TASKS.........
 
 # pull_molleweide_latest
-# setup_symlink_configs
+# setup_basic_xdg_config_symlinks
 # setup_neovim
 # setup_osx
