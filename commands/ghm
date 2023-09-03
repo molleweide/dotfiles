@@ -216,7 +216,7 @@ function ghm() (
 			entries=("$line")
 			the_repo_url="${entries[0]}"
 			# test: use silent here, since we are downloading many repos.
-			ghq get -p -s "$the_repo_url"
+			ghq get -p "$the_repo_url"
 
 			# for entry in "${entries[@]}"; do
 			# 	# Process each entry here

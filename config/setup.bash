@@ -40,6 +40,7 @@ APT_ADD=(
 	openssl
 	traceroute
 	vim
+	tmux
 )
 
 # https://code.visualstudio.com/docs/setup/linux
