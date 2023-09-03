@@ -41,6 +41,7 @@ APT_ADD=(
 	traceroute
 	vim
 	tmux
+	ranger
 )
 
 # https://code.visualstudio.com/docs/setup/linux
