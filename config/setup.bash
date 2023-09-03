@@ -26,21 +26,7 @@ APK_INSTALL=(
 # 	thunderbird
 # )
 
-APT_ADD=(
-	# software-properties-common
-	aria2
-	atomicparsley # a youtube-dl dependency
-	build-essential
-	curl
-	git
-	gnome-keyring
-	libnotify-bin
-	libssl-dev
-	make
-	openssl
-	traceroute
-	vim
-)
+
 
 # https://code.visualstudio.com/docs/setup/linux
 # if [[ "$(get-arch)" == 'x'* ]]; then
@@ -394,3 +380,17 @@ HOMEBREW_FONTS=(
 	'font-monoid'
 )
 GO_LINTING_INSTALL=no
+APT_INSTALL=(
+	'aria2'
+	'atomicparsley'
+	'build-essential'
+	'curl'
+	'git'
+	'gnome-keyring'
+	'libnotify-bin'
+	'libssl-dev'
+	'make'
+	'openssl'
+	'traceroute'
+	'vim'
+)
