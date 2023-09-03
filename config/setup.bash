@@ -54,6 +54,7 @@ if "$DOROTHY/commands/is-mac"; then
 		changkun.de/x/rmtrash
 		github.com/gennaro-tedesco/boilit # manual install -> `go get -u -v github.com/gennaro-tedesco/boilit`
 		github.com/uw-labs/strongbox
+		github.com/x-motemen/ghq@latest
 		# github.com/cloudflare/utahfs/cmd/utahfs-client
 		# https://github.com/maaslalani/nap # cli snippets manager
 	)
@@ -62,6 +63,7 @@ else
 		changkun.de/x/rmtrash
 		github.com/gennaro-tedesco/boilit
 		github.com/uw-labs/strongbox
+		github.com/x-motemen/ghq@latest
 		# github.com/rfjakob/gocryptfs: use `setup-util-gocryptfs` instead, as this version lags behind
 	)
 fi

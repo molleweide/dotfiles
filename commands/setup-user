@@ -6,16 +6,19 @@ source "$DOROTHY/sources/strict.bash"
 # ~ symlink user configs
 # ~ make sure GHQ_ROOT exists
 # ~ clone GHQ
-# ~
+# ~ strongbox?
+
+# TEST: what is the difference btw export vars from environment.bash or
+# source/some_script?
 
 DORO_USER_XDG="$DOROTHY/user/config.xdg"
+GHQ_ROOT_GH_USER="$GHQ_ROOT/github.com/molleweide"
 
 function pull_molleweide_latest() {
 	pushd $DOROTHY/user >/dev/null 2>&1
 	echo "doro user pwd: $PWD"
 	popd >/dev/null 2>&1
 }
-
 
 # I can't keep my xdg configs inside of GHQ because GHQ depends on my XDG
 # configs to know where to install all my repos. therefore simple configs
@@ -30,11 +33,11 @@ function setup_basic_xdg_config_symlinks() {
 }
 
 function setup_neovim() {
-	doom_nvim_dir="$HOME/code/doom-nvim"
-	if [ ! -d "$HOME/code/doom-nvim" ]; then
-		git clone git@github.com:molleweide/doom-nvim.git "$doom_nvim_dir"
-	fi
-	symlink-helper --existing="$doom_nvim_dir" --symlink="$XDG_CONFIG_HOME/nvim"
+	# doom_nvim_dir="$HOME/code/doom-nvim"
+	# if [ ! -d "$HOME/code/doom-nvim" ]; then
+	# 	git clone git@github.com:molleweide/doom-nvim.git "$doom_nvim_dir"
+	# fi
+	symlink-helper --existing="$GHQ_ROOT_GH_USER/doom-nvim" --symlink="$XDG_CONFIG_HOME/nvim"
 }
 
 function setup_osx() {

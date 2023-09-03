@@ -7,11 +7,18 @@
 # up properly to your dorothy user config.
 
 function ghm() (
+	GHQ_ROOT=$(ghq root)
+
 	GHQ_BACKUP_FILE="$DOROTHY/user/backups/ghq.bak"
 
 	function testing() {
-		result_array=($(get_parts "$1"))
-		echo "${result_array[0]}/${result_array[1]}/${result_array[2]}"
+		# Example array with duplicates
+		array=("apple" "banana" "apple" "orange" "banana")
+
+		unique_array=($(printf "%s\n" "${array[@]}" | sort -u))
+
+		echo "Original Array: ${array[*]}"
+		echo "Unique Array: ${unique_array[*]}"
 	}
 
 	# =====================================
@@ -62,6 +69,14 @@ function ghm() (
 	load_locate() {
 		# https://egeek.me/2020/04/18/enabling-locate-on-osx/
 		gupdatedb --localpaths=$HOME --prunepaths=/Volumes --output=$HOME/locatedb
+	}
+
+	function remove_duplicates() {
+		local array=("$1")
+
+		unique_array=($(printf "%s\n" "${array[@]}" | sort -u))
+
+		echo "${unique_array[*]}"
 	}
 
 	# ???
@@ -211,36 +226,48 @@ function ghm() (
 	}
 
 	# for each repo store the remotes as space separated entries on the same line
-	# ^<repo> <remoteName> <remoteUrl> <remoteName> <remoteUrl> ...
+	# ^<repo> <remoteName,repoUrl> <remoteName,repoUrl> ..
+	#
+	# TODO:
+	#  ~ handle duplicates
+	#
 	verify_all_remotes_are_backed_up() {
-		# loop over all repos
-		# check that all remotes are listed in the backup file
-		# for each repo
+		local ghq_all_repos remotes
+		ghq_all_repos=$(ghq list)
 
-		# 1. for each host
-		# 2. for each user
-		# 3. for each repo
-		# 4. find corresponding LINE in backup file
-		# 5. get entries by space/tab
-		# 6. check that list of remotes
+		# A. loop over all repos
+		while IFS= read -r line; do
 
-		# NOTE: this is how I can find each repo line and add the additional string
-		# at the end
+			remotes=$(git -C "$GHQ_ROOT/$line" remote -v)
 
-		# Specify the string to add
-		suffix="suffix"
+      # FIX: this still captures some duplicates!
+      # How do I make sure to match $line with a whitespace at the end
+			repo_match_line_to_append_remotes=$(grep "^$line" "$GHQ_BACKUP_FILE")
 
-		# Specify the target string within lines
-		target="target"
+			echo-segment --h2="$line"
 
-		# Specify the input file
-		input_file="input_file.txt"
+			# B. loop a single repos remotes
+			total=()
+			while IFS= read -r remote; do
 
-		# Use sed to modify the lines
-		sed -i "/$target/ s/$/ $suffix/" "$input_file"
+				stripped_line="${remote% *}"
+				comma_replaced="${stripped_line//$'\t'/,}"
+				repo_match_line_to_append_remotes="$repo_match_line_to_append_remotes $comma_replaced"
 
-		echo "Strings added to lines containing 'target'."
+				total+=("$comma_replaced")
+			done < <(echo "$remotes")
 
+			# echo "${total[@]}"
+			echo "$repo_match_line_to_append_remotes"
+			echo-segment --g2="$line"
+			echo ""
+
+			# suffix="suffix"
+			# target="target"
+			# input_file="input_file.txt"
+			# sed -i "/$target/ s/$/ $suffix/" "$input_file"
+
+		done <<<"$ghq_all_repos"
 	}
 
 	function init_github_remote() {
@@ -353,8 +380,9 @@ function ghm() (
 		clone "${args[@]}"
 	elif test "$action" = 'fork'; then
 		fork "${args[@]}"
+	elif test "$action" = 'vr'; then
+		verify_all_remotes_are_backed_up
 	fi
-
 	exit "$?"
 )
 
