@@ -5,7 +5,7 @@
 #   - add dorothy help file.
 #   - dorothy flags while
 
-# todo: test the whole pipeline of running the kommand
+# TODO: rename this command to `setup-kmonad`
 
 # # ensure valid layout path
 # action="$(
@@ -90,18 +90,23 @@ function kmonad_run_new() {
 	# =================================
 	# Helpers
 
-	function build_kmonad_macos() {
+	# TODO: check if the kmonad repo exists under GHQ
+
+	function build_kmonad() {
 		:
 	}
 
-	function build_kmonad_linux() {
-		:
-	}
+	# NOTE: INSTALL DOCS:
+	# [ https://github.com/kmonad/kmonad/blob/master/doc/installation.md#binaries ]
 
-	function install() {
-		# choose if you want to build or install from pkg
-		# can only build on macos
-		:
+	# https://aur.archlinux.org/packages/kmonad-bin
+	# https://github.com/kmonad/kmonad/blob/master/doc/installation.md#void-linux
+	# https://github.com/kmonad/kmonad/blob/master/doc/installation.md#gnu-guix
+	function install_kmonad_linux_packages() {
+		setup-util --name='kmonad' --cli='kmonad' --order='aur xbps guix' \
+			AUR='kmonad-bin' \
+			XBPS='kmonad' \
+			GUIX='kmonad'
 	}
 
 	# Find executables
@@ -117,14 +122,55 @@ function kmonad_run_new() {
 			fi
 		fi
 
-		if is-mac; then
+		# NOTE: if doesn't exist need to build on mac
+		local_bin_exec_path=($(find $LOCAL_BIN_DIR | grep "kmonad"))
 
-			# NOTE: if doesn't exist need to build on mac
-			bin_exec_paths=($(find $LOCAL_BIN_DIR | grep "kmonad"))
-			KMO_EXECUTABLE="$(choose-option --confirm --question='Select executable name.' -- "${bin_exec_paths[@]}")"
+		echo "MACOS: local bin grep exit code: $?"
+		local local_bin_found=''
+		if [ $? -eq 0 ]; then
+			local_bin_found='yes'
+		else
+			local_bin_found='no'
+		fi
+
+		if is-mac; then
+			if test "$local_bin_found" = "yes"; then
+				KMO_EXECUTABLE="$(choose-option --confirm --question='Select executable name.' -- "${local_bin_exec_path[@]}")"
+			else
+				# FIX: build for mac here
+				:
+			fi
 
 		else
-			# NOTE: check kmonad exists continue else install via setup-util
+
+			# TODO: if
+			# 1. no .local/bin binary AND
+			# 2. no package found via `which kmonad`
+
+      # TEST: since there can be multiple occurences of a command on linux,
+      # I can use `which -a`
+      #
+      # NOTE: `which -a | grep "$HOME/.local/bin/kmonad`
+      # can be used to capture all local builds
+      #
+			# command_name="your_command_name"
+			# while IFS= read -r path; do
+			# 	echo "Command '$command_name' found at: $path"
+			# done < <(which -a "$command_name")
+
+			KMO_PACKAGE=$(which kmonad)
+
+			# install_kmonad_linux_packages
+			if test "$local_bin_found" = "yes"; then
+				KMO_EXECUTABLE="$(choose-option --confirm --question='Select executable name.' -- "${local_bin_exec_path[@]}")"
+			else
+				# FIX: build for mac here
+				:
+			fi
+
+			# TODO: check if an executable exists under local/bin
+			# Do you want to build kmonad
+
 			:
 		fi
 		echo "$KMO_EXECUTABLE"
@@ -212,16 +258,28 @@ function kmonad_run_new() {
 	# kmonad in various ways
 	# echo "hardware" "layout" "executable"
 
-	function dry_run() {
-		echo-style --bold="Dry running kmonad now..."
-
+	function get_necessary_parts() {
 		SELECTED_HARDWARE=$(get_select_hardware)
 		SELECTED_LAYOUT_FILE=$(get_compiled_layout_file "$SELECTED_HARDWARE")
 		KMO_EXECUTABLE=$(get_executable)
+		echo "$KMO_EXECUTABLE" "$SELECTED_LAYOUT_FILE"
+	}
 
-		echo "Hardware: $SELECTED_HARDWARE"
-		echo "Layout: $SELECTED_LAYOUT_FILE"
-		echo "Executable: $KMO_EXECUTABLE"
+	function dry_run() {
+		echo-style --bold="Dry running kmonad now..."
+
+		# SELECTED_HARDWARE=$(get_select_hardware)
+		# SELECTED_LAYOUT_FILE=$(get_compiled_layout_file "$SELECTED_HARDWARE")
+		# KMO_EXECUTABLE=$(get_executable)
+		#
+		# echo "Hardware: $SELECTED_HARDWARE"
+		# echo "Layout: $SELECTED_LAYOUT_FILE"
+		# echo "Executable: $KMO_EXECUTABLE"
+		#
+		# I can also get the commands this way.
+		parts=($(get_necessary_parts))
+
+		"${parts[@]}" -d
 
 		# $KMO_EXECUTABLE "$layout_temp_file" -d
 	}
