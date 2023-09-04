@@ -276,6 +276,7 @@ NPM_INSTALL=(
 	'tern'
 	'typescript'
 	'vim-node-rpc'
+	'diff-so-fancy'
 )
 
 # rust/cargo/crates.io
