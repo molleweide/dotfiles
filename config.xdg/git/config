@@ -173,16 +173,7 @@
 	user = molleweide
 
 [credential]
-	helper = "!f(){ if [ \"$(uname -s)\" == "Darwin" ]; then git credential-osxkeychain"; fi; if [ \"$(uname -s)\" == "Linux"]; then git credential-cache --timeout 3600; fi; }; f"
-	# !sh -c '
-	# if [ $(uname) == "Darwin" ]; then
-	#     echo "helper = osxkeychain"
-	# fi
-	# if [ $(uname) == "Linux"]; then
-	#     echo "helper = cache --timeout 3600"
-	# fi
-	# '
-	# helper = osxkeychain
+	helper = "!f(){ if [ \"$(uname -s)\" = Linux ]; then git credential-cache --timeout 3600 \"$@\"; else git credential-osxkeychain \"$@\"; fi; }; f"
 
 [difftool]
 	prompt = false
@@ -194,6 +185,7 @@
 	protocol = ssh
 [gitlab]
 	user = molleweide
+
 [ghq]
     root = ~/code/repos
 [ghq "https://github.com/molleweide/neorg_user"]
@@ -205,8 +197,10 @@
 #     starred = !github-list-starred
 # [ghq "https://svn.code.sf.net"]
 #     vcs = git-svn
+
 [tag]
-	gpgsign = true
+	gpgsign = false
+
 [filter "strongbox"]
 	clean = strongbox -clean %f
 	smudge = strongbox -smudge %f
