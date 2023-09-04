@@ -173,7 +173,7 @@
 	user = molleweide
 
 [credential]
-	helper = "!f(){ if [ \"$(uname -s)\" == "Darwin" ]; then git credential-osxkeychain"; fi; if [ \"$(uname -s)\" == "Linux"]; then git credential-cache --timeout 3600; fi }; f"
+	helper = "!f(){ if [ \"$(uname -s)\" == "Darwin" ]; then git credential-osxkeychain"; fi; if [ \"$(uname -s)\" == "Linux"]; then git credential-cache --timeout 3600; fi; }; f"
 	# !sh -c '
 	# if [ $(uname) == "Darwin" ]; then
 	#     echo "helper = osxkeychain"
