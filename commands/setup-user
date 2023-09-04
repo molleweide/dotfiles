@@ -8,6 +8,10 @@ source "$DOROTHY/sources/strict.bash"
 # ~ clone GHQ
 # ~ strongbox?
 
+# TODO: fuzzy finding a specific repo in the backup file that you want to
+# restore so one doesn't have to restore all repos on a new machine at once
+# if you have eg. crappy internet.
+
 # TEST: what is the difference btw export vars from environment.bash or
 # source/some_script?
 
@@ -86,6 +90,6 @@ function setup_obs() {
 # RUN TASKS.........
 
 # pull_molleweide_latest
-# setup_basic_xdg_config_symlinks
+setup_basic_xdg_config_symlinks
 # setup_neovim
 # setup_osx
