@@ -171,8 +171,19 @@
 	signingkey = F75A27C9E590009BB65EC918BE4CDD65C9053F9C
 [github]
 	user = molleweide
+
 [credential]
-	helper = osxkeychain
+	helper = "!f(){ if [ \"$(uname -s)\" == "Darwin" ]; then git credential-osxkeychain"; fi; if [ \"$(uname -s)\" == "Linux"]; then git credential-cache --timeout 3600; fi }; f"
+	# !sh -c '
+	# if [ $(uname) == "Darwin" ]; then
+	#     echo "helper = osxkeychain"
+	# fi
+	# if [ $(uname) == "Linux"]; then
+	#     echo "helper = cache --timeout 3600"
+	# fi
+	# '
+	# helper = osxkeychain
+
 [difftool]
 	prompt = false
 [hub]
