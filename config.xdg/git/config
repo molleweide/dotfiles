@@ -146,8 +146,8 @@
 
 [include]
   # includes these files in your home directory
-  path = config.user
-  path = config.private
+  # path = config.user
+  # path = config.private
 
 [interactive]
   singlekey = true
