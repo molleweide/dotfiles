@@ -5,6 +5,8 @@
 #   - add dorothy help file.
 #   - dorothy flags while
 
+# todo: test the whole pipeline of running the kommand
+
 # # ensure valid layout path
 # action="$(
 # 	choose-option --required \
@@ -12,9 +14,13 @@
 # 		--filter="$action" -- "${actions[@]}"
 # )"
 
-function kmonad_run() {
+function kmonad_run_new() {
 	# index a string in bash
 	# https://unix.stackexchange.com/questions/303960/index-a-string-in-bash
+
+	# Paths
+	KMONAD_CONFIG_DIR="$XDG_CONFIG_HOME/kmonad"
+	LOCAL_BIN_DIR="$HOME/.local/bin"
 
 	function help {
 		cat <<-EOF >/dev/stderr
@@ -40,46 +46,57 @@ function kmonad_run() {
 		return 22 # EINVAL 22 Invalid argument
 	}
 
-	# TODO: how should i handle arguments.
+	# # TODO: how should i handle arguments.
+	# #
+	# # kmo -c
+	# #     select hw and print
+	# #
+	# # kmo -c -d
+	# #     select hw, print, and dry run
+	# #
+	# # kmo -c -- <path>
+	# #     print layout at path
+	# #
+	# # kmo -c -r
+	# #     select layout print and run
+	# #
+	# # kmo -c -r -- <path>
+	# #   print and run layout at path
+	# #
+	# # Process action arguments
+	# local item action='' option_branch='' option_commit='' args=()
+	# while test "$#" -ne 0; do
+	# 	item="$1"
+	# 	shift
+	# 	case "$item" in
+	# 	'--help' | '-h') help ;;
+	# 	'-d' | '--dry-run') action='dry_run' ;;
+	# 	'-c' | '--cat') action='cat' ;;
+	# 	'-w' | '--write') action='write' ;;
+	# 	'-r' | '--run') action='run' ;;
+	# 	# custom config path
+	# 	#
+	# 	'--'*) help "An unrecognised flag was provided: $item" ;;
+	# 	*) help "An unrecognised argument was provided: $item" ;;
+	# 	esac
+	# done
 	#
-	# kmo -c
-	#     select hw and print
-	#
-	# kmo -c -d
-	#     select hw, print, and dry run
-	#
-	# kmo -c -- <path>
-	#     print layout at path
-	#
-	# kmo -c -r
-	#     select layout print and run
-	#
-	# kmo -c -r -- <path>
-	#   print and run layout at path
+	# if test -z "$action"; then
+	# 	help "<action> must be provided."
+	# fi
 
-	# Process action arguments
-	local item action='' option_branch='' option_commit='' args=()
-	while test "$#" -ne 0; do
-		item="$1"
-		shift
-		case "$item" in
-		'--help' | '-h') help ;;
-		'-d' | '--dry-run') action='dry_run' ;;
-		'-c' | '--cat') action='cat' ;;
-		'-w' | '--write') action='write' ;;
-		'-r' | '--run') action='run' ;;
-		# custom config path
-		#
-		'--'*) help "An unrecognised flag was provided: $item" ;;
-		*) help "An unrecognised argument was provided: $item" ;;
-		esac
-	done
+	local action="$1"
 
-	if test -z "$action"; then
-		help "<action> must be provided."
-	fi
+	# =================================
+	# Helpers
 
-	# TODO: default as dry-run
+	function build_kmonad_macos() {
+		:
+	}
+
+	function build_kmonad_linux() {
+		:
+	}
 
 	function install() {
 		# choose if you want to build or install from pkg
@@ -87,70 +104,80 @@ function kmonad_run() {
 		:
 	}
 
-	# Paths
-	config_kmonad_dir="$XDG_CONFIG_HOME/kmonad"
-	bin_dir="$HOME/.local/bin"
-
 	# Find executables
 	function get_executable() {
-		:
-	}
-	local KMO_EXECUTABLE
-	if is-mac; then
-		# NOTE: if doesn't exist need to build on mac
-		bin_exec_paths=($(find $bin_dir | grep "kmonad"))
-		KMO_EXECUTABLE="$(choose-option --confirm --question='Select executable name.' -- "${bin_exec_paths[@]}")"
-	else
-		# NOTE: check kmonad exists continue else install via setup-util
-		:
-	fi
+		local KMO_EXECUTABLE
 
-	# Select which hardware to run on
+		if ! command-exists kmonad; then
+			if is-mac; then
+
+				:
+			else
+				:
+			fi
+		fi
+
+		if is-mac; then
+
+			# NOTE: if doesn't exist need to build on mac
+			bin_exec_paths=($(find $LOCAL_BIN_DIR | grep "kmonad"))
+			KMO_EXECUTABLE="$(choose-option --confirm --question='Select executable name.' -- "${bin_exec_paths[@]}")"
+
+		else
+			# NOTE: check kmonad exists continue else install via setup-util
+			:
+		fi
+		echo "$KMO_EXECUTABLE"
+	}
+
 	function get_select_hardware() {
-		:
+		user_hardwares_list=(
+			"ergo"
+			"pro"
+			"air"
+		)
+		SELECTED_HARDWARE="$(choose-option --confirm --question='Select hardware to run kmonad for.' -- "${user_hardwares_list[@]}")"
+		echo "$SELECTED_HARDWARE"
 	}
-	user_hardwares_list=(
-		"ergo"
-		"pro"
-		"air"
-	)
-	SELECTED_HARDWARE="$(choose-option --confirm --question='Select hardware to run kmonad for.' -- "${user_hardwares_list[@]}")"
 
-	# Create kmonad `cfg` block
-	function get_cfg_block() {
-		:
-	}
-	declare -A defcfg_input_str=(
-		[ergo]="Ergodox EZ"
-		[pro]="Apple Internal Keyboard / Trackpad"
-		[air]="Apple Internal Keyboard / Trackpad"
-	)
-	input="${defcfg_input_str[$SELECTED_HARDWARE]}"
-	output="kext"
-	fallthrough=false
-	DEFCFG="(defcfg
-    input (iokit-name \"$input\")
-    output ($output)
-    fallthrough $fallthrough
-  )"
+	# function get_cfg_block() {
+	# 	local SELECTED_HARDWARE=$1
+	# }
 
-	# Get source keymap file
-	function get_src_file_for_hardware() {
-		:
-	}
-	declare -A defsrc_files=(
-		[ergo]="defsrc_ergodox.kbd"
-		[pro]="defsrc_mbpro_swe.kbd"
-		[air]="defsrc_mbair.kbd"
-	)
-	DEFSRC="$config_kmonad_dir/defsrc/${defsrc_files[$SELECTED_HARDWARE]}"
+	# function get_src_file_for_hardware() {
+	# }
 
-	# Create final layout
 	function compile_layout() {
+		local SELECTED_HARDWARE=$1
+
+		# Get source keymap file
+		declare -A defsrc_files=(
+			[ergo]="defsrc_ergodox.kbd"
+			[pro]="defsrc_mbpro_swe.kbd"
+			[air]="defsrc_mbair.kbd"
+		)
+		DEFSRC="$KMONAD_CONFIG_DIR/defsrc/${defsrc_files[$SELECTED_HARDWARE]}"
+
+		# Create kmonad `cfg` block
+		declare -A defcfg_input_str=(
+			[ergo]="Ergodox EZ"
+			[pro]="Apple Internal Keyboard / Trackpad"
+			[air]="Apple Internal Keyboard / Trackpad"
+		)
+		input="${defcfg_input_str[$SELECTED_HARDWARE]}"
+		output="kext"
+		fallthrough=false
+		DEFCFG="(defcfg
+      input (iokit-name \"$input\")
+      output ($output)
+      fallthrough $fallthrough
+    )"
+
+		# Compile final layout
 		echo "$DEFCFG"
 		cat "$DEFSRC"
 		# Load each layer file
-		for f in "$config_kmonad_dir/common/"*.kbd; do
+		for f in "$KMONAD_CONFIG_DIR/common/"*.kbd; do
 			local filename
 			filename="$(basename "$f")"
 			# FIX: rewrite this as a `continue` statement
@@ -162,15 +189,41 @@ function kmonad_run() {
 		done
 	}
 
-	# Compile layout into tmpfile
-	layout_temp_file="$(mktemp /tmp/kmonad-XXX)"
-	compile_layout >"$layout_temp_file"
+	function get_compiled_layout_file() {
+		SELECTED_HARDWARE=$1
+		layout_temp_file="/tmp/kmonad_compiled_layout" # "$(mktemp /tmp/kmonad-XXX)"
+		compile_layout "$SELECTED_HARDWARE" >"$layout_temp_file"
+		echo "$layout_temp_file"
+	}
+
+	# =================================
+	# Main functions
 
 	function print_layout() {
 		local title="Printed kmonad layout"
 		echo-segment --h2="$title"
 		cat "$layout_temp_file"
 		echo-segment --g2="$title"
+	}
+
+	# TODO: this could be renamed into get_necessary_parameters() which
+	# returns everything necessary to run kmonad.
+	# Then, I can reuse this function to get all of the data and then run
+	# kmonad in various ways
+	# echo "hardware" "layout" "executable"
+
+	function dry_run() {
+		echo-style --bold="Dry running kmonad now..."
+
+		SELECTED_HARDWARE=$(get_select_hardware)
+		SELECTED_LAYOUT_FILE=$(get_compiled_layout_file "$SELECTED_HARDWARE")
+		KMO_EXECUTABLE=$(get_executable)
+
+		echo "Hardware: $SELECTED_HARDWARE"
+		echo "Layout: $SELECTED_LAYOUT_FILE"
+		echo "Executable: $KMO_EXECUTABLE"
+
+		# $KMO_EXECUTABLE "$layout_temp_file" -d
 	}
 
 	function run() {
@@ -182,36 +235,37 @@ function kmonad_run() {
 		:
 	}
 
+	# =================================
 	# Arguments
-	mode="d" # run
 
-	for arg in "$@"; do
-		if test "$arg" = '--cat' -o "$arg" = '-c'; then
-			mode="c"
-		elif test "$arg" = '--write' -o "$arg" = '-w'; then
-			mode="w" # TODO
-		elif test "$arg" = '--run' -o "$arg" = '-r'; then
-			mode="r"
-		fi
-	done
+	# mode="d" # run
+	# for arg in "$@"; do
+	# 	if test "$arg" = '--cat' -o "$arg" = '-c'; then
+	# 		mode="c"
+	# 	elif test "$arg" = '--write' -o "$arg" = '-w'; then
+	# 		mode="w" # TODO
+	# 	elif test "$arg" = '--run' -o "$arg" = '-r'; then
+	# 		mode="r"
+	# 	fi
+	# done
 
-	# Run kmonad
-	if test "$mode" = "r"; then
+	if [ $# -eq 0 ]; then
+		# help "<action> must be provided."
+		dry_run
+	elif test "$action" = "install"; then
+		install
+	elif test "$action" = "run"; then
 		run
-
-	elif test "$mode" = 'c'; then
+	elif test "$action" = 'cat'; then
 		print_layout
-
-	elif test "$mode" = 'w'; then
+	elif test "$action" = 'write'; then
 		echo "write layout -> todo..."
-
-	elif test "$mode" = 'd'; then
-		$KMO_EXECUTABLE "$layout_temp_file" -d
+	elif test "$action" = 'dry'; then
+		dry_run
 	fi
-
 }
 
 # fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-	kmonad_run "$@"
+	kmonad_run_new "$@"
 fi
