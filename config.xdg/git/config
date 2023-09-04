@@ -146,15 +146,15 @@
 
 [include]
   # includes these files in your home directory
-  path = config.user
-  path = config.private
+  # path = config.user
+  # path = config.private
 
 [interactive]
   singlekey = true
 
 [commit]
   template = ~/.config/git/message
-	gpgsign = true
+	gpgsign = false
 
 [filter "lfs"]
 	process = git-lfs filter-process
@@ -171,8 +171,10 @@
 	signingkey = F75A27C9E590009BB65EC918BE4CDD65C9053F9C
 [github]
 	user = molleweide
+
 [credential]
-	helper = osxkeychain
+	helper = "!f(){ if [ \"$(uname -s)\" = Linux ]; then git credential-cache --timeout 3600 \"$@\"; else git credential-osxkeychain \"$@\"; fi; }; f"
+
 [difftool]
 	prompt = false
 [hub]
@@ -183,6 +185,7 @@
 	protocol = ssh
 [gitlab]
 	user = molleweide
+
 [ghq]
     root = ~/code/repos
 [ghq "https://github.com/molleweide/neorg_user"]
@@ -194,8 +197,10 @@
 #     starred = !github-list-starred
 # [ghq "https://svn.code.sf.net"]
 #     vcs = git-svn
+
 [tag]
-	gpgsign = true
+	gpgsign = false
+
 [filter "strongbox"]
 	clean = strongbox -clean %f
 	smudge = strongbox -smudge %f

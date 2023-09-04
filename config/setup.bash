@@ -26,24 +26,6 @@ APK_INSTALL=(
 # 	thunderbird
 # )
 
-APT_ADD=(
-	# software-properties-common
-	aria2
-	atomicparsley # a youtube-dl dependency
-	build-essential
-	curl
-	git
-	gnome-keyring
-	libnotify-bin
-	libssl-dev
-	make
-	openssl
-	traceroute
-	vim
-	tmux
-	ranger
-)
-
 # https://code.visualstudio.com/docs/setup/linux
 # if [[ "$(get-arch)" == 'x'* ]]; then
 SNAP_INSTALL=(
@@ -294,6 +276,7 @@ NPM_INSTALL=(
 	'tern'
 	'typescript'
 	'vim-node-rpc'
+	'diff-so-fancy'
 )
 
 # rust/cargo/crates.io
@@ -398,3 +381,19 @@ HOMEBREW_FONTS=(
 	'font-monoid'
 )
 GO_LINTING_INSTALL=no
+APT_INSTALL=(
+	'aria2'
+	'atomicparsley'
+	'build-essential'
+	'curl'
+	'git'
+	'gnome-keyring'
+	'libnotify-bin'
+	'libssl-dev'
+	'make'
+	'openssl'
+	'traceroute'
+	'vim'
+	'tmux'
+	'ranger'
+)

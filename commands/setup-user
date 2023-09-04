@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source "$DOROTHY/sources/strict.bash"
+# source "$DOROTHY/sources/strict.bash"
 
 # NOTE: ORDER of install
 # ~ dorothy
@@ -8,14 +8,13 @@ source "$DOROTHY/sources/strict.bash"
 # ~ clone GHQ
 # ~ strongbox?
 
-# TODO: fuzzy finding a specific repo in the backup file that you want to
-# restore so one doesn't have to restore all repos on a new machine at once
-# if you have eg. crappy internet.
+# TODO: rewrite this file to follow the dorothy installer conventions
 
 # TEST: what is the difference btw export vars from environment.bash or
 # source/some_script?
 
 DORO_USER_XDG="$DOROTHY/user/config.xdg"
+GHQ_ROOT=$(ghq root)
 GHQ_ROOT_GH_USER="$GHQ_ROOT/github.com/molleweide"
 
 function pull_molleweide_latest() {
@@ -28,6 +27,7 @@ function pull_molleweide_latest() {
 # configs to know where to install all my repos. therefore simple configs
 # should be kept here in the doro user dir.
 function setup_basic_xdg_config_symlinks() {
+	echo-header "SETTING UP DORO USR XDG SYMLINKS..."
 	for f in "$DORO_USER_XDG"/*; do
 		if test "$(basename "$f")" = "_"; then
 			continue
@@ -37,11 +37,33 @@ function setup_basic_xdg_config_symlinks() {
 }
 
 function setup_neovim() {
+	echo-header "SETTING UP NEOVIM..."
 	# doom_nvim_dir="$HOME/code/doom-nvim"
 	# if [ ! -d "$HOME/code/doom-nvim" ]; then
 	# 	git clone git@github.com:molleweide/doom-nvim.git "$doom_nvim_dir"
 	# fi
+	# local doom_path="$GHQ_ROOT_GH_USER/doom-nvim"
+	# echo "$doom_path"
 	symlink-helper --existing="$GHQ_ROOT_GH_USER/doom-nvim" --symlink="$XDG_CONFIG_HOME/nvim"
+}
+
+function setup_tmux_user() {
+	echo-header "SETTING UP TMUX..."
+	# https://github.com/tmux-plugins/tmux-urlview
+	# https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
+	# https://github.com/sigpipe/urlview
+	TMUX_PLUG_DIR="$HOME/.config/tmux/plugins/tpm"
+	[ ! -d $TMUX_PLUG_DIR ] && git clone git@github.com:tmux-plugins/tpm.git $TMUX_PLUG_DIR
+	install_script="$TMUX_PLUG_DIR/bin/install_plugins"
+	if [ -x "$install_script" ]; then
+		$install_script
+	fi
+}
+
+function setup_neorg_notes() {
+	if [ ! -d "$HOME/neorg" ]; then
+		git clone git@github.com:molleweide/neorg_user.git "$HOME/neorg"
+	fi
 }
 
 function setup_osx() {
@@ -81,6 +103,10 @@ function setup_hammerspoon() {
 	fi
 }
 
+function setup_keyboard() {
+	:
+}
+
 function setup_obs() {
 	# ~/Library/Application Support/obs-studio/
 	# ~/.config/obs-studio/
@@ -90,6 +116,8 @@ function setup_obs() {
 # RUN TASKS.........
 
 # pull_molleweide_latest
-setup_basic_xdg_config_symlinks
+#setup_basic_xdg_config_symlinks
 # setup_neovim
+# setup_tmux_user
+# setup_neorg_notes
 # setup_osx
