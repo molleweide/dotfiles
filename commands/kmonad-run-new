@@ -90,10 +90,54 @@ function kmonad_run_new() {
 	# =================================
 	# Helpers
 
+	function macos_install_dext() {
+		dext_path="c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/dist/Karabiner-DriverKit-VirtualHIDDevice-1.15.0.dmg"
+		dext_path=$(defaults read /Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/Info.plist CFBundleVersion | grep 1.15.0)
+		if test -z "$check_dext"; then
+			sudo installer -pkg "$dext_path" -target /Applications
+		else
+			echo-style --green "dext v1.15.0 already installed"
+		fi
+		/Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Manager activate
+	}
+
 	# TODO: check if the kmonad repo exists under GHQ
 
+	function get_ghq_kmo() {
+		$(ghq list -p "kmonad/kmonad")
+	}
+
 	function build_kmonad() {
-		:
+		# make sure kmonad repo exists in GHQ
+		local GHQ_KMONAD_REPO
+		GHQ_KMONAD_REPO=$(ghq list -p "github.com/kmonad/kmonad")
+		if test -z "$GHQ_KMONAD_REPO"; then
+			ghq get -p git@github.com:x-motemen/ghq.git
+			GHQ_KMONAD_REPO=$(ghq list -p "github.com/kmonad/kmonad")
+		fi
+
+		arch="$(get-arch)"
+		github_user=$(git config github.user)
+
+		# stack clean -> completely reset build
+		if is-mac; then
+			echo "BUILD KMONAD MAC..."
+			# macos_install_dext # TODO: needs testing first
+
+			# if test "$arch" = 'a64'; then
+			#     stack build --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+			# else
+			#     stack build --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+			# fi
+
+		else
+			echo "BUILD KMONAD LINUX..."
+			# stack install # Check `stack path`. Should install to `$USER/.local/bin`.
+			# or
+			# aur: https://aur.archlinux.org/packages/kmonad-bin
+
+		fi
+
 	}
 
 	# NOTE: INSTALL DOCS:
@@ -125,7 +169,7 @@ function kmonad_run_new() {
 		# NOTE: if doesn't exist need to build on mac
 		local_bin_exec_path=($(find $LOCAL_BIN_DIR | grep "kmonad"))
 
-		echo "MACOS: local bin grep exit code: $?"
+		# echo "MACOS: local bin grep exit code: $?"
 		local local_bin_found=''
 		if [ $? -eq 0 ]; then
 			local_bin_found='yes'
@@ -147,12 +191,12 @@ function kmonad_run_new() {
 			# 1. no .local/bin binary AND
 			# 2. no package found via `which kmonad`
 
-      # TEST: since there can be multiple occurences of a command on linux,
-      # I can use `which -a`
-      #
-      # NOTE: `which -a | grep "$HOME/.local/bin/kmonad`
-      # can be used to capture all local builds
-      #
+			# TEST: since there can be multiple occurences of a command on linux,
+			# I can use `which -a`
+			#
+			# NOTE: `which -a | grep "$HOME/.local/bin/kmonad`
+			# can be used to capture all local builds
+			#
 			# command_name="your_command_name"
 			# while IFS= read -r path; do
 			# 	echo "Command '$command_name' found at: $path"
@@ -164,7 +208,7 @@ function kmonad_run_new() {
 			if test "$local_bin_found" = "yes"; then
 				KMO_EXECUTABLE="$(choose-option --confirm --question='Select executable name.' -- "${local_bin_exec_path[@]}")"
 			else
-				# FIX: build for mac here
+				# FIX: build for Linux here
 				:
 			fi
 
