@@ -230,10 +230,11 @@ function kmonad_run_new() (
 		echo "$SELECTED_HARDWARE"
 	}
 
-	# TODO: im probably going to have to make this a bit more dynamic to handle
-	# mix between layouts and mac vs linux.
-	function compile_layout() {
+	function compile_base() {
 		local SELECTED_HARDWARE=$1
+
+		# TODO: im probably going to have to make this a bit more dynamic to handle
+		# mix between layouts and mac vs linux.
 
 		# Get source keymap file
 		# TODO: move this array to xdg configs
@@ -264,9 +265,11 @@ function kmonad_run_new() (
       fallthrough $fallthrough
     )"
 
-		# Compile final layout
 		echo "$DEFCFG"
 		cat "$DEFSRC"
+	}
+
+	function compile_layers() {
 		for f in "$KMONAD_CONFIG_DIR/common/"*.kbd; do
 			local filename
 			filename="$(basename "$f")"
@@ -277,20 +280,36 @@ function kmonad_run_new() (
 		done
 	}
 
+	function compile_full_layout() {
+		compile_base "$SELECTED_HARDWARE"
+		compile_layers
+	}
+
 	function get_compiled_layout_file() {
 		local SELECTED_HARDWARE=$1
 		local layout_temp_file="/tmp/kmonad_compiled_layout" # "$(mktemp /tmp/kmonad-XXX)"
-		compile_layout "$SELECTED_HARDWARE" >"$layout_temp_file"
+		compile_full_layout "$SELECTED_HARDWARE" >"$layout_temp_file"
 		echo "$layout_temp_file"
 	}
 
 	# =================================
 	# Main functions
 
+	function print_base() {
+		SELECTED_HARDWARE=$(get_select_hardware)
+		compile_base "$SELECTED_HARDWARE"
+	}
+
+	function print_layers() {
+		compile_layers
+	}
+
 	function print_layout() {
-		local title="Printed kmonad layout"
+		SELECTED_HARDWARE=$(get_select_hardware)
+		local title="PRINTED KMONAD LAYOUT"
 		echo-segment --h2="$title"
-		cat "$layout_temp_file"
+		SELECTED_LAYOUT_FILE=$(get_compiled_layout_file "$SELECTED_HARDWARE")
+		cat "$SELECTED_LAYOUT_FILE"
 		echo-segment --g2="$title"
 	}
 
@@ -334,16 +353,24 @@ function kmonad_run_new() (
 		dry_run
 	elif test "$action" = "help"; then
 		help "<action> must be provided."
+
 	elif test "$action" = "install"; then
 		install_kmonad
-	elif test "$action" = "run"; then
-		run
-	elif test "$action" = 'cat'; then
-		print_layout
-	elif test "$action" = 'write'; then
-		write_layout_to_file
+
 	elif test "$action" = 'dry'; then
 		dry_run
+	elif test "$action" = "run"; then
+		run
+
+	elif test "$action" = 'base'; then
+		print_base
+	elif test "$action" = 'layers'; then
+		print_layers
+	elif test "$action" = 'layout'; then
+		print_layout
+
+	elif test "$action" = 'write'; then
+		write_layout_to_file
 	elif test "$action" = 'dummy_plummy_xxxyy'; then
 		dummy
 	fi
