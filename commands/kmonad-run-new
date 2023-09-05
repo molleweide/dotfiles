@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-# TODO: rename this command to `setup-kmonad`
+# TODO:
+# ~ rename this command to `setup-kmonad`
+# ~ check that haskell, ghc, and stack is installed
 
 # # ensure valid layout path
 # action="$(
@@ -103,15 +105,16 @@ function kmonad_run_new() {
 		$(ghq list -p "kmonad/kmonad")
 	}
 
+	# NOTE: kmonad build docs [ https://github.com/kmonad/kmonad/blob/master/doc/installation.md#compilation ]
 	function build_kmonad() {
-		# # make sure kmonad repo exists in GHQ
-		# local GHQ_KMONAD_REPO
-		# GHQ_KMONAD_REPO=$(ghq list -p "github.com/kmonad/kmonad")
-		# if test -z "$GHQ_KMONAD_REPO"; then
-		# 	ghq get -p git@github.com:x-motemen/ghq.git
-		# 	GHQ_KMONAD_REPO=$(ghq list -p "github.com/kmonad/kmonad")
-		# fi
-		#
+		# make sure kmonad repo exists in GHQ
+		local GHQ_KMONAD_REPO
+		GHQ_KMONAD_REPO=$(ghq list -p "github.com/kmonad/kmonad")
+		if test -z "$GHQ_KMONAD_REPO"; then
+			ghq get -p git@github.com:x-motemen/ghq.git
+			GHQ_KMONAD_REPO=$(ghq list -p "github.com/kmonad/kmonad")
+		fi
+
 		# arch="$(get-arch)"
 		# github_user=$(git config github.user)
 		#
@@ -119,22 +122,18 @@ function kmonad_run_new() {
 		# if is-mac; then
 		# 	echo "BUILD KMONAD MAC..."
 		# 	# macos_install_dext # TODO: needs testing first
-		#
 		# 	# if test "$arch" = 'a64'; then
 		# 	#     stack build --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
 		# 	# else
 		# 	#     stack build --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
 		# 	# fi
-		#
 		# else
 		# 	echo "BUILD KMONAD LINUX..."
 		# 	# stack install # Check `stack path`. Should install to `$USER/.local/bin`.
 		# 	# or
 		# 	# aur: https://aur.archlinux.org/packages/kmonad-bin
-		#
 		# fi
-		#
-		:
+
 	}
 
 	# NOTE: INSTALL DOCS:
@@ -150,80 +149,73 @@ function kmonad_run_new() {
 			GUIX='kmonad'
 	}
 
+	function setup() {
+		# NOTE:
+		# The intention of this command would be to find all executables and
+		# ask if user wants to install or build extra additions
+		:
+	}
+
 	# Find executables
 	function get_executable() {
-		local kmo_executables exec_found local_exec_found selected_executable kmo_package kmo_local_bin
+		local exec_found selected_executable kmo_packages
 
 		# check for executables
-		kmo_executables=($(which -a kmonad))
-		if [ $? -eq 0 ]; then
-			exec_found='yes'
-		else
-			exec_found='no'
-		fi
+		kmo_packages=($(which -a kmonad))
+		exec_found=$?
 
-		if is-mac; then
-			if test "$exec_found" = "yes"; then
-				# select executable
-				selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${kmo_executables[@]}")"
-			else
-				# build and select executable
+		# NOTE: AAAAAA not exec found
+
+		# FIX: implement this new and better logic structure.
+		# if ! exec found
+		#   if is-mac
+		#   if is-linux
+		#     has local or not?
+		# fi
+
+		# macos
+		if is-mac && [ ! "$exec_found" ]; then
+			if confirm --bool --ppid=$$ -- "No executable found! No packages for MacOS - Do you want to build from source?"; then
 				build_kmonad
-				kmo_executables=($(which -a kmonad))
-				selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${kmo_executables[@]}")"
 			fi
 		fi
 
+		# TEST: use --label flag for choose option to map the tty listed value to a shorter key
+
+		# linux
 		if is-linux; then
-			# TODO: if
-			# 1. no .local/bin binary AND
-			# 2. no package found via `which kmonad`
+			if ! "$exec_found"; then
+				install_choices="$(
+					choose-option --multi \
+						--question="No kmonad command was found - Select if you want to build and/or try to install from packages." \
+						build_from_source install_from_package
+				)"
 
-			kmo_local_bin=($(echo kmo_executables | "$HOME/.local/bin/kmonad"))
-			if [ $? -eq 0 ]; then
-				local_exec_found='yes'
+				# FIX: i need to loop install_choices OR use mapfile so that I can
+				# access keys
+				# 1. if install_from_package
+				# 2. if build_from_source
+
+				# NOTE: BBBBBB not exec found
+
+			elif [ "$exec_found" ] && [ ! $(echo kmo_packages | grep "$HOME/.local/bin/kmonad") ]; then
+				echo "Found kmonad command under packages *BUT NO* local build(s)."
+				if confirm --bool --ppid=$$ -- "Do you ALSO want to build kmonad (yes/no)"; then
+					# 	build_kmonad
+					:
+				fi
+
 			else
-				local_exec_found='no'
-			fi
-
-			kmo_package=$(which kmonad)
-			if [ $? -eq 0 ]; then
-				exec_found='yes'
-			else
-				exec_found='no'
-			fi
-
-			if test "$exec_found" = no; then
-				echo "No kmonad command found"
-				echo "Build || install package (yes/no)"
-				# TODO: multiple select install/build
-				# choose-option --question='What is your response?' -- a b c
-
-			elif test "$exec_found" = "yes" -a "$local_exec_found" = "no"; then
-				echo "Found kmonad command under packages"
-				echo "Do you want to build kmonad (yes/no)"
-				# if ! confirm --bool --ppid=$$ -- "Does this repository house your Reaper configuration? [$reaperConfig]"; then
-				# 	reaperConfig=''
-				# fi
-
-			elif test "$exec_found" = "yes" -a "$local_exec_found" = "yes"; then
 				echo "Found kmonad command, including local builds"
-				# TODO: move this to the end and pass it a `exec_selection_pool`
-				selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${kmo_executables[@]}")"
-
 			fi
-
-			# # install_kmonad_linux_packages
-			# if test "$exec_found" = "yes"; then
-			# 	selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${local_bin_exec_path[@]}")"
-			# else
-			# 	build_kmonad
-			# 	kmo_executables=($(which -a kmonad))
-			# 	selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${kmo_executables[@]}")"
-			# fi
-
 		fi
 
+		# Finally select an executable and return
+		kmo_packages=($(which -a kmonad))
+
+		# TODO: need to attach the version number to each selectable, so that it is
+		# clear which version is being used.
+		selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${kmo_packages[@]}")"
 		echo "$selected_executable"
 	}
 
