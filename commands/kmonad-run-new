@@ -77,11 +77,11 @@ function kmonad_run_new() (
 	# =================================
 	# Helpers
 
-  # Do I need to handle the `kext` case? No, because it wouldn't be possible to
-  # get new macintosh machines with such an old OS, in those cases I would just
-  # run linux on those computers.
+	# Do I need to handle the `kext` case? No, because it wouldn't be possible to
+	# get new macintosh machines with such an old OS, in those cases I would just
+	# run linux on those computers.
 	function macos_install_dext() {
-	  local dext_path dext_exists
+		local dext_path dext_exists
 
 		dext_path="$GHQ_KMONAD_REPO/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/dist/Karabiner-DriverKit-VirtualHIDDevice-1.15.0.dmg"
 
@@ -90,7 +90,7 @@ function kmonad_run_new() (
 		if test -z "$dext_exists"; then
 			sudo installer -pkg "$dext_path" -target /Applications
 		else
-		  # TODO: replace with dorothy echo
+			# TODO: replace with dorothy echo
 			echo-style --green "dext v1.15.0 already installed"
 		fi
 
@@ -126,6 +126,9 @@ function kmonad_run_new() (
 		# stack clean -> completely reset build
 		if is-mac; then
 			echo "BUILD KMONAD MAC..."
+
+			# local is_apple_silicone=$(test)
+
 			# if test "$arch" = 'a64'; then
 			#     stack build --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
 			# else
@@ -134,13 +137,11 @@ function kmonad_run_new() (
 
 			# Activate dext
 			# macos_install_dext
-		else
+
+		elif is-linux; then
 			echo "BUILD KMONAD LINUX..."
 			# stack install # Check `stack path`. Should install to `$LOCAL_BIN_DIR`.
-			# or
-			# aur: https://aur.archlinux.org/packages/kmonad-bin
 		fi
-
 	}
 
 	# NOTE: INSTALL DOCS:
@@ -150,10 +151,11 @@ function kmonad_run_new() (
 	# https://github.com/kmonad/kmonad/blob/master/doc/installation.md#void-linux
 	# https://github.com/kmonad/kmonad/blob/master/doc/installation.md#gnu-guix
 	function install_kmonad_from_packages() {
-		setup-util --name='kmonad' --cli='kmonad' --order='aur xbps guix' \
-			AUR='kmonad-bin' \
-			XBPS='kmonad' \
-			GUIX='kmonad'
+		echo "install_kmonad_from_packages"
+		# setup-util --name='kmonad' --cli='kmonad' --order='aur xbps guix' \
+		# 	AUR='kmonad-bin' \
+		# 	XBPS='kmonad' \
+		# 	GUIX='kmonad'
 	}
 
 	function install_kmonad() {
@@ -162,40 +164,40 @@ function kmonad_run_new() (
 		kmo_packages=($(which -a kmonad))
 		exec_found=$?
 
+		# TODO: how to handle cases when user aborts/ don't select anything.
+
 		if is-mac && [ ! "$exec_found" ]; then
 			if confirm --bool --ppid=$$ -- \
 				"No executable found! No packages for MacOS - Do you want to build from source?"; then
-				echo ">> build_kmonad"
-				# build_kmonad
+				build_kmonad
 			fi
 		fi
 
+		# if test "x" = "x"; then
 		if is-linux; then
-			if ! "$exec_found"; then
-				# TEST: use --label flag for choose option to map the tty listed value to a shorter key
+			if [ ! $exec_found ]; then
 				install_choices="$(
 					choose-option --multi \
-						--question="No kmonad command was found - Select if you want to build and/or try to install from packages." \
-						install_from_package build_from_source
+						--question="No kmonad command was found - Select if you want to build and/or try to install from packages. (Use <space> to select.)" \
+						-- "install_from_package" "build_from_source"
 				)"
 				for opt in $install_choices; do
 					if test "$opt" = "install_from_package"; then
-						echo ">> install_kmonad_from_packages"
-						# install_kmonad_from_packages
+						install_kmonad_from_packages
 					elif test "$opt" = "build_from_source"; then
-						echo ">> build_kmonad"
-						# build_kmonad
+						build_kmonad
 					fi
 				done
-
-			elif [ "$exec_found" ] && [ ! "$(echo kmo_packages | grep -q "$LOCAL_BIN_DIR/kmonad")" ]; then
-				if confirm --bool --ppid=$$ -- "Found kmonad command but NO local build(s) - Do you ALSO want to build kmonad (yes/no)"; then
-					echo ">> build_kmonad"
-					# build_kmonad
+			elif [ "$exec_found" ] && [ ! "$(echo "${kmo_packages[@]}" | grep "$LOCAL_BIN_DIR/kmonad")" ]; then
+				if confirm --bool --ppid=$$ -- "Found kmonad PACKAGE - Do you ALSO want to build kmonad from source"; then
+					build_kmonad
+				fi
+			else
+				if confirm --bool --ppid=$$ -- "Found kmonad LOCAL BUILD - Do you ALSO want to install package?"; then
+					install_kmonad_from_packages
 				fi
 			fi
 		fi
-
 	}
 
 	function get_select_executable() {
@@ -228,8 +230,8 @@ function kmonad_run_new() (
 		echo "$SELECTED_HARDWARE"
 	}
 
-  # TODO: im probably going to have to make this a bit more dynamic to handle
-  # mix between layouts and mac vs linux.
+	# TODO: im probably going to have to make this a bit more dynamic to handle
+	# mix between layouts and mac vs linux.
 	function compile_layout() {
 		local SELECTED_HARDWARE=$1
 
@@ -251,7 +253,7 @@ function kmonad_run_new() (
 
 		input="${defcfg_input_str[$SELECTED_HARDWARE]}"
 
-    # TODO: this needs to be dynamic for mac/linux
+		# TODO: this needs to be dynamic for mac/linux
 		output="kext"
 
 		fallthrough=false
@@ -315,7 +317,7 @@ function kmonad_run_new() (
 		echo "write layout -> todo..."
 	}
 
-  # kept just to supress some lsp messages
+	# kept just to supress some lsp messages
 	function dummy() {
 		macos_install_dext
 		build_kmonad
@@ -333,7 +335,7 @@ function kmonad_run_new() (
 	elif test "$action" = "help"; then
 		help "<action> must be provided."
 	elif test "$action" = "install"; then
-		install
+		install_kmonad
 	elif test "$action" = "run"; then
 		run
 	elif test "$action" = 'cat'; then
