@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-# @todo
-#   - use $KMO_LAYOUT_DIR > if exists, else check in config/kmonad
-#   - add dorothy help file.
-#   - dorothy flags while
-
 # TODO: rename this command to `setup-kmonad`
 
 # # ensure valid layout path
@@ -74,8 +69,9 @@ function kmonad_run_new() {
 	# 	'-c' | '--cat') action='cat' ;;
 	# 	'-w' | '--write') action='write' ;;
 	# 	'-r' | '--run') action='run' ;;
-	# 	# custom config path
-	# 	#
+	# 	# use layout @ path
+	# 	# use config @ path
+	# 	# use executable @ path
 	# 	'--'*) help "An unrecognised flag was provided: $item" ;;
 	# 	*) help "An unrecognised argument was provided: $item" ;;
 	# 	esac
@@ -108,36 +104,37 @@ function kmonad_run_new() {
 	}
 
 	function build_kmonad() {
-		# make sure kmonad repo exists in GHQ
-		local GHQ_KMONAD_REPO
-		GHQ_KMONAD_REPO=$(ghq list -p "github.com/kmonad/kmonad")
-		if test -z "$GHQ_KMONAD_REPO"; then
-			ghq get -p git@github.com:x-motemen/ghq.git
-			GHQ_KMONAD_REPO=$(ghq list -p "github.com/kmonad/kmonad")
-		fi
-
-		arch="$(get-arch)"
-		github_user=$(git config github.user)
-
-		# stack clean -> completely reset build
-		if is-mac; then
-			echo "BUILD KMONAD MAC..."
-			# macos_install_dext # TODO: needs testing first
-
-			# if test "$arch" = 'a64'; then
-			#     stack build --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
-			# else
-			#     stack build --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
-			# fi
-
-		else
-			echo "BUILD KMONAD LINUX..."
-			# stack install # Check `stack path`. Should install to `$USER/.local/bin`.
-			# or
-			# aur: https://aur.archlinux.org/packages/kmonad-bin
-
-		fi
-
+		# # make sure kmonad repo exists in GHQ
+		# local GHQ_KMONAD_REPO
+		# GHQ_KMONAD_REPO=$(ghq list -p "github.com/kmonad/kmonad")
+		# if test -z "$GHQ_KMONAD_REPO"; then
+		# 	ghq get -p git@github.com:x-motemen/ghq.git
+		# 	GHQ_KMONAD_REPO=$(ghq list -p "github.com/kmonad/kmonad")
+		# fi
+		#
+		# arch="$(get-arch)"
+		# github_user=$(git config github.user)
+		#
+		# # stack clean -> completely reset build
+		# if is-mac; then
+		# 	echo "BUILD KMONAD MAC..."
+		# 	# macos_install_dext # TODO: needs testing first
+		#
+		# 	# if test "$arch" = 'a64'; then
+		# 	#     stack build --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+		# 	# else
+		# 	#     stack build --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+		# 	# fi
+		#
+		# else
+		# 	echo "BUILD KMONAD LINUX..."
+		# 	# stack install # Check `stack path`. Should install to `$USER/.local/bin`.
+		# 	# or
+		# 	# aur: https://aur.archlinux.org/packages/kmonad-bin
+		#
+		# fi
+		#
+		:
 	}
 
 	# NOTE: INSTALL DOCS:
@@ -155,69 +152,79 @@ function kmonad_run_new() {
 
 	# Find executables
 	function get_executable() {
-		local KMO_EXECUTABLE
+		local kmo_executables exec_found local_exec_found selected_executable kmo_package kmo_local_bin
 
-		if ! command-exists kmonad; then
-			if is-mac; then
-
-				:
-			else
-				:
-			fi
-		fi
-
-		# NOTE: if doesn't exist need to build on mac
-		local_bin_exec_path=($(find $LOCAL_BIN_DIR | grep "kmonad"))
-
-		# echo "MACOS: local bin grep exit code: $?"
-		local local_bin_found=''
+		# check for executables
+		kmo_executables=($(which -a kmonad))
 		if [ $? -eq 0 ]; then
-			local_bin_found='yes'
+			exec_found='yes'
 		else
-			local_bin_found='no'
+			exec_found='no'
 		fi
 
 		if is-mac; then
-			if test "$local_bin_found" = "yes"; then
-				KMO_EXECUTABLE="$(choose-option --confirm --question='Select executable name.' -- "${local_bin_exec_path[@]}")"
+			if test "$exec_found" = "yes"; then
+				# select executable
+				selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${kmo_executables[@]}")"
 			else
-				# FIX: build for mac here
-				:
+				# build and select executable
+				build_kmonad
+				kmo_executables=($(which -a kmonad))
+				selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${kmo_executables[@]}")"
 			fi
+		fi
 
-		else
-
+		if is-linux; then
 			# TODO: if
 			# 1. no .local/bin binary AND
 			# 2. no package found via `which kmonad`
 
-			# TEST: since there can be multiple occurences of a command on linux,
-			# I can use `which -a`
-			#
-			# NOTE: `which -a | grep "$HOME/.local/bin/kmonad`
-			# can be used to capture all local builds
-			#
-			# command_name="your_command_name"
-			# while IFS= read -r path; do
-			# 	echo "Command '$command_name' found at: $path"
-			# done < <(which -a "$command_name")
-
-			KMO_PACKAGE=$(which kmonad)
-
-			# install_kmonad_linux_packages
-			if test "$local_bin_found" = "yes"; then
-				KMO_EXECUTABLE="$(choose-option --confirm --question='Select executable name.' -- "${local_bin_exec_path[@]}")"
+			kmo_local_bin=($(echo kmo_executables | "$HOME/.local/bin/kmonad"))
+			if [ $? -eq 0 ]; then
+				local_exec_found='yes'
 			else
-				# FIX: build for Linux here
-				:
+				local_exec_found='no'
 			fi
 
-			# TODO: check if an executable exists under local/bin
-			# Do you want to build kmonad
+			kmo_package=$(which kmonad)
+			if [ $? -eq 0 ]; then
+				exec_found='yes'
+			else
+				exec_found='no'
+			fi
 
-			:
+			if test "$exec_found" = no; then
+				echo "No kmonad command found"
+				echo "Build || install package (yes/no)"
+				# TODO: multiple select install/build
+				# choose-option --question='What is your response?' -- a b c
+
+			elif test "$exec_found" = "yes" -a "$local_exec_found" = "no"; then
+				echo "Found kmonad command under packages"
+				echo "Do you want to build kmonad (yes/no)"
+				# if ! confirm --bool --ppid=$$ -- "Does this repository house your Reaper configuration? [$reaperConfig]"; then
+				# 	reaperConfig=''
+				# fi
+
+			elif test "$exec_found" = "yes" -a "$local_exec_found" = "yes"; then
+				echo "Found kmonad command, including local builds"
+				# TODO: move this to the end and pass it a `exec_selection_pool`
+				selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${kmo_executables[@]}")"
+
+			fi
+
+			# # install_kmonad_linux_packages
+			# if test "$exec_found" = "yes"; then
+			# 	selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${local_bin_exec_path[@]}")"
+			# else
+			# 	build_kmonad
+			# 	kmo_executables=($(which -a kmonad))
+			# 	selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${kmo_executables[@]}")"
+			# fi
+
 		fi
-		echo "$KMO_EXECUTABLE"
+
+		echo "$selected_executable"
 	}
 
 	function get_select_hardware() {
@@ -273,6 +280,9 @@ function kmonad_run_new() {
 			# FIX: rewrite this as a `continue` statement
 			# I wanted literal match here because layers ending with `~.kbd` are ignored
 			# Do this instead with a [if match xyz then continue..]
+			# if test "$(basename "$f")" = "_"; then
+			# 	continue
+			# fi
 			if [[ ! $filename =~ "~.kbd" ]]; then
 				cat "$f"
 			fi
