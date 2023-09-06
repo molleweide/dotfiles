@@ -204,20 +204,20 @@ HOMEBREW_SLOW_FORMULAS=(
 # xld
 # calibre
 HOMEBREW_CASKS=(
-  'obs'
-  'gimp'
-    'timer'
-    'alinoftimer'
-    'michaelvillar-timer'
-    'breaktimer'
-    'minitimer'
-    '1password'
+	'obs'
+	'gimp'
+	'timer'
+	'alinoftimer'
+	'michaelvillar-timer'
+	'breaktimer'
+	'minitimer'
+	'1password'
 	'aerial'
 	'alacritty'
 	'appflowy'
 	'autodesk-fusion360'
 	'docker'
-  # 'fig'
+	# 'fig'
 	'syncthing'
 	'brave-browser'
 	'dmenu-mac'
@@ -396,4 +396,8 @@ APT_INSTALL=(
 	'vim'
 	'tmux'
 	'ranger'
+)
+
+HASKEL_INSTALL=(
+  'yesod-bin'
 )

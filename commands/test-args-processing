@@ -5,6 +5,12 @@
 function testing_args() (
 	source "$DOROTHY/sources/bash.bash"
 
+  if is-apple-silicon; then
+    echo "silocon"
+  else
+    echo "intle"
+  fi
+
 	# default values
 	local item='' items=() capture='' option_timeout='' option_multi='no'
 

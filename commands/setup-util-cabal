@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# https://packages.debian.org/sid/amd64/curl/filelist
+# /usr/bin/curl
+
+# https://repology.org/project/curl/versions
+
+function setup-util-cabal() (
+	source "$DOROTHY/sources/bash.bash"
+
+	# improve performance
+	if test "$*" = '--quiet' && command-exists curl; then
+		return 0
+	fi
+
+	# # setup
+	# local options=(
+	# 	--cli='curl'
+	# 	"$@"
+	# 	APK='curl' # ALPINE
+	# 	APT='curl' # UBUNTU
+	# 	AUR='curl' # ARCH
+	# 	BREW='curl'
+	# 	EMERGE='net-misc/curl' # GENTOO
+	# 	NIX='nixpkgs.curl'
+	# 	RPM='curl'   # FEDORA
+	# 	URPMI='curl' # MAGEIA
+	# 	WINGET='cURL'
+	# 	XBPS='curl'   # VOID
+	# 	ZYPPER='curl' # SUSE
+	# )
+	# setup-util "${options[@]}"
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	setup-util-cabal "$@"
+fi

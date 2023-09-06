@@ -81,19 +81,18 @@ function kmonad_run_new() (
 	# get new macintosh machines with such an old OS, in those cases I would just
 	# run linux on those computers.
 	function macos_install_dext() {
-		local dext_path dext_exists
-
-		dext_path="$GHQ_KMONAD_REPO/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/dist/Karabiner-DriverKit-VirtualHIDDevice-1.15.0.dmg"
+		local GHQ_KMONAD_REPO=$1 dext_path='' dext_exists=''
 
 		dext_exists=$(defaults read /Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/Info.plist CFBundleVersion | grep 1.15.0)
 
 		if test -z "$dext_exists"; then
+			dext_path="$GHQ_KMONAD_REPO/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/dist/Karabiner-DriverKit-VirtualHIDDevice-1.15.0.dmg"
 			sudo installer -pkg "$dext_path" -target /Applications
 		else
-			# TODO: replace with dorothy echo
-			echo-style --green "dext v1.15.0 already installed"
+			echo-style --g3 "dext v1.15.0 already installed"
 		fi
 
+		echo-style --g3 "Activating dext to be used with kmonad"
 		"/Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Manager" activate
 	}
 
@@ -104,44 +103,68 @@ function kmonad_run_new() (
 	}
 
 	# NOTE: kmonad build docs [ https://github.com/kmonad/kmonad/blob/master/doc/installation.md#compilation ]
+	#
+	# TODO: look at setup-util-gocryptfs
+	#
 	function build_kmonad() {
 		# make sure kmonad repo exists in GHQ
-		local GHQ_KMONAD_REPO
+		local GHQ_KMONAD_REPO=''
 
-		# move this out to top/globals
+		# TODO: move this up into the get_kmo_path function.
+		# >>> convert this into a more generalized function for getting the
+		# path of a dir, and if it doesn't exist, then clone it.
 		GHQ_KMONAD_REPO=$(get_kmo_path)
-
 		if test -z "$GHQ_KMONAD_REPO"; then
-			ghq get -p git@github.com:x-motemen/ghq.git
+			ghq get -p git@github.com:kmonad/kmonad.git
 			GHQ_KMONAD_REPO=$(ghq list -p "github.com/kmonad/kmonad")
 		fi
 
-		# TODO: verify installed!!
-		# GHC
-		# Stack
+		# etup-util-haskell
+		if ! command-exists stack; then
+
+		  echo "Building kmonad has some Haskell dependencies. Setting up Haskell now.."
+			setup-haskell
+		fi
 
 		arch="$(get-arch)"
-		github_user=$(git config github.user)
+		# github_user=$(git config github.user)
+
+		pushd $GHQ_KMONAD_REPO/kmonad >/dev/null 2>&1
 
 		# stack clean -> completely reset build
 		if is-mac; then
-			echo "BUILD KMONAD MAC..."
-
+			echo "BUILD KMONAD MAC @ $PWD"
 			# local is_apple_silicone=$(test)
 
-			# if test "$arch" = 'a64'; then
-			#     stack build --flag kmonad:dext --arch=aarch64 --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
-			# else
-			#     stack build --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
-			# fi
+			local extra_include="c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include"
+
+			# note: older macs using [ kext ]
+			# stack build --flag kmonad:kext --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
+
+			# arm / intel
+			if test "$arch" = 'a64'; then
+				# stack build --flag kmonad:dext \
+				#             --arch=aarch64 \
+				#             --extra-include-dirs="$extra_include"
+				:
+			else
+				# stack build --flag kmonad:dext \
+				#             --extra-include-dirs="$extra_include"
+				:
+			fi
 
 			# Activate dext
-			# macos_install_dext
+			# macos_install_dext "$GHQ_KMONAD_REPO"
 
 		elif is-linux; then
-			echo "BUILD KMONAD LINUX..."
+			echo "BUILD KMONAD LINUX @ $PWD"
 			# stack install # Check `stack path`. Should install to `$LOCAL_BIN_DIR`.
 		fi
+
+		# TODO: copy binary to $HOME/.local/bin
+
+		popd >/dev/null 2>&1
+
 	}
 
 	# NOTE: INSTALL DOCS:
@@ -338,7 +361,7 @@ function kmonad_run_new() (
 
 	# kept just to supress some lsp messages
 	function dummy() {
-		macos_install_dext
+		macos_install_dext "arst"
 		build_kmonad
 		install_kmonad_from_packages
 	}
