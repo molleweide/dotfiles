@@ -80,7 +80,7 @@ function kmonad_run_new() (
 	# Do I need to handle the `kext` case? No, because it wouldn't be possible to
 	# get new macintosh machines with such an old OS, in those cases I would just
 	# run linux on those computers.
-	function macos_install_dext() {
+	function macos_setup_activate_dext() {
 		local GHQ_KMONAD_REPO=$1 dext_path='' dext_exists=''
 
 		dext_exists=$(defaults read /Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/Info.plist CFBundleVersion | grep 1.15.0)
@@ -95,8 +95,6 @@ function kmonad_run_new() (
 		echo-style --g3 "Activating dext to be used with kmonad"
 		"/Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Manager" activate
 	}
-
-	# TODO: check if the kmonad repo exists under GHQ
 
 	function get_kmo_path() {
 		ghq list -p "kmonad/kmonad"
@@ -122,14 +120,14 @@ function kmonad_run_new() (
 		# etup-util-haskell
 		if ! command-exists stack; then
 
-		  echo "Building kmonad has some Haskell dependencies. Setting up Haskell now.."
+			echo "Building kmonad has some Haskell dependencies. Setting up Haskell now.."
 			setup-haskell
 		fi
 
 		arch="$(get-arch)"
 		# github_user=$(git config github.user)
 
-		pushd $GHQ_KMONAD_REPO/kmonad >/dev/null 2>&1
+	 	pushd $GHQ_KMONAD_REPO/kmonad >/dev/null 2>&1
 
 		# stack clean -> completely reset build
 		if is-mac; then
@@ -154,14 +152,17 @@ function kmonad_run_new() (
 			fi
 
 			# Activate dext
-			# macos_install_dext "$GHQ_KMONAD_REPO"
+			# macos_setup_activate_dext "$GHQ_KMONAD_REPO"
 
 		elif is-linux; then
 			echo "BUILD KMONAD LINUX @ $PWD"
-			# stack install # Check `stack path`. Should install to `$LOCAL_BIN_DIR`.
+			# stack build
 		fi
 
-		# TODO: copy binary to $HOME/.local/bin
+    # copy binary to XDG_BIN_HOME
+    count=$(find "$XDG_BIN_HOME" -type f -name "kmonad" | grep -c "kmonad")
+    echo "copying bin to $XDG_BIN_HOME/dorothy/kmonad-$count"
+		# cp -i "$(stack path --local-install-root)/bin/kmonad" "$XDG_BIN_HOME/dorothy/kmonad-$count"
 
 		popd >/dev/null 2>&1
 
@@ -315,6 +316,13 @@ function kmonad_run_new() (
 		echo "$layout_temp_file"
 	}
 
+	function get_necessary_parts() {
+		SELECTED_HARDWARE=$(get_select_hardware)
+		SELECTED_LAYOUT_FILE=$(get_compiled_layout_file "$SELECTED_HARDWARE")
+		KMO_EXECUTABLE=$(get_select_executable)
+		echo "$KMO_EXECUTABLE" "$SELECTED_LAYOUT_FILE"
+	}
+
 	# =================================
 	# Main functions
 
@@ -336,13 +344,6 @@ function kmonad_run_new() (
 		echo-segment --g2="$title"
 	}
 
-	function get_necessary_parts() {
-		SELECTED_HARDWARE=$(get_select_hardware)
-		SELECTED_LAYOUT_FILE=$(get_compiled_layout_file "$SELECTED_HARDWARE")
-		KMO_EXECUTABLE=$(get_select_executable)
-		echo "$KMO_EXECUTABLE" "$SELECTED_LAYOUT_FILE"
-	}
-
 	function dry_run() {
 		echo-style --bold="Dry running kmonad now..."
 		parts=($(get_necessary_parts))
@@ -361,7 +362,7 @@ function kmonad_run_new() (
 
 	# kept just to supress some lsp messages
 	function dummy() {
-		macos_install_dext "arst"
+		macos_setup_activate_dext "arst"
 		build_kmonad
 		install_kmonad_from_packages
 	}
