@@ -184,7 +184,6 @@ function kmonad_run_new() (
 	}
 
 	function install_kmonad() {
-		# set -x
 		local status selected_executable kmo_packages
 
 		eval_capture --statusvar=status --stdoutvar=kmo_packages -- which -a kmonadxx
@@ -238,17 +237,13 @@ function kmonad_run_new() (
 				fi
 			fi
 		fi
-		# set +x
 	}
 
 	function get_select_executable() {
-		# kmo_packages=($(which -a kmonad))
 		local status kmo_packages=''
 		eval_capture --statusvar=status --stdoutvar=kmo_packages -- which -a kmonad
 
 		if test "$status" -eq 0; then
-			# TODO: need to attach the version number to each selectable, so that it is
-			# clear which version is being used.
 			selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${kmo_packages[@]}")"
 			echo "$selected_executable"
 		else
