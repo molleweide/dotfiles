@@ -4,23 +4,30 @@
 
 function setup_util_ghcup() (
 
+	# improve performance
+	if test "$*" = '--quiet' && command-exists ghcup; then
+		return 0
+	fi
 
-  # Please ensure the following distro packages are installed before continuing
-  # (you can exit ghcup and return at any time): build-essential curl
-  # libffi-dev libffi8ubuntu1 libgmp-dev libgmp10 libncurses-dev libncurses5
-  # libtinfo5
+	# Please ensure the following distro packages are installed before continuing
+	# (you can exit ghcup and return at any time):
+	# libffi-dev libffi8ubuntu1 libgmp-dev libgmp10 libncurses-dev libncurses5
+	# libtinfo5
 
+  setup-util-curl
+	setup-util --cli='build-essential' APT='build-essential'
+	setup-util --cli='libffi-dev' APT='libffi-dev'
+	setup-util --cli='libffi8ubuntu1' APT='libffi8ubuntu1'
+	setup-util --cli='libgmp-dev' APT='libgmp-dev'
+	setup-util --cli='libgmp10' APT='libgmp10'
+	setup-util --cli='libncurses-dev' APT='libncurses-dev'
+	setup-util --cli='libncurses5' APT='libncurses5'
+	setup-util --cli='libtinfo5' APT='libtinfo5'
 
-	# TODO: check if ghcup exists
-	if ! command-exists ghcup; then
-
-		if command-exists curl; then
-			curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
-		else
-			echo-error "Failed to install GHCUp. Command [curl] not found."
-		fi
+	if command-exists curl; then
+		curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 	else
-		echo "GHCup EXISTS"
+		echo-error "Failed to install GHCUp. Command [curl] not found."
 	fi
 )
 
