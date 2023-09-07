@@ -125,7 +125,7 @@ function kmonad_run_new() (
 				"Building kmonad requires Haskell ecosystem? Proceed?"; then
 				setup-haskell
 			else
-				return 125 # ECANCELED 125 Operation cancelled
+				return 1 # TODO: more appropriate error code
 			fi
 		fi
 		arch="$(get-arch)"
@@ -246,9 +246,15 @@ function kmonad_run_new() (
 		else
 			if confirm --bool --ppid=$$ -- "No executable found! Do you want to proceed with installing kmonad?"; then
 				install_kmonad
+
+				# try get executable again
+				eval_capture --statusvar=status --stdoutvar=kmo_packages -- which -a kmonad
+				selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${kmo_packages[@]}")"
+				echo "$selected_executable"
+
 			else
 				echo "[should install here]" # NOTE: why isn't this echoing here??
-				return 125                   # ECANCELED 125 Operation cancelled
+				return 1                   # ECANCELED 125 Operation cancelled
 			fi
 			:
 		fi
@@ -328,22 +334,40 @@ function kmonad_run_new() (
 	}
 
 	function get_necessary_parts() {
-		SELECTED_HARDWARE=$(get_select_hardware)
-		SELECTED_LAYOUT_FILE=$(get_compiled_layout_file "$SELECTED_HARDWARE")
-		KMO_EXECUTABLE=$(get_select_executable)
-		echo "$KMO_EXECUTABLE" "$SELECTED_LAYOUT_FILE"
+	  local hardware layout_file kmo_executable
+
+		hardware=$(get_select_hardware)
+
+		layout_file=$(get_compiled_layout_file "$hardware")
+
+    local status
+		eval_capture --statusvar=status --stdoutvar=kmo_executable -- get_select_executable
+
+		if ! test "$status" -eq 0; then
+		  return 1
+		fi
+
+
+		echo "$kmo_executable" "$layout_file"
 	}
 
 	# =================================
 	# Main functions
 
 	function print_base() {
+	  local title="Print kmo base file."
 		SELECTED_HARDWARE=$(get_select_hardware)
+		echo-segment --h2="$title"
 		compile_base "$SELECTED_HARDWARE"
+		echo-segment --g2="$title"
 	}
 
+  # TODO: it would be nice to wrap each layer in a nice echo divider
 	function print_layers() {
+	  local title="Print kmo layers."
+		echo-segment --h2="$title"
 		compile_layers
+		echo-segment --g2="$title"
 	}
 
 	function print_layout() {
