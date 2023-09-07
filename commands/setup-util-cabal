@@ -16,6 +16,8 @@ function setup-util-cabal() (
 	# TODO: check if `cabal` exists
 	if ! command-exists cabal; then
 		ghcup install cabal
+
+		# TODO: install `cabal-install` as well
 	else
 		echo "CABAL EXISTS"
 	fi
