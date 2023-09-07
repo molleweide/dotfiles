@@ -4,6 +4,13 @@
 
 function setup_util_ghcup() (
 
+
+  # Please ensure the following distro packages are installed before continuing
+  # (you can exit ghcup and return at any time): build-essential curl
+  # libffi-dev libffi8ubuntu1 libgmp-dev libgmp10 libncurses-dev libncurses5
+  # libtinfo5
+
+
 	# TODO: check if ghcup exists
 	if ! command-exists ghcup; then
 
