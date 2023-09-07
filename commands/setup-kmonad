@@ -123,7 +123,8 @@ function kmonad_run_new() (
 		if ! command-exists stack; then
 			if confirm --bool --ppid=$$ -- \
 				"Building kmonad requires Haskell ecosystem? Proceed?"; then
-				setup-haskell
+				# setup-haskell
+				:
 			else
 				return 1 # TODO: more appropriate error code
 			fi
