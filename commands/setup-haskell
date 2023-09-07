@@ -111,10 +111,16 @@ function setup_haskell() (
 	# TODO: show some information about XDG.
 	# you can host your config in $HOME or $HOME/.config
 
+
+	# TODO: wrap each in a confirm question.
+
 	setup-util-ghcup
+
 	setup-util-stack
+
 	# setup-util-cabal
 
+    # cabal-install??
 
 	ghcup install ghc
 	ghcup install cabal
