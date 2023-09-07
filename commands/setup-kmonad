@@ -5,6 +5,7 @@
 # ~ check that haskell, ghc, and stack is installed
 
 function kmonad_run_new() (
+	source "$DOROTHY/sources/bash.bash"
 	# index a string in bash
 	# https://unix.stackexchange.com/questions/303960/index-a-string-in-bash
 
@@ -368,8 +369,9 @@ function kmonad_run_new() (
 
 	# =================================
 	# Arguments
+	local action=''
 
-	local action="$1"
+	action="${1-}"
 
 	if [ $# -eq 0 ]; then
 		# help "<action> must be provided."

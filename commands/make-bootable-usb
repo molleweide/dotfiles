@@ -1,6 +1,47 @@
+#!/usr/bin/env bash
+
+# >>> https://superuser.com/questions/591234/how-to-create-a-bootable-usb-from-a-bootable-iso-with-the-command-line-on-linux
+# https://www.howtogeek.com/741125/how-to-create-a-bootable-linux-live-usb-on-your-mac/
+# https://linuxize.com/post/how-to-create-a-bootable-linux-usb-drive/
+# https://linuxconfig.org/how-to-make-a-bootable-usb-from-an-iso-in-linux
+# https://linuxopsys.com/topics/make-bootable-usb-from-iso-using-linux-terminal
+
+# NOTE: MAKE BOOTABLE USB FROM ISO
+
+# TODO:
+# add selection menu that shows you list of external drives
+#
+# add various warning mechanisms so one doesn't ever overwrite large
+# HDDs
 
 
-PUT THIS PROCEEDURE INTO SCRIPT
+if is-mac; then
 
-https://www.howtogeek.com/741125/how-to-create-a-bootable-linux-live-usb-on-your-mac/
+# convert iso to dmg
+hdiutil convert /path/to/downloaded.iso -format UDRW -o /path/to/image
 
+
+# find usb with
+diskutil list
+diskutil unmountDisk /dev/diskX
+
+
+# write dmg to usb
+sudo dd if=/path/to/image.dmg of=/dev/diskX bs=1m
+
+else
+  :
+
+  # find usb drive with `lsblk`
+
+  # unmount
+  # sudo umount /dev/sdx1
+
+
+  # old dd command
+  # sudo dd bs=4M if=Downloads/ubuntu-19.04-desktop-amd64.iso of=/dev/sdb conv=fdatasync
+
+  #recent dd command
+  # sudo dd bs=4M if=Downloads/ubuntu-19.04-desktop-amd64.iso of=/dev/sdb conv=fdatasync status=progress
+
+fi
