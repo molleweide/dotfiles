@@ -127,7 +127,7 @@ function kmonad_run_new() (
 		arch="$(get-arch)"
 		# github_user=$(git config github.user)
 
-	 	pushd $GHQ_KMONAD_REPO/kmonad >/dev/null 2>&1
+		pushd $GHQ_KMONAD_REPO/kmonad >/dev/null 2>&1
 
 		# stack clean -> completely reset build
 		if is-mac; then
@@ -159,9 +159,9 @@ function kmonad_run_new() (
 			# stack build
 		fi
 
-    # copy binary to XDG_BIN_HOME
-    count=$(find "$XDG_BIN_HOME" -type f -name "kmonad" | grep -c "kmonad")
-    echo "copying bin to $XDG_BIN_HOME/dorothy/kmonad-$count"
+		# copy binary to XDG_BIN_HOME
+		count=$(find "$XDG_BIN_HOME" -type f -name "kmonad" | grep -c "kmonad")
+		echo "copying bin to $XDG_BIN_HOME/dorothy/kmonad-$count"
 		# cp -i "$(stack path --local-install-root)/bin/kmonad" "$XDG_BIN_HOME/dorothy/kmonad-$count"
 
 		popd >/dev/null 2>&1
@@ -183,6 +183,7 @@ function kmonad_run_new() (
 	}
 
 	function install_kmonad() {
+		set -x
 		local exec_found selected_executable kmo_packages
 
 		kmo_packages=($(which -a kmonad))
@@ -195,10 +196,8 @@ function kmonad_run_new() (
 				"No executable found! No packages for MacOS - Do you want to build from source?"; then
 				build_kmonad
 			fi
-		fi
-
-		# if test "x" = "x"; then
-		if is-linux; then
+			# elif test "x" = "x"; then
+		elif is-linux; then
 			if [ ! $exec_found ]; then
 				install_choices="$(
 					choose-option --multi \
@@ -222,6 +221,7 @@ function kmonad_run_new() (
 				fi
 			fi
 		fi
+		set +x
 	}
 
 	function get_select_executable() {
@@ -375,6 +375,7 @@ function kmonad_run_new() (
 	if [ $# -eq 0 ]; then
 		# help "<action> must be provided."
 		dry_run
+
 	elif test "$action" = "help"; then
 		help "<action> must be provided."
 
@@ -388,15 +389,19 @@ function kmonad_run_new() (
 
 	elif test "$action" = 'base'; then
 		print_base
+
 	elif test "$action" = 'layers'; then
 		print_layers
+
 	elif test "$action" = 'layout'; then
 		print_layout
 
 	elif test "$action" = 'write'; then
 		write_layout_to_file
+
 	elif test "$action" = 'dummy_plummy_xxxyy'; then
 		dummy
+
 	fi
 )
 
