@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
 
 # TODO:
-# ~ rename this command to `setup-kmonad`
-# ~ check that haskell, ghc, and stack is installed
+# ~ ??
+
+# ??????
+# index a string in bash
+# https://unix.stackexchange.com/questions/303960/index-a-string-in-bash
 
 function kmonad_run_new() (
 	source "$DOROTHY/sources/bash.bash"
 	require_array 'mapfile'
-	# index a string in bash
-	# https://unix.stackexchange.com/questions/303960/index-a-string-in-bash
 
 	# Paths
 	KMONAD_CONFIG_DIR="$XDG_CONFIG_HOME/kmonad"
-	LOCAL_BIN_DIR="$HOME/.local/bin"
+	KARABINER_APP="/Applications/.Karabiner-VirtualHIDDevice-Manager.app"
 
 	# HACK: global vars???
 	# SELECTED_HARDWARE
@@ -35,6 +36,9 @@ function kmonad_run_new() (
 		fi
 		return 22 # EINVAL 22 Invalid argument
 	}
+
+	# =================================
+	# Args processing
 
 	# # TODO: how should i handle arguments.
 	# #
@@ -83,9 +87,8 @@ function kmonad_run_new() (
 	# get new macintosh machines with such an old OS, in those cases I would just
 	# run linux on those computers.
 	function macos_setup_activate_dext() {
-		local GHQ_KMONAD_REPO=$1 dext_path='' dext_exists=''
-
-		dext_exists=$(defaults read /Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/Info.plist CFBundleVersion | grep 1.15.0)
+		local GHQ_KMONAD_REPO=$1 dext_path='' dext_exists='' KARABINER_APP
+		dext_exists=$(defaults read "$KARABINER_APP/Contents/Info.plist" CFBundleVersion | grep 1.15.0)
 
 		if test -z "$dext_exists"; then
 			dext_path="$GHQ_KMONAD_REPO/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/dist/Karabiner-DriverKit-VirtualHIDDevice-1.15.0.dmg"
@@ -93,9 +96,8 @@ function kmonad_run_new() (
 		else
 			echo-style --g3 "dext v1.15.0 already installed"
 		fi
-
 		echo-style --g3 "Activating dext to be used with kmonad"
-		"/Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Manager" activate
+		"$KARABINER_APP/Contents/MacOS/Karabiner-VirtualHIDDevice-Manager" activate
 	}
 
 	function get_kmo_path() {
@@ -118,36 +120,32 @@ function kmonad_run_new() (
 			ghq get -p git@github.com:kmonad/kmonad.git
 			GHQ_KMONAD_REPO=$(ghq list -p "github.com/kmonad/kmonad")
 		fi
-
-		# etup-util-haskell
 		if ! command-exists stack; then
-
-			echo "Building kmonad has some Haskell dependencies. Setting up Haskell now.."
-			setup-haskell
+			if confirm --bool --ppid=$$ -- \
+				"Building kmonad requires Haskell ecosystem? Proceed?"; then
+				setup-haskell
+			else
+				return 125 # ECANCELED 125 Operation cancelled
+			fi
 		fi
-
 		arch="$(get-arch)"
 		# github_user=$(git config github.user)
 
 		pushd $GHQ_KMONAD_REPO/kmonad >/dev/null 2>&1
-
-		# TODO: ??
-		# stack clean -> completely reset build
-
+		# TODO: stack clean -> completely reset build
 		if is-mac; then
 			echo "BUILD KMONAD MAC @ $PWD"
-
-			local extra_include="c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include"
+			local kmo_karab_include_dir="c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include"
 
 			# note: older macs using [ kext ]
 			# stack build --flag kmonad:kext --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
 
 			# arm / intel
 			if test "$arch" = 'a64'; then
-				# stack build --flag kmonad:dext --arch=aarch64 --extra-include-dirs="$extra_include"
+				# stack build --flag kmonad:dext --arch=aarch64 --extra-include-dirs="$kmo_karab_include_dir"
 				:
 			else
-				# stack build --flag kmonad:dext --extra-include-dirs="$extra_include"
+				# stack build --flag kmonad:dext --extra-include-dirs="$kmo_karab_include_dir"
 				:
 			fi
 			# macos_setup_activate_dext "$GHQ_KMONAD_REPO"
@@ -164,7 +162,8 @@ function kmonad_run_new() (
 		branch=$(git rev-parse --abbrev-ref HEAD)
 		version=$($stack_bin_executable --version | cut -d ',' -f1) # version outputs <version, commit xyz...>
 		echo "Copying bin to [$XDG_BIN_HOME/dorothy/kmonad-$count_existing-$branch.$version.$commit]"
-		# cp -i "$(stack path --local-install-root)/bin/kmonad" "$XDG_BIN_HOME/dorothy/kmonad-$count_existing"
+		# cp -i "$(stack path --local-install-root)/bin/kmonad" \
+		#       "$XDG_BIN_HOME/dorothy/kmonad-$count_existing"
 
 		popd >/dev/null 2>&1
 	}
@@ -183,14 +182,12 @@ function kmonad_run_new() (
 		# 	GUIX='kmonad'
 	}
 
+	# NOTE:
+	# QUESTIONS: am I "aborting" correctly here?
 	function install_kmonad() {
 		local status selected_executable kmo_packages
 
 		eval_capture --statusvar=status --stdoutvar=kmo_packages -- which -a kmonadxx
-		# kmo_packages=($(which -a kmonad))
-		# exec_found=$?
-
-		# TODO: how to handle cases when user aborts/ don't select anything.
 
 		if is-mac && test ! "$status" -eq 0; then
 			if confirm --bool --ppid=$$ -- \
@@ -213,7 +210,6 @@ function kmonad_run_new() (
 				if test -z "$fodder"; then
 					return 125 # ECANCELED 125 Operation cancelled
 				fi
-				# echo "${install_choices[@]}"
 				mapfile -t choices <<<"$fodder" # <( destroys stdin
 				print_line "Proceeding with these choices: ${choices[*]}"
 				# FIX: install from packages never works?!
@@ -224,7 +220,7 @@ function kmonad_run_new() (
 					build_kmonad
 				fi
 
-			elif [ "$status" -eq 0 ] && [ ! "$(echo "${kmo_packages[@]}" | grep "$LOCAL_BIN_DIR/kmonad.*")" ]; then
+			elif [ "$status" -eq 0 ] && [ ! "$(echo "${kmo_packages[@]}" | grep "$XDG_BIN_HOME/kmonad.*")" ]; then
 				if confirm --bool --ppid=$$ -- \
 					"LINUX: Found kmonad PACKAGE - Do you ALSO want to build kmonad from source"; then
 					build_kmonad
@@ -239,10 +235,11 @@ function kmonad_run_new() (
 		fi
 	}
 
+	# NOTE:
+	# QUESTIONS: am I "aborting" correctly here?
 	function get_select_executable() {
 		local status kmo_packages=''
 		eval_capture --statusvar=status --stdoutvar=kmo_packages -- which -a kmonad
-
 		if test "$status" -eq 0; then
 			selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${kmo_packages[@]}")"
 			echo "$selected_executable"
@@ -251,8 +248,7 @@ function kmonad_run_new() (
 				install_kmonad
 			else
 				echo "[should install here]" # NOTE: why isn't this echoing here??
-
-				return 125 # ECANCELED 125 Operation cancelled
+				return 125                   # ECANCELED 125 Operation cancelled
 			fi
 			:
 		fi
@@ -383,10 +379,9 @@ function kmonad_run_new() (
 	}
 
 	# =================================
-	# Arguments
-	local action=''
+	# Act
 
-	action="${1-}"
+	local action="${1-}"
 
 	if [ $# -eq 0 ]; then
 		# help "<action> must be provided."
