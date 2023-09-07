@@ -1,5 +1,6 @@
 # reload aliases
 function reload_aliases() {
+	source "$DOROTHY/sources/environment.sh"
   source $DOROTHY/user/sources/aliases.sh
   source $DOROTHY/user/sources/nvim.sh
   # source $DOROTHY/user/sources/asdf.bash
