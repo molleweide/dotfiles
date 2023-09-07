@@ -155,15 +155,15 @@ function kmonad_run_new() (
 			# stack build
 		fi
 
-		# MOVE BIN TO $XDG_BIN_HOME
-		stack_bin_executable="$(stack path --local-install-root)/bin/kmonad"
-		count_existing=$(find "$XDG_BIN_HOME" -type f -name "kmonad" | grep -c "kmonad")
-		commit=$(git rev-parse --short HEAD)
-		branch=$(git rev-parse --abbrev-ref HEAD)
-		version=$($stack_bin_executable --version | cut -d ',' -f1) # version outputs <version, commit xyz...>
-		echo "Copying bin to [$XDG_BIN_HOME/dorothy/kmonad-$count_existing-$branch.$version.$commit]"
-		# cp -i "$(stack path --local-install-root)/bin/kmonad" \
-		#       "$XDG_BIN_HOME/dorothy/kmonad-$count_existing"
+		# # MOVE BIN TO $XDG_BIN_HOME
+		# stack_bin_executable="$(stack path --local-install-root)/bin/kmonad"
+		# count_existing=$(find "$XDG_BIN_HOME" -type f -name "kmonad" | grep -c "kmonad")
+		# commit=$(git rev-parse --short HEAD)
+		# branch=$(git rev-parse --abbrev-ref HEAD)
+		# version=$($stack_bin_executable --version | cut -d ',' -f1) # version outputs <version, commit xyz...>
+		# echo "Copying bin to [$XDG_BIN_HOME/dorothy/kmonad-$count_existing-$branch.$version.$commit]"
+		# # cp -i "$(stack path --local-install-root)/bin/kmonad" \
+		# #       "$XDG_BIN_HOME/dorothy/kmonad-$count_existing"
 
 		popd >/dev/null 2>&1
 	}
@@ -212,11 +212,11 @@ function kmonad_run_new() (
 				fi
 				mapfile -t choices <<<"$fodder" # <( destroys stdin
 				print_line "Proceeding with these choices: ${choices[*]}"
+
 				# FIX: install from packages never works?!
 				if is-needle package "${choices[@]}"; then
 					install_kmonad_from_packages
-				fi
-				if is-needle build "${choices[@]}"; then
+				elif is-needle build "${choices[@]}"; then
 					build_kmonad
 				fi
 
@@ -256,7 +256,6 @@ function kmonad_run_new() (
 				echo "[should install here]" # NOTE: why isn't this echoing here??
 				return 1                   # ECANCELED 125 Operation cancelled
 			fi
-			:
 		fi
 	}
 

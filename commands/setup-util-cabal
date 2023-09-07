@@ -8,9 +8,16 @@
 function setup-util-cabal() (
 	source "$DOROTHY/sources/bash.bash"
 
-	# improve performance
-	if test "$*" = '--quiet' && command-exists curl; then
-		return 0
+	# # improve performance
+	# if test "$*" = '--quiet' && command-exists curl; then
+	# 	return 0
+	# fi
+
+	# TODO: check if `cabal` exists
+	if ! command-exists cabal; then
+		ghcup install cabal
+	else
+		echo "CABAL EXISTS"
 	fi
 
 	# # setup
