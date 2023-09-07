@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# https://github.com/golang/go/wiki/Ubuntu
+
+function setup_util_ghcup() (
+	if command-exists curl; then
+		curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+	else
+		echo-error "Failed to install GHCUp. Command [curl] not found."
+	fi
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	setup_util_ghcup "$@"
+fi

@@ -6,17 +6,41 @@
 # It makes sure that information about what repos your are using are backed
 # up properly to your dorothy user config.
 
+# TODO: fuzzy finding a specific repo in the backup file that you want to
+# restore so one doesn't have to restore all repos on a new machine at once
+# if you have eg. crappy internet.
+
 function ghm() (
 	GHQ_ROOT=$(ghq root)
-
 	GHQ_BACKUP_FILE="$DOROTHY/user/backups/ghq.bak"
+	GITHUB_USER=$(git config github.user)
+	GHQ_GH_USER_PATH="/Users/hjalmarjakobsson/code/repos/github.com/$GITHUB_USER"
+	GHQ_GITHUB="/Users/hjalmarjakobsson/code/repos/github.com"
+
+	# ======================
+	# Make sure GHQ exists
+	if ! command-exists ghq; then
+		if is-mac; then
+			brew install ghq
+		else
+			go install github.com/x-motemen/ghq@latest
+		fi
+	fi
+	# still if installing didn't work exit
+	if ! command-exists ghq; then
+		exit
+	fi
+	pattern="code/repos"
+	if [[ ! "$GHQ_ROOT" == *"$pattern"* ]]; then
+		echo "GHQ root/config hasn't been setup to [ code/repos ]. Exiting..."
+		exit
+	fi
+
+	# ======================
 
 	function testing() {
-		# Example array with duplicates
 		array=("apple" "banana" "apple" "orange" "banana")
-
 		unique_array=($(printf "%s\n" "${array[@]}" | sort -u))
-
 		echo "Original Array: ${array[*]}"
 		echo "Unique Array: ${unique_array[*]}"
 	}
@@ -62,9 +86,6 @@ function ghm() (
 	# =====================================
 	# Helpers
 
-	# TODO: replace with $HOME/
-	GHQ_GITHUB="/Users/hjalmarjakobsson/code/repos/github.com"
-
 	# this has been moved to its own command?
 	load_locate() {
 		# https://egeek.me/2020/04/18/enabling-locate-on-osx/
@@ -73,15 +94,13 @@ function ghm() (
 
 	function remove_duplicates() {
 		local array=("$1")
-
 		unique_array=($(printf "%s\n" "${array[@]}" | sort -u))
-
 		echo "${unique_array[*]}"
 	}
 
 	# ???
 	ghq_do() {
-		# ghq create "$github_user/$repo_name" || exit 1
+		# ghq create "$GITHUB_USER/$repo_name" || exit 1
 		# backup
 		:
 	}
@@ -121,6 +140,8 @@ function ghm() (
 	}
 
 	function backup() {
+		# TODO: first check and make sure that a new repo does not already exists
+		# in the backup file
 		local repo_url=$1
 		local already_prepared=$2
 
@@ -186,27 +207,6 @@ function ghm() (
 	# user can be sure that things are installed to the right location.
 	restore_repos() {
 
-		# install ghq
-		if ! command-exists ghq; then
-			if is-mac; then
-				brew install ghq
-			else
-				go install github.com/x-motemen/ghq@latest
-			fi
-		fi
-
-		# still if installing didn't work exit
-		if ! command-exists ghq; then
-			exit
-		fi
-
-		ghq_root_string=$(ghq root)
-		pattern="code/repos"
-		if [[ ! "$ghq_root_string" == *"$pattern"* ]]; then
-			echo "ghq root/config hasn't been setup to [ code/repos ]. Exiting..."
-			exit
-		fi
-
 		if [ ! -f "$GHQ_BACKUP_FILE" ]; then
 			echo "user/backups/ghq.bak doesn't exist"
 			exit 1
@@ -240,8 +240,8 @@ function ghm() (
 
 			remotes=$(git -C "$GHQ_ROOT/$line" remote -v)
 
-      # FIX: this still captures some duplicates!
-      # How do I make sure to match $line with a whitespace at the end
+			# FIX: this still captures some duplicates!
+			# How do I make sure to match $line with a whitespace at the end
 			repo_match_line_to_append_remotes=$(grep "^$line" "$GHQ_BACKUP_FILE")
 
 			echo-segment --h2="$line"
@@ -271,10 +271,11 @@ function ghm() (
 	}
 
 	function init_github_remote() {
-		local ghq_gh_user_path=$1
-		local repo_name=$2
+		local repo_name=$1
 
-		pushd $ghq_gh_user_path/$repo_name >/dev/null 2>&1
+    # FIX: look at how dorothy does pushd
+
+		pushd "$GHQ_GH_USER_PATH/$repo_name" >/dev/null 2>&1
 		echo "# $repo_name" >README.md
 		git add --all && git commit -m 'first'
 		gh repo create --source=. --private --push
@@ -289,20 +290,11 @@ function ghm() (
 		backup "$repo"
 	}
 
-	function new() {
+	function create_new_repo_for_user() {
 		repo_name=$1
-
-		# FIX: move these to the top of the `ghm` function, so I don't have to keep
-		# redoing these.
-
-		github_user=$(git config github.user)
-		ghq_gh_user_path="/Users/hjalmarjakobsson/code/repos/github.com/$github_user/"
-
-		ghq create "$github_user/$repo_name" || exit 1
-
-		backup "github.com/$github_user/$repo_name" true
-
-		init_github_remote "$ghq_gh_user_path" "$repo_name"
+		ghq create "$GITHUB_USER/$repo_name" || exit 1
+		backup "github.com/$GITHUB_USER/$repo_name" true
+		init_github_remote "$GHQ_GH_USER_PATH" "$repo_name"
 	}
 
 	function fork() {
@@ -335,28 +327,22 @@ function ghm() (
 		popd >/dev/null 2>&1
 	}
 
-	# create new nvim plugin w/ boilit
-	# TODO: needs backup
-	function nvim() {
-
+	function create_new_nvim_plugin() {
 		# initial check
+		local repo_name=$1
 
 		if ! command-exists boilit; then
 			echo "This command requires $(boilit) package." >/dev/stderr
 			return 1
 		fi
 
-		repo_name="$1.nvim"
-		github_user=$(git config github.user)
-		ghq_gh_user_path="/Users/hjalmarjakobsson/code/repos/github.com/$github_user/"
+		repo_name="$repo_name.nvim"
 
 		# SPAWN NEW PLUGIN
 		# boilit >> need to fix it so that it strips the `.nvim` string within the plugin/code
-		boilit -p "$ghq_gh_user_path" "$repo_name" || exit 1
-
-		init_github_remote "$ghq_gh_user_path" "$repo_name"
-
-		backup "github.com/$github_user/$repo_name" true
+		boilit -p "$GHQ_GH_USER_PATH" "$repo_name" || exit 1
+		init_github_remote "$GHQ_GH_USER_PATH" "$repo_name"
+		backup "github.com/$GITHUB_USER/$repo_name" true
 	}
 
 	# =====================================
@@ -371,11 +357,11 @@ function ghm() (
 	elif test "$action" = 'remove_repo'; then
 		remove_repo "${args[@]}"
 	elif test "$action" = 'nvim'; then
-		nvim "${args[@]}"
+		create_new_nvim_plugin "${args[@]}"
 	elif test "$action" = 'gp'; then
 		get_parts "${args[@]}"
 	elif test "$action" = 'new'; then
-		new "${args[@]}"
+		create_new_repo_for_user "${args[@]}"
 	elif test "$action" = 'clone'; then
 		clone "${args[@]}"
 	elif test "$action" = 'fork'; then

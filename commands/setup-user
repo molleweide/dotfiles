@@ -61,8 +61,9 @@ function setup_tmux_user() {
 }
 
 function setup_neorg_notes() {
-	# clone my notes basically
-	git clone git@github.com:molleweide/neorg_user.git "$HOME/neorg"
+	if [ ! -d "$HOME/neorg" ]; then
+		git clone git@github.com:molleweide/neorg_user.git "$HOME/neorg"
+	fi
 }
 
 function setup_osx() {
@@ -118,5 +119,5 @@ function setup_obs() {
 #setup_basic_xdg_config_symlinks
 # setup_neovim
 # setup_tmux_user
-setup_neorg_notes
+# setup_neorg_notes
 # setup_osx

@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-# echo-header "SETTING UP HASKELL.."
-# test ! $(which stack) && curl -sSL https://get.haskellstack.org/ | sh
-# stack upgrade
-# # stack install yesod-bin --install-ghc
-
-
