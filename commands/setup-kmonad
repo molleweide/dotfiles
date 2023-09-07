@@ -129,10 +129,11 @@ function kmonad_run_new() (
 
 		pushd $GHQ_KMONAD_REPO/kmonad >/dev/null 2>&1
 
+		# TODO: ??
 		# stack clean -> completely reset build
+
 		if is-mac; then
 			echo "BUILD KMONAD MAC @ $PWD"
-			# local is_apple_silicone=$(test)
 
 			local extra_include="c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include"
 
@@ -141,17 +142,12 @@ function kmonad_run_new() (
 
 			# arm / intel
 			if test "$arch" = 'a64'; then
-				# stack build --flag kmonad:dext \
-				#             --arch=aarch64 \
-				#             --extra-include-dirs="$extra_include"
+				# stack build --flag kmonad:dext --arch=aarch64 --extra-include-dirs="$extra_include"
 				:
 			else
-				# stack build --flag kmonad:dext \
-				#             --extra-include-dirs="$extra_include"
+				# stack build --flag kmonad:dext --extra-include-dirs="$extra_include"
 				:
 			fi
-
-			# Activate dext
 			# macos_setup_activate_dext "$GHQ_KMONAD_REPO"
 
 		elif is-linux; then
@@ -159,13 +155,16 @@ function kmonad_run_new() (
 			# stack build
 		fi
 
-		# copy binary to XDG_BIN_HOME
-		count=$(find "$XDG_BIN_HOME" -type f -name "kmonad" | grep -c "kmonad")
-		echo "copying bin to $XDG_BIN_HOME/dorothy/kmonad-$count"
-		# cp -i "$(stack path --local-install-root)/bin/kmonad" "$XDG_BIN_HOME/dorothy/kmonad-$count"
+		# MOVE BIN TO $XDG_BIN_HOME
+		stack_bin_executable="$(stack path --local-install-root)/bin/kmonad"
+		count_existing=$(find "$XDG_BIN_HOME" -type f -name "kmonad" | grep -c "kmonad")
+		commit=$(git rev-parse --short HEAD)
+		branch=$(git rev-parse --abbrev-ref HEAD)
+		version=$($stack_bin_executable --version | cut -d ',' -f1) # version outputs <version, commit xyz...>
+		echo "Copying bin to [$XDG_BIN_HOME/dorothy/kmonad-$count_existing-$branch.$version.$commit]"
+		# cp -i "$(stack path --local-install-root)/bin/kmonad" "$XDG_BIN_HOME/dorothy/kmonad-$count_existing"
 
 		popd >/dev/null 2>&1
-
 	}
 
 	# NOTE: INSTALL DOCS:
