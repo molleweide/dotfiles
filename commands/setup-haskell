@@ -3,6 +3,9 @@
 # stack upgrade
 # # stack install yesod-bin --install-ghc
 
+# TODO: show some information about XDG.
+# you can host your config in $HOME or $HOME/.config
+
 # NOTE:
 # ~ GHCup is the main installer for the general purpose language
 # ~ Stack and Cabal are also very commonly used tools to manage project
@@ -108,24 +111,27 @@ function setup_haskell() (
 	# =====================================
 	# Install
 
-	# TODO: show some information about XDG.
-	# you can host your config in $HOME or $HOME/.config
+	# TODO: cabal-install??
 
+	if confirm --bool --ppid=$$ -- \
+		"Setup-haskell: Do you want to install [GHCup]"; then
+		setup-util-ghcup
+	fi
 
-	# TODO: wrap each in a confirm question.
+	if confirm --bool --ppid=$$ -- \
+		"Setup-haskell: Do you want to install [Stack]"; then
+		setup-util-stack
+	fi
 
-	setup-util-ghcup
+	if confirm --bool --ppid=$$ -- \
+		"Setup-haskell: Do you want to install [GHC] with GHCup"; then
+		ghcup install ghc
+	fi
 
-	setup-util-stack
-
-	# setup-util-cabal
-
-    # cabal-install??
-
-	ghcup install ghc
-	ghcup install cabal
-
-
+	if confirm --bool --ppid=$$ -- \
+		"Setup-haskell: Do you want to install [cabal]"; then
+		setup util cabal
+	fi
 
 	# ???
 	# source "$DOROTHY/sources/environment.sh"
