@@ -3,10 +3,17 @@
 # https://github.com/golang/go/wiki/Ubuntu
 
 function setup_util_ghcup() (
-	if command-exists curl; then
-		curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+
+	# TODO: check if ghcup exists
+	if ! command-exists ghcup; then
+
+		if command-exists curl; then
+			curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+		else
+			echo-error "Failed to install GHCUp. Command [curl] not found."
+		fi
 	else
-		echo-error "Failed to install GHCUp. Command [curl] not found."
+		echo "GHCup EXISTS"
 	fi
 )
 
