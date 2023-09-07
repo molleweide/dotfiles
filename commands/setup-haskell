@@ -123,16 +123,6 @@ function setup_haskell() (
 		setup-util-stack
 	fi
 
-	if confirm --bool --ppid=$$ -- \
-		"Setup-haskell: Do you want to install [GHC] with GHCup"; then
-		ghcup install ghc
-	fi
-
-	if confirm --bool --ppid=$$ -- \
-		"Setup-haskell: Do you want to install [cabal]"; then
-		setup util cabal
-	fi
-
 	# ???
 	# source "$DOROTHY/sources/environment.sh"
 
