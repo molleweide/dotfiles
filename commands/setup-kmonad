@@ -134,6 +134,9 @@ function kmonad_run_new() (
 			ghq get -p git@github.com:kmonad/kmonad.git
 			GHQ_KMONAD_REPO=$(ghq list -p "github.com/kmonad/kmonad")
 		fi
+
+		echo ">> $GHQ_KMONAD_REPO"
+
 		if ! command-exists stack; then
 			if confirm --bool --ppid=$$ -- \
 				"Building kmonad requires Haskell ecosystem? Proceed?"; then
@@ -142,13 +145,16 @@ function kmonad_run_new() (
 				return 1 # ?/
 			fi
 		fi
+
 		arch="$(get-arch)"
 		# github_user=$(git config github.user)
 
-		pushd $GHQ_KMONAD_REPO/kmonad >/dev/null 2>&1
+		pushd $GHQ_KMONAD_REPO >/dev/null 2>&1
 		# TODO: stack clean -> completely reset build
+
 		if is-mac; then
 			echo "BUILD KMONAD MAC @ $PWD"
+
 			local kmo_karab_include_dir="c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include"
 
 			# note: older macs using [ kext ]
@@ -170,7 +176,7 @@ function kmonad_run_new() (
 		fi
 
 		# MOVE BIN TO $XDG_BIN_HOME
-		if confirm --bool -- \
+		if confirm --bool --ppid=$$ -- \
 			"Copy kmonad build to XDG_BIN_HOME"; then
 			stack_bin_executable="$(stack path --local-install-root)/bin/kmonad"
 			count_existing=$(find "$XDG_BIN_HOME" -type f -name "kmonad" | grep -c "kmonad")
@@ -179,8 +185,8 @@ function kmonad_run_new() (
 			version=$($stack_bin_executable --version | cut -d ',' -f1) # version outputs <version, commit xyz...>
 			new_name="kmonad-$count_existing-$version.$commit.$branch"
 			echo "Copying bin to [$XDG_BIN_HOME/dorothy/$new_name]"
-			cp -i "$(stack path --local-install-root)/bin/kmonad" \
-				"$XDG_BIN_HOME/$new_name"
+			# cp -i "$(stack path --local-install-root)/bin/kmonad" \
+			# 	"$XDG_BIN_HOME/$new_name"
 		fi
 
 		popd >/dev/null 2>&1
@@ -444,6 +450,8 @@ function kmonad_run_new() (
 
 	elif test "$action" = "install"; then
 		install_kmonad
+	elif test "$action" = "build"; then
+		build_kmonad
 
 	elif test "$action" = 'dry'; then
 		dry_run
