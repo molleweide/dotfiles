@@ -210,14 +210,16 @@ function kmonad_run_new() (
 
 		eval_capture --statusvar=status --stdoutvar=kmo_packages -- which -a kmonadxx
 
-		if is-mac && test "$status" -eq 0; then
-			if confirm --bool --ppid=$$ -- \
-				"MACOS: No executable found! Do you want to build from source?"; then
-				build_kmonad
+		if is-mac; then
+			if test "$status" -ne 0; then
+				if confirm --bool --ppid=$$ -- \
+					"MACOS: No executable found! Do you want to build from source?"; then
+					build_kmonad
+				fi
+			else
+				echo "MACOS: [install_kmonad] executable exists."
+				return 0
 			fi
-		else
-		  echo "MACOS: [install_kmonad] executable exists."
-		  return 0
 		fi
 
 		# if test "x" = "x"; then
@@ -239,12 +241,13 @@ function kmonad_run_new() (
 				fi
 
 				mapfile -t choices <<<"$fodder" # <( destroys stdin
-				print_line "Proceeding with these choices: ${choices[*]}"
+				print_line "Proceeding with these choices: [ ${choices[*]} ]"
 
 				# FIX: install from packages never works?!
 				if is-needle package "${choices[@]}"; then
 					install_kmonad_from_packages
-				elif is-needle build "${choices[@]}"; then
+				fi
+				if is-needle build "${choices[@]}"; then
 					build_kmonad
 				fi
 
