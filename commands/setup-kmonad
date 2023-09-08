@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 
 # TODO:
-# ~ ??
+# ~ why choose-option --multi error
 
 # ??????
 # index a string in bash
 # https://unix.stackexchange.com/questions/303960/index-a-string-in-bash
-
-# FIX: QUESTIONS FOR BEN
-# ~ I should use `eval_capture` where ever commands CANNOT fail.
 
 function kmonad_run_new() (
 	source "$DOROTHY/sources/bash.bash"
@@ -226,6 +223,7 @@ function kmonad_run_new() (
 		# if test "x" = "x"; then
 		if is-linux; then
 			if test "$status" -ne 0; then
+
 				local fodder choices
 				fodder="$(
 					choose-option --multi \
@@ -239,6 +237,7 @@ function kmonad_run_new() (
 					print_line 'No choices selected.'
 					return 22 # ??
 				fi
+
 				mapfile -t choices <<<"$fodder" # <( destroys stdin
 				print_line "Proceeding with these choices: ${choices[*]}"
 
