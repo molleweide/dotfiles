@@ -234,7 +234,8 @@ fgr() {
 # Running `tm` will let you fuzzy-find a session mame
 # Passing an argument to `ftm` will switch to that session if it exists or create it otherwise
 
-tfs() {
+# tmux new session
+tns() {
 	[[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
 	if [ $1 ]; then
 		tmux $change -t "$1" 2>/dev/null ||

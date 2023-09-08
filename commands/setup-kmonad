@@ -7,6 +7,9 @@
 # index a string in bash
 # https://unix.stackexchange.com/questions/303960/index-a-string-in-bash
 
+# FIX: QUESTIONS FOR BEN
+# ~ I should use `eval_capture` where ever commands CANNOT fail.
+
 function kmonad_run_new() (
 	source "$DOROTHY/sources/bash.bash"
 	require_array 'mapfile'
@@ -15,10 +18,21 @@ function kmonad_run_new() (
 	KMONAD_CONFIG_DIR="$XDG_CONFIG_HOME/kmonad"
 	KARABINER_APP="/Applications/.Karabiner-VirtualHIDDevice-Manager.app"
 
-	# HACK: global vars???
-	# SELECTED_HARDWARE
-	# SELECTED_LAYOUT_FILE
-	# SELECTED_EXECUTABLE
+	USER_HARDWARE_KEYBOARD_LIST=(
+		"ergo"
+		"pro"
+		"air"
+	)
+	declare -A DEFSRC_FILES=(
+		[ergo]="defsrc_ergodox.kbd"
+		[pro]="defsrc_mbpro_swe.kbd"
+		[air]="defsrc_mbair.kbd"
+	)
+	declare -A DEFCFG_INPUT_STRINGS=(
+		[ergo]="Ergodox EZ"
+		[pro]="Apple Internal Keyboard / Trackpad"
+		[air]="Apple Internal Keyboard / Trackpad"
+	)
 
 	function help {
 		cat <<-EOF >/dev/stderr
@@ -123,10 +137,9 @@ function kmonad_run_new() (
 		if ! command-exists stack; then
 			if confirm --bool --ppid=$$ -- \
 				"Building kmonad requires Haskell ecosystem? Proceed?"; then
-				# setup-haskell
-				:
+				setup-haskell
 			else
-				return 1 # TODO: more appropriate error code
+				return 1 # ?/
 			fi
 		fi
 		arch="$(get-arch)"
@@ -156,15 +169,19 @@ function kmonad_run_new() (
 			# stack build
 		fi
 
-		# # MOVE BIN TO $XDG_BIN_HOME
-		# stack_bin_executable="$(stack path --local-install-root)/bin/kmonad"
-		# count_existing=$(find "$XDG_BIN_HOME" -type f -name "kmonad" | grep -c "kmonad")
-		# commit=$(git rev-parse --short HEAD)
-		# branch=$(git rev-parse --abbrev-ref HEAD)
-		# version=$($stack_bin_executable --version | cut -d ',' -f1) # version outputs <version, commit xyz...>
-		# echo "Copying bin to [$XDG_BIN_HOME/dorothy/kmonad-$count_existing-$branch.$version.$commit]"
-		# # cp -i "$(stack path --local-install-root)/bin/kmonad" \
-		# #       "$XDG_BIN_HOME/dorothy/kmonad-$count_existing"
+		# MOVE BIN TO $XDG_BIN_HOME
+		if confirm --bool -- \
+			"Copy kmonad build to XDG_BIN_HOME"; then
+			stack_bin_executable="$(stack path --local-install-root)/bin/kmonad"
+			count_existing=$(find "$XDG_BIN_HOME" -type f -name "kmonad" | grep -c "kmonad")
+			commit=$(git rev-parse --short HEAD)
+			branch=$(git rev-parse --abbrev-ref HEAD)
+			version=$($stack_bin_executable --version | cut -d ',' -f1) # version outputs <version, commit xyz...>
+			new_name="kmonad-$count_existing-$version.$commit.$branch"
+			echo "Copying bin to [$XDG_BIN_HOME/dorothy/$new_name]"
+			cp -i "$(stack path --local-install-root)/bin/kmonad" \
+				"$XDG_BIN_HOME/$new_name"
+		fi
 
 		popd >/dev/null 2>&1
 	}
@@ -186,30 +203,35 @@ function kmonad_run_new() (
 	# NOTE:
 	# QUESTIONS: am I "aborting" correctly here?
 	function install_kmonad() {
-		local status selected_executable kmo_packages
+		local status kmo_packages
 
 		eval_capture --statusvar=status --stdoutvar=kmo_packages -- which -a kmonadxx
 
-		if is-mac && test ! "$status" -eq 0; then
+		if is-mac && test "$status" -eq 0; then
 			if confirm --bool --ppid=$$ -- \
 				"MACOS: No executable found! Do you want to build from source?"; then
 				build_kmonad
 			fi
+		else
+		  echo "MACOS: [install_kmonad] executable exists."
+		  return 0
 		fi
 
 		# if test "x" = "x"; then
 		if is-linux; then
-			if ! test "$status" -eq 0; then
+			if test "$status" -ne 0; then
 				local fodder choices
 				fodder="$(
 					choose-option --multi \
-						--question="LINUX: No kmonad command was found - Select install method. (Use <space> to select.)" \
+						--question="LINUX: No kmonad command was found - Select install method. Use space key to select." \
 						--label -- \
 						package "Try install via package managers" \
 						build "Create local build"
 				)"
+
 				if test -z "$fodder"; then
-					return 125 # ECANCELED 125 Operation cancelled
+					print_line 'No choices selected.'
+					return 22 # ??
 				fi
 				mapfile -t choices <<<"$fodder" # <( destroys stdin
 				print_line "Proceeding with these choices: ${choices[*]}"
@@ -221,16 +243,17 @@ function kmonad_run_new() (
 					build_kmonad
 				fi
 
-			elif [ "$status" -eq 0 ] && [ ! "$(echo "${kmo_packages[@]}" | grep "$XDG_BIN_HOME/kmonad.*")" ]; then
-				if confirm --bool --ppid=$$ -- \
-					"LINUX: Found kmonad PACKAGE - Do you ALSO want to build kmonad from source"; then
-					build_kmonad
-				fi
-
 			else
-				if confirm --bool --ppid=$$ -- \
-					"LINUX: Found kmonad LOCAL BUILD - Do you ALSO want to install package?"; then
-					install_kmonad_from_packages
+				if [ ! "$(echo "${kmo_packages[@]}" | grep "$XDG_BIN_HOME/kmonad.*")" ]; then
+					if confirm --bool --ppid=$$ -- \
+						"LINUX: Found kmonad PACKAGE - Do you ALSO want to build kmonad from source"; then
+						build_kmonad
+					fi
+				else
+					if confirm --bool --ppid=$$ -- \
+						"LINUX: Found kmonad LOCAL BUILD - Do you ALSO want to install package?"; then
+						install_kmonad_from_packages
+					fi
 				fi
 			fi
 		fi
@@ -239,75 +262,62 @@ function kmonad_run_new() (
 	# NOTE:
 	# QUESTIONS: am I "aborting" correctly here?
 	function get_select_executable() {
-		local status kmo_packages=''
+		local status kmo_packages
+
 		eval_capture --statusvar=status --stdoutvar=kmo_packages -- which -a kmonad
+
+		# ok
 		if test "$status" -eq 0; then
+
 			selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${kmo_packages[@]}")"
 			echo "$selected_executable"
+
 		else
 			if confirm --bool --ppid=$$ -- "No executable found! Do you want to proceed with installing kmonad?"; then
-				install_kmonad
+				local status_install
+				eval_capture --statusvar=status -- install_kmonad
 
-				# try get executable again
+				if test "$status" -ne 0; then
+					echo-error '[install_kmonad] failed inside [get_select_executable].'
+					return 22 # ??
+				fi
+
+				# find executables again
 				eval_capture --statusvar=status --stdoutvar=kmo_packages -- which -a kmonad
 				selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${kmo_packages[@]}")"
 				echo "$selected_executable"
 
 			else
-				echo "[should install here]" # NOTE: why isn't this echoing here??
-				return 1                   # ECANCELED 125 Operation cancelled
+				echo-error "[User chose NOT to install. Aborting.]"
+				return 1 # ECANCELED 125 Operation cancelled
 			fi
 		fi
 	}
 
 	function get_select_hardware() {
-		# TODO: move this array to xdg configs
-		user_hardwares_list=(
-			"ergo"
-			"pro"
-			"air"
-		)
-		SELECTED_HARDWARE="$(choose-option --confirm --question='Select hardware to run kmonad for.' -- "${user_hardwares_list[@]}")"
+		SELECTED_HARDWARE="$(choose-option --confirm --question='Select hardware to run kmonad for.' -- "${USER_HARDWARE_KEYBOARD_LIST[@]}")"
 		echo "$SELECTED_HARDWARE"
 	}
 
 	function compile_base() {
-		local SELECTED_HARDWARE=$1
+		local SELECTED_HARDWARE=$1 defsrc_base_file defcfg_chunk
 
-		# TODO: im probably going to have to make this a bit more dynamic to handle
-		# mix between layouts and mac vs linux.
-
-		# Get source keymap file
-		# TODO: move this array to xdg configs
-		declare -A defsrc_files=(
-			[ergo]="defsrc_ergodox.kbd"
-			[pro]="defsrc_mbpro_swe.kbd"
-			[air]="defsrc_mbair.kbd"
-		)
-		DEFSRC="$KMONAD_CONFIG_DIR/defsrc/${defsrc_files[$SELECTED_HARDWARE]}"
+		defsrc_base_file="$KMONAD_CONFIG_DIR/defsrc/${DEFSRC_FILES[$SELECTED_HARDWARE]}"
 
 		# Create kmonad `cfg` block
-		declare -A defcfg_input_str=(
-			[ergo]="Ergodox EZ"
-			[pro]="Apple Internal Keyboard / Trackpad"
-			[air]="Apple Internal Keyboard / Trackpad"
-		)
-
-		input="${defcfg_input_str[$SELECTED_HARDWARE]}"
-
-		# TODO: this needs to be dynamic for mac/linux
+		# <output> needs to be dynamic for mac/linux
+		input="${DEFCFG_INPUT_STRINGS[$SELECTED_HARDWARE]}"
 		output="kext"
-
 		fallthrough=false
 
-		DEFCFG="(defcfg
+		defcfg_chunk="(defcfg
       input (iokit-name \"$input\")
       output ($output)
       fallthrough $fallthrough
     )"
 
-		echo "$DEFCFG"
-		cat "$DEFSRC"
+		echo "$defcfg_chunk"
+		cat "$defsrc_base_file"
 	}
 
 	function compile_layers() {
@@ -328,43 +338,44 @@ function kmonad_run_new() (
 
 	function get_compiled_layout_file() {
 		local SELECTED_HARDWARE=$1
+
 		local layout_temp_file="/tmp/kmonad_compiled_layout" # "$(mktemp /tmp/kmonad-XXX)"
 		compile_full_layout "$SELECTED_HARDWARE" >"$layout_temp_file"
+
 		echo "$layout_temp_file"
 	}
 
 	function get_necessary_parts() {
-	  local hardware layout_file kmo_executable
+		local status hardware layout_file kmo_executable
 
 		hardware=$(get_select_hardware)
 
 		layout_file=$(get_compiled_layout_file "$hardware")
 
-    local status
 		eval_capture --statusvar=status --stdoutvar=kmo_executable -- get_select_executable
 
 		if ! test "$status" -eq 0; then
-		  return 1
+			return 1
 		fi
 
-
-		echo "$kmo_executable" "$layout_file"
+		print_line "$kmo_executable"
+		print_line "$layout_file"
 	}
 
 	# =================================
 	# Main functions
 
 	function print_base() {
-	  local title="Print kmo base file."
+		local title="Print kmo base file."
 		SELECTED_HARDWARE=$(get_select_hardware)
 		echo-segment --h2="$title"
 		compile_base "$SELECTED_HARDWARE"
 		echo-segment --g2="$title"
 	}
 
-  # TODO: it would be nice to wrap each layer in a nice echo divider
+	# TODO: it would be nice to wrap each layer in a nice echo divider
 	function print_layers() {
-	  local title="Print kmo layers."
+		local title="Print kmo layers."
 		echo-segment --h2="$title"
 		compile_layers
 		echo-segment --g2="$title"
@@ -380,15 +391,30 @@ function kmonad_run_new() (
 	}
 
 	function dry_run() {
+		local status fodder cmd=()
 		echo-style --bold="Dry running kmonad now..."
-		parts=($(get_necessary_parts))
-		"${parts[@]}" -d
+		eval_capture --statusvar=status --stdoutvar=fodder -- get_necessary_parts
+
+		if test "$status" -ne 0; then
+			echo-error "Failed to put together command for dry/run"
+			return 22 # ??
+		else
+			mapfile -t cmd <<<"$fodder"
+			eval-helper --wrap --no-quiet -- "${cmd[@]}" -d
+		fi
 	}
 
 	function run() {
+		local status
 		echo-style --bold="Running kmonad now..."
-		parts=($(get_necessary_parts))
-		# sudo "${parts[@]}" --allow-cmd
+		eval_capture --statusvar=status --stdoutvar=parts -- get_necessary_parts
+
+		if ! test $status -eq 0; then
+			echo-error "Failed to put together command for dry/run"
+		else
+			echo "Run command is commented out in [run]"
+			# sudo "${parts[@]}" --allow-cmd
+		fi
 	}
 
 	function write_layout_to_file() {
@@ -400,6 +426,8 @@ function kmonad_run_new() (
 		macos_setup_activate_dext "arst"
 		build_kmonad
 		install_kmonad_from_packages
+		get_necessary_parts
+		get_select_executable
 	}
 
 	# =================================
