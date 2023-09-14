@@ -289,7 +289,12 @@ function kmonad_run_new() (
 		eval_capture --statusvar=status --stdoutvar=fodder -- which -a kmonad
 		mapfile -t execs <<<"$fodder" # <( destroys stdiN
 
-		mapfile -t local_builds < <(find "$XDG_BIN_HOME" -type f -name 'kmonad-*' -perm +111)
+		if is-mac; then
+			mapfile -t local_builds < <(find "$XDG_BIN_HOME" -type f -name 'kmonad-*' -perm +111)
+		else
+			mapfile -t local_builds < <(find "$XDG_BIN_HOME" -type f -name 'kmonad-*' -executable)
+		fi
+
 		for i in "${local_builds[@]}"; do
 			execs+=("$i")
 		done
