@@ -284,15 +284,27 @@ function kmonad_run_new() (
 		fi
 	}
 
+	function echo_executables() {
+		local fodder execs=() local_builds=()
+		eval_capture --statusvar=status --stdoutvar=fodder -- which -a kmonad
+		mapfile -t execs <<<"$fodder" # <( destroys stdiN
+
+		mapfile -t local_builds < <(find "$XDG_BIN_HOME" -type f -name 'kmonad-*' -perm +111)
+		for i in "${local_builds[@]}"; do
+			execs+=("$i")
+		done
+		echo-lines "${execs[@]}"
+	}
+
 	# NOTE:
 	# QUESTIONS: am I "aborting" correctly here?
 	function get_select_executable() {
-		local status kmo_packages
+		local status kmo_packages=() local_builds=()
 
-		eval_capture --statusvar=status --stdoutvar=kmo_packages -- which -a kmonad
+		mapfile -t kmo_packages < <(echo_executables)
 
-		# ok
-		if test "$status" -eq 0; then
+		if ! is-array-empty "${kmo_packages[@]}"; then
+			# if test "$status" -eq 0; then
 
 			selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${kmo_packages[@]}")"
 			echo "$selected_executable"
@@ -307,8 +319,10 @@ function kmonad_run_new() (
 					return 22 # ??
 				fi
 
-				# find executables again
-				eval_capture --statusvar=status --stdoutvar=kmo_packages -- which -a kmonad
+				mapfile -t kmo_packages < <(echo_executables)
+
+				# FIX: copy mapfile local_builds to here
+
 				selected_executable="$(choose-option --confirm --question='Select executable name.' -- "${kmo_packages[@]}")"
 				echo "$selected_executable"
 
@@ -453,6 +467,7 @@ function kmonad_run_new() (
 		install_kmonad_from_packages
 		get_necessary_parts
 		get_select_executable
+		echo_executables
 	}
 
 	# =================================
