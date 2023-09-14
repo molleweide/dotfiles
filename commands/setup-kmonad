@@ -512,6 +512,9 @@ function kmonad_run_new() (
 	elif test "$action" = 'dummy_plummy_xxxyy'; then
 		dummy
 
+	elif test "$action" = 'echo'; then
+	  echo_executables
+
 	fi
 )
 
