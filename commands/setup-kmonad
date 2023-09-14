@@ -298,7 +298,7 @@ function kmonad_run_new() (
 		for i in "${local_builds[@]}"; do
 			execs+=("$i")
 		done
-		echo-lines "${execs[@]}"
+		echo-lines "${execs[@]}" | echo-trim-zero-length --stdin
 	}
 
 	# NOTE:
