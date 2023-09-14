@@ -22,8 +22,8 @@ function kmonad_run_new() (
 	KMONAD_CONFIG_DIR="$XDG_CONFIG_HOME/kmonad"
 	KARABINER_APP="/Applications/.Karabiner-VirtualHIDDevice-Manager.app"
 
-  # ============================================
-  # User config variables
+	# ============================================
+	# User config variables
 
 	USER_HARDWARE_KEYBOARD_LIST=(
 		"ergo"
@@ -162,22 +162,19 @@ function kmonad_run_new() (
 		# TODO: stack clean -> completely reset build
 
 		if is-mac; then
-			echo "BUILD KMONAD MAC @ $PWD"
-
-			local kmo_karab_include_dir="c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include"
-
-			# note: older macs using [ kext ]
-			# stack build --flag kmonad:kext --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
-
-			# arm / intel
-			if test "$arch" = 'a64'; then
-				# stack build --flag kmonad:dext --arch=aarch64 --extra-include-dirs="$kmo_karab_include_dir"
-				:
-			else
-				# stack build --flag kmonad:dext --extra-include-dirs="$kmo_karab_include_dir"
-				:
+			if confirm --bool --ppid=$$ -- \
+				"MACOS: Are you sure that you want to proceed with building [ KMONAD ]"; then
+				local kmo_karab_include_dir="c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include"
+				# note: older macs using [ kext ]
+				# stack build --flag kmonad:kext --extra-include-dirs=c_src/mac/Karabiner-VirtualHIDDevice/dist/include
+				# If arm / intel
+				if test "$arch" = 'a64'; then
+					stack build --flag kmonad:dext --arch=aarch64 --extra-include-dirs="$kmo_karab_include_dir"
+				else
+					stack build --flag kmonad:dext --extra-include-dirs="$kmo_karab_include_dir"
+				fi
+				macos_setup_activate_dext "$GHQ_KMONAD_REPO"
 			fi
-			# macos_setup_activate_dext "$GHQ_KMONAD_REPO"
 
 		elif is-linux; then
 			echo "BUILD KMONAD LINUX @ $PWD"
@@ -186,9 +183,19 @@ function kmonad_run_new() (
 
 		# MOVE BIN TO $XDG_BIN_HOME
 		if confirm --bool --ppid=$$ -- \
-			"Copy kmonad build to XDG_BIN_HOME"; then
+			"Copy kmonad build to XDG_BIN_HOME ()"; then
+		  local version='' count_existing=0
+
 			stack_bin_executable="$(stack path --local-install-root)/bin/kmonad"
-			count_existing=$(find "$XDG_BIN_HOME" -type f -name "kmonad" | grep -c "kmonad")
+
+			local status capture
+			eval_capture --statusvar=status --stdoutvar=capture -- find "$XDG_BIN_HOME" -type f -name "kmonad"
+			if test "$status" -eq 0; then
+			  count_existing=$(echo-lines -- "${capture[@]}" | grep -c "kmonad")
+			fi
+
+			echo "count_existing: $count_existing"
+
 			commit=$(git rev-parse --short HEAD)
 			branch=$(git rev-parse --abbrev-ref HEAD)
 			version=$($stack_bin_executable --version | cut -d ',' -f1) # version outputs <version, commit xyz...>
