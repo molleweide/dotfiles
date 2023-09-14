@@ -22,6 +22,9 @@ function kmonad_run_new() (
 	KMONAD_CONFIG_DIR="$XDG_CONFIG_HOME/kmonad"
 	KARABINER_APP="/Applications/.Karabiner-VirtualHIDDevice-Manager.app"
 
+  # ============================================
+  # User config variables
+
 	USER_HARDWARE_KEYBOARD_LIST=(
 		"ergo"
 		"pro"
@@ -37,6 +40,8 @@ function kmonad_run_new() (
 		[pro]="Apple Internal Keyboard / Trackpad"
 		[air]="Apple Internal Keyboard / Trackpad"
 	)
+
+	# =================================
 
 	function help {
 		cat <<-EOF >/dev/stderr
@@ -203,11 +208,10 @@ function kmonad_run_new() (
 	# https://github.com/kmonad/kmonad/blob/master/doc/installation.md#void-linux
 	# https://github.com/kmonad/kmonad/blob/master/doc/installation.md#gnu-guix
 	function install_kmonad_from_packages() {
-		echo "install_kmonad_from_packages"
-		# setup-util --name='kmonad' --cli='kmonad' --order='aur xbps guix' \
-		# 	AUR='kmonad-bin' \
-		# 	XBPS='kmonad' \
-		# 	GUIX='kmonad'
+		setup-util --name='kmonad' --cli='kmonad' --order='aur xbps guix' \
+			AUR='kmonad-bin' \
+			XBPS='kmonad' \
+			GUIX='kmonad'
 	}
 
 	# NOTE:
