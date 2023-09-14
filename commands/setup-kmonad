@@ -184,14 +184,14 @@ function kmonad_run_new() (
 		# MOVE BIN TO $XDG_BIN_HOME
 		if confirm --bool --ppid=$$ -- \
 			"Copy kmonad build to XDG_BIN_HOME ()"; then
-		  local version='' count_existing=0
+			local version='' count_existing=0
 
 			stack_bin_executable="$(stack path --local-install-root)/bin/kmonad"
 
 			local status capture
 			eval_capture --statusvar=status --stdoutvar=capture -- find "$XDG_BIN_HOME" -type f -name "kmonad"
 			if test -n "$capture"; then
-			  count_existing=$(echo-lines -- "${capture[@]}" | grep -c "kmonad")
+				count_existing=$(echo-lines -- "${capture[@]}" | grep -c "kmonad")
 			fi
 
 			echo "count_existing: $count_existing"
@@ -201,8 +201,7 @@ function kmonad_run_new() (
 			version=$($stack_bin_executable --version | cut -d ',' -f1) # version outputs <version, commit xyz...>
 			new_name="kmonad-$count_existing-$version.$commit.$branch"
 			echo "Copying bin to [$XDG_BIN_HOME/dorothy/$new_name]"
-			# cp -i "$(stack path --local-install-root)/bin/kmonad" \
-			# 	"$XDG_BIN_HOME/$new_name"
+			cp -i "$(stack path --local-install-root)/bin/kmonad" "$XDG_BIN_HOME/$new_name"
 		fi
 
 		popd >/dev/null 2>&1
