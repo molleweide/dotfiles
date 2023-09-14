@@ -190,7 +190,7 @@ function kmonad_run_new() (
 
 			local status capture
 			eval_capture --statusvar=status --stdoutvar=capture -- find "$XDG_BIN_HOME" -type f -name "kmonad"
-			if test "$status" -eq 0; then
+			if test -n "$capture"; then
 			  count_existing=$(echo-lines -- "${capture[@]}" | grep -c "kmonad")
 			fi
 
