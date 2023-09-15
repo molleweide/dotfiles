@@ -10,6 +10,14 @@
 # 			--code="$0" ' ' --error='is incompatible with' ' ' --code="bash $BASH_VERSION" $'\n' \
 # 			'Run ' --code='setup-util-bash' ' to upgrade capabilities, then run the prior command again.' >/dev/stderr
 
+# FIX: KEYBOARD
+# 1. check key codes @ kmonad/kmonad/src/KMonad/Keyboard/Keycode.hs
+# 2. conditional layouts
+#     use cat << EOF ... EOF
+
+# FIX: layour legend
+#     https://github.com/kmonad/kmonad/discussions/420
+
 # ??????
 # index a string in bash
 # https://unix.stackexchange.com/questions/303960/index-a-string-in-bash
@@ -79,6 +87,8 @@ function kmonad_run_new() (
 	# #
 	# # kmo -c -r -- <path>
 	# #   print and run layout at path
+	#
+	# # FIX: flag > use custom path if not GHQ
 	# #
 	# # Process action arguments
 	# local item action='' option_branch='' option_commit='' args=()
@@ -185,17 +195,12 @@ function kmonad_run_new() (
 		if confirm --bool --ppid=$$ -- \
 			"Copy kmonad build to XDG_BIN_HOME ()"; then
 			local version='' count_existing=0
-
 			stack_bin_executable="$(stack path --local-install-root)/bin/kmonad"
-
 			local status capture
 			eval_capture --statusvar=status --stdoutvar=capture -- find "$XDG_BIN_HOME" -type f -name "kmonad"
 			if test -n "$capture"; then
 				count_existing=$(echo-lines -- "${capture[@]}" | grep -c "kmonad")
 			fi
-
-			echo "count_existing: $count_existing"
-
 			commit=$(git rev-parse --short HEAD)
 			branch=$(git rev-parse --abbrev-ref HEAD)
 			version=$($stack_bin_executable --version | cut -d ',' -f1) # version outputs <version, commit xyz...>
@@ -287,14 +292,12 @@ function kmonad_run_new() (
 	function echo_executables() {
 		local fodder execs=() local_builds=()
 		eval_capture --statusvar=status --stdoutvar=fodder -- which -a kmonad
-		mapfile -t execs <<<"$fodder" # <( destroys stdiN
-
+		mapfile -t execs <<<"$fodder" # <( destroys stdin??
 		if is-mac; then
 			mapfile -t local_builds < <(find "$XDG_BIN_HOME" -type f -name 'kmonad-*' -perm +111)
 		else
 			mapfile -t local_builds < <(find "$XDG_BIN_HOME" -type f -name 'kmonad-*' -executable)
 		fi
-
 		for i in "${local_builds[@]}"; do
 			execs+=("$i")
 		done
@@ -364,14 +367,26 @@ function kmonad_run_new() (
 		cat "$defsrc_base_file"
 	}
 
+	# FIX: rewrite layer files as bash scripts so that I can make
+	#       dynamic keys based wheter using linux or macos, etc.
 	function compile_layers() {
 		for f in "$KMONAD_CONFIG_DIR/common/"*.kbd; do
 			local filename
+
 			filename="$(basename "$f")"
+
+			# Ignore these / Work in progress layers etc.
+			# TODO: use `if filename contains char X`
 			if [[ $filename =~ "~.kbd" ]]; then
 				continue
 			fi
-			cat "$f"
+
+			# If kbd file layer or shell script layer
+			if [ -f "$f" ] && [[ "$filename" == *.kbd ]]; then
+				cat "$f"
+			else
+				$f
+			fi
 		done
 	}
 
@@ -513,7 +528,7 @@ function kmonad_run_new() (
 		dummy
 
 	elif test "$action" = 'echo'; then
-	  echo_executables
+		echo_executables
 
 	fi
 )
