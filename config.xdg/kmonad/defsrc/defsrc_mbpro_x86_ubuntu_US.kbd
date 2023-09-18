@@ -1,8 +1,8 @@
-;; MACBOOK PRO SWE KEYBOARD
+;; Macbook pro intel (x86) running ubuntu with US keyboard
 
 (defsrc
   q    w    e    r    t         y    u    i    o    p
   a    s    d    f    g         h    j    k    l    ;
-  grv  z    x    c    v         n    m    ,    .    /
+  <    z    x    c    v         n    m    ,    .    /
             lalt lmet      spc       rmet ralt
 )
