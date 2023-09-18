@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 mctl="mctl"
-if is-mac; then
+if is-linux; then
   mctl="XX"
 fi
 

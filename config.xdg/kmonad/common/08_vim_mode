@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-mctl="mctl"
+# mctl="mctl"
+# if is-linux; then
+#   mctl="XX"
+# fi
 
-if is-mac; then
-  mctl="XX"
-fi
+# mctl=$(($(is-mac ? "mctl" : "XX")))
 
-# result=$(($condition ? "true-value" : "false-value"))
-
+mctl=$(is-mac && echo "mctl" || echo "XX")
 
 cat << EOF
 ;; VIM MODE
@@ -16,7 +16,7 @@ cat << EOF
   v01 mute
   v02 vold
   v03 volu
-  v04 mctl
+  v04 $mctl
   v05 XX ;;-------------
   v06 XX
   v07 XX
@@ -38,9 +38,9 @@ cat << EOF
   v21 pp
   v22 bldn
   v23 blup
-  v24 mctl
+  v24 $mctl
   v25 lp  ;; ----------
-  v26 mctl
+  v26 $mctl
   v27 pp
   v28 XX
   v29 XX
