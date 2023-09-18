@@ -8,6 +8,7 @@
 # mctl=$(($(is-mac ? "mctl" : "XX")))
 
 mctl=$(is-mac && echo "mctl" || echo "XX")
+lp=$(is-mac && echo "lp" || echo "XX")
 
 cat << EOF
 ;; VIM MODE
@@ -27,7 +28,7 @@ cat << EOF
   v11 XX
   v12 brdn
   v13 brup
-  v14 lp
+  v14 $lp
   v15 pp ;;-------------
   v16 vold
   v17 volu
@@ -39,7 +40,7 @@ cat << EOF
   v22 bldn
   v23 blup
   v24 $mctl
-  v25 lp  ;; ----------
+  v25 $lp  ;; ----------
   v26 $mctl
   v27 pp
   v28 XX

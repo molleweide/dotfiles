@@ -15,8 +15,12 @@
 #     hardwares on the system. i believe this is mostly useful on linux since
 #     keyboards are located in some type of /dev/keyb/...
 
-# FIX: KEYBOARD
-# 1. check key codes @ kmonad/kmonad/src/KMonad/Keyboard/Keycode.hs
+# FIX: make these keys conditional so that my keymap verifies on ubuntu
+#
+# #ifdef darwin_HOST_OS
+#   , (KeyLaunchpad,      ["lp"])
+#   , (KeyMissionCtrl,    ["mctl"])
+# #endif
 
 # FIX: layour legend
 #     https://github.com/kmonad/kmonad/discussions/420

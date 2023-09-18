@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-mctl="mctl"
-if is-linux; then
-  mctl="XX"
-fi
+# mctl="mctl"
+# if is-linux; then
+#   mctl="XX"
+# fi
+
+mctl=$(is-mac && echo "mctl" || echo "XX")
+lp=$(is-mac && echo "lp" || echo "XX")
 
 cat << EOF
 ;;#| ---------------------------------------------------------------
@@ -30,7 +33,7 @@ cat << EOF
   t11 XX
   t12 brdn
   t13 brup
-  t14 lp
+  t14 $lp
   t15 pp ;;-------------
   t16 vold
   t17 volu
@@ -43,7 +46,7 @@ cat << EOF
   t22 bldn
   t23 blup
   t24 $mctl
-  t25 lp  ;; ----------
+  t25 $lp  ;; ----------
   t26 $mctl
   t27 pp
   t28 XX
