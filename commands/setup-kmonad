@@ -429,11 +429,11 @@ function kmonad_run_new() (
 
 			# If kbd file layer or shell script layer
 			if [ -f "$f" ] && [[ "$filename" == *.kbd ]]; then
-			    echo "cat layer $filename"
-				# cat "$f"
+				# echo "cat layer $filename"
+				cat "$f"
 			else
-			    echo "run layer $filename"
-				# $f
+				# echo "run layer $filename"
+				$f
 			fi
 		done
 	}
@@ -530,10 +530,10 @@ function kmonad_run_new() (
 
 	function list_keyboards() {
 		if is-mac; then
-		  # In kmonad repo...
+			# In kmonad repo...
 			: # make; ./list-keyboards
 		else
-		  : # cat dev/input/by-id/
+			: # cat dev/input/by-id/
 		fi
 	}
 
@@ -582,14 +582,13 @@ function kmonad_run_new() (
 		write_layout_to_file
 
 	elif test "$action" = 'keybs'; then
-	  list_keyboards
+		list_keyboards
 
 	elif test "$action" = 'echo'; then
 		echo_executables
 
-
 	elif test "$action" = 'dummy_plummy_xxxyy'; then
-	  # NOTE: special do not ever call
+		# NOTE: special do not ever call
 		dummy
 
 	fi

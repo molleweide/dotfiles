@@ -116,7 +116,7 @@ function setup_obs() {
 # RUN TASKS.........
 
 # pull_molleweide_latest
-#setup_basic_xdg_config_symlinks
+# setup_basic_xdg_config_symlinks
 # setup_neovim
 # setup_tmux_user
 # setup_neorg_notes
