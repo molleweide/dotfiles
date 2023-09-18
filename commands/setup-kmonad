@@ -416,9 +416,10 @@ function kmonad_run_new() (
 	}
 
 	function compile_layers() {
-		for f in "$KMONAD_CONFIG_DIR/common/"*.kbd; do
+		for f in "$KMONAD_CONFIG_DIR/common"/*; do
 			local filename
 			filename="$(basename "$f")"
+			# echo "filename=$filename"
 
 			# Ignore these / Work in progress layers etc.
 			# TODO: use `if filename contains char X`
@@ -428,9 +429,11 @@ function kmonad_run_new() (
 
 			# If kbd file layer or shell script layer
 			if [ -f "$f" ] && [[ "$filename" == *.kbd ]]; then
-				cat "$f"
+			    echo "cat layer $filename"
+				# cat "$f"
 			else
-				$f
+			    echo "run layer $filename"
+				# $f
 			fi
 		done
 	}
