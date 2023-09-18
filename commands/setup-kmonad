@@ -52,7 +52,7 @@ function kmonad_run_new() (
 		[ergo]="Ergodox EZ"
 		[mbpro_x86]="Apple Internal Keyboard / Trackpad"
 		[mbair_m1]="Apple Internal Keyboard / Trackpad"
-		# "mbpro_x86_ubuntu"
+		[mbpro_x86_ubuntu]="/dev/input/by-id/usb-Apple_Inc._Apple_Internal_Keyboard___Trackpad-event-kbd"
 	)
 
 	# =================================
