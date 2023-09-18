@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+mctl="mctl"
+if is-mac; then
+  mctl="XX"
+fi
+
 cat << EOF
 ;;#| ---------------------------------------------------------------
 ;;
@@ -13,7 +18,7 @@ cat << EOF
   t01 mute
   t02 vold
   t03 volu
-  t04 mctl
+  t04 $mctl
   t05 XX ;;-------------
   t06 XX
   t07 XX
@@ -37,9 +42,9 @@ cat << EOF
   t21 pp
   t22 bldn
   t23 blup
-  t24 mctl
+  t24 $mctl
   t25 lp  ;; ----------
-  t26 mctl
+  t26 $mctl
   t27 pp
   t28 XX
   t29 XX

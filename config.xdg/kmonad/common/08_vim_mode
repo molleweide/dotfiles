@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+mctl="mctl"
+
+if is-mac; then
+  mctl="XX"
+fi
+
+# result=$(($condition ? "true-value" : "false-value"))
+
+
 cat << EOF
 ;; VIM MODE
 (defalias

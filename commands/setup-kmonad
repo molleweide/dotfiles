@@ -17,8 +17,6 @@
 
 # FIX: KEYBOARD
 # 1. check key codes @ kmonad/kmonad/src/KMonad/Keyboard/Keycode.hs
-# 2. conditional layouts
-#     use cat << EOF ... EOF
 
 # FIX: layour legend
 #     https://github.com/kmonad/kmonad/discussions/420
@@ -40,21 +38,21 @@ function kmonad_run_new() (
 
 	USER_HARDWARE_KEYBOARD_LIST=(
 		"ergo"
-		"pro"
-		"air"
-		# "mbpro_US_x86_ubuntu"
+		"mbpro_x86"
+		"mbair_m1"
+		"mbpro_x86_ubuntu"
 	)
 	declare -A DEFSRC_FILES=(
 		[ergo]="defsrc_ergodox.kbd"
-		[pro]="defsrc_mbpro_swe.kbd"
-		[air]="defsrc_mbair.kbd"
-		# "mbpro_US_x86_ubuntu"
+		[mbpro_x86]="defsrc_mbpro_swe.kbd"
+		[mbair_m1]="defsrc_mbair.kbd"
+		# "mbpro_x86_ubuntu"
 	)
 	declare -A DEFCFG_INPUT_STRINGS=(
 		[ergo]="Ergodox EZ"
-		[pro]="Apple Internal Keyboard / Trackpad"
-		[air]="Apple Internal Keyboard / Trackpad"
-		# "mbpro_US_x86_ubuntu"
+		[mbpro_x86]="Apple Internal Keyboard / Trackpad"
+		[mbair_m1]="Apple Internal Keyboard / Trackpad"
+		# "mbpro_x86_ubuntu"
 	)
 
 	# =================================
@@ -381,7 +379,6 @@ function kmonad_run_new() (
 
 	function compile_base() {
 		local SELECTED_HARDWARE=$1 defsrc_base_file defcfg_chunk
-
 		defsrc_base_file="$KMONAD_CONFIG_DIR/defsrc/${DEFSRC_FILES[$SELECTED_HARDWARE]}"
 
 		# TODO: look at the layout output and check if I have to escape "" in the
@@ -394,12 +391,11 @@ function kmonad_run_new() (
 				echo "device-file $1"
 			fi
 		}
-
 		function make_output() {
 			if is-mac; then
 				echo "kext"
 			else
-			  # Make sure uinput kernel module is loaded `sudo modprobe uinput`.
+				# Make sure uinput kernel module is loaded `sudo modprobe uinput`.
 				echo "uinput-sink \"kmonad-dorothy\"" # The uinput name is arbitrary, ie. it is created when spawning kmo.
 			fi
 		}
@@ -530,6 +526,15 @@ function kmonad_run_new() (
 		echo "write layout -> todo..."
 	}
 
+	function list_keyboards() {
+		if is-mac; then
+		  # In kmonad repo...
+			: # make; ./list-keyboards
+		else
+		  : # cat dev/input/by-id/
+		fi
+	}
+
 	# kept just to supress some lsp messages
 	function dummy() {
 		macos_setup_activate_dext "arst"
@@ -574,11 +579,16 @@ function kmonad_run_new() (
 	elif test "$action" = 'write'; then
 		write_layout_to_file
 
-	elif test "$action" = 'dummy_plummy_xxxyy'; then
-		dummy
+	elif test "$action" = 'keybs'; then
+	  list_keyboards
 
 	elif test "$action" = 'echo'; then
 		echo_executables
+
+
+	elif test "$action" = 'dummy_plummy_xxxyy'; then
+	  # NOTE: special do not ever call
+		dummy
 
 	fi
 )
