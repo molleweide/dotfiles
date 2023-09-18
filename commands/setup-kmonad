@@ -46,7 +46,7 @@ function kmonad_run_new() (
 		[ergo]="defsrc_ergodox.kbd"
 		[mbpro_x86]="defsrc_mbpro_swe.kbd"
 		[mbair_m1]="defsrc_mbair.kbd"
-		# "mbpro_x86_ubuntu"
+		[mbpro_x86_ubuntu]="defsrc_mbpro_swe.kbd" # should this be its own file?
 	)
 	declare -A DEFCFG_INPUT_STRINGS=(
 		[ergo]="Ergodox EZ"
@@ -386,28 +386,27 @@ function kmonad_run_new() (
 
 		function make_input() {
 			if is-mac; then
-				echo "iokit-name $1"
+				echo "iokit-name \"$1\""
 			else
-				echo "device-file $1"
+				echo "device-file \"$1\""
 			fi
 		}
 		function make_output() {
 			if is-mac; then
 				echo "kext"
 			else
-				# Make sure uinput kernel module is loaded `sudo modprobe uinput`.
-				echo "uinput-sink \"kmonad-dorothy\"" # The uinput name is arbitrary, ie. it is created when spawning kmo.
+				# note 1: Make sure uinput kernel module is loaded `sudo modprobe uinput`.
+				# note 2: maybe check if a kmonad process is already running and add
+				#         a name or int to separate the processes?
+				echo "uinput-sink \"KMonad Keyboard\"" # The uinput name is arbitrary, ie. it is created when spawning kmo.
 			fi
 		}
 
-		# Create kmonad `cfg` block
-		# <output> needs to be dynamic for mac/linux
-		input="${DEFCFG_INPUT_STRINGS[$SELECTED_HARDWARE]}"
-		output="kext"
+		input=$(make_input "${DEFCFG_INPUT_STRINGS[$SELECTED_HARDWARE]}")
+		output=$(make_output)
 		fallthrough=false
-
 		defcfg_chunk="(defcfg
-      input (iokit-name \"$input\")
+      input ($input)
       output ($output)
       fallthrough $fallthrough
     )"
