@@ -15,19 +15,8 @@
 #     hardwares on the system. i believe this is mostly useful on linux since
 #     keyboards are located in some type of /dev/keyb/...
 
-# FIX: make these keys conditional so that my keymap verifies on ubuntu
-#
-# #ifdef darwin_HOST_OS
-#   , (KeyLaunchpad,      ["lp"])
-#   , (KeyMissionCtrl,    ["mctl"])
-# #endif
-
 # FIX: layour legend
 #     https://github.com/kmonad/kmonad/discussions/420
-
-# ??????
-# index a string in bash
-# https://unix.stackexchange.com/questions/303960/index-a-string-in-bash
 
 function kmonad_run_new() (
 	source "$DOROTHY/sources/bash.bash"
@@ -37,27 +26,8 @@ function kmonad_run_new() (
 	KMONAD_CONFIG_DIR="$XDG_CONFIG_HOME/kmonad"
 	KARABINER_APP="/Applications/.Karabiner-VirtualHIDDevice-Manager.app"
 
-	# ============================================
-	# User config variables
-
-	USER_HARDWARE_KEYBOARD_LIST=(
-		"ergo"
-		"mbpro_x86"
-		"mbair_m1"
-		"mbpro_x86_ubuntu"
-	)
-	declare -A DEFSRC_FILES=(
-		[ergo]="defsrc_ergodox.kbd"
-		[mbpro_x86]="defsrc_mbpro_swe.kbd"
-		[mbair_m1]="defsrc_mbair.kbd"
-		[mbpro_x86_ubuntu]="defsrc_mbpro_x86_ubuntu_US.kbd" # should this be its own file?
-	)
-	declare -A DEFCFG_INPUT_STRINGS=(
-		[ergo]="Ergodox EZ"
-		[mbpro_x86]="Apple Internal Keyboard / Trackpad"
-		[mbair_m1]="Apple Internal Keyboard / Trackpad"
-		[mbpro_x86_ubuntu]="/dev/input/by-id/usb-Apple_Inc._Apple_Internal_Keyboard___Trackpad-event-kbd"
-	)
+	# Config
+	source "$KMONAD_CONFIG_DIR/config"
 
 	# =================================
 
@@ -537,7 +507,7 @@ function kmonad_run_new() (
 			# In kmonad repo...
 			: # make; ./list-keyboards
 		else
-			: # cat dev/input/by-id/
+			: # ls dev/input/by-id/ | grep event-kbd
 		fi
 	}
 
