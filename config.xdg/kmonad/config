@@ -19,7 +19,7 @@ declare -A DEFSRC_FILES=(
 	[ergo]="defsrc_ergodox.kbd"
 	[mbpro_x86]="defsrc_mbpro_swe.kbd"
 	[mbair_m1]="defsrc_mbair.kbd"
-	[mbpro_x86_ubuntu]="defsrc_mbpro_x86_ubuntu_US.kbd" # should this be its own file?
+	[mbpro_x86_ubuntu]="defsrc_mbpro_swe.kbd" # should this be its own file?
 )
 
 # Input string for hardware (same can be used for multiple)
