@@ -495,6 +495,8 @@ function kmonad_run_new() (
 		else
 			echo "Run command is commented out in [run]"
 			# sudo "${parts[@]}" --allow-cmd
+
+			mapfile -t cmd <<<"$fodder"
 			eval-helper --wrap --no-quiet -- sudo "${cmd[@]}" --allow-cmd
 			# if is-mac; then
 			# else
