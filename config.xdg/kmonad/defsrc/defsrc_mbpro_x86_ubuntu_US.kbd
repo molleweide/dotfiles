@@ -3,6 +3,6 @@
 (defsrc
   q    w    e    r    t         y    u    i    o    p
   a    s    d    f    g         h    j    k    l    ;
-  \<   z    x    c    v         n    m    ,    .    /
+  (around lsft ,)   z    x    c    v         n    m    ,    .    /
             lalt lmet      spc       rmet ralt
 )
