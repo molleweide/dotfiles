@@ -488,13 +488,17 @@ function kmonad_run_new() (
 	function run() {
 		local status
 		echo-style --bold="Running kmonad now..."
-		eval_capture --statusvar=status --stdoutvar=parts -- get_necessary_parts
+		eval_capture --statusvar=status --stdoutvar=fodder -- get_necessary_parts
 
-		if ! test $status -eq 0; then
+		if test $status -ne 0; then
 			echo-error "Failed to put together command for dry/run"
 		else
 			echo "Run command is commented out in [run]"
 			# sudo "${parts[@]}" --allow-cmd
+			eval-helper --wrap --no-quiet -- sudo "${cmd[@]}" --allow-cmd
+			# if is-mac; then
+			# else
+			# fi
 		fi
 	}
 
