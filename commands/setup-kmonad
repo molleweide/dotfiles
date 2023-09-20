@@ -15,6 +15,14 @@
 #     hardwares on the system. i believe this is mostly useful on linux since
 #     keyboards are located in some type of /dev/keyb/...
 
+# NOTE: the defsrc file could actually be made into one bash script that outputs
+# a dynamic EOF string, so that I could just use the same layout for all of my
+# keyboards.
+#   >> Call the `defsrc` with an argument for the hardware and then have a
+#   conditional statement that makes sure to create all of the correct
+#   keys
+#   if mbpro_swedish, elif mbair, elif ergo, elif ubuntu, etc...
+
 # FIX: layour legend
 #     https://github.com/kmonad/kmonad/discussions/420
 
