@@ -5,12 +5,7 @@
 source "$DOROTHY/config/setup.bash"
 
 APK_INSTALL=(
-	# gocryptfs: use `setup-util-gocryptfs` instead, as this version lags behind
-	aria2
-	git
-	gnupg
-	tree
-	wget
+	'tree'
 )
 
 # APT_REMOVE=(
@@ -382,20 +377,15 @@ HOMEBREW_FONTS=(
 )
 GO_LINTING_INSTALL=no
 APT_INSTALL=(
-	'aria2'
+	# 'alacritty'
 	'atomicparsley'
-	'build-essential'
-	'curl'
-	'git'
+	'btrfs-progs'
 	'gnome-keyring'
+	'kitty'
 	'libnotify-bin'
-	'libssl-dev'
-	'make'
-	'openssl'
-	'traceroute'
-	'vim'
-	'tmux'
 	'ranger'
+	'tmux'
+	'traceroute'
 )
 
 HASKEL_INSTALL=(
