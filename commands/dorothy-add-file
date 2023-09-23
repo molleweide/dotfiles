@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+#
+# TODO:
+#
+#   ~ core/user
+#
+#       1. user is default
+#       2. -[d] for core
+#
+#   ~ regular/local
+#
+#       1. regular is default
+#       2. -[l] for local
+#
+#   ~ command/config
+#
+#       1. command is default
+#       2. -[g] for config
+#
+#   ~ if config choose shell env
+#
+#       sh|bash|zsh|fish|nu
+#
+#       use capital letters for this.
+#
+#   ~ -E for edit the new file
+#
+#  EXAMPLES
+#
+#   add -dg  -> add .bash config file to core
+#
+#   add -l some-file -> adds new local command to user
+#
+#   add -d some-cmd -> add new command to core
+#
+#   add -df -> add new command to core with flag-while-loop boilerplate
+#
+#   add -dfh -> add new command with help and flags boilerplate
+
+function dorothy_add_file() (
+	source "$DOROTHY/sources/bash.bash"
+
+	# =====================================
+	# Help
+
+	function help {
+		cat <<-EOF >/dev/stderr
+			USAGE:
+			  dorothy-add-file -[arstss] <filename>
+
+			      DESCRIPTION:
+			      Utility for quickly adding new files to dorothy core/user with necessary
+			      boilerplate.
+
+		EOF
+		if test "$#" -ne 0; then
+			echo-error "$@"
+		fi
+		return 22 # EINVAL 22 Invalid argument
+	}
+
+	# =====================================
+	# Input args
+
+	# process
+	local item new_name='' flags=''
+	while test "$#" -ne 0; do
+		item="$1"
+		shift
+		case "$item" in
+		'--help' | '-h') help ;;
+		'-'*)
+			flags="${item#*-}"
+			;;
+		*)
+			if test -z "$new_name"; then
+				new_name="$item"
+			else
+				help "An unrecognised argument was provided: $item"
+			fi
+			;;
+		esac
+	done
+
+	function add_new_file() {
+		local is_core='no' hidden='no' is_config='no' for_shell='bash' edit='no' add_help='no' add_flags='no'
+
+		echo "flags:  $flags"
+		echo "name:   $new_name"
+
+    # Analyze flag options
+		for ((i = 0; i < ${#flags}; i++)); do
+			char="${flags:i:1}"
+			echo "Character at position $i: $char"
+
+			case "$char" in
+			a) help ;;
+			esac
+		done
+
+    # Conditionally create the new file
+
+	}
+
+	# =====================================
+	# Action
+
+	if test -z "$new_name"; then
+		help "No <new_name> provided."
+	else
+		add_new_file
+	fi
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	dorothy_add_file "$@"
+fi
