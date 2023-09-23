@@ -64,6 +64,10 @@ function dorothy_add_file() (
 
 	# process
 	local item new_name='' flags=''
+	local is_core='no' hidden='no' is_config='no' for_shell='bash'
+	local edit='no' add_help='no' add_flags='no'
+	local minimal='no' complex='no'
+
 	while test "$#" -ne 0; do
 		item="$1"
 		shift
@@ -71,6 +75,21 @@ function dorothy_add_file() (
 		'--help' | '-h') help ;;
 		'-'*)
 			flags="${item#*-}"
+			for ((i = 0; i < ${#flags}; i++)); do
+				char="${flags:i:1}"
+				case "$char" in
+				c) is_core='yes' ;;    # core
+				l) hidden='yes' ;;     # secret
+				g) is_config='yes' ;;  # config
+				S) for_shell='sh' ;;   # shell
+				Z) for_shell='zsh' ;;  # shell
+				F) for_shell='fish' ;; # shell
+				N) for_shell='nu' ;;   # shell
+				E) edit='yes' ;;       # edit
+				H) add_help='yes' ;;   # add help
+				A) add_flags='yes' ;;  # add args processing
+				esac
+			done
 			;;
 		*)
 			if test -z "$new_name"; then
@@ -82,24 +101,123 @@ function dorothy_add_file() (
 		esac
 	done
 
-	function add_new_file() {
-		local is_core='no' hidden='no' is_config='no' for_shell='bash' edit='no' add_help='no' add_flags='no'
+	function command_template() {
+		local command_name="${1//-/_}"
 
-		echo "flags:  $flags"
+		local eof_end_hack="EOF"
+
+		cat <<-EOF
+			#!/usr/bin/env bash
+
+			function ${command_name}_test() (
+			  source "\$DOROTHY/sources/bash.bash"
+			  echo-segment --h1="TEST: \$0"
+			  echo-segment --g1="TEST: \$0"
+			  return 0
+			)
+			function $command_name() (
+			  source "\$DOROTHY/sources/bash.bash"
+
+			  function help {
+			    cat <<-EOF >/dev/stderr
+			      USAGE:
+			        $1 ...
+
+			      DESCRIPTION:
+			        ...
+
+			$eof_end_hack
+			    if test "\$#" -ne 0; then
+			    echo-error "\$@"
+			    fi
+			    return 22 # EINVAL 22 Invalid argument
+			  }
+
+			# =====================================
+			# Args
+
+			local item action=''
+			while test "\$#" -ne 0; do
+			  item="\$1"
+			  shift
+			  case "\$item" in
+			    '--help' | '-h') help ;;
+			    *)
+			    if test -z "\$action"; then
+				    action="\$item"
+			    else
+				    help "An unrecognised argument was provided: \$item"
+			    fi
+			    ;;
+			  esac
+			done
+
+			# =====================================
+			# Action
+
+			if test -z "\$action"; then
+			  help "No <new_name> provided."
+			else
+			  :
+			fi
+			)
+
+			# fire if invoked standalone
+			if test "\$0" = "\${BASH_SOURCE[0]}"; then
+			  $command_name "\$@"
+			fi
+		EOF
+	}
+
+	function config_template() {
+		cat <<-EOF
+			#!/usr/bin/env bash
+			# do not use \$(export) keyword in this file:
+			# shellcheck disable=SC2034
+		EOF
+	}
+
+	function add_help_snippet() {
+		:
+	}
+
+	function add_args_snippet() {
+		:
+	}
+
+	function add_new_file() {
 		echo "name:   $new_name"
 
-    # Analyze flag options
-		for ((i = 0; i < ${#flags}; i++)); do
-			char="${flags:i:1}"
-			echo "Character at position $i: $char"
+		# Put together new file path destination
+		local base="$DOROTHY/user"
+		local sub_dir='commands'
+		if test $is_core = "yes"; then
+			base="$DOROTHY"
+		fi
+		if test $is_config = "yes"; then
+			sub_dir="config"
+		fi
+		if test $hidden = "yes"; then
+			sub_dir="$sub_dir.local"
+		fi
+		local final_dest="$base/$sub_dir/$new_name"
 
-			case "$char" in
-			a) help ;;
-			esac
-		done
+		echo "dest: $final_dest"
 
-    # Conditionally create the new file
+		# Make sure we don't override an existing file
+		if [ -e "$final_dest" ]; then
+			echo "The file [$final_dest] already exists."
+			return 0
+		fi
 
+		# Put together file template
+		if test $is_config = 'yes'; then
+			config_template >"$final_dest"
+		else
+			command_template "$new_name" >"$final_dest"
+		fi
+
+		# chmod +x new-file
 	}
 
 	# =====================================
