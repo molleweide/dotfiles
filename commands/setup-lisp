@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+function setup_lisp_test() (
+  source "$DOROTHY/sources/bash.bash"
+  echo-segment --h1="TEST: $0"
+  echo-segment --g1="TEST: $0"
+  return 0
+)
+function setup_lisp() (
+  source "$DOROTHY/sources/bash.bash"
+
+  function help {
+    cat <<-EOF >/dev/stderr
+      USAGE:
+        setup-lisp ...
+
+      DESCRIPTION:
+        ...
+
+EOF
+    if test "$#" -ne 0; then
+    echo-error "$@"
+    fi
+    return 22 # EINVAL 22 Invalid argument
+  }
+
+# =====================================
+# Args
+
+local item action=''
+while test "$#" -ne 0; do
+  item="$1"
+  shift
+  case "$item" in
+    '--help' | '-h') help ;;
+    *)
+    if test -z "$action"; then
+    action="$item"
+    else
+    help "An unrecognised argument was provided: $item"
+    fi
+    ;;
+  esac
+done
+
+# =====================================
+# Action
+
+if test -z "$action"; then
+  help "No <new_name> provided."
+else
+  :
+fi
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+  setup_lisp "$@"
+fi
