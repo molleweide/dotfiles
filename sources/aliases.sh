@@ -1,9 +1,10 @@
 # reload aliases
 function reload_aliases() {
-	echo "reloading aliases (and environment.)"
+	echo "[RELOADING SHELL]"
 	source "$DOROTHY/sources/environment.sh"
-	source $DOROTHY/user/sources/aliases.sh
-	source $DOROTHY/user/sources/nvim.sh
+	source "$DOROTHY/sources/interactive.sh"
+	# source "$DOROTHY/user/sources/aliases.sh"
+	# source "$DOROTHY/user/sources/nvim.sh"
 	# source $DOROTHY/user/sources/asdf.bash
 	# source $XDG_CONFIG_HOME/dorothy/sources/aliases.sh
 	# source $XDG_CONFIG_HOME/dorothy/sources/nvim.sh

@@ -1,41 +1,43 @@
 #!/usr/bin/env bash
-#
-# TODO:
-#
+
+# TODO: add flag for `minimal` so that one can quickly wrap scripts in the
+# dorothy command pattern
+
+# TODO: brainstorming ideas
 #   ~ core/user
-#
 #       1. user is default
 #       2. -[d] for core
-#
 #   ~ regular/local
-#
 #       1. regular is default
 #       2. -[l] for local
-#
 #   ~ command/config
-#
 #       1. command is default
 #       2. -[g] for config
-#
 #   ~ if config choose shell env
-#
 #       sh|bash|zsh|fish|nu
-#
 #       use capital letters for this.
-#
 #   ~ -E for edit the new file
-#
-#  EXAMPLES
-#
+
+#  NOTE: EXAMPLES
 #   add -dg  -> add .bash config file to core
-#
 #   add -l some-file -> adds new local command to user
-#
 #   add -d some-cmd -> add new command to core
-#
 #   add -df -> add new command to core with flag-while-loop boilerplate
-#
 #   add -dfh -> add new command with help and flags boilerplate
+
+# FIX: HOW TO SPLIT TEMPLATE INTO REUSABLE COMPONENTS
+# Store the content directly in a variable without using cat or a subshell
+# read -r MY_CONTENT <<EOF
+# This is some text.
+# You can put multiple lines here.
+# EOF
+# # Insert the variable into another heredoc segment with additional indentation
+# cat <<EOF
+# This is before the variable:
+# More text here.
+#     $MY_CONTENT
+# This line is also indented.
+# EOF
 
 function dorothy_add_file() (
 	source "$DOROTHY/sources/bash.bash"
@@ -186,7 +188,7 @@ function dorothy_add_file() (
 	}
 
 	function add_new_file() {
-		echo "name:   $new_name"
+		# echo "name:   $new_name"
 
 		# Put together new file path destination
 		local base="$DOROTHY/user"
@@ -202,7 +204,7 @@ function dorothy_add_file() (
 		fi
 		local final_dest="$base/$sub_dir/$new_name"
 
-		echo "dest: $final_dest"
+		# echo "dest: $final_dest"
 
 		# Make sure we don't override an existing file
 		if [ -e "$final_dest" ]; then
@@ -217,7 +219,9 @@ function dorothy_add_file() (
 			command_template "$new_name" >"$final_dest"
 		fi
 
-		# chmod +x new-file
+		chmod +x "$final_dest"
+
+		echo "$final_dest"
 	}
 
 	# =====================================

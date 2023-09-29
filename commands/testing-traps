@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+function testing_traps() (
+	source "$DOROTHY/sources/bash.bash"
+
+	# # 1. press ctrl-c and trap echoes
+	# trap 'echo "Ctrl+C was pressed"' SIGINT
+	# while true; do
+	# 	sleep 5
+	# done
+
+  # 2. clean up on exit
+	function cleanup {
+		echo "Cleaning up..."
+		# Add cleanup actions here
+	}
+	trap 'cleanup' EXIT
+	# Your script logic here
+	echo "Script is running..."
+	# Simulate the script finishing
+	exit 0
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	testing_traps "$@"
+fi
