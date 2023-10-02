@@ -3,49 +3,6 @@
 # TODO: add flag for `minimal` so that one can quickly wrap scripts in the
 # dorothy command pattern
 
-# FIX: TYPES OF COMMANDS
-# 1. normal command
-# 2. stdin-args command, eg. echo-style pattern
-# 3. setup-util pattern
-# 4. configs
-# 5. sources
-
-# TODO: brainstorming ideas
-#   ~ core/user
-#       1. user is default
-#       2. -[d] for core
-#   ~ regular/local
-#       1. regular is default
-#       2. -[l] for local
-#   ~ command/config
-#       1. command is default
-#       2. -[g] for config
-#   ~ if config choose shell env
-#       sh|bash|zsh|fish|nu
-#       use capital letters for this.
-#   ~ -E for edit the new file
-
-#  NOTE: EXAMPLES
-#   add -dg  -> add .bash config file to core
-#   add -l some-file -> adds new local command to user
-#   add -d some-cmd -> add new command to core
-#   add -df -> add new command to core with flag-while-loop boilerplate
-#   add -dfh -> add new command with help and flags boilerplate
-
-# FIX: HOW TO SPLIT TEMPLATE INTO REUSABLE COMPONENTS
-# Store the content directly in a variable without using cat or a subshell
-# read -r MY_CONTENT <<EOF
-# This is some text.
-# You can put multiple lines here.
-# EOF
-# # Insert the variable into another heredoc segment with additional indentation
-# cat <<EOF
-# This is before the variable:
-# More text here.
-#     $MY_CONTENT
-# This line is also indented.
-# EOF
-
 function dorothy_add_file() (
 	source "$DOROTHY/sources/bash.bash"
 
@@ -89,6 +46,7 @@ EOF
 				echo-segment --g1="TEST: \$0"
 				return 0
 			)
+
 		EOF
 		# fi
 	}
@@ -114,6 +72,7 @@ EOF
 				    ;;
 				  esac
 				done
+
 			EOF
 		fi
 	}
@@ -134,6 +93,7 @@ EOF
 			    fi
 			    return 22 # EINVAL 22 Invalid argument
 			  }
+
 		EOF
 	}
 
@@ -149,7 +109,6 @@ EOF
 			#!/usr/bin/env bash
 
 			$(command_test_template $command_name)
-
 			# =====================================
 			# MAIN COMMAND \`${new_name^^}\`
 
@@ -157,9 +116,7 @@ EOF
 			  source "\$DOROTHY/sources/bash.bash"
 
 			  $(help_template)
-
 			  $(flags_template)
-
 			  # =====================================
 			  # Action
 
@@ -180,7 +137,27 @@ EOF
 		:
 	}
 	function command_setup_util_template() {
-		:
+		local command_name="${1//-/_}"
+		cat <<-EOF
+			#!/usr/bin/env bash
+
+			function $command_name() (
+			  source "\$DOROTHY/sources/bash.bash"
+
+			  # improve performance
+			  if is-needle --quiet "$@" && ! is-needle --upgrade "$@" && ! is-needle --uninstall "$@" && command-exists {REPLACE_ME}; then
+			    return 0
+			  fi
+
+			        # Code goes here...
+
+			)
+
+			# Fire if invoked standalone
+			if test "\$0" = "\${BASH_SOURCE[0]}"; then
+			  $command_name "\$@"
+			fi
+		EOF
 	}
 	function config_template() {
 		cat <<-EOF
@@ -200,19 +177,28 @@ EOF
 
 		# Base dir - core | user
 		local base="$DOROTHY/user"
-		if test $is_core = "yes"; then
+		if test "$is_core" = "yes"; then
 			base="$DOROTHY"
 		fi
 
 		# Subdir - commands | config | sources
 		local sub_dir='commands'
 		case "$file_type" in
-		normal | stdin | util) sub_dir='commands' ;;
-		config) sub_dir='config' ;;
-		source) sub_dir='sources' ;;
+		normal | stdin | util)
+			sub_dir='commands'
+			is_command='yes'
+			;;
+		config)
+			sub_dir='config'
+			is_config='yes'
+			;;
+		source)
+			sub_dir='sources'
+			is_source='yes'
+			;;
 		esac
 
-		if test $hidden = "yes"; then
+		if test "$hidden" = "yes"; then
 			sub_dir="$sub_dir.local"
 		fi
 
@@ -227,13 +213,26 @@ EOF
 		fi
 
 		# Create the actual file
-		if test $is_config = 'yes'; then
-			# config_template >"$final_dest"
-			cat config_template
-		else
-			# command_normal_template "$new_name" >"$final_dest"
-			command_normal_template "$new_name"
+		if test "$is_config" = 'yes'; then
+			config_template >"$final_dest"
+			# cat config_template
+		elif test "$is_command" = 'yes'; then
+			case $file_type in
+			normal)
+				command_normal_template "$new_name" >"$final_dest"
+				# command_normal_template "$new_name"
+				;;
+			stdin)
+				command_stdin_args_template "$new_name" >"$final_dest"
+				;;
+			util)
+				command_setup_util_template "$new_name" >"$final_dest"
+				;;
+			esac
+		elif test "$is_source" = 'yes'; then
+			:
 		fi
+
 		chmod +x "$final_dest"
 
 		echo "$final_dest"
@@ -245,6 +244,7 @@ EOF
 	# process
 	local item new_name='' flags=''
 	local is_core='no' hidden='no' is_config='no' for_shell='bash'
+	local is_command='' is_config='' is_source=''
 	local edit='no' add_help='no' add_flags='no'
 	local minimal='no' complex='no'
 
