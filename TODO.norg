@@ -1,0 +1,35 @@
+
+
+
+* SHELL OPTIONS WORTH USING
+
+  ** cmdhist
+
+    With cmdhist Set:
+      When cmdhist is set, Bash records multiple lines of input as a single history entry, regardless of whether they are part of a multi-line command or separate commands on different lines. It combines lines entered in the same session until the user presses Enter without any continuation (e.g., a new prompt is displayed).
+
+    With cmdhist Unset:
+      When cmdhist is unset, Bash records each line of input as a separate history entry. Each line, even within a multi-line command, is saved individually.
+
+  ** histappend
+
+    With histappend set, Bash appends new history entries to the history file (typically ~/.bash_history) rather than overwriting the file. This preserves the history across multiple shell sessions.
+
+  ** histverify
+
+    With histverify set, after you use the fc (history editing) command to edit a history entry and press Enter, the edited command is displayed for verification but not executed. You need to press Enter again to execute it.
+
+  ** hostcomplete
+
+    With hostcomplete set, Bash performs hostname completion when you press Tab after an @ character in commands. It attempts to complete hostnames from your system's known hosts.
+
+  ** localvar_unset
+
+    With localvar_unset set, local variables declared in a function are automatically unset (deleted) when the function exits or returns.
+    (otherwise you'll be able to echo the func variable outside later, which seems wierd)
+
+  ** xpg_echo
+
+    https://stackoverflow.com/questions/13517818/bash-shopt-xpg-echo
+    With xpg_echo set, Bash attempts to mimic the behavior of the echo command as specified in the POSIX standard (POSIX-compliant behavior). This may affect how echo interprets escape sequences.
+    This would for example expand \n into a line break.

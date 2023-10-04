@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+# https://github.com/rvaiya/warpd
+
+# NOTE: currently dependent on GHQ (x-motemen/ghq)
+
+function setup_util_warpd() (
+	source "$DOROTHY/sources/bash.bash"
+
+	# improve performance
+	if is-needle --quiet "setup-util-warpd" && ! is-needle --upgrade "setup-util-warpd" && ! is-needle --uninstall "setup-util-warpd" && command-exists warpd; then
+		return 0
+	fi
+
+	local GHQ_WARPD_REPO=''
+
+	# Install dependencies
+	if is-linux; then
+		setup-util --cli='libxi-dev' APT='libxi-dev'
+		setup-util --cli='libxinerama-dev' APT='libxinerama-dev'
+		setup-util --cli='libxft-dev' APT='libxft-dev'
+		setup-util --cli='libxfixes-dev' APT='libxfixes-dev'
+		setup-util --cli='libxtst-dev' APT='libxtst-dev'
+		setup-util --cli='libx11-dev' APT='libx11-dev'
+		setup-util --cli='libcairo2-dev' APT='libcairo2-dev'
+		setup-util --cli='libxkbcommon-dev' APT='libxkbcommon-dev'
+		setup-util --cli='libwayland-dev' APT='libwayland-dev'
+	fi
+
+	# Pull warpd repo
+	GHQ_WARPD_REPO=$(ghq list -p "rvaiya/warpd")
+	if test -z "$GHQ_WARPD_REPO"; then
+		ghq get -p git@github.com:rvaiya/warpd.git
+		GHQ_WARPD_REPO=$(ghq list -p "github.com/rvaiya/warpd")
+	fi
+
+	# # Build
+	cd "$GHQ_WARPD_REPO" && git pull
+	# make
+	# sudo make install
+
+	echo ">>> $GHQ_WARPD_REPO"
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	setup_util_warpd "$@"
+fi

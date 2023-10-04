@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+function ttt2_test() (
+  source "$DOROTHY/sources/bash.bash"
+  echo-segment --h1="TEST: $0"
+  echo-segment --g1="TEST: $0"
+  return 0
+)
+function ttt2() (
+  source "$DOROTHY/sources/bash.bash"
+
+  function help {
+    cat <<-EOF >/dev/stderr
+      USAGE:
+        ttt2 ...
+
+      DESCRIPTION:
+        ...
+
+EOF
+    if test "$#" -ne 0; then
+    echo-error "$@"
+    fi
+    return 22 # EINVAL 22 Invalid argument
+  }
+
+
+
+# =====================================
+# Action
+
+if test -z "$action"; then
+  help "No <new_name> provided."
+else
+  :
+fi
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+  ttt2 "$@"
+fi
