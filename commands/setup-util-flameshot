@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+function setup_util_flameshot() (
+	source "$DOROTHY/sources/bash.bash"
+
+	# improve performance
+	if is-needle --quiet "setup-util-flameshot" && ! is-needle --upgrade "setup-util-flameshot" && ! is-needle --uninstall "setup-util-flameshot" && command-exists {REPLACE_ME}; then
+		return 0
+	fi
+
+	# https://github.com/flameshot-org/flameshot
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	setup_util_flameshot "$@"
+fi

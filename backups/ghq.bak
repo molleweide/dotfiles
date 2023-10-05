@@ -234,3 +234,6 @@ github.com/windwp/nvim-ts-autotag
 github.com/x-motemen/ghq
 github.com/ziontee113/color-picker.nvim
 github.com/zmkfirmware/zmk
+github.com/tmux-plugins/tmux-resurrect
+github.com/akinsho/toggleterm.nvim
+github.com/akinsho/toggleterm.nvim

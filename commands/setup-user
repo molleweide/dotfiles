@@ -36,7 +36,7 @@ function setup_basic_xdg_config_symlinks() {
 	done
 }
 
-function setup_neovim() {
+function setup_doom_neovim_config() {
 	echo-header "SETTING UP NEOVIM..."
 	# doom_nvim_dir="$HOME/code/doom-nvim"
 	# if [ ! -d "$HOME/code/doom-nvim" ]; then
@@ -47,6 +47,8 @@ function setup_neovim() {
 	symlink-helper --existing="$GHQ_ROOT_GH_USER/doom-nvim" --symlink="$XDG_CONFIG_HOME/nvim"
 }
 
+# FIX: create `setup-util-tmux` for tmux
+#       look at syncthing, to see how uninstalling is done.
 function setup_tmux_user() {
 	echo-header "SETTING UP TMUX..."
 	# https://github.com/tmux-plugins/tmux-urlview
@@ -71,6 +73,7 @@ function setup_osx() {
 	:
 }
 
+# FIX: setup-hammerspoon. it makes sense to have everything in a setup script
 function setup_hammerspoon() {
 	if is-mac; then
 		HAMMERSPOON_CONFIG_DIR="$HOME/code/config_hammerspoon"
@@ -117,7 +120,7 @@ function setup_obs() {
 
 # pull_molleweide_latest
 # setup_basic_xdg_config_symlinks
-# setup_neovim
+# setup_doom_neovim_config
 # setup_tmux_user
 # setup_neorg_notes
 # setup_osx
