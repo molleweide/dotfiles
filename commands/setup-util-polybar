@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+function setup_util_polybar() (
+  source "$DOROTHY/sources/bash.bash"
+
+  # improve performance
+  if is-needle --quiet "setup-util-polybar" && ! is-needle --upgrade "setup-util-polybar" && ! is-needle --uninstall "setup-util-polybar" && command-exists {REPLACE_ME}; then
+    return 0
+  fi
+
+        # Code goes here...
+
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+  setup_util_polybar "$@"
+fi

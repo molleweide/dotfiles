@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+# NOTE: STATUS BARS TO CHECK OUT
+# setup-util-polybar
+# lemonbar
+# i3status
+# https://codeberg.org/xmobar/xmobar
+# spacebar for macos
+
+# ============================================
+# TESTS FOR `SETUP_STATUS_BAR`
+
+function setup_status_bar_test() (
+source "$DOROTHY/sources/bash.bash"
+echo-segment --h1="TEST: $0"
+echo-segment --g1="TEST: $0"
+return 0
+)
+# =====================================
+# MAIN COMMAND `SETUP-STATUS-BAR`
+
+function setup_status_bar() (
+  source "$DOROTHY/sources/bash.bash"
+
+    function help {
+    cat <<-EOF >/dev/stderr
+      USAGE:
+        setup-status-bar ...
+
+      DESCRIPTION:
+        ...
+
+EOF
+    if test "$#" -ne 0; then
+    echo-error "$@"
+    fi
+    return 22 # EINVAL 22 Invalid argument
+  }
+
+  # =====================================
+  # Action
+
+  if test -z "$action"; then
+    help "No <new_name> provided."
+  else
+    :
+  fi
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+  setup_status_bar "$@"
+fi

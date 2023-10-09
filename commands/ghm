@@ -46,44 +46,6 @@ function ghm() (
 	}
 
 	# =====================================
-	# ??
-
-	actions=(
-		restore
-		backup
-		get
-		new
-		vim
-	)
-
-	# process
-	action=''
-	args=()
-	# option_dry='no'
-	while test "$#" -ne 0; do
-		item="$1"
-		shift
-		case "$item" in
-		'help' | '--help' | '-h') help ;;
-		'--') ;;
-		'--'*) help "An unrecognised flag was provided: $item" ;;
-		*)
-			# if is empty string
-			if test -z "$action"; then
-				action="$item"
-				# elif test -z "$args"; then
-			else
-				args+=("$item")
-			# elif test -z "$item"; then
-			# 	help "Empty path argument provided."
-			# else
-			# 	args+=("$item")
-			fi
-			;;
-		esac
-	done
-
-	# =====================================
 	# Helpers
 
 	# this has been moved to its own command?
@@ -140,8 +102,6 @@ function ghm() (
 	}
 
 	function backup() {
-		# TODO: first check and make sure that a new repo does not already exists
-		# in the backup file
 		local repo_url=$1
 		local already_prepared=$2
 
@@ -150,16 +110,16 @@ function ghm() (
 		else
 
 			if test "$already_prepared" = "true"; then
-
 				"$repo_url" >>"$DOROTHY/user/backups/ghq.bak"
 			else
 				local result_array=($(get_parts "$repo_url"))
 
-				"${result_array[0]}/${result_array[1]}/${result_array[2]}" >>"$DOROTHY/user/backups/ghq.bak"
+				# FIX: first check and make sure that a new repo does not already exists
+				# in the backup file
+				echo "${result_array[0]}/${result_array[1]}/${result_array[2]}" >>"$DOROTHY/user/backups/ghq.bak"
 			fi
 
-			# NOTE: what does this really do??
-			locatedb_load
+			locatedb-load >/dev/null 2>&1 &
 		fi
 
 	}
@@ -273,7 +233,7 @@ function ghm() (
 	function init_github_remote() {
 		local repo_name=$1
 
-    # FIX: look at how dorothy does pushd
+		# FIX: look at how dorothy does pushd
 
 		pushd "$GHQ_GH_USER_PATH/$repo_name" >/dev/null 2>&1
 		echo "# $repo_name" >README.md
@@ -345,13 +305,84 @@ function ghm() (
 		backup "github.com/$GITHUB_USER/$repo_name" true
 	}
 
+	# =================================
+	# Help
+
+	# TODO:
+	# ~ add command for making sure that all ghq repos have been added to
+	# backup, ie. are synced with the backup file.
+
+	function help {
+		cat <<-EOF >/dev/stderr
+			ABOUT:
+
+			ghm
+
+			# NOTE: CRUD wrapper around GHQ for Dorothy.
+			# It makes sure that information about what repos your are using are backed
+			# up properly to your dorothy user config.
+
+
+			????
+
+			USAGE:
+			?????
+		EOF
+		if test "$#" -ne 0; then
+			echo-error "$@"
+		fi
+		return 22 # EINVAL 22 Invalid argument
+	}
+
+	# =====================================
+	# ??
+
+	actions=(
+		restore
+		backup
+		get
+		new
+		vim
+	)
+
+	# process
+	action=''
+	args=()
+	# option_dry='no'
+	while test "$#" -ne 0; do
+		item="$1"
+		shift
+		case "$item" in
+		'help' | '--help' | '-h') help ;;
+		'--') ;;
+		'--'*) help "An unrecognised flag was provided: $item" ;;
+		*)
+			# if is empty string
+			if test -z "$action"; then
+				action="$item"
+				# elif test -z "$args"; then
+			else
+				args+=("$item")
+			# elif test -z "$item"; then
+			# 	help "Empty path argument provided."
+			# else
+			# 	args+=("$item")
+			fi
+			;;
+		esac
+	done
+
 	# =====================================
 	# Act
 
 	# echo ">>> $action ${args[@]}"
 
+	# add
+
 	if test "$action" = "test"; then
 		testing "${args[@]}"
+	elif test "$action" = "add_missing"; then
+		:
 	elif test "$action" = "restore_repos"; then
 		restore_repos
 	elif test "$action" = 'remove_repo'; then

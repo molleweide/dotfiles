@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
 # FIX: EXTERNAL DISPLAYS ARE NOT INCLUDED
+#
+# todo: would it be possible to initiate the screenshot-crop feature so that
+# one can use the pointer to select which area to screen shot from
 
+# TODO: export in user config
 screenshot_dir="$HOME/Documents/Screenshots"
 
 mkdir -p $screenshot_dir

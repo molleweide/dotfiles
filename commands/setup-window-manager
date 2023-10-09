@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+# NOTE: window managers
+# ~ https://dwm.suckless.org/
+
+# ============================================
+# TESTS FOR `SETUP_WINDOW_MANAGER`
+
+function setup_window_manager_test() (
+source "$DOROTHY/sources/bash.bash"
+echo-segment --h1="TEST: $0"
+echo-segment --g1="TEST: $0"
+return 0
+)
+# =====================================
+# MAIN COMMAND `SETUP-WINDOW-MANAGER`
+
+function setup_window_manager() (
+  source "$DOROTHY/sources/bash.bash"
+
+    function help {
+    cat <<-EOF >/dev/stderr
+      USAGE:
+        setup-window-manager ...
+
+      DESCRIPTION:
+        ...
+
+EOF
+    if test "$#" -ne 0; then
+    echo-error "$@"
+    fi
+    return 22 # EINVAL 22 Invalid argument
+  }
+
+  # =====================================
+  # Action
+
+  if test -z "$action"; then
+    help "No <new_name> provided."
+  else
+    :
+  fi
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+  setup_window_manager "$@"
+fi

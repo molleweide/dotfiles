@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# NOTE: launcher apps
+# ~ https://codeberg.org/dnkl/fuzzel
+# ~ https://github.com/davatorium/rofi
+# ~ https://tools.suckless.org/dmenu/
+
+# ============================================
+# TESTS FOR `SETUP_LAUNCHER`
+
+function setup_launcher_test() (
+source "$DOROTHY/sources/bash.bash"
+echo-segment --h1="TEST: $0"
+echo-segment --g1="TEST: $0"
+return 0
+)
+# =====================================
+# MAIN COMMAND `SETUP-LAUNCHER`
+
+function setup_launcher() (
+  source "$DOROTHY/sources/bash.bash"
+
+    function help {
+    cat <<-EOF >/dev/stderr
+      USAGE:
+        setup-launcher ...
+
+      DESCRIPTION:
+        ...
+
+EOF
+    if test "$#" -ne 0; then
+    echo-error "$@"
+    fi
+    return 22 # EINVAL 22 Invalid argument
+  }
+
+  # =====================================
+  # Action
+
+  if test -z "$action"; then
+    help "No <new_name> provided."
+  else
+    :
+  fi
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+  setup_launcher "$@"
+fi
