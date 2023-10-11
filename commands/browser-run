@@ -12,6 +12,19 @@
 # chromium flags
 # https://peter.sh/experiments/chromium-command-line-switches/
 
+# TODO: save desktop apps
+# # ubuntu/linux
+#     https://askubuntu.com/questions/359492/create-a-shortcut-for-url
+#     https://help.ubuntu.com/community/UnityLaunchersAndDesktopFiles
+#     https://askubuntu.com/questions/359492/create-a-shortcut-for-url#359495
+# # macos
+#     https://pixelperfectly.com/how-to-add-a-web-app-launch-icon-to-your-mac-osx-dock/
+#     https://pixelperfectly.com/how-to-add-a-website-shortcut-to-your-dock-mac/
+#     https://stackoverflow.com/questions/55696710/programmatically-add-web-app-shortcut-to-macos-dock
+
+# TODO: ask brave community question
+#   `how do I put together saved websites with bash`
+
 # ============================================
 # TESTS FOR `BRAVE_RUN`
 
@@ -31,6 +44,8 @@ function brave_run() (
 
 	GHQ_ROOT=$(ghq root)
 
+	# TODO: check if extensions exist, else prompt user
+
 	FIREFOX_PATHS=(
 		brookhong/Surfingkeys/dist/production/chrome
 		glacambre/firenvim/target/chrome
@@ -45,7 +60,7 @@ function brave_run() (
 
 	for ext in "${CHROMIUM_PATHS[@]}"; do
 
-    local full_path="$GHQ_ROOT/github.com/$ext"
+		local full_path="$GHQ_ROOT/github.com/$ext"
 
 		if [ -z "$result_paths" ]; then
 			result_paths="$full_path"
@@ -56,10 +71,17 @@ function brave_run() (
 
 	echo "$result_paths"
 
-	open -a "Brave Browser" --args \
-	  --load-extension="$result_paths" \
-	  --force-dev-mode-highlighting \
-	  --no-default-browser-check
+	if is-mac; then
+		open -a "Brave Browser" --args \
+			--load-extension="$result_paths" \
+			--force-dev-mode-highlighting \
+			--no-default-browser-check
+	else
+		brave-browser \
+			--load-extension="$result_paths" \
+			--force-dev-mode-highlighting \
+			--no-default-browser-check
+	fi
 
 )
 
