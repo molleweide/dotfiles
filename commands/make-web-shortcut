@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+# ============================================
+# TESTS FOR `MAKE_WEB_SHORTCUT`
+
+function make_web_shortcut_test() (
+	source "$DOROTHY/sources/bash.bash"
+	echo-segment --h1="TEST: $0"
+	echo-segment --g1="TEST: $0"
+	return 0
+)
+# =====================================
+# MAIN COMMAND `MAKE-WEB-SHORTCUT`
+
+function make_web_shortcut() (
+	source "$DOROTHY/sources/bash.bash"
+
+	function help {
+		cat <<-EOF >/dev/stderr
+			      USAGE:
+			        make-web-shortcut ...
+
+			      DESCRIPTION:
+			        ...
+
+		EOF
+		if test "$#" -ne 0; then
+			echo-error "$@"
+		fi
+		return 22 # EINVAL 22 Invalid argument
+	}
+
+	# =====================================
+
+	local path data='' app_id=''
+
+	path="/home/molleweide/.config/dorothy/testing/$1.Desktop"
+
+	if [ "$#" -ne 2 ]; then
+		echo "Illegal number of parameters. Usage : createUrlShortcut Name Url FileBaseName"
+	fi
+
+	app_id="$(
+		uuidgen | head -c 8
+	)"
+
+
+    # TODO: ask in community how to configure the desktop
+    # file
+
+	data=$(
+		cat <<-EOF
+			#!/usr/bin/env xdg-open
+			[Desktop Entry]
+			Version=1.0
+			Terminal=false
+			Type=Application
+
+			Name=$1
+			URL=$2
+			Icon=text-html"
+
+			Exc=???
+			StartupWMClass=???
+		EOF
+	)
+
+	echo "$data" >"$path"
+
+	# =====================================
+	# Action
+
+	# if test -z "$action"; then
+	#   help "No <new_name> provided."
+	# else
+	#   :
+	# fi
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	make_web_shortcut "$@"
+fi
