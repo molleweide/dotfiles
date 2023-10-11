@@ -1,5 +1,8 @@
-mapkey('<ctrl-y>', 'Show me the money', function() {
-  Front.showPopup('a well-known phrase uttered by characters in the 1996 film Jerry Maguire (Escape to close).');
+// surfingkeys API docs:
+//  https://github.com/brookhong/Surfingkeys/blob/master/docs/API.md
+
+api.mapkey('<ctrl-y>', 'Show me the money', function() {
+  api.Front.showPopup('a well-known phrase uttered by characters in the 1996 film Jerry Maguire (Escape to close).');
 });
 
 settings.theme = "dark";
@@ -48,4 +51,4 @@ settings.theme = `
 settings.defaultSearchEngine = "d";
 settings.useNeovim = true;
 
-Visual.style('cursor', 'background-color: #CE6E19;');
+api.Visual.style('cursor', 'background-color: #CE6E19;');

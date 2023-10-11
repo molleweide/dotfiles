@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+# NOTE:
+#
+#
+# firefox flags
+# https://wiki.mozilla.org/Firefox/CommandLineOptions
+#
+# install extensions on firefox from cli
+# https://stackoverflow.com/questions/37728865/install-webextensions-on-firefox-from-the-command-line
+#
+# chromium flags
+# https://peter.sh/experiments/chromium-command-line-switches/
+
+# ============================================
+# TESTS FOR `BRAVE_RUN`
+
+function brave_run_test() (
+	source "$DOROTHY/sources/bash.bash"
+	echo-segment --h1="TEST: $0"
+	echo-segment --g1="TEST: $0"
+	return 0
+)
+# =====================================
+# MAIN COMMAND `BRAVE-RUN`
+
+function brave_run() (
+	source "$DOROTHY/sources/bash.bash"
+
+	local GHQ_ROOT CHROMIUM_PATHS FIREFOX_PATHS
+
+	GHQ_ROOT=$(ghq root)
+
+	FIREFOX_PATHS=(
+		brookhong/Surfingkeys/dist/production/chrome
+		glacambre/firenvim/target/chrome
+	)
+
+	CHROMIUM_PATHS=(
+		brookhong/Surfingkeys/dist/production/chrome
+		glacambre/firenvim/target/chrome
+	)
+
+	local result_paths=''
+
+	for ext in "${CHROMIUM_PATHS[@]}"; do
+
+    local full_path="$GHQ_ROOT/github.com/$ext"
+
+		if [ -z "$result_paths" ]; then
+			result_paths="$full_path"
+		else
+			result_paths="$result_paths,$full_path"
+		fi
+	done
+
+	echo "$result_paths"
+
+	open -a "Brave Browser" --args \
+	  --load-extension="$result_paths" \
+	  --force-dev-mode-highlighting \
+	  --no-default-browser-check
+
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	brave_run "$@"
+fi
