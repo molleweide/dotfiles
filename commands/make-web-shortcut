@@ -44,9 +44,18 @@ function make_web_shortcut() (
 		uuidgen | head -c 8
 	)"
 
+	# #!/usr/bin/env xdg-open
+	# [Desktop Entry]
+	# Version=1.0
+	# Terminal=false
+	# Type=Application
+	# Name=ChatGPT
+	# Exec=/opt/brave.com/brave/brave-browser --profile-directory=Default --app-id=jckaldkomadaenmmgladeopgmfbahfjm
+	# Icon=brave-jckaldkomadaenmmgladeopgmfbahfjm-Default
+	# StartupWMClass=crx_jckaldkomadaenmmgladeopgmfbahfjm
 
-    # TODO: ask in community how to configure the desktop
-    # file
+	# TODO: ask in community how to configure the desktop
+	# file
 
 	data=$(
 		cat <<-EOF
