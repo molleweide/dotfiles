@@ -237,3 +237,5 @@ github.com/zmkfirmware/zmk
 github.com/tmux-plugins/tmux-resurrect
 github.com/akinsho/toggleterm.nvim
 github.com/akinsho/toggleterm.nvim
+github.com/sainnhe/tmux-fzf
+github.com/glacambre/firenvim
