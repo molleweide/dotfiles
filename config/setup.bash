@@ -280,6 +280,7 @@ CARGO_INSTALL=(
 	# cargo install --git https://github.com/boxdot/gurk-rs
 	proximity-sort
 	ttyper
+	ast-grep
 	stylua
 	bob-nvim
 )

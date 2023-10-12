@@ -9,43 +9,53 @@
 # TESTS FOR `SETUP_WINDOW_MANAGER`
 
 function setup_window_manager_test() (
-source "$DOROTHY/sources/bash.bash"
-echo-segment --h1="TEST: $0"
-echo-segment --g1="TEST: $0"
-return 0
+	source "$DOROTHY/sources/bash.bash"
+	echo-segment --h1="TEST: $0"
+	echo-segment --g1="TEST: $0"
+	return 0
 )
 # =====================================
 # MAIN COMMAND `SETUP-WINDOW-MANAGER`
 
 function setup_window_manager() (
-  source "$DOROTHY/sources/bash.bash"
+	source "$DOROTHY/sources/bash.bash"
 
-    function help {
-    cat <<-EOF >/dev/stderr
-      USAGE:
-        setup-window-manager ...
+	function help {
+		cat <<-EOF >/dev/stderr
+			      USAGE:
+			        setup-window-manager ...
 
-      DESCRIPTION:
-        ...
+			      DESCRIPTION:
+			        ...
 
-EOF
-    if test "$#" -ne 0; then
-    echo-error "$@"
-    fi
-    return 22 # EINVAL 22 Invalid argument
-  }
+		EOF
+		if test "$#" -ne 0; then
+			echo-error "$@"
+		fi
+		return 22 # EINVAL 22 Invalid argument
+	}
 
-  # =====================================
-  # Action
+	if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+		echo "Xorg (X) is being used."
+		setup-util-bspwm
+	elif [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+		echo "Wayland is being used."
+		setup-util-sway
+	else
+		echo "Unknown session type or not set."
+	fi
 
-  if test -z "$action"; then
-    help "No <new_name> provided."
-  else
-    :
-  fi
+	# =====================================
+	# Action
+
+	if test -z "$action"; then
+		help "No <new_name> provided."
+	else
+		:
+	fi
 )
 
 # Fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-  setup_window_manager "$@"
+	setup_window_manager "$@"
 fi
