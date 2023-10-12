@@ -90,7 +90,7 @@ function setup_browsers() (
 
 		IFS='->' read -ra parts <<<"$1"
 
-		# TODO: mv to cmd: trim-partial-array of empty elements
+		# TODO: how can we refactor this into `array-trim`
 		for part in "${parts[@]}"; do
 			if test -z "$part"; then
 				continue
@@ -98,30 +98,18 @@ function setup_browsers() (
 			trimmed+=("$part")
 		done
 
-		# trim_empty_entries "${parts[*]}"
-		#
-		# return
-
-		# trimmed=($(trim_empty_entries "${parts[*]}"))
-		# mapfile -t mp <<<$(trim_empty_entries "${parts[@]}")
-		#
-		# echo "mp: [$mp], ${#mp[@]}"
-
-		# print_line ">>> ${mp[0]} : ${mp[1]}"
-		print_line "repo: ${trimmed[0]}"
+    # FIX: requires # of 2
+		IFS=';' read -ra subparts <<<"${trimmed[0]}"
 		echo
+		echo "repo: ${subparts[0]}"
+		echo "subdir: ${subparts[1]}"
 
-		# local spart=()
+    # FIX: requires # of 1 minimum
+		IFS=';' read -ra subparts <<<"${trimmed[1]}"
+		for s in "${subparts[@]}"; do
+			echo "-> $(trim_whitespace "$s")"
+		done
 
-		# for spart in "${trimmed[@]}"; do
-			IFS=';' read -ra subparts <<<"${trimmed[1]}"
-			for s in "${subparts[@]}"; do
-				:
-				trim_whitespace "$s"
-			done
-		# done
-
-		# echo "trimmed: ${#trimmed[@]}"
 	}
 
 	# FIX: the above array needs to be # == even number
