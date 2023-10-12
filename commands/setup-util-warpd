@@ -16,6 +16,8 @@ function setup_util_warpd() (
 
 	local GHQ_WARPD_REPO=''
 
+	local gh_repo="rvaiya/warpd"
+
 	# TODO: put all deps in array -> loop over them and run the setup-util command
 
 	# Install dependencies
@@ -31,19 +33,16 @@ function setup_util_warpd() (
 		setup-util --cli='libwayland-dev' APT='libwayland-dev'
 	fi
 
-	# Pull warpd repo
-	GHQ_WARPD_REPO=$(ghq list -p "rvaiya/warpd")
-	if test -z "$GHQ_WARPD_REPO"; then
-		ghq get -p git@github.com:rvaiya/warpd.git
-		GHQ_WARPD_REPO=$(ghq list -p "github.com/rvaiya/warpd")
-	fi
+	GHQ_WARPD_REPO=$(ghm-get-repo-path "$gh_repo")
 
 	# # Build
 	cd "$GHQ_WARPD_REPO" && git pull
-	# make
-	# sudo make install
 
-	echo ">>> $GHQ_WARPD_REPO"
+
+	# PR: the make command fails if the bin already exists, which should be
+	# fixed in the origin repo
+	make
+	sudo make install
 )
 
 # Fire if invoked standalone
