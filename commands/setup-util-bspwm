@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+function setup_util_bspwm() (
+  source "$DOROTHY/sources/bash.bash"
+
+  # improve performance
+  if is-needle --quiet "setup-util-bspwm" && ! is-needle --upgrade "setup-util-bspwm" && ! is-needle --uninstall "setup-util-bspwm" && command-exists {REPLACE_ME}; then
+    return 0
+  fi
+
+	setup-util --cli='bspwm' APT='bspwm'
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+  setup_util_bspwm "$@"
+fi

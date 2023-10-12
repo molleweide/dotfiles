@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# tiling window manager
+
+function setup_util_sway() (
+	source "$DOROTHY/sources/bash.bash"
+
+	# improve performance
+	if is-needle --quiet "setup-util-sway" && ! is-needle --upgrade "setup-util-sway" && ! is-needle --uninstall "setup-util-sway" && command-exists {REPLACE_ME}; then
+		return 0
+	fi
+
+	setup-util --cli='sway' APT='sway'
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	setup_util_sway "$@"
+fi
