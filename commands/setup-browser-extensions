@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# FIX: why isn't `npm` found in eval-helper??
+
 # NOTE: interesting command for launching chromium/brave/chrome on mac
 # open -a chromium --args --load-extension=$PWD/build --force-dev-mode-highlighting --no-default-browser-check
 #
@@ -46,11 +48,9 @@ function setup_browser_extensions() (
 		repo="${ext_data[0]}"
 		subdir="${ext_data[1]}"
 
-		# echo "$repo / $subdir"
-		cd "$repo"
+		cd "$repo" || exit
 		for cmd in "${ext_data[@]:2}"; do
-			echo "$PWD && $cmd"
-			# eval-helper --wrap --no-quiet -- "$cmd"
+			eval-helper --wrap --no-quiet -- "$cmd"
 		done
 	done
 )

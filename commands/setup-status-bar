@@ -68,7 +68,7 @@ function setup_status_bar() (
 	# setup-util-hammerspoon
 	else
 		# READ: https://github.com/polybar/polybar/wiki
-		setup-util --cli="polybar" APT="polybar"
+		setup-util-polybar
 	fi
 
 	# =====================================
