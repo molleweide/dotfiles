@@ -37,24 +37,21 @@ function setup_browser_extensions() (
 			cmds+=("$(string-trim "$s")")
 		done
 
-		echo-lines -- "$repo_path" "$(string-trim $subdir)" "${cmds[@]}"
+		echo-lines -- "$repo_path" "$(string-trim "$subdir")" "${cmds[@]}"
 	}
 
 	for x in "${extensions[@]}"; do
 		local ext_data repo subdir
-
 		mapfile -t ext_data <<<"$(parse_extension_string "$x")"
-
 		repo="${ext_data[0]}"
 		subdir="${ext_data[1]}"
 
-		echo "$repo / $subdir"
+		# echo "$repo / $subdir"
+		cd "$repo"
 		for cmd in "${ext_data[@]:2}"; do
-			echo "$cmd"
+			echo "$PWD && $cmd"
+			# eval-helper --wrap --no-quiet -- "$cmd"
 		done
-
-		# TODO: cd repo && run cmds
-
 	done
 )
 
