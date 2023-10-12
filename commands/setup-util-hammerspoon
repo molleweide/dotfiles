@@ -12,6 +12,7 @@ if is-mac; then
     [ ! -d "$spoons_dir/SpoonInstall.spoon" ] \
         && wget -nv $url -O $destination && unzip -d "$spoons_dir" "$destination"
 
+    # if xdg configure XDG config
     defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 
     # FIX: replace with symlink-helper

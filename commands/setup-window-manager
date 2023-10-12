@@ -3,6 +3,8 @@
 # NOTE: window managers
 # ~ https://dwm.suckless.org/
 
+# TODO: choose option select which wm to use
+
 # ============================================
 # TESTS FOR `SETUP_WINDOW_MANAGER`
 

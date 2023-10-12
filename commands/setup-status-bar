@@ -6,48 +6,82 @@
 # i3status
 # https://codeberg.org/xmobar/xmobar
 # spacebar for macos
+# https://github.com/FelixKratz/SketchyBar
+# https://github.com/Jean-Tinland/simple-bar
+
+
+# NOTE: sketchybar configs
+# setup -> https://felixkratz.github.io/SketchyBar/setup
+#
+# config files:
+#   https://gist.github.com/johnallen3d/6c002ef1f4e1e0fc15ce74bfc8390614
+#   https://github.com/mvritz/dotfiles/tree/main/sketchybar
+#   https://github.com/sasha-id/dotfiles/tree/master/sketchybar
 
 # ============================================
 # TESTS FOR `SETUP_STATUS_BAR`
 
 function setup_status_bar_test() (
-source "$DOROTHY/sources/bash.bash"
-echo-segment --h1="TEST: $0"
-echo-segment --g1="TEST: $0"
-return 0
+	source "$DOROTHY/sources/bash.bash"
+	echo-segment --h1="TEST: $0"
+	echo-segment --g1="TEST: $0"
+	return 0
 )
 # =====================================
 # MAIN COMMAND `SETUP-STATUS-BAR`
 
 function setup_status_bar() (
-  source "$DOROTHY/sources/bash.bash"
+	source "$DOROTHY/sources/bash.bash"
 
-    function help {
-    cat <<-EOF >/dev/stderr
-      USAGE:
-        setup-status-bar ...
+	function help {
+		cat <<-EOF >/dev/stderr
+			      USAGE:
+			        setup-status-bar ...
 
-      DESCRIPTION:
-        ...
+			      DESCRIPTION:
+			        ...
 
-EOF
-    if test "$#" -ne 0; then
-    echo-error "$@"
-    fi
-    return 22 # EINVAL 22 Invalid argument
-  }
+		EOF
+		if test "$#" -ne 0; then
+			echo-error "$@"
+		fi
+		return 22 # EINVAL 22 Invalid argument
+	}
 
-  # =====================================
-  # Action
+	# =====================================
+	# Operations
 
-  if test -z "$action"; then
-    help "No <new_name> provided."
-  else
-    :
-  fi
+	# TODO: switch bar
+	# use chooose option to select which status bar to use
+
+	if is-mac; then
+		# spacebar
+		#
+		# brew install cmacrae/formulae/spacebar
+		# brew services start spacebar
+
+		# https://github.com/Jean-Tinland/simple-bar
+		# https://github.com/FelixKratz/SketchyBar
+		setup-util --cli="sketchybar" BREW="FelixKratz/formulae/sketchybar"
+
+	# simple-bar requires hammerspoon
+	# setup-util-hammerspoon
+	else
+		# READ: https://github.com/polybar/polybar/wiki
+		setup-util --cli="polybar" APT="polybar"
+	fi
+
+	# =====================================
+	# Action
+
+	if test -z "$action"; then
+		help "No <new_name> provided."
+	else
+		:
+	fi
 )
 
 # Fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-  setup_status_bar "$@"
+	setup_status_bar "$@"
 fi

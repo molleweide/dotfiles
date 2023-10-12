@@ -56,6 +56,23 @@ function make_web_shortcut() (
 
 	# TODO: ask in community how to configure the desktop
 	# file
+	#
+	# My goal:
+	# I want to create a script that allows me to create .desktop
+	# standalone apps of websites with brave.
+	#
+	# I can see that if I save a website on ubuntu, they follow this format.
+	#
+	# Question:
+	#
+	# What does the --app-id point and the StartupWMClass point to so
+	# that I can set it up myself by passing a URL to a bash script?
+	#
+	# Also I want to set this up myself so that I can backup all my
+	# standalone web apps easilly
+
+	# TODO: ask in community how to configure the desktop
+	# file
 
 	data=$(
 		cat <<-EOF

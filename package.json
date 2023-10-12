@@ -1,0 +1,15 @@
+{
+  "name": "myergo",
+  "version": "1.0.0",
+  "description": "modular set of keymaps with some custom stuff",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "molleweide",
+  "license": "GPL-2.0",
+  "dependencies": {
+    "gulp": "^4.0.0",
+    "gulp-run-command": "0.0.9"
+  }
+}

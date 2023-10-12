@@ -4,11 +4,16 @@
 ;;
 ;;--------------------------------------------------------------- |#
 
-;; i need to shift out grid..
+(defalias
+  wrpH (cmd-button "warpd --hint")
+  wrpG (cmd-button "warpd --grid")
+  wrpN (cmd-button "warpd --normal")
+)
+
 (deflayer FUNCTION_KEYS
-  f9   f10  f11  f12  @TUT      @TUT f21  f22  f23  f24
-  f5   f6   f7   f8   @RTR      @RTR f17  f18  f19  f20
-  f1   f2   f3   f4   XX        XX   f13  f14  f15  f16
-            @BQ  esc       _              esc  @BQ
+  f9   f10  f11  f12  @wrpN     @TUT  f21  f22  f23  f24
+  f5   f6   f7   f8   @RTR      @RTR  f17  f18  f19  f20
+  f1   f2   f3   f4   @wrpH     @wrpG f13  f14  f15  f16
+            @BQ  esc       _          esc  @BQ
 )
 
