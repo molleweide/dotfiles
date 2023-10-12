@@ -1,16 +1,13 @@
 #!/usr/bin/env bash
 
-
 # NOTE: a lot of things are sync across browsers via Browser-Sync.
 # This means that I most likely only have to automate installing
 # local extensions, eg Surfingkeys.
-
 
 # NOTE: interesting command for launching chromium/brave/chrome on mac
 # open -a chromium --args --load-extension=$PWD/build --force-dev-mode-highlighting --no-default-browser-check
 #
 # --load-extension=comma/separated/list/of/paths/to/extensions
-
 
 function setup_browsers() (
 	source "$DOROTHY/sources/bash.bash"
@@ -32,25 +29,124 @@ function setup_browsers() (
 	# TODO: VIMB
 	# https://github.com/fanglingsu/vimb
 
-  # TODO: SAFARI
+	# TODO: SAFARI
 
-  # TODO: FIREFOX
-  # https://wiki.mozilla.org/Firefox/CommandLineOptions
+	# TODO: FIREFOX
+	# https://wiki.mozilla.org/Firefox/CommandLineOptions
 
-  # TODO: VIVALDI
+	# TODO: VIVALDI
 
-  # TODO: CHROMIUM
-  #
-  # NOTE: how to save websites to desktop, preferably with bash/code
-  # https://askubuntu.com/questions/910494/run-chrome-webpage-as-desktop-application
+	# TODO: CHROMIUM
 
-  ### IN CHROME
-  # https://peter.sh/experiments/chromium-command-line-switches/
+	local extensions=()
 
-  ### IN BRAVE
-  # https://support.brave.com/hc/en-us/articles/360044860011-How-Do-I-Use-Command-Line-Flags-in-Brave-
+	extensions=(
+		"brookhong/Surfingkeys;dist/production/chrome -> npm install; npm build"
+		"glacambre/firenvim;target/chrome             -> npm install; npm run build; npm run install_manifests"
+	)
 
-  ## SAVE WEB APPS TO DESKTOP
+	trim_empty_entries() {
+		local input_array=("$@")
+		local new_array=()
+
+		echo "$@"
+
+		for element in "${input_array[@]}"; do
+			# if [[ -n "$element" ]]; then
+			# 	new_array+=("$element")
+			# fi
+			if test -z "$element"; then
+				continue
+			fi
+			new_array+=("$element")
+		done
+
+		# for part in "${parts[@]}"; do
+		# 	if test -z "$part"; then
+		# 		continue
+		# 	fi
+		# 	trimmed+=("$part")
+		# done
+
+		# Return the new array
+		echo-lines -- "${new_array[*]}"
+		# print_line ">${new_array[0]-}"
+		# print_line ">${new_array[1]-}"
+		# for l in $new_array; do
+		#   echo "elem: [$element]"
+		# 	print_line "$l"
+		# done
+	}
+
+	function trim_whitespace() {
+		local s=$1 res=''
+		res="${s#"${s%%[![:space:]]*}"}"
+		res="${res%%[[:space:]]}"
+		echo "$res"
+	}
+
+	function parse_extension_string() {
+		local trimmed=()
+
+		IFS='->' read -ra parts <<<"$1"
+
+		# TODO: mv to cmd: trim-partial-array of empty elements
+		for part in "${parts[@]}"; do
+			if test -z "$part"; then
+				continue
+			fi
+			trimmed+=("$part")
+		done
+
+		# trim_empty_entries "${parts[*]}"
+		#
+		# return
+
+		# trimmed=($(trim_empty_entries "${parts[*]}"))
+		# mapfile -t mp <<<$(trim_empty_entries "${parts[@]}")
+		#
+		# echo "mp: [$mp], ${#mp[@]}"
+
+		# print_line ">>> ${mp[0]} : ${mp[1]}"
+		print_line "repo: ${trimmed[0]}"
+		echo
+
+		# local spart=()
+
+		# for spart in "${trimmed[@]}"; do
+			IFS=';' read -ra subparts <<<"${trimmed[1]}"
+			for s in "${subparts[@]}"; do
+				:
+				trim_whitespace "$s"
+			done
+		# done
+
+		# echo "trimmed: ${#trimmed[@]}"
+	}
+
+	# FIX: the above array needs to be # == even number
+	#   odd = name
+	#   eve = commands to build
+
+	function build_extensions() {
+		:
+	}
+
+	for x in "${extensions[@]}"; do
+		# echo "$x"
+		parse_extension_string "$x"
+	done
+
+	# NOTE: how to save websites to desktop, preferably with bash/code
+	# https://askubuntu.com/questions/910494/run-chrome-webpage-as-desktop-application
+
+	### IN CHROME
+	# https://peter.sh/experiments/chromium-command-line-switches/
+
+	### IN BRAVE
+	# https://support.brave.com/hc/en-us/articles/360044860011-How-Do-I-Use-Command-Line-Flags-in-Brave-
+
+	## SAVE WEB APPS TO DESKTOP
 
 )
 
