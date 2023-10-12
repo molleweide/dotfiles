@@ -9,7 +9,6 @@
 # https://github.com/FelixKratz/SketchyBar
 # https://github.com/Jean-Tinland/simple-bar
 
-
 # NOTE: sketchybar configs
 # setup -> https://felixkratz.github.io/SketchyBar/setup
 #
@@ -67,8 +66,14 @@ function setup_status_bar() (
 	# simple-bar requires hammerspoon
 	# setup-util-hammerspoon
 	else
-		# READ: https://github.com/polybar/polybar/wiki
-		setup-util-polybar
+		if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+			setup-util-polybar
+		elif [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+			setup-util-waybar
+		else
+			echo "Unknown session type or not set."
+		fi
+
 	fi
 
 	# =====================================

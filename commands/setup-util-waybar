@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# SWAYBAR STYLING:
+# https://github.com/Alexays/Waybar/wiki/Styling
+
+function setup_util_waybar() (
+  source "$DOROTHY/sources/bash.bash"
+
+  # improve performance
+  if is-needle --quiet "setup-util-waybar" && ! is-needle --upgrade "setup-util-waybar" && ! is-needle --uninstall "setup-util-waybar" && command-exists {REPLACE_ME}; then
+    return 0
+  fi
+
+        # Code goes here...
+
+	setup-util --cli='waybar' APT='waybar'
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+  setup_util_waybar "$@"
+fi
