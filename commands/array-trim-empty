@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# NOTE: trim out empty elements in an array
+
+function array_trim_empty() (
+	source "$DOROTHY/sources/bash.bash"
+
+
+	local input_array=("$@")
+	local new_array=()
+
+	for element in "${input_array[@]}"; do
+		# if [[ -n "$element" ]]; then
+		# 	new_array+=("$element")
+		# fi
+		if test -z "$element"; then
+			continue
+		fi
+		new_array+=("$element")
+	done
+
+	echo-lines -- "${new_array[@]}"
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	array_trim_empty "$@"
+fi

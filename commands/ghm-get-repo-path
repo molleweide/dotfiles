@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+function ghm_get_repo_path() (
+	source "$DOROTHY/sources/bash.bash"
+
+	local repo=$1 repo_path
+	repo_path=$(ghq list -p "$1")
+	if test -z "$repo_path"; then
+		ghm clone -p git@github.com:rvaiya/warpd.git
+		repo_path=$(ghq list -p "github.com/rvaiya/warpd")
+	fi
+	echo "$repo_path"
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	ghm_get_repo_path "$@"
+fi

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+function string_trim() (
+	source "$DOROTHY/sources/bash.bash"
+
+	local s=$1 res=''
+	res="${s#"${s%%[![:space:]]*}"}"
+	res="${res%%[[:space:]]}"
+	echo "$res"
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	string_trim "$@"
+fi

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# TODO: rename this to setup-browser-extensions
-
 # NOTE: interesting command for launching chromium/brave/chrome on mac
 # open -a chromium --args --load-extension=$PWD/build --force-dev-mode-highlighting --no-default-browser-check
 #
@@ -12,107 +10,51 @@ function setup_browser_extensions() (
 
 	local extensions=()
 
-  # TODO: move this to config
+	# TODO: move this to config
 	extensions=(
 		"brookhong/Surfingkeys;dist/production/chrome -> npm install; npm build"
 		"glacambre/firenvim;target/chrome             -> npm install; npm run build; npm run install_manifests"
 	)
 
-	# # improve performance
-	# if is-needle --quiet "setup-browsers" && ! is-needle --upgrade "setup-browsers" && ! is-needle --uninstall "setup-browsers" && command-exists {REPLACE_ME}; then
-	#   return 0
-	# fi
-
-	trim_empty_entries() {
-		local input_array=("$@")
-		local new_array=()
-
-		echo "$@"
-
-		for element in "${input_array[@]}"; do
-			# if [[ -n "$element" ]]; then
-			# 	new_array+=("$element")
-			# fi
-			if test -z "$element"; then
-				continue
-			fi
-			new_array+=("$element")
-		done
-
-		# for part in "${parts[@]}"; do
-		# 	if test -z "$part"; then
-		# 		continue
-		# 	fi
-		# 	trimmed+=("$part")
-		# done
-
-		# Return the new array
-		echo-lines -- "${new_array[*]}"
-		# print_line ">${new_array[0]-}"
-		# print_line ">${new_array[1]-}"
-		# for l in $new_array; do
-		#   echo "elem: [$element]"
-		# 	print_line "$l"
-		# done
-	}
-
-  # TODO: move into `string-trim`
-	function trim_whitespace() {
-		local s=$1 res=''
-		res="${s#"${s%%[![:space:]]*}"}"
-		res="${res%%[[:space:]]}"
-		echo "$res"
-	}
-
-	# TODO: refactor into its own command `ghq-get-repo-path`
-	function get_ghq_local_path {
-		local repo=$1 repo_path
-		repo_path=$(ghq list -p "$1")
-		if test -z "$repo_path"; then
-			ghm clone -p git@github.com:rvaiya/warpd.git
-			repo_path=$(ghq list -p "github.com/rvaiya/warpd")
-		fi
-		echo "$repo_path"
-	}
-
 	function parse_extension_string() {
-		local trimmed=()
+		local trimmed
 		local repo_path subdir parts subparts
 
 		IFS='->' read -ra parts <<<"$1"
 
-		# TODO: how can we refactor this into `array-trim`
-		for part in "${parts[@]}"; do
-			if test -z "$part"; then
-				continue
-			fi
-			trimmed+=("$part")
-		done
+		mapfile -t trimmed <<<"$(array-trim-empty "${parts[@]}")"
 
 		# FIX: requires # of 2
 		IFS=';' read -ra subparts <<<"${trimmed[0]}"
 
-		repo_path=$(get_ghq_local_path "${subparts[0]}")
+		repo_path=$(ghm-get-repo-path "${subparts[0]}")
 		subdir=${subparts[1]}
 
 		# FIX: requires # of 1 minimum
 		IFS=';' read -ra subparts <<<"${trimmed[1]}"
+		local cmds=()
 		for s in "${subparts[@]}"; do
-			echo "$repo_path / $subdir -> $(trim_whitespace "$s")"
+			cmds+=("$(string-trim "$s")")
 		done
 
-		# TODO: if ! subdir exists || --force
-		#   build extension
-
+		echo-lines -- "$repo_path" "$(string-trim $subdir)" "${cmds[@]}"
 	}
 
-	# function build_extensions() {
-	# 	:
-	# }
-
 	for x in "${extensions[@]}"; do
-		# echo "$x"
-		parse_extension_string "$x"
+		local ext_data repo subdir
+
+		mapfile -t ext_data <<<"$(parse_extension_string "$x")"
+
+		repo="${ext_data[0]}"
+		subdir="${ext_data[1]}"
+
+		echo "$repo / $subdir"
+		for cmd in "${ext_data[@]:2}"; do
+			echo "$cmd"
+		done
+
+		# TODO: cd repo && run cmds
+
 	done
 )
 
