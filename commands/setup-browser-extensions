@@ -1,51 +1,27 @@
 #!/usr/bin/env bash
 
-# NOTE: a lot of things are sync across browsers via Browser-Sync.
-# This means that I most likely only have to automate installing
-# local extensions, eg Surfingkeys.
+# TODO: rename this to setup-browser-extensions
 
 # NOTE: interesting command for launching chromium/brave/chrome on mac
 # open -a chromium --args --load-extension=$PWD/build --force-dev-mode-highlighting --no-default-browser-check
 #
 # --load-extension=comma/separated/list/of/paths/to/extensions
 
-function setup_browsers() (
+function setup_browser_extensions() (
 	source "$DOROTHY/sources/bash.bash"
+
+	local extensions=()
+
+  # TODO: move this to config
+	extensions=(
+		"brookhong/Surfingkeys;dist/production/chrome -> npm install; npm build"
+		"glacambre/firenvim;target/chrome             -> npm install; npm run build; npm run install_manifests"
+	)
 
 	# # improve performance
 	# if is-needle --quiet "setup-browsers" && ! is-needle --upgrade "setup-browsers" && ! is-needle --uninstall "setup-browsers" && command-exists {REPLACE_ME}; then
 	#   return 0
 	# fi
-
-	# FIX: create setup-util-for each browser
-
-	# TODO: TERMINAL BASED BROWSERS
-	# https://itsfoss.com/terminal-web-browsers/
-
-	# TODO: INSTALL NYXT
-	# https://github.com/atlas-engineer/nyxt
-
-	# TODO: INSTALL QUTE
-	# https://github.com/qutebrowser/qutebrowser
-
-	# TODO: VIMB
-	# https://github.com/fanglingsu/vimb
-
-	# TODO: SAFARI
-
-	# TODO: FIREFOX
-	# https://wiki.mozilla.org/Firefox/CommandLineOptions
-
-	# TODO: VIVALDI
-
-	# TODO: CHROMIUM
-
-	local extensions=()
-
-	extensions=(
-		"brookhong/Surfingkeys;dist/production/chrome -> npm install; npm build"
-		"glacambre/firenvim;target/chrome             -> npm install; npm run build; npm run install_manifests"
-	)
 
 	trim_empty_entries() {
 		local input_array=("$@")
@@ -80,6 +56,7 @@ function setup_browsers() (
 		# done
 	}
 
+  # TODO: move into `string-trim`
 	function trim_whitespace() {
 		local s=$1 res=''
 		res="${s#"${s%%[![:space:]]*}"}"
@@ -87,7 +64,7 @@ function setup_browsers() (
 		echo "$res"
 	}
 
-  # todo: refactor into its own command
+	# TODO: refactor into its own command `ghq-get-repo-path`
 	function get_ghq_local_path {
 		local repo=$1 repo_path
 		repo_path=$(ghq list -p "$1")
@@ -129,25 +106,17 @@ function setup_browsers() (
 
 	}
 
+	# function build_extensions() {
+	# 	:
+	# }
+
 	for x in "${extensions[@]}"; do
 		# echo "$x"
 		parse_extension_string "$x"
 	done
-
-	# NOTE: how to save websites to desktop, preferably with bash/code
-	# https://askubuntu.com/questions/910494/run-chrome-webpage-as-desktop-application
-
-	### IN CHROME
-	# https://peter.sh/experiments/chromium-command-line-switches/
-
-	### IN BRAVE
-	# https://support.brave.com/hc/en-us/articles/360044860011-How-Do-I-Use-Command-Line-Flags-in-Brave-
-
-	## SAVE WEB APPS TO DESKTOP
-
 )
 
 # Fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-	setup_browsers "$@"
+	setup_browser_extensions "$@"
 fi
