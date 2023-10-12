@@ -35,21 +35,17 @@ function setup_window_manager() (
 		return 22 # EINVAL 22 Invalid argument
 	}
 
-	if [ "$XDG_SESSION_TYPE" = "x11" ]; then
-		setup-util-bspwm
-	elif [ "$XDG_SESSION_TYPE" = "wayland" ]; then
-		setup-util-sway
-	else
-		echo "Unknown session type or not set."
-	fi
-
-	# =====================================
-	# Action
-
-	if test -z "$action"; then
-		help "No <new_name> provided."
-	else
+	if is-mac; then
 		:
+	else
+
+		if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+			setup-util-bspwm
+		elif [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+			setup-util-sway
+		else
+			echo "Unknown session type or not set."
+		fi
 	fi
 )
 

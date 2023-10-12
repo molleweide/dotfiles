@@ -75,15 +75,6 @@ function setup_status_bar() (
 		fi
 
 	fi
-
-	# =====================================
-	# Action
-
-	if test -z "$action"; then
-		help "No <new_name> provided."
-	else
-		:
-	fi
 )
 
 # Fire if invoked standalone
