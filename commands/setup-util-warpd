@@ -4,6 +4,8 @@
 
 # NOTE: currently dependent on GHQ (x-motemen/ghq)
 
+# TODO: ask build for X or Wayland??
+
 function setup_util_warpd() (
 	source "$DOROTHY/sources/bash.bash"
 
@@ -14,7 +16,7 @@ function setup_util_warpd() (
 
 	local GHQ_WARPD_REPO=''
 
-	# todo: put all deps in array -> loop over them and run the setup-util command
+	# TODO: put all deps in array -> loop over them and run the setup-util command
 
 	# Install dependencies
 	if is-linux; then
