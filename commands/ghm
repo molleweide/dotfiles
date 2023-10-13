@@ -102,21 +102,24 @@ function ghm() (
 	}
 
 	function backup() {
-		local repo_url=$1
-		local already_prepared=$2
+		local repo_url="$1"
+		local already_prepared="$2"
 
 		if [ -z "$repo_url" ]; then
 			echo "No repo was provided to [ghm backup]"
 		else
 
 			if test "$already_prepared" = "true"; then
-				"$repo_url" >>"$DOROTHY/user/backups/ghq.bak"
+				echo "already prepared -> backing up [$repo_url]"
+				echo "$repo_url" >>"$DOROTHY/user/backups/ghq.bak"
 			else
-				local result_array=($(get_parts "$repo_url"))
+				local prepared_new result_array=($(get_parts "$repo_url"))
 
 				# FIX: first check and make sure that a new repo does not already exists
 				# in the backup file
-				echo "${result_array[0]}/${result_array[1]}/${result_array[2]}" >>"$DOROTHY/user/backups/ghq.bak"
+				prepared_new="${result_array[0]}/${result_array[1]}/${result_array[2]}"
+				echo "prepared new -> [$prepared_new]"
+				echo "$prepared_new" >>"$DOROTHY/user/backups/ghq.bak"
 			fi
 
 			locatedb-load >/dev/null 2>&1 &
@@ -231,15 +234,14 @@ function ghm() (
 	}
 
 	function init_github_remote() {
-		local repo_name=$1
+		local ghq_user_path="$1"
+		local repo_name="$2"
 
-		# FIX: look at how dorothy does pushd
-
-		pushd "$GHQ_GH_USER_PATH/$repo_name" >/dev/null 2>&1
+		pushd "$GHQ_GH_USER_PATH/$repo_name" || exit >/dev/null 2>&1
 		echo "# $repo_name" >README.md
 		git add --all && git commit -m 'first'
 		gh repo create --source=. --private --push
-		popd >/dev/null 2>&1
+		popd || exit >/dev/null 2>&1
 	}
 
 	# ======================
