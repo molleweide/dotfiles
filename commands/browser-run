@@ -77,7 +77,7 @@ function brave_run() (
 			--force-dev-mode-highlighting \
 			--no-default-browser-check
 	else
-		brave-browser \
+		xdg-open brave-browser \
 			--load-extension="$result_paths" \
 			--force-dev-mode-highlighting \
 			--no-default-browser-check

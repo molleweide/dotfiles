@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+function setup_pointer() (
+  source "$DOROTHY/sources/bash.bash"
+
+  # improve performance
+  if is-needle --quiet "setup-pointer" && ! is-needle --upgrade "setup-pointer" && ! is-needle --uninstall "setup-pointer" && command-exists {REPLACE_ME}; then
+    return 0
+  fi
+
+	if is-mac; then
+	  :
+	else
+		if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+			setup-util-warpd
+		elif [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+			:
+			# https://github.com/moverest/wl-kbptr
+		else
+			echo "Unknown session type or not set."
+		fi
+
+	fi
+
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+  setup_pointer "$@"
+fi
