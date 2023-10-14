@@ -11,6 +11,8 @@
 # if you have eg. crappy internet.
 
 function ghm() (
+	source "$DOROTHY/sources/bash.bash"
+
 	GHQ_ROOT=$(ghq root)
 	GHQ_BACKUP_FILE="$DOROTHY/user/backups/ghq.bak"
 	GITHUB_USER=$(git config github.user)
@@ -274,9 +276,12 @@ function ghm() (
 		repo_name_str=$(basename "$repo_url")
 		repo_name=${repo_name_str%.*}
 
+		echo "ru: $repo_url"
+
 		# ghq
 		ghq get -p "$repo_url"
-		backup "$repo_url"
+		backup "github.com/$repo_user/$repo_name" true
+
 
 		# enter repo and perform actions
 		pushd "$GHQ_GITHUB/$repo_user/$repo_name" >/dev/null 2>&1
