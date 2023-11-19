@@ -13,35 +13,37 @@
 #
 # add various warning mechanisms so one doesn't ever overwrite large
 # HDDs
-
+#
+#
+# args:
+#   command takes a download-iso url
+#   --iso=download-path-url
+#   --usb=path-to-disk
 
 if is-mac; then
 
-# convert iso to dmg
-hdiutil convert /path/to/downloaded.iso -format UDRW -o /path/to/image
+	# convert iso to dmg
+	hdiutil convert /path/to/downloaded.iso -format UDRW -o /path/to/image
 
+	# find usb with
+	diskutil list
+	diskutil unmountDisk /dev/diskX
 
-# find usb with
-diskutil list
-diskutil unmountDisk /dev/diskX
-
-
-# write dmg to usb
-sudo dd if=/path/to/image.dmg of=/dev/diskX bs=1m
+	# write dmg to usb
+	sudo dd if=/path/to/image.dmg of=/dev/diskX bs=1m
 
 else
-  :
+	:
 
-  # find usb drive with `lsblk`
+	# find usb drive with `lsblk`
 
-  # unmount
-  # sudo umount /dev/sdx1
+	# unmount
+	# sudo umount /dev/sdx1
 
+	# old dd command
+	# sudo dd bs=4M if=Downloads/ubuntu-19.04-desktop-amd64.iso of=/dev/sdb conv=fdatasync
 
-  # old dd command
-  # sudo dd bs=4M if=Downloads/ubuntu-19.04-desktop-amd64.iso of=/dev/sdb conv=fdatasync
-
-  #recent dd command
-  # sudo dd bs=4M if=Downloads/ubuntu-19.04-desktop-amd64.iso of=/dev/sdb conv=fdatasync status=progress
+	#recent dd command
+	# sudo dd bs=4M if=Downloads/ubuntu-19.04-desktop-amd64.iso of=/dev/sdb conv=fdatasync status=progress
 
 fi

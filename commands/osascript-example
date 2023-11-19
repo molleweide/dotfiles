@@ -1,0 +1,36 @@
+#!/usr/bin/osascript
+
+
+-- Display a dialog box
+display dialog "Hello, World!" buttons {"OK"} default button "OK"
+
+-- Set the volume to 75%
+set volume output volume 75
+
+-- Get system information
+set systemInfo to system info
+display dialog "macOS Version: " & (version of systemInfo) & return & "Computer Name: " & (computer name of systemInfo) buttons {"OK"} default button "OK"
+
+-- Open a URL in the default browser
+open location "https://www.example.com"
+
+-- Create a Calendar event
+tell application "Calendar"
+    set newEvent to make new event at end of calendar "Home" with properties {summary:"Meeting with John", start date:date "2023-10-31T09:00:00", end date:date "2023-10-31T10:00:00"}
+    tell newEvent
+        make new attendee at end of attendees with properties {email:"john@example.com", display name:"John Doe"}
+    end tell
+end tell
+
+-- Toggle Do Not Disturb
+tell application "System Events" to key code 100 using {option down, command down}
+
+-- Display a notification
+display notification "This is a notification" with title "My Script"
+
+-- Control iTunes or Music
+tell application "Music"
+    play
+    delay 5
+    pause
+end tell

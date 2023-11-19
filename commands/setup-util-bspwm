@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# tiling window manager
+
 function setup_util_bspwm() (
   source "$DOROTHY/sources/bash.bash"
 

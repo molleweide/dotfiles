@@ -19,7 +19,7 @@
 # versions managed by bob
 alias v="CC=gcc-12 nvim"
 alias vc="CC=/usr/local/Cellar/gcc/12.2.0/bin/gcc-12 ~/.local/share/neovim/bin/nvim"
-alias vb="~/.local/share/bob/nvim-bin/nvim"
+alias vb="CC=gcc-12 ~/.local/share/bob/nvim-bin/nvim"
 
 # brew version
 alias vim="nvim"
