@@ -1,1 +1,2 @@
 *.local/* filter=strongbox diff=strongbox
+*.local/config.xdg/* filter=strongbox diff=strongbox
