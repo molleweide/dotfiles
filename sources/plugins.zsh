@@ -10,32 +10,38 @@
 source "$ADOTDIR/antigen.zsh"
 
 # remove bundle with: antigen purge <bundle>
+ANTIGEN_PLUGINS=(
+git
+nvm
+pyenv
+rvm
+vi-mode
+dbalatero/fzf-git
+DarrinTisdale/zsh-aliases-exa
+chriskempson/base16-shell
+wookayin/fzf-fasd
+# rupa/z z.sh
+twang817/zsh-ssh-agent
+zsh-users/zsh-completions
+zdharma/fast-syntax-highlighting
+hlissner/zsh-autopair
+)
 
-antigen bundle robbyrussell/oh-my-zsh plugins/git
-
-antigen bundle robbyrussell/oh-my-zsh plugins/nvm
-antigen bundle robbyrussell/oh-my-zsh plugins/pyenv
-antigen bundle robbyrussell/oh-my-zsh plugins/rvm
-
-antigen bundle robbyrussell/oh-my-zsh plugins/vi-mode
-
-antigen bundle dbalatero/fzf-git
-antigen bundle DarrinTisdale/zsh-aliases-exa
-antigen bundle chriskempson/base16-shell
-antigen bundle wookayin/fzf-fasd
-# antigen bundle rupa/z z.sh
-antigen bundle twang817/zsh-ssh-agent
-antigen bundle zsh-users/zsh-completions
-antigen bundle zdharma/fast-syntax-highlighting
-antigen bundle hlissner/zsh-autopair
-
-antigen theme romkatv/powerlevel10k
-
-antigen apply
+function antigen_install() {
+  for f in "${ANTIGEN_PLUGINS[@]}"; do
+    antigen bundle "$f"
+  done
+  antigen apply
+}
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 eval "$(direnv hook zsh)"
-eval "$(fasd --init auto)"
+
+if command-exists fasd; then
+  eval "$(fasd --init auto)"
+else
+  antigen_install
+fi
 
 # fi

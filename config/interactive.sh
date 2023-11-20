@@ -5,8 +5,7 @@
 # load defaults
 source "$DOROTHY/config/interactive.sh"
 
-# use my own theme
-export DOROTHY_THEME='system'
+export DOROTHY_THEME='starship'
 
 # load my fancy stuff
 for f in "$DOROTHY/user/sources/"*.sh; do
