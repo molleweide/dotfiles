@@ -80,7 +80,6 @@ HOMEBREW_FORMULAS=(
 	'git-extras'
 	'gnu-tar'
 	'gnuplot'
-	'google-cloud-sdk'
 	'gpg-tui'
 	'heroku/brew/heroku'
 	'himalaya'
@@ -155,6 +154,7 @@ HOMEBREW_SLOW_FORMULAS=(
 # dat
 # devdocs
 # fantastical
+		# 'google-cloud-sdk'
 # firefox
 # freedom
 # geekbench
@@ -200,6 +200,7 @@ HOMEBREW_CASKS=(
 	'breaktimer'
 	'dmenu-mac'
 	'gimp'
+
 	'kitty'
 	'licecap'
 	'logseq'
