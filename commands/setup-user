@@ -14,6 +14,7 @@
 # source/some_script?
 
 DORO_USER_XDG="$DOROTHY/user/config.xdg"
+DORO_USER_XDG_HIDDEN="$DOROTHY/user/config.local/config.xdg"
 GHQ_ROOT=$(ghq root)
 GHQ_ROOT_GH_USER="$GHQ_ROOT/github.com/molleweide"
 
@@ -29,6 +30,13 @@ function pull_molleweide_latest() {
 function setup_basic_xdg_config_symlinks() {
 	echo-header "SETTING UP DORO USR XDG SYMLINKS..."
 	for f in "$DORO_USER_XDG"/*; do
+		if test "$(basename "$f")" = "_"; then
+			continue
+		fi
+		symlink-helper --existing="$f" --symlink="$XDG_CONFIG_HOME/$(basename "$f")"
+	done
+
+	for f in "$DORO_USER_XDG_HIDDEN"/*; do
 		if test "$(basename "$f")" = "_"; then
 			continue
 		fi
@@ -119,7 +127,7 @@ function setup_obs() {
 # RUN TASKS.........
 
 # pull_molleweide_latest
-# setup_basic_xdg_config_symlinks
+setup_basic_xdg_config_symlinks
 # setup_doom_neovim_config
 # setup_tmux_user
 # setup_neorg_notes
