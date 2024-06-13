@@ -5,7 +5,7 @@
 # load defaults
 source "$DOROTHY/config/interactive.sh"
 
-export DOROTHY_THEME='starship'
+export DOROTHY_THEME='oz'
 
 # load my fancy stuff
 for f in "$DOROTHY/user/sources/"*.sh; do

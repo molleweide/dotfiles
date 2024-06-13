@@ -200,6 +200,8 @@ HOMEBREW_CASKS=(
 	'breaktimer'
 	'dmenu-mac'
 	'gimp'
+  'discord'
+  'element'
 
 	'kitty'
 	'licecap'
@@ -214,6 +216,7 @@ HOMEBREW_CASKS=(
 	'qtpass'
 	'qutebrowser'
 	'spotify'
+	'loopback'
 	'supercollider'
 	'thefuck'
 	'timer'

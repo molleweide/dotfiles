@@ -9,6 +9,12 @@
 # TODO: fuzzy finding a specific repo in the backup file that you want to
 # restore so one doesn't have to restore all repos on a new machine at once
 # if you have eg. crappy internet.
+#
+
+# FIX: look at tmux-continuum AND resurrect.
+# I should modify the tmux-resurect code so that it can be used for
+# backing up all my repos I have used.
+# All of the logic required is implemented in resurrect.
 
 function ghm() (
 	source "$DOROTHY/sources/bash.bash"
@@ -251,7 +257,7 @@ function ghm() (
 	function clone() {
 		local repo=$1
 		ghq get -p "$repo"
-		backup "$repo"
+		backup "$repo" "true"
 	}
 
 	function create_new_repo_for_user() {

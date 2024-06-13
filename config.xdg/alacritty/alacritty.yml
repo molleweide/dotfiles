@@ -159,7 +159,7 @@ bell:
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-window.opacity: 0.9
+window.opacity: 0.5
 
 cursor:
   # Cursor style
@@ -198,7 +198,7 @@ live_config_reload: true
 working_directory: None
 
 # Send ESC (\x1b) before characters when alt is pressed.
-alt_send_esc: true
+# alt_send_esc: true
 
 mouse:
   # Click settings
