@@ -1,0 +1,29 @@
+pane	10	1	1	:*	1	:/Users/hjalmarjakobsson	1	zsh	:
+pane	11	1	1	:*	1	:/Users/hjalmarjakobsson	1	zsh	:
+pane	12	1	1	:*	1	:/Users/hjalmarjakobsson	1	zsh	:
+pane	doro	1	0	:-	1	:/Users/hjalmarjakobsson/.config/dorothy	1	zsh	:
+pane	doro	2	1	:*Z	1	:/Users/hjalmarjakobsson/.local/share/dorothy	1	zsh	:
+pane	doro	2	1	:*Z	2	:/Users/hjalmarjakobsson/.local/share/dorothy	0	zsh	:
+pane	main	1	1	:*	1	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/doom-nvim	1	zsh	:
+pane	pm	1	0	:	1	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/pitch-machine	1	zsh	:
+pane	pm	1	0	:	2	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/pitch-machine	0	zsh	:
+pane	pm	2	0	:-Z	1	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/pitch-machine/client	1	zsh	:
+pane	pm	2	0	:-Z	2	:/Users/hjalmarjakobsson/code/repos/github.com/molleweide/pitch-machine/client	0	zsh	:
+pane	pm	3	1	:*Z	1	:/Users/hjalmarjakobsson/code/repos/github.com/shadcn-ui/ui	1	zsh	:/Users/hjalmarjakobsson/.local/share/bob/nvim-bin/nvim
+pane	pm	3	1	:*Z	2	:/Users/hjalmarjakobsson/code/test/shadcn-testing/vite	0	zsh	:
+pane	rpp	1	0	:-	1	:/Users/hjalmarjakobsson/reaper/packages/reaper-keys	1	nvim	:/Users/hjalmarjakobsson/.local/share/bob/nvim-bin/nvim
+pane	rpp	2	1	:*	1	:/Users/hjalmarjakobsson/neorg	1	nvim	:/Users/hjalmarjakobsson/.local/share/bob/nvim-bin/nvim
+pane	rpp	3	0	:##	1	:/Users/hjalmarjakobsson/reaper/app/reaper/Scripts	1	nvim	:/Users/hjalmarjakobsson/.local/share/bob/nvim-bin/nvim
+window	10	1	:zsh	1	:*	5767,213x50,0,0,56	:
+window	11	1	:zsh	1	:*	d764,213x50,0,0,63	:
+window	12	1	:zsh	1	:*	d766,213x50,0,0,65	:
+window	doro	1	:user	0	:-	ae65,213x50,0,0,8	off
+window	doro	2	:dorothy	1	:*Z	55e4,213x50,0,0{96x50,0,0,9,116x50,97,0,60}	off
+window	main	1	:doom	1	:*	d761,213x50,0,0,22	off
+window	pm	1	:server	0	:	9f6e,213x50,0,0{106x50,0,0,11,106x50,107,0,24}	off
+window	pm	2	:client	0	:-Z	759e,213x50,0,0{96x50,0,0,36,116x50,97,0,13}	off
+window	pm	3	:shadcn	1	:*Z	5f6d,213x50,0,0{106x50,0,0,30,106x50,107,0,31}	off
+window	rpp	1	:rk	0	:-	d765,213x50,0,0,45	off
+window	rpp	2	:reaper	1	:*	d767,213x50,0,0,47	off
+window	rpp	3	:reaper-nvim	0	:##	5765,213x50,0,0,16	off
+state	rpp	12

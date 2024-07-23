@@ -191,6 +191,7 @@ HOMEBREW_SLOW_FORMULAS=(
 # workflowy
 # xld
 # calibre
+# 	'dmenu-mac'
 HOMEBREW_CASKS=(
 	'aerial'
 	'alacritty'
@@ -198,7 +199,6 @@ HOMEBREW_CASKS=(
 	'appflowy'
 	'autodesk-fusion360'
 	'breaktimer'
-	'dmenu-mac'
 	'gimp'
   'discord'
   'element'

@@ -1,3 +1,12 @@
+@document.meta
+title: TODO
+description:
+authors: hjalmarjakobsson
+categories:
+created: 2024-06-16T08:09:18-0500
+updated: 2024-06-16T08:09:37-0500
+version: 1.1.1
+@end
 
 
 
@@ -33,3 +42,8 @@
     https://stackoverflow.com/questions/13517818/bash-shopt-xpg-echo
     With xpg_echo set, Bash attempts to mimic the behavior of the echo command as specified in the POSIX standard (POSIX-compliant behavior). This may affect how echo interprets escape sequences.
     This would for example expand \n into a line break.
+
+
+* USEFUL PROGRAMS TO FORK
+
+  https://github.com/oNaiPs/dmenu-mac

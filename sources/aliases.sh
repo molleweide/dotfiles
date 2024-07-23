@@ -12,6 +12,8 @@ function reload_aliases() {
 alias ralias="reload_aliases"
 alias rl="reload_aliases"
 
+echo "hello from aliases file"
+
 alias il="zsh -il"
 
 #------------------------
