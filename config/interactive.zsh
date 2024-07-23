@@ -8,8 +8,6 @@ source "$DOROTHY/user/config/interactive.sh"
 # load defaults
 source "$DOROTHY/config/interactive.zsh"
 
-echo "from usern interactive.zsh"
-
 for f in "$DOROTHY/user/sources/"*.zsh; do
     source "$f"
 done

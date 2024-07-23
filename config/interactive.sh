@@ -2,8 +2,6 @@
 # shellcheck disable=SC2034
 # use inline `export VAR=...` statements, for fish compatibility`
 
-echo "??????"
-
 # load defaults
 source "$DOROTHY/config/interactive.sh"
 
