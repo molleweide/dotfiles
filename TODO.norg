@@ -4,7 +4,7 @@ description:
 authors: hjalmarjakobsson
 categories:
 created: 2024-06-16T08:09:18-0500
-updated: 2024-06-16T08:09:37-0500
+updated: 2024-07-26T05:22:32-0500
 version: 1.1.1
 @end
 
@@ -45,5 +45,11 @@ version: 1.1.1
 
 
 * USEFUL PROGRAMS TO FORK
+
+* ADD VIM SUPPORT FOR ALTERNATIVE SHELLS.
+
+  ~ https://github.com/nushell/tree-sitter-nu
+  ~ https://github.com/elves/tree-sitter-elvish
+  ~ https://github.com/ram02z/tree-sitter-fish
 
   https://github.com/oNaiPs/dmenu-mac

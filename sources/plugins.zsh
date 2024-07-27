@@ -1,10 +1,15 @@
 # PURE_PROMPT_SYMBOL="%%"
 
+# NOTE: rename this file to zsh-plugins, because it deals with adding
+# plugins to the zsh.
+
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins
 # https://travis.media/top-10-oh-my-zsh-plugins-for-productive-developers/
 
 # if test -f "$ADOTDIR/antigen.zsh"; then
 
+
+echo "user -> sources/ >> load antigen"
 
 
 source "$ADOTDIR/antigen.zsh"
@@ -40,14 +45,27 @@ antigen bundle pyenv
 antigen bundle rvm
 antigen bundle vi-mode
 
-antigen bundle dbalatero/fzf-git
+# NOTE: replace with https://github.com/Aloxaf/fzf-tab
+# antigen bundle dbalatero/fzf-git
+antigen bundle Aloxaf/fzf-tab
+
+# THIS IS SPECIFICALLY A ZSH PLUGIN
+# https://github.com/DarrinTisdale/zsh-aliases-exa
 antigen bundle DarrinTisdale/zsh-aliases-exa
-antigen bundle chriskempson/base16-shell
+
+# I HAVE NO IDEA WHAT THIS DOES..
+# antigen bundle chriskempson/base16-shell
+
 antigen bundle wookayin/fzf-fasd
+
 # antigen bundle rupa/z z.sh
+
 antigen bundle twang817/zsh-ssh-agent
+
 antigen bundle zsh-users/zsh-completions
-antigen bundle zdharma/fast-syntax-highlighting
+
+# antigen bundle zdharma/fast-syntax-highlighting
+
 antigen bundle hlissner/zsh-autopair
 
 antigen apply

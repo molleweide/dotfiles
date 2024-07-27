@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+function setup_util_oh_my_zsh() (
+	source "$DOROTHY/sources/bash.bash"
+
+	# If zdotdir then install to zdotdir with
+	# ZSH="$XDG_DATA_HOME/oh-my-zsh" sh install.sh
+	# else install to home.
+
+	if ! test -d "$HOME/.oh-my-zsh"; then
+		if command-exists curl; then
+			sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+		elif command-exists wget; then
+			sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+		elif command-exists fetch; then
+			sh -c "$(fetch -o - https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+		else
+			echo-error "Failed to install oh-my-zsh. Neither [curl] or [wget] command exists on system."
+		fi
+	else
+		echo "OHMYZSH EXISTS"
+	fi
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	setup_util_oh_my_zsh "$@"
+fi

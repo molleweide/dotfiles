@@ -290,7 +290,7 @@ SETUP_UTILS=(
 	'devel'
 	'docker'
 	'dust'
-	'exa'
+	'eza'
 	'fd'
 	'fish'
 	'fzf'
