@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+function config_helper() (
+
+  source "$DOROTHY/sources/bash.bash"
+  __require_array 'mapfile'
+
+  echo "config helper testing."
+
+  delay=3
+
+      # "the first strings" \
+
+  # printf "\n"
+
+  test_file="$DOROTHY/user/config/testing.bash"
+
+  echo-style --h1="TEST: $0"
+
+  # # test invalid arguments fail
+  # # sleep "$delay"
+  # eval-tester --name='test-invalid-arguments-01' --status=22 --ignore-stderr \
+  #   -- eval-no-color -- config-helper
+  # sleep "$delay"
+  # eval-tester --name='test-invalid-arguments-02' --status=22 --ignore-stderr \
+  #   -- eval-no-color -- config-helper --no-quiet --file="${missing_file:-}"
+  # sleep "$delay"
+  # eval-tester --name='test-invalid-arguments-03' --status=22 --ignore-stderr \
+  #   -- eval-no-color -- config-helper "$missing_file"
+
+  # test invalid find and replace arguments
+  sleep "$delay"
+  eval-tester --name='test-invalid-find-and-replace-arguments-01' --status=22 --ignore-stderr \
+    -- eval-no-color -- config-helper --no-quiet --file="$test_file" -- --replace='one'
+  sleep "$delay"
+  eval-tester --name='test-invalid-find-and-replace-arguments-02' --status=22 --ignore-stderr \
+    -- eval-no-color -- config-helper --no-quiet --file="$test_file" -- --find='a' --replace='one' --replace='two'
+  # ^ first find and replace succeeds, hence [one], second find and replace failed, hence no two
+  sleep "$delay"
+  eval-tester --name='test-invalid-find-and-replace-arguments-03' --stdout='one' \
+    -- cat "$test_file"
+
+	# done
+	echo-style --g1="TEST: $0"
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+  if test "$*" = '--test'; then
+    config_helper_test
+  else
+    config_helper "$@"
+  fi
+fi
