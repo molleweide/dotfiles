@@ -32,16 +32,30 @@ SNAP_INSTALL=(
 
 if "$DOROTHY/commands/is-mac"; then
   GO_INSTALL=(
-  	'changkun.de/x/rmtrash'
-  	'github.com/gennaro-tedesco/boilit'
-  	'github.com/x-motemen/ghq@latest'
+    'changkun.de/x/rmtrash'
+    'github.com/gennaro-tedesco/boilit'
+    'github.com/x-motemen/ghq@latest'
+    'bash'
+    'bat'
+    'bottom'
+  )
+elif "$DOROTHY/commands/is-ubuntu"; then
+  GO_INSTALL=(
+    'changkun.de/x/rmtrash'
+    'github.com/gennaro-tedesco/boilit'
+    'github.com/x-motemen/ghq@latest'
+    'bash'
+    'bat'
+    'bottom'
   )
 else
   GO_INSTALL=(
     'changkun.de/x/rmtrash'
     'github.com/gennaro-tedesco/boilit'
     'github.com/x-motemen/ghq@latest'
-    # github.com/rfjakob/gocryptfs: use `setup-util-gocryptfs` instead, as this version lags behind
+    'bash'
+    'bat'
+    'bottom'
   )
 fi
 
