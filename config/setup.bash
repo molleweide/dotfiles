@@ -24,28 +24,15 @@ APK_INSTALL=(
 # https://code.visualstudio.com/docs/setup/linux
 # if [[ "$(get-arch)" == 'x'* ]]; then
 SNAP_INSTALL=(
-	# 'code --classic'
-	# deno
+  # 'code --classic'
+  # deno
 )
 
-if "$DOROTHY/commands/is-mac"; then
-	GO_INSTALL=(
-		changkun.de/x/rmtrash
-		github.com/gennaro-tedesco/boilit # manual install -> `go get -u -v github.com/gennaro-tedesco/boilit`
-		github.com/uw-labs/strongbox
-		github.com/x-motemen/ghq@latest
-		# github.com/cloudflare/utahfs/cmd/utahfs-client
-		# https://github.com/maaslalani/nap # cli snippets manager
-	)
-else
-	GO_INSTALL=(
-		changkun.de/x/rmtrash
-		github.com/gennaro-tedesco/boilit
-		github.com/uw-labs/strongbox
-		github.com/x-motemen/ghq@latest
-		# github.com/rfjakob/gocryptfs: use `setup-util-gocryptfs` instead, as this version lags behind
-	)
-fi
+GO_INSTALL=(
+  'changkun.de/x/rmtrash'
+  'github.com/gennaro-tedesco/boilit'
+  'github.com/x-motemen/ghq@latest'
+)
 
 # fzf
 # gnuplot
