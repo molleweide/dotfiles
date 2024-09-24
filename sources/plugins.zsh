@@ -9,7 +9,7 @@
 # if test -f "$ADOTDIR/antigen.zsh"; then
 
 
-echo "user -> sources/ >> load antigen"
+# echo "user -> sources/ >> load antigen"
 
 
 source "$ADOTDIR/antigen.zsh"

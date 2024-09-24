@@ -24,6 +24,7 @@ function pull_molleweide_latest() {
 	popd >/dev/null 2>&1
 }
 
+# TODO: this should be its own `setup-(user)-configs`
 # I can't keep my xdg configs inside of GHQ because GHQ depends on my XDG
 # configs to know where to install all my repos. therefore simple configs
 # should be kept here in the doro user dir.
@@ -57,6 +58,7 @@ function setup_doom_neovim_config() {
 
 # FIX: create `setup-util-tmux` for tmux
 #       look at syncthing, to see how uninstalling is done.
+#
 function setup_tmux_user() {
 	echo-header "SETTING UP TMUX..."
 	# https://github.com/tmux-plugins/tmux-urlview

@@ -1,23 +1,18 @@
 #!/usr/bin/env bash
 
-
-# NOTE: 1. qutebrowser now works on both linux and macos!!!!
-# 2. I have my own dark mode config for qute.
-# 3. Needs to be symlinked to $HOME on macos...
-
-function setup_util_qute_browser_test() (
+function setup_lua_test() (
   source "$DOROTHY/sources/bash.bash"
   echo-segment --h1="TEST: $0"
   echo-segment --g1="TEST: $0"
   return 0
 )
-function setup_util_qute_browser() (
+function setup_lua() (
   source "$DOROTHY/sources/bash.bash"
 
   function help {
     cat <<-EOF >/dev/stderr
       USAGE:
-        setup-util-qute-browser ...
+        setup-lua ...
 
       DESCRIPTION:
         ...
@@ -60,5 +55,6 @@ fi
 
 # fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-  setup_util_qute_browser "$@"
+  setup_lua "$@"
 fi
+

@@ -14,6 +14,9 @@ alias rl="reload_aliases"
 
 alias il="zsh -il"
 
+
+alias XDH="$XDG_DATA_HOME"
+
 #------------------------
 #---       TODO       ---
 #------------------------

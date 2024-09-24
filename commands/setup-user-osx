@@ -47,6 +47,11 @@ defaults write com.apple.LaunchServices LSQuarantine -bool false
 # Try e.g. `cd /tmp; unidecode "\x{0000}" > cc.txt; open -e cc.txt`
 defaults write NSGlobalDomain NSTextShowsControlCharacters -bool true
 
+#############################################################################
+# Animations
+#
+# how to disable all macos animations: https://apple.stackexchange.com/questions/14001/how-to-turn-off-all-animations-on-os-x
+
 # Disable opening and closing window animations
 defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
 
@@ -89,21 +94,29 @@ defaults write NSGlobalDomain AppleFontSmoothing -int 2
 # Disable auto-correct
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
+#############################################################################
+# MOUSE
+#
+
 # Enable tap to click (Trackpad) for this user and for the login screen
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+# Tracking Speed
+# 0: Slow
+# 3: Fast
+defaults write NSGlobalDomain com.apple.trackpad.scaling -float 3
+# defaults read -g com.apple.mouse.scaling 4
+
+#############################################################################
+
 
 # # Map bottom right Trackpad corner to right-click
 # defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
 # defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
 # defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
 # defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
-
-# Tracking Speed
-# 0: Slow
-# 3: Fast
-defaults write NSGlobalDomain com.apple.trackpad.scaling -float 3
 
 # TODO: move to `setup-screen-saver`
 

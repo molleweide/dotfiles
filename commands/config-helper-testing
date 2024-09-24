@@ -1,47 +1,38 @@
 #!/usr/bin/env bash
 
 function config_helper() (
-
   source "$DOROTHY/sources/bash.bash"
+	source "$DOROTHY/sources/config.sh"
   __require_array 'mapfile'
 
-  echo "config helper testing."
+  # setup.bash provides:
+  local GO_INSTALL=()
 
-  delay=3
+  test_file="testing.bash"
+  # packages_var="GO_INSTALL"
 
-      # "the first strings" \
+		# 	SETUP_UTILS=()
+  load_dorothy_config $test_file
 
-  # printf "\n"
-
-  test_file="$DOROTHY/user/config/testing.bash"
+  # testing_packages_to_remove=(
+  #   'bash'
+  #   'bat'
+  #   'bottom'
+  # )
 
   echo-style --h1="TEST: $0"
 
-  # # test invalid arguments fail
-  # # sleep "$delay"
-  # eval-tester --name='test-invalid-arguments-01' --status=22 --ignore-stderr \
-  #   -- eval-no-color -- config-helper
-  # sleep "$delay"
-  # eval-tester --name='test-invalid-arguments-02' --status=22 --ignore-stderr \
-  #   -- eval-no-color -- config-helper --no-quiet --file="${missing_file:-}"
-  # sleep "$delay"
-  # eval-tester --name='test-invalid-arguments-03' --status=22 --ignore-stderr \
-  #   -- eval-no-color -- config-helper "$missing_file"
+  # config-helper --verbose --file="$test_file" -- --field=CARGO_INSTALL
 
-  # test invalid find and replace arguments
-  sleep "$delay"
-  eval-tester --name='test-invalid-find-and-replace-arguments-01' --status=22 --ignore-stderr \
-    -- eval-no-color -- config-helper --no-quiet --file="$test_file" -- --replace='one'
-  sleep "$delay"
-  eval-tester --name='test-invalid-find-and-replace-arguments-02' --status=22 --ignore-stderr \
-    -- eval-no-color -- config-helper --no-quiet --file="$test_file" -- --find='a' --replace='one' --replace='two'
-  # ^ first find and replace succeeds, hence [one], second find and replace failed, hence no two
-  sleep "$delay"
-  eval-tester --name='test-invalid-find-and-replace-arguments-03' --stdout='one' \
-    -- cat "$test_file"
+  # NOTE: This line performs the modifications to `setup.bash`
+  dorothy-config --file="$test_file" --packages-var='GO_INSTALL' -- "${GO_INSTALL[@]}"
 
-	# done
-	echo-style --g1="TEST: $0"
+  # dorothy-config --file="$test_file" --prefer="public" -- \
+  #   --field="$packages_var" --array="$(__print_lines "${testing_packages_to_remove[@]}" | sort --ignore-case | uniq)"
+		# 		--field='SETUP_UTILS' --array="$(__print_lines "${SETUP_UTILS[@]}" | sort --ignore-case | uniq)"
+
+  # done
+  echo-style --g1="TEST: $0"
 )
 
 # fire if invoked standalone

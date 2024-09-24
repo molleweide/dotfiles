@@ -2,9 +2,9 @@
 # shellcheck disable=SC2034
 # use inline `export VAR=...` statements, for fish compatibility`
 
-echo "user -> config/interactive.zsh"
+# echo "user -> config/interactive.zsh"
 
-export DOROTHY_THEME="starship"
+export DOROTHY_THEME="oz"
 
 # load defaults
 source "$DOROTHY/config/interactive.zsh"
@@ -16,4 +16,3 @@ source "$DOROTHY/user/config/interactive.bash" #??
 for f in "$DOROTHY/user/sources/"*.zsh; do
     source "$f"
 done
-

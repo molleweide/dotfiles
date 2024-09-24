@@ -17,7 +17,7 @@
 [ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
 
 # versions managed by bob
-alias v="CC=gcc-12 nvim"
+alias v="nvim" # "CC=gcc-12 nvim"
 alias vc="CC=/usr/local/Cellar/gcc/12.2.0/bin/gcc-12 ~/.local/share/neovim/bin/nvim"
 alias vb="CC=gcc-12 ~/.local/share/bob/nvim-bin/nvim"
 

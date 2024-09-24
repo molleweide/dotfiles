@@ -5,11 +5,19 @@
 # NOTE: CRUD wrapper around GHQ for Dorothy.
 # It makes sure that information about what repos your are using are backed
 # up properly to your dorothy user config.
+#
 
 # TODO: fuzzy finding a specific repo in the backup file that you want to
 # restore so one doesn't have to restore all repos on a new machine at once
 # if you have eg. crappy internet.
-#
+# Implement something using `fzf`.
+
+# TODO: Use the `choose` command to select which packages to restore.
+# ~ take each line in the ghm backup file
+#     >> transform each line into a good entry
+# ~ on select print each package.
+# >>> look at how setup-dns works now with the new choose implementation
+#     and reuse it in this command.
 
 # FIX: look at tmux-continuum AND resurrect.
 # I should modify the tmux-resurect code so that it can be used for

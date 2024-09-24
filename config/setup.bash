@@ -5,7 +5,7 @@
 source "$DOROTHY/config/setup.bash"
 
 APK_INSTALL=(
-	'tree'
+  'tree'
 )
 
 # APT_REMOVE=(
@@ -23,9 +23,9 @@ APK_INSTALL=(
 
 # https://code.visualstudio.com/docs/setup/linux
 # if [[ "$(get-arch)" == 'x'* ]]; then
+# 'code --classic'
+# deno
 SNAP_INSTALL=(
-  # 'code --classic'
-  # deno
 )
 
 GO_INSTALL=(
@@ -44,85 +44,84 @@ GO_INSTALL=(
 # neofetch
 # zsh-completions
 HOMEBREW_FORMULAS=(
-	'ack'
-	'asdf'
-	'blueutil'
-	'cabal-install'
-	'calcurse'
-	'cloudflare/cloudflare/cloudflared'
-	'cmacrae/formulae/spacebar'
-	'code-minimap'
-	'cointop'
-	'dbus'
-	'diff-so-fancy'
-	'direnv'
-	'fasd'
-	'fff'
-	'figlet'
-	'findutils'
-	'fswatch'
-	'gcc'
-	'ghc'
-	'ghq'
-	'git-extras'
-	'gnu-tar'
-	'gnuplot'
-	'gpg-tui'
-	'heroku/brew/heroku'
-	'himalaya'
-	'hub'
-	'imagemagick'
-	'irssi'
-	'isync'
-	'koekeishiya/formulae/skhd'
-	'koekeishiya/formulae/yabai'
-	'lazygit'
-	'lf'
-	'libxml2'
-	'libzip'
-	'lua'
-	'luarocks'
-	'mongocli'
-	'most'
-	'mps-youtube'
-	'msmtp'
-	'ncurses'
-	'neofetch'
-	'neomutt'
-	'ninja'
-	'nnn'
-	'pandoc'
-	'pass'
-	'pass-otp'
-	'paul-nameless/repo/tg'
-	'pinentry-mac'
-	'podman'
-	'postgresql'
-	'ranger'
-	'readline'
-	'reattach-to-user-namespace'
-	'redis'
-	'sc-im'
-	'signal-cli'
-	'sl'
-	'sox'
-	'spotify-tui'
-	'stripe/stripe-cli/stripe'
-	'subversion'
-	'terminal-notifier'
-	'the_silver_searcher'
-	'tmux'
-	'tmuxinator'
-	'universal-ctags'
-	'urlview'
-	'watch'
-	'watchman'
-	'wp-cli'
-	'zstd'
+  'ack'
+  'asdf'
+  'blueutil'
+  'cabal-install'
+  'calcurse'
+  'cmacrae/formulae/spacebar'
+  'code-minimap'
+  'cointop'
+  'dbus'
+  'diff-so-fancy'
+  'direnv'
+  'fasd'
+  'fff'
+  'figlet'
+  'findutils'
+  'fswatch'
+  'gcc'
+  'ghc'
+  'ghq'
+  'git-extras'
+  'gnu-tar'
+  'gnuplot'
+  'gpg-tui'
+  'heroku/brew/heroku'
+  'himalaya'
+  'hub'
+  'imagemagick'
+  'irssi'
+  'isync'
+  'koekeishiya/formulae/skhd'
+  'koekeishiya/formulae/yabai'
+  'lazygit'
+  'lf'
+  'libxml2'
+  'libzip'
+  'lua'
+  'luarocks'
+  'mongocli'
+  'most'
+  'mps-youtube'
+  'msmtp'
+  'ncurses'
+  'neofetch'
+  'neomutt'
+  'ninja'
+  'nnn'
+  'pandoc'
+  'pass'
+  'pass-otp'
+  'paul-nameless/repo/tg'
+  'pinentry-mac'
+  'podman'
+  'postgresql'
+  'ranger'
+  'readline'
+  'reattach-to-user-namespace'
+  'redis'
+  'sc-im'
+  'signal-cli'
+  'sl'
+  'sox'
+  'spotify-tui'
+  'stripe/stripe-cli/stripe'
+  'subversion'
+  'terminal-notifier'
+  'the_silver_searcher'
+  'tmux'
+  'tmuxinator'
+  'universal-ctags'
+  'urlview'
+  'watch'
+  'watchman'
+  'wp-cli'
+  'zstd'
 )
 HOMEBREW_SLOW_FORMULAS=(
-	gpg
-	shellcheck
+  gpg
+  shellcheck
 )
 
 # 1password-cli
@@ -141,7 +140,7 @@ HOMEBREW_SLOW_FORMULAS=(
 # dat
 # devdocs
 # fantastical
-		# 'google-cloud-sdk'
+# 'google-cloud-sdk'
 # firefox
 # freedom
 # geekbench
@@ -164,12 +163,14 @@ HOMEBREW_SLOW_FORMULAS=(
 # pomello
 # reflector
 # screenflow
+#   'logseq'
 # chromedriver
 # sketch
 # skype
 # soundsource
 # undercover
 # usage
+# 'notion'
 # visual-studio-code
 # vlc
 # vmware-fusion
@@ -179,54 +180,51 @@ HOMEBREW_SLOW_FORMULAS=(
 # xld
 # calibre
 # 	'dmenu-mac'
+#
+# 'mullvadvpn'
+#   'autodesk-fusion360'
+#     'appflowy'
 HOMEBREW_CASKS=(
-	'aerial'
-	'alacritty'
-	'alinoftimer'
-	'appflowy'
-	'autodesk-fusion360'
-	'breaktimer'
-	'gimp'
+  'aerial'
+  'alinoftimer'
+  'breaktimer'
   'discord'
   'element'
-
-	'kitty'
-	'licecap'
-	'logseq'
-	'michaelvillar-timer'
-	'minitimer'
-	'mpv'
-	'mullvadvpn'
-	'native-access'
-	'notion'
-	'obsidian'
-	'qtpass'
-	'qutebrowser'
-	'spotify'
-	'loopback'
-	'supercollider'
-	'thefuck'
-	'timer'
-	'ubersicht'
-	'utm'
-	'xquartz'
+  'gimp'
+  'kitty'
+  'licecap'
+  'loopback'
+  'michaelvillar-timer'
+  'minitimer'
+  'mpv'
+  'native-access'
+  'obsidian'
+  'qtpass'
+  'qutebrowser'
+  'spotify'
+  'supercollider'
+  'thefuck'
+  'timer'
+  'ubersicht'
+  'utm'
+  'xquartz'
 )
 
-# gems
+# 'git-up' # This is an objective-C proj, dunno why it was located under GEM?
+# I also believe that I have stopped using `sass` completely..
 GEM_INSTALL=(
-	'awesome_print'
-	'bundler'
-	'cani'
-	'compass'
-	'ffi'
-	'git-up'
-	'hirb'
-	'pry'
-	'sass'
-	'tmuxinator'
-	'twurl'
-	'yard'
-	'zeus'
+  'awesome_print'
+  'bundler'
+  'cani'
+  'compass'
+  'ffi'
+  'hirb'
+  'pry'
+  'sass'
+  'tmuxinator'
+  'twurl'
+  'yard'
+  'zeus'
 )
 
 # pip
@@ -236,82 +234,84 @@ GEM_INSTALL=(
 # - https://github.com/pikepdf/pikepdf
 # - https://github.com/pdfminer/pdfminer.six
 PIPX_INSTALL=(
-	'git+https://github.com/boppreh/mouse.git'
-	'pyobjc-framework-Quartz'
+  'git+https://github.com/boppreh/mouse.git'
+  'pyobjc-framework-Quartz'
 )
 
+# 'diff-so-fancy'
 NPM_INSTALL=(
-	'bash-language-server'
-	'eslint'
-	'gulp-cli'
-	'json'
-	'tern'
-	'typescript'
-	'vim-node-rpc'
-	'diff-so-fancy'
+  'bash-language-server'
+  'eslint'
+  'gulp-cli'
+  'json'
+  'tern'
+  'typescript'
+  'vim-node-rpc'
 )
 
 # rust/cargo/crates.io
 # --locked: Require Cargo.lock is up to date
 # as rust packages can be supported by many package managers, and as cargo requires downloading every dependency, most rust packages are better installed via SETUP_UTILS
 CARGO_INSTALL=(
-	# cargo install --git https://github.com/boxdot/gurk-rs
-	proximity-sort
-	ttyper
-	ast-grep
-	stylua
-	bob-nvim
+  # cargo install --git https://github.com/boxdot/gurk-rs
+  proximity-sort
+  ttyper
+  ast-grep
+  stylua
+  bob-nvim
 )
 
 SETUP_UTILS=(
-	'1password'
-	'aria2'
-	'bandwhich'
-	'bash'
-	'bat'
-	'bottom'
-	'brave'
-	'curl'
-	'delta'
-	'deno'
-	'devel'
-	'docker'
-	'dust'
-	'eza'
-	'fd'
-	'fish'
-	'fzf'
-	'gh'
-	'ghcup'
-	'git'
-	'glab'
-	'gocryptfs'
-	'grex'
-	'hammerspoon'
-	'httpie'
-	'hyperfine'
-	'jq'
-	'mas'
-	'micro'
-	'neovim'
-	'obs'
-	'prettier'
-	'procs'
-	'ripgrep'
-	'rmesg'
-	'screen'
-	'sd'
-	'shellcheck'
-	'signal'
-	'syncthing'
-	'tealdeer'
-	'tokei'
-	'tree'
-	'unziptar'
-	'vim'
-	'vscode'
-	'wget'
-	'zoxide'
+  '1password'
+  'alacritty'
+  'aria2'
+  'bandwhich'
+  'bash'
+  'bat'
+  'bottom'
+  'brave'
+  'curl'
+  'delta'
+  'deno'
+  'devel'
+  'docker'
+  'dust'
+  'eza'
+  'fd'
+  'fish'
+  'fzf'
+  'gh'
+  'ghcup'
+  'git'
+  'glab'
+  'gocryptfs'
+  'grex'
+  'hammerspoon'
+  'httpie'
+  'hyperfine'
+  'jq'
+  'mas'
+  'micro'
+  'neovim'
+  'obs'
+  'prettier'
+  'procs'
+  'ripgrep'
+  'rmesg'
+  'screen'
+  'sd'
+  'shellcheck'
+  'signal'
+  'strongbox'
+  'syncthing'
+  'tealdeer'
+  'tokei'
+  'tree'
+  'unziptar'
+  'vim'
+  'vscode'
+  'wget'
+  'zoxide'
 )
 
 # heroku plugins:install heroku-repo
@@ -342,49 +342,49 @@ MAS_INSTALL=(
 # )
 
 STACK_INSTALL=(
-	"yesod-bin --install-ghc"
+  "yesod-bin --install-ghc"
 )
 HOMEBREW_ENCODING_INSTALL=no
 HOMEBREW_FONTS=(
-	'font-cantarell'
-	'font-cascadia-code'
-	'font-fira-code'
-	'font-fira-code-nerd-font'
-	'font-fira-mono'
-	'font-fira-mono-nerd-font'
-	'font-hack' # many editors require this
-	'font-hasklig'
-	'font-ibm-plex' # many editors require this
-	'font-inconsolata-go-nerd-font'
-	'font-inter' # many apps require this
-	'font-jetbrains-mono'
-	'font-jetbrains-mono-nerd-font'
-	'font-lato'
-	'font-maven-pro'
-	'font-monoid'
-	'font-montserrat'
-	'font-open-sans'
-	'font-oxygen'
-	'font-oxygen-mono'
-	'font-roboto'
-	'font-roboto-mono'
-	'font-source-code-pro' # many editors require this
-	'font-ubuntu'
-	'font-meslo-lg-nerd-font'
+  'font-cantarell'
+  'font-cascadia-code'
+  'font-fira-code'
+  'font-fira-code-nerd-font'
+  'font-fira-mono'
+  'font-fira-mono-nerd-font'
+  'font-hack' # many editors require this
+  'font-hasklig'
+  'font-ibm-plex' # many editors require this
+  'font-inconsolata-go-nerd-font'
+  'font-inter' # many apps require this
+  'font-jetbrains-mono'
+  'font-jetbrains-mono-nerd-font'
+  'font-lato'
+  'font-maven-pro'
+  'font-monoid'
+  'font-montserrat'
+  'font-open-sans'
+  'font-oxygen'
+  'font-oxygen-mono'
+  'font-roboto'
+  'font-roboto-mono'
+  'font-source-code-pro' # many editors require this
+  'font-ubuntu'
+  'font-meslo-lg-nerd-font'
 )
-GO_LINTING_INSTALL=no
+GO_LINTING_INSTALL='no'
 APT_INSTALL=(
-	# 'alacritty'
-	'atomicparsley'
-	'btrfs-progs'
-	'gnome-keyring'
-	'kitty'
-	'libnotify-bin'
-	'ranger'
-	'tmux'
-	'traceroute'
+  # 'alacritty'
+  'atomicparsley'
+  'btrfs-progs'
+  'gnome-keyring'
+  'kitty'
+  'libnotify-bin'
+  'ranger'
+  'tmux'
+  'traceroute'
 )
 
-HASKEL_INSTALL=(
-  'yesod-bin'
-)
+# HASKEL_INSTALL=(
+#   'yesod-bin'
+# )
