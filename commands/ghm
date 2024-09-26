@@ -6,6 +6,17 @@
 # It makes sure that information about what repos your are using are backed
 # up properly to your dorothy user config.
 #
+#
+# TODO: Fix support for:
+# - codeberg
+# - sourcehut
+# - gitlab
+# - <any> ?? Can I make it so that this process is automated??
+#
+# TODO: restore selector -> output backup into fzf
+#  ghm show   -> list all from backup.
+#  ghm select -> fzf -> `choose` from options on this repo.
+#  ghm choose ->
 
 # TODO: fuzzy finding a specific repo in the backup file that you want to
 # restore so one doesn't have to restore all repos on a new machine at once
@@ -25,316 +36,326 @@
 # All of the logic required is implemented in resurrect.
 
 function ghm() (
-	source "$DOROTHY/sources/bash.bash"
-
-	GHQ_ROOT=$(ghq root)
-	GHQ_BACKUP_FILE="$DOROTHY/user/backups/ghq.bak"
-	GITHUB_USER=$(git config github.user)
-	GHQ_GH_USER_PATH="/Users/hjalmarjakobsson/code/repos/github.com/$GITHUB_USER"
-	GHQ_GITHUB="/Users/hjalmarjakobsson/code/repos/github.com"
-
-	# ======================
-	# Make sure GHQ exists
-	if ! command-exists ghq; then
-		if is-mac; then
-			brew install ghq
-		else
-			go install github.com/x-motemen/ghq@latest
-		fi
-	fi
-	# still if installing didn't work exit
-	if ! command-exists ghq; then
-		exit
-	fi
-	pattern="code/repos"
-	if [[ ! "$GHQ_ROOT" == *"$pattern"* ]]; then
-		echo "GHQ root/config hasn't been setup to [ code/repos ]. Exiting..."
-		exit
-	fi
-
-	# ======================
-
-	function testing() {
-		array=("apple" "banana" "apple" "orange" "banana")
-		unique_array=($(printf "%s\n" "${array[@]}" | sort -u))
-		echo "Original Array: ${array[*]}"
-		echo "Unique Array: ${unique_array[*]}"
-	}
-
-	# =====================================
-	# Helpers
-
-	# this has been moved to its own command?
-	load_locate() {
-		# https://egeek.me/2020/04/18/enabling-locate-on-osx/
-		gupdatedb --localpaths=$HOME --prunepaths=/Volumes --output=$HOME/locatedb
-	}
-
-	function remove_duplicates() {
-		local array=("$1")
-		unique_array=($(printf "%s\n" "${array[@]}" | sort -u))
-		echo "${unique_array[*]}"
-	}
-
-	# ???
-	ghq_do() {
-		# ghq create "$GITHUB_USER/$repo_name" || exit 1
-		# backup
-		:
-	}
-
-	jump_to_repo_and_do() {
-		# the idea is to pass an array of the commands necessary and then
-		# jump to the dir and run them so that I don't have to repeart push/pop
-		# in every function below.
-		:
-	}
-
-	# TODO: initial check
-	# ~ ghq exists?
-	# ~ ghq root is what?
-	# ~ i can obtain my github user?
-	# ~ and find the path in ghq
-	initial_check() {
-		:
-	}
-
-	# get host, user, and repo from a repo url.
-	# This function is a bit hacky.
-	function get_parts() {
-		url="$1"
-
-		git_trimmed=${url%.git}
-		REPO_NAME="${git_trimmed##*/}"
-
-		repo_trimmed="${git_trimmed%/*}"
-		USER_NAME=$(echo "$repo_trimmed" | sed -E 's/.*[:\/]([^\/]*)$/\1/')
-
-		left="${repo_trimmed%?$USER_NAME}"
-		HOST_NAME="${left##*[\/@]}"
-
-		# echo "$REPO_NAME, $repo_trimmed  >> $USER_NAME >>>>> $left"
-		echo "$HOST_NAME" "$USER_NAME" "$REPO_NAME"
-	}
-
-	function backup() {
-		local repo_url="$1"
-		local already_prepared="$2"
-
-		if [ -z "$repo_url" ]; then
-			echo "No repo was provided to [ghm backup]"
-		else
-
-			if test "$already_prepared" = "true"; then
-				echo "already prepared -> backing up [$repo_url]"
-				echo "$repo_url" >>"$DOROTHY/user/backups/ghq.bak"
-			else
-				local prepared_new result_array=($(get_parts "$repo_url"))
-
-				# FIX: first check and make sure that a new repo does not already exists
-				# in the backup file
-				prepared_new="${result_array[0]}/${result_array[1]}/${result_array[2]}"
-				echo "prepared new -> [$prepared_new]"
-				echo "$prepared_new" >>"$DOROTHY/user/backups/ghq.bak"
-			fi
-
-			locatedb-load >/dev/null 2>&1 &
-		fi
-
-	}
-
-	function backup_all() {
-		# loop over all ghq repos and verify that they are backed up properly.
-		:
-	}
-
-	# if repo from backup does not exist/hasn't been cloned, then remove
-	# that repo. Ask before??
-	function clean() {
-		:
-	}
-
-	# remove repo from ghq tree and from backup file
-	# @args host user repo
-	remove_repo() {
-
-		# TODO:
-		# get host from $1
-		# get user from $2
-		# get repo from $3
-
-		# Specify the GitHub repo URL you want to remove
-		github_url="https:\/\/github\.com\/username\/repo"
-
-		# Specify the input file
-		input_file="input_file.txt"
-
-		# Create a temporary file for storing modified content
-		temp_file=$(mktemp)
-
-		# Use grep to filter out lines that match the GitHub URL
-		grep -v "$github_url" "$input_file" >"$temp_file"
-
-		# Replace the original file with the modified content
-		mv "$temp_file" "$input_file"
-
-		echo "Lines with the GitHub URL removed."
-	}
-
-	# restore all repos from backup file
-	# TODO: use dorothy tty to prompt user with the current ghq root so that
-	# user can be sure that things are installed to the right location.
-	restore_repos() {
-
-		if [ ! -f "$GHQ_BACKUP_FILE" ]; then
-			echo "user/backups/ghq.bak doesn't exist"
-			exit 1
-		fi
-
-		while IFS= read -r line; do
-			entries=("$line")
-			the_repo_url="${entries[0]}"
-			# test: use silent here, since we are downloading many repos.
-			ghq get -p "$the_repo_url"
-
-			# for entry in "${entries[@]}"; do
-			# 	# Process each entry here
-			# 	echo "Entry: $entry"
-			# done
-		done <"$GHQ_BACKUP_FILE"
-	}
-
-	# for each repo store the remotes as space separated entries on the same line
-	# ^<repo> <remoteName,repoUrl> <remoteName,repoUrl> ..
-	#
-	# TODO:
-	#  ~ handle duplicates
-	#
-	verify_all_remotes_are_backed_up() {
-		local ghq_all_repos remotes
-		ghq_all_repos=$(ghq list)
-
-		# A. loop over all repos
-		while IFS= read -r line; do
-
-			remotes=$(git -C "$GHQ_ROOT/$line" remote -v)
-
-			# FIX: this still captures some duplicates!
-			# How do I make sure to match $line with a whitespace at the end
-			repo_match_line_to_append_remotes=$(grep "^$line" "$GHQ_BACKUP_FILE")
-
-			echo-segment --h2="$line"
-
-			# B. loop a single repos remotes
-			total=()
-			while IFS= read -r remote; do
-
-				stripped_line="${remote% *}"
-				comma_replaced="${stripped_line//$'\t'/,}"
-				repo_match_line_to_append_remotes="$repo_match_line_to_append_remotes $comma_replaced"
-
-				total+=("$comma_replaced")
-			done < <(echo "$remotes")
-
-			# echo "${total[@]}"
-			echo "$repo_match_line_to_append_remotes"
-			echo-segment --g2="$line"
-			echo ""
-
-			# suffix="suffix"
-			# target="target"
-			# input_file="input_file.txt"
-			# sed -i "/$target/ s/$/ $suffix/" "$input_file"
-
-		done <<<"$ghq_all_repos"
-	}
-
-	function init_github_remote() {
-		local ghq_user_path="$1"
-		local repo_name="$2"
-
-		pushd "$GHQ_GH_USER_PATH/$repo_name" || exit >/dev/null 2>&1
-		echo "# $repo_name" >README.md
-		git add --all && git commit -m 'first'
-		gh repo create --source=. --private --push
-		popd || exit >/dev/null 2>&1
-	}
-
-	# ======================
-
-	function clone() {
-		local repo=$1
-		ghq get -p "$repo"
-		backup "$repo" "true"
-	}
-
-	function create_new_repo_for_user() {
-		repo_name=$1
-		ghq create "$GITHUB_USER/$repo_name" || exit 1
-		backup "github.com/$GITHUB_USER/$repo_name" true
-		init_github_remote "$GHQ_GH_USER_PATH" "$repo_name"
-	}
-
-	function fork() {
-		repo_url=$1
-
-		# TODO: refactor the user strings into function above `get_repo_name_and_user`
-
-		# if url is an ssh string
-		if [[ "$1" =~ ^git@.* ]]; then
-			repo_url="$(echo "$1" | cut -f2 -d":")"
-		fi
-
-		# extract names
-		repo_user=$(basename $(dirname "$repo_url"))
-		repo_name_str=$(basename "$repo_url")
-		repo_name=${repo_name_str%.*}
-
-		echo "ru: $repo_url"
-
-		# ghq
-		ghq get -p "$repo_url"
-		backup "github.com/$repo_user/$repo_name" true
-
-
-		# enter repo and perform actions
-		pushd "$GHQ_GITHUB/$repo_user/$repo_name" >/dev/null 2>&1
-		# echo $PWD
-		# TODO: ADD FLAGS
-		gh repo fork
-
-		# TODO: molleweide branch; first push;
-
-		popd >/dev/null 2>&1
-	}
-
-	function create_new_nvim_plugin() {
-		# initial check
-		local repo_name=$1
-
-		if ! command-exists boilit; then
-			echo "This command requires $(boilit) package." >/dev/stderr
-			return 1
-		fi
-
-		repo_name="$repo_name.nvim"
-
-		# SPAWN NEW PLUGIN
-		# boilit >> need to fix it so that it strips the `.nvim` string within the plugin/code
-		boilit -p "$GHQ_GH_USER_PATH" "$repo_name" || exit 1
-		init_github_remote "$GHQ_GH_USER_PATH" "$repo_name"
-		backup "github.com/$GITHUB_USER/$repo_name" true
-	}
-
-	# =================================
-	# Help
-
-	# TODO:
-	# ~ add command for making sure that all ghq repos have been added to
-	# backup, ie. are synced with the backup file.
-
-	function help {
-		cat <<-EOF >/dev/stderr
+  source "$DOROTHY/sources/bash.bash"
+
+  # ======================
+  # Make sure GHQ exists
+  if ! command-exists ghq; then
+    if is-mac; then
+      brew install ghq
+    else
+      go install github.com/x-motemen/ghq@latest
+    fi
+  fi
+  # still if installing didn't work exit
+  if ! command-exists ghq; then
+    exit
+  fi
+
+  GHQ_ROOT=$(ghq root)
+  GHQ_BACKUP_FILE="$DOROTHY/user/backups/ghq.bak"
+  GITHUB_USER=$(git config github.user)
+  GHQ_GH_USER_PATH="/Users/hjalmarjakobsson/code/repos/github.com/$GITHUB_USER"
+  GHQ_GITHUB="/Users/hjalmarjakobsson/code/repos/github.com"
+
+  pattern="code/repos"
+  if [[ ! "$GHQ_ROOT" == *"$pattern"* ]]; then
+    echo "GHQ root/config hasn't been setup to [ code/repos ]. Exiting..."
+    exit
+  fi
+
+  # ======================
+
+  function testing() {
+    array=("apple" "banana" "apple" "orange" "banana")
+    unique_array=($(printf "%s\n" "${array[@]}" | sort -u))
+    echo "Original Array: ${array[*]}"
+    echo "Unique Array: ${unique_array[*]}"
+  }
+
+  # =====================================
+  # Helpers
+
+  # this has been moved to its own command?
+  load_locate() {
+    # https://egeek.me/2020/04/18/enabling-locate-on-osx/
+    gupdatedb --localpaths=$HOME --prunepaths=/Volumes --output=$HOME/locatedb
+  }
+
+  function remove_duplicates() {
+    local array=("$1")
+    unique_array=($(printf "%s\n" "${array[@]}" | sort -u))
+    echo "${unique_array[*]}"
+  }
+
+  # ???
+  ghq_do() {
+    # ghq create "$GITHUB_USER/$repo_name" || exit 1
+    # backup
+    :
+  }
+
+  jump_to_repo_and_do() {
+    # the idea is to pass an array of the commands necessary and then
+    # jump to the dir and run them so that I don't have to repeart push/pop
+    # in every function below.
+    :
+  }
+
+  # TODO: initial check
+  # ~ ghq exists?
+  # ~ ghq root is what?
+  # ~ i can obtain my github user?
+  # ~ and find the path in ghq
+  initial_check() {
+    :
+  }
+
+  # get host, user, and repo from a repo url.
+  # This function is a bit hacky.
+  function get_parts() {
+    url="$1"
+
+    git_trimmed=${url%.git}
+    REPO_NAME="${git_trimmed##*/}"
+
+    repo_trimmed="${git_trimmed%/*}"
+    USER_NAME=$(echo "$repo_trimmed" | sed -E 's/.*[:\/]([^\/]*)$/\1/')
+
+    left="${repo_trimmed%?$USER_NAME}"
+    HOST_NAME="${left##*[\/@]}"
+
+    # echo "$REPO_NAME, $repo_trimmed  >> $USER_NAME >>>>> $left"
+    echo "$HOST_NAME" "$USER_NAME" "$REPO_NAME"
+  }
+
+  function backup() {
+    local repo_url="$1"
+    local already_prepared="$2"
+
+    if [ -z "$repo_url" ]; then
+      echo "No repo was provided to [ghm backup]"
+    else
+
+      if test "$already_prepared" = "true"; then
+        echo "already prepared -> backing up [$repo_url]"
+        echo "$repo_url" >>"$DOROTHY/user/backups/ghq.bak"
+      else
+        local prepared_new result_array=($(get_parts "$repo_url"))
+
+        # FIX: first check and make sure that a new repo does not already exists
+        # in the backup file
+        prepared_new="${result_array[0]}/${result_array[1]}/${result_array[2]}"
+        echo "prepared new -> [$prepared_new]"
+        echo "$prepared_new" >>"$DOROTHY/user/backups/ghq.bak"
+      fi
+
+      locatedb-load >/dev/null 2>&1 &
+    fi
+
+  }
+
+  function backup_all() {
+    # loop over all ghq repos and verify that they are backed up properly.
+    :
+  }
+
+  # if repo from backup does not exist/hasn't been cloned, then remove
+  # that repo. Ask before??
+  function clean() {
+    :
+  }
+
+  # remove repo from ghq tree and from backup file
+  # @args host user repo
+  remove_repo() {
+
+    # TODO:
+    # get host from $1
+    # get user from $2
+    # get repo from $3
+
+    # Specify the GitHub repo URL you want to remove
+    github_url="https:\/\/github\.com\/username\/repo"
+
+    # Specify the input file
+    input_file="input_file.txt"
+
+    # Create a temporary file for storing modified content
+    temp_file=$(mktemp)
+
+    # Use grep to filter out lines that match the GitHub URL
+    grep -v "$github_url" "$input_file" >"$temp_file"
+
+    # Replace the original file with the modified content
+    mv "$temp_file" "$input_file"
+
+    echo "Lines with the GitHub URL removed."
+  }
+
+  # restore all repos from backup file
+  # 1. use dorothy tty to prompt user with the current ghq root so that
+  #     user can be sure that things are installed to the right location.
+  #     >> Ask user is ghq root correct?? else prompt user to
+  #
+  restore_repos() {
+    if [ ! -f "$GHQ_BACKUP_FILE" ]; then
+      echo "user/backups/ghq.bak doesn't exist"
+      exit 1
+    fi
+
+    if confirm --ppid=$$ \
+      --question="Are you sure you want to restore all [ghq] repos from backup file?" \
+      --yes="Proceeding by restoring repos." \
+      --no="User chose NOT to restore [ghq] repos."; then
+      return 0
+      while IFS= read -r line; do
+        entries=("$line")
+        the_repo_url="${entries[0]}"
+        # test: use silent here, since we are downloading many repos.
+        ghq get -p "$the_repo_url"
+
+        # for entry in "${entries[@]}"; do
+        # 	# Process each entry here
+        # 	echo "Entry: $entry"
+        # done
+      done <"$GHQ_BACKUP_FILE"
+    fi
+  }
+  restore_single() {
+    :
+  }
+
+  # for each repo store the remotes as space separated entries on the same line
+  # ^<repo> <remoteName,repoUrl> <remoteName,repoUrl> ..
+  #
+  # TODO:
+  #  ~ handle duplicates
+  #
+  verify_all_remotes_are_backed_up() {
+    local ghq_all_repos remotes
+    ghq_all_repos=$(ghq list)
+
+    # A. loop over all repos
+    while IFS= read -r line; do
+
+      remotes=$(git -C "$GHQ_ROOT/$line" remote -v)
+
+      # FIX: this still captures some duplicates!
+      # How do I make sure to match $line with a whitespace at the end
+      repo_match_line_to_append_remotes=$(grep "^$line" "$GHQ_BACKUP_FILE")
+
+      echo-segment --h2="$line"
+
+      # B. loop a single repos remotes
+      total=()
+      while IFS= read -r remote; do
+
+        stripped_line="${remote% *}"
+        comma_replaced="${stripped_line//$'\t'/,}"
+        repo_match_line_to_append_remotes="$repo_match_line_to_append_remotes $comma_replaced"
+
+        total+=("$comma_replaced")
+      done < <(echo "$remotes")
+
+      # echo "${total[@]}"
+      echo "$repo_match_line_to_append_remotes"
+      echo-segment --g2="$line"
+      echo ""
+
+      # suffix="suffix"
+      # target="target"
+      # input_file="input_file.txt"
+      # sed -i "/$target/ s/$/ $suffix/" "$input_file"
+
+    done <<<"$ghq_all_repos"
+  }
+
+  function init_github_remote() {
+    local ghq_user_path="$1"
+    local repo_name="$2"
+
+    pushd "$GHQ_GH_USER_PATH/$repo_name" || exit >/dev/null 2>&1
+    echo "# $repo_name" >README.md
+    git add --all && git commit -m 'first'
+    gh repo create --source=. --private --push
+    popd || exit >/dev/null 2>&1
+  }
+
+  # ======================
+
+  function clone() {
+    local repo=$1
+    ghq get -p "$repo"
+    backup "$repo" "true"
+  }
+
+  function create_new_repo_for_user() {
+    repo_name=$1
+    ghq create "$GITHUB_USER/$repo_name" || exit 1
+    backup "github.com/$GITHUB_USER/$repo_name" true
+    init_github_remote "$GHQ_GH_USER_PATH" "$repo_name"
+  }
+
+  function fork() {
+    repo_url=$1
+
+    # TODO: refactor the user strings into function above `get_repo_name_and_user`
+
+    # if url is an ssh string
+    if [[ "$1" =~ ^git@.* ]]; then
+      repo_url="$(echo "$1" | cut -f2 -d":")"
+    fi
+
+    # extract names
+    repo_user=$(basename $(dirname "$repo_url"))
+    repo_name_str=$(basename "$repo_url")
+    repo_name=${repo_name_str%.*}
+
+    echo "ru: $repo_url"
+
+    # ghq
+    ghq get -p "$repo_url"
+    backup "github.com/$repo_user/$repo_name" true
+
+    # enter repo and perform actions
+    pushd "$GHQ_GITHUB/$repo_user/$repo_name" >/dev/null 2>&1
+    # echo $PWD
+    # TODO: ADD FLAGS
+    gh repo fork
+
+    # TODO: molleweide branch; first push;
+
+    popd >/dev/null 2>&1
+  }
+
+  function create_new_nvim_plugin() {
+    # initial check
+    local repo_name=$1
+
+    if ! command-exists boilit; then
+      echo "This command requires $(boilit) package." >/dev/stderr
+      return 1
+    fi
+
+    repo_name="$repo_name.nvim"
+
+    # SPAWN NEW PLUGIN
+    # boilit >> need to fix it so that it strips the `.nvim` string within the plugin/code
+    boilit -p "$GHQ_GH_USER_PATH" "$repo_name" || exit 1
+    init_github_remote "$GHQ_GH_USER_PATH" "$repo_name"
+    backup "github.com/$GITHUB_USER/$repo_name" true
+  }
+
+  # =================================
+  # Help
+
+  # TODO:
+  # ~ add command for making sure that all ghq repos have been added to
+  # backup, ie. are synced with the backup file.
+
+  function help {
+    cat <<-EOF >/dev/stderr
 			ABOUT:
 
 			ghm
@@ -349,82 +370,82 @@ function ghm() (
 			USAGE:
 			?????
 		EOF
-		if test "$#" -ne 0; then
-			echo-error "$@"
-		fi
-		return 22 # EINVAL 22 Invalid argument
-	}
+    if test "$#" -ne 0; then
+      echo-error "$@"
+    fi
+    return 22 # EINVAL 22 Invalid argument
+  }
 
-	# =====================================
-	# ??
+  # =====================================
+  # ??
 
-	actions=(
-		restore
-		backup
-		get
-		new
-		vim
-	)
+  actions=(
+    restore
+    backup
+    get
+    new
+    vim
+  )
 
-	# process
-	action=''
-	args=()
-	# option_dry='no'
-	while test "$#" -ne 0; do
-		item="$1"
-		shift
-		case "$item" in
-		'help' | '--help' | '-h') help ;;
-		'--') ;;
-		'--'*) help "An unrecognised flag was provided: $item" ;;
-		*)
-			# if is empty string
-			if test -z "$action"; then
-				action="$item"
-				# elif test -z "$args"; then
-			else
-				args+=("$item")
-			# elif test -z "$item"; then
-			# 	help "Empty path argument provided."
-			# else
-			# 	args+=("$item")
-			fi
-			;;
-		esac
-	done
+  # process
+  action=''
+  args=()
+  # option_dry='no'
+  while test "$#" -ne 0; do
+    item="$1"
+    shift
+    case "$item" in
+    'help' | '--help' | '-h') help ;;
+    '--') ;;
+    '--'*) help "An unrecognised flag was provided: $item" ;;
+    *)
+      # if is empty string
+      if test -z "$action"; then
+        action="$item"
+        # elif test -z "$args"; then
+      else
+        args+=("$item")
+      # elif test -z "$item"; then
+      # 	help "Empty path argument provided."
+      # else
+      # 	args+=("$item")
+      fi
+      ;;
+    esac
+  done
 
-	# =====================================
-	# Act
+  # =====================================
+  # Act
 
-	# echo ">>> $action ${args[@]}"
+  # echo ">>> $action ${args[@]}"
 
-	# add
+  # add
 
-	if test "$action" = "test"; then
-		testing "${args[@]}"
-	elif test "$action" = "add_missing"; then
-		:
-	elif test "$action" = "restore_repos"; then
-		restore_repos
-	elif test "$action" = 'remove_repo'; then
-		remove_repo "${args[@]}"
-	elif test "$action" = 'nvim'; then
-		create_new_nvim_plugin "${args[@]}"
-	elif test "$action" = 'gp'; then
-		get_parts "${args[@]}"
-	elif test "$action" = 'new'; then
-		create_new_repo_for_user "${args[@]}"
-	elif test "$action" = 'clone'; then
-		clone "${args[@]}"
-	elif test "$action" = 'fork'; then
-		fork "${args[@]}"
-	elif test "$action" = 'vr'; then
-		verify_all_remotes_are_backed_up
-	fi
-	exit "$?"
+  if test "$action" = "test"; then
+    testing "${args[@]}"
+  elif test "$action" = "add_missing"; then
+    :
+  elif test "$action" = "restore_repos"; then
+    restore_repos
+  elif test "$action" = 'remove_repo'; then
+    remove_repo "${args[@]}"
+  elif test "$action" = 'nvim'; then
+    create_new_nvim_plugin "${args[@]}"
+  elif test "$action" = 'gp'; then
+    get_parts "${args[@]}"
+  elif test "$action" = 'new'; then
+    create_new_repo_for_user "${args[@]}"
+  elif test "$action" = 'clone'; then
+    clone "${args[@]}"
+  elif test "$action" = 'fork'; then
+    fork "${args[@]}"
+  elif test "$action" = 'vr'; then
+    verify_all_remotes_are_backed_up
+  fi
+  exit "$?"
 )
 
 # fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-	ghm "$@"
+  ghm "$@"
 fi

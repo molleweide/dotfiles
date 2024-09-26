@@ -5,57 +5,30 @@
 # 2. I have my own dark mode config for qute.
 # 3. Needs to be symlinked to $HOME on macos...
 
-function setup_util_qute_browser_test() (
-  source "$DOROTHY/sources/bash.bash"
-  echo-segment --h1="TEST: $0"
-  echo-segment --g1="TEST: $0"
-  return 0
-)
 function setup_util_qute_browser() (
   source "$DOROTHY/sources/bash.bash"
 
-  function help {
-    cat <<-EOF >/dev/stderr
-      USAGE:
-        setup-util-qute-browser ...
 
-      DESCRIPTION:
-        ...
+  # NOTE: install `qutebrowser`
 
-EOF
-    if test "$#" -ne 0; then
-    echo-error "$@"
-    fi
-    return 22 # EINVAL 22 Invalid argument
-  }
+  # setup-util
 
-# =====================================
-# Args
+  # NOTE: setup-config
+  #
+  # NOTE: GHQ?
+  # The issue with ghq is that we cannot know what someones config repo
+  # is called and therefore it is a bit unreliable to check for names
+  # here. but we could at least do a check??
 
-local item action=''
-while test "$#" -ne 0; do
-  item="$1"
-  shift
-  case "$item" in
-    '--help' | '-h') help ;;
-    *)
-    if test -z "$action"; then
-    action="$item"
-    else
-    help "An unrecognised argument was provided: $item"
-    fi
-    ;;
-  esac
-done
+  if is-mac; then
+    :
+    # symlink to ~
+  else
+    :
+    # symlink to .config
+  fi
 
-# =====================================
-# Action
 
-if test -z "$action"; then
-  help "No <new_name> provided."
-else
-  :
-fi
 )
 
 # fire if invoked standalone
