@@ -123,6 +123,8 @@ alias ZZ=exit
 #---       DOROTHY       ---
 #---------------------------
 
+alias d='dorothy'
+
 alias dr='cd "$DOROTHY"'
 
 alias sdri="setup-install"

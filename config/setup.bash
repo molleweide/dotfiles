@@ -236,6 +236,7 @@ GEM_INSTALL=(
 PIPX_INSTALL=(
   'git+https://github.com/boppreh/mouse.git'
   'pyobjc-framework-Quartz'
+  'openbb'
 )
 
 # 'diff-so-fancy'
