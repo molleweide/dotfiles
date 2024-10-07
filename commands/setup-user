@@ -37,6 +37,9 @@ function pull_molleweide_latest() {
 function setup_basic_xdg_config_symlinks() {
   echo-header "SETTING UP DORO USR XDG SYMLINKS..."
 
+  # WARN: It turns out that the dorothy's symlink-helper command is very slow,
+  # even if --quiet
+
   local special_cases_do_not_go_into_config_home=(
     "qutebrowser"
   )
@@ -45,7 +48,6 @@ function setup_basic_xdg_config_symlinks() {
     local origin_entry_path current_tool_name
     origin_entry_path=$1
     current_tool_name="$(basename "$origin_entry_path")"
-    # echo "$current_tool_name | $origin_entry_path"
 
     if test "$current_tool_name" = "_ignore_these"; then
       return
@@ -53,15 +55,13 @@ function setup_basic_xdg_config_symlinks() {
 
     if ! is-needle --needle="$current_tool_name" -- "${special_cases_do_not_go_into_config_home[@]}"; then
       symlink-helper --existing="$origin_entry_path" \
-        --symlink="$XDG_CONFIG_HOME/$(basename "$origin_entry_path")" \
-        --quiet
+        --symlink="$XDG_CONFIG_HOME/$(basename "$origin_entry_path")" # \ --quiet
     else
       # handle special cases
-      echo "!!! handle special case = $current_tool_name"
-
       case "$current_tool_name" in
       "qutebrowser")
-        symlink-helper --existing="$origin_entry_path" --symlink="$HOME/$current_tool_name"
+        symlink-helper --existing="$origin_entry_path" --symlink="$HOME/$current_tool_name" \
+          --log-if-overriding-file # \ --quiet --log-if-overriding-symlink
         ;;
       *)
         echo "How to handle symlink of config for special case tool [$current_tool_name] has not yet been setup!" ...
@@ -69,7 +69,6 @@ function setup_basic_xdg_config_symlinks() {
       esac
     fi
   }
-
   for cp in "${CONFIG_PATHS[@]}"; do
     for origin_entry_path in "$cp"/*; do
       handle_symlink_for_entry "$origin_entry_path"
