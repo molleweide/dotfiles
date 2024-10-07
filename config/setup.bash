@@ -31,7 +31,6 @@ SNAP_INSTALL=(
 GO_INSTALL=(
   'changkun.de/x/rmtrash'
   'github.com/gennaro-tedesco/boilit'
-  'github.com/x-motemen/ghq@latest'
 )
 
 # fzf
@@ -62,7 +61,6 @@ HOMEBREW_FORMULAS=(
   'fswatch'
   'gcc'
   'ghc'
-  'ghq'
   'git-extras'
   'gnu-tar'
   'gnuplot'

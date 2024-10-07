@@ -1,28 +1,15 @@
 #!/usr/bin/env bash
 # source "$DOROTHY/sources/strict.bash"
 
-# NOTE: ORDER of install
-# ~ dorothy
-# ~ symlink user configs
-# ~ make sure GHQ_ROOT exists
+# NOTE: [git] is assumed to exist
+
+# TODO: ORDER of install
+# ~ [x] symlink basic xdg configs
+# ~ [x] make sure GHQ_ROOT exists
 # ~ clone GHQ
 # ~ strongbox?
 
-# TODO: rewrite this file to follow the dorothy installer conventions
-
-# TEST: what is the difference btw export vars from environment.bash or
-# source/some_script?
-
-DORO_USER_XDG="$DOROTHY/user/config.xdg"
-DORO_USER_XDG_HIDDEN="$DOROTHY/user/config.local/config.xdg"
-
-GHQ_ROOT=$(ghq root)
-GHQ_ROOT_GH_USER="$GHQ_ROOT/github.com/molleweide"
-
-CONFIG_PATHS=(
-  "$DORO_USER_XDG"
-  "$DORO_USER_XDG_HIDDEN"
-)
+# Functions =================================
 
 function pull_molleweide_latest() {
   pushd $DOROTHY/user >/dev/null 2>&1
@@ -30,30 +17,28 @@ function pull_molleweide_latest() {
   popd >/dev/null 2>&1
 }
 
-# TODO: this should be its own `setup-(user)-configs`
-# I can't keep my xdg configs inside of GHQ because GHQ depends on my XDG
-# configs to know where to install all my repos. therefore simple configs
-# should be kept here in the doro user dir.
+# handle basic configs and special cases.
+# WARN: It turns out that the dorothy's symlink-helper command is very slow,
+# even if --quiet
 function setup_basic_xdg_config_symlinks() {
-  echo-header "SETTING UP DORO USR XDG SYMLINKS..."
-
-  # WARN: It turns out that the dorothy's symlink-helper command is very slow,
-  # even if --quiet
-
-  local special_cases_do_not_go_into_config_home=(
+  echo-style --h1="SETTING UP USER SYMLINKS"
+  local DORO_USER_XDG="$DOROTHY/user/config.xdg"
+  local DORO_USER_XDG_HIDDEN="$DOROTHY/user/config.local/config.xdg"
+  local CONFIG_PATHS=(
+    "$DORO_USER_XDG"
+    "$DORO_USER_XDG_HIDDEN"
+  )
+  local SPECIAL_CASES_DO_NOT_GO_INTO_CONFIG_HOME=(
     "qutebrowser"
   )
-
   function handle_symlink_for_entry() {
     local origin_entry_path current_tool_name
     origin_entry_path=$1
     current_tool_name="$(basename "$origin_entry_path")"
-
     if test "$current_tool_name" = "_ignore_these"; then
       return
     fi
-
-    if ! is-needle --needle="$current_tool_name" -- "${special_cases_do_not_go_into_config_home[@]}"; then
+    if ! is-needle --needle="$current_tool_name" -- "${SPECIAL_CASES_DO_NOT_GO_INTO_CONFIG_HOME[@]}"; then
       symlink-helper --existing="$origin_entry_path" \
         --symlink="$XDG_CONFIG_HOME/$(basename "$origin_entry_path")" # \ --quiet
     else
@@ -74,29 +59,26 @@ function setup_basic_xdg_config_symlinks() {
       handle_symlink_for_entry "$origin_entry_path"
     done
   done
+  echo-style --g1="SETTING UP USER SYMLINKS"
 }
 
-function setup_doom_neovim_config() {
-  echo-header "SETTING UP NEOVIM..."
-  # doom_nvim_dir="$HOME/code/doom-nvim"
-  # if [ ! -d "$HOME/code/doom-nvim" ]; then
-  # 	git clone git@github.com:molleweide/doom-nvim.git "$doom_nvim_dir"
-  # fi
-  # local doom_path="$GHQ_ROOT_GH_USER/doom-nvim"
-  # echo "$doom_path"
-  symlink-helper --existing="$GHQ_ROOT_GH_USER/doom-nvim" --symlink="$XDG_CONFIG_HOME/nvim"
-}
+# # depents on GHQ so it needs to be called after setting up
+# # basic configs.
+# function setup_doom_neovim_config() {
+#   echo-header "SETTING UP NEOVIM..."
+#   # doom_nvim_dir="$HOME/code/doom-nvim"
+#   # if [ ! -d "$HOME/code/doom-nvim" ]; then
+#   # 	git clone git@github.com:molleweide/doom-nvim.git "$doom_nvim_dir"
+#   # fi
+#   # local doom_path="$GHQ_ROOT_GH_USER/doom-nvim"
+#   # echo "$doom_path"
+#   symlink-helper --existing="$GHQ_ROOT_GH_USER/doom-nvim" --symlink="$XDG_CONFIG_HOME/nvim"
+# }
 
-# FIX: create `setup-util-tmux` for tmux
-#       look at syncthing, to see how uninstalling is done.
-#
+# add setting up plugin manager and linking config to the setup-util-tmux
 function setup_tmux_user() {
-  echo-header "SETTING UP TMUX..."
-  # https://github.com/tmux-plugins/tmux-urlview
-  # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
-  # https://github.com/sigpipe/urlview
-  TMUX_PLUG_DIR="$HOME/.config/tmux/plugins/tpm"
-  [ ! -d $TMUX_PLUG_DIR ] && git clone git@github.com:tmux-plugins/tpm.git $TMUX_PLUG_DIR
+  local TMUX_PLUG_DIR="$HOME/.config/tmux/plugins/tpm"
+  [ ! -d "$TMUX_PLUG_DIR" ] && git clone git@github.com:tmux-plugins/tpm.git "$TMUX_PLUG_DIR"
   install_script="$TMUX_PLUG_DIR/bin/install_plugins"
   if [ -x "$install_script" ]; then
     $install_script
@@ -157,14 +139,25 @@ function setup_obs() {
   :
 }
 
-# RUN TASKS.........
+# Act =================================
 
-# pull_molleweide_latest
 setup_basic_xdg_config_symlinks
 
-# neovim needs to be after ghq since it depends on my ghq setup..
+if ! command-exists -- ghq; then
+  setup-util-ghq
+fi
+GHQ_ROOT=$(ghq root)
+GHQ_ROOT_GH_USER="$GHQ_ROOT/github.com/molleweide"
 
-# setup_doom_neovim_config
-# setup_tmux_user
-# setup_neorg_notes
-# setup_osx
+# FIX: only restore necessary/specific repos.
+ghm restore_repos
+
+# GHQ -> restore doom
+# GHQ -> setup_doom_neovim_config
+symlink-helper --existing="$GHQ_ROOT_GH_USER/doom-nvim" --symlink="$XDG_CONFIG_HOME/nvim"
+
+setup_tmux_user
+
+setup_neorg_notes
+
+setup_osx
