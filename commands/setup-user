@@ -149,8 +149,7 @@ fi
 GHQ_ROOT=$(ghq root)
 GHQ_ROOT_GH_USER="$GHQ_ROOT/github.com/molleweide"
 
-# FIX: only restore necessary/specific repos.
-ghm restore_repos
+ghm restore "doom-nvim"
 
 # GHQ -> restore doom
 # GHQ -> setup_doom_neovim_config
