@@ -2,6 +2,8 @@
 
 echo-style --g1="SETUP REAPER"
 
+# TODO: wrap in dorothy command structure.
+
 # https://forum.cockos.com/showthread.php?p=2487247#post2487247
 # https://forum.cockos.com/showthread.php?t=242922&highlight=reaper+update+utility
 # https://github.com/iliaspoulakis/Reaper-Tools/blob/master/Various/REAPER%20Update%20Utility.lua
@@ -19,6 +21,8 @@ REAPER_PACKAGES_DIR="$REAPER_DIR/packages"
 REAPER_PROJECTS_DIR="$REAPER_DIR/projects"
 REAPER_TMP_DIR="$REAPER_DIR/tmp"
 REAPER_BACKUP_DIR="$REAPER_DIR/backup"
+
+REAPER_CONFIG_REPO_NAME="reaper-config"
 
 # TODO:
 # put UserPlugins under packages/UserPlugins
@@ -38,10 +42,25 @@ export GIT_DEFAULT_BRANCH="molleweide" # rm...
 
 github_user=$(git config github.user)
 
+alias clone="git clone"
+
+gh_ssh="git@github.com:$github_user"
+
+# load these with choose or fzf so that user can select.
+actions=(
+"complete setup"
+"install packages"
+"install sws"
+"build sws"
+"use sws release"
+"use sws build"
+"install js api extension"
+)
+
 # if no first positional parameter then default to app/reaper
 INSTALL_PATH="$REAPER_APP_DIR/${1-reaper}"
 
-app_name="${1-reaper}.app"
+reaper_executable_new_name="${1-reaper}.app"
 
 checkout_default_branch() {
 	echo "todo"
@@ -65,13 +84,13 @@ find_existing_sws() {
 symlink_packages() {
 	local sws sws_basename
 
-  # scripts from github
+	# scripts from github
 	symlink-helper --existing="$REAPER_PACKAGES_DIR/reaper-keys" --symlink="$INSTALL_PATH/Scripts/reaper-keys"
 	symlink-helper --existing="$REAPER_PACKAGES_DIR/reaper-fuzzy" --symlink="$INSTALL_PATH/Scripts/reaper-fuzzy"
 	symlink-helper --existing="$REAPER_PACKAGES_DIR/reaper-jsfx" --symlink="$INSTALL_PATH/Effects/reaper-jsfx"
 	symlink-helper --existing="$REAPER_PACKAGES_DIR/ColorThemes" --symlink="$INSTALL_PATH/ColorThemes"
 
-  # sws
+	# sws
 	sws=$(find_existing_sws)
 	sws_basename=$(basename "$sws")
 	if test -f "$sws"; then
@@ -82,33 +101,34 @@ symlink_packages() {
 	# js_reascript_api
 	for f in "$REAPER_PACKAGES_DIR/js_reascript_api"/*; do
 		symlink-helper --existing="$f" --symlink="$INSTALL_PATH/UserPlugins/$(basename "$f")"
-  done
+	done
 }
 
 install_reaper_custom() {
 	if test -d "$INSTALL_PATH"; then
-		echo-style --g3="Reaper already exists at '$INSTALL_PATH'.
-                \ You can install a new instance by 'setup-util-reaper <name>'."
+		echo-error "Reaper already exists at '$INSTALL_PATH'. You can install a new instance by 'setup-util-reaper <name>'."
 	else
 		if confirm --bool --ppid=$$ -- "Do you want to install Reaper to [$INSTALL_PATH]?"; then
 			echo-style --green="Installing Reaper with custom config to $INSTALL_PATH"
 
 			if test -n "$github_user"; then
-				reaperConfig="git@github.com:$github_user/reaper-config.git"
+				reaperConfig="git@github.com:$github_user/$REAPER_CONFIG_REPO_NAME.git"
 				if ! confirm --bool --ppid=$$ -- "Does this repository house your Reaper configuration? [$reaperConfig]"; then
 					reaperConfig=''
 				fi
 			fi
 
 			echo-style --purple="Cloning the Reaper configuration into $INSTALL_PATH"
-			if ! git clone "$reaperConfig" "$INSTALL_PATH"; then
+
+			if ! clone "$reaperConfig" "$INSTALL_PATH"; then
 				echo-style --orange="The clone of the repository [$reaperConfig] to [$INSTALL_PATH] failed. \
 				    Setting up a clean install with git init."
 				pushd "$INSTALL_PATH" >/dev/null || exit 1
 				silent git init
 				popd >/dev/null || exit 1
+
 			else
-				echo-style --magenta="checkout branch ($GIT_DEFAULT_BRANCH)!!"
+				echo-style --magenta="Checking out branch: $GIT_DEFAULT_BRANCH"
 				pushd "$INSTALL_PATH" >/dev/null 2>&1
 				git checkout $GIT_DEFAULT_BRANCH
 				# git submodule update --init --recursive
@@ -120,7 +140,7 @@ install_reaper_custom() {
 
 			echo-style --g2="Downloading the reaper executable."
 			brew install --cask reaper --appdir="$INSTALL_PATH" --force
-			$(mv "$INSTALL_PATH/REAPER.app" "$INSTALL_PATH/$app_name")
+			$(mv "$INSTALL_PATH/REAPER.app" "$INSTALL_PATH/$reaper_executable_new_name")
 
 			symlink_packages
 		fi
@@ -143,78 +163,68 @@ install_reaper_custom() {
 # 	path = ColorThemes
 # 	url = git@github.com:molleweide/ColorThemes
 
-install_packages() {
-	echo-style --g3="Checking if any 3rd party packages need be installed to $REAPER_DIR/packages"
-	arch="$(get-arch)"
-
-	if ! test -d "$REAPER_PACKAGES_DIR/reaper-keys"; then
-		echo-style --g3="Installing [reaper-keys] to $REAPER_PACKAGES_DIR"
-		git clone git@github.com:molleweide/reaper-keys.git "$REAPER_PACKAGES_DIR/reaper-keys"
-	fi
-
-	if ! test -d "$REAPER_PACKAGES_DIR/ColorThemes"; then
-		echo-style --g3="Installing [ColorThemes] to $REAPER_PACKAGES_DIR"
-		git clone git@github.com:molleweide/ColorThemes.git "$REAPER_PACKAGES_DIR/ColorThemes"
-	fi
-
-	if ! test -d "$REAPER_PACKAGES_DIR/reaper-auto-syntax"; then
-		echo-style --g3="Installing [reaper-auto-syntax] to $REAPER_PACKAGES_DIR"
-		git clone git@github.com:molleweide/reaper-auto-syntax.git "$REAPER_PACKAGES_DIR/reaper-auto-syntax"
-	fi
-
-	if ! test -d "$REAPER_PACKAGES_DIR/reaper-fuzzy"; then
-		echo-style --g3="Installing [fast fx finder] to $REAPER_PACKAGES_DIR"
-		# https://forums.cockos.com/showthread.php?t=229807
-		git clone git@github.com:molleweide/reaper-fuzzy.git "$REAPER_PACKAGES_DIR/reaper-fuzzy"
-	fi
-
-	if ! test -d "$REAPER_PACKAGES_DIR/reaper-jsfx"; then
-		echo-style --g3="Installing [reaper-jsfx] to $REAPER_PACKAGES_DIR"
-		git clone git@github.com:molleweide/reaper-jsfx.git "$REAPER_PACKAGES_DIR/reaper-jsfx"
-	fi
-
-	rm -r "$REAPER_PACKAGES_DIR/js_reascript_api"
-	if ! test -d "$REAPER_PACKAGES_DIR/js_reascript_api"; then
-		echo-style --g3="Installing [js reascript api (c++ lua extension)] to $REAPER_PACKAGES_DIR"
-		js_ext_version="v1.310"
-		github-download --slug="juliansader/ReaExtensions" \
-		        --ref="master" \
-		        --unzip-filter="js_ReaScriptAPI/$js_ext_version/reaper_js_*" \
-		        --directory="$REAPER_PACKAGES_DIR/js_reascript_api"
-	fi
-
-	# TODO: can I find the latest version number somehow
+install_sws() {
+	# TODO: build SWS extension.
+	# TODO: can I find the latest release version number somehow and then
+	# update this file and commit?
 	if ! find "$REAPER_PACKAGES_DIR" -type f -name "*sws*.dylib" -print -quit | grep -q .; then
 		echo-style --g3="Installing [SWS] to $REAPER_PACKAGES_DIR"
+
+		# TODO: add ability to pass url to the `down` command so that I can outsource all
+		# of the dmg operatios to down.
+
+		local sws_version="$sws_version"
 		local sws_url="https://www.sws-extension.org/download/featured/"
 		local sws_pgk_name
 		local sws_dylib
 		if is-mac; then
-			if test "$arch" = 'a64'; then
-				sws_pgk_name="sws-2.12.1.3-Darwin-arm64.dmg"
-			elif test "$arch" = 'x64'; then
-				sws_pgk_name="sws-2.12.1.3-Darwin-x86_64.dmg"
-			fi
+			case "$arch" in
+			"a64") sws_pgk_name="sws-$sws_version-Darwin-arm64.dmg" ;;
+			"x64") sws_pgk_name="sws-$sws_version-Darwin-x86_64.dmg" ;;
+			esac
+			# if test "$arch" = 'a64'; then
+			# 	sws_pgk_name="sws-$sws_version-Darwin-arm64.dmg"
+			# elif test "$arch" = 'x64'; then
+			# 	sws_pgk_name="sws-$sws_version-Darwin-x86_64.dmg"
+			# fi
 			tempd=$(mktemp -d)
+
+			# download to temporary URL
 			down --directory="$tempd" "$sws_url/$sws_pgk_name"
-			listing=$(sudo hdiutil attach "$tempd/$sws_pgk_name" | grep "Volumes/$(fs-filename $sws_pgk_name)")
+
+      # open the DMG file
+			listing=$(sudo hdiutil attach "$tempd/$sws_pgk_name" | grep "Volumes/$(fs-filename "$sws_pgk_name")")
+
 			volume=$(echo "$listing" | cut -f 3)
 			sws_dylib=$(find "$volume" -name "reaper*.dylib" -maxdepth 1 -print -quit)
+
 			cp -RLf "$sws_dylib" "$REAPER_PACKAGES_DIR"
+
+			# This is the down -> dmg_unmount...
 			sudo hdiutil detach "$volume" #"$(echo "$listing" | cut -f 1)"
+
 			rm -rf "$tempd"
+
+			# maybe add this to down aswell
 			xattr -d com.apple.quarantine "$REAPER_PACKAGES_DIR/$(basename "$sws_dylib")"
+
 		fi
 		if is-linux; then
-			if test "$arch" = 'a64'; then
-				sws_pgk_name="sws-2.12.1.3-Linux-aarch64.tar.xz"
-			elif test "$arch" = 'a32'; then
-				sws_pgk_name="sws-2.12.1.3-Linux-armv7l.tar.xz"
-			elif test "$arch" = 'x64'; then
-				sws_pgk_name="sws-2.12.1.3-Linux-x86_64.tar.xz"
-			elif test "$arch" = 'x32'; then
-				sws_pgk_name="sws-2.12.1.3-Linux-i686.tar.xz"
-			fi
+		  case "$arch" in
+		    'a64') sws_pgk_name="sws-$sws_version-Linux-aarch64.tar.xz" ;;
+		    'a32') sws_pgk_name="sws-$sws_version-Linux-armv7l.tar.xz" ;;
+		    'x64') sws_pgk_name="sws-$sws_version-Linux-x86_64.tar.xz" ;;
+		    'x32') sws_pgk_name="sws-$sws_version-Linux-i686.tar.xz" ;;
+		  esac
+			# if test "$arch" = 'a64'; then
+			# 	sws_pgk_name="sws-$sws_version-Linux-aarch64.tar.xz"
+			# elif test "$arch" = 'a32'; then
+			# 	sws_pgk_name="sws-$sws_version-Linux-armv7l.tar.xz"
+			# elif test "$arch" = 'x64'; then
+			# 	sws_pgk_name="sws-$sws_version-Linux-x86_64.tar.xz"
+			# elif test "$arch" = 'x32'; then
+			# 	sws_pgk_name="sws-$sws_version-Linux-i686.tar.xz"
+			# fi
 			# TODO: dorothy unziptar
 			# tempd=$(mktemp -d)
 			# curl "$sws_url/$sws_pgk_name" >"$tempd/$sws_pgk_name"
@@ -222,11 +232,68 @@ install_packages() {
 			# rm -rf "$tempd"
 		fi
 		if is-wsl; then
-			echo "windows"
-			# sws-2.12.1.3-Windows-x86.exe
-			# sws-2.12.1.3-Windows-x64.exe
+			echo-error "windows is unsupported"
+			# sws-$sws_version-Windows-x86.exe
+			# sws-$sws_version-Windows-x64.exe
 		fi
 	fi
+}
+
+# git clone packages
+clone() {
+	if ! test -d "$REAPER_PACKAGES_DIR/$1"; then
+		echo-style --g3="Installing [$1] to $REAPER_PACKAGES_DIR"
+		clone "$gh_ssh/$1.git" "$REAPER_PACKAGES_DIR/$1"
+	fi
+}
+
+
+install_packages() {
+	echo-style --g3="Checking if any 3rd party packages need be installed to $REAPER_DIR/packages"
+	arch="$(get-arch)"
+
+  clone "reaper-keys"
+	# if ! test -d "$REAPER_PACKAGES_DIR/reaper-keys"; then
+	# 	echo-style --g3="Installing [reaper-keys] to $REAPER_PACKAGES_DIR"
+	# 	clone "$gh_ssh/reaper-keys.git" "$REAPER_PACKAGES_DIR/reaper-keys"
+	# fi
+
+  clone "ColorThemes"
+	# if ! test -d "$REAPER_PACKAGES_DIR/ColorThemes"; then
+	# 	echo-style --g3="Installing [ColorThemes] to $REAPER_PACKAGES_DIR"
+	# 	clone "$gh_ssh/ColorThemes.git" "$REAPER_PACKAGES_DIR/ColorThemes"
+	# fi
+
+	# clone reaper-auto-syntax
+	# if ! test -d "$REAPER_PACKAGES_DIR/reaper-auto-syntax"; then
+	# 	echo-style --g3="Installing [reaper-auto-syntax] to $REAPER_PACKAGES_DIR"
+	# 	clone "gh_ssh/reaper-auto-syntax.git" "$REAPER_PACKAGES_DIR/reaper-auto-syntax"
+	# fi
+
+  # clone "reaper-fuzzy"
+	# if ! test -d "$REAPER_PACKAGES_DIR/reaper-fuzzy"; then
+	# 	echo-style --g3="Installing [fast fx finder] to $REAPER_PACKAGES_DIR"
+	# 	# https://forums.cockos.com/showthread.php?t=229807
+	# 	clone git@github.com:molleweide/reaper-fuzzy.git "$REAPER_PACKAGES_DIR/reaper-fuzzy"
+	# fi
+
+ #  clone "reaper-jsfx"
+	# if ! test -d "$REAPER_PACKAGES_DIR/reaper-jsfx"; then
+	# 	echo-style --g3="Installing [reaper-jsfx] to $REAPER_PACKAGES_DIR"
+	# 	clone git@github.com:molleweide/reaper-jsfx.git "$REAPER_PACKAGES_DIR/reaper-jsfx"
+	# fi
+
+	rm -r "$REAPER_PACKAGES_DIR/js_reascript_api"
+	if ! test -d "$REAPER_PACKAGES_DIR/js_reascript_api"; then
+		echo-style --g3="Installing [js reascript api (c++ lua extension)] to $REAPER_PACKAGES_DIR"
+		js_ext_version="v1.310"
+		github-download --slug="juliansader/ReaExtensions" \
+			--ref="master" \
+			--unzip-filter="js_ReaScriptAPI/$js_ext_version/reaper_js_*" \
+			--directory="$REAPER_PACKAGES_DIR/js_reascript_api"
+	fi
+
+	install_sws
 
 }
 
