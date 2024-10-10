@@ -11,3 +11,7 @@ source "$DOROTHY/config/interactive.sh"
 for f in "$DOROTHY/user/sources/"*.sh; do
   source "$f"
 done
+
+nman() {
+  nvim "+hide Man $1"
+}

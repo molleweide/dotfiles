@@ -75,7 +75,7 @@ function setup_basic_xdg_config_symlinks() {
 #   symlink-helper --existing="$GHQ_ROOT_GH_USER/doom-nvim" --symlink="$XDG_CONFIG_HOME/nvim"
 # }
 
-# add setting up plugin manager and linking config to the setup-util-tmux
+# Add setting up plugin manager and linking config to the setup-util-tmux
 function setup_tmux_user() {
   local TMUX_PLUG_DIR="$HOME/.config/tmux/plugins/tpm"
   [ ! -d "$TMUX_PLUG_DIR" ] && git clone git@github.com:tmux-plugins/tpm.git "$TMUX_PLUG_DIR"
@@ -146,13 +146,12 @@ setup_basic_xdg_config_symlinks
 if ! command-exists -- ghq; then
   setup-util-ghq
 fi
+
 GHQ_ROOT=$(ghq root)
 GHQ_ROOT_GH_USER="$GHQ_ROOT/github.com/molleweide"
 
 ghm restore "doom-nvim"
 
-# GHQ -> restore doom
-# GHQ -> setup_doom_neovim_config
 symlink-helper --existing="$GHQ_ROOT_GH_USER/doom-nvim" --symlink="$XDG_CONFIG_HOME/nvim"
 
 setup_tmux_user

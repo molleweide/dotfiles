@@ -124,6 +124,7 @@ alias ZZ=exit
 #---------------------------
 
 alias d='dorothy'
+alias dp='dorothy permissions'
 
 alias dr='cd "$DOROTHY"'
 

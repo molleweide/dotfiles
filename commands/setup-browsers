@@ -1,13 +1,30 @@
 #!/usr/bin/env bash
 
-# NOTE: a lot of things are sync across browsers via Browser-Sync.
+# NOTE: symlink all repos related to web browsing into a coe
+# 1. browser extensions are spread out across GHQ root.
+# 2. Take all of these and symlink them into:
+#       `~/code/web_browsers/extensions/<...>`
+# 3. With this it becomes easy to manually install extensions, which is
+#       necessary with chromium based browser IIRC
+
+# NOTE: Make this into a generalized util for setting up and managing web
+# browsers, tools and addons, so that ones browser usage becomes more reliable.
+
+# note: a lot of things are sync across browsers via Browser-Sync.
 # This means that I most likely only have to automate installing
 # local extensions, eg Surfingkeys.
 
-# NOTE: interesting command for launching chromium/brave/chrome on mac
+# note: interesting command for launching chromium/brave/chrome on mac
 # open -a chromium --args --load-extension=$PWD/build --force-dev-mode-highlighting --no-default-browser-check
 #
 # --load-extension=comma/separated/list/of/paths/to/extensions
+
+
+	# TERMINAL BASED BROWSERS
+	# https://itsfoss.com/terminal-web-browsers/
+	#
+	# nyxt
+	# https://github.com/atlas-engineer/nyxt
 
 function setup_browsers() (
 	source "$DOROTHY/sources/bash.bash"
@@ -19,26 +36,15 @@ function setup_browsers() (
 
 	# FIX: create setup-util-for each browser
 
-	# TODO: TERMINAL BASED BROWSERS
-	# https://itsfoss.com/terminal-web-browsers/
+	# TODO: [x] setup-util-qutebrowser
 
-	# TODO: INSTALL NYXT
-	# https://github.com/atlas-engineer/nyxt
 
-	# TODO: INSTALL QUTE
-	# https://github.com/qutebrowser/qutebrowser
-
-	# TODO: VIMB
-	# https://github.com/fanglingsu/vimb
-
-	# TODO: SAFARI
-
-	# TODO: FIREFOX
+	# TODO: [ ] FIREFOX / FORKS
 	# https://wiki.mozilla.org/Firefox/CommandLineOptions
+	# - arc?
+	# - zen
 
-	# TODO: VIVALDI
-
-	# TODO: CHROMIUM
+	# VIVALDI?
 
 	local extensions=()
 

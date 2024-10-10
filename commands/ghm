@@ -6,29 +6,18 @@
 # It makes sure that information about what repos your are using are backed
 # up properly to your dorothy user config.
 #
+# TODO: command/ func to ensure that all 0 columns with the repo name follow
+# the same format
 #
+# TODO: remove duplicate 0 col entries
+
 # TODO: Fix support for:
 # - codeberg
 # - sourcehut
 # - gitlab
 # - <any> ?? Can I make it so that this process is automated??
-#
-# TODO: restore selector -> output backup into fzf
-#  ghm show   -> list all from backup.
-#  ghm select -> fzf -> `choose` from options on this repo.
-#  ghm choose ->
 
-# TODO: fuzzy finding a specific repo in the backup file that you want to
-# restore so one doesn't have to restore all repos on a new machine at once
-# if you have eg. crappy internet.
-# Implement something using `fzf`.
-
-# TODO: Use the `choose` command to select which packages to restore.
-# ~ take each line in the ghm backup file
-#     >> transform each line into a good entry
-# ~ on select print each package.
-# >>> look at how setup-dns works now with the new choose implementation
-#     and reuse it in this command.
+# TODO: - drop single /  subset -> fzf/choose
 
 # FIX: look at tmux-continuum AND resurrect.
 # I should modify the tmux-resurect code so that it can be used for
@@ -210,7 +199,7 @@ function ghm() (
       --no="User chose NOT to restore [ghq] repos."; then
       return 0
       while IFS= read -r line; do
-        entries=("$line")
+        entries=("$ghq_list_single_repo")
         the_repo_url="${entries[0]}"
         # test: use silent here, since we are downloading many repos.
         ghq get -p "$the_repo_url"
@@ -262,7 +251,7 @@ function ghm() (
     # by search string.
     echo-style --h1="[GHM]: Restoring a subset of repos"
     while IFS= read -r line; do
-      entries=("$line")
+      entries=("$ghq_list_single_repo")
 
       repo_url="${entries[0]}"
 
@@ -292,39 +281,83 @@ function ghm() (
   # for each repo store the remotes as space separated entries on the same line
   # ^<repo> <remoteName,repoUrl> <remoteName,repoUrl> ..
   #
-  # TODO:
-  #  ~ handle duplicates
+  # NOTE:This function looks at all locally cloned repos, and then checks if
+  # the they exist in the database backup file. If they exist, then we update the
+  # values for remotes, else we call `add_new_repo_to_database` which then in turn
+  # is responsible for collecting the remote data anew and store everything..
   #
-  verify_all_remotes_are_backed_up() {
-    local ghq_all_repos remotes
+  # TODO:
+  # 1. loop over
+  #
+  #
+  capture_and_overwrite_local_repos_remotes() {
+    local ghq_all_repos remotes repo_match_line_to_append_remotes=''
     ghq_all_repos=$(ghq list)
 
+    # set -x
+
     # A. loop over all repos
-    while IFS= read -r line; do
+    while IFS= read -r ghq_list_single_repo; do
+      # always outputs a dot as first entry for some reason?
+      if [[ "$ghq_list_single_repo" == "." ]]; then
+        continue
+      fi
 
-      remotes=$(git -C "$GHQ_ROOT/$line" remote -v)
+      remotes=$(git -C "$GHQ_ROOT/$ghq_list_single_repo" remote -v)
 
-      # FIX: this still captures some duplicates!
-      # How do I make sure to match $line with a whitespace at the end
-      repo_match_line_to_append_remotes=$(grep "^$line" "$GHQ_BACKUP_FILE")
+      # # echoing / debugging
+      # while IFS= read -r remote; do
+      #   __print_line "- $remote"
+      # done < <(echo "$remotes")
 
-      echo-segment --h2="$line"
+      # TODO: grep handle duplicates, eg.:
+      # github.com/LukeSmithxyz/dwm
+      # github.com/LukeSmithxyz/dwmblocks
 
-      # B. loop a single repos remotes
-      total=()
+      local grep_status_repo_exists grep_out=()
+      eval_capture --statusvar=grep_status_repo_exists --stdoutvar=grep_out -- \
+        grep "^$ghq_list_single_repo" "$GHQ_BACKUP_FILE"
+
+      local print_status='x'
+      local num_duplicates
+      if test "$grep_status_repo_exists" -eq 0; then
+        num_duplicates="${#grep_out[@]}"
+      else
+        num_duplicates=0
+        print_status=" "
+      fi
+
+      echo-style --h1="Repo single [#$num_duplicates], #$num_duplicates: $ghq_list_single_repo"
+
+      if test "$num_duplicates" = 0; then
+        echo-style --notice="No item found in database for current repo. Needs to be added to DB first."
+        continue
+      fi
+
+      if test "$num_duplicates" -gt 1; then
+        echo-style --warning="I need to ensure I dont get duplicates back from grep."
+        continue
+      fi
+
+      # These are the final remote string chunks that I should put between
+      # the <REMOTES> keyword and the next special keyword ??
+      remotes_string_chunk=()
       while IFS= read -r remote; do
-
+        local stripped_line comma_replaced repo_match_line_to_append_remotes
         stripped_line="${remote% *}"
         comma_replaced="${stripped_line//$'\t'/,}"
         repo_match_line_to_append_remotes="$repo_match_line_to_append_remotes $comma_replaced"
-
-        total+=("$comma_replaced")
+        remotes_string_chunk+=("$comma_replaced")
       done < <(echo "$remotes")
 
-      # echo "${total[@]}"
-      echo "$repo_match_line_to_append_remotes"
-      echo-segment --g2="$line"
-      echo ""
+      __print_lines "${remotes_string_chunk[@]}"
+      # echo "$repo_match_line_to_append_remotes"
+      echo-style --g2="$ghq_list_single_repo"
+
+      # TODO: put together the full new line string.
+      #
+      #
+      # TODO: revers insert lines?
 
       # suffix="suffix"
       # target="target"
@@ -505,7 +538,7 @@ function ghm() (
   elif test "$action" = 'fork'; then
     fork "${args[@]}"
   elif test "$action" = 'vr'; then
-    verify_all_remotes_are_backed_up
+    capture_and_overwrite_local_repos_remotes
   fi
   exit "$?"
 )

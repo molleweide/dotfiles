@@ -2,7 +2,7 @@ live_config_reload = true
 # working_directory = "None"
 
 [bell]
-duration = 500
+duration = 0
 
 [colors]
 draw_bold_text_with_bright_colors = false # default to false
