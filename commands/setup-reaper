@@ -106,7 +106,6 @@ function setup-reaper() (
 		  return 1
 		fi
 
-		# scripts from github
 		symlink-helper --existing="$RPP_PKG_DIR/reaper-keys" --symlink="$install_path/Scripts/reaper-keys"
 		symlink-helper --existing="$RPP_PKG_DIR/reaper-fuzzy" --symlink="$install_path/Scripts/reaper-fuzzy"
 		symlink-helper --existing="$RPP_PKG_DIR/reaper-jsfx" --symlink="$install_path/Effects/reaper-jsfx"
@@ -188,8 +187,6 @@ function setup-reaper() (
 		# 	--directory="$HOME/Documents/SWS_TEST" \
 		# 	--archive-format="dmg" \
 		# 	--archive-glob="sws-2.14.0.3-Darwin-arm64-*/reaper*.dylib"
-
-		# FIX: fix the command appears to be unreachable.
 
 		if ! find "$RPP_PKG_DIR" -type f -name "*sws*.dylib" -print -quit | grep -q .; then
 			echo-style --g3="Installing [SWS] to $RPP_PKG_DIR"
