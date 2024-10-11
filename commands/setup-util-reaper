@@ -162,8 +162,7 @@ install_sws() {
 	# update this file and commit?
 	if ! find "$RPP_PKG_DIR" -type f -name "*sws*.dylib" -print -quit | grep -q .; then
 		echo-style --g3="Installing [SWS] to $RPP_PKG_DIR"
-
-		local sws_version="$sws_version"
+		local sws_version="2.14.0.3"
 		local sws_url="https://www.sws-extension.org/download/featured/"
 		local sws_pgk_name
 		local sws_dylib
@@ -174,7 +173,49 @@ install_sws() {
 			esac
 
 			# NEW VERSION
-			down --url="$sws_url/$sws_pgk_name" --directory="$RPP_PKG_DIR" --archive-glob="reaper*.dylib"
+			# I should explain this usage in the docs
+			# down --url="$sws_url/$sws_pgk_name" --directory="$RPP_PKG_DIR" --archive-glob="reaper*.dylib"
+
+			# FIX: this almost works. it is just that I dont undertand how the glob
+			# works. when i pass the dylib pattern then it returns empty.
+			# --
+			# ->>> it seems it does not account for the actual name of the
+			#
+			# NOTE: links:
+			#  - https://superuser.com/questions/221136/bypass-a-licence-agreement-when-mounting-a-dmg-on-the-command-line
+
+			down https://www.sws-extension.org/download/featured/sws-2.14.0.3-Darwin-arm64.dmg \
+				--directory="$HOME/Documents/SWS_TEST" \
+				--archive-format="dmg" \
+				--archive-glob="sws-2.14.0.3-Darwin-arm64-*/reaper*.dylib"
+
+			# >> TEST `UNZIPTAR` WAY OF MOUNTING DMG <<<<<<<<
+			# hdiutil attach -readonly -nobrowse -mountroot $HOME/Downloads \
+			#     ~/Downloads/sws-2.14.0.3-Darwin-arm64.dmg
+
+			# NOTE: THIS WORKS FOR SUPPRESSING LICENSE!
+			# "yes" | PAGER=cat hdiutil attach -readonly -nobrowse -mountroot "$HOME/Downloads" \
+			# 	~/Downloads/sws-2.14.0.3-Darwin-arm64.dmg
+
+			# NOTE: current command used to load and capture the dmg volume name
+			# hdiutil attach -readonly -nobrowse -mountroot "$archive_directory" \
+			#     "$archive" | echo-wait | echo-regexp -fo --regexp='(/dev/.+?)\s' --replace='$1'
+			#
+			# hdiutil attach -readonly -nobrowse -mountroot "$archive_directory" \
+			#     "$archive" | echo-wait | echo-regexp -fo --regexp='(/dev/.+?)\s' --replace='$1'
+			# x="$(
+			# 	yes | PAGER=cat hdiutil attach -readonly -nobrowse -mountroot "$HOME/Downloads" \
+			# 		~/Downloads/sws-2.14.0.3-Darwin-arm64.dmg | echo-wait | echo-regexp -fo --verbose --regexp='(/.+/sws-[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+-*)' --replace='$1'
+			# )"
+
+
+
+			# >> NAME OF THE FINAL DMG MOUNT POINT <<<<<
+			# $HOME/reaper/test/sws-2.14.0.3-Darwin-arm64.dmg
+			# /Users/hjalmarjakobsson/reaper/test/sws-2.14.0.3-Darwin-arm64-f9ab612d
+
+			# -- COMMAND USED BY UNZIPTAR TO FILTER THE MOUNTED DMG --------
+			# expand-path -- "$HOME/reaper/test/sws-2.14.0.3-Darwin-arm64.dmg/*.dylib"
 
 			# tempd=$(mktemp -d)
 			# # download to temporary URL
