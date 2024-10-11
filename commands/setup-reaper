@@ -92,36 +92,46 @@ function setup-reaper() (
 		find "$RPP_PKG_DIR" -type f -name "*sws*.dylib" -print -quit
 	}
 
+	# fzf or choose to remove installation.
+	act_remove_reaper_installation() {
+		:
+	}
+
 	# FIX: requires certain args
 	act_symlink_packages() {
 		local sws sws_basename
 
+		if ! test -d "$install_path"; then
+		  echo-error "[symlink packages]: Install path does not exist. Skipping.."
+		  return 1
+		fi
+
 		# scripts from github
-		symlink-helper --existing="$RPP_PKG_DIR/reaper-keys" --symlink="$INSTALL_PATH/Scripts/reaper-keys"
-		symlink-helper --existing="$RPP_PKG_DIR/reaper-fuzzy" --symlink="$INSTALL_PATH/Scripts/reaper-fuzzy"
-		symlink-helper --existing="$RPP_PKG_DIR/reaper-jsfx" --symlink="$INSTALL_PATH/Effects/reaper-jsfx"
-		symlink-helper --existing="$RPP_PKG_DIR/ColorThemes" --symlink="$INSTALL_PATH/ColorThemes"
+		symlink-helper --existing="$RPP_PKG_DIR/reaper-keys" --symlink="$install_path/Scripts/reaper-keys"
+		symlink-helper --existing="$RPP_PKG_DIR/reaper-fuzzy" --symlink="$install_path/Scripts/reaper-fuzzy"
+		symlink-helper --existing="$RPP_PKG_DIR/reaper-jsfx" --symlink="$install_path/Effects/reaper-jsfx"
+		symlink-helper --existing="$RPP_PKG_DIR/ColorThemes" --symlink="$install_path/ColorThemes"
 
 		# sws
 		sws=$(find_existing_sws)
 		sws_basename=$(basename "$sws")
 		if test -f "$sws"; then
-			symlink-helper --existing="$sws" --symlink="$INSTALL_PATH/UserPlugins/$sws_basename"
+			symlink-helper --existing="$sws" --symlink="$install_path/UserPlugins/$sws_basename"
 			# symlink-helper --existing="$HOME/reaper/packages/reaper_sws-arm64.dylib" --symlink="$HOME/reaper/app/reaper/UserPlugins/reaper_sws-arm64.dylib"
 		fi
 
 		# js_reascript_api
 		for f in "$RPP_PKG_DIR/js_reascript_api"/*; do
-			symlink-helper --existing="$f" --symlink="$INSTALL_PATH/UserPlugins/$(basename "$f")"
+			symlink-helper --existing="$f" --symlink="$install_path/UserPlugins/$(basename "$f")"
 		done
 	}
 
 	act_install_reaper_custom() {
-		if test -d "$INSTALL_PATH"; then
-			echo-error "Reaper already exists at '$INSTALL_PATH'. You can install a new instance by 'setup-util-reaper <name>'."
+		if test -d "$install_path"; then
+			echo-error "Reaper already exists at '$install_path'. You can install a new instance by 'setup-util-reaper <name>'."
 		else
-			if confirm --bool --ppid=$$ -- "Do you want to install Reaper to [$INSTALL_PATH]?"; then
-				echo-style --green="Installing Reaper with custom config to $INSTALL_PATH"
+			if confirm --bool --ppid=$$ -- "Do you want to install Reaper to [$install_path]?"; then
+				echo-style --green="Installing Reaper with custom config to $install_path"
 
 				if test -n "$github_user"; then
 					reaperConfig="git@github.com:$github_user/$REAPER_CONFIG_REPO_NAME.git"
@@ -130,18 +140,18 @@ function setup-reaper() (
 					fi
 				fi
 
-				echo-style --purple="Cloning the Reaper configuration into $INSTALL_PATH"
+				echo-style --purple="Cloning the Reaper configuration into $install_path"
 
-				if ! clone "$reaperConfig" "$INSTALL_PATH"; then
-					echo-style --orange="The clone of the repository [$reaperConfig] to [$INSTALL_PATH] failed. \
+				if ! clone "$reaperConfig" "$install_path"; then
+					echo-style --orange="The clone of the repository [$reaperConfig] to [$install_path] failed. \
 				    Setting up a clean install with git init."
-					pushd "$INSTALL_PATH" >/dev/null || exit 1
+					pushd "$install_path" >/dev/null || exit 1
 					silent git init
 					popd >/dev/null || exit 1
 
 				else
 					echo-style --magenta="Checking out branch: $GIT_DEFAULT_BRANCH"
-					pushd "$INSTALL_PATH" >/dev/null 2>&1
+					pushd "$install_path" >/dev/null 2>&1
 					git checkout $GIT_DEFAULT_BRANCH
 					# git submodule update --init --recursive
 					# cd Scripts/reaper-keys && git checkout molleweide && cd ../..
@@ -151,8 +161,8 @@ function setup-reaper() (
 				fi
 
 				echo-style --g2="Downloading the reaper executable."
-				brew install --cask reaper --appdir="$INSTALL_PATH" --force
-				$(mv "$INSTALL_PATH/REAPER.app" "$INSTALL_PATH/$reaper_executable_new_name")
+				brew install --cask reaper --appdir="$install_path" --force
+				$(mv "$install_path/REAPER.app" "$install_path/$executable_name")
 
 			fi
 
@@ -281,8 +291,9 @@ function setup-reaper() (
 		return 22 # EINVAL 22 Invalid argument
 	}
 
-	local item action='' option_args=() reaper_executable_new_name='' directory='' use_fzf='yes'
-	local INSTALL_PATH='' # rename to `directory` and follow dorothy pattern
+	local item action='' option_args=() executable_name='' directory='' use_fzf='yes'
+	local install_path='' # rename to `directory` and follow dorothy pattern
+	local installer_name=''
 
 	while test "$#" -ne 0; do
 		item="$1"
@@ -293,7 +304,7 @@ function setup-reaper() (
 		'--no-fzf'* | '--fzf'*)
 			use_fzf="$(get-flag-value --affirmative --fallback="$use_fzf" -- "$item")"
 			;;
-		'--directory='*) INSTALL_PATH="${item#*=}" ;;
+		'--directory='*) install_path="${item#*=}" ;;
 		'default')
 			action="install_reaper_default"
 			;;
@@ -320,7 +331,10 @@ function setup-reaper() (
 			action='symlink_packages'
 			;;
 		'--executable-name='* | '--exec='*)
-			reaper_executable_new_name="${item#*=}"
+			executable_name="${item#*=}"
+			;;
+		'remove' | 'rm')
+			action="remove_reaper_installation"
 			;;
 		*) help "An unrecognised argument was provided: $item" ;;
 		esac
@@ -365,7 +379,7 @@ function setup-reaper() (
 				__print_lines "${fzf_actions[@]}" | fzf "${fzf_base_opts[@]}" \
 					--header "$(get_fzf_heading "You have to select an ACTION")"
 
-        # NOTE: display next lines by adding $'\n'
+				# NOTE: display next lines by adding $'\n'
 
 			)"
 		else
@@ -382,16 +396,20 @@ function setup-reaper() (
 					symlink_packages 'Redo symlinks for existing packages into target reaper install'
 			)"
 		fi
-		selection_prev+=("$action")
+		selection_prev+=("action = $action")
 	fi
 
-	if test -z "$INSTALL_PATH"; then
-		INSTALL_PATH="$REAPER_APP_DIR/${1-reaper}"
+	if test -z "$installer_name"; then
+		installer_name="$(
+			ask --required \
+				--question='Input name for new reaper install:' \
+				--default="reaper"
+		)"
+		selection_prev+=("installer_name = $install_path")
 	fi
 
-	if test -z "$reaper_executable_new_name"; then
-		reaper_executable_new_name="reaper.app"
-	fi
+	install_path="$REAPER_APP_DIR/$installer_name"
+	executable_name="$installer_name.app"
 
 	echo-style --h1="SETUP REAPER"
 
