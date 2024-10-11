@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
-# TODO: wrap in dorothy command structure.
+# TODO: handle samples lib? setup dirs?
+
+# TODO: ???
+# put UserPlugins under packages/UserPlugins
+# put Scripts under packages/Scripts
+# put Effects under packages/Effects
+# color themes...
 
 # https://forum.cockos.com/showthread.php?p=2487247#post2487247
 # https://forum.cockos.com/showthread.php?t=242922&highlight=reaper+update+utility
@@ -17,46 +23,42 @@ function setup-reaper() (
 
 	# export REAPER_CLI=$REAPER_APP_DIR/reaper-latest
 	# export PATH="$PATH:$REAPER_APP_DIR"
-	export REAPER_DIR="$HOME/reaper"
+	local REAPER_DIR="$HOME/reaper"
+	local REAPER_APP_DIR="$REAPER_DIR/app"
+	local RPP_PKG_DIR="$REAPER_DIR/packages"
+	local REAPER_PROJECTS_DIR="$REAPER_DIR/projects"
+	local REAPER_TMP_DIR="$REAPER_DIR/tmp"
+	local REAPER_BACKUP_DIR="$REAPER_DIR/backup"
+	local REAPER_CONFIG_REPO_NAME="reaper-config"
 
-	export REAPER_APP_DIR="$REAPER_DIR/app"
+	local GIT_DEFAULT_BRANCH="molleweide" # rm...
+	local github_user='' gh_ssh=''
 
-	RPP_PKG_DIR="$REAPER_DIR/packages"
-	REAPER_PROJECTS_DIR="$REAPER_DIR/projects"
-	REAPER_TMP_DIR="$REAPER_DIR/tmp"
-	REAPER_BACKUP_DIR="$REAPER_DIR/backup"
-
-	REAPER_CONFIG_REPO_NAME="reaper-config"
-
-	# TODO:
-	# put UserPlugins under packages/UserPlugins
-	# put Scripts under packages/Scripts
-	# put Effects under packages/Effects
-	# color themes...
+	gh_ssh="git@github.com:$github_user"
+	github_user=$(git config github.user)
 
 	mkdir -p "$REAPER_APP_DIR"
 	mkdir -p "$RPP_PKG_DIR"
 	mkdir -p "$REAPER_PROJECTS_DIR"
 	mkdir -p "$REAPER_TMP_DIR"
 	mkdir -p "$REAPER_BACKUP_DIR"
+
 	# TODO: SAMPLES DIR
 	# mkdir -p "$REAPER_SAMPLES_DIR"
 
-	export GIT_DEFAULT_BRANCH="molleweide" # rm...
-
-	github_user=$(git config github.user)
-
 	alias clone="git clone"
-
-	gh_ssh="git@github.com:$github_user"
-
-	# if no first positional parameter then default to app/reaper
-	INSTALL_PATH="$REAPER_APP_DIR/${1-reaper}"
-
-	reaper_executable_new_name="${1-reaper}.app"
 
 	# ============================================
 	# helpers
+	#
+
+	__use_fzf() {
+		if test "$use_fzf" = 'yes'; then
+			return 0
+		else
+			return 1
+		fi
+	}
 
 	checkout_default_branch() {
 		echo "todo"
@@ -75,7 +77,7 @@ function setup-reaper() (
 	# ============================================
 	# Act
 
-	install_reaper_default() {
+	act_install_reaper_default() {
 		if confirm --bool --ppid=$$ -- "Do you want to install Reaper with default configs to /Applications?"; then
 			echo-style --g2="Installing..."
 			if is-mac; then
@@ -90,6 +92,7 @@ function setup-reaper() (
 		find "$RPP_PKG_DIR" -type f -name "*sws*.dylib" -print -quit
 	}
 
+	# FIX: requires certain args
 	act_symlink_packages() {
 		local sws sws_basename
 
@@ -256,6 +259,9 @@ function setup-reaper() (
 			USAGE:
 			setup-reaper <action>
 
+			--directory=<directory>
+			    ????
+
 			ACTIONS:
 			full | complete | everything
 			    Setup everything from scratch. OBS: Will prompt to ensure nothing that
@@ -275,25 +281,25 @@ function setup-reaper() (
 		return 22 # EINVAL 22 Invalid argument
 	}
 
-	# load these with choose or fzf so that user can select.
-	actions=(
-		"complete setup"
-		"install packages"
-		"install sws"
-		"build sws"
-		"use sws release"
-		"use sws build"
-		"install js api extension"
-	)
+	local item action='' option_args=() reaper_executable_new_name='' directory='' use_fzf='yes'
+	local INSTALL_PATH='' # rename to `directory` and follow dorothy pattern
 
-	local item action='' option_args=()
 	while test "$#" -ne 0; do
 		item="$1"
 		shift
 		case "$item" in
 		'--help' | '-h') help ;;
+		# '--fzf') use_fzf='yes' ;;
+		'--no-fzf'* | '--fzf'*)
+			use_fzf="$(get-flag-value --affirmative --fallback="$use_fzf" -- "$item")"
+			;;
+		'--directory='*) INSTALL_PATH="${item#*=}" ;;
+		'default')
+			action="install_reaper_default"
+			;;
 		'full' | 'complete' | 'all')
 			action="full_setup"
+			option_args+=("$@")
 			;;
 		'packages' | 'pkgs')
 			action='install_packages'
@@ -313,9 +319,79 @@ function setup-reaper() (
 		'symlink' | 'link')
 			action='symlink_packages'
 			;;
+		'--executable-name='* | '--exec='*)
+			reaper_executable_new_name="${item#*=}"
+			;;
 		*) help "An unrecognised argument was provided: $item" ;;
 		esac
 	done
+
+	# FIX: add support for FZF in choose if
+	# 1. add flag --fzf
+	# 2. should work only if single selection.
+	# (actually fzf could work in choose with if you'd save the results from each
+	# menu and then show a list of all chosen selections.)
+
+	# load these with choose or fzf so that user can select.
+	local fzf_actions=(
+		'full_setup'
+		'install_packages'
+		'install_reaper_default'
+		'install_sws_release'
+		'install_sws_build'
+		'install_js_api'
+		'symlink_packages'
+	)
+
+	local fzf_heading__prefix='SELECTION (Current question: '
+	local fzf_heading__suffix=')'
+
+	get_fzf_heading() {
+		# local final header=
+		#
+		__print_string "$fzf_heading__prefix${1-????}$fzf_heading__suffix"
+	}
+
+	local fzf_base_opts=(
+		--height=40%
+		--ellipsis=..
+	)
+
+	local selection_prev=()
+
+	if test -z "$action"; then
+		if __use_fzf; then
+			action="$(
+				__print_lines "${fzf_actions[@]}" | fzf "${fzf_base_opts[@]}" \
+					--header "$(get_fzf_heading "You have to select an ACTION")"
+
+        # NOTE: display next lines by adding $'\n'
+
+			)"
+		else
+			action="$(
+				choose --linger --required --label \
+					--question='Choose an action' \
+					-- \
+					full_setup 'Run a full system reaper setup' \
+					install_packages 'Install reaper packages/addons' \
+					install_reaper_default 'Standard installation to /Applications' \
+					install_sws_release 'Install SWS extension from releases' \
+					install_sws_build 'Build install SWS Extension' \
+					install_js_api 'Install the JS API' \
+					symlink_packages 'Redo symlinks for existing packages into target reaper install'
+			)"
+		fi
+		selection_prev+=("$action")
+	fi
+
+	if test -z "$INSTALL_PATH"; then
+		INSTALL_PATH="$REAPER_APP_DIR/${1-reaper}"
+	fi
+
+	if test -z "$reaper_executable_new_name"; then
+		reaper_executable_new_name="reaper.app"
+	fi
 
 	echo-style --h1="SETUP REAPER"
 
