@@ -15,251 +15,235 @@
 # - look at reaper update utility.
 #   can this one be used / compatible with branches
 
+# OLD MODULES FILE
+# [submodule "Scripts/reaper-auto-syntax"]
+# 	path = Scripts/reaper-auto-syntax
+# 	url = git@github.com:molleweide/reaper-auto-syntax
+# [submodule "ColorThemes"]
+# 	path = ColorThemes
+# 	url = git@github.com:molleweide/ColorThemes
+#
+# Find latest version of SWS programmatically? I believe that
+# github-downloads can do all of this..
+#
+# # SWS DOWN TEST VERSION
+# down https://www.sws-extension.org/download/featured/sws-2.14.0.3-Darwin-arm64.dmg \
+# 	--directory="$HOME/Documents/SWS_TEST" \
+# 	--archive-format="dmg" \
+# 	--archive-glob="sws-2.14.0.3-Darwin-arm64-*/reaper*.dylib"
+
 function setup-reaper() (
-	source "$DOROTHY/sources/bash.bash"
+  source "$DOROTHY/sources/bash.bash"
 
-	# ============================================
-	# vars
+  # ============================================
+  # vars
 
-	# export REAPER_CLI=$REAPER_APP_DIR/reaper-latest
-	# export PATH="$PATH:$REAPER_APP_DIR"
-	local REAPER_DIR="$HOME/reaper"
-	local REAPER_APP_DIR="$REAPER_DIR/app"
-	local RPP_PKG_DIR="$REAPER_DIR/packages"
-	local REAPER_PROJECTS_DIR="$REAPER_DIR/projects"
-	local REAPER_TMP_DIR="$REAPER_DIR/tmp"
-	local REAPER_BACKUP_DIR="$REAPER_DIR/backup"
-	local REAPER_CONFIG_REPO_NAME="reaper-config"
+  # export REAPER_CLI=$REAPER_APP_DIR/reaper-latest
+  # export PATH="$PATH:$REAPER_APP_DIR"
+  local REAPER_DIR="$HOME/reaper"
+  local REAPER_APP_DIR="$REAPER_DIR/app"
+  local RPP_PKG_DIR="$REAPER_DIR/packages"
+  local REAPER_PROJECTS_DIR="$REAPER_DIR/projects"
+  local REAPER_TMP_DIR="$REAPER_DIR/tmp"
+  local REAPER_BACKUP_DIR="$REAPER_DIR/backup"
+  local REAPER_CONFIG_REPO_NAME="reaper-config"
+  local GIT_DEFAULT_BRANCH="molleweide" # rm...
+  local github_user='' gh_ssh=''
+  gh_ssh="git@github.com:$github_user"
+  github_user=$(git config github.user)
+  mkdir -p "$REAPER_APP_DIR"
+  mkdir -p "$RPP_PKG_DIR"
+  mkdir -p "$REAPER_PROJECTS_DIR"
+  mkdir -p "$REAPER_TMP_DIR"
+  mkdir -p "$REAPER_BACKUP_DIR"
 
-	local GIT_DEFAULT_BRANCH="molleweide" # rm...
-	local github_user='' gh_ssh=''
+  # TODO: SAMPLES DIR
+  # mkdir -p "$REAPER_SAMPLES_DIR"
 
-	gh_ssh="git@github.com:$github_user"
-	github_user=$(git config github.user)
+  # ============================================
+  # helpers
+  #
 
-	mkdir -p "$REAPER_APP_DIR"
-	mkdir -p "$RPP_PKG_DIR"
-	mkdir -p "$REAPER_PROJECTS_DIR"
-	mkdir -p "$REAPER_TMP_DIR"
-	mkdir -p "$REAPER_BACKUP_DIR"
+  __use_fzf() {
+    if test "$use_fzf" = 'yes'; then
+      return 0
+    else
+      return 1
+    fi
+  }
 
-	# TODO: SAMPLES DIR
-	# mkdir -p "$REAPER_SAMPLES_DIR"
+  checkout_default_branch() {
+    echo "todo"
+  }
 
-	alias clone="git clone"
+  # git clone packages
+  clone() {
+    if ! test -d "$RPP_PKG_DIR/$1"; then
+      echo-style --g3="Installing [$1] to $RPP_PKG_DIR"
+      git clone "$gh_ssh/$1.git" "$RPP_PKG_DIR/$1"
+    else
+      echo "[$1] already exists."
+    fi
+  }
 
-	# ============================================
-	# helpers
-	#
+  # ============================================
+  # Act
 
-	__use_fzf() {
-		if test "$use_fzf" = 'yes'; then
-			return 0
-		else
-			return 1
-		fi
-	}
+  act_install_reaper_default() {
+    if confirm --bool --ppid=$$ -- "Do you want to install Reaper with default configs to /Applications?"; then
+      echo-style --g2="Installing..."
+      if is-mac; then
+        brew install --cask reaper
+        # TODO: test this
+        # mv "/Applications/REAPER.app" "/Applications/REAPER_DEFAULT.app"
+      fi
+    fi
+  }
 
-	checkout_default_branch() {
-		echo "todo"
-	}
+  find_existing_sws() {
+    find "$RPP_PKG_DIR" -type f -name "*sws*.dylib" -print -quit
+  }
 
-	# git clone packages
-	clone() {
-		if ! test -d "$RPP_PKG_DIR/$1"; then
-			echo-style --g3="Installing [$1] to $RPP_PKG_DIR"
-			clone "$gh_ssh/$1.git" "$RPP_PKG_DIR/$1"
-		else
-			echo "[$1] already exists."
-		fi
-	}
+  # fzf or choose to remove installation.
+  act_remove_reaper_installation() {
+    :
+  }
 
-	# ============================================
-	# Act
+  act_symlink_packages() {
+    local sws sws_basename
+    if ! test -d "$install_path"; then
+      echo-error "[symlink packages]: Install path does not exist. Skipping.."
+      return 1
+    fi
+    if ! confirm --bool --ppid=$$ -- "Do you want to re-link packages for installer = [$install_path]?"; then
+      return 1
+    fi
+    symlink-helper --existing="$RPP_PKG_DIR/reaper-keys" --symlink="$install_path/Scripts/reaper-keys"
+    symlink-helper --existing="$RPP_PKG_DIR/reaper-fuzzy" --symlink="$install_path/Scripts/reaper-fuzzy"
+    symlink-helper --existing="$RPP_PKG_DIR/reaper-jsfx" --symlink="$install_path/Effects/reaper-jsfx"
+    symlink-helper --existing="$RPP_PKG_DIR/ColorThemes" --symlink="$install_path/ColorThemes"
+    # sws
+    sws=$(find_existing_sws)
+    sws_basename=$(basename "$sws")
+    if test -f "$sws"; then
+      symlink-helper --existing="$sws" --symlink="$install_path/UserPlugins/$sws_basename"
+      # symlink-helper --existing="$HOME/reaper/packages/reaper_sws-arm64.dylib" --symlink="$HOME/reaper/app/reaper/UserPlugins/reaper_sws-arm64.dylib"
+    fi
+    # js_reascript_api
+    for f in "$RPP_PKG_DIR/js_reascript_api"/*; do
+      symlink-helper --existing="$f" --symlink="$install_path/UserPlugins/$(basename "$f")"
+    done
+  }
 
-	act_install_reaper_default() {
-		if confirm --bool --ppid=$$ -- "Do you want to install Reaper with default configs to /Applications?"; then
-			echo-style --g2="Installing..."
-			if is-mac; then
-				brew install --cask reaper
-				# TODO: test this
-				# mv "/Applications/REAPER.app" "/Applications/REAPER_DEFAULT.app"
-			fi
-		fi
-	}
-
-	find_existing_sws() {
-		find "$RPP_PKG_DIR" -type f -name "*sws*.dylib" -print -quit
-	}
-
-	# fzf or choose to remove installation.
-	act_remove_reaper_installation() {
-		:
-	}
-
-	# FIX: requires certain args
-	act_symlink_packages() {
-		local sws sws_basename
-
-		if ! test -d "$install_path"; then
-		  echo-error "[symlink packages]: Install path does not exist. Skipping.."
-		  return 1
-		fi
-
-		symlink-helper --existing="$RPP_PKG_DIR/reaper-keys" --symlink="$install_path/Scripts/reaper-keys"
-		symlink-helper --existing="$RPP_PKG_DIR/reaper-fuzzy" --symlink="$install_path/Scripts/reaper-fuzzy"
-		symlink-helper --existing="$RPP_PKG_DIR/reaper-jsfx" --symlink="$install_path/Effects/reaper-jsfx"
-		symlink-helper --existing="$RPP_PKG_DIR/ColorThemes" --symlink="$install_path/ColorThemes"
-
-		# sws
-		sws=$(find_existing_sws)
-		sws_basename=$(basename "$sws")
-		if test -f "$sws"; then
-			symlink-helper --existing="$sws" --symlink="$install_path/UserPlugins/$sws_basename"
-			# symlink-helper --existing="$HOME/reaper/packages/reaper_sws-arm64.dylib" --symlink="$HOME/reaper/app/reaper/UserPlugins/reaper_sws-arm64.dylib"
-		fi
-
-		# js_reascript_api
-		for f in "$RPP_PKG_DIR/js_reascript_api"/*; do
-			symlink-helper --existing="$f" --symlink="$install_path/UserPlugins/$(basename "$f")"
-		done
-	}
-
-	act_install_reaper_custom() {
-		if test -d "$install_path"; then
-			echo-error "Reaper already exists at '$install_path'. You can install a new instance by 'setup-util-reaper <name>'."
-		else
-			if confirm --bool --ppid=$$ -- "Do you want to install Reaper to [$install_path]?"; then
-				echo-style --green="Installing Reaper with custom config to $install_path"
-
-				if test -n "$github_user"; then
-					reaperConfig="git@github.com:$github_user/$REAPER_CONFIG_REPO_NAME.git"
-					if ! confirm --bool --ppid=$$ -- "Does this repository house your Reaper configuration? [$reaperConfig]"; then
-						reaperConfig=''
-					fi
-				fi
-
-				echo-style --purple="Cloning the Reaper configuration into $install_path"
-
-				if ! clone "$reaperConfig" "$install_path"; then
-					echo-style --orange="The clone of the repository [$reaperConfig] to [$install_path] failed. \
+  # FIX: use cd instead of pushd/popd
+  act_install_reaper_custom() {
+    if test -d "$install_path"; then
+      echo-error "Reaper already exists at '$install_path'. You can install a new instance by 'setup-util-reaper <name>'."
+    else
+      if confirm --bool --ppid=$$ -- "Do you want to install Reaper to [$install_path]?"; then
+        echo-style --green="Installing Reaper with custom config to $install_path"
+        if test -n "$github_user"; then
+          reaperConfig="git@github.com:$github_user/$REAPER_CONFIG_REPO_NAME.git"
+          if ! confirm --bool --ppid=$$ -- "Does this repository house your Reaper configuration? [$reaperConfig]"; then
+            reaperConfig=''
+          fi
+        fi
+        echo-style --purple="Cloning the Reaper configuration into $install_path"
+        if ! clone "$reaperConfig" "$install_path"; then
+          echo-style --orange="The clone of the repository [$reaperConfig] to [$install_path] failed. \
 				    Setting up a clean install with git init."
-					pushd "$install_path" >/dev/null || exit 1
-					silent git init
-					popd >/dev/null || exit 1
+          pushd "$install_path" >/dev/null || exit 1
+          silent git init
+          popd >/dev/null || exit 1
+        else
+          echo-style --magenta="Checking out branch: $GIT_DEFAULT_BRANCH"
+          pushd "$install_path" >/dev/null 2>&1
+          git checkout $GIT_DEFAULT_BRANCH
+          # git submodule update --init --recursive
+          # cd Scripts/reaper-keys && git checkout molleweide && cd ../..
+          # cd Effects/molleweide && git checkout molleweide && cd ../..
+          # cd ColorThemes && git checkout molleweide && cd ..
+          popd >/dev/null 2>&1
+        fi
+        echo-style --g2="Downloading the reaper executable."
+        brew install --cask reaper --appdir="$install_path" --force
+        $(mv "$install_path/REAPER.app" "$install_path/$executable_name")
+      fi
+    fi
+  }
 
-				else
-					echo-style --magenta="Checking out branch: $GIT_DEFAULT_BRANCH"
-					pushd "$install_path" >/dev/null 2>&1
-					git checkout $GIT_DEFAULT_BRANCH
-					# git submodule update --init --recursive
-					# cd Scripts/reaper-keys && git checkout molleweide && cd ../..
-					# cd Effects/molleweide && git checkout molleweide && cd ../..
-					# cd ColorThemes && git checkout molleweide && cd ..
-					popd >/dev/null 2>&1
-				fi
+  act_install_sws_release() {
+    arch="$(get-arch)"
+    if ! find "$RPP_PKG_DIR" -type f -name "*sws*.dylib" -print -quit | grep -q .; then
+      echo-style --g3="Installing [SWS] to $RPP_PKG_DIR"
+      local sws_pgk_name='' sws_version="2.14.0.3" sws_url="https://www.sws-extension.org/download/featured/"
+      local sws_dylib_glob='reaper*.dylib'
+      if is-mac; then
+        case "$arch" in
+        "a64") sws_pgk_name="sws-$sws_version-Darwin-arm64.dmg" ;;
+        "x64") sws_pgk_name="sws-$sws_version-Darwin-x86_64.dmg" ;;
+        esac
+        down "$sws_url/$sws_pgk_name.dmg" --directory="$RPP_PKG_DIR" --archive-format="dmg" \
+          --archive-glob="$sws_pgk_name-*/reaper*.dylib"
+        xattr -d com.apple.quarantine "$RPP_PKG_DIR/$(basename "$sws_dylib_glob")"
+      fi
+      if is-linux; then
+        case "$arch" in
+        'a64') sws_pgk_name="sws-$sws_version-Linux-aarch64.tar.xz" ;;
+        'a32') sws_pgk_name="sws-$sws_version-Linux-armv7l.tar.xz" ;;
+        'x64') sws_pgk_name="sws-$sws_version-Linux-x86_64.tar.xz" ;;
+        'x32') sws_pgk_name="sws-$sws_version-Linux-i686.tar.xz" ;;
+        esac
+        down --url="$sws_url/$sws_pgk_name" --directory="$RPP_PKG_DIR"
+      fi
+      if is-wsl; then
+        echo-error "windows is unsupported"
+      fi
+    else
+      echo "SWS already exists in packages"
+    fi
+  }
 
-				echo-style --g2="Downloading the reaper executable."
-				brew install --cask reaper --appdir="$install_path" --force
-				$(mv "$install_path/REAPER.app" "$install_path/$executable_name")
+  act_install_basic_clones() {
+    clone "reaper-keys"
+    clone "ColorThemes"
+    # clone reaper-auto-syntax
+    # clone "reaper-fuzzy"
+    # clone "reaper-jsfx"
+  }
 
-			fi
+  # rm -r "$RPP_PKG_DIR/js_reascript_api"
+  act_install_js_api() {
+    if ! test -d "$RPP_PKG_DIR/js_reascript_api"; then
+      echo-style --g3="Installing [js reascript api (c++ lua extension)] to $RPP_PKG_DIR"
+      js_ext_version="v1.310"
+      github-download --slug="juliansader/ReaExtensions" \
+        --ref="master" \
+        --unzip-filter="js_ReaScriptAPI/$js_ext_version/reaper_js_*" \
+        --directory="$RPP_PKG_DIR/js_reascript_api"
+    else
+      echo "[js api] already exists."
+    fi
+    # install_sws
+  }
 
-		fi
-	}
+  act_install_packages() {
+    act_install_basic_clones
+    act_install_sws_release
+    act_install_js_api
+  }
 
-	# OLD MODULES FILE
-	# [submodule "Scripts/reaper-auto-syntax"]
-	# 	path = Scripts/reaper-auto-syntax
-	# 	url = git@github.com:molleweide/reaper-auto-syntax
-	# [submodule "ColorThemes"]
-	# 	path = ColorThemes
-	# 	url = git@github.com:molleweide/ColorThemes
+  act_full_setup() {
+    act_install_reaper_custom
+    act_install_packages
+    act_symlink_packages
+  }
 
-	# Find latest version of SWS programmatically? I believe that
-	# github-downloads can do all of this..
+  # ============================================
+  # ARGS
 
-	act_install_sws_release() {
-
-		arch="$(get-arch)"
-		# # TEST VERSION
-		# down https://www.sws-extension.org/download/featured/sws-2.14.0.3-Darwin-arm64.dmg \
-		# 	--directory="$HOME/Documents/SWS_TEST" \
-		# 	--archive-format="dmg" \
-		# 	--archive-glob="sws-2.14.0.3-Darwin-arm64-*/reaper*.dylib"
-
-		if ! find "$RPP_PKG_DIR" -type f -name "*sws*.dylib" -print -quit | grep -q .; then
-			echo-style --g3="Installing [SWS] to $RPP_PKG_DIR"
-			local sws_pgk_name='' sws_version="2.14.0.3" sws_url="https://www.sws-extension.org/download/featured/"
-			local sws_dylib_glob='reaper*.dylib'
-			if is-mac; then
-				case "$arch" in
-				"a64") sws_pgk_name="sws-$sws_version-Darwin-arm64.dmg" ;;
-				"x64") sws_pgk_name="sws-$sws_version-Darwin-x86_64.dmg" ;;
-				esac
-
-				down "$sws_url/$sws_pgk_name.dmg" --directory="$RPP_PKG_DIR" --archive-format="dmg" \
-					--archive-glob="$sws_pgk_name-*/reaper*.dylib"
-
-				xattr -d com.apple.quarantine "$RPP_PKG_DIR/$(basename "$sws_dylib_glob")"
-			fi
-			if is-linux; then
-				case "$arch" in
-				'a64') sws_pgk_name="sws-$sws_version-Linux-aarch64.tar.xz" ;;
-				'a32') sws_pgk_name="sws-$sws_version-Linux-armv7l.tar.xz" ;;
-				'x64') sws_pgk_name="sws-$sws_version-Linux-x86_64.tar.xz" ;;
-				'x32') sws_pgk_name="sws-$sws_version-Linux-i686.tar.xz" ;;
-				esac
-				down --url="$sws_url/$sws_pgk_name" --directory="$RPP_PKG_DIR"
-			fi
-			if is-wsl; then
-				echo-error "windows is unsupported"
-			fi
-		else
-			echo "SWS already exists in packages"
-		fi
-	}
-
-	act_install_basic_clones() {
-		clone "reaper-keys"
-		clone "ColorThemes"
-		# clone reaper-auto-syntax
-		# clone "reaper-fuzzy"
-		# clone "reaper-jsfx"
-	}
-
-	# rm -r "$RPP_PKG_DIR/js_reascript_api"
-	act_install_js_api() {
-		if ! test -d "$RPP_PKG_DIR/js_reascript_api"; then
-			echo-style --g3="Installing [js reascript api (c++ lua extension)] to $RPP_PKG_DIR"
-			js_ext_version="v1.310"
-			github-download --slug="juliansader/ReaExtensions" \
-				--ref="master" \
-				--unzip-filter="js_ReaScriptAPI/$js_ext_version/reaper_js_*" \
-				--directory="$RPP_PKG_DIR/js_reascript_api"
-		else
-			echo "[js api] already exists."
-		fi
-		# install_sws
-	}
-
-	act_install_packages() {
-		act_install_basic_clones
-		act_install_sws_release
-		act_install_js_api
-	}
-
-	act_full_setup() {
-		act_install_reaper_custom
-		act_install_packages
-		act_symlink_packages
-	}
-
-	# ============================================
-	# ARGS
-
-	function help {
-		cat <<-EOF >/dev/stderr
+  function help {
+    cat <<-EOF >/dev/stderr
 			ABOUT:
 			Manage and setup local reaper installs.
 
@@ -282,149 +266,149 @@ function setup-reaper() (
 			...
 			...
 		EOF
-		if test "$#" -ne 0; then
-			echo-error "$@"
-		fi
-		return 22 # EINVAL 22 Invalid argument
-	}
+    if test "$#" -ne 0; then
+      echo-error "$@"
+    fi
+    return 22 # EINVAL 22 Invalid argument
+  }
 
-	local item action='' option_args=() executable_name='' directory='' use_fzf='yes'
-	local install_path='' # rename to `directory` and follow dorothy pattern
-	local installer_name=''
+  local item action='' option_args=() executable_name='' directory='' use_fzf='yes'
+  local install_path='' # rename to `directory` and follow dorothy pattern
+  local installer_name=''
 
-	while test "$#" -ne 0; do
-		item="$1"
-		shift
-		case "$item" in
-		'--help' | '-h') help ;;
-		# '--fzf') use_fzf='yes' ;;
-		'--no-fzf'* | '--fzf'*)
-			use_fzf="$(get-flag-value --affirmative --fallback="$use_fzf" -- "$item")"
-			;;
-		'--directory='*) install_path="${item#*=}" ;;
-		'default')
-			action="install_reaper_default"
-			;;
-		'full' | 'complete' | 'all')
-			action="full_setup"
-			option_args+=("$@")
-			;;
-		'packages' | 'pkgs')
-			action='install_packages'
-			;;
-		'sws' | 'sws-release')
-			action='install_sws_release'
-			;;
-		'sws-build')
-			action='sws_build'
-			;; # clone and build my fork...
-		'clones')
-			action='install_basic_clones'
-			;;
-		'js-api' | 'api' | 'js')
-			action='install_js_api'
-			;;
-		'symlink' | 'link')
-			action='symlink_packages'
-			;;
-		'--executable-name='* | '--exec='*)
-			executable_name="${item#*=}"
-			;;
-		'remove' | 'rm')
-			action="remove_reaper_installation"
-			;;
-		*) help "An unrecognised argument was provided: $item" ;;
-		esac
-	done
+  while test "$#" -ne 0; do
+    item="$1"
+    shift
+    case "$item" in
+    '--help' | '-h') help ;;
+    # '--fzf') use_fzf='yes' ;;
+    '--no-fzf'* | '--fzf'*)
+      use_fzf="$(get-flag-value --affirmative --fallback="$use_fzf" -- "$item")"
+      ;;
+    '--directory='*) install_path="${item#*=}" ;;
+    'default')
+      action="install_reaper_default"
+      ;;
+    'full' | 'complete' | 'all')
+      action="full_setup"
+      option_args+=("$@")
+      ;;
+    'packages' | 'pkgs')
+      action='install_packages'
+      ;;
+    'sws' | 'sws-release')
+      action='install_sws_release'
+      ;;
+    'sws-build')
+      action='sws_build'
+      ;; # clone and build my fork...
+    'clones')
+      action='install_basic_clones'
+      ;;
+    'js-api' | 'api' | 'js')
+      action='install_js_api'
+      ;;
+    'symlink' | 'link')
+      action='symlink_packages'
+      ;;
+    '--executable-name='* | '--exec='*)
+      executable_name="${item#*=}"
+      ;;
+    'remove' | 'rm')
+      action="remove_reaper_installation"
+      ;;
+    *) help "An unrecognised argument was provided: $item" ;;
+    esac
+  done
 
-	# FIX: add support for FZF in choose if
-	# 1. add flag --fzf
-	# 2. should work only if single selection.
-	# (actually fzf could work in choose with if you'd save the results from each
-	# menu and then show a list of all chosen selections.)
+  # FIX: add support for FZF in choose if
+  # 1. add flag --fzf
+  # 2. should work only if single selection.
+  # (actually fzf could work in choose with if you'd save the results from each
+  # menu and then show a list of all chosen selections.)
 
-	# load these with choose or fzf so that user can select.
-	local fzf_actions=(
-		'full_setup'
-		'install_packages'
-		'install_reaper_default'
-		'install_sws_release'
-		'install_sws_build'
-		'install_js_api'
-		'symlink_packages'
-	)
+  # load these with choose or fzf so that user can select.
+  local fzf_actions=(
+    'full_setup'
+    'install_packages'
+    'install_reaper_default'
+    'install_sws_release'
+    'install_sws_build'
+    'install_js_api'
+    'symlink_packages'
+  )
 
-	local fzf_heading__prefix='SELECTION (Current question: '
-	local fzf_heading__suffix=')'
+  local fzf_heading__prefix='SELECTION (Current question: '
+  local fzf_heading__suffix=')'
 
-	get_fzf_heading() {
-		# local final header=
-		#
-		__print_string "$fzf_heading__prefix${1-????}$fzf_heading__suffix"
-	}
+  get_fzf_heading() {
+    # local final header=
+    #
+    __print_string "$fzf_heading__prefix${1-????}$fzf_heading__suffix"
+  }
 
-	local fzf_base_opts=(
-		--height=40%
-		--ellipsis=..
-	)
+  local fzf_base_opts=(
+    --height=40%
+    --ellipsis=..
+  )
 
-	local selection_prev=()
+  local selection_prev=()
 
-	if test -z "$action"; then
-		if __use_fzf; then
-			action="$(
-				__print_lines "${fzf_actions[@]}" | fzf "${fzf_base_opts[@]}" \
-					--header "$(get_fzf_heading "You have to select an ACTION")"
+  if test -z "$action"; then
+    if __use_fzf; then
+      action="$(
+        __print_lines "${fzf_actions[@]}" | fzf "${fzf_base_opts[@]}" \
+          --header "$(get_fzf_heading "You have to select an ACTION")"
 
-				# NOTE: display next lines by adding $'\n'
+        # NOTE: display next lines by adding $'\n'
 
-			)"
-		else
-			action="$(
-				choose --linger --required --label \
-					--question='Choose an action' \
-					-- \
-					full_setup 'Run a full system reaper setup' \
-					install_packages 'Install reaper packages/addons' \
-					install_reaper_default 'Standard installation to /Applications' \
-					install_sws_release 'Install SWS extension from releases' \
-					install_sws_build 'Build install SWS Extension' \
-					install_js_api 'Install the JS API' \
-					symlink_packages 'Redo symlinks for existing packages into target reaper install'
-			)"
-		fi
-		selection_prev+=("action = $action")
-	fi
+      )"
+    else
+      action="$(
+        choose --linger --required --label \
+          --question='Choose an action' \
+          -- \
+          full_setup 'Run a full system reaper setup' \
+          install_packages 'Install reaper packages/addons' \
+          install_reaper_default 'Standard installation to /Applications' \
+          install_sws_release 'Install SWS extension from releases' \
+          install_sws_build 'Build install SWS Extension' \
+          install_js_api 'Install the JS API' \
+          symlink_packages 'Redo symlinks for existing packages into target reaper install'
+      )"
+    fi
+    selection_prev+=("action = $action")
+  fi
 
-	if test -z "$installer_name"; then
-		installer_name="$(
-			ask --required \
-				--question='Input name for new reaper install:' \
-				--default="reaper"
-		)"
-		selection_prev+=("installer_name = $install_path")
-	fi
+  if test -z "$installer_name"; then
+    installer_name="$(
+      ask --required \
+        --question='Input name for new reaper install:' \
+        --default="reaper"
+    )"
+    selection_prev+=("installer_name = $install_path")
+  fi
 
-	install_path="$REAPER_APP_DIR/$installer_name"
-	executable_name="$installer_name.app"
+  install_path="$REAPER_APP_DIR/$installer_name"
+  executable_name="$installer_name.app"
 
-	echo-style --h1="SETUP REAPER"
+  echo-style --h1="SETUP REAPER"
 
-	if test "$(type -t "act_$action")" = 'function'; then
-		if test "${#option_args[@]}" -eq 0; then # bash v3 compat
-			"act_$action"
-			return
-		else
-			"act_$action" "${option_args[@]}"
-			return
-		fi
-	else
-		echo-style --error="Action [$action] not yet implemented." >/dev/stderr
-		return 78 # ENOSYS 78 Function not implemented
-	fi
+  if test "$(type -t "act_$action")" = 'function'; then
+    if test "${#option_args[@]}" -eq 0; then # bash v3 compat
+      "act_$action"
+      return
+    else
+      "act_$action" "${option_args[@]}"
+      return
+    fi
+  else
+    echo-style --error="Action [$action] not yet implemented." >/dev/stderr
+    return 78 # ENOSYS 78 Function not implemented
+  fi
 )
 
 # fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-	setup-reaper "$@"
+  setup-reaper "$@"
 fi
