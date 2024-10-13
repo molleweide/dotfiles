@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+# carapace spec docs
+#   https://carapace-sh.github.io/carapace-spec/carapace-spec.html
+
+# carapace spec examples:
+#   https://github.com/carapace-sh/carapace-spec/tree/master/example
+#   https://github.com/carapace-sh/carapace-spec/blob/master/example/pkill.yaml
+
+function dorothy_autocomplete() (
+  source "$DOROTHY/sources/bash.bash"
+  __require_array 'mapfile'
+
+  # =====================================
+  # Helpers
+
+  function get_help_contents() {
+    # FIX: exclude the surrounding EOF lines
+    local regex_help_func="^\s+function\s+help\s*{([\s\S]*?)}"
+    local regex_heredoc_content="<<[-]?\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*([\s\S]*?)^\s*\1\s*$"
+    local help_contents="$(cat "$1" | echo-regexp -gm --find="$regex_help_func")"
+    local res="$(echo "$help_contents" | echo-regexp -gm --find="$regex_heredoc_content")"
+  }
+
+  # =====================================
+  # Arguments
+
+  function help {
+    cat <<-EOF >/dev/stderr
+			USAGE:
+			dorothy-autocomplete [...options] <file> -- ...
+
+			  DESCRIPTION:
+			  Auto generate carapace-spec shell completions for dorothy commands.
+			  Either for a single command, a filter, or all commands a new.
+		EOF
+    if test "$#" -ne 0; then
+      echo-error "$@"
+    fi
+    return 22 # EINVAL 22 Invalid argument
+  }
+
+  # process
+  # local item option_args=() option_file='' option_multiple='ok' option_quiet
+  # option_quiet="$(echo-quiet-enabled -- "$@")"
+  while test "$#" -ne 0; do
+    item="$1"
+    shift
+    case "$item" in
+    # '--help' | '-h') help ;;
+    # '--file='*) option_file="${item#*=}" ;;
+    # '--no-quiet'* | '--quiet'* | '--no-verbose'* | '--verbose'*) ;; # handled by echo-quiet-enabled
+    # '--multiple=ok' | '--multiple=warn-skip' | '--multiple=warn-apply') option_multiple="${item#*=}" ;;
+    # '--')
+    #   option_args+=("$@")
+    #   shift $#
+    #   break
+    #   ;;
+    # '--'*) help "An unrecognised flag was provided: $item" ;;
+    # *)
+    #   if test -z "$option_file"; then
+    #     option_file="$item"
+    #   else
+    #     help "An unrecognised argument was provided: $item"
+    #   fi
+    #   ;;
+    esac
+  done
+
+  dorothy --help
+
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+  if test "$*" = '--test'; then
+    config_helper_test
+  else
+    dorothy_autocomplete "$@"
+  fi
+fi
