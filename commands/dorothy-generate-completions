@@ -7,9 +7,24 @@
 #   https://github.com/carapace-sh/carapace-spec/tree/master/example
 #   https://github.com/carapace-sh/carapace-spec/blob/master/example/pkill.yaml
 
+# ????
+# https://github.com/carapace-sh/carapace-spec-man
+
 function dorothy_autocomplete() (
   source "$DOROTHY/sources/bash.bash"
   __require_array 'mapfile'
+
+  # Ensure that the autocomplete dir exists
+  mkdir -p "$DOROTHY/autocomplete"
+
+  # =====================================
+  # Variables
+
+  local regex_lines_starting_with_hyphen="^[-]{1,2}.*$"
+
+  # these could go into a helper func
+  local regex_about_section="ABOUT:\s*([\s\S]*?)(?=\n[A-Z]+\:|\n{2,})"
+  local regex_options_section="OPTIONS:\s*([\s\S]*?)(?=\n\s*[A-Z]+\s*:)"
 
   # =====================================
   # Helpers
@@ -20,6 +35,59 @@ function dorothy_autocomplete() (
     local regex_heredoc_content="<<[-]?\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*([\s\S]*?)^\s*\1\s*$"
     local help_contents="$(cat "$1" | echo-regexp -gm --find="$regex_help_func")"
     local res="$(echo "$help_contents" | echo-regexp -gm --find="$regex_heredoc_content")"
+  }
+
+  # =====================================
+  # Actions
+
+  create_carpace_spec_for_command() {
+    local command_name=$1 help_content final_spec
+
+    set +e # prevent errexit
+    help_content="$("$command_name" --help 2>&1)"
+    set -e
+
+    # TODO: build the yaml config file.
+    # 1. [x] start by just injecting the name.
+    # 2. [x] description
+    # 2. [ ] loop across all options.
+    # 3. [ ] handle actions.
+
+    # TEST: continue reading [https://carapace-sh.github.io/carapace-spec/carapace-spec/command/parsing.html]
+
+    # TODO: move this to its own func
+    # try to get the "ABOUT" section
+    local about_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_about_section")"
+    local about="$(echo "$about_section" | sed -n 2p)"
+
+    #  # NOTE: OPTIONS
+    #  # Loop over all option segments and capture descriptions.
+    #  # If successive options without newline and a description at the end all
+    #  # have the same description.
+
+    local options_section options_all
+    options_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_options_section")"
+    options_all="$(echo "$help_content" | echo-regexp -gmn --find="$regex_lines_starting_with_hyphen")"
+    # __print_lines "$options_all"
+
+    final_spec="$(
+      __print_lines \
+        "name: $command_name" \
+        "description: ${about[*]}"
+    )"
+
+    final_spec+=($'\n'"flags:")
+
+
+    for item in "${options_all[@]}"; do
+      final_spec+=($'\n'"  $item")
+      # final_spec+=("\t$item")
+    done
+
+    __print_lines "${final_spec[*]}"
+
+    __print_lines "${final_spec[*]}" >"$DOROTHY/autocomplete/$command_name.yaml"
+
   }
 
   # =====================================
@@ -43,12 +111,14 @@ function dorothy_autocomplete() (
   # process
   # local item option_args=() option_file='' option_multiple='ok' option_quiet
   # option_quiet="$(echo-quiet-enabled -- "$@")"
+  local option_command_single='' option_all='no'
   while test "$#" -ne 0; do
     item="$1"
     shift
     case "$item" in
     '--help' | '-h') help ;;
-    # '--file='*) option_file="${item#*=}" ;;
+    '--all') options_all='yes' ;;
+    '--command='*) option_command_single="${item#*=}" ;;
     # '--no-quiet'* | '--quiet'* | '--no-verbose'* | '--verbose'*) ;; # handled by echo-quiet-enabled
     # '--multiple=ok' | '--multiple=warn-skip' | '--multiple=warn-apply') option_multiple="${item#*=}" ;;
     # '--')
@@ -68,6 +138,41 @@ function dorothy_autocomplete() (
     esac
   done
 
+  # TODO: if no command/all selected, then use fzf or chose to seect a command.
+
+  # local fzf_heading__prefix='SELECTION (Current question: '
+  # local fzf_heading__suffix=')'
+  #
+  # get_fzf_heading() {
+  #   # local final header=
+  #   #
+  #   __print_string "$fzf_heading__prefix${1-????}$fzf_heading__suffix"
+  # }
+  #
+  # local fzf_base_opts=(
+  #   --height=40%
+  #   --ellipsis=..
+  # )
+  #
+  # local selection_prev=()
+  #
+  # if test -z "$action"; then
+  #   if __use_fzf; then
+  #     action="$(
+  #       __print_lines "${fzf_actions[@]}" | fzf "${fzf_base_opts[@]}" \
+  #         --header "$(get_fzf_heading "You have to select an ACTION")"
+  #
+  #       # NOTE: display next lines by adding $'\n'
+  #
+  #     )"
+  #   else
+  #     action="$(
+  #     choose all dorothy commands
+  #     )"
+  #   fi
+  #   selection_prev+=("action = $action")
+  # fi
+
   # dorothy --help
 
   # TODO: Re-use my dorothy-new command to see how I did the
@@ -79,13 +184,7 @@ function dorothy_autocomplete() (
   # OPTIONS
   # ACTIONS
 
-  local regex_lines_starting_with_hyphen="^[-]{1,2}.*$"
-
-  local regex_about_section="ABOUT:\s*([\s\S]*?)(?=\n[A-Z]+\:|\n{2,})"
-
   local regex_usage_section="USAGE:\s*([\s\S]*?)(?=\n\s*\w+:|$)"
-
-  local regex_options_section="OPTIONS:\s*([\s\S]*?)(?=\n\s*[A-Z]+\s*:)"
 
   local lines_starting_with_hyphen
   local help_content
@@ -101,23 +200,9 @@ function dorothy_autocomplete() (
   # lines_starting_with_hyphen="$(echo "$help_content" | echo-regexp -gmn --find="$regex_lines_starting_with_hyphen")"
   # __print_lines "${lines_starting_with_hyphen[@]}"
   #
-  # echo-style --notice="About section"
-  # local about_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_about_section")"
-  # __print_lines "$about_section"
-  #
   # echo-style --notice="usage section"
   # local usage_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_usage_section")"
   # __print_lines "$usage_section"
-
-  # NOTE: OPTIONS
-  # Loop over all option segments and capture descriptions.
-  # If successive options without newline and a description at the end all
-  # have the same description.
-
-  # echo-style --notice="Options section"
-  # local options_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_options_section")"
-  # local options_all="$(echo "$help_content" | echo-regexp -gmn --find="$regex_lines_starting_with_hyphen")"
-  # __print_lines "$options_all"
 
   # NOTE: ACTIONS
   # Loop over all sub action segments and then for each get the action name
@@ -157,6 +242,22 @@ function dorothy_autocomplete() (
   # __print_lines "$actions_section"
 
   # echo-style --g1 "dorothy gen autocomp"
+
+  if test -n "$option_command_single"; then
+    :
+    # the single command name is selected,
+    #
+    # TODO: try to find command in $dorothy/commands.
+
+    create_carpace_spec_for_command "$option_command_single"
+  elif test "$$options_all" = "yes"; then
+    :
+    # TODO: loop over all commands and render for each of them.
+  else
+
+    :
+    # ask should we select a single command or do for all???
+  fi
 
 )
 
