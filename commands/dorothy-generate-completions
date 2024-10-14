@@ -47,7 +47,7 @@ function dorothy_autocomplete() (
     item="$1"
     shift
     case "$item" in
-    # '--help' | '-h') help ;;
+    '--help' | '-h') help ;;
     # '--file='*) option_file="${item#*=}" ;;
     # '--no-quiet'* | '--quiet'* | '--no-verbose'* | '--verbose'*) ;; # handled by echo-quiet-enabled
     # '--multiple=ok' | '--multiple=warn-skip' | '--multiple=warn-apply') option_multiple="${item#*=}" ;;
@@ -57,17 +57,106 @@ function dorothy_autocomplete() (
     #   break
     #   ;;
     # '--'*) help "An unrecognised flag was provided: $item" ;;
-    # *)
-    #   if test -z "$option_file"; then
-    #     option_file="$item"
-    #   else
-    #     help "An unrecognised argument was provided: $item"
-    #   fi
-    #   ;;
+    *)
+      if test -z "$option_file"; then
+        option_file="$item"
+      else
+        help "An unrecognised argument was provided: $item"
+      fi
+      #   ;;
+      ;;
     esac
   done
 
-  dorothy --help
+  # dorothy --help
+
+  # TODO: Re-use my dorothy-new command to see how I did the
+  # templating.
+
+  # TODO: capture each chunk
+  # ABOUT
+  # USAGE
+  # OPTIONS
+  # ACTIONS
+
+  local regex_lines_starting_with_hyphen="^[-]{1,2}.*$"
+
+  local regex_about_section="ABOUT:\s*([\s\S]*?)(?=\n[A-Z]+\:|\n{2,})"
+
+  local regex_usage_section="USAGE:\s*([\s\S]*?)(?=\n\s*\w+:|$)"
+
+  local regex_options_section="OPTIONS:\s*([\s\S]*?)(?=\n\s*[A-Z]+\s*:)"
+
+  local lines_starting_with_hyphen
+  local help_content
+
+  # Get help command content
+  set +e
+  help_content="$(dorothy --help 2>&1)"
+  set -e
+
+  # echo-style --h1 "dorothy gen autocomp"
+
+  # echo-style --notice="lines starting with hyphen"
+  # lines_starting_with_hyphen="$(echo "$help_content" | echo-regexp -gmn --find="$regex_lines_starting_with_hyphen")"
+  # __print_lines "${lines_starting_with_hyphen[@]}"
+  #
+  # echo-style --notice="About section"
+  # local about_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_about_section")"
+  # __print_lines "$about_section"
+  #
+  # echo-style --notice="usage section"
+  # local usage_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_usage_section")"
+  # __print_lines "$usage_section"
+
+  # NOTE: OPTIONS
+  # Loop over all option segments and capture descriptions.
+  # If successive options without newline and a description at the end all
+  # have the same description.
+
+  # echo-style --notice="Options section"
+  # local options_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_options_section")"
+  # local options_all="$(echo "$help_content" | echo-regexp -gmn --find="$regex_lines_starting_with_hyphen")"
+  # __print_lines "$options_all"
+
+  # NOTE: ACTIONS
+  # Loop over all sub action segments and then for each get the action name
+  # and description etc.
+
+  local regex_actions_section="ACTIONS:\s*([\s\S]*?)(?=\n[A-Z]+[\s:]*|\s*$)"
+
+  local regex_sub_action="(^[a-zA-Z|<>\s]+(?:\s+\[.*\])?\n(?:\s+.*\n?)*)+"
+
+  echo-style --notice="Actions section"
+  # local actions_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_actions_section")"
+
+  local actions_section="$(echo "$help_content" | sed -n '/^ACTIONS:/,/^[A-Z][A-Z\s]*:/{/^ACTIONS:/!p;}')"
+
+  # __print_lines "${actions_section[@]}"
+
+  # This variable is used to handle some special cases when subsequent lines
+  # are starting at beginning of the line, so that we split each sub action
+  # correctly.
+  local prev_line_not_empty="prev_empty" # bash inverted boolean, eg. 0 = true
+
+  # Loop over actions and separate by ----
+  while IFS= read -r line; do
+    if [[ "$line" =~ ^[^[:space:]] && -n "$line" && "$prev_line_not_empty" == "prev_empty" ]]; then
+      echo "----------------------"
+      # fi
+    fi
+    echo "$line" # ($prev_line_not_empty)"
+    #
+    if test -z "$line"; then
+      prev_line_not_empty="prev_empty"
+    else
+      prev_line_not_empty="_"
+    fi
+  done <<<"$actions_section"
+
+  # __print_lines "$actions_section"
+
+  # echo-style --g1 "dorothy gen autocomp"
 
 )
 
