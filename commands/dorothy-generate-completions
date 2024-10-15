@@ -17,7 +17,6 @@
 # Values are defined with an optional description and optional style delimited by \t.
 # ["value", "value\tdescription", "value\tdescription\tblue"]
 
-
 # NOTE: Supposed to be flaky but could maybe be used.
 # Use Carapaces man page spec generator
 # https://carapace-sh.github.io/carapace-bin/spec/scrape.html#man
@@ -48,6 +47,14 @@ function dorothy_autocomplete() (
 
   # =====================================
   # Helpers
+
+  __use_fzf() {
+    if test "$use_fzf" = 'yes'; then
+      return 0
+    else
+      return 1
+    fi
+  }
 
   # Unused
   get_help_contents() {
@@ -82,45 +89,6 @@ function dorothy_autocomplete() (
 
   # =====================================
   # Actions
-
-  # example1() {
-  #   cat <<-EOF
-  # 	    # yaml-language-server: $schema=https://carapace.sh/schemas/command.json
-  # 	name: mycmd
-  # 	description: my command
-  # 	flags:
-  # 	  --optarg?: optarg flag
-  # 	  -r, --repeatable*: repeatable flag
-  # 	  -v=: flag with value
-  # 	persistentflags:
-  # 	  --help: bool flag
-  # 	completion:
-  # 	  flag:
-  # 	    optarg: ["one", "two\twith description", "three\twith style\tblue"]
-  # 	    v: ["$files"]
-  # 	commands:
-  # 	- name: sub
-  # 	  description: subcommand
-  # 	  completion:
-  # 	    positional:
-  # 	      - ["$list(,)", "1", "2", "3"]
-  # 	      - ["$directories"]
-  # EOF
-  # }
-
-  # NOTE: This one checks repos for first positional arg, and then remote
-  # refs for the second pos arg
-  #
-  # example_github() {
-  #   cat <<-EOF
-  #   # yaml-language-server: $schema=https://carapace.sh/schemas/command.json
-  #   name: github
-  #   completion:
-  #   positional:
-  #   - ["\$carapace.tools.gh.OwnerRepositories"] # \${C_ARG0}
-  #   - ["\$carapace.tools.git.LsRemoteRefs({url: 'https://github.com/\${C_ARG0}', branches: true, tags: true})"]
-  #   EOF
-  # }
 
   create_carpace_spec_for_command() {
     local command_name=$1
@@ -251,12 +219,15 @@ function dorothy_autocomplete() (
   # process
   # local item option_args=() option_file='' option_multiple='ok' option_quiet
   # option_quiet="$(echo-quiet-enabled -- "$@")"
-  local option_command_single='' option_all='no'
+  local option_command_single='' option_all='no' use_fzf='yes'
   while test "$#" -ne 0; do
     item="$1"
     shift
     case "$item" in
     '--help' | '-h') help ;;
+    '--no-fzf'* | '--fzf'*)
+      use_fzf="$(get-flag-value --affirmative --fallback="$use_fzf" -- "$item")"
+      ;;
     '--all') options_all='yes' ;;
     '--command='*) option_command_single="${item#*=}" ;;
     # '--no-quiet'* | '--quiet'* | '--no-verbose'* | '--verbose'*) ;; # handled by echo-quiet-enabled
@@ -280,49 +251,18 @@ function dorothy_autocomplete() (
 
   # TODO: if no command/all selected, then use fzf or chose to seect a command.
 
-  # local fzf_heading__prefix='SELECTION (Current question: '
-  # local fzf_heading__suffix=')'
-  #
-  # get_fzf_heading() {
-  #   # local final header=
-  #   #
-  #   __print_string "$fzf_heading__prefix${1-????}$fzf_heading__suffix"
-  # }
-  #
-  # local fzf_base_opts=(
-  #   --height=40%
-  #   --ellipsis=..
-  # )
-  #
-  # local selection_prev=()
-  #
-  # if test -z "$action"; then
-  #   if __use_fzf; then
-  #     action="$(
-  #       __print_lines "${fzf_actions[@]}" | fzf "${fzf_base_opts[@]}" \
-  #         --header "$(get_fzf_heading "You have to select an ACTION")"
-  #
-  #       # NOTE: display next lines by adding $'\n'
-  #
-  #     )"
-  #   else
-  #     action="$(
-  #     choose all dorothy commands
-  #     )"
-  #   fi
-  #   selection_prev+=("action = $action")
-  # fi
-
-  # dorothy --help
-
-  # TODO: Re-use my dorothy-new command to see how I did the
-  # templating.
-
-  # TODO: capture each chunk
-  # ABOUT
-  # USAGE
-  # OPTIONS
-  # ACTIONS
+  local selection_prev=()
+  local fzf_heading__prefix='SELECTION (Current question: '
+  local fzf_heading__suffix=')'
+  get_fzf_heading() {
+    # local final header=
+    #
+    __print_string "$fzf_heading__prefix${1-????}$fzf_heading__suffix"
+  }
+  local fzf_base_opts=(
+    --height=40%
+    --ellipsis=..
+  )
 
   local lines_starting_with_hyphen
   local help_content
@@ -379,19 +319,38 @@ function dorothy_autocomplete() (
   # echo-style --g1 "dorothy gen autocomp"
 
   if test -n "$option_command_single"; then
-    :
     # the single command name is selected,
-    #
-    # TODO: try to find command in $dorothy/commands.
-
+    # todo: try to find command in $dorothy/commands.
     create_carpace_spec_for_command "$option_command_single"
   elif test "$$options_all" = "yes"; then
     :
-    # TODO: loop over all commands and render for each of them.
+    # todo: loop over all commands and render for each of them.
   else
+    local commands_dir="$DOROTHY/commands"
+    get_all_commands() {
+      # this is slow as fuck
+      find "$commands_dir" -maxdepth 1 -type f | while read -r file; do
+        basename "$file"
+      done
+    }
 
-    :
-    # ask should we select a single command or do for all???
+    # echo "${values[@]}"
+    local selected_command
+
+    if __use_fzf; then
+      selected_command="$(
+        # find "$DOROTHY/commands" -maxdepth 1 -type f  | fzf "${fzf_base_opts[@]}" \
+        get_all_commands | fzf "${fzf_base_opts[@]}" \
+          --header "$(get_fzf_heading "You have to select an ACTION")"
+      )"
+      create_carpace_spec_for_command "$selected_command"
+    else
+      action="$(
+        choose all dorothy commands
+      )"
+    fi
+    selection_prev+=("action = $action")
+
   fi
 
 )
