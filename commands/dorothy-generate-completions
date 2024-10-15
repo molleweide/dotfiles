@@ -10,6 +10,12 @@
 # ????
 # https://github.com/carapace-sh/carapace-spec-man
 
+# Documentation
+# carapace-sh.github.io/carapace	documentation of the library
+# carapace-sh.github.io/carapace-bin	documentation of the binary
+# carapace-sh.github.io/carapace-spec	documentation of the spec
+# carapace-sh.github.io/carapace-pixi	picture book introduction
+
 function dorothy_autocomplete() (
   source "$DOROTHY/sources/bash.bash"
   __require_array 'mapfile'
@@ -39,6 +45,31 @@ function dorothy_autocomplete() (
 
   # =====================================
   # Actions
+
+  example1() {
+    cab <<-EOF
+			    # yaml-language-server: $schema=https://carapace.sh/schemas/command.json
+			name: mycmd
+			description: my command
+			flags:
+			  --optarg?: optarg flag
+			  -r, --repeatable*: repeatable flag
+			  -v=: flag with value
+			persistentflags:
+			  --help: bool flag
+			completion:
+			  flag:
+			    optarg: ["one", "two\twith description", "three\twith style\tblue"]
+			    v: ["$files"]
+			commands:
+			- name: sub
+			  description: subcommand
+			  completion:
+			    positional:
+			      - ["$list(,)", "1", "2", "3"]
+			      - ["$directories"]
+		EOF
+  }
 
   create_carpace_spec_for_command() {
     local command_name=$1 help_content final_spec
@@ -72,17 +103,59 @@ function dorothy_autocomplete() (
 
     final_spec="$(
       __print_lines \
+        "# yaml-language-server: \$schema=https://carapace.sh/schemas/command.json" \
         "name: $command_name" \
         "description: ${about[*]}"
     )"
 
+    # FLAGS
+    # = flag takes an argument
+    # * flag is repeatable
+    # ? flag takes an optional argument
+    # & flag is hidden
+    # ! flag is required
+    #
+    # https://github.com/carapace-sh/carapace-spec/blob/master/example/traverse.yaml
+    #
+    # yaml-language-server: $schema=https://carapace.sh/schemas/command.json
+    # name: flag
+    # flags:
+    #   -e=: executables
+    #   -f, --file=: file
+    # completion:
+    #   flag: ????????????
+    #     e: ["$executables"]
+    #     file: ["$files"]
+
     final_spec+=($'\n'"flags:")
-
-
     for item in "${options_all[@]}"; do
       final_spec+=($'\n'"  $item")
       # final_spec+=("\t$item")
     done
+
+    # POSITIONAL
+    # I believe that sub actios should be added as positional actions.
+    # https://carapace-sh.github.io/carapace-spec/carapace-spec/command/completion/positional.html
+    #
+    #     # yaml-language-server: $schema=https://carapace.sh/schemas/command.json
+    # name: positional
+    # completion:
+    #   positional: NOTE: these are completed in order, so pos1 before pos2
+    #     - [pos1, positional1]
+    #     - [pos2, positional2]
+    #
+    #     # yaml-language-server: $schema=https://carapace.sh/schemas/command.json
+    # name: positionalany
+    # completion: NOTE: here, the order is arbitrary.
+    #   positionalany: [one, two, three]
+
+    # DASH
+    # Positional arguments after `--`
+    # https://carapace-sh.github.io/carapace-spec/carapace-spec/command/completion/dash.html
+    #
+    # NOTE: dash | dash-any
+    # completes in the same way as positional above but after the double dash
+    # separator.
 
     __print_lines "${final_spec[*]}"
 
