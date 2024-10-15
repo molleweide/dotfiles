@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# NOTE: The carapace docs suck a huge bag of dicks and so you have to do a lot
+# of manual testing to figure out how each spec works/operates in practice.
+
+# NOTE: good spec examples
+# https://carapace-sh.github.io/carapace-bin/spec/examples.html
+
 # carapace spec docs
 #   https://carapace-sh.github.io/carapace-spec/carapace-spec.html
 
@@ -7,7 +13,14 @@
 #   https://github.com/carapace-sh/carapace-spec/tree/master/example
 #   https://github.com/carapace-sh/carapace-spec/blob/master/example/pkill.yaml
 
-# ????
+# TEST: Carapace config `values`
+# Values are defined with an optional description and optional style delimited by \t.
+# ["value", "value\tdescription", "value\tdescription\tblue"]
+
+
+# NOTE: Supposed to be flaky but could maybe be used.
+# Use Carapaces man page spec generator
+# https://carapace-sh.github.io/carapace-bin/spec/scrape.html#man
 # https://github.com/carapace-sh/carapace-spec-man
 
 # Documentation
@@ -28,87 +41,113 @@ function dorothy_autocomplete() (
 
   local regex_lines_starting_with_hyphen="^[-]{1,2}.*$"
 
-  # these could go into a helper func
+  # These could go into a helper func
+  local regex_usage_section="USAGE:\s*([\s\S]*?)(?=\n\s*\w+:|$)"
   local regex_about_section="ABOUT:\s*([\s\S]*?)(?=\n[A-Z]+\:|\n{2,})"
   local regex_options_section="OPTIONS:\s*([\s\S]*?)(?=\n\s*[A-Z]+\s*:)"
 
   # =====================================
   # Helpers
 
-  function get_help_contents() {
-    # FIX: exclude the surrounding EOF lines
+  # Unused
+  get_help_contents() {
     local regex_help_func="^\s+function\s+help\s*{([\s\S]*?)}"
     local regex_heredoc_content="<<[-]?\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*([\s\S]*?)^\s*\1\s*$"
     local help_contents="$(cat "$1" | echo-regexp -gm --find="$regex_help_func")"
     local res="$(echo "$help_contents" | echo-regexp -gm --find="$regex_heredoc_content")"
   }
 
+  collect_about_section() {
+    local help_content="$1"
+    local about_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_about_section")"
+    local about="$(echo "$about_section" | sed -n 2p)"
+    __print_lines "$about"
+  }
+
+  collect_usage_section() {
+    local help_content="$1"
+    local usage_section
+    usage_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_usage_section")"
+    __print_lines "$usage_section"
+  }
+
+  # collect and print all lines containing option flags
+  collect_option_flag_lines() {
+    local help_content="$1"
+    local options_section options_all
+    options_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_options_section")"
+    command_option_flag_lines="$(echo "$options_section" | echo-regexp -gmn --find="$regex_lines_starting_with_hyphen")"
+    __print_lines "$command_option_flag_lines"
+  }
+
   # =====================================
   # Actions
 
-  example1() {
-    cab <<-EOF
-			    # yaml-language-server: $schema=https://carapace.sh/schemas/command.json
-			name: mycmd
-			description: my command
-			flags:
-			  --optarg?: optarg flag
-			  -r, --repeatable*: repeatable flag
-			  -v=: flag with value
-			persistentflags:
-			  --help: bool flag
-			completion:
-			  flag:
-			    optarg: ["one", "two\twith description", "three\twith style\tblue"]
-			    v: ["$files"]
-			commands:
-			- name: sub
-			  description: subcommand
-			  completion:
-			    positional:
-			      - ["$list(,)", "1", "2", "3"]
-			      - ["$directories"]
-		EOF
-  }
+  # example1() {
+  #   cat <<-EOF
+  # 	    # yaml-language-server: $schema=https://carapace.sh/schemas/command.json
+  # 	name: mycmd
+  # 	description: my command
+  # 	flags:
+  # 	  --optarg?: optarg flag
+  # 	  -r, --repeatable*: repeatable flag
+  # 	  -v=: flag with value
+  # 	persistentflags:
+  # 	  --help: bool flag
+  # 	completion:
+  # 	  flag:
+  # 	    optarg: ["one", "two\twith description", "three\twith style\tblue"]
+  # 	    v: ["$files"]
+  # 	commands:
+  # 	- name: sub
+  # 	  description: subcommand
+  # 	  completion:
+  # 	    positional:
+  # 	      - ["$list(,)", "1", "2", "3"]
+  # 	      - ["$directories"]
+  # EOF
+  # }
+
+  # NOTE: This one checks repos for first positional arg, and then remote
+  # refs for the second pos arg
+  #
+  # example_github() {
+  #   cat <<-EOF
+  #   # yaml-language-server: $schema=https://carapace.sh/schemas/command.json
+  #   name: github
+  #   completion:
+  #   positional:
+  #   - ["\$carapace.tools.gh.OwnerRepositories"] # \${C_ARG0}
+  #   - ["\$carapace.tools.git.LsRemoteRefs({url: 'https://github.com/\${C_ARG0}', branches: true, tags: true})"]
+  #   EOF
+  # }
 
   create_carpace_spec_for_command() {
-    local command_name=$1 help_content final_spec
+    local command_name=$1
+    local help_content
+    local final_spec
+    local about_text
+    local command_option_flag_lines
+    local command_sub_actions
 
     set +e # prevent errexit
     help_content="$("$command_name" --help 2>&1)"
     set -e
 
-    # TODO: build the yaml config file.
-    # 1. [x] start by just injecting the name.
-    # 2. [x] description
-    # 2. [ ] loop across all options.
-    # 3. [ ] handle actions.
+    about_text="$(collect_about_section "$help_content")"
 
-    # TEST: continue reading [https://carapace-sh.github.io/carapace-spec/carapace-spec/command/parsing.html]
+    command_option_flag_lines=$(collect_option_flag_lines "$help_content")
 
-    # TODO: move this to its own func
-    # try to get the "ABOUT" section
-    local about_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_about_section")"
-    local about="$(echo "$about_section" | sed -n 2p)"
-
-    #  # NOTE: OPTIONS
-    #  # Loop over all option segments and capture descriptions.
-    #  # If successive options without newline and a description at the end all
-    #  # have the same description.
-
-    local options_section options_all
-    options_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_options_section")"
-    options_all="$(echo "$help_content" | echo-regexp -gmn --find="$regex_lines_starting_with_hyphen")"
-    # __print_lines "$options_all"
-
+    # ------------------------------------------------------------------
+    # Put together final spec file for $command_name
     final_spec="$(
       __print_lines \
         "# yaml-language-server: \$schema=https://carapace.sh/schemas/command.json" \
         "name: $command_name" \
-        "description: ${about[*]}"
+        "description: ${about_text[*]}"
     )"
 
-    # FLAGS
+    # FLAGS -------------------------------------------------------
     # = flag takes an argument
     # * flag is repeatable
     # ? flag takes an optional argument
@@ -127,13 +166,27 @@ function dorothy_autocomplete() (
     #     e: ["$executables"]
     #     file: ["$files"]
 
+    # TODO: [ ] check if has flags
+    # TODO: [ ] fix spec flag formatting
+
     final_spec+=($'\n'"flags:")
-    for item in "${options_all[@]}"; do
+    for item in "${command_option_flag_lines[@]}"; do
       final_spec+=($'\n'"  $item")
       # final_spec+=("\t$item")
     done
 
-    # POSITIONAL
+    # PERSISTENT FLAGS --------------------------------------------
+    #
+
+    # COMPLETION --------------------------------------------
+    #
+    # TODO: [ ] check if has/should add completions
+    #
+    # completion > flags
+
+    # TODO: [ ] try add flag completions if has option flags
+
+    # completion > Positional
     # I believe that sub actios should be added as positional actions.
     # https://carapace-sh.github.io/carapace-spec/carapace-spec/command/completion/positional.html
     #
@@ -149,6 +202,13 @@ function dorothy_autocomplete() (
     # completion: NOTE: here, the order is arbitrary.
     #   positionalany: [one, two, three]
 
+    # TODO: [ ] positional args.
+    # Before embarking on pos args, i have to first try the flags options and
+    # see how this works.
+
+    # TODO: [ ] positional any
+    # same as above..
+
     # DASH
     # Positional arguments after `--`
     # https://carapace-sh.github.io/carapace-spec/carapace-spec/command/completion/dash.html
@@ -156,6 +216,13 @@ function dorothy_autocomplete() (
     # NOTE: dash | dash-any
     # completes in the same way as positional above but after the double dash
     # separator.
+
+    # TODO: [ ] start have a look at macros
+    # https://carapace-sh.github.io/carapace-spec/carapace-spec/macros.html
+    # Macros allow for hooking into more advanced lib funcs.
+
+    # TODO: [ ] investigate variable replacement
+    # https://carapace-sh.github.io/carapace-spec/carapace-spec/variables.html
 
     __print_lines "${final_spec[*]}"
 
@@ -257,8 +324,6 @@ function dorothy_autocomplete() (
   # OPTIONS
   # ACTIONS
 
-  local regex_usage_section="USAGE:\s*([\s\S]*?)(?=\n\s*\w+:|$)"
-
   local lines_starting_with_hyphen
   local help_content
 
@@ -273,9 +338,6 @@ function dorothy_autocomplete() (
   # lines_starting_with_hyphen="$(echo "$help_content" | echo-regexp -gmn --find="$regex_lines_starting_with_hyphen")"
   # __print_lines "${lines_starting_with_hyphen[@]}"
   #
-  # echo-style --notice="usage section"
-  # local usage_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_usage_section")"
-  # __print_lines "$usage_section"
 
   # NOTE: ACTIONS
   # Loop over all sub action segments and then for each get the action name
