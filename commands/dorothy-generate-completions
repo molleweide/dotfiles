@@ -38,12 +38,24 @@ function dorothy_autocomplete() (
   # =====================================
   # Variables
 
+  local dorothy_commands_dir="$DOROTHY/commands"
+
   local regex_lines_starting_with_hyphen="^[-]{1,2}.*$"
+
+  local help_content
 
   # These could go into a helper func
   local regex_usage_section="USAGE:\s*([\s\S]*?)(?=\n\s*\w+:|$)"
   local regex_about_section="ABOUT:\s*([\s\S]*?)(?=\n[A-Z]+\:|\n{2,})"
   local regex_options_section="OPTIONS:\s*([\s\S]*?)(?=\n\s*[A-Z]+\s*:)"
+
+  local OPTIONS_SECTIONS=()
+  local ACTIONS_SECTIONS=()
+
+  local fzf_base_opts=(
+    --height=40%
+    --ellipsis=..
+  )
 
   # =====================================
   # Helpers
@@ -54,6 +66,14 @@ function dorothy_autocomplete() (
     else
       return 1
     fi
+  }
+
+  local section_regex_base=":\s*([\s\S]*?)(?=\n\s*[A-Z]+\s*:)"
+
+  get_regex_for_section() {
+    local section_name=$1
+    # __print_string "$section_name:\s*([\s\S]*?)(?=\n\s*\w+:|$)"
+    __print_string "$section_name$section_regex_base"
   }
 
   # Unused
@@ -87,24 +107,141 @@ function dorothy_autocomplete() (
     __print_lines "$command_option_flag_lines"
   }
 
+  loop_option_sections() {
+    :
+    # TODO: 1. trim first line of the options section
+    # 2. split by white space
+    local help_content="$1"
+    local options_section options_all
+
+    # local regex_opts="OPTIONS:\s*[\s\S]*?\n([\s\S]*?)(?=\n\s*[A-Z]+\s*:)"
+
+    options_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_options_section")"
+
+    local trimmed_string=$(echo "$options_section" | sed '1d')
+
+    __print_lines "$trimmed_string"
+    # command_option_flag_lines="$(echo "$options_section" | echo-regexp -gmn --find="$regex_lines_starting_with_hyphen")"
+  }
+
+  insert_into_dynamic_array() {
+    local array_name="$1"   # Name of the array passed as a string
+    local new_value="$2"     # New value to insert
+
+    # Use indirect reference to add new value to the array
+    eval "$array_name+=(\"$new_value\")"
+}
+
+  # This works for splitting a section on empty lines
+  # TODO: make this into a generalized helper
+  # Takes a multiline input string, and splits it by empty lines into an array.
+  # input:
+  # - multiline string
+  # - target array to insert each section into.
+  # new name: `split_multiline_string_by_empty_lines`
+  collect_sub_sections() {
+    local section_name=$1
+    # local sub_sections_array="$section_name"_SECTIONS
+    local section_regex
+    local sub_sections
+
+    # make dynamic var reference (*)
+    declare -n sub_sections_array="$section_name"_SECTIONS
+
+    section_regex=$(get_regex_for_section "$section_name")
+    sub_sections="$(echo "$help_content" | echo-regexp -gmn --find="$section_regex")"
+    sub_sections="$(echo "$sub_sections" | sed '1d')"
+
+    # Initialize an array to hold sections
+    sections=()
+    current_section=""
+
+    # Read the multiline string line by line
+    while IFS= read -r line; do
+      if [[ -z "$line" ]]; then
+        # If we encounter an empty line, store the current section if not empty
+        if [[ -n "$current_section" ]]; then
+          sections+=("$current_section")
+          current_section=""
+        fi
+      else
+        # Accumulate non-empty lines
+        current_section+="$line"$'\n'
+      fi
+    done <<<"$sub_sections"
+
+    # Store the last section if it exists
+    if [[ -n "$current_section" ]]; then
+      sections+=("$current_section")
+    fi
+
+    echo "# $section_name pre ######################"
+    for section in "${sections[@]}"; do
+      sub_sections_array+=("$section") # (*) now we can append normally to our var ref.
+      # echo "$section"
+      # echo "--------------------------"
+    done
+    echo "# $section_name post ######################"
+
+  }
+
+  # This splits th action section based on new lines starting at the beginning
+  # of the line.
+  collect_action_section() {
+    local help_content
+    set +e
+    help_content="$(dorothy --help 2>&1)"
+    set -e
+    local actions_section="$(echo "$help_content" | sed -n '/^ACTIONS:/,/^[A-Z][A-Z\s]*:/{/^ACTIONS:/!p;}')"
+
+    # This variable is used to handle some special cases when subsequent lines
+    # are starting at beginning of the line, so that we split each sub action
+    # correctly.
+    local prev_line_not_empty="prev_empty" # bash inverted boolean, eg. 0 = true
+
+    # Loop over actions and separate by ----
+    while IFS= read -r line; do
+      if [[ "$line" =~ ^[^[:space:]] && -n "$line" && "$prev_line_not_empty" == "prev_empty" ]]; then
+        # visually splitting each sub action for testing purposes
+        echo "--------------------------------------------"
+      fi
+      echo "$line" # ($prev_line_not_empty)"
+      #
+      if test -z "$line"; then
+        prev_line_not_empty="prev_empty"
+      else
+        prev_line_not_empty="_"
+      fi
+    done <<<"$actions_section"
+  }
+
   # =====================================
   # Actions
 
   create_carpace_spec_for_command() {
     local command_name=$1
-    local help_content
     local final_spec
     local about_text
     local command_option_flag_lines
     local command_sub_actions
 
+    OPTIONS_SECTIONS=()
+    ACTIONS_SECTIONS=()
+
     set +e # prevent errexit
     help_content="$("$command_name" --help 2>&1)"
     set -e
 
+    # TODO: [ ] reset the options and actions section arrays
+
     about_text="$(collect_about_section "$help_content")"
 
     command_option_flag_lines=$(collect_option_flag_lines "$help_content")
+
+    # collect options
+    collect_sub_sections "OPTIONS"
+
+    # collect actions
 
     # ------------------------------------------------------------------
     # Put together final spec file for $command_name
@@ -136,6 +273,10 @@ function dorothy_autocomplete() (
 
     # TODO: [ ] check if has flags
     # TODO: [ ] fix spec flag formatting
+    # each flag is a map of short/long-hand -> description
+    # FIX: i probably need to do a custom section split for each option,
+    # and then parse each option section one by one, so that I can capture
+    # the flag and description into separate variables.
 
     final_spec+=($'\n'"flags:")
     for item in "${command_option_flag_lines[@]}"; do
@@ -196,6 +337,16 @@ function dorothy_autocomplete() (
 
     __print_lines "${final_spec[*]}" >"$DOROTHY/autocomplete/$command_name.yaml"
 
+    # collect_action_section
+    # local opt_sec=$(loop_option_sections "$help_content")
+    # split_multiline_string_on_empty_lines "$opt_sec"
+
+    echo "##################################"
+
+    echo "${#OPTIONS_SECTIONS[@]}"
+
+    __print_lines "${OPTIONS_SECTIONS[@]}"
+
   }
 
   # =====================================
@@ -249,75 +400,11 @@ function dorothy_autocomplete() (
     esac
   done
 
-  # TODO: if no command/all selected, then use fzf or chose to seect a command.
-
-  local selection_prev=()
   local fzf_heading__prefix='SELECTION (Current question: '
   local fzf_heading__suffix=')'
   get_fzf_heading() {
-    # local final header=
-    #
     __print_string "$fzf_heading__prefix${1-????}$fzf_heading__suffix"
   }
-  local fzf_base_opts=(
-    --height=40%
-    --ellipsis=..
-  )
-
-  local lines_starting_with_hyphen
-  local help_content
-
-  # Get help command content
-  set +e
-  help_content="$(dorothy --help 2>&1)"
-  set -e
-
-  # echo-style --h1 "dorothy gen autocomp"
-
-  # echo-style --notice="lines starting with hyphen"
-  # lines_starting_with_hyphen="$(echo "$help_content" | echo-regexp -gmn --find="$regex_lines_starting_with_hyphen")"
-  # __print_lines "${lines_starting_with_hyphen[@]}"
-  #
-
-  # NOTE: ACTIONS
-  # Loop over all sub action segments and then for each get the action name
-  # and description etc.
-
-  local regex_actions_section="ACTIONS:\s*([\s\S]*?)(?=\n[A-Z]+[\s:]*|\s*$)"
-
-  local regex_sub_action="(^[a-zA-Z|<>\s]+(?:\s+\[.*\])?\n(?:\s+.*\n?)*)+"
-
-  echo-style --notice="Actions section"
-  # local actions_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_actions_section")"
-
-  local actions_section="$(echo "$help_content" | sed -n '/^ACTIONS:/,/^[A-Z][A-Z\s]*:/{/^ACTIONS:/!p;}')"
-
-  # __print_lines "${actions_section[@]}"
-
-  # This variable is used to handle some special cases when subsequent lines
-  # are starting at beginning of the line, so that we split each sub action
-  # correctly.
-  local prev_line_not_empty="prev_empty" # bash inverted boolean, eg. 0 = true
-
-  # Loop over actions and separate by ----
-  while IFS= read -r line; do
-    if [[ "$line" =~ ^[^[:space:]] && -n "$line" && "$prev_line_not_empty" == "prev_empty" ]]; then
-      echo "----------------------"
-      # fi
-    fi
-    echo "$line" # ($prev_line_not_empty)"
-    #
-    if test -z "$line"; then
-      prev_line_not_empty="prev_empty"
-    else
-      prev_line_not_empty="_"
-    fi
-  done <<<"$actions_section"
-
-  # __print_lines "$actions_section"
-
-  # echo-style --g1 "dorothy gen autocomp"
-
   if test -n "$option_command_single"; then
     # the single command name is selected,
     # todo: try to find command in $dorothy/commands.
@@ -326,17 +413,13 @@ function dorothy_autocomplete() (
     :
     # todo: loop over all commands and render for each of them.
   else
-    local commands_dir="$DOROTHY/commands"
     get_all_commands() {
       # this is slow as fuck
-      find "$commands_dir" -maxdepth 1 -type f | while read -r file; do
+      find "$dorothy_commands_dir" -maxdepth 1 -type f | while read -r file; do
         basename "$file"
       done
     }
-
-    # echo "${values[@]}"
     local selected_command
-
     if __use_fzf; then
       selected_command="$(
         # find "$DOROTHY/commands" -maxdepth 1 -type f  | fzf "${fzf_base_opts[@]}" \
@@ -349,8 +432,6 @@ function dorothy_autocomplete() (
         choose all dorothy commands
       )"
     fi
-    selection_prev+=("action = $action")
-
   fi
 
 )
@@ -358,7 +439,7 @@ function dorothy_autocomplete() (
 # fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
   if test "$*" = '--test'; then
-    config_helper_test
+    :
   else
     dorothy_autocomplete "$@"
   fi
