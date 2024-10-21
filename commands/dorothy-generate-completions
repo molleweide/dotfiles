@@ -23,433 +23,309 @@
 # ["value", "value\tdescription", "value\tdescription\tblue"]
 
 function dorothy_autocomplete() (
-  source "$DOROTHY/sources/bash.bash"
-  __require_array 'mapfile'
-
-  # Ensure that the autocomplete dir exists
-  mkdir -p "$DOROTHY/autocomplete"
-
-  # =====================================
-  # Variables
-
-  local dorothy_commands_dir="$DOROTHY/commands"
-
-  local regex_lines_starting_with_hyphen="^[-]{1,2}.*$"
-
-  local help_content
-
-  # These could go into a helper func
-  local regex_usage_section="USAGE:\s*([\s\S]*?)(?=\n\s*\w+:|$)"
-  local regex_about_section="ABOUT:\s*([\s\S]*?)(?=\n[A-Z]+\:|\n{2,})"
-  local regex_options_section="OPTIONS:\s*([\s\S]*?)(?=\n\s*[A-Z]+\s*:)"
-
-  local current_command
-
-  local OPTIONS_SECTIONS=()
-  local ACTIONS_SECTIONS=()
-
-  local fzf_base_opts=(
-    --height=40%
-    --ellipsis=..
-  )
-
-  # =====================================
-  # Helpers
-
-  __use_fzf() {
-    if test "$use_fzf" = 'yes'; then
-      return 0
-    else
-      return 1
-    fi
-  }
-
-  # local section_regex_base=":\s*([\s\S]*?)(?=\n\s*[A-Z]+\s*:)"
-  local section_regex_base=":\s*([\s\S]*?)(?=\n[A-Z][A-Z\s]*)"
-
-  get_regex_for_section() {
-    local section_name=$1
-
-    echo "$section_name$section_regex_base" >/dev/tty
-
-    # __print_string "$section_name:\s*([\s\S]*?)(?=\n\s*\w+:|$)"
-    __print_string "$section_name$section_regex_base"
-  }
-
-  # Unused
-  get_help_contents() {
-    local regex_help_func="^\s+function\s+help\s*{([\s\S]*?)}"
-    local regex_heredoc_content="<<[-]?\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*([\s\S]*?)^\s*\1\s*$"
-    local help_contents="$(cat "$1" | echo-regexp -gm --find="$regex_help_func")"
-    local res="$(echo "$help_contents" | echo-regexp -gm --find="$regex_heredoc_content")"
-  }
-
-  collect_about_section() {
-    local help_content="$1"
-    local about_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_about_section")"
-    local about="$(echo "$about_section" | sed -n 2p)"
-    __print_lines "$about"
-  }
-
-  collect_usage_section() {
-    local help_content="$1"
-    local usage_section
-    usage_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_usage_section")"
-    __print_lines "$usage_section"
-  }
-
-  # collect and print all lines containing option flags
-  collect_option_flag_lines() {
-    local help_content="$1"
-    local options_section options_all
-    options_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_options_section")"
-    command_option_flag_lines="$(echo "$options_section" | echo-regexp -gmn --find="$regex_lines_starting_with_hyphen")"
-    __print_lines "$command_option_flag_lines"
-  }
-
-  loop_option_sections() {
-    :
-    # TODO: 1. trim first line of the options section
-    # 2. split by white space
-    local help_content="$1"
-    local options_section options_all
-
-    # local regex_opts="OPTIONS:\s*[\s\S]*?\n([\s\S]*?)(?=\n\s*[A-Z]+\s*:)"
-
-    options_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_options_section")"
-
-    local trimmed_string=$(echo "$options_section" | sed '1d')
-
-    __print_lines "$trimmed_string"
-    # command_option_flag_lines="$(echo "$options_section" | echo-regexp -gmn --find="$regex_lines_starting_with_hyphen")"
-  }
-
-  insert_into_dynamic_array() {
-    local array_name="$1" # Name of the array passed as a string
-    local new_value="$2"  # New value to insert
-
-    # Use indirect reference to add new value to the array
-    eval "$array_name+=(\"$new_value\")"
-  }
-
-  # This works for splitting a section on empty lines
-  # TODO: make this into a generalized helper
-  # Takes a multiline input string, and splits it by empty lines into an array.
-  # input:
-  # - multiline string
-  # - target array to insert each section into.
-  # new name: `split_multiline_string_by_empty_lines`
-  collect_sub_sections() {
-    local section_name=$1
-    # local sub_sections_array="$section_name"_SECTIONS
-    local section_regex
-    local sub_sections
-
-    # make dynamic var reference (*)
-    declare -n sub_sections_array="$section_name"_SECTIONS
-
-    echo-style --h3="parsing $section_name for [$current_command]"
-
-    section_regex=$(get_regex_for_section "$section_name")
-
-    echo-style --purple --bold "$section_name regex = [$section_regex]"
-    sub_sections="$(echo "$help_content" | echo-regexp -gmn --find="$section_regex")"
-
-    # FIX: These do not print anything for `ABOUT`
-
-    # __print_lines "1. ${sub_sections[*]}"
-
-    sub_sections="$(echo "$sub_sections" | sed '1d')"
-
-    __print_lines "2. ${sub_sections[*]}"
-
-    echo
-    echo
-
-    # Initialize an array to hold sections
-    sections=()
-    current_section=""
-
-    # NOTE: when parsing the section it
-    # will first
-    # 1. start with the NAME:
-    # 2. (empty line)
-    # 3.
-
-    # VERSION A
-
-    # # Read the multiline string line by line
-    # while IFS= read -r line; do
-    #   if [[ -z "$line" ]]; then
-    #     # If we encounter an empty line, store the current section if not empty
-    #     if [[ -n "$current_section" ]]; then
-    #       sections+=("$current_section")
-    #       current_section=""
-    #     fi
-    #   else
-    #     # Accumulate non-empty lines
-    #     current_section+="$line"$'\n'
-    #   fi
-    # done <<<"$sub_sections"
-    # # Store the last section if it exists
-    # if [[ -n "$current_section" ]]; then
-    #   sections+=("$current_section")
-    # fi
-
-    # VERSION B
-
-    # TODO: trim ignore empty lines
-
-    local current_section_and_whitespace='no'
-    local section_counter=0
-    # local prev_line_not_empty="prev_empty" # bash inverted boolean, eg. 0 = true
-    while IFS= read -r line; do
-      if [[ "$line" =~ ^[[:space:]]+ || -z "$line" ]]; then
-        if test -n "$current_section"; then
-          current_section_and_whitespace='yes'
-          echo "#$section_counter [dscr]: $line"
-          current_section+="$line"$'\n'
-        else
-          :
-        fi
-      else
-        if test -z "$current_section"; then
-          section_counter=$((section_counter + 1))
-          echo "#$section_counter: $line"
-          current_section="$line"$'\n'
-        elif test -n "$current_section" -a "$current_section_and_whitespace" = "yes"; then
-          current_section_and_whitespace='no'
-          section_counter=$((section_counter + 1))
-          echo "----------------------"
-          sections+=("$current_section")
-          echo "#$section_counter [name]: $line"
-          current_section="$line"$'\n'
-        elif test -n "$current_section" -a "$current_section_and_whitespace" = "no"; then
-          echo "#$section_counter [name]: $line"
-        fi
-      fi
-
-      # elif [[ "$line" =~ ^[^[:space:]] && -n "$line" && "$prev_line_not_empty" == "prev_empty" ]]; then
-      #   # visually splitting each sub action for testing purposes
-      #   echo "--------------------------------------------"
-      #   sections+=("$current_section")
-      #   current_section=""
-      # fi
-      # # echo "$line" # ($prev_line_not_empty)"
-      # current_section+="$line"$'\n'
-      # #
-      # if test -z "$line"; then
-      #   prev_line_not_empty="prev_empty"
-      # else
-      #   prev_line_not_empty="_"
-    done <<<"$sub_sections"
-
-    for section in "${sections[@]}"; do
-      sub_sections_array+=("$section") # (*) now we can append normally to our var ref.
-      # echo "$section"
-      # echo "--------------------------"
-    done
-
-    echo-style --g3="parsing $section_name for [$current_command]"
-    echo
-  }
-
-  # TODO: This needs to be merged into the function above so that we can use
-  # a single function to split all doc section
-  # ! The sub actions description/examples are indented. -> This means that there
-  # might be empty lines separating sub segments BUT the first segment is always
-  # the description -> Therefore it is fine to just split each sub action and then
-  # capture the FIRST LINE = action name, and the first paragraph after the
-  # first line will then be the description. Everything coming after, eg. `examples`
-  # and such can be discarded for as it does not make sense to include inthe
-  # completer.
-  #
-  # This splits th action section based on new lines starting at the beginning
-  # of the line.
-  collect_action_section() {
-    local help_content
-    set +e
-    help_content="$(dorothy --help 2>&1)"
-    set -e
-    local actions_section="$(echo "$help_content" | sed -n '/^ACTIONS:/,/^[A-Z][A-Z\s]*:/{/^ACTIONS:/!p;}')"
-
-    # This variable is used to handle some special cases when subsequent lines
-    # are starting at beginning of the line, so that we split each sub action
-    # correctly.
-    local prev_line_not_empty="prev_empty" # bash inverted boolean, eg. 0 = true
-
-    # Loop over actions and separate by ----
-    while IFS= read -r line; do
-      if [[ "$line" =~ ^[^[:space:]] && -n "$line" && "$prev_line_not_empty" == "prev_empty" ]]; then
-        # visually splitting each sub action for testing purposes
-        echo "--------------------------------------------"
-      fi
-      echo "$line" # ($prev_line_not_empty)"
-      #
-      if test -z "$line"; then
-        prev_line_not_empty="prev_empty"
-      else
-        prev_line_not_empty="_"
-      fi
-    done <<<"$actions_section"
-  }
-
-  # =====================================
-  # Actions
-
-  create_carpace_spec_for_command() {
-    local command_name=$1
-    current_command="$command_name"
-    local final_spec
-    local about_text
-    local command_option_flag_lines
-    local command_sub_actions
-
-    echo-style --h2="Building spec for: [$command_name]"
-
-    OPTIONS_SECTIONS=()
-    ACTIONS_SECTIONS=()
-
-    # help content
-    set +e # prevent errexit
-    help_content="$("$command_name" --help 2>&1)"
-    set -e
-    echo-style --h3="help content for: $command_name"
-    __print_lines "$help_content"
-    echo-style --g3="help content for: $command_name"
-    echo
-
-    about_text="$(collect_about_section "$help_content")"
-    echo-style --yellow "ABOUT:" --red "$about_text"
-    command_option_flag_lines=$(collect_option_flag_lines "$help_content")
-    echo
-
-    collect_sub_sections "OPTIONS"
-    collect_sub_sections "ACTIONS"
-
-    echo "##################################"
-    echo-style --notice="options"
-    # echo "${#OPTIONS_SECTIONS[@]}"
-    __print_lines "${OPTIONS_SECTIONS[@]}"
-    echo "##################################"
-    echo-style --notice="actions"
-    __print_lines "${ACTIONS_SECTIONS[@]}"
-    echo-style --g2="Building spec for: [$command_name]"
-
-    # ------------------------------------------------------------------
-    # Put together final spec file for $command_name
-    final_spec="$(
-      __print_lines \
-        "# yaml-language-server: \$schema=https://carapace.sh/schemas/command.json" \
-        "name: $command_name" \
-        "description: ${about_text[*]}"
-    )"
-
-    # FLAGS -------------------------------------------------------
-    # = flag takes an argument
-    # * flag is repeatable
-    # ? flag takes an optional argument
-    # & flag is hidden
-    # ! flag is required
-    #
-    # https://github.com/carapace-sh/carapace-spec/blob/master/example/traverse.yaml
-    #
-    # yaml-language-server: $schema=https://carapace.sh/schemas/command.json
-    # name: flag
-    # flags:
-    #   -e=: executables
-    #   -f, --file=: file
-    # completion:
-    #   flag: ????????????
-    #     e: ["$executables"]
-    #     file: ["$files"]
-
-    # TODO: [ ] check if has flags
-    # TODO: [ ] fix spec flag formatting
-    # each flag is a map of short/long-hand -> description
-    # FIX: i probably need to do a custom section split for each option,
-    # and then parse each option section one by one, so that I can capture
-    # the flag and description into separate variables.
-
-    # TODO: split each options section into 1. the flags, 2. the description.
-
-    # TODO: (optionally) force the description into a single line?
-
-    # TODO: [ ] if a flag line begins with <...> it should be collected OR prompted to be moved
-    # to the positional args section instead?
-
-    final_spec+=($'\n'"flags:")
-    for item in "${command_option_flag_lines[@]}"; do
-      final_spec+=($'\n'"  $item")
-      # final_spec+=("\t$item")
-    done
-
-    # PERSISTENT FLAGS --------------------------------------------
-    #
-
-    # COMPLETION --------------------------------------------
-    # completion > flags
-    # TODO: [ ] check if has/should add completions
-    # TODO: [ ] how are flags completion values specified in dorothy docs?
-
-    # TODO: [ ] try add flag completions if has option flags
-
-    # completion > Positional
-    # I believe that sub actios should be added as positional actions.
-    # https://carapace-sh.github.io/carapace-spec/carapace-spec/command/completion/positional.html
-    #
-    #     # yaml-language-server: $schema=https://carapace.sh/schemas/command.json
-    # name: positional
-    # completion:
-    #   positional: NOTE: these are completed in order, so pos1 before pos2
-    #     - [pos1, positional1]
-    #     - [pos2, positional2]
-    #
-    #     # yaml-language-server: $schema=https://carapace.sh/schemas/command.json
-    # name: positionalany
-    # completion: NOTE: here, the order is arbitrary.
-    #   positionalany: [one, two, three]
-
-    # TODO: [ ] positional args.
-    # Before embarking on pos args, i have to first try the flags options and
-    # see how this works.
-
-    # TODO: [ ] positional any
-    # same as above..
-
-    # DASH
-    # Positional arguments after `--`
-    # https://carapace-sh.github.io/carapace-spec/carapace-spec/command/completion/dash.html
-    #
-    # NOTE: dash | dash-any
-    # completes in the same way as positional above but after the double dash
-    # separator.
-
-    # TODO: [ ] start have a look at macros
-    # https://carapace-sh.github.io/carapace-spec/carapace-spec/macros.html
-    # Macros allow for hooking into more advanced lib funcs.
-
-    # TODO: [ ] investigate variable replacement
-    # https://carapace-sh.github.io/carapace-spec/carapace-spec/variables.html
-
-    echo
-    echo-style --h3="final spec: [$command_name]"
-    __print_lines "${final_spec[*]}"
-    echo-style --g3="final spec: [$command_name]"
-
-    __print_lines "${final_spec[*]}" >"$DOROTHY/autocomplete/$command_name.yaml"
-
-    # collect_action_section
-    # local opt_sec=$(loop_option_sections "$help_content")
-    # split_multiline_string_on_empty_lines "$opt_sec"
-
-  }
-
-  # =====================================
-  # Arguments
-
-  function help {
-    cat <<-EOF >/dev/stderr
+	source "$DOROTHY/sources/bash.bash"
+	__require_array 'mapfile'
+
+	# Ensure that the autocomplete dir exists
+	mkdir -p "$DOROTHY/autocomplete"
+
+	# =====================================
+	# Variables
+
+	local dorothy_commands_dir="$DOROTHY/commands"
+
+	local regex_lines_starting_with_hyphen="^[-]{1,2}.*$"
+
+	local help_content
+
+	# These could go into a helper func
+	local regex_usage_section="USAGE:\s*([\s\S]*?)(?=\n\s*\w+:|$)"
+	local regex_about_section="ABOUT:\s*([\s\S]*?)(?=\n[A-Z]+\:|\n{2,})"
+	local regex_options_section="OPTIONS:\s*([\s\S]*?)(?=\n\s*[A-Z]+\s*:)"
+
+	local current_command
+
+	local OPTIONS_SECTIONS=()
+	local ACTIONS_SECTIONS=()
+
+	local fzf_base_opts=(
+		--height=40%
+		--ellipsis=..
+	)
+
+	# =====================================
+	# Helpers
+
+	__use_fzf() {
+		if test "$use_fzf" = 'yes'; then
+			return 0
+		else
+			return 1
+		fi
+	}
+
+	# local section_regex_base=":\s*([\s\S]*?)(?=\n\s*[A-Z]+\s*:)"
+	local section_regex_base=":\s*([\s\S]*?)(?=\n[A-Z][A-Z\s]*)"
+
+	get_regex_for_section() {
+		local section_name=$1
+		__print_string "$section_name$section_regex_base"
+	}
+
+	collect_about_section() {
+		local help_content="$1"
+		local about_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_about_section")"
+		local about="$(echo "$about_section" | sed -n 2p)"
+		__print_lines "$about"
+	}
+
+	collect_usage_section() {
+		local help_content="$1"
+		local usage_section
+		usage_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_usage_section")"
+		__print_lines "$usage_section"
+	}
+
+	# collect and print all lines containing option flags
+	collect_option_flag_lines() {
+		local help_content="$1"
+		local options_section options_all
+		options_section="$(echo "$help_content" | echo-regexp -gmn --find="$regex_options_section")"
+		command_option_flag_lines="$(echo "$options_section" | echo-regexp -gmn --find="$regex_lines_starting_with_hyphen")"
+		__print_lines "$command_option_flag_lines"
+	}
+
+	# This works for splitting a section on empty lines
+	# TODO: make this into a generalized helper
+	# Takes a multiline input string, and splits it by empty lines into an array.
+	# input:
+	# - multiline string
+	# - target array to insert each section into.
+	# new name: `split_multiline_string_by_empty_lines`
+	collect_sub_sections() {
+		local section_name=$1
+		# local sub_sections_array="$section_name"_SECTIONS
+		local section_regex
+		local sub_sections
+		# make dynamic var reference (*)
+		declare -n sub_sections_array="$section_name"_SECTIONS
+
+		section_regex=$(get_regex_for_section "$section_name")
+		echo-style --h2="parsing $section_name for [$current_command] | [$section_regex]"
+
+		sub_sections="$(echo "$help_content" | echo-regexp -gmn --find="$section_regex")"
+		# __print_lines "1. ${sub_sections[*]}"
+		sub_sections="$(echo "$sub_sections" | sed '1d')"
+		# __print_lines "2. ${sub_sections[*]}"
+
+		# Initialize an array to hold sections
+		sections=()
+		current_section=""
+
+		# NOTE: when parsing the section it
+		# will first
+		# 1. start with the NAME:
+		# 2. (empty line)
+		# 3.
+
+		# TODO: trim ignore empty lines ??
+		# squeeze sections together...
+
+		local current_section_and_whitespace='no'
+		local section_counter=0
+		# local prev_line_not_empty="prev_empty" # bash inverted boolean, eg. 0 = true
+		while IFS= read -r line; do
+			if [[ "$line" =~ ^[[:space:]]+ || -z "$line" ]]; then
+				if test -n "$current_section"; then
+					current_section_and_whitespace='yes'
+					if [[ "$line" =~ ^[[:space:]]*$ ]]; then
+					  # ignore empty lines
+						continue
+					else
+						echo "#$section_counter [dscr]: $line"
+						current_section+="$line"$'\n'
+					fi
+				else
+					: # first empty lines
+				fi
+			else
+				if test -z "$current_section"; then
+					section_counter=$((section_counter + 1))
+					echo "#$section_counter [name]: $line"
+					current_section="$line"$'\n'
+				elif test -n "$current_section" -a "$current_section_and_whitespace" = "yes"; then
+					current_section_and_whitespace='no'
+					section_counter=$((section_counter + 1))
+					echo "----------------------"
+					sections+=("$current_section")
+					echo "#$section_counter [name]: $line"
+					current_section="$line"$'\n'
+				elif test -n "$current_section" -a "$current_section_and_whitespace" = "no"; then
+					echo "#$section_counter [name]: $line"
+				fi
+			fi
+		done <<<"$sub_sections"
+
+		for section in "${sections[@]}"; do
+			sub_sections_array+=("$section") # (*) now we can append normally to our var ref.
+		done
+		echo-style --g2="parsing $section_name for [$current_command]"
+		echo
+	}
+
+	# =====================================
+	# Actions
+
+	create_carpace_spec_for_command() {
+		local command_name=$1
+		current_command="$command_name"
+		local final_spec
+		local about_text
+		local command_option_flag_lines
+		local command_sub_actions
+
+		OPTIONS_SECTIONS=()
+		ACTIONS_SECTIONS=()
+
+		# help content
+		set +e # prevent errexit
+		help_content="$("$command_name" --help 2>&1)"
+		set -e
+		echo-style --h3="help content for: $command_name"
+		__print_lines "$help_content"
+		echo-style --g3="help content for: $command_name"
+		echo
+
+		about_text="$(collect_about_section "$help_content")"
+		echo-style --yellow "ABOUT:" --red "$about_text"
+		command_option_flag_lines=$(collect_option_flag_lines "$help_content")
+		echo
+
+		collect_sub_sections "OPTIONS"
+		collect_sub_sections "ACTIONS"
+
+		# echo "##################################"
+		# echo-style --notice="options"
+		# # echo "${#OPTIONS_SECTIONS[@]}"
+		# __print_lines "${OPTIONS_SECTIONS[@]}"
+		# echo "##################################"
+		# echo-style --notice="actions"
+		# __print_lines "${ACTIONS_SECTIONS[@]}"
+
+		# ------------------------------------------------------------------
+		# Put together final spec file for $command_name
+		final_spec="$(
+			__print_lines \
+				"# yaml-language-server: \$schema=https://carapace.sh/schemas/command.json" \
+				"name: $command_name" \
+				"description: ${about_text[*]}"
+		)"
+
+		# FLAGS -------------------------------------------------------
+		# = flag takes an argument
+		# * flag is repeatable
+		# ? flag takes an optional argument
+		# & flag is hidden
+		# ! flag is required
+		#
+		# https://github.com/carapace-sh/carapace-spec/blob/master/example/traverse.yaml
+		#
+		# yaml-language-server: $schema=https://carapace.sh/schemas/command.json
+		# name: flag
+		# flags:
+		#   -e=: executables
+		#   -f, --file=: file
+		# completion:
+		#   flag: ????????????
+		#     e: ["$executables"]
+		#     file: ["$files"]
+
+    # NOTE: Now, BECAUSE I split all options, i can take the first line and make
+    # it into the flag name(s), and then put the description after the colon (:).
+
+		# TODO: [ ] check if has flags
+		# TODO: [ ] fix spec flag formatting
+		# each flag is a map of short/long-hand -> description
+		# FIX: i probably need to do a custom section split for each option,
+		# and then parse each option section one by one, so that I can capture
+		# the flag and description into separate variables.
+
+		# TODO: split each options section into 1. the flags, 2. the description.
+
+		# TODO: (optionally) force the description into a single line?
+
+		# TODO: [ ] if a flag line begins with <...> it should be collected OR prompted to be moved
+		# to the positional args section instead?
+
+		final_spec+=($'\n'"flags:")
+		for item in "${command_option_flag_lines[@]}"; do
+			final_spec+=($'\n'"  $item")
+			# final_spec+=("\t$item")
+		done
+
+		# PERSISTENT FLAGS --------------------------------------------
+		#
+
+		# COMPLETION --------------------------------------------
+		# completion > flags
+		# TODO: [ ] check if has/should add completions
+		# TODO: [ ] how are flags completion values specified in dorothy docs?
+
+		# TODO: [ ] try add flag completions if has option flags
+
+		# completion > Positional
+		# I believe that sub actios should be added as positional actions.
+		# https://carapace-sh.github.io/carapace-spec/carapace-spec/command/completion/positional.html
+		#
+		#     # yaml-language-server: $schema=https://carapace.sh/schemas/command.json
+		# name: positional
+		# completion:
+		#   positional: NOTE: these are completed in order, so pos1 before pos2
+		#     - [pos1, positional1]
+		#     - [pos2, positional2]
+		#
+		#     # yaml-language-server: $schema=https://carapace.sh/schemas/command.json
+		# name: positionalany
+		# completion: NOTE: here, the order is arbitrary.
+		#   positionalany: [one, two, three]
+
+		# TODO: [ ] positional args.
+		# Before embarking on pos args, i have to first try the flags options and
+		# see how this works.
+
+		# TODO: [ ] positional any
+		# same as above..
+
+		# DASH
+		# Positional arguments after `--`
+		# https://carapace-sh.github.io/carapace-spec/carapace-spec/command/completion/dash.html
+		#
+		# NOTE: dash | dash-any
+		# completes in the same way as positional above but after the double dash
+		# separator.
+
+		# TODO: [ ] start have a look at macros
+		# https://carapace-sh.github.io/carapace-spec/carapace-spec/macros.html
+		# Macros allow for hooking into more advanced lib funcs.
+
+		# TODO: [ ] investigate variable replacement
+		# https://carapace-sh.github.io/carapace-spec/carapace-spec/variables.html
+
+		echo-style --h3="final spec: [$command_name]"
+		echo-style --red --bold "${final_spec[*]}"
+		echo-style --g3="final spec: [$command_name]"
+
+		# TODO: user commands should be put in the USER repo instead of core.
+
+		# write to file
+		__print_lines "${final_spec[*]}" >"$DOROTHY/autocomplete/$command_name.yaml"
+	}
+
+	# =====================================
+	# Arguments
+
+	function help {
+		cat <<-EOF >/dev/stderr
 			USAGE:
 			dorothy-autocomplete [...options] <file> -- ...
 
@@ -457,92 +333,93 @@ function dorothy_autocomplete() (
 			  Auto generate carapace-spec shell completions for dorothy commands.
 			  Either for a single command, a filter, or all commands a new.
 		EOF
-    if test "$#" -ne 0; then
-      echo-error "$@"
-    fi
-    return 22 # EINVAL 22 Invalid argument
-  }
+		if test "$#" -ne 0; then
+			echo-error "$@"
+		fi
+		return 22 # EINVAL 22 Invalid argument
+	}
 
-  # process
-  # local item option_args=() option_file='' option_multiple='ok' option_quiet
-  # option_quiet="$(echo-quiet-enabled -- "$@")"
-  local option_command_single='' option_all='no' use_fzf='yes'
-  while test "$#" -ne 0; do
-    item="$1"
-    shift
-    case "$item" in
-    '--help' | '-h') help ;;
-    '--no-fzf'* | '--fzf'*)
-      use_fzf="$(get-flag-value --affirmative --fallback="$use_fzf" -- "$item")"
-      ;;
-    '--all') options_all='yes' ;;
-    '--command='*) option_command_single="${item#*=}" ;;
-    # '--no-quiet'* | '--quiet'* | '--no-verbose'* | '--verbose'*) ;; # handled by echo-quiet-enabled
-    # '--multiple=ok' | '--multiple=warn-skip' | '--multiple=warn-apply') option_multiple="${item#*=}" ;;
-    # '--')
-    #   option_args+=("$@")
-    #   shift $#
-    #   break
-    #   ;;
-    # '--'*) help "An unrecognised flag was provided: $item" ;;
-    *)
-      # if test -z "$option_file"; then
-      #   option_file="$item"
-      # else
-      help "An unrecognised argument was provided: $item"
-      # fi
-      #   ;;
-      ;;
-    esac
-  done
+	# process
+	# local item option_args=() option_file='' option_multiple='ok' option_quiet
+	# option_quiet="$(echo-quiet-enabled -- "$@")"
+	local option_command_single='' option_all='no' use_fzf='yes'
+	while test "$#" -ne 0; do
+		item="$1"
+		shift
+		case "$item" in
+		'--help' | '-h') help ;;
+		'--no-fzf'* | '--fzf'*)
+			use_fzf="$(get-flag-value --affirmative --fallback="$use_fzf" -- "$item")"
+			;;
+		'--all') options_all='yes' ;;
+		'--command='*) option_command_single="${item#*=}" ;;
+		# '--no-quiet'* | '--quiet'* | '--no-verbose'* | '--verbose'*) ;; # handled by echo-quiet-enabled
+		# '--multiple=ok' | '--multiple=warn-skip' | '--multiple=warn-apply') option_multiple="${item#*=}" ;;
+		# '--')
+		#   option_args+=("$@")
+		#   shift $#
+		#   break
+		#   ;;
+		# '--'*) help "An unrecognised flag was provided: $item" ;;
+		*)
+			# if test -z "$option_file"; then
+			#   option_file="$item"
+			# else
+			help "An unrecognised argument was provided: $item"
+			# fi
+			#   ;;
+			;;
+		esac
+	done
 
-  local fzf_heading__prefix='SELECTION (Current question: '
-  local fzf_heading__suffix=')'
-  get_fzf_heading() {
-    __print_string "$fzf_heading__prefix${1-????}$fzf_heading__suffix"
-  }
+	local fzf_heading__prefix='SELECTION (Current question: '
+	local fzf_heading__suffix=')'
+	get_fzf_heading() {
+		__print_string "$fzf_heading__prefix${1-????}$fzf_heading__suffix"
+	}
 
-  local this_name="DOROTHY GENERATE COMPLETIONS"
+	local this_name="DOROTHY GENERATE COMPLETIONS"
 
-  echo-style --h1="$this_name"
+	echo-style --h1="$this_name"
 
-  if test -n "$option_command_single"; then
-    # the single command name is selected,
-    # todo: try to find command in $dorothy/commands.
-    create_carpace_spec_for_command "$option_command_single"
-  elif test "$$options_all" = "yes"; then
-    :
-    # todo: loop over all commands and render for each of them.
-  else
-    get_all_commands() {
-      # this is slow as fuck
-      find "$dorothy_commands_dir" -maxdepth 1 -type f | while read -r file; do
-        basename "$file"
-      done
-    }
-    local selected_command
-    if __use_fzf; then
-      selected_command="$(
-        # find "$DOROTHY/commands" -maxdepth 1 -type f  | fzf "${fzf_base_opts[@]}" \
-        get_all_commands | fzf "${fzf_base_opts[@]}" \
-          --header "$(get_fzf_heading "You have to select an ACTION")"
-      )"
-      create_carpace_spec_for_command "$selected_command"
-    else
-      action="$(
-        choose all dorothy commands
-      )"
-    fi
-  fi
+	if test -n "$option_command_single"; then
+		# the single command name is selected,
+		# todo: try to find command in $dorothy/commands.
+		create_carpace_spec_for_command "$option_command_single"
+	elif test "$$options_all" = "yes"; then
+		:
+		# todo: loop over all commands and render for each of them.
+	else
+		# TODO: get all commands
+		get_all_commands() {
+			# this is slow as fuck
+			find "$dorothy_commands_dir" -maxdepth 1 -type f | while read -r file; do
+				basename "$file"
+			done
+		}
+		local selected_command
+		if __use_fzf; then
+			selected_command="$(
+				# find "$DOROTHY/commands" -maxdepth 1 -type f  | fzf "${fzf_base_opts[@]}" \
+				get_all_commands | fzf "${fzf_base_opts[@]}" \
+					--header "$(get_fzf_heading "You have to select an ACTION")"
+			)"
+			create_carpace_spec_for_command "$selected_command"
+		else
+			action="$(
+				choose all dorothy commands
+			)"
+		fi
+	fi
 
-  echo-style --g1="$this_name"
+	echo-style --g1="$this_name"
 )
 
 # fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-  if test "$*" = '--test'; then
-    :
-  else
-    dorothy_autocomplete "$@"
-  fi
+	if test "$*" = '--test'; then
+		:
+	else
+		dorothy_autocomplete "$@"
+	fi
 fi

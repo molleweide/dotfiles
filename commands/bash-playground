@@ -1,0 +1,341 @@
+#!/usr/bin/env bash
+
+# NOTE: keybinds
+
+function bash_playground() (
+	source "$DOROTHY/sources/bash.bash"
+
+	# ============================================
+	# vars
+
+	# ============================================
+	# helpers
+	#
+
+	# ============================================
+	# Act
+
+	# ============================================
+	# ARGS
+
+	function help {
+		cat <<-EOF >/dev/stderr
+			ABOUT:
+			Manage and setup local reaper installs.
+
+			USAGE:
+			bash_playground <action>
+
+			ACTIONS:
+		EOF
+		if test "$#" -ne 0; then
+			echo-error "$@"
+		fi
+		return 22 # EINVAL 22 Invalid argument
+	}
+
+	local item action='' option_args=()
+
+	while test "$#" -ne 0; do
+		item="$1"
+		shift
+		case "$item" in
+		'--help' | '-h') help ;;
+		# *) help "An unrecognised argument was provided: $item" ;;
+		esac
+	done
+
+	# NOTE: =====================================================================
+	# SHELL GRAMMAR
+	#============================================================================
+
+	#
+	# Compound commands
+	#
+
+	# (list)
+
+	(
+		local list_x="xxx"
+		echo "hello from (list)"
+	)
+	echo "(list) variable out side = [${list_x-}]"
+
+	# {list}
+
+	{
+		local list_y="yyy"
+		echo "hello from {list}"
+	}
+	echo "{list} variable out side = [${list_y-}]"
+
+	# ((expr))
+	local expr=$((1 + 1))
+	echo "status of 1+1 = $expr: $?" # NOTE: This should be 1 according to manual on ((expression))
+	local expr=$((1 - 1))
+	echo "status of 1-1 = $expr: $?"
+
+	# [[expression]]
+
+	local string="Hello World"
+	local pattern='(H[a-z]+)[[:space:]]*(W[a-z]+)'
+	if [[ $string =~ $pattern ]]; then
+		echo "Match found!"
+		for i in "${!BASH_REMATCH[@]}"; do
+			echo "$i: ${BASH_REMATCH[$i]}"
+		done
+	else
+		echo "no match"
+	fi
+	if [[ "example@domain.com" =~ ([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}) ]]; then
+		echo "User: ${BASH_REMATCH[1]}"   # Prints the username
+		echo "Domain: ${BASH_REMATCH[2]}" # Prints the domain
+	fi
+
+	# for name [ [ in [ word ... ] ] ; ] do list ; done
+
+	# NOTE: if in word is ommitted then the list is executed once for each element in name
+
+	# for path in "${option_paths[@]}"; do
+	#   # ...
+	# done
+
+	# for (( expr1 ; expr2 ; expr3 )) ; do list ; done
+	# for ((i = 0; i < ${#line}; i++)); do
+	# 	if test "${line:i:1}" = '='; then
+	# 		inherited+=("${line:0:i}") # name
+	# 		inherited+=("${line:i+1}") # value
+	# 		break
+	# 	fi
+	# done
+
+	# select name [ in word ] ; do list ; done
+	#
+	# This allows for making very basic shitty menus
+	#
+	# select word in apple orange pear banana; do
+	#     echo $word;
+	# done
+	# echo "reply = $REPLY"
+
+	# case word in [ [(] pattern [ | pattern ] ... ) list ;; ] ... esac
+
+	#
+	# Coprocesses
+	#
+
+	# RECOMMENDED FORM:
+	# coproc NAME { command [redirections]; }
+
+	# The process id is NAME_PID for the spawned process.
+
+	# https://www.geeksforgeeks.org/coproc-command-in-linux-with-examples/
+
+	# The process id
+
+	#
+	# Shell Function Definitions
+	#
+
+	# This section in the man page is a bit incoherent. it says
+
+	# not working..
+	# fn_expr() [[ "aaa" == "aaa" ]]
+
+	# This did not work
+	# fn_expr () (( 1 + 1))
+	# local e=$(fn_expr)
+	# echo "e = $e"
+
+	# NOTE: =====================================================================
+	# QUOTING
+	#============================================================================
+
+	__print_lines $'\aXrst \bFFF'
+	__print_lines $'\eeeeee\Eaa\r'
+
+	# NOTE: =====================================================================
+	# PARAMETER
+	#============================================================================
+
+	echo-style --h1="PARAMETERS"
+	echo-style --h2="PARAMETERS -> SHELL VARIABLES"
+
+	# there are a shit tone of shell variables
+
+	echo "\$\- = $-"
+	echo "\$0 = $0"
+
+	echo "BASH = $BASH"
+
+	echo "BASHOPTS (including enabled by dorothy):"
+	#   echo "$BASHOPTS" | while IFS=':' read -r o; do
+	# echo $'\t'"$o"
+	# done
+	IFS=':'
+	for option in $BASHOPTS; do
+		echo $'\t'"$option"
+	done
+	unset IFS
+
+	# echo "\$! (most recent bkg job) = ${!-unset}"
+
+	declare -i myvarx=1 myvary=1
+	addto() {
+		# the indirect reference to $1 allows us to manipulate the variable inside of
+		# the function
+		declare -n ref=$1
+		local hmmm=$2
+		ref+=1
+		hmmm+=1
+	}
+	addto myvarx myvary
+	myvary+=1
+	echo "$myvarx $myvary"
+	echo "\$\$ = $$"
+	func1() {
+		echo "func1(){} \$\$ = $$"
+	}
+	func2() (
+		echo "func2()() \$\$ = $$"
+	)
+	func1
+	func2
+	local x=$(func1 >/dev/tty)
+	local y=$(func2 >/dev/tty)
+
+	# BASH_ARGC ????
+	# BASH_ARGV ????
+
+	echo "BASH_ARGV0 = $BASH_ARGV0"
+	echo "BASH_CMDS: ???????"
+	echo "${BASH_CMDS[@]}"
+
+	echo "BASH_COMMAND = $BASH_COMMAND"
+
+	echo "MAIL_PATH = ${MAIL_PATH-}"
+
+	echo "PS1 = ${PS1-}"
+	echo "PS2 = ${PS2-}"
+	echo "PS3 = ${PS3-}"
+	echo "PS4 = ${PS4-}"
+
+	#############################################################################
+	echo-style --h2="PARAMETERS -> ARRAYS"
+
+	local fruits=(apple pear banana)
+	echo "all fruits with \${fruits[@]}"
+	echo "${fruits[@]}"
+	echo "and now with * and IFS=','"
+	IFS=,
+	echo "${fruits[*]}"
+	unset IFS
+
+	#############################################################################
+	echo-style --h1="EXPANSION"
+
+	echo-style --notice="There are 7 types of expansion:"$'\n' \
+		--red "brace expansion"$'\n' \
+		--blue "tilde expansion"$'\n' \
+		--green "param/var expansion"$'\n' \
+		--yellow "command substitution"$'\n' \
+		--magenta "arithmetic expansion"$'\n' \
+		--cyan "word splitting"$'\n' \
+		--puple "pathname expansion"
+
+	echo-style --h2="BRACE {} EXPANSION"
+
+	echo "a{A..E} ->" a{A..E}
+	echo "good for paths:"
+	echo "some/path/{aaa,bbb} ->" some/path/{aaa,bbb}
+	echo /usr/local/src/bash/{old,new,dist,bugs}
+	echo /usr/{ucb/{ex,edit},lib/{ex?.?*,how_ex}}
+
+	echo-style --h2="TILDE (~) EXPANSION"
+
+	# https://linuxsimply.com/bash-scripting-tutorial/expansion/tilde-expansion/
+
+	echo ~  # possible login name -> fallback to $HOME -> home of user executing.
+	echo ~+ # PWS
+	echo ~- # OLDPWD
+	echo ~2+
+	echo ~3-
+
+	echo-style --h2="PARAMETER EXPANSION"
+
+	local zz
+	local xx=yy
+	yy=zz
+	zz=22
+	# here !xx will print zz
+	echo "${xx}; ${yy}; ${!xx}"
+
+	local NAME="VARIABLE"
+	local VARIABLE=42
+	echo "NAME=${!NAME}"
+
+	echo "\${custom:-default(xxxx)} = ${arst:-xxxx}"
+	local adg
+	echo "\${adg(null):=assign_default} = ${adg:=xxxx}"
+	echo "adg = $adg (now having been assigned above)"
+	# echo "\${param:?error_if_unset} = ${aaaaa:?throw error 1 aaa hasnt been set}"
+	echo "\${param:+use this if param IS set}"
+
+	local str="abcde"
+	echo "\${abcde:1:3} -> ${str:1:3}"
+
+
+  echo-style --notice "> "
+
+	local test_a=1984
+	local test_b=9652
+
+	(
+		IFS=":"
+		echo "\${!test_*} = ${!test_*}"
+		echo "\${!test_@} = ${!test_@}"
+		# ${!prefix@}
+	)
+	echo "\${!fruits[@]} -> ${!fruits[*]}" # -> 0 1 2
+	echo "length of fruits \${#fruits} = ${#fruits}"
+
+	# ???????????????
+	# ${parameter#word}
+	# ${parameter##word}
+
+
+  echo-style --notice "> # and % can be used to remove mathing prefix/suffix:"
+
+	local prefix="hell"
+	local suffix="ld"
+	local string="hello-world"
+	local strings=("a_test" "b_test" "c_test")
+	local foo=${string#"$prefix"}
+	local foo2=${foo%"$suffix"}
+	echo "string = [hello world]"
+	echo "\${string#\"\$prefix\"} -> $foo"
+	echo "\${string%\"\$suffix\"} -> $foo2"
+	echo "${foo2}"
+
+	echo "strings=${strings[*]}"
+	echo "\${strings[@]%\"_test\"} -> ${strings[*]%_test}"
+
+  echo-style --notice "Param find and replace with \${param/?{/,#,%}pattern/replacement}"
+  local parm="this is a param string"
+  echo "parm:[$parm]; \${parm/string/xxxx} -> ${parm/string/xxxx}"
+
+  echo-style --notice ">Change care with ^ ^^ , ,,"
+  local t="my_test_string"
+  local T="MY_TEST_STRING"
+  echo "t = $t; T = $T"
+  echo "\${t^} -> ${t^}"
+  echo "\${t^^} -> ${t^^}"
+  echo "\${T,} -> ${T,}"
+  echo "\${T,,} -> ${T,,}"
+
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	bash_playground "$@"
+fi
