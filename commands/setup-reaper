@@ -214,6 +214,9 @@ function setup-reaper() (
 
   # rm -r "$RPP_PKG_DIR/js_reascript_api"
   act_install_js_api() {
+
+    # TODO: ask -> reinstall?
+
     if ! test -d "$RPP_PKG_DIR/js_reascript_api"; then
       echo-style --g3="Installing [js reascript api (c++ lua extension)] to $RPP_PKG_DIR"
       js_ext_version="v1.310"

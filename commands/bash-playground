@@ -1,12 +1,27 @@
 #!/usr/bin/env bash
 
-# NOTE: keybinds
+# TODO: use `eval-helper --wrap --no-quiet --`
+
+# TODO: Watch and re-run on test changes
+# https://unix.stackexchange.com/questions/287230/bash-script-to-check-if-a-file-is-modified-or-not
+# pure bash file modified detection: https://unix.stackexchange.com/a/287615/390747
+# https://superuser.com/questions/181517/how-to-execute-a-command-whenever-a-file-changes
+# https://github.com/eradman/entr
+
+# NOTE: keybinds / there are some existing epic keybinds for bash/shell
+
 
 function bash_playground() (
 	source "$DOROTHY/sources/bash.bash"
 
 	# ============================================
 	# vars
+
+	# Try to keep this as close to man page chapters as possible?
+	local BASH_MAN_PAGE_CHAPTERS=(
+		"SHELL GRAMMAR"
+		"PARAMETERS"
+	)
 
 	# ============================================
 	# helpers
@@ -34,6 +49,9 @@ function bash_playground() (
 		return 22 # EINVAL 22 Invalid argument
 	}
 
+	# TODO: flags -> sheck chapter in the chapters array by uppercasing
+	# and then pattern matching.
+
 	local item action='' option_args=()
 
 	while test "$#" -ne 0; do
@@ -49,9 +67,49 @@ function bash_playground() (
 	# SHELL GRAMMAR
 	#============================================================================
 
+	echo-style --h1="SHELL GRAMMAR"
+
+	echo-style --h2="PIPELINES"
+
+	# TODO: demo everything below here.
+
+	# A pipeline is a sequence of one or more commands separated by one of the control operators | or
+	# |&.  The format for a pipeline is:
 	#
-	# Compound commands
+	#        [time [-p]] [ ! ] command1 [ [|⎪|&] command2 ... ]
 	#
+	# The standard output of command1 is connected via a pipe to the standard input of command2.  This
+	# connection is performed before any redirections specified by the command1(see REDIRECTION below).
+	# If |& is used, command1's standard error, in addition to its standard output, is connected to
+	# command2's standard input through the pipe; it is shorthand for 2>&1 |.  This implicit
+	# redirection of the standard error to the standard output is performed after any redirections
+	# specified by command1.
+	#
+	# The return status of a pipeline is the exit status of the last command, unless the pipefail
+	# option is enabled.  If pipefail is enabled, the pipeline's return status is the value of the last
+	# (rightmost) command to exit with a non-zero status, or zero if all commands exit successfully.
+	# If the reserved word !  precedes a pipeline, the exit status of that pipeline is the logical
+	# negation of the exit status as described above.  The shell waits for all commands in the pipeline
+	# to terminate before returning a value.
+	#
+	# If the time reserved word precedes a pipeline, the elapsed as well as user and system time
+	# consumed by its execution are reported when the pipeline terminates.  The -p option changes the
+	# output format to that specified by POSIX.  When the shell is in posix mode, it does not recognize
+	# time as a reserved word if the next token begins with a `-'.  The TIMEFORMAT variable may be set
+	# to a format string that specifies how the timing information should be displayed; see the
+	# description of TIMEFORMAT under Shell Variables below.
+	#
+	# When the shell is in posix mode, time may be followed by a newline.  In this case, the shell
+	# displays the total user and system time consumed by the shell and its children.  The TIMEFORMAT
+	# variable may be used to specify the format of the time information.
+	#
+	# Each command in a multi-command pipeline, where pipes are created, is executed in a subshell,
+	# which is a separate process.  See COMMAND EXECUTION ENVIRONMENT for a description of subshells
+	# and a subshell environment.  If the lastpipe option is enabled using the shopt builtin (see the
+	# description of shopt below), the last element of a pipeline may be run by the shell process when
+	# job control is not active.
+
+	echo-style --h2="COMPOUND COMMANDS"
 
 	# (list)
 
@@ -150,6 +208,76 @@ function bash_playground() (
 	# NOTE: =====================================================================
 	# QUOTING
 	#============================================================================
+	echo-style --h1="QUOTING & ESCAPE CHARS"
+
+	# Quoting is used to remove the special meaning of certain characters or words to the shell.
+	# Quoting can be used to disable special treatment for special characters, to prevent reserved
+	# words from being recognized as such, and to prevent parameter expansion.
+	#
+	# Each of the metacharacters listed above under DEFINITIONS has special meaning to the shell and
+	# must be quoted if it is to represent itself.
+	#
+	# When the command history expansion facilities are being used (see HISTORY EXPANSION below), the
+	# history expansion character, usually !, must be quoted to prevent history expansion.
+	#
+	# There are three quoting mechanisms: the escape character, single quotes, and double quotes.
+	#
+	# A non-quoted backslash (\) is the escape character.  It preserves the literal value of the next
+	# character that follows, with the exception of <newline>.  If a \<newline> pair appears, and the
+	# backslash is not itself quoted, the \<newline> is treated as a line continuation (that is, it is
+	# removed from the input stream and effectively ignored).
+	#
+	# Enclosing characters in single quotes preserves the literal value of each character within the
+	# quotes.  A single quote may not occur between single quotes, even when preceded by a backslash.
+	#
+	# Enclosing characters in double quotes preserves the literal value of all characters within the
+	# quotes, with the exception of $, `, \, and, when history expansion is enabled, !.  When the shell
+	# is in posix mode, the ! has no special meaning within double quotes, even when history expansion
+	# is enabled.  The characters $ and ` retain their special meaning within double quotes.  The
+	# backslash retains its special meaning only when followed by one of the following characters: $,
+	# `, ", \, or <newline>.  A double quote may be quoted within double quotes by preceding it with a
+	# backslash.  If enabled, history expansion will be performed unless an !  appearing in double
+	# quotes is escaped using a backslash.  The backslash preceding the !  is not removed.
+	#
+	# The special parameters * and @ have special meaning when in double quotes (see PARAMETERS below).
+	#
+	# Character sequences of the form $'string' are treated as a special variant of single quotes.  The
+	# sequence expands to string, with backslash-escaped characters in string replaced as specified by
+	# the ANSI C standard.  Backslash escape sequences, if present, are decoded as follows:
+	#        \a     alert (bell)
+	#        \b     backspace
+	#        \e
+	#        \E     an escape character
+	#        \f     form feed
+	#        \n     new line
+	#        \r     carriage return
+	#        \t     horizontal tab
+	#        \v     vertical tab
+	#        \\     backslash
+	#        \'     single quote
+	#        \"     double quote
+	#        \?     question mark
+	#        \nnn   the eight-bit character whose value is the octal value nnn (one to three octal
+	#               digits)
+	#        \xHH   the eight-bit character whose value is the hexadecimal value HH (one or two hex
+	#               digits)
+	#        \uHHHH the Unicode (ISO/IEC 10646) character whose value is the hexadecimal value HHHH
+	#               (one to four hex digits)
+	#        \UHHHHHHHH
+	#               the Unicode (ISO/IEC 10646) character whose value is the hexadecimal value HHHHHHHH
+	#               (one to eight hex digits)
+	#        \cx    a control-x character
+	#
+	# The expanded result is single-quoted, as if the dollar sign had not been present.
+	#
+	# A double-quoted string preceded by a dollar sign ($"string") will cause the string to be
+	# translated according to the current locale.  The gettext infrastructure performs the lookup and
+	# translation, using the LC_MESSAGES, TEXTDOMAINDIR, and TEXTDOMAIN shell variables.  If the
+	# current locale is C or POSIX, if there are no translations available, or if the string is not
+	# translated, the dollar sign is ignored.  This is a form of double quoting, so the string remains
+	# double-quoted by default, whether or not it is translated and replaced.  If the
+	# noexpand_translation option is enabled using the shopt builtin, translated strings are single-
+	# quoted instead of double-quoted.  See the description of shopt below under SHELLBUILTINCOMMANDS.
 
 	__print_lines $'\aXrst \bFFF'
 	__print_lines $'\eeeeee\Eaa\r'
@@ -232,7 +360,7 @@ function bash_playground() (
 	unset IFS
 
 	#############################################################################
-	echo-style --h1="EXPANSION"
+	echo-style --h1="PARAMETER EXPANSION"
 
 	echo-style --notice="There are 7 types of expansion:"$'\n' \
 		--red "brace expansion"$'\n' \
@@ -284,8 +412,7 @@ function bash_playground() (
 	local str="abcde"
 	echo "\${abcde:1:3} -> ${str:1:3}"
 
-
-  echo-style --notice "> "
+	echo-style --notice "> "
 
 	local test_a=1984
 	local test_b=9652
@@ -303,8 +430,7 @@ function bash_playground() (
 	# ${parameter#word}
 	# ${parameter##word}
 
-
-  echo-style --notice "> # and % can be used to remove mathing prefix/suffix:"
+	echo-style --notice "> # and % can be used to remove mathing prefix/suffix:"
 
 	local prefix="hell"
 	local suffix="ld"
@@ -320,18 +446,458 @@ function bash_playground() (
 	echo "strings=${strings[*]}"
 	echo "\${strings[@]%\"_test\"} -> ${strings[*]%_test}"
 
-  echo-style --notice "Param find and replace with \${param/?{/,#,%}pattern/replacement}"
-  local parm="this is a param string"
-  echo "parm:[$parm]; \${parm/string/xxxx} -> ${parm/string/xxxx}"
+	echo-style --notice "Param find and replace with \${param/?{/,#,%}pattern/replacement}"
+	local parm="this is a param string"
+	echo "parm:[$parm]; \${parm/string/xxxx} -> ${parm/string/xxxx}"
 
-  echo-style --notice ">Change care with ^ ^^ , ,,"
-  local t="my_test_string"
-  local T="MY_TEST_STRING"
-  echo "t = $t; T = $T"
-  echo "\${t^} -> ${t^}"
-  echo "\${t^^} -> ${t^^}"
-  echo "\${T,} -> ${T,}"
-  echo "\${T,,} -> ${T,,}"
+	echo-style --notice ">Change care with ^ ^^ , ,,"
+	local t="my_test_string"
+	local T="MY_TEST_STRING"
+	echo "t = $t; T = $T"
+	echo "\${t^} -> ${t^}"
+	echo "\${t^^} -> ${t^^}"
+	echo "\${T,} -> ${T,}"
+	echo "\${T,,} -> ${T,,}"
+
+	echo-style --notice "Parameter transformation with \${param@operator}"
+	echo-quote "The expansion is either a transformation of the value of parameter or information about parameter itself, depending on the value of operator."
+
+	# TODO: !!!!
+
+	local op_string="/dir/dir/^my_testing_string_123_blaah!!"
+	echo "op_string=$op_string"
+
+	# U      The expansion is a string that is the value of parameter with lowercase alphabetic
+	#        characters converted to uppercase.
+	echo "Convert lowercase chars to upper: \${op_string@U} -> ${op_string@U}"
+
+	# u      The expansion is a string that is the value of parameter with the first character
+	#        converted to uppercase, if it is alphabetic.
+	echo "Convert first char to upper: \${op_string@u} -> ${op_string@u}"
+	echo "^^^ @u does not do anything if the string does NOT start with an alpha char."
+
+	# L      The expansion is a string that is the value of parameter with uppercase alphabetic
+	#        characters converted to lowercase.
+	local op_string_2="'ABCDE'"
+	echo "op_string_2=$op_string_2"
+	echo "Convert all alpha to lowercase: \${op_string_2@L} -> ${op_string_2@L}"
+
+	# Q      The expansion is a string that is the value of parameter quoted in a format that
+	#        can be reused as input.
+	echo "Quote for reusable input: \${op_string_2@Q} -> ${op_string_2@Q}"
+	echo "^^^Notice how it surrounds param string with lots of stuff to ensure proper quotes"
+
+	local op_string_3="aaa\nbbb"
+	echo "op_string_3=$op_string_3"
+
+	# E      The expansion is a string that is the value of parameter with backslash escape
+	#        sequences expanded as with the $'...' quoting mechanism.
+	echo "Expand escape chars into $'...': \${op_string_3@E} -> ${op_string_3@E}"
+
+	# P      The expansion is a string that is the result of expanding the value of parameter as
+	#        if it were a prompt string (see PROMPTING below).
+	echo "Expand as prompt string: \${op_string_3@P} -> ${op_string_3@P}"
+
+	# A      The expansion is a string in the form of an assignment statement or declare command
+	#        that, if evaluated, will recreate parameter with its attributes and value.
+	echo "Backwards assignment statement with @A:Fruits (with @A): ${fruits[*]@A}"
+	echo "Dunno what this is useful for??"
+
+	# K      Produces a possibly-quoted version of the value of parameter, except that it prints
+	#        the values of indexed and associative arrays as a sequence of quoted key-value
+	#        pairs (see Arrays above).
+	echo "Quoting with K: \${op_string_2@K} -> ${op_string_2@K}"
+	echo "Quoting with K: \${fruits[*]@K} -> ${fruits[*]@K}"
+
+	# a      The expansion is a string consisting of flag values representing parameter's
+	#        attributes.
+	echo-style --red "@a prints the attributes of param"
+	echo "Expansion with 'a': \${fruits[*]@a} -> ${fruits[*]@a}"
+	declare -A assoc=([a]="alpha" [b]="beta")
+	echo "Expansion with 'a': \${assoc@a} -> ${assoc@a}"
+
+	# k      Like the K transformation, but expands the keys and values of indexed and
+	#        associative arrays to separate words after word splitting.
+	local fruits_2=("apple" "big banana" "gigantic pineapple")
+
+	# NOTE:the following echoes break auto formatting
+	#
+	# echo "Quoting with K: \${fruits_2[*]@K} -> ${fruits_2[*]@K}"
+	# echo "Quoting with k: \${fruits_2[*]@k} -> ${fruits_2[*]@k}"
+
+	echo-style --red "^^ Notice that 'k' word split each fruit in fruits_2"
+
+	echo-style --h2="COMMAND SUBSTITUTION"
+	# Command substitution allows the output of a command to replace the command name.  There are two
+	# forms:
+
+	local cmd_sub1 cmd_sub2 nested
+	cmd_sub1=$(echo "something"$'\n\n\n\n')
+
+	__print_lines $cmd_sub1
+
+	# Bash performs the expansion by executing command in a subshell environment and replacing the
+	# command substitution with the standard output of the command, with any trailing newlines deleted.
+	echo "----- (see how trailing new line is removed from prev output...)"
+
+	# cmd_sub2=$(echo "aaaaa bbbb")
+
+	# Embedded newlines are not deleted, but they may be removed during word splitting.  The command
+	# substitution $(cat file) can be replaced by the equivalent but faster $(< file).
+
+	# TODO: time both cat and < to see which is faster.
+
+	# When the old-style backquote form of substitution is used, backslash retains its literal meaning
+	# except when followed by $, `, or \.  The first backquote not preceded by a backslash terminates
+	# the command substitution.  When using the $(command) form, all characters between the parentheses
+	# make up the command; none are treated specially.
+
+	# Command substitutions may be nested.  To nest when using the backquoted form, escape the inner
+	# backquotes with backslashes.
+	# TODO: nested
+	# Eg. do wordcount on a process stdout that comes from another stdout.
+	# nested=$( $())
+
+	# If the substitution appears within double quotes, word splitting and pathname expansion are not
+	# performed on the results.
+	local cmd_sub_split cmd_sub_quoted
+	cmd_sub_split=$()
+	cmd_sub_quoted="$()"
+	# TODO: show difference between split and not.
+
+	echo-style --h2="ARITHMETIC EXPANSION (not much to see here..)"
+	echo-style --h2="WORD SPLITTING"
+
+	# TODO: show how trailing new lines are trimmed
+	# TODO: what is embedded new lines?
+
+	# The shell scans the results of parameter expansion, command substitution, and arithmetic
+	# expansion that did not occur within double quotes for word splitting.
+
+	# The shell treats each character of IFS as a delimiter, and splits the results of the other
+	# expansions into words using these characters as field terminators.  If IFS is unset, or its value
+	# is exactly <space><tab><newline>, the default, then sequences of <space>, <tab>, and <newline> at
+	# the beginning and end of the results of the previous expansions are ignored, and any sequence of
+	# IFS characters not at the beginning or end serves to delimit words.
+	local ws1=~/some/path
+	local ws2="    word_w_whitespace_on_both_sides    "
+	local ws3="  :words:separated :by: colon:    "
+
+	echo "\"\$ws1\" (quoted) -> $ws1"
+	echo "\$ws1 (unquoted)   -> "$ws1
+
+	echo "\"\$ws2\" (quoted) -> $ws2"
+	echo "\$ws2 (unquoted)   -> "$ws2
+
+	# If IFS has a value other
+	# than the default, then sequences of the whitespace characters space, tab, and newline are ignored
+	# at the beginning and end of the word, as long as the whitespace character is in the value of IFS
+	# (an IFS whitespace character).  Any character in IFS that is not IFS whitespace, along with any
+	# adjacent IFS whitespace characters, delimits a field.  A sequence of IFS whitespace characters is
+	# also treated as a delimiter.  If the value of IFS is null, no word splitting occurs.
+
+	echo "\"\$ws3\" (quoted) -> $ws3"
+	IFS=':'
+	echo "( setting IFT=':' )"
+	echo "\$ws3 (unquoted)   -> "$ws3
+	echo "Notice, w custom IFS, that now the surrounding whitespace did not get removed."
+	unset IFS
+
+	# Explicit null arguments ("" or '') are retained and passed to commands as empty strings.
+
+	# TODO: demo this!!!
+	#
+	# Unquoted implicit null arguments, resulting from the expansion of parameters that have no values,
+	# are removed.
+
+	# TODO: demo this!!!
+	#
+	# If a parameter with no value is expanded within double quotes, a null argument
+	# results and is retained and passed to a command as an empty string.
+
+	# TODO: demo this!!!
+	#
+	# When a quoted null argument
+	# appears as part of a word whose expansion is non-null, the null argument is removed.  That is,
+	# the word -d'' becomes -d after word splitting and null argument removal.
+	#
+	# Note that if no expansion occurs, no splitting is performed.
+
+	echo-style --h2="PATHNAME EXPANSION"
+
+	# After word splitting, unless the -f option has been set, bash scans each word for the characters
+	# *, ?, and [.
+
+	# TODO: demo this
+	#
+	# If one of these characters appears, and is not quoted, then the word is regarded as
+	# a pattern, and replaced with an alphabetically sorted list of filenames matching the pattern (see
+	# Pattern Matching below).
+
+	# TODO: demo this
+	#
+	# If no matching filenames are found, and the shell option nullglob is
+	# not enabled, the word is left unchanged.
+
+	# TODO: demo this
+	#
+	# If the nullglob option is set, and no matches are
+	# found, the word is removed.
+
+	# TODO: demo this
+	#
+	# If the failglob shell option is set, and no matches are found, an
+	# error message is printed and the command is not executed.
+
+	# TODO: demo this
+	#
+	# If the shell option nocaseglob is
+	# enabled, the match is performed without regard to the case of alphabetic characters.
+
+	# TODO: demo this
+	#
+	# When a
+	# pattern is used for pathname expansion, the character ``.'' at the start of a name or immediately
+	# following a slash must be matched explicitly, unless the shell option dotglob is set.
+
+	# TODO: demo this
+	#
+	# In order
+	# to match the filenames ``.'' and ``..'', the pattern must begin with ``.'' (for example, ``.?''),
+	# even if dotglob is set.
+
+	# TODO: demo this
+	#
+	# If the globskipdots shell option is enabled, the filenames ``.'' and
+	# ``..'' are never matched, even if the pattern begins with a ``.''.
+
+	# TODO: demo this
+	#
+	# When not matching pathnames,
+	# the ``.'' character is not treated specially.
+
+	# TODO: demo this
+	#
+	# When matching a pathname, the slash character must
+	# always be matched explicitly by a slash in the pattern, but in other matching contexts it can be
+	# matched by a special pattern character as described below under Pattern Matching.
+
+	# TODO: Put a note under these that sais these are demoed in the path expansion
+	# section.
+	#
+	# See the
+	# description of shopt below under SHELL BUILTIN COMMANDS for a description of the nocaseglob,
+	# nullglob, globskipdots, failglob, and dotglob shell options.
+
+	# TODO: demo this.
+	#
+	# The GLOBIGNORE shell variable may be used to restrict the set of file names matching a pattern.
+	# If GLOBIGNORE is set, each matching file name that also matches one of the patterns in GLOBIGNORE
+	# is removed from the list of matches.
+
+	# TODO: demo this.
+	#
+	# If the nocaseglob option is set, the matching against the
+	# patterns in GLOBIGNORE is performed without regard to case.
+
+	# TODO: demo this.
+	#
+	# The filenames ``.'' and ``..'' are
+	# always ignored when GLOBIGNORE is set and not null.
+
+	# TODO: demo this.
+	#
+	# However, setting GLOBIGNORE to a non-null
+	# value has the effect of enabling the dotglob shell option, so all other filenames beginning with
+	# a ``.'' will match.
+
+	# TODO: demo this.
+	#
+	# To get the old behavior of ignoring filenames beginning with a ``.'', make
+	# ``.*'' one of the patterns in GLOBIGNORE.
+
+	# The dotglob option is disabled when GLOBIGNORE is
+	# unset.
+
+	# TODO: demo this.
+	#
+	# The pattern matching honors the setting of the extglob shell option.
+
+	echo-style --h3="Pattern Matching"
+	echo-style --notice="This comes as a subsection to Path Expansion in Man pages."
+
+	# Any character that appears in a pattern, other than the special pattern characters described
+	# below, matches itself.  The NUL character may not occur in a pattern.  A backslash escapes the
+	# following character; the escaping backslash is discarded when matching.  The special pattern
+	# characters must be quoted if they are to be matched literally.
+	#
+	# The special pattern characters have the following meanings:
+
+	#         *      Matches any string, including the null string.  When the globstar shell option is
+	#               enabled, and * is used in a pathname expansion context, two adjacent *s used as a
+	#               single pattern will match all files and zero or more directories and
+	#               subdirectories.  If followed by a /, two adjacent *s will match only directories
+	#               and subdirectories.
+	#        ?      Matches any single character.
+	#        [...]  Matches any one of the enclosed characters.  A pair of characters separated by a
+	#               hyphen denotes a range expression; any character that falls between those two
+	#               characters, inclusive, using the current locale's collating sequence and character
+	#               set, is matched.  If the first character following the [ is a !  or a ^ then any
+	#               character not enclosed is matched.  The sorting order of characters in range
+	#               expressions, and the characters included in the range, are determined by the
+	#               current locale and the values of the LC_COLLATE or LC_ALL shell variables, if set.
+	#               To obtain the traditional interpretation of range expressions, where [a-d] is
+	#               equivalent to [abcd], set value of the LC_ALL shell variable to C, or enable the
+	#               globasciiranges shell option.  A - may be matched by including it as the first or
+	#               last character in the set.  A ] may be matched by including it as the first
+	#               character in the set.
+	#
+	#               Within [ and ], character classes can be specified using the syntax [:class:],
+	#               where class is one of the following classes defined in the POSIX standard:
+	#               alnum alpha ascii blank cntrl digit graph lower print punct space upper word xdigit
+	#               A character class matches any character belonging to that class.  The word
+	#               character class matches letters, digits, and the character _.
+	#
+	#               Within [ and ], an equivalence class can be specified using the syntax [=c=], which
+	#               matches all characters with the same collation weight (as defined by the current
+	#               locale) as the character c.
+	#
+	#               Within [ and ], the syntax [.symbol.] matches the collating symbol symbol.
+	#
+	# If the extglob shell option is enabled using the shopt builtin, the shell recognizes several
+	# extended pattern matching operators.  In the following description, a pattern-list is a list of
+	# one or more patterns separated by a |.  Composite patterns may be formed using one or more of the
+	# following sub-patterns:
+	#
+	#        ?(pattern-list)
+	#               Matches zero or one occurrence of the given patterns
+	#        *(pattern-list)
+	#               Matches zero or more occurrences of the given patterns
+	#        +(pattern-list)
+	#               Matches one or more occurrences of the given patterns
+	#        @(pattern-list)
+	#               Matches one of the given patterns
+	#        !(pattern-list)
+	#               Matches anything except one of the given patterns
+
+	#     Theextglob option changes the behavior of the parser, since the parentheses are normally treated
+	#     as operators with syntactic meaning.  To ensure that extended matching patterns are parsed
+	#     correctly, make sure that extglob is enabled before parsing constructs containing the patterns,
+	#     including shell functions and command substitutions.
+	#
+	#     When matching filenames, the dotglob shell option determines the set of filenames that are
+	#     tested: when dotglob is enabled, the set of filenames includes all files beginning with ``.'',
+	#     but ``.'' and ``..'' must be matched by a pattern or sub-pattern that begins with a dot; when it
+	#     is disabled, the set does not include any filenames beginning with ``.'' unless the pattern or
+	#     sub-pattern begins with a ``.''.  As above, ``.'' only has a special meaning when matching
+	#     filenames.
+	#
+	#     Complicated extended pattern matching against long strings is slow, especially when the patterns
+	#     contain alternations and the strings contain multiple matches.  Using separate matches against
+	#     shorter strings, or using arrays of strings instead of a single long string, may be faster.
+	#
+	# Quote Removal
+	#     After the preceding expansions, all unquoted occurrences of the characters \, ', and " that did
+	#     not result from one of the above expansions are removed.
+
+	echo-style --h1="REDIRECTION"
+
+	# Before a command is executed, its input and output may be redirected using a special notation
+	# interpreted by the shell.  Redirection allows commands' file handles to be duplicated, opened,
+	# closed, made to refer to different files, and can change the files the command reads from and
+	# writes to.  Redirection may also be used to modify file handles in the current shell execution
+	# environment.  The following redirection operators may precede or appear anywhere within a simple
+	# command or may follow a command.  Redirections are processed in the order they appear, from left
+	# to right.
+	#
+	# Each redirection that may be preceded by a file descriptor number may instead be preceded by a
+	# word of the form {varname}.  In this case, for each redirection operator except >&- and <&-, the
+	# shell will allocate a file descriptor greater than or equal to 10 and assign it to varname.  If
+	# >&- or <&- is preceded by {varname}, the value of varname defines the file descriptor to close.
+	# If {varname} is supplied, the redirection persists beyond the scope of the command, allowing the
+	# shell programmer to manage the file descriptor's lifetime manually.  The varredir_close shell
+	# option manages this behavior.
+	#
+	# In the following descriptions, if the file descriptor number is omitted, and the first character
+	# of the redirection operator is <, the redirection refers to the standard input (file descriptor
+	# 0).  If the first character of the redirection operator is >, the redirection refers to the
+	# standard output (file descriptor 1).
+	#
+	# The word following the redirection operator in the following descriptions, unless otherwise
+	# noted, is subjected to brace expansion, tilde expansion, parameter and variable expansion,
+	# command substitution, arithmetic expansion, quote removal, pathname expansion, and word
+	# splitting.  If it expands to more than one word, bash reports an error.
+	#
+	# Note that the order of redirections is significant.  For example, the command
+	#
+	#        ls > dirlist 2>&1
+	#
+	# directs both standard output and standard error to the file dirlist, while the command
+	#
+	#        ls 2>&1 > dirlist
+	#
+	# directs only the standard output to file dirlist, because the standard error was duplicated from
+	# the standard output before the standard output was redirected to dirlist.
+	#
+	# Bash handles several filenames specially when they are used in redirections, as described in the
+	# following table.  If the operating system on which bash is running provides these special files,
+	# bash will use them; otherwise it will emulate them internally with the behavior described below.
+
+	#        /dev/fd/fd
+	#               If fd is a valid integer, file descriptor fd is duplicated.
+	#        /dev/stdin
+	#               File descriptor 0 is duplicated.
+	#        /dev/stdout
+	#               File descriptor 1 is duplicated.
+	#        /dev/stderr
+	#               File descriptor 2 is duplicated.
+	#        /dev/tcp/host/port
+	#               If host is a valid hostname or Internet address, and port is an integer port number
+	#               or service name, bash attempts to open the corresponding TCP socket.
+	#        /dev/udp/host/port
+	#               If host is a valid hostname or Internet address, and port is an integer port number
+	#               or service name, bash attempts to open the corresponding UDP socket.
+	#
+	# A failure to open or create a file causes the redirection to fail.
+	#
+	# Redirections using file descriptors greater than 9 should be used with care, as they may conflict
+	# with file descriptors the shell uses internally.
+
+	echo-style --h2="Redirecting Input"
+	# echo-style --h2="Redirecting Output"
+	# echo-style --h2="Appending Output"
+	# echo-style --h2="Redirecting stdout and sderr"
+	# echo-style --h2="Appending stdout and sderr"
+	# echo-style --h2="Here Documents"
+	# echo-style --h2="Here Strings"
+	# echo-style --h2="Duplicating file descriptors"
+	# echo-style --h2="moving file descriptors"
+	# echo-style --h2="opening file descriptors for read/write"
+
+	# echo-style --h1="ALIASES"
+	# echo-style --h1="FUNCTIONS"
+	# echo-style --h1="ARITHMETIC EVALUATION"
+
+	# echo-style --h1="CONDITIONAL EXPRESSIONS"
+	# NOTE: QUIRKS
+	# https://stackoverflow.com/questions/669452/are-double-square-brackets-preferable-over-single-square-brackets-in-b
+
+	# echo-style --h1="SIMPLE COMMAND EXPANSION"
+	# echo-style --h1="COMMAND EXECUTION"
+	# echo-style --h1="COMMAND EXECUTION ENVIRONMENT"
+	# echo-style --h1="ENVIRONMENT"
+	# echo-style --h1="EXIT STATUS"
+	# echo-style --h1="SIGNALS"
+	# echo-style --h1="JOB CONTROL"
+	# echo-style --h1="PROMPTING"
+	# echo-style --h1="READLINE"
+	# echo-style --h1="HISTORY"
+	# echo-style --h1="HISTORY EXPANSION"
+	# echo-style --h1="HISTORY EXPANSION"
+	# echo-style --h1="SHELL BUILTIN COMMANDS"
+	# echo-style --h1="SHELL COMPATABILITY MODE"
+	# echo-style --h1="RESTRICTED SHELL"
+	# echo-style --h1="FILES"
 
 )
 
