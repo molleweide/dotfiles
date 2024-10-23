@@ -5,6 +5,9 @@
 # load defaults
 source "$DOROTHY/config/interactive.bash"
 
+# load cross shell `sh` files
+source "$DOROTHY/user/config/interactive.sh"
+
 for f in "$DOROTHY/user/sources/"*.bash; do
   source "$f"
 done

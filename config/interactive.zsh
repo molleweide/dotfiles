@@ -9,9 +9,12 @@ export DOROTHY_THEME="oz"
 # load defaults
 source "$DOROTHY/config/interactive.zsh"
 
-# load my bash and sh configs
+# load cross shell `sh` files
 source "$DOROTHY/user/config/interactive.sh"
-source "$DOROTHY/user/config/interactive.bash" #??
+
+# cross shell scripts should b written in `sh`
+# `sh`is the only script that is allowed to be sourced in other shells.
+# source "$DOROTHY/user/config/interactive.bash" #??
 
 for f in "$DOROTHY/user/sources/"*.zsh; do
     source "$f"

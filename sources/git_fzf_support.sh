@@ -20,8 +20,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+# NOTE: Should these binds be callable if one is not runnig a git command?
+# Eg. should it work to run C-gC-e if the prompt is empty, ie. just triggering
+# the fzf helper standalone.
+
 # shellcheck disable=SC2039
 [[ $0 = - ]] && return
+
+# echo-style --h1="add git fzf support"
 
 # echo "\$0 = $0"
 # echo "\$- = $-"
@@ -336,9 +342,13 @@ elif [[ -n "${ZSH_VERSION:-}" ]]; then
   __fzf_git_init() {
     local m o
     for o in "$@"; do
-      # echo "o"
+
+      # why do we have to generate custom functions???
       eval "fzf-git-$o-widget() { local result=\$(_fzf_git_$o | __fzf_git_join); zle reset-prompt; LBUFFER+=\$result }"
+
+      # what is the zle command?
       eval "zle -N fzf-git-$o-widget"
+
       for m in emacs vicmd viins; do
         eval "bindkey -M $m '^g^${o[1]}' fzf-git-$o-widget"
         eval "bindkey -M $m '^g${o[1]}' fzf-git-$o-widget"
