@@ -16,3 +16,13 @@ source "$DOROTHY/user/config/interactive.bash" #??
 for f in "$DOROTHY/user/sources/"*.zsh; do
     source "$f"
 done
+
+
+# # fzf support
+# github_fzf_helper="$GHQ_GITHUB/junegunn/fzf-git.sh/fzf-git.sh"
+# set -x
+# if [[ -f "$github_fzf_helper" ]]; then
+# source "$GHQ_GITHUB/junegunn/fzf-git.sh/fzf-git.sh"
+# fi
+# set +x
+

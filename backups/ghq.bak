@@ -285,3 +285,4 @@ git@github.com:NTBBloodbath/logging.nvim.git
 github.com/max397574/care.nvim
 git@github.com:neovim/neovim.git
 git@github.com:vsedov/PoloVim.git
+git@github.com:junegunn/fzf-git.sh.git

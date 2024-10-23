@@ -1,38 +1,12 @@
 #!/usr/bin/env bash
 
-# TODO: handle samples lib? setup dirs?
+# TODO: List of known fuzzy matchers that are fast
+# fzf [x] already exists in dorothy.
+# [ ] skim
+# [ ] nucleo
 
-# TODO: ???
-# put UserPlugins under packages/UserPlugins
-# put Scripts under packages/Scripts
-# put Effects under packages/Effects
-# color themes...
 
-# https://forum.cockos.com/showthread.php?p=2487247#post2487247
-# https://forum.cockos.com/showthread.php?t=242922&highlight=reaper+update+utility
-# https://github.com/iliaspoulakis/Reaper-Tools/blob/master/Various/REAPER%20Update%20Utility.lua
-# - cli > write log file to $REAPER_APP_DIR/rpp.log
-# - look at reaper update utility.
-#   can this one be used / compatible with branches
-
-# OLD MODULES FILE
-# [submodule "Scripts/reaper-auto-syntax"]
-# 	path = Scripts/reaper-auto-syntax
-# 	url = git@github.com:molleweide/reaper-auto-syntax
-# [submodule "ColorThemes"]
-# 	path = ColorThemes
-# 	url = git@github.com:molleweide/ColorThemes
-#
-# Find latest version of SWS programmatically? I believe that
-# github-downloads can do all of this..
-#
-# # SWS DOWN TEST VERSION
-# down https://www.sws-extension.org/download/featured/sws-2.14.0.3-Darwin-arm64.dmg \
-# 	--directory="$HOME/Documents/SWS_TEST" \
-# 	--archive-format="dmg" \
-# 	--archive-glob="sws-2.14.0.3-Darwin-arm64-*/reaper*.dylib"
-
-function setup_reaper() (
+function setup_fuzzy_matchers() (
   source "$DOROTHY/sources/bash.bash"
 
   # ============================================
@@ -251,7 +225,7 @@ function setup_reaper() (
 			Manage and setup local reaper installs.
 
 			USAGE:
-			setup_reaper <action>
+			setup_fuzzy_matchers <action>
 
 			--directory=<directory>
 			    ????
@@ -413,5 +387,6 @@ function setup_reaper() (
 
 # fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-  setup_reaper "$@"
+  setup_fuzzy_matchers "$@"
 fi
+

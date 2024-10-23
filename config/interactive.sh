@@ -7,6 +7,8 @@
 # load defaults
 source "$DOROTHY/config/interactive.sh"
 
+# echo "(interactive.sh) -> $1; $2"
+
 # load my fancy stuff
 for f in "$DOROTHY/user/sources/"*.sh; do
   source "$f"
