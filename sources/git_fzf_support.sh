@@ -20,6 +20,18 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+# NOTE:
+# list all zsh binds with: bindkey -L
+# -------
+# list of articles on zsh's bindkey:
+# https://jdhao.github.io/2019/06/13/zsh_bind_keys/
+# https://www.thegeekdiary.com/bindkey-command-examples-add-keybindings-to-z-shell/
+
+# TODO: It feels like the core also should be moved into a dorothy command so
+# that you can use reuse this easilly.
+
+# TODO: we could use
+
 
 # NOTE: Should these binds be callable if one is not runnig a git command?
 # Eg. should it work to run C-gC-e if the prompt is empty, ie. just triggering
@@ -69,12 +81,17 @@ __fzf_git_cat() {
     return
   fi
 
+  local bat_opts=(
+    --style="'${BAT_STYLE:-full}'"
+    --color="$(__fzf_git_color .)"
+    --pager="never"
+  )
+
   # Sometimes bat is installed as batcat
-  _fzf_git_bat_options="--style='${BAT_STYLE:-full}' --color=$(__fzf_git_color .) --pager=never"
   if command -v batcat > /dev/null; then
-    echo "batcat $_fzf_git_bat_options"
+    echo "batcat ${bat_opts[*]}"
   elif command -v bat > /dev/null; then
-    echo "bat $_fzf_git_bat_options"
+    echo "bat ${bat_opts[*]}"
   else
     echo cat
   fi
@@ -88,10 +105,22 @@ __fzf_git_pager() {
 
 
 
-# FIX: Explain what is going on here?
+
+# TODO: Maybe this chunk could be moved into its own file?
+#
+# NOTE: We only enter here when this script is called from the
+# fzf_action handlers. Thus, echoing here for test purposes will not
+# show any output.
+#
+# Allows the fzf git functions to perform and use specific git logic.
+# This could maybe go into dorothy commands?
+
+# Calling script with ONE arg
 if [[ $# -eq 1 ]]; then
   branches() {
-    git branch "$@" --sort=-committerdate --sort=-HEAD --format=$'%(HEAD) %(color:yellow)%(refname:short) %(color:green)(%(committerdate:relative))\t%(color:blue)%(subject)%(color:reset)' --color=$(__fzf_git_color) | column -ts$'\t'
+    git branch "$@" --sort=-committerdate --sort=-HEAD \
+      --format=$'%(HEAD) %(color:yellow)%(refname:short) %(color:green)(%(committerdate:relative))\t%(color:blue)%(subject)%(color:reset)' \
+      --color=$(__fzf_git_color) | column -ts$'\t'
   }
   refs() {
     git for-each-ref "$@" --sort=-creatordate --sort=-HEAD --color=$(__fzf_git_color) --format=$'%(if:equals=refs/remotes)%(refname:rstrip=-2)%(then)%(color:magenta)remote-branch%(else)%(if:equals=refs/heads)%(refname:rstrip=-2)%(then)%(color:brightgreen)branch%(else)%(if:equals=refs/tags)%(refname:rstrip=-2)%(then)%(color:brightcyan)tag%(else)%(if:equals=refs/stash)%(refname:rstrip=-2)%(then)%(color:brightred)stash%(else)%(color:white)%(refname:rstrip=-2)%(end)%(end)%(end)%(end)\t%(color:yellow)%(refname:short) %(color:green)(%(creatordate:relative))\t%(color:blue)%(subject)%(color:reset)' | column -ts$'\t'
@@ -128,13 +157,13 @@ if [[ $# -eq 1 ]]; then
     *) exit 1 ;;
   esac
 elif [[ $# -gt 1 ]]; then
-  set -e
+  # Calling script with multiple args.
 
+  # this is only when the scripting is initiating on shell load.
+  # maybe should unset the vars instead.
   if [[ $1 =~ "interactive"* || $2 =~ "interactive"* ]]; then
     :
   else
-
-    echo "fzf git support: $# > 1"
 
     branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
     if [[ $branch = HEAD ]]; then
@@ -201,7 +230,6 @@ __fzf_cmd__base() {
 
 __fzf_ensure_git_repo() {
   git rev-parse HEAD > /dev/null 2>&1 && return
-
   [[ -n $TMUX ]] && tmux display-message "Not in a git repository"
   return 1
 }
@@ -213,10 +241,17 @@ __fzf_ensure_git_repo() {
 # 1. First it gets  the symlinked into dorothy user path
 # 2. Then, it is converted to the absolute path.
 #
-# NOTE: This will need to be unique across the system
+# NOTE: the purpose of this statement is to find the location of the
+# script that is being called. But if this is located in dorothy, do we need
+# this then?
+# >> This variable will be accessible in the cli.
+#
+# Is this what fs-absolute does in dorothy?
+# And especially if this script is
 
 __fzf_git_script=${BASH_SOURCE[0]:-${(%):-%x}}
-__fzf_git_script=$(readlink -f "$__fzf_git_script" 2> /dev/null || /usr/bin/ruby --disable-gems -e 'puts File.expand_path(ARGV.first)' "$__fzf_git_script" 2> /dev/null)
+__fzf_git_script=$(readlink -f "$__fzf_git_script" 2> /dev/null || \
+  /usr/bin/ruby --disable-gems -e 'puts File.expand_path(ARGV.first)' "$__fzf_git_script" 2> /dev/null)
 
 # =======================================================
 # Git types
@@ -241,6 +276,8 @@ _fzf_git_files() {
 
 _fzf_git_branches() {
   __fzf_ensure_git_repo || return
+  local str_preview_cmd="git log --oneline --graph --date=short --color=$(__fzf_git_color .) \
+            --pretty='format:%C(auto)%cd %h%d %s' \$(sed s/^..// <<< {} | cut -d' ' -f1) --"
   bash "$__fzf_git_script" branches |
   __fzf_cmd__base --ansi \
     --border-label '🌲 Branches' \
@@ -252,8 +289,8 @@ _fzf_git_branches() {
     --bind 'ctrl-/:change-preview-window(down,70%|hidden|)' \
     --bind "ctrl-o:execute-silent:bash $__fzf_git_script branch {}" \
     --bind "alt-a:change-border-label(🌳 All branches)+reload:bash \"$__fzf_git_script\" all-branches" \
-    --preview "git log --oneline --graph --date=short --color=$(__fzf_git_color .) --pretty='format:%C(auto)%cd %h%d %s' \$(sed s/^..// <<< {} | cut -d' ' -f1) --" "$@" |
-  sed 's/^..//' | cut -d' ' -f1
+    --preview "$str_preview_cmd" \
+    "$@" | sed 's/^..//' | cut -d' ' -f1
 }
 
 _fzf_git_tags() {
@@ -302,6 +339,7 @@ _fzf_git_stashes() {
   cut -d: -f1
 }
 
+# ref logs (it starts with `l` so that we can use `l` as the keybind.
 _fzf_git_lreflogs() {
   __fzf_ensure_git_repo || return
   git reflog --color=$(__fzf_git_color) --format="%C(blue)%gD %C(yellow)%h%C(auto)%d %gs" | __fzf_cmd__base --ansi \
@@ -344,6 +382,18 @@ _fzf_git_worktrees() {
 
 # =======================================================
 # Load fzf support bindings
+#
+# NOTE: I dont believe anything here calls anything above
+# directly, so this could be kept alone in the source
+# loaders script, and all of the above could be moved to its
+# own lib/files, and further refactored for dorothy purposes.
+
+# NOTE: I believe that we should have an improved system for making keybinds
+# with dorothy so that it is a bit more automated. Maybe, this could go
+# into somekind of keybinds.sh file.
+# BUT i am not sure  all of this should be managed. so now i think that a good
+# way is just to explore how such bindings work and stuff so that we can
+# have some nice extra control bindings in the shell.
 
 if [[ -n "${BASH_VERSION:-}" ]]; then
   __fzf_git_init() {
@@ -364,7 +414,7 @@ if [[ -n "${BASH_VERSION:-}" ]]; then
     done
   }
 elif [[ -n "${ZSH_VERSION:-}" ]]; then
-  __fzf_git_join() {
+  __fzf_git_join_lines() {
     local item
     while read item; do
       echo -n "${(q)item} "
@@ -375,29 +425,128 @@ elif [[ -n "${ZSH_VERSION:-}" ]]; then
   set -e
 
   __fzf_git_init() {
+
+
+    # local available_funcs=$(declare -f)
+    # __print_lines "${available_funcs[@]}"
+
     local m o
     for o in "$@"; do
 
       # why do we have to generate custom functions???
-      local eval_name="fzf-git-$o-widget"
-      local action="_fzf_git_$o"
+      local zsh_bind_func_handle="fzf-git-$o-widget"
+      local fzf_action="_fzf_git_$o"
 
-      local eval_str="$eval_name() { local result=\$($action | __fzf_git_join); zle reset-prompt; LBUFFER+=\$result }"
+      # >> `:Man zshzle`
+      #
+      # reset-prompt (unbound) (unbound) (unbound)
+      #        Force the prompts on both the left and right of the screen to be
+      #        re-expanded, then redisplay the edit buffer.  This reflects
+      #        changes both to the prompt variables themselves and changes in
+      #        the expansion of the values (for example, changes in time or
+      #        directory, or changes to the value of variables referred to by
+      #        the prompt).
+      #
+      #        Otherwise, the prompt is only expanded each time zle starts, and
+      #        when the display has been interrupted by output from another
+      #        part of the shell (such as a job notification) which causes the
+      #        command line to be reprinted.
+      #
+      #        reset-prompt doesn't alter the special parameter LASTWIDGET.
+      #
 
-      __debug_lines "$eval_str"
+      # USER-DEFINED WIDGETS
+      #        User-defined widgets, being implemented as shell functions, can
+      #        execute any normal shell command.  They can also run other
+      #        widgets (whether built-in or user-defined) using the zle builtin
+      #        command. The standard input of the function is redirected from
+      #        /dev/null to prevent external commands from unintentionally
+      #        blocking ZLE by reading from the terminal, but read -k or read
+      #        -q can be used to read characters.  Finally, they can examine
+      #        and edit the ZLE buffer being edited by reading and setting the
+      #        special parameters described below.
+      #
+      #        These special parameters are always available in widget
+      #        functions, but are not in any way special outside ZLE.  If they
+      #        have some normal value outside ZLE, that value is temporarily
+      #        inaccessible, but will return when the widget function exits.
+      #        These special parameters in fact have local scope, like
+      #        parameters created in a function using local.
+      #
+      #        Inside completion widgets and traps called while ZLE is active,
+      #        these parameters are available read-only.
+      #
+      #        Note that the parameters appear as local to any ZLE widget in
+      #        which they appear.  Hence if it is desired to override them this
+      #        needs to be done within a nested function:
+      #
+      #               widget-function() {
+      #                 # $WIDGET here refers to the special variable
+      #                 # that is local inside widget-function
+      #                 () {
+      #                    # This anonymous nested function allows WIDGET
+      #                    # to be used as a local variable.  The -h
+      #                    # removes the special status of the variable.
+      #                    local -h WIDGET
+      #                 }
+      #               }
+      #
+      #
+      #      LBUFFER (scalar)
+      #              The part of the buffer that lies to the left of the cursor position.  If it is assigned to, only that part of the
+      #              buffer is replaced, and the cursor remains between the new $LBUFFER and the old $RBUFFER.
 
-      eval "$eval_str"
-      eval "zle -N $eval_name" # what is the zle command?
+      # Define function handles that are responsible for:
+      # 1. run the fzf git func
+      # 2. capture results
+      # 3. put the results to the left of cursor with `zle`
+      local eval_str__zsh_create_func_handle="\
+        $zsh_bind_func_handle() { local result=\$($fzf_action | __fzf_git_join_lines); \
+        zle reset-prompt; \
+        LBUFFER+=\$result \
+      }"
+      __debug_lines "$eval_str__zsh_create_func_handle"
 
+      # make the func handlers available in the shell.
+      eval "$eval_str__zsh_create_func_handle"
+
+
+      # >> Mark the func handlers as zsh-widgets
+      # This seems to be required in order to enable the use of LBUFFER, inside of
+      # the widget
+      #
+      #        zle -N widget [ function ]
+      #               Create a user-defined widget.  If there is already a widget with
+      #               the specified name, it is overwritten.  When the new widget is
+      #               invoked from within the editor, the specified shell function is
+      #               called.  If no function name is specified, it defaults to the
+      #               same name as the widget.  For further information, see the
+      #               section `Widgets' below.
+      eval "zle -N $zsh_bind_func_handle" # what is the zle command?
+
+      # I think that it is poorly documented how this syntax works in
+      # the docs.
       for m in emacs vicmd viins; do
-        eval "bindkey -M $m '^g^${o[1]}' $eval_name"
-        eval "bindkey -M $m '^g${o[1]}' $eval_name"
+        eval "bindkey -M $m '^g^${o[1]}' $zsh_bind_func_handle"
+        eval "bindkey -M $m '^g${o[1]}' $zsh_bind_func_handle"
       done
     done
   }
   set +e
 fi
-__fzf_git_init files branches tags remotes hashes stashes lreflogs each_ref worktrees
 
-# -----------------------------------------------------------------------------
+# TODO: put key binds in array as well so that I can configure binds easilly.
+actions=(
+  files
+  branches
+  tags
+  remotes
+  hashes
+  stashes
+  lreflogs
+  each_ref
+  worktrees
+)
+
+__fzf_git_init "${actions[@]}"
 fi
