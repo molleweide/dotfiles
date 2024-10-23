@@ -20,9 +20,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+
 # NOTE: Should these binds be callable if one is not runnig a git command?
 # Eg. should it work to run C-gC-e if the prompt is empty, ie. just triggering
 # the fzf helper standalone.
+
+# BUG: Find why I need to use `set -e` in zsh (and bash?)
 
 # shellcheck disable=SC2039
 [[ $0 = - ]] && return
@@ -33,6 +36,21 @@
 # echo "\$- = $-"
 # echo "\$1 = $1"
 # echo "\$2 = $2"
+
+DEBUG_FZF="yes"
+
+# =======================================================
+# Helpers
+
+__print_lines(){
+        printf "%s\n" "$1"
+      }
+
+__debug_lines(){
+      if (( "$DEBUG_FZF" == "yes" )); then
+        __print_lines "$1"
+      fi
+}
 
 
 __fzf_git_color() {
@@ -68,6 +86,9 @@ __fzf_git_pager() {
   echo "${pager:-cat}"
 }
 
+
+
+# FIX: Explain what is going on here?
 if [[ $# -eq 1 ]]; then
   branches() {
     git branch "$@" --sort=-committerdate --sort=-HEAD --format=$'%(HEAD) %(color:yellow)%(refname:short) %(color:green)(%(committerdate:relative))\t%(color:blue)%(subject)%(color:reset)' --color=$(__fzf_git_color) | column -ts$'\t'
@@ -160,11 +181,16 @@ elif [[ $# -gt 1 ]]; then
   fi
 fi
 
+# Only allow this to run in interactive mode.
 if [[ $- =~ i ]]; then
-# -----------------------------------------------------------------------------
 
-# Redefine this function to change the options
-_fzf_git_fzf() {
+# =======================================================
+# Helpers
+
+
+# TODO: refactor this into a fzf vars option config array
+
+__fzf_cmd__base() {
   fzf --height=50% --tmux 90%,70% \
     --layout=reverse --multi --min-height=20 --border \
     --border-label-pos=2 \
@@ -173,28 +199,40 @@ _fzf_git_fzf() {
     --bind='ctrl-/:change-preview-window(down,50%,border-top|hidden|)' "$@"
 }
 
-_fzf_git_check() {
+__fzf_ensure_git_repo() {
   git rev-parse HEAD > /dev/null 2>&1 && return
 
   [[ -n $TMUX ]] && tmux display-message "Not in a git repository"
   return 1
 }
 
-__fzf_git=${BASH_SOURCE[0]:-${(%):-%x}}
-__fzf_git=$(readlink -f "$__fzf_git" 2> /dev/null || /usr/bin/ruby --disable-gems -e 'puts File.expand_path(ARGV.first)' "$__fzf_git" 2> /dev/null)
+# Function handle to "this" script that will be something like:
+# (1) /Users/hjalmarjakobsson/.local/share/dorothy/user/sources/git_fzf_support.sh
+# (2) /Users/hjalmarjakobsson/.config/dorothy/sources/git_fzf_support.sh
+#
+# 1. First it gets  the symlinked into dorothy user path
+# 2. Then, it is converted to the absolute path.
+#
+# NOTE: This will need to be unique across the system
+
+__fzf_git_script=${BASH_SOURCE[0]:-${(%):-%x}}
+__fzf_git_script=$(readlink -f "$__fzf_git_script" 2> /dev/null || /usr/bin/ruby --disable-gems -e 'puts File.expand_path(ARGV.first)' "$__fzf_git_script" 2> /dev/null)
+
+# =======================================================
+# Git types
 
 _fzf_git_files() {
-  _fzf_git_check || return
+  __fzf_ensure_git_repo || return
   local root query
   root=$(git rev-parse --show-toplevel)
   [[ $root != "$PWD" ]] && query='!../ '
 
   (git -c color.status=$(__fzf_git_color) status --short --no-branch
    git ls-files "$root" | grep -vxFf <(git status -s | grep '^[^?]' | cut -c4-; echo :) | sed 's/^/   /') |
-  _fzf_git_fzf -m --ansi --nth 2..,.. \
+  __fzf_cmd__base -m --ansi --nth 2..,.. \
     --border-label '📁 Files' \
     --header $'CTRL-O (open in browser) ╱ ALT-E (open in editor)\n\n' \
-    --bind "ctrl-o:execute-silent:bash $__fzf_git file {-1}" \
+    --bind "ctrl-o:execute-silent:bash $__fzf_git_script file {-1}" \
     --bind "alt-e:execute:${EDITOR:-vim} {-1} > /dev/tty" \
     --query "$query" \
     --preview "git diff --no-ext-diff --color=$(__fzf_git_color .) -- {-1} | $(__fzf_git_pager); $(__fzf_git_cat) {-1}" "$@" |
@@ -202,9 +240,9 @@ _fzf_git_files() {
 }
 
 _fzf_git_branches() {
-  _fzf_git_check || return
-  bash "$__fzf_git" branches |
-  _fzf_git_fzf --ansi \
+  __fzf_ensure_git_repo || return
+  bash "$__fzf_git_script" branches |
+  __fzf_cmd__base --ansi \
     --border-label '🌲 Branches' \
     --header-lines 2 \
     --tiebreak begin \
@@ -212,51 +250,51 @@ _fzf_git_branches() {
     --color hl:underline,hl+:underline \
     --no-hscroll \
     --bind 'ctrl-/:change-preview-window(down,70%|hidden|)' \
-    --bind "ctrl-o:execute-silent:bash $__fzf_git branch {}" \
-    --bind "alt-a:change-border-label(🌳 All branches)+reload:bash \"$__fzf_git\" all-branches" \
+    --bind "ctrl-o:execute-silent:bash $__fzf_git_script branch {}" \
+    --bind "alt-a:change-border-label(🌳 All branches)+reload:bash \"$__fzf_git_script\" all-branches" \
     --preview "git log --oneline --graph --date=short --color=$(__fzf_git_color .) --pretty='format:%C(auto)%cd %h%d %s' \$(sed s/^..// <<< {} | cut -d' ' -f1) --" "$@" |
   sed 's/^..//' | cut -d' ' -f1
 }
 
 _fzf_git_tags() {
-  _fzf_git_check || return
+  __fzf_ensure_git_repo || return
   git tag --sort -version:refname |
-  _fzf_git_fzf --preview-window right,70% \
+  __fzf_cmd__base --preview-window right,70% \
     --border-label '📛 Tags' \
     --header $'CTRL-O (open in browser)\n\n' \
-    --bind "ctrl-o:execute-silent:bash $__fzf_git tag {}" \
+    --bind "ctrl-o:execute-silent:bash $__fzf_git_script tag {}" \
     --preview "git show --color=$(__fzf_git_color .) {} | $(__fzf_git_pager)" "$@"
 }
 
 _fzf_git_hashes() {
-  _fzf_git_check || return
-  bash "$__fzf_git" hashes |
-  _fzf_git_fzf --ansi --no-sort --bind 'ctrl-s:toggle-sort' \
+  __fzf_ensure_git_repo || return
+  bash "$__fzf_git_script" hashes |
+  __fzf_cmd__base --ansi --no-sort --bind 'ctrl-s:toggle-sort' \
     --border-label '🍡 Hashes' \
     --header-lines 3 \
-    --bind "ctrl-o:execute-silent:bash $__fzf_git commit {}" \
+    --bind "ctrl-o:execute-silent:bash $__fzf_git_script commit {}" \
     --bind "ctrl-d:execute:grep -o '[a-f0-9]\{7,\}' <<< {} | head -n 1 | xargs git diff --color=$(__fzf_git_color) > /dev/tty" \
-    --bind "alt-a:change-border-label(🍇 All hashes)+reload:bash \"$__fzf_git\" all-hashes" \
+    --bind "alt-a:change-border-label(🍇 All hashes)+reload:bash \"$__fzf_git_script\" all-hashes" \
     --color hl:underline,hl+:underline \
     --preview "grep -o '[a-f0-9]\{7,\}' <<< {} | head -n 1 | xargs git show --color=$(__fzf_git_color .) | $(__fzf_git_pager)" "$@" |
   awk 'match($0, /[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]*/) { print substr($0, RSTART, RLENGTH) }'
 }
 
 _fzf_git_remotes() {
-  _fzf_git_check || return
+  __fzf_ensure_git_repo || return
   git remote -v | awk '{print $1 "\t" $2}' | uniq |
-  _fzf_git_fzf --tac \
+  __fzf_cmd__base --tac \
     --border-label '📡 Remotes' \
     --header $'CTRL-O (open in browser)\n\n' \
-    --bind "ctrl-o:execute-silent:bash $__fzf_git remote {1}" \
+    --bind "ctrl-o:execute-silent:bash $__fzf_git_script remote {1}" \
     --preview-window right,70% \
     --preview "git log --oneline --graph --date=short --color=$(__fzf_git_color .) --pretty='format:%C(auto)%cd %h%d %s' '{1}/$(git rev-parse --abbrev-ref HEAD)' --" "$@" |
   cut -d$'\t' -f1
 }
 
 _fzf_git_stashes() {
-  _fzf_git_check || return
-  git stash list | _fzf_git_fzf \
+  __fzf_ensure_git_repo || return
+  git stash list | __fzf_cmd__base \
     --border-label '🥡 Stashes' \
     --header $'CTRL-X (drop stash)\n\n' \
     --bind 'ctrl-x:reload(git stash drop -q {1}; git stash list)' \
@@ -265,16 +303,16 @@ _fzf_git_stashes() {
 }
 
 _fzf_git_lreflogs() {
-  _fzf_git_check || return
-  git reflog --color=$(__fzf_git_color) --format="%C(blue)%gD %C(yellow)%h%C(auto)%d %gs" | _fzf_git_fzf --ansi \
+  __fzf_ensure_git_repo || return
+  git reflog --color=$(__fzf_git_color) --format="%C(blue)%gD %C(yellow)%h%C(auto)%d %gs" | __fzf_cmd__base --ansi \
     --border-label '📒 Reflogs' \
     --preview "git show --color=$(__fzf_git_color .) {1} | $(__fzf_git_pager)" "$@" |
   awk '{print $1}'
 }
 
 _fzf_git_each_ref() {
-  _fzf_git_check || return
-  bash "$__fzf_git" refs | _fzf_git_fzf --ansi \
+  __fzf_ensure_git_repo || return
+  bash "$__fzf_git_script" refs | __fzf_cmd__base --ansi \
     --nth 2,2.. \
     --tiebreak begin \
     --border-label '☘️  Each ref' \
@@ -283,16 +321,16 @@ _fzf_git_each_ref() {
     --color hl:underline,hl+:underline \
     --no-hscroll \
     --bind 'ctrl-/:change-preview-window(down,70%|hidden|)' \
-    --bind "ctrl-o:execute-silent:bash $__fzf_git {1} {2}" \
+    --bind "ctrl-o:execute-silent:bash $__fzf_git_script {1} {2}" \
     --bind "alt-e:execute:${EDITOR:-vim} <(git show {2}) > /dev/tty" \
-    --bind "alt-a:change-border-label(🍀 Every ref)+reload:bash \"$__fzf_git\" all-refs" \
+    --bind "alt-a:change-border-label(🍀 Every ref)+reload:bash \"$__fzf_git_script\" all-refs" \
     --preview "git log --oneline --graph --date=short --color=$(__fzf_git_color .) --pretty='format:%C(auto)%cd %h%d %s' {2} --" "$@" |
   awk '{print $2}'
 }
 
 _fzf_git_worktrees() {
-  _fzf_git_check || return
-  git worktree list | _fzf_git_fzf \
+  __fzf_ensure_git_repo || return
+  git worktree list | __fzf_cmd__base \
     --border-label '🌴 Worktrees' \
     --header $'CTRL-X (remove worktree)\n\n' \
     --bind 'ctrl-x:reload(git worktree remove {1} > /dev/null; git worktree list)' \
@@ -304,7 +342,8 @@ _fzf_git_worktrees() {
   awk '{print $1}'
 }
 
-message_loading="loading fzf git support"
+# =======================================================
+# Load fzf support bindings
 
 if [[ -n "${BASH_VERSION:-}" ]]; then
   __fzf_git_init() {
@@ -312,8 +351,6 @@ if [[ -n "${BASH_VERSION:-}" ]]; then
     bind -m emacs-standard '"\C-z": vi-editing-mode'
     bind -m vi-command     '"\C-z": emacs-editing-mode'
     bind -m vi-insert      '"\C-z": emacs-editing-mode'
-
-  # echo "$message_loading"
 
     local o c
     for o in "$@"; do
@@ -334,8 +371,6 @@ elif [[ -n "${ZSH_VERSION:-}" ]]; then
     done
   }
 
-  # echo "$message_loading"
-
   # there is some type of error that I have to figure out.
   set -e
 
@@ -344,14 +379,19 @@ elif [[ -n "${ZSH_VERSION:-}" ]]; then
     for o in "$@"; do
 
       # why do we have to generate custom functions???
-      eval "fzf-git-$o-widget() { local result=\$(_fzf_git_$o | __fzf_git_join); zle reset-prompt; LBUFFER+=\$result }"
+      local eval_name="fzf-git-$o-widget"
+      local action="_fzf_git_$o"
 
-      # what is the zle command?
-      eval "zle -N fzf-git-$o-widget"
+      local eval_str="$eval_name() { local result=\$($action | __fzf_git_join); zle reset-prompt; LBUFFER+=\$result }"
+
+      __debug_lines "$eval_str"
+
+      eval "$eval_str"
+      eval "zle -N $eval_name" # what is the zle command?
 
       for m in emacs vicmd viins; do
-        eval "bindkey -M $m '^g^${o[1]}' fzf-git-$o-widget"
-        eval "bindkey -M $m '^g${o[1]}' fzf-git-$o-widget"
+        eval "bindkey -M $m '^g^${o[1]}' $eval_name"
+        eval "bindkey -M $m '^g${o[1]}' $eval_name"
       done
     done
   }
