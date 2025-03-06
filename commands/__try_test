@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+source "$DOROTHY/sources/bash.bash"
+
+__print_lines '== CHECK NESTED [ERREXIT] =='
+function inner {
+  test 1 -eq 2
+  __print_lines 'NEVER ONE'
+  return 125
+}
+function fn() (
+  inner
+  __print_lines 'NEVER TWO'
+  return 126
+)
+eval_capture --statusvar=caught_try_status -- fn
+__print_lines "caught_try_status = $caught_try_status = 1"

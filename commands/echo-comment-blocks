@@ -95,14 +95,13 @@ function echo_comment_blocks() (
       help "Unknown argument was provided"
       ;;
 
-
-		# # forward to stdinargs, however support mixing and matching of our options, with stdinargs options
-		# '--')
-		# 	option_args+=("$item" "$@")
-		# 	shift $#
-		# 	break
-		# 	;;
-		# *) option_args+=("$item") ;;
+      # # forward to stdinargs, however support mixing and matching of our options, with stdinargs options
+      # '--')
+      # 	option_args+=("$item" "$@")
+      # 	shift $#
+      # 	break
+      # 	;;
+      # *) option_args+=("$item") ;;
 
     esac
   done
@@ -133,6 +132,10 @@ function echo_comment_blocks() (
   # FUNCTIONS: MAKE PATTERN-ACTION STATEMENTS
   # =======================================================
 
+  local test='BEGIN { prev = "" };
+  { curr = $1; if (curr != prev && NR > 1) { print "---------"; prev = curr }};
+  /FAIL/ {print "\033[1;31m" $0 "\033[0m"; next}
+  {print "\033[1;32m" $0 "\033[0m"}'
 
   function get_pa__collect_comment() {
     local fs=${1}__FS_COMMENT
@@ -209,18 +212,15 @@ function echo_comment_blocks() (
     # awk "${awk_args[@]}" "$awk_string" "${option_args[@]}"
   fi
 
-
-
-
-	# local files=()
-	# function on_line {
-	# 	files+=("$1")
-	# }
-	# function on_finish {
-	# 	echo_files "${files[@]}"
-	# }
-	#
-	# stdinargs "${option_args[@]}"
+  # local files=()
+  # function on_line {
+  # 	files+=("$1")
+  # }
+  # function on_finish {
+  # 	echo_files "${files[@]}"
+  # }
+  #
+  # stdinargs "${option_args[@]}"
 
 )
 

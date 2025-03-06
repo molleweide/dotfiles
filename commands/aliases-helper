@@ -25,6 +25,20 @@
 # - modified parser ??
 # - add zsh shebang?
 #
+# HACK: How to handle aliases that modify the prompt? Ideas:
+# #1: Generate aliases wrappers in source files that run the commands?
+#     Do this for every shell
+#     These would take precedence since the interactive shell is loaded last.
+#     ------
+# #2: Use a general event trigger system that takes the information that should
+#     go into the prompt and passes the data to prompt_handlers primitives in
+#     the login shell
+#     ------
+# #3:
+# --------
+# >> in any case -> create a function that migrates aliases back to tiny source funcs
+# [revert_to_aliases_and_funcs] ??
+#
 # TODO: help() -> print supported interpreters
 #
 # FIX: 1. you correct a failure, 2. then edit_name and make it a failure again.

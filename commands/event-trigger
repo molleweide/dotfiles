@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+function event_trigger() (
+  source "$DOROTHY/sources/stdinargs.bash"
+
+  function help {
+    cat <<-EOF >/dev/stderr
+			ABOUT:
+			todo...
+
+		EOF
+    return 22 # EINVAL 22 Invalid argument
+  }
+
+  # NOTE: Use [get-master-login-shell] to obtain the PID of the login
+  # shell within which the event-trigger is called.
+
+  # if ps -o comm= -p $PPID | grep -q "zsh"; then
+  #   ran_from_shell='zsh'
+  # fi
+
+  local pid=''
+
+  get-master-login-shell
+
+  # pid=$(get-master-login-shell)
+
+  # if [[ -n "$pid" ]]; then
+  #
+  #   # 1. write callback data to state file
+  #   # pid -> goes into state file name
+  #   # func name -> first line (head)
+  #   # data -> rest of file (tail)
+  #
+  #   # 2. trigger event
+  #   kill -USR1 "$pid"
+  # fi
+
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+  event_trigger "$@"
+fi

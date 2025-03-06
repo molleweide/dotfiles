@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+mlr --icsv --opprint cat "$DOROTHY/user/miller2.csv" | awk 'BEGIN {
+    prev = "";
+    divider=""; for(i=0; i<90; i++) divider = divider "-";
+    red = "\033[1;31m"
+    green = "\033[1;32m"
+    yellow = "\033[1;33m"
+    blue = "\033[1;34m"
+    cyan = "\033[1;36m"
+    reset = "\033[0m"
+};
+
+# This line should leave the header as is.
+NR == 1 { print $0; next };
+
+{ curr = $1; if (curr != prev) { print blue divider; prev = curr } };
+{
+  # IMPLEMENTATION =======================================================
+    impl = $1; n = 10;
+    if (length(impl) < n) {
+        impl = impl sprintf("%-" (n - length(impl)) "s", "")
+    }
+
+  # VERSION =======================================================
+    version = $2; n = 12;
+    if (length(version) < n) {
+        version = version sprintf("%-" (n - length(version)) "s", "")
+    }
+
+  # TEXT =======================================================
+  text = ""; n = 60;
+  for (i=3; i<=( NF-1 ); i++) { text = text $i " " }
+    if (length(text) < n) {
+        text = text sprintf("%-" (n - length(text)) "s", "")
+  }
+
+  # STATUS =======================================================
+
+  status =  $NF
+
+};
+{
+  if ($0 ~ /FAIL/) {
+    print cyan impl yellow version red text status
+  } else {
+    print cyan impl yellow version green text status
+  }
+};
+
+# {print "\033[1;32m" $0 "\033[0m"}'

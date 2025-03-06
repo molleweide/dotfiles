@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 # NAME: fz
 # -------------------------------------------------------
 # DESCRIPTION:
@@ -18,21 +18,47 @@
 # the prompt but we need a custom solution that can handle the prompt from
 # outside. -> We'd need a helper that can modify and update the prompt from
 # our custom aliases.
+# 1. put data in temp file
+# 2. signal to shell on exit
+# 3. dorothy handles signal `call_to_parent_shell`
+# 4. reads the data and performs action.
 #
+# TEST: Is this a place where exec could be used???
+
 # NOTE: Old zsh variant
-# -print -z $( ( [ -n "$ZSH_NAME" ] && fc -l 1 || history ) | fzf +s --tac | sed 's/ *[0-9]* *//')
+# print -z $( ( [ -n "$ZSH_NAME" ] && fc -l 1 || history ) | fzf +s --tac | sed 's/ *[0-9]* *//')
+#
+# >>>> print -z seems to be the thing that prints in position
+#
+# man zshbuiltins
+#     print -z     Push the arguments onto the editing buffer stack, separated by spaces.
+
+
+print -z "arst"
+
+# TODO: run fzf on current shell history
 
 ran_from_shell='bash'
 
+data=''
+
 # get which shell the command was called from
+# function: get_name_of_calling_shell
 if ps -o comm= -p $PPID | grep -q "zsh"; then
   ran_from_shell='zsh'
 fi
 
 if [[ "$ran_from_shell" == 'zsh' ]]; then
-  cmd=$(awk '{print $0}' "$ZDOTDIR/.zsh_history" | fzf --tac | sed 's/ *[0-9]* *//')
-  echo "$cmd" # \033[K clears the line after the cursor
+  data="$(awk '{print $0}' "$ZDOTDIR/.zsh_history" | fzf --tac | sed 's/ *[0-9]* *//')"
+  # echo "$cmd" # \033[K clears the line after the cursor
 else
-  cmd=$(awk '{print $0}' "$HOME/.bash_history" | fzf --tac | sed 's/ *[0-9]* *//')
-  echo "$cmd"
+  data=$(awk '{print $0}' "$HOME/.bash_history" | fzf --tac | sed 's/ *[0-9]* *//')
+  # hist=$(awk '{print $0}' "$HOME/.bash_history")
+  # echo "$cmd"
 fi
+
+# exec fzf --tac
+
+
+# TODO: trigger parent
+event-trigger --login -- set_prompt "$data"
