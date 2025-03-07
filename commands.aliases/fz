@@ -59,8 +59,5 @@ fi
 
 # exec fzf --tac
 
-
 # TODO: it should default to --login
-event-trigger --login -- set_prompt "$data"
-
-echo "fz: after [event-trigger]"
+event-trigger --login -- dorothy_prompt_set "$data"

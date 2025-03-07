@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# TODO: add timestamp to event files -> echo "Task data" > /queue-dir/task_$(date +%s.%N)
+
 # TODO: ( ) one shot async events wo/semaphore
 #           ^ put data in async dir where each file can be read without
 #           regards to the order
@@ -57,27 +59,21 @@ function event_trigger() (
   # -
 
   if [[ -n "$pid" ]]; then
-    local state_events_dir="$XDG_STATE_HOME/dorothy/login_shell_events"
-    local state_events_file="$state_events_dir/$pid"
+    local state_event_queue_dir="$XDG_STATE_HOME/dorothy/login_shell_events/$pid/queue"
+    local state_events_file="$state_event_queue_dir/task_$(date +%s.%N)"
 
-    __mkdirp "$state_events_dir"
+    __mkdirp "$state_event_queue_dir"
 
-    # 1. write callback data to state file
-    # pid -> goes into state file name
-    # func name -> first line (head)
-    # data -> rest of file (tail)
-
-    __print_lines "${option_args[@]}" > "$state_events_file"
+    __print_lines "${option_args[@]}" >"$state_events_file"
 
     echo "Pid from event-trigger: $pid"
 
     # Does this truly trigger after the this command has finished.
     kill -USR1 "$pid"
 
-
-    echo "======================================================="
-    echo "Cat the events file:"
-    bat "$state_events_file"
+    # echo "======================================================="
+    # echo "Cat the events file:"
+    # bat "$state_events_file"
   fi
 
 )
