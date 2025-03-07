@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 function event_trigger() (
-  source "$DOROTHY/sources/stdinargs.bash"
+  source "$DOROTHY/sources/bash.bash"
+  # source "$DOROTHY/sources/stdinargs.bash"
 
   function help {
     cat <<-EOF >/dev/stderr
@@ -12,6 +13,24 @@ function event_trigger() (
     return 22 # EINVAL 22 Invalid argument
   }
 
+  local option_args=()
+
+  while [[ $# -ne 0 ]]; do
+    item="$1"
+    shift
+    case "$item" in
+    '--help' | '-h') help ;;
+    '--login') ;;
+    '--')
+      option_args+=("$@")
+      shift $#
+      break
+      ;;
+    *)
+      help "Unknown argument was provided"
+      ;;
+    esac
+  done
   # NOTE: Use [get-master-login-shell] to obtain the PID of the login
   # shell within which the event-trigger is called.
 
@@ -26,16 +45,27 @@ function event_trigger() (
   pid=$(get-parent-login-shell)
 
   if [[ -n "$pid" ]]; then
+    local state_events_dir="$XDG_STATE_HOME/dorothy/login_shell_events"
+    local state_events_file="$state_events_dir/$pid"
+
+    __mkdirp "$state_events_dir"
 
     # 1. write callback data to state file
     # pid -> goes into state file name
     # func name -> first line (head)
     # data -> rest of file (tail)
 
+    __print_lines "${option_args[@]}" > "$state_events_file"
+
     echo "Pid from event-trigger: $pid"
 
-    # 2. trigger event
-    # kill -USR1 "$pid"
+    # Does this truly trigger after the this command has finished.
+    kill -USR1 "$pid"
+
+
+    echo "======================================================="
+    echo "Cat the events file:"
+    bat "$state_events_file"
   fi
 
 )

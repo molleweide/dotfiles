@@ -52,17 +52,26 @@ function set_prompt {
 # Ben said something about checking for builtins in the alias.
 #
 
+echo "Loaded [events.sh]"
+
 function event_handler {
+  local callback state_events_dir="$XDG_STATE_HOME/dorothy/login_shell_events"
+  local state_events_file="$state_events_dir/$$"
   echo "Hello from <event handler>"
 
   # read state data
-  local callback="$(cat "state file" | echo "head -> callback func")"
-  local data="$(cat "stat file" | echo "tail -> test to insert into prompt")"
+  callback="$(head -n 1 "$state_events_file")"
+  local data="$(tail "$state_events_file")"
+  #
 
-  case "$callback" in
-    reload_environment) ;;
-    set_prompt) set_prompt "$data" ;;
-  esac
+  echo "events | callback: $callback"
+  echo "events | data: $data"
+
+  #
+  # case "$callback" in
+  #   reload_environment) ;;
+  #   set_prompt) set_prompt "$data" ;;
+  # esac
 }
 
 # trap that captures event.

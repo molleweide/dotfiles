@@ -61,4 +61,6 @@ fi
 
 
 # TODO: trigger parent
-event-trigger --login -- set_prompt "$data"
+event-trigger --login -- set_prompt "[data: $data]"
+
+echo "fz: after [event-trigger]"
