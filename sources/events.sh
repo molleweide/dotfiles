@@ -4,22 +4,25 @@
 # These are functions that the event handler will cal when
 # triggered by the trap
 
-# NOTE: How to set commandline for various shells
-# https://duckduckgo.com/?q=bash+set+string+command+line+programmatically&ia=web
-# ----
-# https://unix.stackexchange.com/questions/82630/put-text-in-the-bash-command-line-buffer
-# https://unix.stackexchange.com/questions/111957/is-there-a-way-to-make-a-bash-script-enter-a-certain-keystroke?noredirect=1&lq=1
-# https://unix.stackexchange.com/questions/731343/command-to-inject-string-into-command-line-like-a-pre-filled-command-to-edit-be
-# https://unix.stackexchange.com/questions/391679/how-to-automatically-insert-a-string-after-the-prompt?noredirect=1&lq=1
-# https://unix.stackexchange.com/questions/82630/put-text-in-the-bash-command-line-buffer?noredirect=1&lq=1
-# ----
+# The pid should be added as a subdir here .../$$/events/<queued_event_files>
+# ^ Now, we can use [.../$$/events/semaphore]
+DOROTHY_STATE_EVENTS_DIR="$XDG_STATE_HOME/dorothy/login_shell_events"
+
 function set_prompt {
   # echo "set_prompt args: [$*]"
   # echo "set_prompt: ACTIVE_POSIX_SHELL == [$ACTIVE_POSIX_SHELL]"
+  #
+  # note: How to set commandline for various shells
+  #         https://duckduckgo.com/?q=bash+set+string+command+line+programmatically&ia=web
+  #         https://unix.stackexchange.com/questions/82630/put-text-in-the-bash-command-line-buffer
+  #         https://unix.stackexchange.com/questions/111957/is-there-a-way-to-make-a-bash-script-enter-a-certain-keystroke?noredirect=1&lq=1
+  #         https://unix.stackexchange.com/questions/731343/command-to-inject-string-into-command-line-like-a-pre-filled-command-to-edit-be
+  #         https://unix.stackexchange.com/questions/391679/how-to-automatically-insert-a-string-after-the-prompt?noredirect=1&lq=1
+  #         https://unix.stackexchange.com/questions/82630/put-text-in-the-bash-command-line-buffer?noredirect=1&lq=1
 
-  if [ "$ACTIVE_POSIX_SHELL" = "bash" ] ; then
+  if [ "$ACTIVE_POSIX_SHELL" = "bash" ]; then
     :
-  elif [ "$ACTIVE_POSIX_SHELL" = "zsh" ] ; then
+  elif [ "$ACTIVE_POSIX_SHELL" = "zsh" ]; then
     print -z "$@"
   else
     echo "setting prompt is not supported for other shells than [bash] or [zsh]"
@@ -50,15 +53,29 @@ function set_prompt {
 # Ben said something about checking for builtins in the alias.
 #
 
-echo "Loaded [events.sh]"
+# # Run each event in order
+# function queue_flush {
+#   while true; do
+#     file=$(ls -tr /queue-dir | head -n 1)
+#     [ -n "$file" ] && cat "/queue-dir/$file" && rm "/queue-dir/$file"
+#     sleep 1 # Avoid busy looping
+#   done
+# }
 
-function event_handler {
-  local callback state_events_dir="$XDG_STATE_HOME/dorothy/login_shell_events"
-  local state_events_file="$state_events_dir/$$"
+function event_handler_queued {
+  local callback
+  local state_events_file="$DOROTHY_STATE_EVENTS_DIR/$$"
 
   # echo "Hello from <event handler>"
+  #
 
-  # WARN: How to prevent collision and multiple events here?
+  # TODO: put the queue reading into its own command [event-read -- $pid]
+  # Which ensures to only return after the next queued correct event
+  # has been read.
+
+  # TODO: FIFO by reading the oldest file always
+  # file=$(ls -tr /queue-dir | head -n 1) # Get oldest file
+  # [ -n "$file" ] && cat "/queue-dir/$file" && rm "/queue-dir/$file"
 
   callback="$(head -n 1 "$state_events_file")"
   local data="$(tail -n +2 "$state_events_file")"
@@ -67,10 +84,18 @@ function event_handler {
   # echo "events | data: $data"
 
   case "$callback" in
-    'reload_environment') ;;
-    'set_prompt') set_prompt "$data" ;;
+  'reload_environment') ;;
+  'set_prompt') set_prompt "$data" ;;
   esac
 }
 
 # trap that captures event.
-trap event_handler SIGUSR1
+trap event_handler_queued SIGUSR1
+
+# TODO: login shell cleanup trap -> remove purge $$ events dir
+function cleanup {
+  :
+  # rm -rf "/tmp/state-dir-$$"  # Use $$ (PID of shell) to clean up its state dir
+}
+
+trap cleanup EXIT

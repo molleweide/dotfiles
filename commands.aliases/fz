@@ -60,7 +60,7 @@ fi
 # exec fzf --tac
 
 
-# TODO: trigger parent
+# TODO: it should default to --login
 event-trigger --login -- set_prompt "$data"
 
 echo "fz: after [event-trigger]"
