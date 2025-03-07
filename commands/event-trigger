@@ -21,20 +21,22 @@ function event_trigger() (
 
   local pid=''
 
-  get-master-login-shell
+  # get-parent-login-shell
 
-  # pid=$(get-master-login-shell)
+  pid=$(get-parent-login-shell)
 
-  # if [[ -n "$pid" ]]; then
-  #
-  #   # 1. write callback data to state file
-  #   # pid -> goes into state file name
-  #   # func name -> first line (head)
-  #   # data -> rest of file (tail)
-  #
-  #   # 2. trigger event
-  #   kill -USR1 "$pid"
-  # fi
+  if [[ -n "$pid" ]]; then
+
+    # 1. write callback data to state file
+    # pid -> goes into state file name
+    # func name -> first line (head)
+    # data -> rest of file (tail)
+
+    echo "Pid from event-trigger: $pid"
+
+    # 2. trigger event
+    # kill -USR1 "$pid"
+  fi
 
 )
 
