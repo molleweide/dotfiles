@@ -14,15 +14,13 @@
 # https://unix.stackexchange.com/questions/82630/put-text-in-the-bash-command-line-buffer?noredirect=1&lq=1
 # ----
 function set_prompt {
+  # echo "set_prompt args: [$*]"
+  # echo "set_prompt: ACTIVE_POSIX_SHELL == [$ACTIVE_POSIX_SHELL]"
 
-  # INFO: The ACTIVE_SHELL variable should be available
-
-  echo "set_prompt: ACTIVE_POSIX_SHELL == $ACTIVE_POSIX_SHELL"
-
-  if [ "$ACTIVE_POSIX_SHELL" == "bash" ] ; then
+  if [ "$ACTIVE_POSIX_SHELL" = "bash" ] ; then
     :
-  elif [ "$ACTIVE_POSIX_SHELL" == "zsh" ] ; then
-    :
+  elif [ "$ACTIVE_POSIX_SHELL" = "zsh" ] ; then
+    print -z "$@"
   else
     echo "setting prompt is not supported for other shells than [bash] or [zsh]"
   fi
@@ -57,21 +55,21 @@ echo "Loaded [events.sh]"
 function event_handler {
   local callback state_events_dir="$XDG_STATE_HOME/dorothy/login_shell_events"
   local state_events_file="$state_events_dir/$$"
-  echo "Hello from <event handler>"
 
-  # read state data
+  # echo "Hello from <event handler>"
+
+  # WARN: How to prevent collision and multiple events here?
+
   callback="$(head -n 1 "$state_events_file")"
-  local data="$(tail "$state_events_file")"
-  #
+  local data="$(tail -n +2 "$state_events_file")"
 
-  echo "events | callback: $callback"
-  echo "events | data: $data"
+  # echo "events | callback: $callback"
+  # echo "events | data: $data"
 
-  #
-  # case "$callback" in
-  #   reload_environment) ;;
-  #   set_prompt) set_prompt "$data" ;;
-  # esac
+  case "$callback" in
+    'reload_environment') ;;
+    'set_prompt') set_prompt "$data" ;;
+  esac
 }
 
 # trap that captures event.

@@ -34,7 +34,7 @@
 #     print -z     Push the arguments onto the editing buffer stack, separated by spaces.
 
 
-print -z "arst"
+# print -z "arst"
 
 # TODO: run fzf on current shell history
 
@@ -61,6 +61,6 @@ fi
 
 
 # TODO: trigger parent
-event-trigger --login -- set_prompt "[data: $data]"
+event-trigger --login -- set_prompt "$data"
 
 echo "fz: after [event-trigger]"
