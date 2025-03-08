@@ -40,7 +40,30 @@
 # [revert_to_aliases_and_funcs] ??
 #
 # TODO: help() -> print supported interpreters
+
+# WARN: DCAs for builtin functions does not work since they are meant to be
+# ran in the login shell's process. This can 100% be handled by using event
+# trigger command, but with some modifications. BUT it is also dangerous to
+# allow triggering builtins via signals. Therefore, if it is only a matter
+# of basic aliases for builtins, then you need to define them manually in
+# an aliases file.
+# HOWEVER, we could here use a system that helps with handling this situations
+# by creating a skeleton func fore aliases in each shell so that if you run
+# the alias in another shell then that will show [Not implemented for this shell.]
 #
+# TODO: find_builtins: -> list which aliases that contain builtins, that then should be moved to `sources.aliases/*`
+#
+# NOTE: Find where an regular alias was defined
+# https://unix.stackexchange.com/questions/322459/is-it-possible-to-check-where-an-alias-was-defined
+# https://stackoverflow.com/questions/2614403/how-to-find-out-where-alias-in-the-bash-sense-is-defined-when-running-terminal
+#
+# TODO: Put built-in aliases under [sources.aliases/{shell}]
+# ^ We could even here create singular alias files for each builtin alias,
+# so that each one is easy to get back to.
+#
+# TODO: act_create: if builtin -> select for which shell.
+#
+
 # FIX: 1. you correct a failure, 2. then edit_name and make it a failure again.
 # 3. Then, cancel, -> Now it will show green in UI menu but have the invalid name.
 # >>> Should we use a temp var, or is this just a simple check at the name?

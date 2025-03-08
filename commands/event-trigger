@@ -52,6 +52,10 @@ function event_trigger() (
 
   # get-parent-login-shell
 
+  # Getting the pid of parent login shell would be even faster if we
+  # exported the PID. But this is only necessary if it turns out that
+  # the current method is too slow.
+
   pid=$(get-parent-login-shell)
 
   # TODO:
@@ -66,7 +70,7 @@ function event_trigger() (
 
     __print_lines "${option_args[@]}" >"$state_events_file"
 
-    echo "Pid from event-trigger: $pid"
+    # echo "Pid from event-trigger: $pid"
 
     # Does this truly trigger after the this command has finished.
     kill -USR1 "$pid"

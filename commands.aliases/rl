@@ -5,5 +5,9 @@
 # # reload shel
 # -------------------------------------------------------
 # ARGS: ''
+#
+# NOTE: This won't work because we need to call a function
+# in the login shell that performs the exit.
+#
 source "$DOROTHY/sources/environment.sh";
 source "$DOROTHY/sources/interactive.sh"

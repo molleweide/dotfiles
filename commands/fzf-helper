@@ -1,27 +1,39 @@
 #!/usr/bin/env bash
 
-# FIX: fzf picker does not close properly when opening the selection in browser.
+# FIX: ( ) fzf picker does not close properly when opening the selection in browser.
+# ^ I believe this is because binds are ran with [<shell> -c ...] which does
+# not inherit the environment. So it silently crashes.
+# -> Remedy, explicitly pass abs paths
 
 # TODO: Rename this to `fuzzy-picker`?
+#
+# TODO: All pickers__* needs to have more explicit names so that we can list
+# them in the master picker without issues
 
-# TODO: if no args, then cal a standard general purpose picker with
-# the most sensible / reasonable defaults handler
+# TODO: ( ) If no args -> run master picker:
+# ^ Picker that lists all pickers, so that you can have a "master"
+# 1. declare -F
+# 2. filter out pickers__*
+# 3. echo-comment-blocks
+# 4. -> Run picker
 
 # TODO: SYSTEM PICKER > SPOTLIGHT / ROFI / DMENU
 # - [ ]: migrate my existing spotling into this file.
 # - [ ]: create a custom rc file for the custom file browser window.
+#
 # TEST: Revise the `/commands/launcher` script and see how it can be used to
 # make system binds.
 # And how can we manage OS keybindings -> applescript?? to set OS bindings?
+#
 # TEST: >>> Revise calling scripts from kmonad.
 
-# TODO: Support other fuzzy matchers
+# TODO: (=) SUPPORT OTHER FUZZY MATCHERS
 # ! Use setup utils to install absent commands.
 # fzf [x] already exists in dorothy.
 # [ ] skim
 # [ ] nucleo
 
-# NOTE: Macos: set keyboard shortcuts programmatically
+# note: Macos: set keyboard shortcuts programmatically
 # https://stackoverflow.com/questions/823705/programatically-get-set-mac-osx-default-system-keyboard-shortcut
 # https://apple.stackexchange.com/questions/115675/set-services-keyboard-shortcut-via-script-osx
 # https://superuser.com/questions/1139859/os-x-create-keyboard-shortcut-programmatically
@@ -75,6 +87,7 @@ function fzf_helper() (
 
   # ===========================================================================
   # Helpers
+  #
 
   # Could this use / support multiple fuzzy matchers?
   picker_cmd() {
@@ -261,6 +274,8 @@ function fzf_helper() (
   # ===========================================================================
   # Pickers
   #
+  # This is where all pre-defined pickers are listed.
+  #
 
   # TODO: try
   # --cycle
@@ -445,7 +460,6 @@ function fzf_helper() (
   # Test Pickers
   #
 
-
   picker__choose_test() {
     choose "CHOOSE: Select desired dishes from our menu." --linger --required --confirm --multi \
       --label \
@@ -458,6 +472,25 @@ function fzf_helper() (
     # because fzf-helper is called recursively, we need to exit immediately
     # here in our test
     exit 0
+  }
+
+  # =====================================
+  # Help
+
+  function help {
+    cat <<-EOF >/dev/stderr
+						ABOUT:
+
+						USAGE:
+						aliases [...<options] [<action>] [-- [...<input>]]
+
+						ACTIONS:
+
+		EOF
+    if [[ $# -ne 0 ]]; then
+      echo-error "$@"
+    fi
+    return 22 # EINVAL 22 Invalid argument
   }
 
   # ===========================================================================
@@ -513,6 +546,10 @@ function fzf_helper() (
     *) help "An unrecognised argument was provided: $item" ;;
     esac
   done
+
+  # ===========================================================================
+  # Act / Run pickers
+  #
 
   # Check
   if [[ -z "$action" ]]; then
