@@ -25,7 +25,6 @@
 
 # TODO: we could use
 
-
 # NOTE: Should these binds be callable if one is not runnig a git command?
 # Eg. should it work to run C-gC-e if the prompt is empty, ie. just triggering
 # the fzf helper standalone.

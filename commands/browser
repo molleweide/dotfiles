@@ -1,32 +1,26 @@
-# TEST: Can this script be used as a middleman just to ensure that FZF
-# closes properly?
-#
-# TODO: ( ) annotate everything.
-#
-# TODO: Move this into command:
-# 1. ( ) First move into own command [git-open-in-browser]
-# 2. ( ) Then, moved into git-helper
-#
+#!/usr/bin/env bash
 
-LOG_FILE="$DOROTHY/user/fzf_log.txt"
+# TODO: ( ) Extract the parts that pertain to git into -> git-helper.
 
-# Calling script with multiple args.
-open_in_browser() {
+function browser_() (
+	source "$DOROTHY/sources/bash.bash"
 
-	# echo "???????"
-	echo "open in browser" >>"$LOG_FILE"
+	local log_file="$DOROTHY/user/fzf_browser.log"
+	function log {
+		printf '%s ' "$@" >>"$log_file"
+		printf '\n' >> "$log_file"
+	}
 
-	# TODO: Getting the data below should go into a dorothy command.
+	# log "======================================================="
+	# log "Now calling without abs path"
+	# log "$@"
 
 	# This is only when the scripting is initiating on shell load.
-	# maybe should unset the vars instead. ??? What did i mean by this?!?!
+	# maybe should unset the vars instead.
 	branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
 	if [[ $branch = HEAD ]]; then
 		branch=$(git describe --exact-match --tags 2>/dev/null || git rev-parse --short HEAD)
 	fi
-
-	# TODO: name args properly
-	# $1: action; $2 args;
 
 	# Only supports GitHub for now
 	case "$1" in
@@ -60,13 +54,13 @@ open_in_browser() {
 		url=${remote_url%.git}
 	fi
 
-	exit 0
-
-	# TODO: Move this to [browser]
 	case "$(uname -s)" in
 	Darwin) open "$url$path" ;;
 	*) xdg-open "$url$path" ;;
 	esac
+)
 
-	exit 0
-}
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	browser_ "$@"
+fi

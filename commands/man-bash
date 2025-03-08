@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# TODO: Create a command that makes it easy to select
+# specific sections from the bash man page, also for different versions
+#
+#
+#
+man bash | awk '
+/^   Commands for Moving$/{print_this=1}
+/^   Programmable Completion$/{print_this=0} print_this==1{sub(/^   /,""); print}' > bash_commands.txt
+# ^ This is an example snippet of how to chunk out specific sections.
+

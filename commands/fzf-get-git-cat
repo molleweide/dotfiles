@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+fzf_get_git_cat() (
+
+		if [[ -n ${FZF_GIT_CAT-} ]]; then
+			echo "$FZF_GIT_CAT"
+			return
+		fi
+
+		local bat_opts=(
+			--style="'${BAT_STYLE:-full}'"
+			--color="$(fzf_get_git_cat .)"
+			--pager="never"
+		)
+
+		# Sometimes bat is installed as batcat
+		if command -v batcat >/dev/null; then
+			echo "batcat ${bat_opts[*]}"
+		elif command -v bat >/dev/null; then
+			echo "bat ${bat_opts[*]}"
+		else
+			echo cat
+		fi
+)
+
+# fire if invoked standalone
+if [[ $0 == "${BASH_SOURCE[0]}" ]]; then
+	fzf_get_git_cat "$@"
+fi

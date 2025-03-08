@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+fzf_get_git_color() (
+
+	# Expects optionally one and only one arg $1
+
+	if [[ -n ${NO_COLOR-} ]]; then
+		echo never
+	elif [[ $# -gt 0 ]] && [[ -n ${FZF_GIT_PREVIEW_COLOR-} ]]; then
+		echo "$FZF_GIT_PREVIEW_COLOR"
+	else
+		echo "${FZF_GIT_COLOR:-always}"
+	fi
+)
+
+# fire if invoked standalone
+if [[ $0 == "${BASH_SOURCE[0]}" ]]; then
+	fzf_get_git_color "$@"
+fi

@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+get_git_data() (
+
+	# ====
+	# HELPERS
+
+	branches() {
+		# --format=<format>
+		#     A string that interpolates %(fieldname) from a ref being shown and the object it points at.
+		#     In addition, the string literal %% renders as % and %xx - where xx are hex digits - renders
+		#     as the character with hex code xx. For example, %00 interpolates to \0 (NUL), %09 to \t
+		#     (TAB), and %0a to \n (LF).
+		#
+		#     When unspecified, <format> defaults to %(objectname) SPC %(objecttype) TAB %(refname).
+		git branch "$@" --sort=-committerdate --sort=-HEAD \
+			--format=$'%(HEAD) %(color:yellow)%(refname:short)\t%(color:green)(%(committerdate:relative))\t%(color:blue)%(subject)%(color:reset)' \
+			--color="$(fzf-get-git-color)" | column -ts$'\t'
+	}
+
+	refs() {
+		git for-each-ref "$@" --sort=-creatordate --sort=-HEAD --color=$(fzf-get-git-color) --format=$'%(if:equals=refs/remotes)%(refname:rstrip=-2)%(then)%(color:magenta)remote-branch%(else)%(if:equals=refs/heads)%(refname:rstrip=-2)%(then)%(color:brightgreen)branch%(else)%(if:equals=refs/tags)%(refname:rstrip=-2)%(then)%(color:brightcyan)tag%(else)%(if:equals=refs/stash)%(refname:rstrip=-2)%(then)%(color:brightred)stash%(else)%(color:white)%(refname:rstrip=-2)%(end)%(end)%(end)%(end)\t%(color:yellow)%(refname:short) %(color:green)(%(creatordate:relative))\t%(color:blue)%(subject)%(color:reset)' | column -ts$'\t'
+	}
+
+	hashes() {
+		git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=$(fzf-get-git-color) "$@"
+	}
+
+	# =====
+	# ARGS
+	#
+
+	# TODO: ( ) remove the references to header titles string here.
+
+	case "$1" in
+	files)
+		(
+			git -c color.status="$(fzf-get-git-color)" status --short --no-branch
+			git ls-files "$root" | grep -vxFf <(
+				git status -s | grep '^[^?]' | cut -c4-
+				echo :
+			) | sed 's/^/   /'
+		)
+		;;
+	branches)
+		echo $'CTRL-O (open in browser) ╱ ALT-A (show all branches)\n'
+		branches
+		;;
+	all-branches)
+		echo $'CTRL-O (open in browser)\n'
+		branches -a
+		;;
+	hashes)
+		echo $'CTRL-O (open in browser) ╱ CTRL-D (diff)\nCTRL-S (toggle sort) ╱ ALT-A (show all hashes)\n'
+		hashes
+		;;
+	all-hashes)
+		echo $'CTRL-O (open in browser) ╱ CTRL-D (diff)\nCTRL-S (toggle sort)\n'
+		hashes --all
+		;;
+	refs)
+		echo $'CTRL-O (open in browser) ╱ ALT-E (examine in editor) ╱ ALT-A (show all refs)\n'
+		refs --exclude='refs/remotes'
+		;;
+	all-refs)
+		echo $'CTRL-O (open in browser) ╱ ALT-E (examine in editor)\n'
+		refs
+		;;
+	nobeep) ;;
+	*) exit 1 ;;
+	esac
+)
+
+# fire if invoked standalone
+if [[ $0 == "${BASH_SOURCE[0]}" ]]; then
+	get_git_data "$@"
+fi
