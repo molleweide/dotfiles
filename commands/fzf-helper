@@ -59,6 +59,10 @@
 function fzf_helper() (
   source "$DOROTHY/sources/bash.bash"
 
+  # ===========================================================================
+  # FZF HELPER | INTERNAL HELPERS
+  #
+
   DEBUG_FZF="yes"
 
   local LOG_FILE="$DOROTHY/user/fzf_log.txt"
@@ -77,7 +81,8 @@ function fzf_helper() (
   # - [ ] target a specific path
   # - [ ] just pick files in general.
 
-  # FIX: Why does this script require ruby really??
+  # fix: Why does this script require ruby really??
+  # note: this could be moved to a command
   #
   # SOURCES__FZF_HACK=${BASH_SOURCE[0]:-${(%):-%x}}
   local SOURCES__FZF_HACK="$DOROTHY/user/sources/__fzf_action_callbacks.sh"
@@ -86,7 +91,7 @@ function fzf_helper() (
   # echo "SOURCES__FZF_HACK = $SOURCES__FZF_HACK"
 
   # ===========================================================================
-  # Helpers
+  # PICKER HELPERS
   #
 
   # Could this use / support multiple fuzzy matchers?
@@ -152,7 +157,7 @@ function fzf_helper() (
   #
   # These are used in order to define a picker. See pickers below.
 
-  # Move this to other dorothy helpers?
+  # TODO: Use [git-helper] instead
   get_git_data() {
     branches() {
 

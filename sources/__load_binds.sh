@@ -54,7 +54,62 @@ __debug_lines(){
 # way is just to explore how such bindings work and stuff so that we can
 # have some nice extra control bindings in the shell.
 
+
+# =======================================================
+# [BASH] BINDINGS
+# =======================================================
+# man BASH
+#
+# bind [-m keymap] [-lpsvPSVX]
+# bind [-m keymap] [-q function] [-u function] [-r keyseq]
+# bind [-m keymap] -f filename
+# bind [-m keymap] -x keyseq:shell-command
+# bind [-m keymap] keyseq:function-name
+# bind [-m keymap] keyseq:readline-command
+# bind readline-command-line
+#        Display current readline key and function bindings, bind a key sequence to a readline
+#        function or macro, or set a readline variable.  Each non-option argument is a command as
+#        it would appear in a readline initialization file such as .inputrc, but each binding or
+#        command must be passed as a separate argument; e.g., '"\C-x\C-r": re-read-init-file'.
+#        Options, if supplied, have the following meanings:
+#        -m keymap
+#               Use keymap as the keymap to be affected by the subsequent bindings.  Acceptable
+#               keymap names are emacs, emacs-standard, emacs-meta, emacs-ctlx, vi, vi-move,
+#               vi-command, and vi-insert.  vi is equivalent to vi-command (vi-move is also a
+#               synonym); emacs is equivalent to emacs-standard.
+#        -l     List the names of all readline functions.
+#        -p     Display readline function names and bindings in such a way that they can be re-
+#               read.
+#        -P     List current readline function names and bindings.
+#        -s     Display readline key sequences bound to macros and the strings they output in such
+#               a way that they can be re-read.
+#        -S     Display readline key sequences bound to macros and the strings they output.
+#        -v     Display readline variable names and values in such a way that they can be re-read.
+#        -V     List current readline variable names and values.
+#        -f filename
+#               Read key bindings from filename.
+#        -q function
+#               Query about which keys invoke the named function.
+#        -u function
+#               Unbind all keys bound to the named function.
+#        -r keyseq
+#               Remove any current binding for keyseq.
+#        -x keyseq:shell-command
+#               Cause shell-command to be executed whenever keyseq is entered.  When shell-command
+#               is executed, the shell sets the READLINE_LINE variable to the contents of the
+#               readline line buffer and the READLINE_POINT and READLINE_MARK variables to the
+#               current location of the insertion point and the saved insertion point (the mark),
+#               respectively.  The shell assigns any numeric argument the user supplied to the
+#               READLINE_ARGUMENT variable.  If there was no argument, that variable is not set.
+#               If the executed command changes the value of any of READLINE_LINE, READLINE_POINT,
+#               or READLINE_MARK, those new values will be reflected in the editing state.
+#        -X     List all key sequences bound to shell commands and the associated commands in a
+#               format that can be reused as input.
+#
+#        The return value is 0 unless an unrecognized option is given or an error occurred.
+
 if [[ -n "${BASH_VERSION:-}" ]]; then
+
   __fzf_git_init() {
     __debug_lines "bash not supported yet"
     # bind -m emacs-standard '"\er":  redraw-current-line'
@@ -73,35 +128,79 @@ if [[ -n "${BASH_VERSION:-}" ]]; then
     #   bind -m vi-insert      '"\C-g'$c'":    "\C-z\C-g'$c'\C-z"'
     # done
   }
-elif [[ -n "${FISH_VERSION:-}" ]]; then
+fi
 
-# FIX: Because `fish` is not posix, this file cant be sourced in fish, and
-# therefore we are required to split this into multiple files, so that you
-# can define user keybinds separately.
+# =======================================================
+# [ZSH] BINDINGS
+# =======================================================
+#
+# >> `:Man zshzle`
+#
+# reset-prompt (unbound) (unbound) (unbound)
+#        Force the prompts on both the left and right of the screen to be
+#        re-expanded, then redisplay the edit buffer.  This reflects
+#        changes both to the prompt variables themselves and changes in
+#        the expansion of the values (for example, changes in time or
+#        directory, or changes to the value of variables referred to by
+#        the prompt).
+#
+#        Otherwise, the prompt is only expanded each time zle starts, and
+#        when the display has been interrupted by output from another
+#        part of the shell (such as a job notification) which causes the
+#        command line to be reprinted.
+#
+#        reset-prompt doesn't alter the special parameter LASTWIDGET.
+#
+#
+# USER-DEFINED WIDGETS
+#        User-defined widgets, being implemented as shell functions, can
+#        execute any normal shell command.  They can also run other
+#        widgets (whether built-in or user-defined) using the zle builtin
+#        command. The standard input of the function is redirected from
+#        /dev/null to prevent external commands from unintentionally
+#        blocking ZLE by reading from the terminal, but read -k or read
+#        -q can be used to read characters.  Finally, they can examine
+#        and edit the ZLE buffer being edited by reading and setting the
+#        special parameters described below.
+#
+#        These special parameters are always available in widget
+#        functions, but are not in any way special outside ZLE.  If they
+#        have some normal value outside ZLE, that value is temporarily
+#        inaccessible, but will return when the widget function exits.
+#        These special parameters in fact have local scope, like
+#        parameters created in a function using local.
+#
+#        Inside completion widgets and traps called while ZLE is active,
+#        these parameters are available read-only.
+#
+#        Note that the parameters appear as local to any ZLE widget in
+#        which they appear.  Hence if it is desired to override them this
+#        needs to be done within a nested function:
+#
+#               widget-function() {
+#                 # $WIDGET here refers to the special variable
+#                 # that is local inside widget-function
+#                 () {
+#                    # This anonymous nested function allows WIDGET
+#                    # to be used as a local variable.  The -h
+#                    # removes the special status of the variable.
+#                    local -h WIDGET
+#                 }
+#               }
+#
+#
+#      LBUFFER (scalar)
+#              The part of the buffer that lies to the left of the cursor position.  If it is assigned to, only that part of the
+#              buffer is replaced, and the cursor remains between the new $LBUFFER and the old $RBUFFER.
 
-  __fzf_git_init() {
-    # https://fishshell.com/docs/current/cmds/bind.html
-    #
-    # I need to just read through this doc so that we can add this shit
-    # for fish and then have that stuff made for ben later.
-    __debug_lines "fish shell is not supported yet."
+# TODO: ( ) every line needs to be explicitly commented
+# ^ what is going on.
+#   >>> Make it easy for me to come back to this file after a while
 
-    # # bind \cd 'exit'
-    # local o c
-    # for o in "$@"; do
-    #   # local fish_bind_func_handle="fzf-git-$o-widget"
-    #   local fish_bind_func_handle="_fzf_git_$o"
-    #   c=${o:0:1}
-    #   bind "\cg\c$c" "$fish_bind_func_handle"
-    #   # bind -m emacs-standard '"\C-g\C-'$c'": " \C-u \C-a\C-k`_fzf_git_'$o'`\e\C-e\C-y\C-a\C-y\ey\C-h\C-e\er \C-h"'
-    #   # bind -m vi-command     '"\C-g\C-'$c'": "\C-z\C-g\C-'$c'\C-z"'
-    #   # bind -m vi-insert      '"\C-g\C-'$c'": "\C-z\C-g\C-'$c'\C-z"'
-    #   # bind -m emacs-standard '"\C-g'$c'":    " \C-u \C-a\C-k`_fzf_git_'$o'`\e\C-e\C-y\C-a\C-y\ey\C-h\C-e\er \C-h"'
-    #   # bind -m vi-command     '"\C-g'$c'":    "\C-z\C-g'$c'\C-z"'
-    #   # bind -m vi-insert      '"\C-g'$c'":    "\C-z\C-g'$c'\C-z"'
-    # done
-  }
-elif [[ -n "${ZSH_VERSION:-}" ]]; then
+if [[ -n "${ZSH_VERSION:-}" ]]; then
+
+
+  # why???
   __fzf_git_join_lines() {
     local line
     while read line; do
@@ -129,65 +228,6 @@ elif [[ -n "${ZSH_VERSION:-}" ]]; then
 
       local fzf_action="fzf-helper $picker_name"
 
-      # >> `:Man zshzle`
-      #
-      # reset-prompt (unbound) (unbound) (unbound)
-      #        Force the prompts on both the left and right of the screen to be
-      #        re-expanded, then redisplay the edit buffer.  This reflects
-      #        changes both to the prompt variables themselves and changes in
-      #        the expansion of the values (for example, changes in time or
-      #        directory, or changes to the value of variables referred to by
-      #        the prompt).
-      #
-      #        Otherwise, the prompt is only expanded each time zle starts, and
-      #        when the display has been interrupted by output from another
-      #        part of the shell (such as a job notification) which causes the
-      #        command line to be reprinted.
-      #
-      #        reset-prompt doesn't alter the special parameter LASTWIDGET.
-      #
-
-      # USER-DEFINED WIDGETS
-      #        User-defined widgets, being implemented as shell functions, can
-      #        execute any normal shell command.  They can also run other
-      #        widgets (whether built-in or user-defined) using the zle builtin
-      #        command. The standard input of the function is redirected from
-      #        /dev/null to prevent external commands from unintentionally
-      #        blocking ZLE by reading from the terminal, but read -k or read
-      #        -q can be used to read characters.  Finally, they can examine
-      #        and edit the ZLE buffer being edited by reading and setting the
-      #        special parameters described below.
-      #
-      #        These special parameters are always available in widget
-      #        functions, but are not in any way special outside ZLE.  If they
-      #        have some normal value outside ZLE, that value is temporarily
-      #        inaccessible, but will return when the widget function exits.
-      #        These special parameters in fact have local scope, like
-      #        parameters created in a function using local.
-      #
-      #        Inside completion widgets and traps called while ZLE is active,
-      #        these parameters are available read-only.
-      #
-      #        Note that the parameters appear as local to any ZLE widget in
-      #        which they appear.  Hence if it is desired to override them this
-      #        needs to be done within a nested function:
-      #
-      #               widget-function() {
-      #                 # $WIDGET here refers to the special variable
-      #                 # that is local inside widget-function
-      #                 () {
-      #                    # This anonymous nested function allows WIDGET
-      #                    # to be used as a local variable.  The -h
-      #                    # removes the special status of the variable.
-      #                    local -h WIDGET
-      #                 }
-      #               }
-      #
-      #
-      #      LBUFFER (scalar)
-      #              The part of the buffer that lies to the left of the cursor position.  If it is assigned to, only that part of the
-      #              buffer is replaced, and the cursor remains between the new $LBUFFER and the old $RBUFFER.
-
       # Define function handles that are responsible for:
       # 1. run the fzf git func
       # 2. capture results
@@ -196,6 +236,9 @@ elif [[ -n "${ZSH_VERSION:-}" ]]; then
               # TODO: use dorothy command to properly escape the string.
 
         # echo \"\$result\" >/dev/tty; \
+
+
+      # why???
       local eval_str__zsh_create_func_handle="\
         $zsh_bind_func_handle() { \
         local result=\$($fzf_action | __fzf_git_join_lines); \
@@ -203,8 +246,10 @@ elif [[ -n "${ZSH_VERSION:-}" ]]; then
         zle reset-prompt; \
         LBUFFER+=\$result \
       }"
+
       __debug_lines "[input = $o -> key = $key | picker name = $picker_name]"
 
+      # why??
       # make the func handlers available in the shell.
       eval "$eval_str__zsh_create_func_handle"
 
@@ -219,8 +264,11 @@ elif [[ -n "${ZSH_VERSION:-}" ]]; then
       #               called.  If no function name is specified, it defaults to the
       #               same name as the widget.  For further information, see the
       #               section `Widgets' below.
+
+      # why ???
       eval "zle -N $zsh_bind_func_handle" # what is the zle command?
 
+      # why???
       # I think that it is poorly documented how this syntax works in
       # the docs.
       for m in emacs vicmd viins; do
@@ -231,6 +279,10 @@ elif [[ -n "${ZSH_VERSION:-}" ]]; then
   }
   set +e
 fi
+
+# =======================================================
+# MAKE BINDINGS
+#
 
 # The first char is used for the binding for each (*)
 FZF_GIT_SELECTOR_ACTIONS=(

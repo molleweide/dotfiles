@@ -1,5 +1,12 @@
 # TEST: Can this script be used as a middleman just to ensure that FZF
 # closes properly?
+#
+# TODO: ( ) annotate everything.
+#
+# TODO: Move this into command:
+# 1. ( ) First move into own command [git-open-in-browser]
+# 2. ( ) Then, moved into git-helper
+#
 
 LOG_FILE="$DOROTHY/user/fzf_log.txt"
 
@@ -17,6 +24,9 @@ open_in_browser() {
   if [[ $branch = HEAD ]]; then
     branch=$(git describe --exact-match --tags 2>/dev/null || git rev-parse --short HEAD)
   fi
+
+  # TODO: name args properly
+  # $1: action; $2 args;
 
   # Only supports GitHub for now
   case "$1" in
