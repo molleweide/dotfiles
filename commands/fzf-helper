@@ -110,7 +110,8 @@ function fzf_helper() (
 	# PICKER HELPERS
 	#
 
-	# TODO: default bind -> switch back to master picker from any picker?
+	# TODO: If not running from `choose` then add:
+	# --bind='ctrl-z:GO BACK TO MASTER PICKER'
 
 	# shellcheck disable=SC2054
 	local FZF_DEFAULT_OPTS=(
@@ -122,14 +123,8 @@ function fzf_helper() (
 		--bind='ctrl-d:change-preview-window(down,50%,border-top|hidden|)'
 	)
 
-	# TODO: Dynamically put together keybinds-legend, that is shown on above the
-	# search list.
-	# --header $'CTRL-O (open in browser) ╱ ALT-E (open in editor)\n\n' \
-
-	# TODO: ( ) add to header legend string for ctrl-d
 	make_picker_cmd() {
-
-		local fzf_options_default=() fzf_options_use_defaults='yes' fzf_args=()
+		local fzf_options=() fzf_options_use_defaults='yes' fzf_args=()
 		while test "$#" -ne 0; do
 			item="$1"
 			shift
@@ -146,10 +141,22 @@ function fzf_helper() (
 		done
 
 		if [[ "$fzf_options_use_defaults" == 'yes' ]]; then
-			fzf_options_default=("${FZF_DEFAULT_OPTS[@]}")
+			fzf_options=("${FZF_DEFAULT_OPTS[@]}")
 		fi
 
-		fzf "${fzf_options_default[@]}" "${fzf_args[@]}"
+		# add input args
+		fzf_options+=("${fzf_args[@]}")
+
+		# TODO: Dynamically put together keybinds-legend, that is shown on above the
+		# search list.
+		# --header $'CTRL-O (open in browser) ╱ ALT-E (open in editor)\n\n' \
+		#
+		# TODO: ( ) add to header legend string for ctrl-d
+
+		# Loop over args and print them
+		# Then, process them and add defaults to header.
+
+		fzf "${fzf_options[@]}"
 
 	}
 
