@@ -1,15 +1,11 @@
 #!/usr/bin/env bash
 
-# todo: (x) PUT OPEN IN BROWSER INTO STANDALONE COMMAND
-
-# TODO: (=) [fzf-get-git-data] standalone command.
-
 # TODO: ( ) put fzf cmd args into arrays so that it becomes easier to deal with
 # them.
 
 # TODO: ( ) Move everything `git` into [git-helpers]
 
-# TODO: Rename this to `fuzzy-picker`?
+# - Rename this to `fuzzy-picker`?
 #
 # TODO: All pickers__* needs to have more explicit names so that we can list
 # them in the master picker without issues
@@ -114,23 +110,12 @@ function fzf_helper() (
 			--bind='ctrl-d:change-preview-window(down,50%,border-top|hidden|)' "$@"
 	}
 
+	# TODO: move into git-helper
 	is_git_repo() {
 		git rev-parse HEAD >/dev/null 2>&1 && return
 		[[ -n $TMUX ]] && tmux display-message "Not in a git repository"
 		return 1
 	}
-
-	# # TODO: This needs to also be standalone, since it is used in [fzf-get-git-data]
-	# # Expects optionally one and only one arg $1
-	# get_git_color() {
-	# 	if [[ -n ${NO_COLOR-} ]]; then
-	# 		echo never
-	# 	elif [[ $# -gt 0 ]] && [[ -n ${FZF_GIT_PREVIEW_COLOR-} ]]; then
-	# 		echo "$FZF_GIT_PREVIEW_COLOR"
-	# 	else
-	# 		echo "${FZF_GIT_COLOR:-always}"
-	# 	fi
-	# }
 
 	# NOTE: This is only used for creating the FZF command so it can stay here.
 	get_fzf_cat_command() {
@@ -162,123 +147,6 @@ function fzf_helper() (
 	}
 
 	close_picker() { exit 0; }
-
-	# ===========================================================================
-	# GIT DATA HELPERS
-	#
-	# These are used in order to define a picker. See pickers below.
-
-	# TODO: Use [git-helper] instead
-	get_git_data() {
-		branches() {
-
-			# --format=<format>
-			#     A string that interpolates %(fieldname) from a ref being shown and the object it points at.
-			#     In addition, the string literal %% renders as % and %xx - where xx are hex digits - renders
-			#     as the character with hex code xx. For example, %00 interpolates to \0 (NUL), %09 to \t
-			#     (TAB), and %0a to \n (LF).
-			#
-			#     When unspecified, <format> defaults to %(objectname) SPC %(objecttype) TAB %(refname).
-
-			git branch "$@" --sort=-committerdate --sort=-HEAD \
-				--format=$'%(HEAD) %(color:yellow)%(refname:short)\t%(color:green)(%(committerdate:relative))\t%(color:blue)%(subject)%(color:reset)' \
-				--color="$(fzf-get-git-color)" | column -ts$'\t'
-		}
-		refs() {
-			git for-each-ref "$@" --sort=-creatordate --sort=-HEAD --color=$(fzf-get-git-color) --format=$'%(if:equals=refs/remotes)%(refname:rstrip=-2)%(then)%(color:magenta)remote-branch%(else)%(if:equals=refs/heads)%(refname:rstrip=-2)%(then)%(color:brightgreen)branch%(else)%(if:equals=refs/tags)%(refname:rstrip=-2)%(then)%(color:brightcyan)tag%(else)%(if:equals=refs/stash)%(refname:rstrip=-2)%(then)%(color:brightred)stash%(else)%(color:white)%(refname:rstrip=-2)%(end)%(end)%(end)%(end)\t%(color:yellow)%(refname:short) %(color:green)(%(creatordate:relative))\t%(color:blue)%(subject)%(color:reset)' | column -ts$'\t'
-		}
-		hashes() {
-			git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=$(fzf-get-git-color) "$@"
-		}
-		case "$1" in
-		branches)
-			echo $'CTRL-O (open in browser) ╱ ALT-A (show all branches)\n'
-			branches
-			;;
-		all-branches)
-			echo $'CTRL-O (open in browser)\n'
-			branches -a
-			;;
-		hashes)
-			echo $'CTRL-O (open in browser) ╱ CTRL-D (diff)\nCTRL-S (toggle sort) ╱ ALT-A (show all hashes)\n'
-			hashes
-			;;
-		all-hashes)
-			echo $'CTRL-O (open in browser) ╱ CTRL-D (diff)\nCTRL-S (toggle sort)\n'
-			hashes --all
-			;;
-		refs)
-			echo $'CTRL-O (open in browser) ╱ ALT-E (examine in editor) ╱ ALT-A (show all refs)\n'
-			refs --exclude='refs/remotes'
-			;;
-		all-refs)
-			echo $'CTRL-O (open in browser) ╱ ALT-E (examine in editor)\n'
-			refs
-			;;
-		nobeep) ;;
-		*) exit 1 ;;
-		esac
-	}
-
-	# ===========================================================================
-	# GIT OPEN IN BROWSER HELPER
-
-	# open_in_browser() {
-	# 	# Calling script with multiple args.
-	#
-	# 	# echo "???"
-	#
-	# 	# __debug_lines "open in browser"
-	#
-	# 	# this is only when the scripting is initiating on shell load.
-	# 	# maybe should unset the vars instead.
-	# 	branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-	# 	if [[ $branch = HEAD ]]; then
-	# 		branch=$(git describe --exact-match --tags 2>/dev/null || git rev-parse --short HEAD)
-	# 	fi
-	#
-	# 	# Only supports GitHub for now
-	# 	case "$1" in
-	# 	commit)
-	# 		hash=$(grep -o "[a-f0-9]\{7,\}" <<<"$2")
-	# 		path=/commit/$hash
-	# 		;;
-	# 	branch | remote-branch)
-	# 		branch=$(sed 's/^[* ]*//' <<<"$2" | cut -d' ' -f1)
-	# 		remote=$(git config branch."${branch}".remote || echo 'origin')
-	# 		branch=${branch#$remote/}
-	# 		path=/tree/$branch
-	# 		;;
-	# 	remote)
-	# 		remote=$2
-	# 		path=/tree/$branch
-	# 		;;
-	# 	file) path=/blob/$branch/$(git rev-parse --show-prefix)$2 ;;
-	# 	tag) path=/releases/tag/$2 ;;
-	# 	*) exit 1 ;;
-	# 	esac
-	#
-	# 	remote=${remote:-$(git config branch."${branch}".remote || echo 'origin')}
-	# 	remote_url=$(git remote get-url "$remote" 2>/dev/null || echo "$remote")
-	#
-	# 	if [[ $remote_url =~ ^git@ ]]; then
-	# 		url=${remote_url%.git}
-	# 		url=${url#git@}
-	# 		url=https://${url/://}
-	# 	elif [[ $remote_url =~ ^http ]]; then
-	# 		url=${remote_url%.git}
-	# 	fi
-	#
-	# 	exit 0
-	#
-	# 	case "$(uname -s)" in
-	# 	Darwin) open "$url$path" ;;
-	# 	*) xdg-open "$url$path" ;;
-	# 	esac
-	#
-	# 	# exit 0
-	# 	close_picker
-	# }
 
 	# ===========================================================================
 	# PICKERS
@@ -348,10 +216,6 @@ function fzf_helper() (
 			cut -c4- | sed 's/.* -> //'
 	}
 
-	# NOTE: !!!
-	# ^ In this command [fzf-helper] is called in the binding, but bindings don't
-	# inherit the environment, and therefore, we need to supply the absolute path
-	# to the command.
 	picker__tags() {
 		is_git_repo || return
 		git tag --sort -version:refname |
@@ -517,19 +381,6 @@ function fzf_helper() (
 		'stashes') action="$item" ;;
 		'tags') action="$item" ;;
 		'worktrees') action="$item" ;;
-		# ====================================
-		# BIND CALLBACK ACTIONS
-		# There are called by the base pickers internally
-		--open-in-browser | '-o')
-			# echo "--open: $*"
-			open_in_browser "$@"
-			;;
-
-			# TODO: remove this; it should go into its own command for getting git data.
-		--get-data | '-d')
-			get_git_data "$@"
-			return
-			;;
 			# ====================================
 			# using stdin -> but i use the --pipe namespace because i dont want to
 			# overwrite --stdin since i dont know how it works with stdinargs.
