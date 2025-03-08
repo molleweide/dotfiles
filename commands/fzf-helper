@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2054
 
 #
 # FUZZY-HELPER
 #
 #
 #
+#
+
+# TODO: ( ) force use of american keyboard, to make alt-key available.
 
 # TODO: ( ) put fzf cmd args into arrays so that it becomes easier to deal with
 # them.
@@ -80,31 +84,18 @@ function fzf_helper() (
 	# FZF HELPER | INTERNAL HELPERS
 	#
 
-	local DOROTHY_USER="$DOROTHY/user"
-
 	DEBUG_FZF="yes"
 
 	local LOG_FILE="$DOROTHY/user/fzf_log.txt"
 
 	local CURRENT_PICKER=''
 
+  # TODO: print data into log file??
 	__debug_lines() {
 		if (("$DEBUG_FZF" == "yes")); then
 			__print_lines "[fzf-helper (current = $CURRENT_PICKER)]: $1"
 		fi
 	}
-
-	# TODO: refactor git stuff into a git-util? or its own helpers section.
-
-	# TODO: options
-	# - [ ] target a specific path
-	# - [ ] just pick files in general.
-
-	# # SOURCES__FZF_HACK_OPEN_IN_BROWSER=${BASH_SOURCE[0]:-${(%):-%x}}
-	# local SOURCES__FZF_HACK_OPEN_IN_BROWSER="$DOROTHY/user/sources/__fzf_action_callbacks.sh"
-	# SOURCES__FZF_HACK_OPEN_IN_BROWSER=$(readlink -f "$SOURCES__FZF_HACK_OPEN_IN_BROWSER" 2>/dev/null ||
-	# 	/usr/bin/ruby --disable-gems -e 'puts File.expand_path(ARGV.first)' "$SOURCES__FZF_HACK_OPEN_IN_BROWSER" 2>/dev/null)
-	# # echo "SOURCES__FZF_HACK_OPEN_IN_BROWSER = $SOURCES__FZF_HACK_OPEN_IN_BROWSER"
 
 	# ===========================================================================
 	# PICKER HELPERS
@@ -113,7 +104,6 @@ function fzf_helper() (
 	# TODO: If not running from `choose` then add:
 	# --bind='ctrl-z:GO BACK TO MASTER PICKER'
 
-	# shellcheck disable=SC2054
 	local FZF_DEFAULT_OPTS=(
 		--height=50% --tmux 90%,70%
 		--layout=reverse --multi --min-height=20 --border
@@ -122,6 +112,15 @@ function fzf_helper() (
 		--preview-window='right,50%,border-left'
 		--bind='ctrl-d:change-preview-window(down,50%,border-top|hidden|)'
 	)
+
+	# TODO: Dynamically put together keybinds-legend, that is shown on above the
+	# search list.
+	# --header $'CTRL-O (open in browser) ╱ ALT-E (open in editor)\n\n' \
+	# >>> In order to do this I need to investigate more how to update how
+	# to go from picker A into picker B, or how to refresh data, since.
+	# TEST: picker__branches use a bind to toggle new picker with additional data.
+	# Try calling `fzf-helper git_branches_all` instead and see what happens,
+	# when I call a new picker from within another picker
 
 	make_picker_cmd() {
 		local fzf_options=() fzf_options_use_defaults='yes' fzf_args=()
@@ -147,14 +146,11 @@ function fzf_helper() (
 		# add input args
 		fzf_options+=("${fzf_args[@]}")
 
-		# TODO: Dynamically put together keybinds-legend, that is shown on above the
-		# search list.
-		# --header $'CTRL-O (open in browser) ╱ ALT-E (open in editor)\n\n' \
-		#
-		# TODO: ( ) add to header legend string for ctrl-d
-
-		# Loop over args and print them
-		# Then, process them and add defaults to header.
+		# # Loop over args and print them
+		# # Then, process them and add defaults to header.
+		# for item in "${fzf_options[@]}"; do
+		#   __print_lines "> $item"
+		# done
 
 		fzf "${fzf_options[@]}"
 
@@ -227,19 +223,21 @@ function fzf_helper() (
 		str_preview_cmd="git log --oneline --graph --date=short --color=$(fzf-get-git-color .) \
             --pretty='format:%C(auto)%cd %h%d %s' \$(sed s/^..// <<< {} | cut -d' ' -f1) --"
 
-		fzf-get-git-data branches |
-			make_picker_cmd -- --ansi \
-				--border-label '🌲 Branches' \
-				--header-lines 2 \
-				--tiebreak begin \
-				--preview-window down,border-top,40% \
-				--color hl:underline,hl+:underline \
-				--no-hscroll \
-				--bind 'ctrl-/:change-preview-window(down,70%|hidden|)' \
-				--bind "ctrl-o:execute-silent(browser branch {})" \
-				--bind 'ctrl-e:change-border-label(🌳 All branches)+reload:fzf-get-git-data all-branches' \
-				--preview "$str_preview_cmd" \
-				"$@" | sed 's/^..//' | cut -d' ' -f1
+		local opts=(
+			--ansi
+			--border-label '🌲 Branches'
+			--header-lines 2
+			--tiebreak begin
+			--preview-window down,border-top,40%
+			--color hl:underline,hl+:underline
+			--no-hscroll
+			--bind 'ctrl-/:change-preview-window(down,70%|hidden|)'
+			--bind "ctrl-o:execute-silent(browser branch {})"
+			--bind 'ctrl-e:change-border-label(🌳 All branches)+reload:fzf-get-git-data all-branches'
+			--preview "$str_preview_cmd"
+		)
+
+		fzf-get-git-data branches | make_picker_cmd -- "${opts[@]}" "$@" | sed 's/^..//' | cut -d' ' -f1
 	}
 
 	picker__files() {
@@ -274,8 +272,6 @@ function fzf_helper() (
 				--header $'CTRL-O (open in browser)\n\n' \
 				--bind "ctrl-o:execute-silent(browser tag {})" \
 				--preview "git show --color=$(fzf-get-git-color .) {} | $(get_git_pager)" "$@"
-		# --bind "ctrl-o:execute-silent:$DOROTHY_USER/commands/browser tag {}" \
-		# --bind "ctrl-o:execute-silent:fzf-helper --open-in-browser tag {}" \
 	}
 
 	picker__hashes() {
