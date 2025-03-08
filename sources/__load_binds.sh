@@ -249,6 +249,8 @@ if [[ -n "${ZSH_VERSION:-}" ]]; then
 
       __debug_lines "[input = $o -> key = $key | picker name = $picker_name]"
 
+      __debug_lines "$eval_str__zsh_create_func_handle"
+
       # why??
       # make the func handlers available in the shell.
       eval "$eval_str__zsh_create_func_handle"
@@ -286,15 +288,16 @@ fi
 
 # The first char is used for the binding for each (*)
 FZF_GIT_SELECTOR_ACTIONS=(
+  a_hashes
   b_branches
   e_each_ref
   f_files
-  a_hashes
   g_reflogs
+  s_master # this is not firing?!
   r_remotes
-  y_stashes
   t_tags
   w_worktrees
+  y_stashes
 )
 
 __fzf_git_init "${FZF_GIT_SELECTOR_ACTIONS[@]}"
