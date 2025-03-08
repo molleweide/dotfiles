@@ -1,14 +1,31 @@
 #!/usr/bin/env bash
 
+#
+# FUZZY-HELPER
+#
+#
+#
+#
+#
+#
+
 # TODO: ( ) put fzf cmd args into arrays so that it becomes easier to deal with
 # them.
 
 # TODO: ( ) Move everything `git` into [git-helpers]
-
-# - Rename this to `fuzzy-picker`?
 #
+# TODO: Take standard in args -> into picker
+#
+# TODO: Only define the keybind name once:
+# 1. Analyze the --header string and parse out the keybinds in order,
+# 2. Compile the FZF args from this.
+# 3. And create the final fzf command.
+
+# TODO: ( ) Rename this to `fuzzy-picker`?
+
 # TODO: All pickers__* needs to have more explicit names so that we can list
 # them in the master picker without issues
+# Eg. all git pickers need to be prefixed with git_
 
 # TODO: ( ) If no args -> run master picker:
 # ^ Picker that lists all pickers, so that you can have a "master"
@@ -44,10 +61,6 @@
 # https://apple.stackexchange.com/questions/334683/how-to-script-a-global-keyboard-shortcut-in-macos
 # https://unix.stackexchange.com/questions/367632/how-to-programmatically-set-keyboard-shortcut-on-mac
 # https://www.reddit.com/r/shortcuts/comments/ooo4wp/tip_programmatically_creating_shortcuts_on_macos/
-
-# TODO: Dynamically put together keybinds-legend, that is shown on above the
-# search list.
-# --header $'CTRL-O (open in browser) ╱ ALT-E (open in editor)\n\n' \
 
 # Mankier: FZF = https://www.mankier.com/1/fzf#Key/Event_Bindings-Command_Execution
 
@@ -86,38 +99,48 @@ function fzf_helper() (
 	# - [ ] target a specific path
 	# - [ ] just pick files in general.
 
-	# fix: Why does this script require ruby really??
-	# note: this could be moved to a command
-	#
-	# SOURCES__FZF_HACK_OPEN_IN_BROWSER=${BASH_SOURCE[0]:-${(%):-%x}}
-	local SOURCES__FZF_HACK_OPEN_IN_BROWSER="$DOROTHY/user/sources/__fzf_action_callbacks.sh"
-	SOURCES__FZF_HACK_OPEN_IN_BROWSER=$(readlink -f "$SOURCES__FZF_HACK_OPEN_IN_BROWSER" 2>/dev/null ||
-		/usr/bin/ruby --disable-gems -e 'puts File.expand_path(ARGV.first)' "$SOURCES__FZF_HACK_OPEN_IN_BROWSER" 2>/dev/null)
-	# echo "SOURCES__FZF_HACK_OPEN_IN_BROWSER = $SOURCES__FZF_HACK_OPEN_IN_BROWSER"
+	# # SOURCES__FZF_HACK_OPEN_IN_BROWSER=${BASH_SOURCE[0]:-${(%):-%x}}
+	# local SOURCES__FZF_HACK_OPEN_IN_BROWSER="$DOROTHY/user/sources/__fzf_action_callbacks.sh"
+	# SOURCES__FZF_HACK_OPEN_IN_BROWSER=$(readlink -f "$SOURCES__FZF_HACK_OPEN_IN_BROWSER" 2>/dev/null ||
+	# 	/usr/bin/ruby --disable-gems -e 'puts File.expand_path(ARGV.first)' "$SOURCES__FZF_HACK_OPEN_IN_BROWSER" 2>/dev/null)
+	# # echo "SOURCES__FZF_HACK_OPEN_IN_BROWSER = $SOURCES__FZF_HACK_OPEN_IN_BROWSER"
 
 	# ===========================================================================
 	# PICKER HELPERS
 	#
 
-	# Could this use / support multiple fuzzy matchers?
-	picker_cmd() {
-		# put the default key as configurable
-		fzf --height=50% --tmux 90%,70% \
-			--layout=reverse --multi --min-height=20 --border \
-			--border-label-pos=2 \
-			--color='header:italic:underline,label:blue' \
-			--preview-window='right,50%,border-left' \
-			--bind='ctrl-d:change-preview-window(down,50%,border-top|hidden|)' "$@"
+	# shellcheck disable=SC2054
+	local fzf_default_opts=(
+		--height=50% --tmux 90%,70%
+		--layout=reverse --multi --min-height=20 --border
+		--border-label-pos=2
+		--color='header:italic:underline,label:blue'
+		--preview-window='right,50%,border-left'
+		--bind='ctrl-d:change-preview-window(down,50%,border-top|hidden|)'
+	)
+
+	# TODO: Dynamically put together keybinds-legend, that is shown on above the
+	# search list.
+	# --header $'CTRL-O (open in browser) ╱ ALT-E (open in editor)\n\n' \
+
+	# TODO: ( ) rename this to `make_fzf_cmd`
+	# TODO: ( ) allow flag --no-defaults
+	# TODO: ( ) add to header legend string for ctrl-d
+	# TODO: ( ) take args w/while loop
+	make_picker_cmd() {
+		fzf "${fzf_default_opts[@]}" "$@"
 	}
 
-	# TODO: move into git-helper
+	# ===========================================================================
+	# HELPERS | CAN I MOVE THESE TO OTHER COMMANDS???
+	#
+
 	is_git_repo() {
 		git rev-parse HEAD >/dev/null 2>&1 && return
 		[[ -n $TMUX ]] && tmux display-message "Not in a git repository"
 		return 1
 	}
 
-	# NOTE: This is only used for creating the FZF command so it can stay here.
 	get_fzf_cat_command() {
 		if [[ -n ${FZF_GIT_CAT-} ]]; then
 			echo "$FZF_GIT_CAT"
@@ -146,8 +169,6 @@ function fzf_helper() (
 		echo "${pager:-cat}"
 	}
 
-	close_picker() { exit 0; }
-
 	# ===========================================================================
 	# PICKERS
 	#
@@ -158,7 +179,7 @@ function fzf_helper() (
 	# >>> Also, allow for dynamically providing which key should be used, eg. `o`
 	# for opening in browser.
 	#
-	# TODO: ( ) helpers for adding fzf options to the picker_cmd array
+	# TODO: ( ) helpers for adding fzf options to the make_picker_cmd array
 	# 1. First of all, put all options into an array.
 	#     >> "${arr[@]}"
 
@@ -173,11 +194,12 @@ function fzf_helper() (
 		is_git_repo || return
 		local str_preview_cmd
 
+		# move this to git helper?
 		str_preview_cmd="git log --oneline --graph --date=short --color=$(fzf-get-git-color .) \
             --pretty='format:%C(auto)%cd %h%d %s' \$(sed s/^..// <<< {} | cut -d' ' -f1) --"
 
 		fzf-get-git-data branches |
-			picker_cmd --ansi \
+			make_picker_cmd --ansi \
 				--border-label '🌲 Branches' \
 				--header-lines 2 \
 				--tiebreak begin \
@@ -191,7 +213,6 @@ function fzf_helper() (
 				"$@" | sed 's/^..//' | cut -d' ' -f1
 	}
 
-	# Pick single, or multiple, files from current repo.
 	picker__files() {
 		is_git_repo || return
 		local root query=''
@@ -206,7 +227,7 @@ function fzf_helper() (
 				echo :
 			) | sed 's/^/   /'
 		) |
-			picker_cmd -m --ansi --nth 2..,.. \
+			make_picker_cmd -m --ansi --nth 2..,.. \
 				--border-label '📁 Files' \
 				--header $'CTRL-O (open in browser) ╱ ALT-E (open in editor)\n\n' \
 				--bind "ctrl-o:execute-silent(browser file {-1})" \
@@ -219,7 +240,7 @@ function fzf_helper() (
 	picker__tags() {
 		is_git_repo || return
 		git tag --sort -version:refname |
-			picker_cmd --preview-window right,70% \
+			make_picker_cmd --preview-window right,70% \
 				--border-label '📛 Tags' \
 				--header $'CTRL-O (open in browser)\n\n' \
 				--bind "ctrl-o:execute-silent(browser tag {})" \
@@ -231,7 +252,7 @@ function fzf_helper() (
 	picker__hashes() {
 		is_git_repo || return
 		fzf-get-git-data hashes |
-			picker_cmd --ansi --no-sort --bind 'ctrl-s:toggle-sort' \
+			make_picker_cmd --ansi --no-sort --bind 'ctrl-s:toggle-sort' \
 				--border-label '🍡 Hashes' \
 				--header-lines 3 \
 				--color hl:underline,hl+:underline \
@@ -245,7 +266,7 @@ function fzf_helper() (
 	picker__remotes() {
 		is_git_repo || return
 		git remote -v | awk '{print $1 "\t" $2}' | uniq |
-			picker_cmd --tac \
+			make_picker_cmd --tac \
 				--border-label '📡 Remotes' \
 				--header $'CTRL-O (open in browser)\n\n' \
 				--bind "ctrl-o:execute-silent(browser remote {1})" \
@@ -256,7 +277,7 @@ function fzf_helper() (
 
 	picker__stashes() {
 		is_git_repo || return
-		git stash list | picker_cmd \
+		git stash list | make_picker_cmd \
 			--border-label '🥡 Stashes' \
 			--header $'CTRL-X (drop stash)\n\n' \
 			--bind 'ctrl-x:reload(git stash drop -q {1}; git stash list)' \
@@ -267,7 +288,7 @@ function fzf_helper() (
 	# ref logs (it starts with `l` so that we can use `l` as the keybind.
 	picker__reflogs() {
 		is_git_repo || return
-		git reflog --color=$(fzf-get-git-color) --format="%C(blue)%gD %C(yellow)%h%C(auto)%d %gs" | picker_cmd --ansi \
+		git reflog --color=$(fzf-get-git-color) --format="%C(blue)%gD %C(yellow)%h%C(auto)%d %gs" | make_picker_cmd --ansi \
 			--border-label '📒 Reflogs' \
 			--preview "git show --color=$(fzf-get-git-color .) {1} | $(get_git_pager)" "$@" |
 			awk '{print $1}'
@@ -275,7 +296,7 @@ function fzf_helper() (
 
 	picker__each_ref() {
 		is_git_repo || return
-		fzf-get-git-data refs | picker_cmd --ansi \
+		fzf-get-git-data refs | make_picker_cmd --ansi \
 			--nth 2,2.. \
 			--tiebreak begin \
 			--border-label '☘️  Each ref' \
@@ -293,7 +314,7 @@ function fzf_helper() (
 
 	picker__worktrees() {
 		is_git_repo || return
-		git worktree list | picker_cmd \
+		git worktree list | make_picker_cmd \
 			--border-label '🌴 Worktrees' \
 			--header $'CTRL-X (remove worktree)\n\n' \
 			--bind 'ctrl-x:reload(git worktree remove {1} > /dev/null; git worktree list)' \
@@ -312,10 +333,27 @@ function fzf_helper() (
 	# --header "$(get_fzf_heading "You have to select an ACTION")"
 	# "${fzf_base_opts[@]}"
 	picker__default() {
-		__print_lines "${pipe_inputs[@]}" | picker_cmd \
+		__print_lines "${pipe_inputs[@]}" | make_picker_cmd \
 			--border-label '🌴 [Dorothy]: Choose' \
 			--header $'CTRL-X (remove worktree)\n\n' \
 			--cycle
+	}
+
+	# This picker collects all existing pickers and allows you to choose which one
+	# to run.
+	picker__master() {
+		local all_existing_pickers selection
+
+		all_existing_pickers="$(declare -F | awk '{print $3}' | grep '^picker__' | grep -v '^picker__master$')"
+
+		# TODO: run selector for all existing pickers.
+		selection="$(
+			__print_lines "${all_existing_pickers[@]}" | make_picker_cmd \
+				--border-label '🌴 [Dorothy]: All pickers' \
+				--header $'Select which picker to run\n\n'
+		)"
+
+		"$selection"
 	}
 
 	# ===========================================================================
@@ -343,10 +381,17 @@ function fzf_helper() (
 		cat <<-EOF >/dev/stderr
 			ABOUT:
 
-			USAGE:
-			aliases [...<options] [<action>] [-- [...<input>]]
+			Only the last supplied action will be ran.
 
-			ACTIONS:
+			Defaults to running a master picker that lists all existing pickers
+
+			USAGE:
+			aliases [...<options] [<action>] [-- [<action>]]
+
+			PICKERS:
+			$(declare -F | awk '{print $3}' | grep '^picker__')
+
+			OPTIONS:
 
 		EOF
 		if [[ $# -ne 0 ]]; then
@@ -359,32 +404,15 @@ function fzf_helper() (
 	# Arguments
 	#
 
-	# process our own arguments, delegate everything else to stdinargs
 	local item action='' pipe_inputs=()
 	while test "$#" -ne 0; do
 		item="$1"
 		shift
 		case "$item" in
 		'--help' | '-h') help ;;
-		# ====================================
-		# TEST PICKERS
-		'choose_test') action=$item ;;
-		# ====================================
-		# BASE PICKERS
-		# These can be used standalone or from binding.
-		'branches') action=$item ;;
-		'each_ref') action="$item" ;;
-		'files') action="$item" ;;
-		'hashes') action="$item" ;;
-		'reflogs') action="$item" ;;
-		'remotes') action="$item" ;;
-		'stashes') action="$item" ;;
-		'tags') action="$item" ;;
-		'worktrees') action="$item" ;;
-			# ====================================
-			# using stdin -> but i use the --pipe namespace because i dont want to
-			# overwrite --stdin since i dont know how it works with stdinargs.
 		'--pipe')
+			# Using stdin -> but i use the --pipe namespace because i dont want to
+			# overwrite --stdin since i dont know how it works with stdinargs.
 			source "$DOROTHY/sources/stdinargs.bash"
 			function on_input {
 				pipe_inputs+=("$1")
@@ -394,7 +422,20 @@ function fzf_helper() (
 			shift $#
 			break
 			;;
-		*) help "An unrecognised argument was provided: $item" ;;
+		'--')
+			if [[ "$#" -gt 0 ]]; then
+				action=$1
+			else
+				help "Supplying [--] expects a picker name after it"
+			fi
+			shift $#
+			break
+			;;
+		*)
+			# If you supply multiple non flags then the last one will be the action.
+			action="$item"
+			# help "An unrecognised argument was provided: $item"
+			;;
 		esac
 	done
 
@@ -405,11 +446,13 @@ function fzf_helper() (
 	# Check
 	if [[ -z "$action" ]]; then
 		if test "${#pipe_inputs[@]}" -gt 0; then
-			action="default"
+			action="default" # stdin
 		else
-			help 'No action was provided.'
+			picker__master
 		fi
 	fi
+
+	# TODO: Run default picker if only --stdin is used.
 
 	# Run picker
 	if test "$(type -t "picker__$action")" = 'function'; then
