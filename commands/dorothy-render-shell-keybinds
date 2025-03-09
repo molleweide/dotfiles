@@ -1,0 +1,119 @@
+#!/usr/bin/env bash
+
+# NOTE: https://github.com/bevry/dorothy/compare/master...dev/dorothy-new
+
+function dorothy_render_shell_keybinds() (
+	source "$DOROTHY/sources/bash.bash"
+
+  local DOROTHY_KEYBINDS_USER="$DOROTHY/user/keybinds.bash"
+  local DOROTHY_KEYBINDS_DEFAULT="$DOROTHY/keybinds.bash"
+
+	local SUPPORTED_SHELLS=(
+		zsh
+	)
+
+	# =====================================
+	# Arguments
+
+	function help {
+		cat <<-EOF >/dev/stderr
+			ABOUT:
+			Render the final string output that is to be eval'd in order to load
+			each bind in the target [--shell].
+
+			Eg. with ZSH you need to define a custom widget func for each binding
+			that dorothy evals into the environment.
+
+			USAGE:
+
+			      SUPPORTED SHELLS:
+			$(__print_lines "${SUPPORTED_SHELLS[@]}" | awk '{print "    " $1}')
+
+			OPTIONS:
+			--shell=<name>
+
+		EOF
+		if test "$#" -ne 0; then
+			echo-error "$@"
+		fi
+		return 22 # EINVAL 22 Invalid argument
+	}
+
+	# process
+	local option_shell=''
+	while test "$#" -ne 0; do
+		item="$1"
+		shift
+		case "$item" in
+		'--help' | '-h') help ;;
+
+		'--shell='*) option_shell="${item#*=}" ;;
+
+		'--')
+			setup_util_args+=("$@")
+			shift $#
+			break
+			;;
+
+		# generic
+		'--'*) help "An unrecognised flag was provided: $item" ;;
+		*)
+			help "An unrecognised argument was provided: $item"
+			;;
+		esac
+	done
+
+	if [[ -z "$option_shell" ]] || ! is-needle --needle="$option_shell" -- "${SUPPORTED_SHELLS[@]}"; then
+		help "A supported target shell needs to be provided. You provided [$option_shell]."
+	fi
+
+	# =====================================
+	# Action
+
+	local user_key_binds=()
+
+	# bash v3 compat; || true prevents failure due to not finding null delimiter.
+	IFS=$'\n' read -d '' -r -a user_key_binds < <(. "$DOROTHY_KEYBINDS_USER") || true
+
+	# for item in "${user_key_binds[@]}"; do
+	# 	__print_lines "$item"
+	# done
+
+	case "$option_shell" in
+	'bash') ;;
+	'zsh')
+		local kb_line
+		for kb_line in "${user_key_binds[@]}"; do
+			local kb_array=() key picker_name zsh_kb_fn_handle kb_action zsh_eval_str
+			read -r -a kb_array <<<"$kb_line"
+
+			# __print_lines "bind def: ${kb_array[*]}"
+
+			key="${kb_array[0]}"; # TODO: handle multiple keys
+			picker_name="${kb_array[1]}"
+
+			zsh_kb_fn_handle="fzf-git-$picker_name-widget"; kb_action="fzf-helper $picker_name"
+
+			zsh_eval_str="$zsh_kb_fn_handle() { local result=\$($kb_action | __join_keybind_output_for_prompt_injection); echo \"\${result[@]}\"; zle reset-prompt; LBUFFER+=\$result }"
+
+			# __print_lines "zsh eval str: $zsh_eval_str"
+
+			# __debug_lines "[input = $kb_line -> key = $key | picker name = $picker_name]"
+
+			# __debug_lines "$zsh_eval_str"
+
+			# eval "$zsh_eval_str"
+
+			# eval "zle -N $zsh_kb_fn_handle"
+
+			__print_lines "$key" "$zsh_kb_fn_handle" "$zsh_eval_str"
+
+		done
+		;;
+	esac
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	dorothy_render_shell_keybinds "$@"
+fi

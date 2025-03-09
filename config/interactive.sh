@@ -13,7 +13,7 @@ source "$DOROTHY/config/interactive.sh"
 for f in "$DOROTHY/user/sources/"*.sh; do
 
   if [[ "$f" == *"_.sh" ]]; then
-    echo "ignore [$f]"
+    # echo "ignore [$f]"
     continue
   fi
 

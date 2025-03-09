@@ -17,7 +17,7 @@ for f in "$DOROTHY/user/sources/"*.bash; do
     continue
   fi
   if [[ "$f" == *"_.bash" ]]; then
-    echo "ignore [$f]"
+    # echo "ignore [$f]"
     continue
   fi
 

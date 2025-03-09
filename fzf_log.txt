@@ -20,3 +20,6 @@
 [fzf-helper]: Action = master
 [fzf-helper]: Action = hashes
 [fzf-helper]: Action = master
+[fzf-helper]: Action = each_ref
+[fzf-helper]: Action = hashes
+[fzf-helper]: Action = master

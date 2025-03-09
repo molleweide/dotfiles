@@ -79,8 +79,12 @@ __debug_lines(){
 if [[ -n "${ZSH_VERSION:-}" ]]; then
 
 
-  # why???
-  __fzf_git_join_lines() {
+  # NOTE: function responsible for joining data together for injecting output
+  # inte prompt with ZLE.
+  # TODO: ( ) move this to its own command.
+  # !!! Should be able to use `echo-join` here.
+  # >>>> Remember to replace this in all `dorothy-render-shell-keybinds`
+  __join_keybind_output_for_prompt_injection() {
     local line
     while read line; do
       echo -n "${(q)line} "
@@ -90,7 +94,7 @@ if [[ -n "${ZSH_VERSION:-}" ]]; then
   # there is some type of error that I have to figure out.
   set -e
 
-  __fzf_git_init() {
+  __dorothy_zsh__generate_keybinds() {
 
     # local available_funcs=$(declare -f)
     # __print_lines "${available_funcs[@]}"
@@ -107,24 +111,8 @@ if [[ -n "${ZSH_VERSION:-}" ]]; then
 
       local fzf_action="fzf-helper $picker_name"
 
-      # Define function handles that are responsible for:
-      # 1. run the fzf git func
-      # 2. capture results
-      # 3. put the results to the left of cursor with `zle`
+      local eval_str__zsh_create_func_handle="$zsh_bind_func_handle() { local result=\$($fzf_action | __join_keybind_output_for_prompt_injection); echo \"\${result[@]}\"; zle reset-prompt; LBUFFER+=\$result }"
 
-              # TODO: use dorothy command to properly escape the string.
-
-        # echo \"\$result\" >/dev/tty; \
-
-
-      # why???
-      local eval_str__zsh_create_func_handle="$zsh_bind_func_handle() { local result=\$($fzf_action | __fzf_git_join_lines); echo \"\${result[@]}\"; zle reset-prompt; LBUFFER+=\$result }"
-
-      # __debug_lines "[input = $o -> key = $key | picker name = $picker_name]"
-
-      __debug_lines "$eval_str__zsh_create_func_handle"
-
-      # why??
       # make the func handlers available in the shell.
       eval "$eval_str__zsh_create_func_handle"
 
@@ -139,8 +127,6 @@ if [[ -n "${ZSH_VERSION:-}" ]]; then
       #               called.  If no function name is specified, it defaults to the
       #               same name as the widget.  For further information, see the
       #               section `Widgets' below.
-
-      # why ???
       eval "zle -N $zsh_bind_func_handle" # what is the zle command?
 
        # See the section `Zle Builtins' in zshzle(1). -> ZLE BUILTINS
@@ -169,6 +155,8 @@ fi
 #     - the function comes from a command -> then trim out the command and call command.
 #     - is a source/shell function??
 
+dorothy-render-shell-keybinds --shell=zsh
+
 # The first char is used for the binding for each (*)
 FZF_GIT_SELECTOR_ACTIONS=(
   a_hashes
@@ -183,4 +171,4 @@ FZF_GIT_SELECTOR_ACTIONS=(
   y_stashes
 )
 
-__fzf_git_init "${FZF_GIT_SELECTOR_ACTIONS[@]}"
+__dorothy_zsh__generate_keybinds "${FZF_GIT_SELECTOR_ACTIONS[@]}"
