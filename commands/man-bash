@@ -3,7 +3,9 @@
 # TODO: Create a command that makes it easy to select
 # specific sections from the bash man page, also for different versions
 #
+# https://askubuntu.com/questions/444708/is-there-any-manual-to-get-the-list-of-bash-shortcut-keys
 #
+# https://stackoverflow.com/questions/35046794/where-can-i-view-all-my-custom-keybindings-in-bash
 #
 man bash | awk '
 /^   Commands for Moving$/{print_this=1}

@@ -208,11 +208,9 @@ function fzf_helper() (
 	picker__branches() {
 		is_git_repo || return
 		local str_preview_cmd
-
 		# move this to git helper?
 		str_preview_cmd="git log --oneline --graph --date=short --color=$(fzf-get-git-color .) \
             --pretty='format:%C(auto)%cd %h%d %s' \$(sed s/^..// <<< {} | cut -d' ' -f1) --"
-
 		local opts=(
 			--ansi
 			--border-label '🌲 Branches'
@@ -226,8 +224,11 @@ function fzf_helper() (
 			--bind 'ctrl-e:change-border-label(🌳 All branches)+reload:fzf-get-git-data all-branches'
 			--preview "$str_preview_cmd"
 		)
-
 		fzf-get-git-data branches | make_picker_cmd -- "${opts[@]}" "$@" | sed 's/^..//' | cut -d' ' -f1
+	}
+
+	picker__git_branches_all() {
+	  :
 	}
 
 	picker__files() {

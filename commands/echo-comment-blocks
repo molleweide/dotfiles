@@ -132,11 +132,6 @@ function echo_comment_blocks() (
   # FUNCTIONS: MAKE PATTERN-ACTION STATEMENTS
   # =======================================================
 
-  local test='BEGIN { prev = "" };
-  { curr = $1; if (curr != prev && NR > 1) { print "---------"; prev = curr }};
-  /FAIL/ {print "\033[1;31m" $0 "\033[0m"; next}
-  {print "\033[1;32m" $0 "\033[0m"}'
-
   function get_pa__collect_comment() {
     local fs=${1}__FS_COMMENT
     __print_lines "${!fs}"' { comments = comments $0 "\n"; next };'

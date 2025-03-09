@@ -46,6 +46,4 @@ NR == 1 { print $0; next };
   } else {
     print cyan impl yellow version green text status
   }
-};
-
-# {print "\033[1;32m" $0 "\033[0m"}'
+};'

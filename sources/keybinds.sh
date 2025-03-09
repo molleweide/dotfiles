@@ -193,9 +193,6 @@ fi
 #              The part of the buffer that lies to the left of the cursor position.  If it is assigned to, only that part of the
 #              buffer is replaced, and the cursor remains between the new $LBUFFER and the old $RBUFFER.
 
-# TODO: ( ) every line needs to be explicitly commented
-# ^ what is going on.
-#   >>> Make it easy for me to come back to this file after a while
 
 if [[ -n "${ZSH_VERSION:-}" ]]; then
 
@@ -239,15 +236,9 @@ if [[ -n "${ZSH_VERSION:-}" ]]; then
 
 
       # why???
-      local eval_str__zsh_create_func_handle="\
-        $zsh_bind_func_handle() { \
-        local result=\$($fzf_action | __fzf_git_join_lines); \
-        echo \"\${result[@]}\"; \
-        zle reset-prompt; \
-        LBUFFER+=\$result \
-      }"
+      local eval_str__zsh_create_func_handle="$zsh_bind_func_handle() { local result=\$($fzf_action | __fzf_git_join_lines); echo \"\${result[@]}\"; zle reset-prompt; LBUFFER+=\$result }"
 
-      __debug_lines "[input = $o -> key = $key | picker name = $picker_name]"
+      # __debug_lines "[input = $o -> key = $key | picker name = $picker_name]"
 
       __debug_lines "$eval_str__zsh_create_func_handle"
 
@@ -270,9 +261,10 @@ if [[ -n "${ZSH_VERSION:-}" ]]; then
       # why ???
       eval "zle -N $zsh_bind_func_handle" # what is the zle command?
 
-      # why???
-      # I think that it is poorly documented how this syntax works in
-      # the docs.
+       # See the section `Zle Builtins' in zshzle(1). -> ZLE BUILTINS
+       #
+       # Notice that we bind both the sequence with all ctrl chars, and also
+       # the first one being a ctrl leader and then the char.
       for m in emacs vicmd viins; do
         eval "bindkey -M $m '^g^$key' $zsh_bind_func_handle"
         eval "bindkey -M $m '^g$key' $zsh_bind_func_handle"
