@@ -1,13 +1,3 @@
-# NOTE: REFACTOR STRATEGY:
-# - __keybinds.<shell>
-# - command called `__keybind_actions.sh` that hosts a users custom bindings logic.
-# >>> __keybind_actions should also be moved into a dorothy command
-
-# NOTE: This script loads keybinds that map to fzf git selector FZF_GIT_SELECTOR_ACTIONS (*).
-
-# TODO: It feels like the core also should be moved into a dorothy command so
-# that you can use reuse this easilly.
-
 DEBUG_FZF="yes"
 
 __print_lines(){
@@ -20,115 +10,7 @@ __debug_lines(){
       fi
 }
 
-# NOTE: Should these binds be callable if one is not runnig a git command?
-# Eg. should it work to run C-gC-e if the prompt is empty, ie. just triggering
-# the fzf helper standalone.
-
-# echo-style --h1="add git fzf support"
-
-# echo "\$0 = $0"
-# echo "\$- = $-"
-# echo "\$1 = $1"
-# echo "\$2 = $2"
-
-
-# NOTE:
-# list all zsh binds with: bindkey -L
-# -------
-# list of articles on zsh's bindkey:
-# https://jdhao.github.io/2019/06/13/zsh_bind_keys/
-# https://www.thegeekdiary.com/bindkey-command-examples-add-keybindings-to-z-shell/
-
-# =======================================================
-# Load fzf support bindings
-#
-# NOTE: I dont believe anything here calls anything above
-# directly, so this could be kept alone in the source
-# loaders script, and all of the above could be moved to its
-# own lib/files, and further refactored for dorothy purposes.
-
-# NOTE: I believe that we should have an improved system for making keybinds
-# with dorothy so that it is a bit more automated. Maybe, this could go
-# into somekind of keybinds.sh file.
-# BUT i am not sure  all of this should be managed. so now i think that a good
-# way is just to explore how such bindings work and stuff so that we can
-# have some nice extra control bindings in the shell.
-
-
-# =======================================================
-# [BASH] BINDINGS
-# =======================================================
-# man BASH
-#
-# bind [-m keymap] [-lpsvPSVX]
-# bind [-m keymap] [-q function] [-u function] [-r keyseq]
-# bind [-m keymap] -f filename
-# bind [-m keymap] -x keyseq:shell-command
-# bind [-m keymap] keyseq:function-name
-# bind [-m keymap] keyseq:readline-command
-# bind readline-command-line
-#        Display current readline key and function bindings, bind a key sequence to a readline
-#        function or macro, or set a readline variable.  Each non-option argument is a command as
-#        it would appear in a readline initialization file such as .inputrc, but each binding or
-#        command must be passed as a separate argument; e.g., '"\C-x\C-r": re-read-init-file'.
-#        Options, if supplied, have the following meanings:
-#        -m keymap
-#               Use keymap as the keymap to be affected by the subsequent bindings.  Acceptable
-#               keymap names are emacs, emacs-standard, emacs-meta, emacs-ctlx, vi, vi-move,
-#               vi-command, and vi-insert.  vi is equivalent to vi-command (vi-move is also a
-#               synonym); emacs is equivalent to emacs-standard.
-#        -l     List the names of all readline functions.
-#        -p     Display readline function names and bindings in such a way that they can be re-
-#               read.
-#        -P     List current readline function names and bindings.
-#        -s     Display readline key sequences bound to macros and the strings they output in such
-#               a way that they can be re-read.
-#        -S     Display readline key sequences bound to macros and the strings they output.
-#        -v     Display readline variable names and values in such a way that they can be re-read.
-#        -V     List current readline variable names and values.
-#        -f filename
-#               Read key bindings from filename.
-#        -q function
-#               Query about which keys invoke the named function.
-#        -u function
-#               Unbind all keys bound to the named function.
-#        -r keyseq
-#               Remove any current binding for keyseq.
-#        -x keyseq:shell-command
-#               Cause shell-command to be executed whenever keyseq is entered.  When shell-command
-#               is executed, the shell sets the READLINE_LINE variable to the contents of the
-#               readline line buffer and the READLINE_POINT and READLINE_MARK variables to the
-#               current location of the insertion point and the saved insertion point (the mark),
-#               respectively.  The shell assigns any numeric argument the user supplied to the
-#               READLINE_ARGUMENT variable.  If there was no argument, that variable is not set.
-#               If the executed command changes the value of any of READLINE_LINE, READLINE_POINT,
-#               or READLINE_MARK, those new values will be reflected in the editing state.
-#        -X     List all key sequences bound to shell commands and the associated commands in a
-#               format that can be reused as input.
-#
-#        The return value is 0 unless an unrecognized option is given or an error occurred.
-
-if [[ -n "${BASH_VERSION:-}" ]]; then
-
-  __fzf_git_init() {
-    __debug_lines "bash not supported yet"
-    # bind -m emacs-standard '"\er":  redraw-current-line'
-    # bind -m emacs-standard '"\C-z": vi-editing-mode'
-    # bind -m vi-command     '"\C-z": emacs-editing-mode'
-    # bind -m vi-insert      '"\C-z": emacs-editing-mode'
-    #
-    # local o c
-    # for o in "$@"; do
-    #   c=${o:0:1}
-    #   bind -m emacs-standard '"\C-g\C-'$c'": " \C-u \C-a\C-k`_fzf_git_'$o'`\e\C-e\C-y\C-a\C-y\ey\C-h\C-e\er \C-h"'
-    #   bind -m vi-command     '"\C-g\C-'$c'": "\C-z\C-g\C-'$c'\C-z"'
-    #   bind -m vi-insert      '"\C-g\C-'$c'": "\C-z\C-g\C-'$c'\C-z"'
-    #   bind -m emacs-standard '"\C-g'$c'":    " \C-u \C-a\C-k`_fzf_git_'$o'`\e\C-e\C-y\C-a\C-y\ey\C-h\C-e\er \C-h"'
-    #   bind -m vi-command     '"\C-g'$c'":    "\C-z\C-g'$c'\C-z"'
-    #   bind -m vi-insert      '"\C-g'$c'":    "\C-z\C-g'$c'\C-z"'
-    # done
-  }
-fi
+# bindkey: list all keybinds
 
 # =======================================================
 # [ZSH] BINDINGS
@@ -277,6 +159,15 @@ fi
 # =======================================================
 # MAKE BINDINGS
 #
+
+# TODO: export this array / define it in another source file, so that all
+# shell files can use it.
+# If this array is exported through `environment.bash`, then all shells can
+# access it.
+# ( ) put in export location.
+# ( ) analyse if:
+#     - the function comes from a command -> then trim out the command and call command.
+#     - is a source/shell function??
 
 # The first char is used for the binding for each (*)
 FZF_GIT_SELECTOR_ACTIONS=(

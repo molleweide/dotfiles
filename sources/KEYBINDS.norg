@@ -1,0 +1,73 @@
+@document.meta
+title: KEYBINDS
+description:
+authors: hjalmarjakobsson
+categories:
+created: 2025-03-09T03:10:42-0500
+updated: 2025-03-09T03:22:30-0500
+version: 1.1.1
+@end
+
+* dorothy keybinds
+
+  ~ Some CTRL-<key> are captured by the terminal before they reach our binding,
+    eg. Ctrl-S is not mappable for this reason, (at least in alacritty/zsh)
+
+  > Put all keybind user definitions/configs in `environment.bash` so that it
+    becomes accessible later.
+
+  ** TODO:
+
+    *** define leader in `environment.bash`
+
+    *** leader sequence timeout delay?
+
+  @code bash
+
+# NOTE: REFACTOR STRATEGY:
+# - __keybinds.<shell>
+# - command called `__keybind_actions.sh` that hosts a users custom bindings logic.
+# >>> __keybind_actions should also be moved into a dorothy command
+
+# NOTE: This script loads keybinds that map to fzf git selector FZF_GIT_SELECTOR_ACTIONS (*).
+
+# TODO: It feels like the core also should be moved into a dorothy command so
+# that you can use reuse this easilly.
+
+
+# NOTE: Should these binds be callable if one is not runnig a git command?
+# Eg. should it work to run C-gC-e if the prompt is empty, ie. just triggering
+# the fzf helper standalone.
+
+# echo-style --h1="add git fzf support"
+
+# echo "\$0 = $0"
+# echo "\$- = $-"
+# echo "\$1 = $1"
+# echo "\$2 = $2"
+
+
+# NOTE:
+# list all zsh binds with: bindkey -L
+# -------
+# list of articles on zsh's bindkey:
+# https://jdhao.github.io/2019/06/13/zsh_bind_keys/
+# https://www.thegeekdiary.com/bindkey-command-examples-add-keybindings-to-z-shell/
+
+# =======================================================
+# Load fzf support bindings
+#
+# NOTE: I dont believe anything here calls anything above
+# directly, so this could be kept alone in the source
+# loaders script, and all of the above could be moved to its
+# own lib/files, and further refactored for dorothy purposes.
+
+# NOTE: I believe that we should have an improved system for making keybinds
+# with dorothy so that it is a bit more automated. Maybe, this could go
+# into somekind of keybinds.sh file.
+# BUT i am not sure  all of this should be managed. so now i think that a good
+# way is just to explore how such bindings work and stuff so that we can
+# have some nice extra control bindings in the shell.
+
+  @end
+
