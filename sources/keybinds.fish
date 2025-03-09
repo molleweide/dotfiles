@@ -1,29 +1,82 @@
-# if [[ -n "${FISH_VERSION:-}" ]]; then
+# =======================================================
+# [FISH] BINDINGS
 #
-# # FIX: Because `fish` is not posix, this file cant be sourced in fish, and
-# # therefore we are required to split this into multiple files, so that you
-# # can define user keybinds separately.
+# See `man zshzle` for more info.
+# =======================================================
 #
-#   __fzf_git_init() {
-#     # https://fishshell.com/docs/current/cmds/bind.html
-#     #
-#     # I need to just read through this doc so that we can add this shit
-#     # for fish and then have that stuff made for ben later.
-#     __debug_lines "fish shell is not supported yet."
+# zle -N widget [ function ]
+#        Create a user-defined widget.  If there is already a widget with
+#        the specified name, it is overwritten.  When the new widget is
+#        invoked from within the editor, the specified shell function is
+#        called.  If no function name is specified, it defaults to the
+#        same name as the widget.  For further information, see the
+#        section `Widgets' below.
 #
-#     # # bind \cd 'exit'
-#     # local o c
-#     # for o in "$@"; do
-#     #   # local fish_bind_func_handle="fzf-git-$o-widget"
-#     #   local fish_bind_func_handle="_fzf_git_$o"
-#     #   c=${o:0:1}
-#     #   bind "\cg\c$c" "$fish_bind_func_handle"
-#     #   # bind -m emacs-standard '"\C-g\C-'$c'": " \C-u \C-a\C-k`_fzf_git_'$o'`\e\C-e\C-y\C-a\C-y\ey\C-h\C-e\er \C-h"'
-#     #   # bind -m vi-command     '"\C-g\C-'$c'": "\C-z\C-g\C-'$c'\C-z"'
-#     #   # bind -m vi-insert      '"\C-g\C-'$c'": "\C-z\C-g\C-'$c'\C-z"'
-#     #   # bind -m emacs-standard '"\C-g'$c'":    " \C-u \C-a\C-k`_fzf_git_'$o'`\e\C-e\C-y\C-a\C-y\ey\C-h\C-e\er \C-h"'
-#     #   # bind -m vi-command     '"\C-g'$c'":    "\C-z\C-g'$c'\C-z"'
-#     #   # bind -m vi-insert      '"\C-g'$c'":    "\C-z\C-g'$c'\C-z"'
-#     # done
+# =======================================================
+# https://fishshell.com/docs/current/cmds/bind.html
+
+
+# Use [od] to expose hidden special chars
+# echo -n "$line" | od -A n -t x1
+
+# source "$DOROTHY/sources/fish.fish"
+#
+#
+# # bindkey: list all keybinds
+#
+#
+# function __fish_load_binds {
+#
+#   local DEBUG="yes"
+#
+#   __debug_lines(){
+#         if (( "$DEBUG" == "yes" )); then
+#           __print_lines "::: [sources/keybinds.zsh] :::"
+#           __print_lines "$@"
+#         fi
 #   }
-# fi
+#
+#   # If not set, then declaring variables will print them to stdout.
+#   # ^ See `man zshbuiltins`
+#   setopt TYPESET_SILENT
+#
+#   local __kb_collector=()
+#   local __kb_line_count=0
+#
+#   dorothy-render-shell-keybinds --shell=zsh | while read -r line; do
+#     if ! [[ "$line" == $'\0' ]]; then
+#       __kb_collector+=("$line")
+#     else
+#       # process each grouping when a null delimiter is found.
+#       # printf '%s\n' "---------"
+#
+#       # printf '%s\n' "> [${__kb_collector[1]}]"
+#       # printf '%s\n' "> [${__kb_collector[2]}]"
+#       # printf '%s\n' "> [${__kb_collector[3]}]"
+#
+#       local key func_name func_body
+#
+#       key="${__kb_collector[1]}"
+#       func_name="${__kb_collector[2]}"
+#       func_body="${__kb_collector[3]}"
+#
+#       if [[ "$DEBUG" == 'yes' ]] ;then
+#         __debug_lines "key: $key" "func_name: $func_name" "func_body: $func_body"
+#       fi
+#
+#       eval "$func_body"
+#       eval "zle -N $func_name" # register the name as zle command.
+#
+#       for m in emacs vicmd viins; do
+#         eval "bindkey -M $m '^g^$key' $func_name"
+#         eval "bindkey -M $m '^g$key' $func_name"
+#       done
+#
+#       # ------
+#
+#       __kb_collector=() # reset for next iteration
+#     fi
+#   done
+# }
+#
+# __fish_load_binds

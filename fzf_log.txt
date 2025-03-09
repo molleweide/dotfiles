@@ -56,3 +56,5 @@
 [fzf-helper]: Action = git_hashes
 [fzf-helper]: Action = git_reflogs
 [fzf-helper]: Action = git_reflogs
+[fzf-helper]: Action = git_reflogs
+[fzf-helper]: Action = git_hashes

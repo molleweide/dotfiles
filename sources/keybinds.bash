@@ -50,6 +50,10 @@
 #               format that can be reused as input.
 #
 #        The return value is 0 unless an unrecognized option is given or an error occurred.
+#
+# =======================================================
+# https://www.computerhope.com/unix/bash/bind.htm
+
 
 source "$DOROTHY/sources/bash.bash"
 
