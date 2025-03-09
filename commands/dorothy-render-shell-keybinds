@@ -5,8 +5,8 @@
 function dorothy_render_shell_keybinds() (
 	source "$DOROTHY/sources/bash.bash"
 
-  local DOROTHY_KEYBINDS_USER="$DOROTHY/user/keybinds.bash"
-  local DOROTHY_KEYBINDS_DEFAULT="$DOROTHY/keybinds.bash"
+	local DOROTHY_KEYBINDS_USER="$DOROTHY/user/config/keybinds.bash"
+	local DOROTHY_KEYBINDS_DEFAULT="$DOROTHY/config/keybinds.bash"
 
 	local SUPPORTED_SHELLS=(
 		zsh
@@ -68,6 +68,14 @@ function dorothy_render_shell_keybinds() (
 	fi
 
 	# =====================================
+	# Helpers
+
+	__print_grouping() {
+		__print_lines "$@"
+		printf '\0\n'
+	}
+
+	# =====================================
 	# Action
 
 	local user_key_binds=()
@@ -87,26 +95,19 @@ function dorothy_render_shell_keybinds() (
 			local kb_array=() key picker_name zsh_kb_fn_handle kb_action zsh_eval_str
 			read -r -a kb_array <<<"$kb_line"
 
-			# __print_lines "bind def: ${kb_array[*]}"
+			# TODO: handle multiple keys
+			key="${kb_array[0]}"
 
-			key="${kb_array[0]}"; # TODO: handle multiple keys
 			picker_name="${kb_array[1]}"
 
-			zsh_kb_fn_handle="fzf-git-$picker_name-widget"; kb_action="fzf-helper $picker_name"
+			zsh_kb_fn_handle="fzf-git-$picker_name-widget"
+			kb_action="fzf-helper $picker_name"
 
 			zsh_eval_str="$zsh_kb_fn_handle() { local result=\$($kb_action | __join_keybind_output_for_prompt_injection); echo \"\${result[@]}\"; zle reset-prompt; LBUFFER+=\$result }"
 
-			# __print_lines "zsh eval str: $zsh_eval_str"
-
-			# __debug_lines "[input = $kb_line -> key = $key | picker name = $picker_name]"
-
-			# __debug_lines "$zsh_eval_str"
-
-			# eval "$zsh_eval_str"
-
-			# eval "zle -N $zsh_kb_fn_handle"
-
-			__print_lines "$key" "$zsh_kb_fn_handle" "$zsh_eval_str"
+			# use echo-lines
+			__print_grouping "$key" "$zsh_kb_fn_handle" "$zsh_eval_str"
+			# printf '\0\n'
 
 		done
 		;;

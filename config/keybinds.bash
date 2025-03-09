@@ -9,8 +9,8 @@
 # ( ) spec: inject output into prompt/at cursor
 
 
+# <leader> <C-G>
 cat <<-KEYBINDS
-	<leader> <C-G>
 	a hashes
 	b branches
 	e each_ref
