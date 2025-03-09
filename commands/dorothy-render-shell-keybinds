@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# NOTE: https://github.com/bevry/dorothy/compare/master...dev/dorothy-new
-
 function dorothy_render_shell_keybinds() (
 	source "$DOROTHY/sources/bash.bash"
 
@@ -9,8 +7,22 @@ function dorothy_render_shell_keybinds() (
 	local DOROTHY_KEYBINDS_DEFAULT="$DOROTHY/config/keybinds.bash"
 
 	local SUPPORTED_SHELLS=(
+		bash
 		zsh
 	)
+
+	local PROBLEMATIC_KEYS=(
+		"<C-S>" "Interpreted by shells as the Bell control char"
+	)
+
+	local DEBUG='no'
+
+	function __debug {
+		# echo "<[${FUNCNAME[0]}]>"
+		if [[ "$DEBUG" == 'yes' ]]; then
+			__print_lines "$@" >/dev/tty
+		fi
+	}
 
 	# =====================================
 	# Arguments
@@ -87,27 +99,80 @@ function dorothy_render_shell_keybinds() (
 	# 	__print_lines "$item"
 	# done
 
+	# TODO: unique pattern for concatenating the
+
 	case "$option_shell" in
-	'bash') ;;
-	'zsh')
-		local kb_line
+	'bash')
+		local kb_line ensure_unique=()
 		for kb_line in "${user_key_binds[@]}"; do
-			local kb_array=() key picker_name zsh_kb_fn_handle kb_action zsh_eval_str
+			local kb_array=() key kb_action
+
+			# ignore comments
+			if [[ "$kb_line" =~ ^[[:space:]]*# ]]; then
+				continue
+			fi
+
 			read -r -a kb_array <<<"$kb_line"
 
-			# TODO: handle multiple keys
+			__debug "=======================================================" >/dev/tty
+			__debug "[kb render|bash]: line -> [$kb_line]" >/dev/tty
+			__debug "${kb_array[@]}" >/dev/tty
+
 			key="${kb_array[0]}"
 
-			picker_name="${kb_array[1]}"
+			kb_action="${kb_array[@]:1}"
 
-			zsh_kb_fn_handle="fzf-git-$picker_name-widget"
-			kb_action="fzf-helper $picker_name"
+			__print_grouping "$key" "$kb_action"
 
-			zsh_eval_str="$zsh_kb_fn_handle() { local result=\$($kb_action | __join_keybind_output_for_prompt_injection); echo \"\${result[@]}\"; zle reset-prompt; LBUFFER+=\$result }"
+		done
+		;;
+	'zsh')
+		local kb_line ensure_unique=()
+		for kb_line in "${user_key_binds[@]}"; do
+			local kb_array=() \
+			key \
+			zsh_kb_fn_handle \
+			zsh_eval_str \
+			kb_action \
+			kb_action_valid_unique_fn_name
 
-			# use echo-lines
+			# ignore comments
+			if [[ "$kb_line" =~ ^[[:space:]]*# ]]; then
+				continue
+			fi
+
+			read -r -a kb_array <<<"$kb_line"
+
+			__debug "=======================================================" >/dev/tty
+			__debug "[kb render]: line -> [$kb_line]" >/dev/tty
+			__debug "${kb_array[@]}" >/dev/tty
+
+			key="${kb_array[0]}"
+
+			kb_action="${kb_array[@]:1}"
+
+			kb_action_valid_unique_fn_name="$(echo-join '_' -- ${kb_array[@]:1})"
+
+			# # Ensure unique names | Actually this might not be what we want. Eg.
+			# # if you bind the same action to to different binds and THAT IS WHAT YOU WANT
+			# while is-needle --needle="$kb_action_valid_unique_fn_name" -- "${ensure_unique[@]}"; do
+			# 	kb_action_valid_unique_fn_name="${kb_action_valid_unique_fn_name}_$RANDOM"
+			# done
+
+			ensure_unique+=("$kb_action_valid_unique_fn_name")
+
+			__debug "key: [$key]"
+			__debug "kb_action: [$kb_action]"
+			__debug "kb_action_valid_unique_fn_name: [$kb_action_valid_unique_fn_name]"
+
+			zsh_kb_fn_handle="dorothy-zsh-keybind-widget__$kb_action_valid_unique_fn_name"
+
+			zsh_eval_str="$zsh_kb_fn_handle() { local result=\$($kb_action | echo-join ' ' --stdin); echo \"\${result[@]}\"; zle reset-prompt; LBUFFER+=\$result }"
+
+			__debug "zsh_kb_fn_handle: [$zsh_kb_fn_handle]"
+			__debug "zsh_eval_str: [$zsh_eval_str]"
+
 			__print_grouping "$key" "$zsh_kb_fn_handle" "$zsh_eval_str"
-			# printf '\0\n'
 
 		done
 		;;

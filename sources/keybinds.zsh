@@ -4,17 +4,14 @@
 # See `man zshzle` for more info.
 # =======================================================
 
-#
-# TODO: remove these and use bash.bash instead.
-DEBUG_FZF="yes"
+source "$DOROTHY/sources/zsh.zsh"
 
-__print_lines(){
-        printf "%s\n" "$1"
-      }
+DEBUG="yes"
 
 __debug_lines(){
-      if (( "$DEBUG_FZF" == "yes" )); then
-        __print_lines "[sources/load_binds]: $1"
+      if (( "$DEBUG" == "yes" )); then
+        __print_lines "::: [sources/keybinds.zsh] :::"
+        __print_lines "$@"
       fi
 }
 
@@ -32,8 +29,6 @@ __join_keybind_output_for_prompt_injection() {
 
 __dorothy_zsh__generate_keybinds() {
 
-  # local available_funcs=$(declare -f)
-  # __print_lines "${available_funcs[@]}"
 
   local m o
   for o in "$@"; do
@@ -82,57 +77,67 @@ __dorothy_zsh__generate_keybinds() {
 #        same name as the widget.  For further information, see the
 #        section `Widgets' below.
 
-__kb_collector=()
+# Use [od] to expose hidden special chars
+# echo -n "$line" | od -A n -t x1
 
-# line: y
-# line: fzf-git-stashes-widget
-# line: fzf-git-stashes-widget() { local result=$(fzf-helper stashes | __join_keybind_output_for_prompt_injection); echo "${result[@]}"; zle reset-prompt; LBUFFER+=$result }
-dorothy-render-shell-keybinds --shell=zsh | while read -r line; do
-  # echo -n "$line" | od -A n -t x1
+function __zsh_load_binds {
 
-  # # testing
-  # [[ "$__kb_line_count" -eq 0 ]] && echo "keybinds.zsh first line"
-  # __kb_line_count=$((__kb_line_count + 1))
+  # If not set, then declaring variables will print them to stdout.
+  # ^ See `man zshbuiltins`
+  setopt TYPESET_SILENT
 
-  __kb_collector+=("$line")
+  local __kb_collector=()
+  local __kb_line_count=0
 
-  # if [[ "$line" == *$'\0\n'* ]]; then
-  if [[ "$line" == $'\0' ]]; then
-    printf '%s\n' "${__kb_collector[@]}" "---------"
+  dorothy-render-shell-keybinds --shell=zsh | while read -r line; do
+    if ! [[ "$line" == $'\0' ]]; then
+      __kb_collector+=("$line")
+    else
+      # process each grouping when a null delimiter is found.
+      # printf '%s\n' "---------"
 
-    # eval "$eval_str__zsh_create_func_handle"
+      # printf '%s\n' "> [${__kb_collector[1]}]"
+      # printf '%s\n' "> [${__kb_collector[2]}]"
+      # printf '%s\n' "> [${__kb_collector[3]}]"
 
-    # eval "zle -N $zsh_bind_func_handle" # what is the zle command?
+      local key func_name func_body
 
-    # for m in emacs vicmd viins; do
-    #   eval "bindkey -M $m '^g^$key' $zsh_bind_func_handle"
-    #   eval "bindkey -M $m '^g$key' $zsh_bind_func_handle"
-    # done
+      key="${__kb_collector[1]}"
+      func_name="${__kb_collector[2]}"
+      func_body="${__kb_collector[3]}"
 
+      if [[ "$DEBUG" == 'yes' ]] ;then
+        __debug_lines "key: $key" "func_name: $func_name" "func_body: $func_body"
+      fi
 
-    __kb_collector=() # reset for next iteration
-  fi
+      eval "$func_body"
+      eval "zle -N $func_name" # register the name as zle command.
 
+      for m in emacs vicmd viins; do
+        eval "bindkey -M $m '^g^$key' $func_name"
+        eval "bindkey -M $m '^g$key' $func_name"
+      done
 
-done # < <(dorothy-render-shell-keybinds --shell=zsh)
+      # ------
 
-# TODO:
-# 1. capture output of dorothy render
-# 2. pass to func
-# 3. parse array data and create binds
+      __kb_collector=() # reset for next iteration
+    fi
+  done
+}
 
-# The first char is used for the binding for each (*)
-FZF_GIT_SELECTOR_ACTIONS=(
-  a_hashes
-  b_branches
-  e_each_ref
-  f_files
-  g_reflogs
-  s_master # this is not firing?!
-  r_remotes
-  t_tags
-  w_worktrees
-  y_stashes
-)
+__zsh_load_binds
 
-__dorothy_zsh__generate_keybinds "${FZF_GIT_SELECTOR_ACTIONS[@]}"
+# # The first char is used for the binding for each (*)
+# FZF_GIT_SELECTOR_ACTIONS=(
+#   a_hashes
+#   b_branches
+#   e_each_ref
+#   f_files
+#   g_reflogs
+#   s_master # this is not firing?!
+#   r_remotes
+#   t_tags
+#   w_worktrees
+#   y_stashes
+# )
+# __dorothy_zsh__generate_keybinds "${FZF_GIT_SELECTOR_ACTIONS[@]}"
