@@ -13,7 +13,13 @@ function pickers_various() (
     # 2. Then, use a function that returns a chain of action statements to update the picker.
 
     local all_existing_pickers selection
+
+    # 1. for each pickers-* command
+    # 2. collect all picker funcs
+
+
     all_existing_pickers="$(declare -F | awk '{print $3}' | grep '^picker__' | grep -v '^picker__master$')"
+
     selection="$(
       __print_lines "${all_existing_pickers[@]}" | run_picker_fzf -- \
         --border-label '🌴 [Dorothy]: All pickers' \
