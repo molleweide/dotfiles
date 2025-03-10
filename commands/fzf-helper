@@ -26,6 +26,10 @@
 # TODO: Use a --preset={name1,name2,name3,...} to pre select various types
 # of stylings.
 
+# ISSUE: ( ) stdinargs is slow with huge amounts of data.
+# fix >>> supply a command that will be ran directly into [run_picker_fzf]
+# instead.
+
 # TODO: ( ) force use of american keyboard, to make alt-key available.
 
 # FIX: ( ) Make pickers work outside of TMUX

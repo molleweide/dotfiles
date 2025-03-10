@@ -3,6 +3,7 @@
 
 function pickers_various() (
   source "$DOROTHY/sources/bash.bash"
+  source "$DOROTHY/user/sources/pickers.bash"
 
   # Collect all pickers, from all [pickers-*] commands and display.
   picker__master() {
@@ -55,11 +56,11 @@ function pickers_various() (
 
   function help {
     cat <<-EOF >/dev/stderr
-			ABOUT:
-			Various pickers
+      ABOUT
 
-			PICKERS:
-			$(declare -F | awk '{print "    " $3}' | grep 'picker__' | sed 's/picker__//')
+      Various pickers
+
+			$(pickers_options_help)
 		EOF
     if [[ $# -ne 0 ]]; then
       echo-error "$@"

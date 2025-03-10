@@ -6,32 +6,32 @@
 # TODO: [ ] issue with declare is the order
 
 function get_definitions() (
-	source "$DOROTHY/sources/bash.bash"
-	__require_array 'mapfile'
+  source "$DOROTHY/sources/bash.bash"
+  __require_array 'mapfile'
 
-	# # TODO: Obtain func contents from arbitrary script.
-	# # See: https://superuser.com/questions/1111219/can-i-get-all-functions-in-a-script-file-using-bash
-	#
-	# # get_fcn_list () {
-	# #   env -i bash --noprofile --norc -c '
-	# #     source "'"$1"'" >/dev/null
-	# #     while read -r line; do
-	# #       echo ${line##* }
-	# #     done < <(declare -F)
-	# #     '
-	# # }
-	# #
-	# # for fcn_name in $(get_fcn_list dome.sh); do
-	# #     echo "$fcn_name"
-	# # done
-	# #
+  # # TODO: Obtain func contents from arbitrary script.
+  # # See: https://superuser.com/questions/1111219/can-i-get-all-functions-in-a-script-file-using-bash
+  #
+  # # get_fcn_list () {
+  # #   env -i bash --noprofile --norc -c '
+  # #     source "'"$1"'" >/dev/null
+  # #     while read -r line; do
+  # #       echo ${line##* }
+  # #     done < <(declare -F)
+  # #     '
+  # # }
+  # #
+  # # for fcn_name in $(get_fcn_list dome.sh); do
+  # #     echo "$fcn_name"
+  # # done
+  # #
 
-	# =================================
-	# Arguments
+  # =================================
+  # Arguments
 
-	# TODO: [ ] Finish the help text.
-	function help {
-		cat <<-EOF >/dev/stderr
+  # TODO: [ ] Finish the help text.
+  function help {
+    cat <<-EOF >/dev/stderr
 			ABOUT:
 			Query code for bash definitions and identifiers.
 			If no path is supplied then query current env/shell.
@@ -68,88 +68,88 @@ function get_definitions() (
 			      --both
 
 		EOF
-		if [[ $# -ne 0 ]]; then
-			echo-error "$@"
-		fi
-		return 22 # EINVAL 22 Invalid argument
-	}
+    if [[ $# -ne 0 ]]; then
+      echo-error "$@"
+    fi
+    return 22 # EINVAL 22 Invalid argument
+  }
 
-	# process
-	local item option_flags='' no_args='no' option_args=() option_inputs=() option_echo_regexp='yes' option_get_func_contsents='no' option_target_func=''
-	local option_exclude_prefix=''
-	if [[ $# -eq 0 ]]; then
-		no_args='yes'
-	fi
-	while [[ $# -ne 0 ]]; do
-		item="$1"
-		shift
-		case "$item" in
-		'--help' | '-h') help ;;
-		'--flags='*) option_flags="${item#*=}" ;;
-		'--global') option_flags+='g' ;;
-		'--ignore-case') option_flags+='i' ;;
-		# currently just default to echo-regexp
-		'--echo-regexp') option_echo_regexp='yes' ;;
-		'--contents') option_get_func_contsents='yes' ;;
-		'--target-func='*) option_target_func="${item#*=}" ;;
-		'--exclude-prefix='*) option_exclude_prefix="${item#*=}" ;;
-		'--')
-			option_inputs+=("$@")
-			shift $#
-			break
-			;;
-		*) option_args+=("$item") ;;
-		esac
-	done
+  # process
+  local item option_flags='' no_args='no' option_args=() option_inputs=() option_echo_regexp='yes' option_get_func_contsents='no' option_target_func=''
+  local option_exclude_prefix=''
+  if [[ $# -eq 0 ]]; then
+    no_args='yes'
+  fi
+  while [[ $# -ne 0 ]]; do
+    item="$1"
+    shift
+    case "$item" in
+    '--help' | '-h') help ;;
+    '--flags='*) option_flags="${item#*=}" ;;
+    '--global') option_flags+='g' ;;
+    '--ignore-case') option_flags+='i' ;;
+    # currently just default to echo-regexp
+    '--echo-regexp') option_echo_regexp='yes' ;;
+    '--contents') option_get_func_contsents='yes' ;;
+    '--target-func='*) option_target_func="${item#*=}" ;;
+    '--exclude-prefix='*) option_exclude_prefix="${item#*=}" ;;
+    '--')
+      option_inputs+=("$@")
+      shift $#
+      break
+      ;;
+    *) option_args+=("$item") ;;
+    esac
+  done
 
-	# if no args were given at all, then assume that we want to collect names
-	# from executing script.
-	local exec_path
-	if [[ "$no_args" == 'yes' ]]; then
-		exec_path=$(ps -o command= -p "$PPID" | echo-split ' ' | tail -n 1)
-	elif [[ ${#option_inputs[@]} -eq 0 ]]; then
-		# Check for search pattern
-		help 'No <search> file path(s) were provided.'
-	else
-		# "$1" # "${BASH_SOURCE[0]}"
-		exec_path="${option_inputs[0]}"
-	fi
+  # if no args were given at all, then assume that we want to collect names
+  # from executing script.
+  local exec_path
+  if [[ "$no_args" == 'yes' ]]; then
+    exec_path=$(ps -o command= -p "$PPID" | echo-split ' ' | tail -n 1)
+  elif [[ ${#option_inputs[@]} -eq 0 ]]; then
+    # Check for search pattern
+    help 'No <search> file path(s) were provided.'
+  else
+    # "$1" # "${BASH_SOURCE[0]}"
+    exec_path="${option_inputs[0]}"
+  fi
 
-	# =================================
-	# Action
+  # =================================
+  # Action
 
-	# ----------------------
-	# GET FUNC CONTENTS
+  # ----------------------
+  # GET FUNC CONTENTS
 
-	if [[ "$option_get_func_contsents" == "yes" ]]; then
-		echo "TARGET FUNC: $option_target_func"
-		if [[ -z "$option_target_func" ]]; then
-			help "Obtaining the contents of a function requires passing the target function."
-		fi
+  if [[ "$option_get_func_contsents" == "yes" ]]; then
+    echo "TARGET FUNC: $option_target_func"
+    if [[ -z "$option_target_func" ]]; then
+      help "Obtaining the contents of a function requires passing the target function."
+    fi
 
-		# NOTE: The func name cannot be quoted.
-		# NOTE: declare -F only outputs the func names and attributes.
+    # NOTE: The func name cannot be quoted.
+    # NOTE: declare -F only outputs the func names and attributes.
 
-		# while read -r line; do
-		#   echo ${line##* }
-		# done < <(declare -f)
-		local get_all='
+    # while read -r line; do
+    #   echo ${line##* }
+    # done < <(declare -f)
+    local get_all='
 		    source "'"$exec_path"'" >/dev/null
 		    declare -f
 		    '
 
-		# NOTE: use cat heredoc.
+    # NOTE: use cat heredoc.
 
-		# while read -r line; do
-		#   echo ${line##* }
-		# done < <(declare -f '"$option_target_func"')
-		local get_single='
+    # while read -r line; do
+    #   echo ${line##* }
+    # done < <(declare -f '"$option_target_func"')
+    local get_single='
 		    source "'"$exec_path"'" >/dev/null
 		    declare -f '$option_target_func'
 		    '
 
-		local get_single="$(
-			cat <<-EOF
+    local get_single="$(
+      cat <<-EOF
 				source "$exec_path" >/dev/null
 				declare -f $option_target_func | cat
 
@@ -158,161 +158,166 @@ function get_definitions() (
 				# printf "%s\n" "\${contents[@]}"
 				# echo "\$contents"
 			EOF
-		)"
+    )"
 
-		# local get_single2='
-		#     source "'"$exec_path"'" >/dev/null
-		#     declare -F before_failure_without_after
-		#     '
+    # local get_single2='
+    #     source "'"$exec_path"'" >/dev/null
+    #     declare -F before_failure_without_after
+    #     '
 
-		# echo ${line##* }
-		local get_single3='
+    # echo ${line##* }
+    local get_single3='
 		    source "'"$exec_path"'" >/dev/null
         while read -r line; do
           echo $line
         done < <(declare -f '"$option_target_func"')
 		    '
 
-		local runner="$get_single"
-		__print_lines "------------"
-		echo-style --bold "STRING THAT WILL BE RUN"
-		__print_lines "$runner"
-		__print_lines "------------"
+    local runner="$get_single"
+    __print_lines "------------"
+    echo-style --bold "STRING THAT WILL BE RUN"
+    __print_lines "$runner"
+    __print_lines "------------"
 
-		function run() {
+    function run() {
 
-			# TEST:
-			# Ensure bash -c "$runner" runs in the same execution flow by using eval instead:
-			# According to chat gpt...
-			#
+      # TEST:
+      # Ensure bash -c "$runner" runs in the same execution flow by using eval instead:
+      # According to chat gpt...
+      #
 
-			set -x
-			# env -i bash --noprofile --norc -c "$runner"
-			# env -i bash -c "$runner"
-			bash -c "$runner"
-			set +x
-		}
+      set -x
+      # env -i bash --noprofile --norc -c "$runner"
+      # env -i bash -c "$runner"
+      bash -c "$runner"
+      set +x
+    }
 
-		# NOTE:
+    # NOTE:
 
-		local data
+    local data
 
-		data="$(run)"
-		# run
+    data="$(run)"
+    # run
 
-		echo-style --bold "LENGTH OF DATA: ${#data}"
-		__print_lines "$data"
+    echo-style --bold "LENGTH OF DATA: ${#data}"
+    __print_lines "$data"
 
-		# env -i bash --noprofile --norc -c '
-		#     source "'"$exec_path"'" >/dev/null
-		#     while read -r line; do
-		#       echo ${line##* }
-		#     done < <(declare -f "'"$option_target_func"'")
-		#     '
+    # env -i bash --noprofile --norc -c '
+    #     source "'"$exec_path"'" >/dev/null
+    #     while read -r line; do
+    #       echo ${line##* }
+    #     done < <(declare -f "'"$option_target_func"'")
+    #     '
 
-		# set -x
-		# # --noprofile --norc
-		# env -i bash -c '
-		#     source "'"$exec_path"'" >/dev/null
-		#     declare -f "'"$option_target_func"'"
-		#     '
-		# set +x
+    # set -x
+    # # --noprofile --norc
+    # env -i bash -c '
+    #     source "'"$exec_path"'" >/dev/null
+    #     declare -f "'"$option_target_func"'"
+    #     '
+    # set +x
 
-		# function get_body() {
-		# 	env -i bash --noprofile --norc -c '
-		#     source "'"$exec_path"'" >/dev/null
-		#     while read -r line; do
-		#       echo ${line##* }
-		#     done < <(declare -F "'"$option_target_func"'")
-		#     '
-		# }
-		#
-		# for fcn_name in $(get_body); do
-		#     echo "$fcn_name"
-		# done
+    # function get_body() {
+    # 	env -i bash --noprofile --norc -c '
+    #     source "'"$exec_path"'" >/dev/null
+    #     while read -r line; do
+    #       echo ${line##* }
+    #     done < <(declare -F "'"$option_target_func"'")
+    #     '
+    # }
+    #
+    # for fcn_name in $(get_body); do
+    #     echo "$fcn_name"
+    # done
 
-		# __print_lines "$get_single"
+    # __print_lines "$get_single"
 
-		return 0
-	fi
+    return 0
+  fi
 
-	# ----------------------
-	# GET ID'S
+  # ----------------------
+  # GET ID'S
 
-	# FIX: [ ] named caputers are actually used in config-helper.
-	#       Add this to the echo-regexp js patterns.
-	# FIX: Support
-	# [ ] sed
-	# [ ] standard grep
-	# [ ] ripgrep
+  # FIX: [ ] named caputers are actually used in config-helper.
+  #       Add this to the echo-regexp js patterns.
+  # FIX: Support
+  # [ ] sed
+  # [ ] standard grep
+  # [ ] ripgrep
 
-	# TEST: If `nvim` exists or `treesitter` then we should be able to parse
-	# out identifiers efficiently with those.
+  # TEST: If `nvim` exists or `treesitter` then we should be able to parse
+  # out identifiers efficiently with those.
 
-	local fn_regex='' supports_named_captures='no' func_ids_found=()
-	if [[ $option_echo_regexp == 'no' ]]; then
-		# TODO: since ripgrep is the fastest use it to find the func names.
-		if command-exits rg; then
-			:
-		elif command-exists grep; then
-			:
-		elif command-exists sed; then
-			:
-		fi
-	else
-		# JS regexp cheat sheet: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Groups_and_backreferences
-		local fn_pat1="^\s*function\s+([\w_]+)(\(\))?\s*\{" # captures: `function <name>()? {`
-		local fn_pat2="^\s*([\w_]+)\(\)\s*\{"               # captures: `<name>() {`
-		if [[ "$supports_named_captures" == "yes" ]]; then
-			fn_regex="$fn_pat1|$fn_pat2"
-		else
-			fn_regex="$fn_pat1"
-		fi
-		mapfile -t func_ids_found < <(
-			echo-file --raw -- "$exec_path" |
-				echo-regexp -gmon --search="$fn_regex" --replace='$1'
-		)
-	fi
+  # PERF: Using awk is MUCH MUCH faster than echo regexp
+  # Example snippet of how to capture function names
+  # cat "$file" | gawk 'match($0, / *picker__(.*)\(\)/, a) {print a[1]}' |
+  #  grep -v '^master'
 
-	# --------------------------------------------
-	# filter unwanted ids
+  local fn_regex='' supports_named_captures='no' func_ids_found=()
+  if [[ $option_echo_regexp == 'no' ]]; then
+    # TODO: since ripgrep is the fastest use it to find the func names.
+    if command-exits rg; then
+      :
+    elif command-exists grep; then
+      :
+    elif command-exists sed; then
+      :
+    fi
+  else
+    # JS regexp cheat sheet: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Groups_and_backreferences
+    local fn_pat1="^\s*function\s+([\w_]+)(\(\))?\s*\{" # captures: `function <name>()? {`
+    local fn_pat2="^\s*([\w_]+)\(\)\s*\{"               # captures: `<name>() {`
+    if [[ "$supports_named_captures" == "yes" ]]; then
+      fn_regex="$fn_pat1|$fn_pat2"
+    else
+      fn_regex="$fn_pat1"
+    fi
+    mapfile -t func_ids_found < <(
+      echo-file --raw -- "$exec_path" |
+        echo-regexp -gmon --search="$fn_regex" --replace='$1'
+    )
+  fi
 
-	# NOTE: Since this is now running in an isolated command, this block might
-	# be unnecessary.
-	# However, we might always want to exclude definitis in certain commands,
-	# such as this one??
+  # --------------------------------------------
+  # filter unwanted ids
 
-	# FIX: [ ] Move this filter into the `get-definitions` command
+  # NOTE: Since this is now running in an isolated command, this block might
+  # be unnecessary.
+  # However, we might always want to exclude definitis in certain commands,
+  # such as this one??
 
-	# # This should prolly go into a command called echo-filter
-	# local remove_ids=(
-	# 	"render_choose_data"
-	# )
-	local func_names_final=() remove_ids=()
-	for id in "${func_ids_found[@]}"; do
-		local add='yes'
-		local rm_id
+  # FIX: [ ] Move this filter into the `get-definitions` command
 
-		# if [[ "$id" == _* ]]; then
-		if [[ -n "$option_exclude_prefix" && "$id" == "$option_exclude_prefix" ]]; then
-			add='no'
-		else
-			for rm_id in "${remove_ids[@]}"; do
-				if [[ "$rm_id" == "$id" ]]; then
-					add='no'
-				fi
-			done
-		fi
-		if [[ "$add" == 'yes' ]]; then
-			func_names_final+=("$id")
-		fi
-	done
+  # # This should prolly go into a command called echo-filter
+  # local remove_ids=(
+  # 	"render_choose_data"
+  # )
+  local func_names_final=() remove_ids=()
+  for id in "${func_ids_found[@]}"; do
+    local add='yes'
+    local rm_id
 
-	echo-lines -- "${func_names_final[@]}"
+    # if [[ "$id" == _* ]]; then
+    if [[ -n "$option_exclude_prefix" && "$id" == "$option_exclude_prefix" ]]; then
+      add='no'
+    else
+      for rm_id in "${remove_ids[@]}"; do
+        if [[ "$rm_id" == "$id" ]]; then
+          add='no'
+        fi
+      done
+    fi
+    if [[ "$add" == 'yes' ]]; then
+      func_names_final+=("$id")
+    fi
+  done
+
+  echo-lines -- "${func_names_final[@]}"
 
 )
 
 # Fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-	get_definitions "$@"
+  get_definitions "$@"
 fi

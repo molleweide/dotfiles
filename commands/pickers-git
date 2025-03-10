@@ -7,6 +7,7 @@
 
 function pickers_git() (
   source "$DOROTHY/sources/bash.bash"
+  source "$DOROTHY/user/sources/pickers.bash"
 
   # ===========================================================================
   # HELPERS
@@ -212,24 +213,11 @@ function pickers_git() (
 
   function help {
     cat <<-EOF >/dev/stderr
-			...load pickers help file.
+      ABOUT
 
-					ABOUT:
+      Various pickers
 
-					      1. Run git pickers.
-					      2. <action> is the picker name
-					      3. Options will be passed down to [fzf-helper]
-
-					USAGE:
-
-					pickers-* [...<options>] <action>
-
-					ACTIONS/PICKERS:
-					$(declare -F | awk '{print "    " $3}' | grep 'picker__' | sed 's/picker__//')
-
-					OPTIONS:
-					    Options will be forwarded to [fzf]
-
+			$(pickers_options_help)
 		EOF
     if [[ $# -ne 0 ]]; then
       echo-error "$@"
