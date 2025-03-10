@@ -21,7 +21,10 @@
 # https://unix.stackexchange.com/questions/367632/how-to-programmatically-set-keyboard-shortcut-on-mac
 # https://www.reddit.com/r/shortcuts/comments/ooo4wp/tip_programmatically_creating_shortcuts_on_macos/
 
-# TODO: ( ) rename this file to [pickers]
+# TODO: ( ) rename this file to [picker-helper] ???
+
+# TODO: It might be possible to move the help and args processing to [sources/pickers.bash]
+# Since it will probably be the same for all files.
 
 # TODO: Use a --preset={name1,name2,name3,...} to pre select various types
 # of stylings.
@@ -94,6 +97,8 @@ function fzf_helper() (
   # via FZF actions.
 
   # ---------------------------------
+
+  # TODO: Make this into different "presets" that you can pass.
 
   local FZF_DEFAULT_OPTS=(
     --height=50% --tmux 90%,70%
@@ -194,8 +199,8 @@ function fzf_helper() (
 			  [ ] skim
 			  [ ] nucleo
 
-			ACTIONS/PICKERS:
-			$(declare -F | awk '{print "    " $3}' | grep 'picker__' | sed 's/picker__//')
+			PICKERS:
+			...todo; reuse the collector from picker__master.
 
 			OPTIONS:
 

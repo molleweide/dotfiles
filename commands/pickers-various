@@ -12,6 +12,9 @@ function pickers_various() (
     # 1. All pickers above need to take args so that one can choose to only get their options.
     # 2. Then, use a function that returns a chain of action statements to update the picker.
 
+    # TODO: move this into an existing file so that we can list all pickers
+    # in the [pickers-helper] file?
+
     local all_existing_pickers selection pickers_files=() picker_cmds=()
 
     mapfile -t pickers_files < <(find "$DOROTHY/commands" "$DOROTHY/user/commands" -type f -name "pickers-*")
@@ -54,47 +57,49 @@ function pickers_various() (
   # =====================================
   # Help
 
-  function help {
-    cat <<-EOF >/dev/stderr
-      ABOUT
-
-      Various pickers
-
-			$(pickers_options_help)
-		EOF
-    if [[ $# -ne 0 ]]; then
-      echo-error "$@"
-    fi
-    return 22 # EINVAL 22 Invalid argument
-  }
-
-  # ===========================================================================
-  # Arguments
+  # function help {
+  #   cat <<-EOF >/dev/stderr
+  #     ABOUT
   #
+  #     Various pickers
+  #
+		# 	$(pickers_options_help)
+		# EOF
+  #   if [[ $# -ne 0 ]]; then
+  #     echo-error "$@"
+  #   fi
+  #   return 22 # EINVAL 22 Invalid argument
+  # }
+  #
+  # # ===========================================================================
+  # # Arguments
+  # #
+  #
+  # local item action='' options_flags=()
+  # while test "$#" -ne 0; do
+  #   item="$1"
+  #   shift
+  #   case "$item" in
+  #   '--help' | '-h') help ;;
+  #   '--'*) options_flags+=("${item#*=}") ;;
+  #   *)
+  #     action="$item"
+  #     ;;
+  #   esac
+  # done
+  #
+  # if [[ -z "$action" ]]; then
+  #   help "No action was provided."
+  # fi
+  #
+  # if test "$(type -t "picker__$action")" = 'function'; then
+  #   "picker__$action" "${options_flags[@]}"
+  # else
+  #   echo-style --error="Action [$action] does not exist." >/dev/stderr
+  #   return 78 # ENOSYS 78 Function not implemented
+  # fi
 
-  local item action='' options_flags=()
-  while test "$#" -ne 0; do
-    item="$1"
-    shift
-    case "$item" in
-    '--help' | '-h') help ;;
-    '--'*) options_flags+=("${item#*=}") ;;
-    *)
-      action="$item"
-      ;;
-    esac
-  done
-
-  if [[ -z "$action" ]]; then
-    help "No action was provided."
-  fi
-
-  if test "$(type -t "picker__$action")" = 'function'; then
-    "picker__$action" "${options_flags[@]}"
-  else
-    echo-style --error="Action [$action] does not exist." >/dev/stderr
-    return 78 # ENOSYS 78 Function not implemented
-  fi
+  pickers_args "$@"
 )
 
 # fire if invoked standalone

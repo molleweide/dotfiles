@@ -211,49 +211,51 @@ function pickers_git() (
   # =====================================
   # Help
 
-  function help {
-    cat <<-EOF >/dev/stderr
-      ABOUT
+  # function help {
+  #   cat <<-EOF >/dev/stderr
+  #     ABOUT
+  #
+  #     Various pickers
+  #
+		# 	$(pickers_options_help)
+		# EOF
+  #   if [[ $# -ne 0 ]]; then
+  #     echo-error "$@"
+  #   fi
+  #   return 22 # EINVAL 22 Invalid argument
+  # }
+  #
+  # # ===========================================================================
+  # # Arguments
+  #
+  # # TODO: this will be the same for all pickers-* commands?
+  # # Move to its own command?
+  #
+  # local item action='' options_flags=()
+  # while test "$#" -ne 0; do
+  #   item="$1"
+  #   shift
+  #   case "$item" in
+  #   '--help' | '-h') help ;;
+  #   '--'*) options_flags+=("${item#*=}") ;;
+  #   *)
+  #     action="$item"
+  #     ;;
+  #   esac
+  # done
+  #
+  # if [[ -z "$action" ]]; then
+  #   help "No action was provided."
+  # fi
+  #
+  # if test "$(type -t "picker__$action")" = 'function'; then
+  #   "picker__$action" "${options_flags[@]}"
+  # else
+  #   echo-style --error="Action [$action] does not exist." >/dev/stderr
+  #   return 78 # ENOSYS 78 Function not implemented
+  # fi
 
-      Various pickers
-
-			$(pickers_options_help)
-		EOF
-    if [[ $# -ne 0 ]]; then
-      echo-error "$@"
-    fi
-    return 22 # EINVAL 22 Invalid argument
-  }
-
-  # ===========================================================================
-  # Arguments
-
-  # TODO: this will be the same for all pickers-* commands?
-  # Move to its own command?
-
-  local item action='' options_flags=()
-  while test "$#" -ne 0; do
-    item="$1"
-    shift
-    case "$item" in
-    '--help' | '-h') help ;;
-    '--'*) options_flags+=("${item#*=}") ;;
-    *)
-      action="$item"
-      ;;
-    esac
-  done
-
-  if [[ -z "$action" ]]; then
-    help "No action was provided."
-  fi
-
-  if test "$(type -t "picker__$action")" = 'function'; then
-    "picker__$action" "${options_flags[@]}"
-  else
-    echo-style --error="Action [$action] does not exist." >/dev/stderr
-    return 78 # ENOSYS 78 Function not implemented
-  fi
+  pickers_args "$@"
 )
 
 # fire if invoked standalone
