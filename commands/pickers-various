@@ -2,8 +2,7 @@
 # shellcheck disable=SC2054
 
 function pickers_various() (
-	source "$DOROTHY/sources/bash.bash"
-
+  source "$DOROTHY/sources/bash.bash"
 
   # Collect all pickers, from all [pickers-*] commands and display.
   picker__master() {
@@ -12,113 +11,92 @@ function pickers_various() (
     # 1. All pickers above need to take args so that one can choose to only get their options.
     # 2. Then, use a function that returns a chain of action statements to update the picker.
 
-    local all_existing_pickers selection
+    local all_existing_pickers selection pickers_files=() picker_cmds=()
 
-    # 1. for each pickers-* command
-    # 2. collect all picker funcs
+    mapfile -t pickers_files < <(find "$DOROTHY/commands" "$DOROTHY/user/commands" -type f -name "pickers-*")
 
+    for file in "${pickers_files[@]}"; do
+      local function_names=()
 
-    all_existing_pickers="$(declare -F | awk '{print $3}' | grep '^picker__' | grep -v '^picker__master$')"
+      # TODO: move this to the get-func-definitions file
+      mapfile -t function_names < <(
+        cat "$file" | gawk 'match($0, / *picker__(.*)\(\)/, a) {print a[1]}' |
+          grep -v '^master'
+      )
+
+      # TODO: use printf '%n.ns' to format nicely
+      for fn_name in "${function_names[@]}"; do
+        picker_cmds+=("$(basename "$file") $fn_name")
+      done
+    done
 
     selection="$(
-      __print_lines "${all_existing_pickers[@]}" | run_picker_fzf -- \
-        --border-label '🌴 [Dorothy]: All pickers' \
-        --header $'Select which picker to run\n\n'
+      __print_lines "${picker_cmds[@]}" |
+        fzf-helper \
+          --border-label '🌴 [Dorothy]: All pickers' \
+          --header $'Select which picker to run\n\n' \
+          -- --stdin
     )"
-    "$selection"
+
+    local split_selection
+    read -r -a split_selection <<<"$selection"
+
+    # __print_lines "selection: $selection"
+
+    "${split_selection[@]}"
   }
 
   picker__kmonad_layers() {
     :
   }
 
-	# =====================================
-	# Help
+  # =====================================
+  # Help
 
-	function help {
-		cat <<-EOF >/dev/stderr
+  function help {
+    cat <<-EOF >/dev/stderr
 			ABOUT:
 			Various pickers
 
 			PICKERS:
 			$(declare -F | awk '{print "    " $3}' | grep 'picker__' | sed 's/picker__//')
 		EOF
-		if [[ $# -ne 0 ]]; then
-			echo-error "$@"
-		fi
-		return 22 # EINVAL 22 Invalid argument
-	}
+    if [[ $# -ne 0 ]]; then
+      echo-error "$@"
+    fi
+    return 22 # EINVAL 22 Invalid argument
+  }
 
-	# ===========================================================================
-	# Arguments
-	#
+  # ===========================================================================
+  # Arguments
+  #
 
-	local item action='' pipe_inputs=()
-	while test "$#" -ne 0; do
-		item="$1"
-		shift
-		case "$item" in
-		'--help' | '-h') help ;;
-		'--pipe')
-			# Using stdin -> but i use the --pipe namespace because i dont want to
-			# overwrite --stdin since i dont know how it works with stdinargs.
-			source "$DOROTHY/sources/stdinargs.bash"
-			function on_input {
-				pipe_inputs+=("$1")
-			}
-			# echo "inside --pipe"
-			stdinargs "$@"
-			shift $#
-			break
-			;;
-		'--')
-			# TODO: instead of selecting action here, I should pass additional
-			# args to the picker itself.
-			if [[ "$#" -gt 0 ]]; then
-				action=$1
-			else
-				help "Supplying [--] expects a picker name after it"
-			fi
-			shift $#
-			break
-			;;
-		*)
-			# If you supply multiple non flags then the last one will be the action.
-			action="$item"
-			# help "An unrecognised argument was provided: $item"
-			;;
-		esac
-	done
+  local item action='' options_flags=()
+  while test "$#" -ne 0; do
+    item="$1"
+    shift
+    case "$item" in
+    '--help' | '-h') help ;;
+    '--'*) options_flags+=("${item#*=}") ;;
+    *)
+      action="$item"
+      ;;
+    esac
+  done
 
-	# ===========================================================================
-	# Act / Run pickers
-	#
+  if [[ -z "$action" ]]; then
+    help "No action was provided."
+  fi
 
-	# Check
-	if [[ -z "$action" ]]; then
-		if test "${#pipe_inputs[@]}" -gt 0; then
-			action="default" # stdin
-		else
-			picker__master
-		fi
-	fi
-
-	# TODO: Run default picker if only --stdin is used.
-
-	__debug_lines "Action = $action"
-
-	# Run picker
-	if test "$(type -t "picker__$action")" = 'function'; then
-		"picker__$action"
-		return
-	else
-		echo-style --error="Action [$action] not yet implemented." >/dev/stderr
-		return 78 # ENOSYS 78 Function not implemented
-	fi
+  if test "$(type -t "picker__$action")" = 'function'; then
+    "picker__$action" "${options_flags[@]}"
+  else
+    echo-style --error="Action [$action] does not exist." >/dev/stderr
+    return 78 # ENOSYS 78 Function not implemented
+  fi
 )
 
 # fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-	pickers_various "$@"
+  pickers_various "$@"
 fi
-

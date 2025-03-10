@@ -30,7 +30,7 @@ cat <<-BASH
 		e   pickers-git   each_ref
 		f   pickers-git   files
 		g   pickers-git   reflogs
-		s   fzf-helper    master
+		s   pickers-various    master
 		r   pickers-git   remotes
 		t   pickers-git   tags
 		w   pickers-git   worktrees

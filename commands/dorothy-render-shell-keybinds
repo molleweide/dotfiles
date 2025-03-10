@@ -151,7 +151,9 @@ function dorothy_render_shell_keybinds() (
 
 			kb_action="${kb_array[@]:1}"
 
-			kb_action_valid_unique_fn_name="$(echo-join '_' -- ${kb_array[@]:1})"
+      # NOTE: previously the kb_array expansion was not quoted, incase something
+      # goes wrong...
+			kb_action_valid_unique_fn_name="$(echo-join '_' -- "${kb_array[@]:1}")"
 
 			# # Ensure unique names | Actually this might not be what we want. Eg.
 			# # if you bind the same action to to different binds and THAT IS WHAT YOU WANT

@@ -21,8 +21,6 @@
 # https://unix.stackexchange.com/questions/367632/how-to-programmatically-set-keyboard-shortcut-on-mac
 # https://www.reddit.com/r/shortcuts/comments/ooo4wp/tip_programmatically_creating_shortcuts_on_macos/
 
-# TODO: make master picker work.
-
 # TODO: ( ) rename this file to [pickers]
 
 # TODO: Use a --preset={name1,name2,name3,...} to pre select various types
@@ -270,7 +268,6 @@ function fzf_helper() (
     # call run_picker_fzf
     function on_finish {
       if [[ "${#entries[@]}" -gt 0 ]]; then
-        echo "#entries > 0" >/dev/tty
         echo-lines -- "${entries[@]}" | "$picker_cmd" -- "${option_picker_args[@]}"
       else
         run_picker_fzf "${option_picker_args[@]}"
