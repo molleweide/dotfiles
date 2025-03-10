@@ -1,41 +1,22 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2054
 
+# Rename to pickers-user? or
+
 function pickers_various() (
   source "$DOROTHY/sources/bash.bash"
   source "$DOROTHY/user/sources/pickers.bash"
 
   # Collect all pickers, from all [pickers-*] commands and display.
   picker__master() {
+    local selection
     # todo: echo-comment-blocks to capture the description of each picker.
     # todo: Use TRANSFORM ACTIONS to load the new picker.
     # 1. All pickers above need to take args so that one can choose to only get their options.
     # 2. Then, use a function that returns a chain of action statements to update the picker.
 
-    # TODO: move this into an existing file so that we can list all pickers
-    # in the [pickers-helper] file?
-
-    local all_existing_pickers selection pickers_files=() picker_cmds=()
-
-    mapfile -t pickers_files < <(find "$DOROTHY/commands" "$DOROTHY/user/commands" -type f -name "pickers-*")
-
-    for file in "${pickers_files[@]}"; do
-      local function_names=()
-
-      # TODO: move this to the get-func-definitions file
-      mapfile -t function_names < <(
-        cat "$file" | gawk 'match($0, / *picker__(.*)\(\)/, a) {print a[1]}' |
-          grep -v '^master'
-      )
-
-      # TODO: use printf '%n.ns' to format nicely
-      for fn_name in "${function_names[@]}"; do
-        picker_cmds+=("$(basename "$file") $fn_name")
-      done
-    done
-
     selection="$(
-      __print_lines "${picker_cmds[@]}" |
+      get_all_pickers |
         fzf-helper \
           --border-label '🌴 [Dorothy]: All pickers' \
           --header $'Select which picker to run\n\n' \
@@ -54,50 +35,9 @@ function pickers_various() (
     :
   }
 
-  # =====================================
-  # Help
-
-  # function help {
-  #   cat <<-EOF >/dev/stderr
-  #     ABOUT
-  #
-  #     Various pickers
-  #
-		# 	$(pickers_options_help)
-		# EOF
-  #   if [[ $# -ne 0 ]]; then
-  #     echo-error "$@"
-  #   fi
-  #   return 22 # EINVAL 22 Invalid argument
-  # }
-  #
-  # # ===========================================================================
-  # # Arguments
-  # #
-  #
-  # local item action='' options_flags=()
-  # while test "$#" -ne 0; do
-  #   item="$1"
-  #   shift
-  #   case "$item" in
-  #   '--help' | '-h') help ;;
-  #   '--'*) options_flags+=("${item#*=}") ;;
-  #   *)
-  #     action="$item"
-  #     ;;
-  #   esac
-  # done
-  #
-  # if [[ -z "$action" ]]; then
-  #   help "No action was provided."
-  # fi
-  #
-  # if test "$(type -t "picker__$action")" = 'function'; then
-  #   "picker__$action" "${options_flags[@]}"
-  # else
-  #   echo-style --error="Action [$action] does not exist." >/dev/stderr
-  #   return 78 # ENOSYS 78 Function not implemented
-  # fi
+  picker__xdg_config_files() {
+    :
+  }
 
   pickers_args "$@"
 )

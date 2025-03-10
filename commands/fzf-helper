@@ -21,10 +21,9 @@
 # https://unix.stackexchange.com/questions/367632/how-to-programmatically-set-keyboard-shortcut-on-mac
 # https://www.reddit.com/r/shortcuts/comments/ooo4wp/tip_programmatically_creating_shortcuts_on_macos/
 
-# TODO: ( ) rename this file to [picker-helper] ???
-
-# TODO: It might be possible to move the help and args processing to [sources/pickers.bash]
-# Since it will probably be the same for all files.
+# TODO: ( ) rename [fzf-helper] -> [picker]
+# use spectre regex to batch replace all instances
+# or vim quickfix list to replace multi files?
 
 # TODO: Use a --preset={name1,name2,name3,...} to pre select various types
 # of stylings.
@@ -33,29 +32,25 @@
 # fix >>> supply a command that will be ran directly into [run_picker_fzf]
 # instead.
 
-# TODO: ( ) force use of american keyboard, to make alt-key available.
+# TODO: ( ) I need to switch to American keyboard so that I can use ALT key properly.
 
 # FIX: ( ) Make pickers work outside of TMUX
 # ^ No errors are thrown but nothing happens, it seems that some of the
 # standalone commands are relying on $TMUX and return failure.
-
-# TODO: Only define the keybind name once:
-# 1. Analyze the --header string and parse out the keybinds in order,
-# 2. Compile the FZF args from this.
-# 3. And create the final fzf command.
 
 # TODO: (=) SUPPORT OTHER FUZZY MATCHERS
 # fzf [x] already exists in dorothy.
 # [ ] skim
 # [ ] nucleo
 
-# TODO: fzf vi bindings.
+# NOTE: fzf vi bindings.
 # https://github.com/junegunn/fzf/issues/3853
 # junegunn sais emacs bindings are better for input navigation in prompts.
 
-function fzf_helper() (
+function picker() (
   source "$DOROTHY/sources/bash.bash"
   source "$DOROTHY/sources/stdinargs.bash"
+  source "$DOROTHY/user/sources/pickers.bash"
 
   # ===========================================================================
   # FZF HELPER | INTERNAL HELPERS
@@ -119,7 +114,8 @@ function fzf_helper() (
       '--no-defaults')
         fzf_options_use_defaults='no'
         ;;
-      '--')
+        # '--')
+      *)
         fzf_args+=("$@")
         shift $#
         break
@@ -193,6 +189,14 @@ function fzf_helper() (
 			USAGE:
 			fzf-helper [...<picker-options>] [<action>] [-- [...<stdin-options>] [-- [...<item>]]]
 
+			1. picker options
+			2. run_picker_* options
+			  a. this can contain its own -- for handling A. presets etc. B. the actual [bin] options.
+			  ! But as long as [picker] and [run_picker_*] options are unique then B
+			    will fall through properly to the run_ command.
+			3. stdinargs options
+			4. inputs
+
 			SUPPORTED PICKERS
 
 			  [x] fzf
@@ -200,7 +204,7 @@ function fzf_helper() (
 			  [ ] nucleo
 
 			PICKERS:
-			...todo; reuse the collector from picker__master.
+			$(get_all_pickers)
 
 			OPTIONS:
 
@@ -217,6 +221,10 @@ function fzf_helper() (
 
   # ===========================================================================
   # Arguments
+
+  if [[ $# -eq 0 ]]; then
+    help
+  fi
 
   local item action='' option_target_picker='fzf' option_picker_args=() option_stdin_args=()
   while test "$#" -ne 0; do
@@ -299,5 +307,5 @@ function fzf_helper() (
 
 # fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-  fzf_helper "$@"
+  picker "$@"
 fi

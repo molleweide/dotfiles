@@ -1,19 +1,6 @@
 #!/usr/bin/env bash
 
-function pickers_options_help {
-  cat <<-EOF
-		  USAGE:
-		  $(basename "${BASH_SOURCE[1]}") [...<options>] <action>
-
-			PICKERS:
-			$(declare -F | awk '{print "    " $3}' | grep 'picker__' | sed 's/picker__//')
-
-			OPTIONS:
-			    Options are forwarded to [fzf-helper]
-	EOF
-}
-
-# ---------------------------------
+source "$DOROTHY/sources/bash.bash"
 
 function pickers_args {
 
@@ -61,4 +48,26 @@ function pickers_args {
     echo-style --error="Action [$action] does not exist." >/dev/stderr
     return 78 # ENOSYS 78 Function not implemented
   fi
+}
+
+# maybe move this into the [picker] command?
+function get_all_pickers {
+    mapfile -t pickers_files < <(find "$DOROTHY/commands" "$DOROTHY/user/commands" -type f -name "pickers-*")
+
+    for file in "${pickers_files[@]}"; do
+      local function_names=()
+
+      # TODO: move this into get-definitions and use it here instead.
+      mapfile -t function_names < <(
+        cat "$file" | gawk 'match($0, / *picker__(.*)\(\)/, a) {print a[1]}' |
+          grep -v '^master'
+      )
+
+      # TODO: use printf '%n.ns' to format nicely
+      for fn_name in "${function_names[@]}"; do
+        picker_cmds+=("$(basename "$file") $fn_name")
+      done
+    done
+
+    __print_lines "${picker_cmds[@]}"
 }

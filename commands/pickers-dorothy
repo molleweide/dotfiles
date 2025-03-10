@@ -2,15 +2,28 @@
 # shellcheck disable=SC2054
 
 function pickers_dorothy() (
-	source "$DOROTHY/sources/bash.bash"
+  source "$DOROTHY/sources/bash.bash"
   source "$DOROTHY/user/sources/pickers.bash"
 
-	pickers_args "$@"
+  # TODO: ( ) command aliases (DCA's)
+  # TODO: ( ) regular aliases (DRA's)
+  #
+  # TODO: ( ) commands all
+  # TODO: ( ) commands user
+  # TODO: ( ) commands core
+  #
+  # TODO: ( ) sources user
+  # TODO: ( ) sources core
+  #
+  # TODO: ( ) docs
+  #
+  # TODO: ( ) configs user
+  # TODO: ( ) configs core
+
+  pickers_args "$@"
 )
 
 # fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-	pickers_dorothy "$@"
+  pickers_dorothy "$@"
 fi
-
-
