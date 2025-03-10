@@ -53,6 +53,9 @@
 #
 # =======================================================
 # https://www.computerhope.com/unix/bash/bind.htm
+#
+# =======================================================
+# NOTE: Rewrite of BASH man `bind` to make it at least comprehensible.
 
 
 source "$DOROTHY/sources/bash.bash"

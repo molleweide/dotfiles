@@ -1,4 +1,3 @@
-
 #
 # KEYBINDS DEFINITION
 #
@@ -8,7 +7,7 @@
 # TODO:
 # ( ) spec: inject output into prompt/at cursor
 # ( ) use <seq>=<action>??
-# Eg. g "fzf-helper git_branches"
+# Eg. g "pickers-git branches"
 #
 # ??? add a custom name later?? description?
 # <seq> <name> "<command>"
@@ -24,19 +23,18 @@
 
 # <leader> <C-G>
 cat <<-BASH
-  # This is a comment
-  # NOTE: Here it should be [a pickers-git hashes]
-	a fzf-helper git_hashes
-	b fzf-helper git_branches
-	# rsarst
-	e fzf-helper git_each_ref
-	f fzf-helper git_files
-	g fzf-helper git_reflogs
-	s fzf-helper master
-	r fzf-helper git_remotes
-	t fzf-helper git_tags
-	w fzf-helper git_worktrees
-	y fzf-helper git_stashes
-	# Handle double sequence
-	# qw do-something ...
+	  # This is a comment
+		h   pickers-git   hashes
+		b   pickers-git   branches
+		#   rsarst
+		e   pickers-git   each_ref
+		f   pickers-git   files
+		g   pickers-git   reflogs
+		s   fzf-helper    master
+		r   pickers-git   remotes
+		t   pickers-git   tags
+		w   pickers-git   worktrees
+		y   pickers-git   stashes
+		# Handle double sequence
+		# qw do-something ...
 BASH

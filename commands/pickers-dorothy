@@ -5,26 +5,22 @@ function pickers_various() (
 	source "$DOROTHY/sources/bash.bash"
 
 
-  # Collect all pickers, from all [pickers-*] commands and display.
-  picker__master() {
-    # todo: echo-comment-blocks to capture the description of each picker.
-    # todo: Use TRANSFORM ACTIONS to load the new picker.
-    # 1. All pickers above need to take args so that one can choose to only get their options.
-    # 2. Then, use a function that returns a chain of action statements to update the picker.
-
-    local all_existing_pickers selection
-    all_existing_pickers="$(declare -F | awk '{print $3}' | grep '^picker__' | grep -v '^picker__master$')"
-    selection="$(
-      __print_lines "${all_existing_pickers[@]}" | run_picker_fzf -- \
-        --border-label '🌴 [Dorothy]: All pickers' \
-        --header $'Select which picker to run\n\n'
-    )"
-    "$selection"
-  }
-
-  picker__kmonad_layers() {
-    :
-  }
+	# This picker collects all existing pickers and allows you to choose which one
+	# to run.
+	# TODO: echo-comment-blocks to capture the description of each picker.
+	# TODO: Use TRANSFORM ACTIONS to load the new picker.
+	# 1. All pickers above need to take args so that one can choose to only get their options.
+	# 2. Then, use a function that returns a chain of action statements to update the picker.
+	picker__master() {
+		local all_existing_pickers selection
+		all_existing_pickers="$(declare -F | awk '{print $3}' | grep '^picker__' | grep -v '^picker__master$')"
+		selection="$(
+			__print_lines "${all_existing_pickers[@]}" | make_picker_cmd -- \
+				--border-label '🌴 [Dorothy]: All pickers' \
+				--header $'Select which picker to run\n\n'
+		)"
+		"$selection"
+	}
 
 	# =====================================
 	# Help
@@ -115,4 +111,5 @@ function pickers_various() (
 if test "$0" = "${BASH_SOURCE[0]}"; then
 	pickers_various "$@"
 fi
+
 
