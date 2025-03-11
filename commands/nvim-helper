@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+
+nvim_helper() (
+source "$DOROTHY/sources/bash.bash"
+
+	# execute_neovim
+
+	# NOTE:
+	# play around with ways for opening nvim in various ways, so that i start
+	# to use nvim more as a versatile tool rather than just an IDE.
+	#
+	# execute nvim with a special mode
+
+	# TEST:
+	# -   Reads text from standard input until EOF, then opens a buffer with that
+	#     text.  User input is read from standard
+
+	# ( ) pass which version / installation that should be used.
+	# ( ) pass version to use
+	#
+	# ( ) picker grep files and pass selection into quickfix list and launch in
+	# basic mode.
+	#
+	# -q [errorfile]
+	#            QuickFix mode.  Display the first error in errorfile.  If errorfile is omitted, the value of the 'errorfile'
+	#            option is used (defaults to errors.err).  Further errors can be jumped to with the :cnext command.  :help quickfix
+	#
+	#            >> use this to find the error file automatically.
+
+	# NOTE: But most of this stuff could just be put in command aliases...
+	#
+	# ( ) pe specify window layout etc when upon starting, maybe for special files?
+	#
+	# open with a terminal?? this could be a mode and then i set the logic in the
+	# module itself, so it can perform certain startup action based on which mode
+	# is started with.
+	# --mode="advanced" -> open terminal on startup
+
+	# ( ) fuzzy grep sessions before starting?
+
+	# ( ) run with clean env env -i
+
+	# ( ) -P altpath || or run on mult dirs select with fuzzy find grep.
+
+	# NOTE: mode implementation -> run nvim with env -i and pass DOOM_STARTUP_MODE={mode}
+
+	# try use -S for setting the env.
+
+	# start listening to a special location or something?
+
+	# startup time and dump info into dorothy user file.
+
+	# ( ) grep file open at found word linenumber just like how telescope grep
+	# works
+
+	# a lot of this command will be to create pickers for how to open nvim.
+	#
+	# subsequent picker that takes startup pattern?
+
+	# picker open selected files horz/vert stacked.
+
+	# --[no]-swap
+
+	# --open-stdin-eof
+
+	# --error-file=
+	# --tag=
+
+	# --vimrc=
+
+	# TODO: ( ) if doom.mode_is(<mode>|{<modes>}) then do...
+	# > this requires only attaching a function to doom table.
+	# ( ) if doom.mode == <mode>|{<modes>} then ... end
+	# > this would require a meta table.
+
+	local item option_env=() option_nvim_flags=()
+
+	while [[ $# -ne 0 ]]; do
+		item="$1"
+		shift
+		case "$item" in
+		'--help' | '-h') help ;;
+		'--mode'=*) option_env+=(DOOM_STARTUP_MODE "${item#*=}") ;;
+		'--reset-env')
+		  # run neovim with env -i
+		  ;;
+		*)
+			option_nvim_flags+=("$item")
+			;;
+		esac
+	done
+
+	local final_command=(env "${option_env[@]}" nvim "${option_nvim_flags[@]}")
+
+	# echo-join '.' -- "${final_command[@]}"
+	__print_lines "${final_command[@]}"
+
+	# env "$"
+
+)
+
+# fire if invoked standalone
+if [[ $0 == "${BASH_SOURCE[0]}" ]]; then
+	nvim_helper "$@"
+fi

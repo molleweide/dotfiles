@@ -80,6 +80,38 @@
 #   or `bind jk`
 
 
+# NOTE: Ben's demo
+# #!/usr/bin/env bash
+#
+# export entered
+# function fn {
+# 	entered='yes'
+# 	printf '\nentered' >/dev/tty
+# 	#bind -r '\C-m'
+# 	#printf '\n' >/dev/stdin
+# }
+# # function w {
+# # 	while :; do
+# # 		sleep 1
+# # 		if [[ $entered = 'yes' ]]; then
+# # 			printf '\n'
+# # 			break
+# # 		fi
+# # 	done
+# # }
+# bind -x '"\C-M":fn'
+# #read -rei d -p '> ' #< <(w)
+#
+# while :; do
+# 	sleep 1;
+# 	printf '\nwaiting' >/dev/tty
+# 	if [[ ${entered-} = 'yes' ]]; then
+# 		printf '\ndone' >/dev/tty
+# 		break
+# 	fi
+# done
+
+
 # Use [od] to expose hidden special chars
 # echo -n "$line" | od -A n -t x1
 
