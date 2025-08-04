@@ -39,6 +39,11 @@ function pickers_various() (
     :
   }
 
+  # Create a super comprehensible [ps]
+  picker__running_processes() {
+    :
+  }
+
   pickers_args "$@"
 )
 

@@ -55,7 +55,7 @@ function rl() {
 # # 	xq="xbps-query" \
 # # 	# z="zathura" # linux
 #
-# alias e="fg" # Resume background process
+alias e="fg" # Resume background process
 # alias k="clear" # Clear screen
 # alias mm="man man"
 # alias tt="ttyper" # Typing test
@@ -243,28 +243,28 @@ function rl() {
 #
 # alias fh="fff" # File browser
 # alias fj="lf" # File browser
-# alias fk="ranger2" # File browser custom func
+alias fk="ranger_custom" # File browser custom func
 # alias fn="nnn" # File browser
 #
 # # switch cwd on exit
 #
 # # ranger with some extras
 # # - Q to exit to current dir in CLI.
-# function ranger2() {
-#   local IFS=$'\t\n' tempfile ranger_cmd
-#   tempfile="$(mktemp -t tmp.XXXXXX)"
-#   ranger_cmd=(
-#     command
-#     ranger
-#     --cmd='map Q chain shell echo %d > '"$tempfile"'; quitall'
-#   )
-#
-#   "${ranger_cmd[@]}" "$@"
-#   if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n "$(pwd)")" ]]; then
-#     cd -- "$(cat "$tempfile")" || return
-#   fi
-#   command rm -f -- "$tempfile" 2>/dev/null
-# }
+function ranger_custom() {
+  local IFS=$'\t\n' tempfile ranger_cmd
+  tempfile="$(mktemp -t tmp.XXXXXX)"
+  ranger_cmd=(
+    command
+    ranger
+    --cmd='map Q chain shell echo %d > '"$tempfile"'; quitall'
+  )
+
+  "${ranger_cmd[@]}" "$@"
+  if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n "$(pwd)")" ]]; then
+    cd -- "$(cat "$tempfile")" || return
+  fi
+  command rm -f -- "$tempfile" 2>/dev/null
+}
 #
 # # #-----------------------
 # # #---       VIM       ---

@@ -16,18 +16,15 @@
 #   https://gist.github.com/johnallen3d/6c002ef1f4e1e0fc15ce74bfc8390614
 #   https://github.com/mvritz/dotfiles/tree/main/sketchybar
 #   https://github.com/sasha-id/dotfiles/tree/master/sketchybar
+#
+#   https://github.com/FelixKratz/SketchyBar
+#
+#   NOTE: [sketchybar] is the predecessor to [spacebar]
+#
+#   NOTE: https://felixkratz.github.io/SketchyBar/setup
 
-# ============================================
-# TESTS FOR `SETUP_STATUS_BAR`
-
-function setup_status_bar_test() (
-	source "$DOROTHY/sources/bash.bash"
-	echo-segment --h1="TEST: $0"
-	echo-segment --g1="TEST: $0"
-	return 0
-)
-# =====================================
-# MAIN COMMAND `SETUP-STATUS-BAR`
+# simple-bar requires hammerspoon
+# setup-util-hammerspoon
 
 function setup_status_bar() (
 	source "$DOROTHY/sources/bash.bash"
@@ -50,8 +47,11 @@ function setup_status_bar() (
 	# =====================================
 	# Operations
 
-	# TODO: switch bar
-	# use chooose option to select which status bar to use
+	# TODO:
+	# ~ switch bar
+	# ~ uninstall bar
+	# ~ browse bars current/installed/available..
+	#
 
 	if is-mac; then
 		# spacebar
@@ -63,8 +63,18 @@ function setup_status_bar() (
 		# https://github.com/FelixKratz/SketchyBar
 		setup-util --cli="sketchybar" BREW="FelixKratz/formulae/sketchybar"
 
-	# simple-bar requires hammerspoon
-	# setup-util-hammerspoon
+		# TODO: If user config.xdg has spacebar config
+		#               then symlink config.
+		# TODO: Else
+		#           copy config into xdg config
+		mkdir -p ~/.config/sketchybar/plugins
+		cp "$(brew --prefix)/share/sketchybar/examples/sketchybarrc" ~/.config/sketchybar/sketchybarrc
+		cp -r "$(brew --prefix)/share/sketchybar/examples/plugins/" ~/.config/sketchybar/plugins/
+		#
+
+		# TODO: start service
+		brew services start sketchybar
+
 	else
 		if [ "$XDG_SESSION_TYPE" = "x11" ]; then
 			setup-util-polybar

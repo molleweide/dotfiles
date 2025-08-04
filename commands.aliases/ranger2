@@ -6,11 +6,14 @@
 # - Q to exit to current dir in CLI
 # -------------------------------------------------------
 # ARGS: ''
-IFS=$'\t\n' temporary_file ranger_cmd;
-temporary_file="$(mktemp -t tmp.XXXXXX)";
-ranger_cmd=(command ranger --cmd='map Q chain shell echo %d > '"$temporary_file"'; quitall');
-"${ranger_cmd[@]}" "$@";
-if [[ -f "$temporary_file" ]] && [[ "$(cat -- "$temporary_file")" != "$(echo -n "$(pwd)")" ]]; then
-    cd -- "$(cat "$temporary_file")" || return;
-fi;
-command rm -f -- "$temporary_file" 2> /dev/null
+function ranger_dca_custom() {
+	local IFS=$'\t\n' # temporary_file ranger_cmd;
+	temporary_file="$(mktemp -t tmp.XXXXXX)"
+	local ranger_cmd=(command ranger --cmd='map Q chain shell echo %d > '"$temporary_file"'; quitall')
+	"${ranger_cmd[@]}" "$@"
+	if [[ -f "$temporary_file" ]] && [[ "$(cat -- "$temporary_file")" != "$(echo -n "$(pwd)")" ]]; then
+		cd -- "$(cat "$temporary_file")" || return
+	fi
+	command rm -f -- "$temporary_file" 2>/dev/null
+}
+ranger_dca_custom "$@"

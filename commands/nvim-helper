@@ -1,7 +1,21 @@
 #!/usr/bin/env bash
 
+#
+# NVIM HELPER
+#
+
+# TODO: ( ) handle startup mode / doom modes.
+# 1. doom.is_mode
+# 2. doom.mode == ...
+
+# TODO: doom modes
+# - reduced   -> for editing a few files in basic mode, eg from ranger or dorothy edit.
+# - firenvim  -> modules to be loaded with firenvim.
+# - full      -> all enabled modules except for beta
+# - full_beta -> including beta modules / testing modules
+
 nvim_helper() (
-source "$DOROTHY/sources/bash.bash"
+	source "$DOROTHY/sources/bash.bash"
 
 	# execute_neovim
 
@@ -20,6 +34,11 @@ source "$DOROTHY/sources/bash.bash"
 	#
 	# ( ) picker grep files and pass selection into quickfix list and launch in
 	# basic mode.
+
+	picker__grep_qf() {
+		:
+	}
+
 	#
 	# -q [errorfile]
 	#            QuickFix mode.  Display the first error in errorfile.  If errorfile is omitted, the value of the 'errorfile'
@@ -59,6 +78,14 @@ source "$DOROTHY/sources/bash.bash"
 
 	# picker open selected files horz/vert stacked.
 
+	picker__horz_stacked() {
+		:
+	}
+
+	picker__vert_stacked() {
+		:
+	}
+
 	# --[no]-swap
 
 	# --open-stdin-eof
@@ -72,30 +99,99 @@ source "$DOROTHY/sources/bash.bash"
 	# > this requires only attaching a function to doom table.
 	# ( ) if doom.mode == <mode>|{<modes>} then ... end
 	# > this would require a meta table.
+	#
+	# TODO: ( ) Make tests to ensure that the core works properly??
 
-	local item option_env=() option_nvim_flags=()
+	# nvim: Make tests to ensure that the core works properly??
+
+	# =======================================================
+	# Args
+
+	function help {
+		cat <<-EOF >/dev/stderr
+			ABOUT:
+
+			Run [nvim] command with flags or custom environment.
+
+			USAGE:
+			nvim-helper [...<options>]
+
+			ACTIONS/PICKERS:
+			$(declare -F | awk '{print "    " $3}' | grep 'picker__' | sed 's/picker__//')
+
+			OPTIONS:
+
+			--stdin
+			          Pass data and options to a picker with Dorothy's own API wrapper.
+
+			--section=<string>
+			    String can be a comma separated list of module sections. Exclude
+			    sections by prefixing with [!].
+
+			--tags=<string>
+			    String should be a comma separated list of tags. Load only modules
+			    with specific tags, OR, exclude them by prefixing with [!].
+
+
+		EOF
+		if [[ $# -ne 0 ]]; then
+			echo-error "$@"
+		fi
+		return 22 # EINVAL 22 Invalid argument
+	}
+
+	local item option_dry_run='no' option_env=() option_nvim_flags=()
+
+	local option_sections='' option_tags=''
 
 	while [[ $# -ne 0 ]]; do
 		item="$1"
 		shift
 		case "$item" in
 		'--help' | '-h') help ;;
-		'--mode'=*) option_env+=(DOOM_STARTUP_MODE "${item#*=}") ;;
-		'--reset-env')
-		  # run neovim with env -i
-		  ;;
+		'--dry' | '-d') option_dry_run='yes' ;;
+		'--mode'=*) option_env+=("DOOM_STARTUP_MODE=${item#*=}") ;;
+
+		'--sections='*) option_sections="${item#*=}" ;;
+		'--tags='*) option_tags="${item#*=}" ;;
+		'--exclude-sections='*) option_sections="!${item#*=}" ;;
+		'--exclude-tags='*) option_tags="!${item#*=}" ;;
+
+		# '--no-skip-solo'* | '--skip-solo'*)
+		# 	option_confirm_solo="$(get-flag-value --non-affirmative --fallback="$option_confirm_solo" -- "$item")"
+		# 	;;
+
+		'--reset')
+			# run neovim with env -i
+			;;
 		*)
 			option_nvim_flags+=("$item")
 			;;
 		esac
 	done
 
-	local final_command=(env "${option_env[@]}" nvim "${option_nvim_flags[@]}")
+	# CC=gcc-12
+	local nvim_bin=~/.local/share/bob/nvim-bin/nvim
 
-	# echo-join '.' -- "${final_command[@]}"
-	__print_lines "${final_command[@]}"
+	if [[ -n "$option_sections" ]]; then
+		option_env+=("DOOM_LOAD_SECTIONS=$option_sections")
+	fi
+
+	if [[ -n "$option_tags" ]]; then
+		option_env+=("DOOM_LOAD_TAGS=$option_tags")
+	fi
+
+	local final_command=(env "${option_env[@]}" "$nvim_bin" "${option_nvim_flags[@]}")
+
+	echo-join '.' -- "${final_command[*]}"
+
+	# printf '%s ' "${final_command[@]}"
 
 	# env "$"
+
+	if [[ "$option_dry_run" == 'no' ]]; then
+		exec "${final_command[@]}"
+	fi
 
 )
 

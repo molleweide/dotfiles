@@ -20,6 +20,11 @@ function pickers_dorothy() (
   # TODO: ( ) configs user
   # TODO: ( ) configs core
 
+  # pipe debug --x into fzf and allow for fuzzy filtering by various
+  # predicates so that you can quickly narrow down and filter out
+  # irrelevant lines.
+  # eg. only show lines pertainig to function [_ask], or range between line numbers..
+
   pickers_args "$@"
 )
 

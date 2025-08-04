@@ -50,7 +50,6 @@ HOMEBREW_FORMULAS=(
   blueutil
   cabal-install
   calcurse
-  cmacrae/formulae/spacebar
   code-minimap
   cointop
   dbus
