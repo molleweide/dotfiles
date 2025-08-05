@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+function launcher_test_kmonad_fzf() (
+  local launch_cmd="find /Applications -maxdepth 1 -name \"*.app\" | fzf" # > \"$log_file\""
+
+  launcher --string="$launch_cmd"
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+  launcher_test_kmonad_fzf "$@"
+fi

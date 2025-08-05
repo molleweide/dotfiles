@@ -5,23 +5,37 @@
 
 # TODO: choose option select which wm to use
 
+# TODO: Support https://github.com/nikitabobko/AeroSpace
+
 # ============================================
 # TESTS FOR `SETUP_WINDOW_MANAGER`
 
 function setup_window_manager_test() (
-	source "$DOROTHY/sources/bash.bash"
-	echo-segment --h1="TEST: $0"
-	echo-segment --g1="TEST: $0"
-	return 0
+    source "$DOROTHY/sources/bash.bash"
+    echo-segment --h1="TEST: $0"
+    echo-segment --g1="TEST: $0"
+    return 0
 )
 # =====================================
 # MAIN COMMAND `SETUP-WINDOW-MANAGER`
 
-function setup_window_manager() (
-	source "$DOROTHY/sources/bash.bash"
+# TODO: list available window managers
 
-	function help {
-		cat <<-EOF >/dev/stderr
+function setup_window_manager() (
+    source "$DOROTHY/sources/bash.bash"
+
+    local mac_available_window_managers=(
+        "yabai"
+        "aerospace"
+    )
+
+    local linux_available_window_managers=(
+        awesomewm
+        i3
+    )
+
+    function help {
+        cat <<-EOF >/dev/stderr
 			      USAGE:
 			        setup-window-manager ...
 
@@ -29,27 +43,93 @@ function setup_window_manager() (
 			        ...
 
 		EOF
-		if test "$#" -ne 0; then
-			echo-error "$@"
-		fi
-		return 22 # EINVAL 22 Invalid argument
-	}
+        if test "$#" -ne 0; then
+            echo-error "$@"
+        fi
+        return 22 # EINVAL 22 Invalid argument
+    }
 
-	if is-mac; then
-		:
-	else
+    local option_use=''
 
-		if [ "$XDG_SESSION_TYPE" = "x11" ]; then
-			setup-util-bspwm
-		elif [ "$XDG_SESSION_TYPE" = "wayland" ]; then
-			setup-util-sway
-		else
-			echo "Unknown session type or not set."
-		fi
-	fi
+    while test "$#" -ne 0; do
+        item="$1"
+        shift
+        case "$item" in
+        '--help' | '-h') help ;;
+        '--use='*) option_use="${item#*=}" ;;
+        *) help "An unrecognised argument was provided: $item" ;;
+        esac
+    done
+
+    # choose window manager
+    if [[ -z $option_use ]]; then
+        option_use="$(
+            choose --required --linger \
+                --question='Which window manager to setup?' \
+                -- "${mac_available_window_managers[@]}"
+        )"
+    fi
+
+    if is-mac; then
+
+        # TODO: Support https://github.com/FelixKratz/JankyBorders
+        # Window borders were removed from yabai due to too many issues.
+        # https://github.com/koekeishiya/yabai/issues/1889
+        # A more recent project janky borders, to which yabai dev has contributed
+        # to now exists.
+
+        if [[ $option_use == "yabai" ]]; then
+
+            # TODO: ensure other window managers are not used/setup
+            # ask uninstall others?
+
+            setup-util --cli="yabai" BREW="koekeishiya/formulae/yabai"
+
+            if [[ -d "$DOROTHY/user/config.xdg/yabai" ]]; then
+                symlink-helper \
+                    --existing="$DOROTHY/user/config.xdg/yabai" \
+                    --symlink="$XDG_CONFIG_HOME/yabai"
+
+            # else
+            #     mkdir -p ~/.config/sketchybar/plugins
+            #     cp "$(brew --prefix)/share/sketchybar/examples/sketchybarrc" ~/.config/sketchybar/sketchybarrc
+            #     cp -r "$(brew --prefix)/share/sketchybar/examples/plugins/" ~/.config/sketchybar/plugins/
+            fi
+
+            brew services start sketchybar
+        fi
+
+        if [[ $option_use == "aerospace" ]]; then
+            # TODO: ensure other window managers are not used/setup
+            # ask uninstall others?
+
+            setup-util --cli="aerospace" BREW="nikitabobko/tap/aerospace"
+
+            if [[ -d "$DOROTHY/user/config.xdg/aerospace" ]]; then
+                symlink-helper \
+                    --existing="$DOROTHY/user/config.xdg/aerospace" \
+                    --symlink="$XDG_CONFIG_HOME/aerospace"
+            else
+                # i believe that the default config doesnt need to be created.
+                mkdir -p ~/.config/aerospace
+                cp /Applications/AeroSpace.app/Contents/Resources/default-config.toml "$XDG_CONFIG_HOME/aerospace/aerospace.toml"
+            fi
+
+        fi
+
+    else
+
+        if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+            setup-util-bspwm
+        elif [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+            setup-util-sway
+        else
+            echo "Unknown session type or not set."
+        fi
+    fi
 )
 
 # Fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-	setup_window_manager "$@"
+    setup_window_manager "$@"
 fi

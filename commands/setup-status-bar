@@ -23,14 +23,25 @@
 #
 #   NOTE: https://felixkratz.github.io/SketchyBar/setup
 
+# spacebar
+#
+# brew install cmacrae/formulae/spacebar
+# brew services start spacebar
+# https://github.com/Jean-Tinland/simple-bar
 # simple-bar requires hammerspoon
 # setup-util-hammerspoon
 
-function setup_status_bar() (
-	source "$DOROTHY/sources/bash.bash"
+# TODO:
+# ~ switch bar
+# ~ uninstall bar
+# ~ browse bars current/installed/available..
+#
 
-	function help {
-		cat <<-EOF >/dev/stderr
+function setup_status_bar() (
+    source "$DOROTHY/sources/bash.bash"
+
+    function help {
+        cat <<-EOF >/dev/stderr
 			      USAGE:
 			        setup-status-bar ...
 
@@ -38,56 +49,41 @@ function setup_status_bar() (
 			        ...
 
 		EOF
-		if test "$#" -ne 0; then
-			echo-error "$@"
-		fi
-		return 22 # EINVAL 22 Invalid argument
-	}
+        if test "$#" -ne 0; then
+            echo-error "$@"
+        fi
+        return 22 # EINVAL 22 Invalid argument
+    }
 
-	# =====================================
-	# Operations
+    if is-mac; then
+        setup-util --cli="sketchybar" BREW="FelixKratz/formulae/sketchybar"
 
-	# TODO:
-	# ~ switch bar
-	# ~ uninstall bar
-	# ~ browse bars current/installed/available..
-	#
+        if [[ -d "$DOROTHY/user/config.xdg/sketchybar" ]]; then
+            symlink-helper \
+                --existing="$DOROTHY/user/config.xdg/sketchybar" \
+                --symlink="$XDG_CONFIG_HOME/sketchybar"
 
-	if is-mac; then
-		# spacebar
-		#
-		# brew install cmacrae/formulae/spacebar
-		# brew services start spacebar
+        else
+            mkdir -p ~/.config/sketchybar/plugins
+            cp "$(brew --prefix)/share/sketchybar/examples/sketchybarrc" ~/.config/sketchybar/sketchybarrc
+            cp -r "$(brew --prefix)/share/sketchybar/examples/plugins/" ~/.config/sketchybar/plugins/
+        fi
 
-		# https://github.com/Jean-Tinland/simple-bar
-		# https://github.com/FelixKratz/SketchyBar
-		setup-util --cli="sketchybar" BREW="FelixKratz/formulae/sketchybar"
+        brew services start sketchybar
 
-		# TODO: If user config.xdg has spacebar config
-		#               then symlink config.
-		# TODO: Else
-		#           copy config into xdg config
-		mkdir -p ~/.config/sketchybar/plugins
-		cp "$(brew --prefix)/share/sketchybar/examples/sketchybarrc" ~/.config/sketchybar/sketchybarrc
-		cp -r "$(brew --prefix)/share/sketchybar/examples/plugins/" ~/.config/sketchybar/plugins/
-		#
+    else
+        if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+            setup-util-polybar
+        elif [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+            setup-util-waybar
+        else
+            echo "Unknown session type or not set."
+        fi
 
-		# TODO: start service
-		brew services start sketchybar
-
-	else
-		if [ "$XDG_SESSION_TYPE" = "x11" ]; then
-			setup-util-polybar
-		elif [ "$XDG_SESSION_TYPE" = "wayland" ]; then
-			setup-util-waybar
-		else
-			echo "Unknown session type or not set."
-		fi
-
-	fi
+    fi
 )
 
 # Fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-	setup_status_bar "$@"
+    setup_status_bar "$@"
 fi
