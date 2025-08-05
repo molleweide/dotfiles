@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 function launcher_test_() (
-  local launch_cmd="find /Applications -maxdepth 1 -name \"*.app\" | fzf" # > \"$log_file\""
-
-  launcher --string="$launch_cmd"
+  # local launch_cmd="find /Applications -maxdepth 1 -name \"*.app\" | fzf" # > \"$log_file\""
+  # launcher --string="$launch_cmd"
+  launcher -- 'find /Applications -maxdepth 1 -name "*.app" | fzf'
 )
 
 # fire if invoked standalone

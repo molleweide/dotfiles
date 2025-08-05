@@ -25,6 +25,72 @@
 # https://stackoverflow.com/questions/20099333/terminal-command-to-show-connected-displays-monitors-resolutions
 # https://apple.stackexchange.com/questions/162860/how-to-view-current-display-resolution
 
+# MACOS `open` COMMAND
+#
+# The open command opens a file (or a directory or URL), just as if you had double-clicked the file's icon. If no application name is specified, the default application as determined via LaunchServices is used
+# to open the specified files.
+#
+# If the file is in the form of a URL, the file will be opened as a URL.
+#
+# You can specify one or more file names (or pathnames), which are interpreted relative to the shell or Terminal window's current working directory. For example, the following command would open all Word files
+# in the current working directory:
+#
+# open *.doc
+#
+# Opened applications inherit environment variables just as if you had launched the application directly through its full path.  This behavior was also present in Tiger.
+#
+# The options are as follows:
+#
+# -a application
+#     Specifies the application to use for opening the file
+#
+# -b bundle_identifier
+#     Specifies the bundle identifier for the application to use when opening the file
+#
+# -e  Causes the file to be opened with the TextEdit application
+#
+# -t  Causes the file to be opened with the default text editor, as determined via LaunchServices
+#
+# -f  Reads input from standard input and opens the results in the default text editor.  End input by sending EOF character (type Control-D).  Also useful for piping output to open and having it open in the
+#     default text editor.
+#
+# -F  Opens the application "fresh," that is, without restoring windows. Saved persistent state is lost, except for Untitled documents.
+#
+# -W  Causes open to wait until the applications it opens (or that were already open) have exited.  Use with the -n flag to allow open to function as an appropriate app for the $EDITOR environment variable.
+#
+# -R  Reveals the file(s) in the Finder instead of opening them.
+#
+# -n  Open a new instance of the application(s) even if one is already running.
+#
+# -g  Do not bring the application to the foreground.
+#
+# -j  Launches the app hidden.
+#
+# --arch ARCH
+#     Launch with the given cpu architecture type and subtype; ARCH should be one of any, arm, arm64, arm64e, arm64_32, x86_64, x86_64h, i386.  Two integers matching the values for cpu_type_t and cpu_subtype_t
+#     can be specified as integers separated by a '/' character, like "12/13" for CPU_TYPE_ARM/CPU_SUBTYPE_ARM_V8.
+#
+# -h  Searches header locations for a header whose name matches the given string and then opens it.  Pass a full header name (such as NSView.h) for increased performance.
+#
+# -s  For -h, partial or full SDK name to use; if supplied, only SDKs whose names contain the argument value are searched. Otherwise the highest versioned SDK in each platform is used.
+#
+# -u  Opens URL with whatever application claims the url scheme, even if URL also matches a file path
+#
+# --args
+#     All remaining arguments are passed to the opened application in the argv parameter to main().  These arguments are not opened or interpreted by the open tool.
+#
+# --env VAR
+#     Adds VAR to the environment of the launched application.  VAR should be formatted NAME=VALUE or NAME.
+#
+# --stdin PATH
+#     Launches the application with stdin connected to PATH.
+#
+# --stdout PATH
+#     Launches the application with stdout connected to PATH.
+#
+# --stderr PATH
+#     Launches the application with stderr connected to PATH.
+
 function launcher_() (
     source "$DOROTHY/sources/bash.bash"
 
@@ -33,9 +99,13 @@ function launcher_() (
 
     # NOTE: Why do we open alacritty again here?
 
-    local LAUNCHER_DEFAULT_TITLE="Dorothy launcher default title"
-    local launcher_filter="$DOROTHY/user/commands/launcher-filter"
+    local terminal_popup_app="/Applications/Alacritty.app"
+    local forward_terminal_args_title="Dorothy launcher default title"
+
+    # local launcher_filter="$DOROTHY/user/commands/launcher-filter"
+
     local log_file="$DOROTHY/user/commands/launcher.log"
+
     local stdout_file="$DOROTHY/user/commands/launcher--stdout-file"
     local tty_first=$(tty)
     # local popup_storage
@@ -46,11 +116,11 @@ function launcher_() (
 
     # popup_storage="$(
     #   fs-temp \
-    #     --file="${LAUNCHER_DEFAULT_TITLE}_POPUP_CAPTURE"
+    #     --file="${forward_terminal_args_title}_POPUP_CAPTURE"
     # )"
 
-    # # "$LAUNCHER_DEFAULT_TITLE" # only works if last line writes to tmp file?!
-    # selection=$(open -n -a "/Applications/Alacritty.app" --args -t "$LAUNCHER_DEFAULT_TITLE" -e "$launcher_filter")
+    # # "$forward_terminal_args_title" # only works if last line writes to tmp file?!
+    # selection=$(open -n -a "/Applications/Alacritty.app" --args -t "$forward_terminal_args_title" -e "$launcher_filter")
     #
     # NOTE: Here that -e is in this instance the find filter that is passed to
     # fzf
@@ -61,50 +131,6 @@ function launcher_() (
     #
     # LINKS:
     #     https://stackoverflow.com/questions/29510815/how-to-pass-command-line-arguments-to-a-program-run-with-the-open-command
-    #
-    # FLAGS:
-    #     open
-    #         -n  Open a new instance of the application(s) even if one is already running.
-    #         -W  Causes open to wait until the applications it opens (or that were
-    #             already open) have exited.  Use with the -n flag to allow open to function
-    #             as an appropriate app for the $EDITOR environment variable.
-    #         --args
-    #             All remaining arguments are passed to the opened application in the argv parameter to main().  These arguments are not
-    #             opened or interpreted by the open tool.
-    #     alacritty
-    #         -e, --command <COMMAND>...
-    #
-    # NOTE: Because the popup terminal is not associated with the process of the
-    # command running `open`, the solution for storing the data is to use a temp
-    # file.
-    # Look at how the temp files are used in bash.bash.
-
-    local bash_c_launch_filter=(
-        "bash"
-        "-c"
-        "find /Applications -maxdepth 1 -name \"*.app\" | fzf" # > \"$log_file\""
-    )
-
-    # Get focused monitor display height and width
-    # TODO: check if yabai then get values; else use hardcoded values.
-    local PHYSICAL_SCREEN_WIDTH=$(yabai -m query --displays --display | jq .frame.w*2)
-    local PHYSICAL_SCREEN_HEIGHT=$(yabai -m query --displays --display | jq .frame.h*2)
-
-    local TERM_WIDTH=1280
-    local TERM_HEIGHT=1260
-
-    # Apparently this is one way you can do math in bash.
-    let "X=PHYSICAL_SCREEN_WIDTH/2-TERM_WIDTH/2"
-    let "Y=PHYSICAL_SCREEN_HEIGHT/2-TERM_HEIGHT/2"
-
-    local alacritty_default_opts=(
-        -o window.position.x="${X}"
-        -o window.position.y="${Y}"
-        -o window.dimensions.lines=35
-        -o window.dimensions.columns=80
-        -o window.decorations=none
-        -o colors.primary.background="#74B573"
-    )
 
     # =====================================
     # Arguments
@@ -136,26 +162,8 @@ function launcher_() (
         case "$item" in
         '--help' | '-h') help ;;
         '--string='*) option_string="${item#*=}" ;;
-        # TODO: It probably makes more sense to take all args after -- as cmd
-        # args and use this as default, and then only if --string then take the string
-        # param.
-        '--cmd='*) option_cmd="${item#*=}" ;;
-            # '--no-xdg'* | '--xdg'*)
-            # 	option_xdg="$(get-flag-value --affirmative --fallback="$option_xdg" -- "$item")"
-            # 	;;
-            # '--no-touch'* | '--touch'*)
-            # 	option_touch="$(get-flag-value --affirmative --fallback="$option_touch" -- "$item")"
-            # 	;;
-            # '--root='* | '--inside='*) option_root="${item#*=}" ;;
-            # '--directory') option_directories+=('') ;;
-            # '--directory='*) option_directories+=("${item#*=}") ;;
-            # '--file') option_files+=('') ;;
-            # '--file='*) option_files+=("${item#*=}") ;;
-            # '--prefix='*) option_prefix="${item#*=}" ;;
-            # '--suffix='*) option_suffix="${item#*=}" ;;
-            # '--extension='*) option_extension="${item#*=}" ;;
         '--')
-            option_cmd+=("$@")
+            option_cmd="$1"
             shift $#
             break
             ;;
@@ -164,78 +172,80 @@ function launcher_() (
         esac
     done
 
-    local e_opts=()
-
-
-    # TODO: wrap everything
     if is-mac; then
+        local forward_terminal_cmd_args=("bash" "-c")
+        if [[ -n $option_string ]]; then
+            forward_terminal_cmd_args+=("$option_string")
+        elif [[ -n "$option_cmd" ]]; then
+            forward_terminal_cmd_args=("bash" "-c")
+            forward_terminal_cmd_args+=("$option_cmd")
+        else
+            # A shell command is required!
+            # echo-style error
+            return 22
+        fi
 
-        # NOTE: is it possible to get the window dimensions etc without yabai?
-        :
-        # ensure eg yabai is installed
+        if __command_missing -- yabai; then
+            # setup-window-manager --use=yabai
+            echo "requires yabai"
+            exit
+        else
+            # Get focused monitor display height and width
+            local PHYSICAL_SCREEN_WIDTH="$(yabai -m query --displays --display | jq '.frame.w*2')"
+            local PHYSICAL_SCREEN_HEIGHT="$(yabai -m query --displays --display | jq '.frame.h*2')"
+
+
+            __print_lines "phys width: $PHYSICAL_SCREEN_WIDTH"
+
+            local TERM_WIDTH=1280
+            local TERM_HEIGHT=1260
+            local X=$((PHYSICAL_SCREEN_WIDTH / 2 - TERM_WIDTH / 2))
+            local Y=$((PHYSICAL_SCREEN_HEIGHT / 2 - TERM_HEIGHT / 2))
+        fi
+
+        local alacritty_default_opts=(
+            -o window.position.x="${X}"
+            -o window.position.y="${Y}"
+            -o window.dimensions.lines=35
+            -o window.dimensions.columns=80
+            -o window.decorations=none
+            -o colors.primary.background="#74B573"
+        )
+
+        local open_cmd=("open" -n -W -a "$terminal_popup_app" --stdout "$stdout_file" --args)
+
+        # -e "${forward_terminal_cmd_args[@]}"
+        # -e "${bash_c_launch_filter[@]}"
+        # -e "$launcher_filter" "$tty_first" "popup_storage"
+        # -e "find /Applications -maxdepth 1 -name \"*.app\" | fzf > \"$log_file\""
+        # -e "find /Applications -maxdepth 1 -name \"*.app\" | fzf > \"$log_file\"; echo \$? > \"$fifo\"" &
+        # -e "echo \"hello world\"" # Should print hellow world in new terminal?
+        local popup_terminal_options=(
+            -t "$forward_terminal_args_title"
+            "${alacritty_default_opts[@]}"
+            -e "${forward_terminal_cmd_args[@]}"
+        )
+
+        local final_cmd=("${open_cmd[@]}" "${popup_terminal_options[@]}")
+
+        echo "-----"
+        __print_lines "${final_cmd[@]}"
+        echo "-----"
+
+        "${final_cmd[@]}"
+
+        local status=$?
+
+        # echo "forward_terminal_cmd_args: ${forward_terminal_cmd_args[*]}"
+
+        # capture status of last command
+        if [[ status -ne 0 ]]; then
+            echo "[launcher]: command [open] failed for some reason.."
+        fi
+
     else
-        :
+        : # TODO: Linux
     fi
-
-    # If --string
-    if [[ -n $option_string ]]; then
-        e_opts+=("bash" "-c" "$option_string")
-
-        # Else if `-- args1,...`
-    elif [[ "${#option_cmd[@]}" -ge 0 ]]; then
-        e_opts+=("${option_cmd[@]}")
-    else
-        return 22
-    fi
-
-    # TODO: explanation of each flag used.
-
-    open \
-        -n \
-        -W \
-        -a "/Applications/Alacritty.app" \
-        --stdout "$stdout_file" \
-        --args \
-        -t "$LAUNCHER_DEFAULT_TITLE" \
-        -e "${e_opts[@]}"
-    # -e "${bash_c_launch_filter[@]}"
-    # -e "$launcher_filter" "$tty_first" "popup_storage"
-    # -e "find /Applications -maxdepth 1 -name \"*.app\" | fzf > \"$log_file\""
-    # -e "find /Applications -maxdepth 1 -name \"*.app\" | fzf > \"$log_file\"; echo \$? > \"$fifo\"" &
-    # -e "echo \"hello world\"" # Should print hellow world in new terminal?
-
-    # NOTE: Assume that we cannot capture the last stdout of the terminal.
-    # ^ Maybe it can be captured somehow, but for now we just use it as an independent popup.
-    # ^ Maybe can use semaphore to capture data from the popup terminal?
-
-    local status=$?
-
-    # capture status of last command
-    if [[ status -ne 0 ]]; then
-        echo "[launcher]: command [open] failed for some reason.."
-    fi
-    # Remove temp file
-    # fs-rm --quiet --no-confirm -- "$popup_storage"
-
-    # search_locations="/System/Library/CoreServices /System/Applications /Applications /System/Applications/Utilities"
-    # cmd="find /Applications -maxdepth 1 -name \"*.app\" | /usr/local/bin/fzf > \"$temp_file\""
-    # (open -n -a "/Applications/Alacritty.app" --args -t "$LAUNCHER_DEFAULT_TITLE" \
-    #     -e "find /Applications -maxdepth 1 -name \"*.app\" | /usr/local/bin/fzf > \"$temp_file\"")
-
-    # alacritty_pid=$!
-
-    # fifo="/tmp/selection_fifo"
-    # mkfifo "$fifo"
-    # (open -n -a "/Applications/Alacritty.app" --args -t "$LAUNCHER_DEFAULT_TITLE" -e "$launcher_filter" > "$fifo" &)
-    # coproc { wait "${COPROC[0]}"; }
-    # selection=$(cat "$fifo")
-    # exec {COPROC[0]}>&-
-    # rm "$fifo"
-
-    # selection=$(cat "$fifo")
-
-    # echo "sel: $selection"
-    # echo "$selection" >"/Users/hjalmarjakobsson/reaper/tmp/cli/launcher.txt"
 
 )
 

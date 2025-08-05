@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
-# NOTE: window managers
-# ~ https://dwm.suckless.org/
-
-# TODO: choose option select which wm to use
-
-# TODO: Support https://github.com/nikitabobko/AeroSpace
+# TODO: launcher -> fzf -> select yabai action -> run
+# ^ Ie. create a controller for the window manager that does not require eating
+#   up keybindings real estate
+# ^ Eg. select <target>s -> <action>s -> Show `This will do XYZ - [CONFIRM]`
 
 # ============================================
 # TESTS FOR `SETUP_WINDOW_MANAGER`
@@ -49,24 +47,40 @@ function setup_window_manager() (
         return 22 # EINVAL 22 Invalid argument
     }
 
-    local option_use=''
+    local option_action='' option_target_wm=''
 
     while test "$#" -ne 0; do
         item="$1"
         shift
         case "$item" in
         '--help' | '-h') help ;;
-        '--use='*) option_use="${item#*=}" ;;
+        '--use='*)
+            option_action="install"
+            option_target_wm="${item#*=}"
+            ;;
+        '--uninstall='*)
+            option_action="uninstall"
+            option_uninstall_target="${item#*=}"
+            ;;
         *) help "An unrecognised argument was provided: $item" ;;
         esac
     done
 
     # choose window manager
-    if [[ -z $option_use ]]; then
-        option_use="$(
+    if [[ -z $option_target_wm ]]; then
+        option_target_wm="$(
             choose --required --linger \
                 --question='Which window manager to setup?' \
                 -- "${mac_available_window_managers[@]}"
+        )"
+    fi
+
+    # choose action
+    if [[ -z "$option_action" ]]; then
+        option_action="$(
+            choose --required --linger \
+                --question='What action to perform?' \
+                -- "install" "uninstall" "restart"
         )"
     fi
 
@@ -78,44 +92,106 @@ function setup_window_manager() (
         # A more recent project janky borders, to which yabai dev has contributed
         # to now exists.
 
-        if [[ $option_use == "yabai" ]]; then
+        # macos: yabai
 
-            # TODO: ensure other window managers are not used/setup
-            # ask uninstall others?
+        if [[ $option_target_wm == "yabai" ]]; then
 
-            setup-util --cli="yabai" BREW="koekeishiya/formulae/yabai"
+            if [[ "$option_action" == "install" ]]; then
 
-            if [[ -d "$DOROTHY/user/config.xdg/yabai" ]]; then
-                symlink-helper \
-                    --existing="$DOROTHY/user/config.xdg/yabai" \
-                    --symlink="$XDG_CONFIG_HOME/yabai"
+                # TODO: ensure other window managers are not used/setup
+                # ask uninstall others?
 
-            # else
-            #     mkdir -p ~/.config/sketchybar/plugins
-            #     cp "$(brew --prefix)/share/sketchybar/examples/sketchybarrc" ~/.config/sketchybar/sketchybarrc
-            #     cp -r "$(brew --prefix)/share/sketchybar/examples/plugins/" ~/.config/sketchybar/plugins/
+                setup-util --cli="yabai" BREW="koekeishiya/formulae/yabai"
+
+                if [[ -d "$DOROTHY/user/config.xdg/yabai" ]]; then
+                    symlink-helper \
+                        --existing="$DOROTHY/user/config.xdg/yabai" \
+                        --symlink="$XDG_CONFIG_HOME/yabai"
+
+                # else
+                #     mkdir -p ~/.config/sketchybar/plugins
+                #     cp "$(brew --prefix)/share/sketchybar/examples/sketchybarrc" ~/.config/sketchybar/sketchybarrc
+                #     cp -r "$(brew --prefix)/share/sketchybar/examples/plugins/" ~/.config/sketchybar/plugins/
+                fi
+
+                # old: brew services start yabai
+                yabai --start-service
+                # Error: yabai: service file '/Users/<USER>/Library/LaunchAgents/com.koekeishiya.yabai.plist' is not installed! attempting installation..
+                # https://github.com/koekeishiya/yabai/issues/2156
+                # ^ Solution: perms for LaunchAgents/ dir has to be read AND write for `staff`.
+
+                # TODO: Capture stdout from yabai to pattern match if the string
+                # is non-empty and if it contains ``
+
+                sudo chown -R :staff ~/Library/LaunchAgents/
+                sudo chmod -R 770 ~/Library/LaunchAgents/
+
+                # TODO: how to grant accessibility permisions here? <<
+
+                yabai --restart-service
+            elif [[ "$option_action" == "uninstall" ]]; then
+
+                if __command_exists yabai; then
+
+                    yabai --stop-service
+                    yabai --uninstall-service
+
+                    # Can only be done with disabled SIP
+                    # sudo yabai --uninstall-sa # uninstall the scripting addition
+
+                    # brew uninstall yabai # replace with setup-util
+                    setup-util --uninstall --cli="yabai" BREW="koekeishiya/formulae/yabai"
+
+                    # these are logfiles that may be created when running yabai as a service.
+                    rm -rf "/tmp/yabai_$USER.out.log"
+                    rm -rf "/tmp/yabai_$USER.err.log"
+
+                    # remove config and various temporary files
+                    # rm ~/.yabairc
+                    rm "/tmp/yabai_$USER.lock"
+                    rm "/tmp/yabai_$USER.socket"
+                    rm "/tmp/yabai-sa_$USER.socket"
+
+                    # unload the scripting addition by forcing a restart of Dock.app
+                    killall Dock
+                fi
+
+            elif [[ "$option_action" == "restart" ]]; then
+                yabai --restart-service
+
             fi
-
-            brew services start sketchybar
         fi
 
-        if [[ $option_use == "aerospace" ]]; then
-            # TODO: ensure other window managers are not used/setup
-            # ask uninstall others?
+        # macos: aerospace
 
-            setup-util --cli="aerospace" BREW="nikitabobko/tap/aerospace"
+        if [[ $option_target_wm == "aerospace" ]]; then
+            if [[ "$option_action" == "install" ]]; then
+                # TODO: ensure other window managers are not used/setup
+                # ask uninstall others?
 
-            if [[ -d "$DOROTHY/user/config.xdg/aerospace" ]]; then
-                symlink-helper \
-                    --existing="$DOROTHY/user/config.xdg/aerospace" \
-                    --symlink="$XDG_CONFIG_HOME/aerospace"
-            else
-                # i believe that the default config doesnt need to be created.
-                mkdir -p ~/.config/aerospace
-                cp /Applications/AeroSpace.app/Contents/Resources/default-config.toml "$XDG_CONFIG_HOME/aerospace/aerospace.toml"
+                setup-util --cli="aerospace" BREW="nikitabobko/tap/aerospace"
+
+                if [[ -d "$DOROTHY/user/config.xdg/aerospace" ]]; then
+                    symlink-helper \
+                        --existing="$DOROTHY/user/config.xdg/aerospace" \
+                        --symlink="$XDG_CONFIG_HOME/aerospace"
+                else
+                    # i believe that the default config doesnt need to be created.
+                    mkdir -p ~/.config/aerospace
+                    cp /Applications/AeroSpace.app/Contents/Resources/default-config.toml "$XDG_CONFIG_HOME/aerospace/aerospace.toml"
+                fi
+
+            elif [[ "$option_action" == "uninstall" ]]; then
+                :
             fi
 
         fi
+
+        # NOTE: This macos option supposedly improves experience. I dunno what it does yet.
+
+        # # https://felixkratz.github.io/SketchyBar/setup#prerequisite
+        # # https://nikitabobko.github.io/AeroSpace/guide#a-note-on-displays-have-separate-spaces
+        # defaults write com.apple.spaces spans-displays -bool true && killall SystemUIServer
 
     else
 

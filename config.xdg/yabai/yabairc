@@ -153,7 +153,7 @@ wms n misc 4
 # yabai -m rule --add title='bin_custom_launcher' manage=off sticky=on layer=above border=off
 
 # kill any existing limelight process if one exists, before we launch a new one
-killall limelight &>/dev/null
-limelight &>/dev/null &
+# killall limelight &>/dev/null
+# limelight &>/dev/null &
 
 echo "yabai configuration loaded.."
