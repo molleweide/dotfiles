@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# NOTE: Ideally, use KMonad or Kanata for all keymappings.
+# The issue is however, that on MacOS you cant call some binaries from the
+# above mentionned keymappings due to some permissions issues, that seem
+# impossible to overcome.
+# ^ Therefore, these tools can be used to setup hotkeys, both on linux and mac,
+# but mainly intended for mac, to make these special mappings that require
+# calling these "problematic" binaries.
+
+function setup_hotkeys() (
+    source "$DOROTHY/sources/bash.bash"
+
+    # TODO: support
+    # mac:
+    # ~ skhd (maintenance mode) | https://github.com/koekeishiya/skhd
+    # ~ skhd.zig (bc compat predecessor) | https://github.com/jackielii/skhd.zig
+    #   ^ Default to zig, but allow for installing the older version.
+    #   >> setup-util-skhd
+    # linux:
+    # ??
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+    setup_hotkeys "$@"
+fi
+

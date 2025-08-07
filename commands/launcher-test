@@ -3,7 +3,30 @@
 function launcher_test_() (
   # local launch_cmd="find /Applications -maxdepth 1 -name \"*.app\" | fzf" # > \"$log_file\""
   # launcher --string="$launch_cmd"
-  launcher -- 'find /Applications -maxdepth 1 -name "*.app" | fzf'
+  # launcher -- 'find /Applications -maxdepth 1 -name "*.app" | fzf'
+
+  # FIX: it runs and immediately closes the new terminal.
+  # ie. something is not properly being sent to the command
+  # ^ This is prolly one of those cases where i want to forward the stdin passing
+  # directly to the fzf command.
+
+  # launcher -- 'find /Applications -maxdepth 1 -name "*.app" | fzf' # fzf-helper --border-label "XXXXX" -- --stdin'
+  # launcher -- 'fzf-helper' # ; echo "XXX >> "$DOROTHY/user/commands/launcher.log"'
+
+  # launcher -- 'find /Applications -maxdepth 1 -name "*.app" | fzf-helper --border-label "🌴 [Launcher]: test" --header $'Select an app. It wont do anything...\n\n -- --stdin'
+
+
+# local str='find /Applications -maxdepth 1 -name "*.app" | fzf-helper --border-label '"'"'🌴 [Dorothy]: All pickers'"'"' --header $'"'"'Select which picker to run\n\n'"'"' -- --stdin'
+# local str='find /Applications -maxdepth 1 -name "*.app" | fzf-helper --border-label "🌴 [Dorothy]: All pickers"  -- --stdin'
+# local str='find /Applications -maxdepth 1 -name "*.app" | fzf-helper -- --stdin'
+# local str='find /Applications -maxdepth 1 -name "*.app" | fzf-helper'
+# local str='fzf-helper -- -- a b c d'
+# launcher -- "$str"
+
+# launcher -- 'echo-lines -- a b c d | fzf-helper --no-tmux'
+
+launcher -- 'pickers-various master'
+
 )
 
 # fire if invoked standalone

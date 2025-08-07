@@ -4,50 +4,53 @@
 # Rename to pickers-user? or
 
 function pickers_various() (
-  source "$DOROTHY/sources/bash.bash"
-  source "$DOROTHY/user/sources/pickers.bash"
+    source "$DOROTHY/sources/bash.bash"
+    source "$DOROTHY/user/sources/pickers.bash"
 
-  # Collect all pickers, from all [pickers-*] commands and display.
-  picker__master() {
-    local selection
-    # todo: echo-comment-blocks to capture the description of each picker.
-    # todo: Use TRANSFORM ACTIONS to load the new picker.
-    # 1. All pickers above need to take args so that one can choose to only get their options.
-    # 2. Then, use a function that returns a chain of action statements to update the picker.
+    # Collect all pickers, from all [pickers-*] commands and display.
+    picker__master() {
+        local selection
+        # todo: echo-comment-blocks to capture the description of each picker.
+        # todo: Use TRANSFORM ACTIONS to load the new picker.
+        # 1. All pickers above need to take args so that one can choose to only get their options.
+        # 2. Then, use a function that returns a chain of action statements to update the picker.
 
-    selection="$(
-      get_all_pickers |
-        fzf-helper \
-          --border-label '🌴 [Dorothy]: All pickers' \
-          --header $'Select which picker to run\n\n' \
-          -- --stdin
-    )"
+        selection="$(
+            get_all_pickers |
+                fzf-helper --no-tmux -- \
+                    --border-label '🌴 [Dorothy]: All pickers' \
+                    --header $'Select which picker to run\n\n' \
+        )"
 
-    local split_selection
-    read -r -a split_selection <<<"$selection"
+        local split_selection
+        read -r -a split_selection <<<"$selection"
 
-    # __print_lines "selection: $selection"
+        # __print_lines "selection: $selection"
 
-    "${split_selection[@]}"
-  }
+        "${split_selection[@]}" --no-tmux
+    }
 
-  picker__kmonad_layers() {
-    :
-  }
+    picker__random_strings() {
+        echo-lines -- a b c d e f g | fzf-helper "$@"
+    }
 
-  picker__xdg_config_files() {
-    :
-  }
+    picker__kmonad_layers() {
+        :
+    }
 
-  # Create a super comprehensible [ps]
-  picker__running_processes() {
-    :
-  }
+    picker__xdg_config_files() {
+        :
+    }
 
-  pickers_args "$@"
+    # Create a super comprehensible [ps]
+    picker__running_processes() {
+        :
+    }
+
+    pickers_args "$@"
 )
 
 # fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-  pickers_various "$@"
+    pickers_various "$@"
 fi

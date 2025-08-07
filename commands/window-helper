@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# NOTE: This aims to be a unified monitor, display, window and tiling-wm helper
+# so that we have a good API to manage and control applications through dorothy.
+
+# TODO: Create a browser that allows one to query the system for
+
+function window_helper() (
+    source "$DOROTHY/sources/bash.bash"
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+    window_helper "$@"
+fi
+
+

@@ -91,6 +91,14 @@
 # --stderr PATH
 #     Launches the application with stderr connected to PATH.
 
+# WARN: If using --tmux flag with fzf-helper, then focus is not switched to the
+# new terminal, instead, the picker is spawned in the currently active tmux session? I think?
+# If you remove this flag, then focus is properly switched to the new terminal,
+# with the correct picker loaded.
+# However, it is not clear what happens. It seems that --tmux moves the focus
+# back to the terminal where the existing tmux session resides.
+# I am not sure of the sequence of events here and what causes what.
+
 function launcher_() (
     source "$DOROTHY/sources/bash.bash"
 
@@ -110,7 +118,7 @@ function launcher_() (
     local tty_first=$(tty)
     # local popup_storage
 
-    echo "tty first: $tty_first"
+    echo "tty first: $tty_first" > "$log_file"
 
     # TODO: create temp file. Use dorothy temp
 
@@ -145,17 +153,14 @@ function launcher_() (
         return 22 # EINVAL 22 Invalid argument
     }
 
+    # TODO: Add more flags and actions?
+    # What would be other useful operations?
+
     # process
     local item
     local option_string=''
     local option_cmd=''
-    # local option_xdg="${PREFER_XDG:-"no"}"
-    # local option_directories=()
-    # local option_files=()
-    # local option_prefix=''
-    # local option_suffix=''
-    # local option_extension=''
-    # local option_touch='no'
+
     while test "$#" -ne 0; do
         item="$1"
         shift
@@ -173,17 +178,38 @@ function launcher_() (
     done
 
     if is-mac; then
+
+        # NOTE: default to bash -c but other shells could also be used..
+
         local forward_terminal_cmd_args=("bash" "-c")
         if [[ -n $option_string ]]; then
             forward_terminal_cmd_args+=("$option_string")
         elif [[ -n "$option_cmd" ]]; then
             forward_terminal_cmd_args=("bash" "-c")
+
+            # NOTE: that im pushing to the log file.
+
             forward_terminal_cmd_args+=("$option_cmd")
+            # forward_terminal_cmd_args+=("$option_cmd >> $log_file")
         else
             # A shell command is required!
             # echo-style error
             return 22
         fi
+
+        # TODO: Maybe put the below info into a `view-helper`.
+        # https://stackoverflow.com/questions/20099333/terminal-command-to-show-connected-displays-monitors-resolutions
+        # https://apple.stackexchange.com/questions/141213/grab-the-active-window-in-applescript
+        # https://www.macscripter.net/t/possible-to-identify-screen-monitor-of-current-cursor-position/71446/2
+        # https://www.reddit.com/r/applescript/comments/za3jtv/help_with_scripting_monitor_display_mode/
+        # https://apple.stackexchange.com/questions/316213/can-i-use-applescript-to-detect-if-there-are-any-windows-on-screen
+        # https://stackoverflow.com/questions/14773974/set-focus-to-specific-window-of-an-application-using-applescript
+        # https://stackoverflow.com/questions/1146472/applescript-to-target-frontmost-application?rq=3
+        # https://www.macscripter.net/t/setting-focus-to-a-window-by-title/48824
+        # https://stackoverflow.com/questions/18372328/applescript-get-list-of-running-apps
+        # https://stackoverflow.com/questions/1562513/applescript-list-all-running-applications?rq=3
+        # https://stackoverflow.com/questions/14551419/listing-all-windows-of-all-applications?rq=3
+        # https://stackoverflow.com/questions/16064957/how-to-check-in-applescript-if-an-app-is-running-without-launching-it-via-osa?rq=3
 
         if __command_missing -- yabai; then
             # setup-window-manager --use=yabai
@@ -193,15 +219,18 @@ function launcher_() (
             # Get focused monitor display height and width
             local PHYSICAL_SCREEN_WIDTH="$(yabai -m query --displays --display | jq '.frame.w*2')"
             local PHYSICAL_SCREEN_HEIGHT="$(yabai -m query --displays --display | jq '.frame.h*2')"
+            # __print_lines "phys width: $PHYSICAL_SCREEN_WIDTH"
 
-
-            __print_lines "phys width: $PHYSICAL_SCREEN_WIDTH"
-
+            # TODO: set these dynamically??
             local TERM_WIDTH=1280
             local TERM_HEIGHT=1260
+
             local X=$((PHYSICAL_SCREEN_WIDTH / 2 - TERM_WIDTH / 2))
             local Y=$((PHYSICAL_SCREEN_HEIGHT / 2 - TERM_HEIGHT / 2))
         fi
+
+        # NOTE: The previously active window can be passed through to the alacritty
+        # -e cmd by supplying it with an ENV var.
 
         local alacritty_default_opts=(
             -o window.position.x="${X}"
@@ -226,7 +255,14 @@ function launcher_() (
             -e "${forward_terminal_cmd_args[@]}"
         )
 
+        # NOTE: the bash string that is run has to be a single string of course.
+        # Could I use echo-escape to stringify and escape an incomming command sequence?
+        # So that one could call launcher by `launcher -- <cmd>..` instead of
+        # doing `launcher -- <cmd_string>`
+
         local final_cmd=("${open_cmd[@]}" "${popup_terminal_options[@]}")
+
+        echo "${final_cmd[@]}" >> "$log_file"
 
         echo "-----"
         __print_lines "${final_cmd[@]}"

@@ -37,9 +37,12 @@ function setup_window_manager() (
 			      USAGE:
 			        setup-window-manager ...
 
-			      DESCRIPTION:
-			        ...
 
+			        install
+
+			        uninstall
+
+			        restart
 		EOF
         if test "$#" -ne 0; then
             echo-error "$@"
@@ -91,6 +94,8 @@ function setup_window_manager() (
         # https://github.com/koekeishiya/yabai/issues/1889
         # A more recent project janky borders, to which yabai dev has contributed
         # to now exists.
+
+        # WARN: Remember, to put each specific package in a setup-util-.. command.
 
         # macos: yabai
 
@@ -159,6 +164,13 @@ function setup_window_manager() (
             elif [[ "$option_action" == "restart" ]]; then
                 yabai --restart-service
 
+            elif [[ "$option_action" == "launcher_actions" ]]; then
+                :
+                # TODO: Run launcher.
+                # List possible actions that could be done with yabai.
+                #   Eg. browse existing apps? Focus selection
+                #   Eg. browse existing desktop "spaces"
+                # ^ The Launcher should b spawned in the currently active monitor window.
             fi
         fi
 
