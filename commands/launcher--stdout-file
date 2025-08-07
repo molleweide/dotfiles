@@ -290,3 +290,127 @@ Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-
 [0.000228959s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
                                                  Use `alacritty migrate` to automatically resolve it
 Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-83302.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-50483.log"
+[0.000658000s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-50483.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-55835.log"
+[0.000422167s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-55835.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-60057.log"
+[0.000231875s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-60057.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-74186.log"
+[0.000364083s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-74186.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-75387.log"
+[0.000233917s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-75387.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-79108.log"
+[0.000479458s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-79108.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-80456.log"
+[0.000479542s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-81786.log"
+[0.000229542s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-81786.log"
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-80456.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-83648.log"
+[0.000212334s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-83648.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-90089.log"
+[0.000583000s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-90089.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-92313.log"
+[0.000219042s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-92313.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-97319.log"
+[0.000220084s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-97319.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-1097.log"
+[0.000556125s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-1097.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-6874.log"
+[0.000335125s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-12066.log"
+[0.000383542s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-6874.log"
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-12066.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-13867.log"
+[0.000390083s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-13867.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-14450.log"
+[0.000199459s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-14450.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-15025.log"
+[0.000213209s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-15025.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-21374.log"
+[0.000329917s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-21374.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-72100.log"
+[0.000920208s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-72100.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-27008.log"
+[0.000571125s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-27008.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-31545.log"
+[0.000498708s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-31545.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-22153.log"
+[0.000540375s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-22153.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-23373.log"
+[0.000234291s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-23373.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-43484.log"
+[0.000472625s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-43484.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-69350.log"
+[0.000522625s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-69350.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-72914.log"
+[0.000226458s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-72914.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-85252.log"
+[0.000455542s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-85252.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-87638.log"
+[0.000224459s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-87638.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-91945.log"
+[0.000247625s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-91945.log"
+Created log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-93923.log"
+[0.000229292s] [WARN ] [alacritty_config_derive] Config warning: live_config_reload has been deprecated; use general.live_config_reload instead
+                                                 Use `alacritty migrate` to automatically resolve it
+Deleted log file at "/var/folders/9x/2sl9wmt12l367t8pgctqpnwh0000gn/T/Alacritty-93923.log"

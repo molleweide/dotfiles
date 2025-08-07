@@ -5,6 +5,14 @@
 #   up keybindings real estate
 # ^ Eg. select <target>s -> <action>s -> Show `This will do XYZ - [CONFIRM]`
 
+# FIX: Could not acquire lock-file: https://github.com/koekeishiya/yabai/issues?q=could%20not%20acquire%20lock-file
+# https://github.com/koekeishiya/yabai/issues/2546
+# ^ On mac terminal and kitty both show this message
+# FIX: yabai: could not access accessibility features! abort..
+# ^ In alacritty however, this is the message. Might be some arm64 build
+# issue
+# ^^^ This was resolved by manually removing, and readding Alacritty accessibility enabled.
+
 # ============================================
 # TESTS FOR `SETUP_WINDOW_MANAGER`
 
@@ -138,8 +146,8 @@ function setup_window_manager() (
 
                 if __command_exists yabai; then
 
-                    yabai --stop-service
-                    yabai --uninstall-service
+                    # yabai --stop-service
+                    # yabai --uninstall-service
 
                     # Can only be done with disabled SIP
                     # sudo yabai --uninstall-sa # uninstall the scripting addition
