@@ -5,12 +5,157 @@
 
 # TODO: Create a browser that allows one to query the system for
 
+# Query
+# General Syntax
+#     yabai -m query <COMMAND> [<PROPERTIES>] [<ARGUMENT>]
+#
+# COMMAND
+#     --displays
+#         Retrieve information about displays.
+#
+#     --spaces
+#         Retrieve information about spaces.
+#
+#     --windows
+#         Retrieve information about windows.
+#
+# ARGUMENT
+#     --display [<DISPLAY_SEL>]
+#         Constrain matches to the selected display.
+#
+#     --space [<SPACE_SEL>]
+#         Constrain matches to the selected space.
+#
+#     --window [<WINDOW_SEL>]
+#         Constrain matches to the selected window.
+#
+# PROPERTIES
+#     A comma-separated string containing the name of fields to include in the output.
+#     The name of the provided fields must be present in the dataformat of the corresponding entity.
+#
+# DATAFORMAT
+#     DISPLAY
+#
+#         {
+#             "id": number,
+#             "uuid": string,
+#             "index": number,
+#             "label": string,
+#             "frame": object {
+#                 "x": number,
+#                 "y": number,
+#                 "w": number,
+#                 "h": number
+#             },
+#             "spaces": array of number,
+#             "has-focus": bool
+#         }
+#
+#     SPACE
+#
+#         {
+#             "id": number,
+#             "uuid": string,
+#             "index": number,
+#             "label": string,
+#             "type": string,
+#             "display": number,
+#             "windows": array of number,
+#             "first-window": number,
+#             "last-window": number,
+#             "has-focus": bool,
+#             "is-visible": bool,
+#             "is-native-fullscreen": bool
+#         }
+#
+#     WINDOW
+#
+#         {
+#             "id": number,
+#             "pid": number,
+#             "app": string,
+#             "title": string,
+#             "scratchpad": string,
+#             "frame": object {
+#                 "x": number,
+#                 "y": number,
+#                 "w": number,
+#                 "h": number,
+#             },
+#             "role": string,
+#             "subrole": string,
+#             "root-window": bool,
+#             "display": number,
+#             "space": number,
+#             "level": number,
+#             "sub-level": number,
+#             "layer": string,
+#             "sub-layer": string,
+#             "opacity": number,
+#             "split-type": string,
+#             "split-child": string,
+#             "stack-index": number,
+#             "can-move": bool,
+#             "can-resize": bool,
+#             "has-focus": bool,
+#             "has-shadow": bool,
+#             "has-parent-zoom": bool,
+#             "has-fullscreen-zoom": bool,
+#             "has-ax-reference": bool,
+#             "is-native-fullscreen": bool,
+#             "is-visible": bool,
+#             "is-minimized": bool,
+#             "is-hidden": bool,
+#             "is-floating": bool,
+#             "is-sticky": bool,
+#             "is-grabbed": bool
+#         }
+#
+#     Some window properties are only accessible when yabai has a valid AX-reference for that window.
+#     This AX-reference can only be retrieved when the space that the window is visible on, is active.
+#     If windows are already opened on inactive spaces when yabai is launched, yabai can detect those
+#     windows and retrieve a limited amount of information about them. In addition, yabai window commands
+#     will NOT WORK for these windows. These windows can be identified by looking at the has-ax-reference
+#     property. Once the space that the window belongs to becomes active, yabai will automatically create
+#     an AX-reference. The queries will from that point forwards contain complete information, and the window
+#     can be used with yabai window commands.
+#
+#     The properties that contain incorrect information for windows with has-ax-reference: false are as follows:
+#
+#         {
+#             "role": string,
+#             "subrole": string,
+#             "can-move": bool,
+#             "can-resize": bool
+#         }
+
 function window_helper() (
     source "$DOROTHY/sources/bash.bash"
+
+    # TODO:
+    # picker-yabai: displays, spaces, windows
+    #
+
+    local window_picker_alternatives=(displays spaces windows)
+
+    selection="$(
+        echo-lines -- "${window_picker_alternatives[@]}" |
+            fzf-helper -- \
+                --border-label '🌴 [Window helper]: yabai picker' \
+                --header $'Select which query type to inspect:\n\n'
+    )"
+
+    __print_lines "$selection"
+
+
+    # TODO: jq get [index:id:label]
+    # TODO: preview -> just run the yabai command for this id
+
+    yabai -m query "--$selection" | jq '.[].id' | fzf-helper -- --preview "yabai -m query --$selection --${selection::-1} {}"
+
+)
 
 # Fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
     window_helper "$@"
 fi
-
-
