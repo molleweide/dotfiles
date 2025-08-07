@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+function skhd_test() (
+	# source "$DOROTHY/sources/bash.bash"
+	echo "Dorothy: [$DOROTHY]" 1>&2
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	skhd_test "$@"
+fi
+

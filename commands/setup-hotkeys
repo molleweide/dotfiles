@@ -9,20 +9,53 @@
 # calling these "problematic" binaries.
 
 function setup_hotkeys() (
-    source "$DOROTHY/sources/bash.bash"
+	source "$DOROTHY/sources/bash.bash"
 
-    # TODO: support
-    # mac:
-    # ~ skhd (maintenance mode) | https://github.com/koekeishiya/skhd
-    # ~ skhd.zig (bc compat predecessor) | https://github.com/jackielii/skhd.zig
-    #   ^ Default to zig, but allow for installing the older version.
-    #   >> setup-util-skhd
-    # linux:
-    # ??
+	# TODO: support
+	# mac:
+	# ~ skhd (maintenance mode) | https://github.com/koekeishiya/skhd
+	# ~ skhd.zig (bc compat predecessor) | https://github.com/jackielii/skhd.zig
+	#   ^ Default to zig, but allow for installing the older version.
+	#   >> setup-util-skhd
+	# linux:
+	# ??
+
+	# FIX: skhd: could not lock pid-file! abort..
+
+	if [[ -z "${1-}" ]]; then
+
+		# OLD
+		setup-util --cli="skhd" BREW="koekeishiya/formulae/skhd"
+
+		rm -rf "/tmp/skhd_$USER.out.log"
+		rm -rf "/tmp/skhd_$USER.out.log"
+		rm -rf "/tmp/skhd_$USER.pid"
+
+		skhd --start-service
+
+
+		# NEW
+		# brew install jackielii/tap/skhd-zig
+		# setup-util --cli="skhd" BREW="jackielii/tap/skhd-zig"
+
+	else
+
+		skhd --stop-service
+
+		# OLD
+		setup-util --uninstall --cli="skhd" BREW="koekeishiya/formulae/skhd"
+
+		rm -rf "/tmp/skhd_$USER.out.log"
+		rm -rf "/tmp/skhd_$USER.out.log"
+		rm -rf "/tmp/skhd_$USER.pid"
+
+		# NEW
+		# brew uninstall jackielii/tap/skhd-zig
+		# setup-util --uninstall --cli="skhd" BREW="jackielii/tap/skhd-zig"
+	fi
 )
 
 # Fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-    setup_hotkeys "$@"
+	setup_hotkeys "$@"
 fi
-

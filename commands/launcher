@@ -3,6 +3,13 @@
 # USE CASE: You need user input but command is not run in a tty, eg. you run
 # a command from a keybind script.
 
+# FIX:
+# /Users/hjalmarjakobsson/.local/share/dorothy/user/commands/launcher: line 107: /sources/bash.bash: No such file or directory
+# /Users/hjalmarjakobsson/.local/share/dorothy/user/commands/launcher: line 125: /user/commands/launcher.log: No such file or directory
+# /Users/hjalmarjakobsson/.local/share/dorothy/commands/is-mac: line 21: /sources/bash.bash: No such file or directory
+# /Users/hjalmarjakobsson/.local/share/dorothy/user/commands/launcher: line 220: __command_missing: command not found
+# _LSOpenURLsWithCompletionHandler() failed for the application /Applications/Alacritty.app with error -10810.
+
 # NOTE: `launcher` is the core command and `launcher-*` are usage commands.
 
 # TODO: Make into -> command `spotlight-launcher-menu`
@@ -228,26 +235,34 @@ function launcher_() (
 
 			# Get focused monitor display height and width
 
-			local PHYSICAL_SCREEN_X="$(yabai -m query --displays --display | jq '.frame.x*1')"
-			local PHYSICAL_SCREEN_Y="$(yabai -m query --displays --display | jq '.frame.y*1')"
+			# local PHYSICAL_SCREEN_X="$(yabai -m query --displays --display | jq '.frame.x*1')"
+			# local PHYSICAL_SCREEN_Y="$(yabai -m query --displays --display | jq '.frame.y*1')"
+			#
+			# local PHYSICAL_SCREEN_DATA="$(yabai -m query --displays --display | jq -r '"\(.frame.x*1)\n \(.frame.y*1)\n \(.frame.w*1)\n \(.frame.h*1)"')"
+
+			local PHYSICAL_SCREEN_DATA
+
+			readarray -t PHYSICAL_SCREEN_DATA < <(yabai -m query --displays --display | jq -r '.frame | [.x*1, .y*1, .w*1, .h*1][]')
+
+			# __print_lines "PHYSICAL_SCREEN_DATA: ${PHYSICAL_SCREEN_DATA[*]}"
 
 			# __print_lines "physical screen X: $PHYSICAL_SCREEN_X"
 			# __print_lines "physical screen Y: $PHYSICAL_SCREEN_Y"
 
-			local PHYSICAL_SCREEN_WIDTH="$(yabai -m query --displays --display | jq '.frame.w*1')"
-			local PHYSICAL_SCREEN_HEIGHT="$(yabai -m query --displays --display | jq '.frame.h*1')"
+			# local PHYSICAL_SCREEN_WIDTH="$(yabai -m query --displays --display | jq '.frame.w*1')"
+			# local PHYSICAL_SCREEN_HEIGHT="$(yabai -m query --displays --display | jq '.frame.h*1')"
 
 			# __print_lines "physical screen width: $PHYSICAL_SCREEN_WIDTH"
 			# __print_lines "physical screen height: $PHYSICAL_SCREEN_HEIGHT"
 
 			local num_cols=75 num_lines=30
 
-			local TERM_WIDTH=750 # $((num_cols * 10))
+			local TERM_WIDTH=750  # $((num_cols * 10))
 			local TERM_HEIGHT=510 # $((num_lines * 17))
 
-            # Note: Im adding the physical display x/y values to shift the window to the correct monitor display.
-			local X=$(((PHYSICAL_SCREEN_WIDTH / 2) - (TERM_WIDTH / 2) + PHYSICAL_SCREEN_X))
-			local Y=$(((PHYSICAL_SCREEN_HEIGHT / 2) - (TERM_HEIGHT / 2) + PHYSICAL_SCREEN_Y))
+			# Note: Im adding the physical display x/y values to shift the window to the correct monitor display.
+			local X=$(((PHYSICAL_SCREEN_DATA[2] / 2) - (TERM_WIDTH / 2) + PHYSICAL_SCREEN_DATA[0]))
+			local Y=$(((PHYSICAL_SCREEN_DATA[3] / 2) - (TERM_HEIGHT / 2) + PHYSICAL_SCREEN_DATA[1]))
 
 			# __print_lines "X:$X Y:$Y"
 		fi
@@ -304,7 +319,7 @@ function launcher_() (
 		# Spawn the new window
 		"${final_cmd[@]}"
 
-        exit
+		exit
 
 		# TODO:
 		# 1. Get new window id by "label"
@@ -316,11 +331,11 @@ function launcher_() (
 		# sleep 0.01
 
 		# yabai -m query --windows | jq -r '.[].app'
-		yabai -m query --windows | jq -r '.[] | "\(.app)\t\(.title)"'
+		# yabai -m query --windows | jq -r '.[] | "\(.app)\t\(.title)"'
 
 		# yabai -m query --windows | jq -r '.[] | select(.label == "'"$forward_terminal_args_title"'") | .id'
 
-		new_term_win_id=$(yabai -m query --windows | jq -r '.[] | select(.title == "'"$forward_terminal_args_title"'") | .id')
+		# new_term_win_id=$(yabai -m query --windows | jq -r '.[] | select(.title == "'"$forward_terminal_args_title"'") | .id')
 
 		# # move term to focused display
 		# yabai -m window "$new_term_win_id" --display "$active_display_id"

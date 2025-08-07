@@ -72,8 +72,6 @@ HOMEBREW_FORMULAS=(
   imagemagick
   irssi
   isync
-  koekeishiya/formulae/skhd
-  koekeishiya/formulae/yabai
   lazygit
   lf
   libxml2
