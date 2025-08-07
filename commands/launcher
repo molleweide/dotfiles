@@ -104,248 +104,269 @@
 # I am not sure of the sequence of events here and what causes what.
 
 function launcher_() (
-    source "$DOROTHY/sources/bash.bash"
+	source "$DOROTHY/sources/bash.bash"
 
-    # exec > "/Users/hjalmarjakobsson/.config/dorothy/commands/launcher.log" 2>&1
-    #
+	# exec > "/Users/hjalmarjakobsson/.config/dorothy/commands/launcher.log" 2>&1
+	#
 
-    # NOTE: Why do we open alacritty again here?
+	# NOTE: Why do we open alacritty again here?
 
-    local terminal_popup_app="/Applications/Alacritty.app"
-    local forward_terminal_args_title="Dorothy launcher default title"
+	local terminal_popup_app="/Applications/Alacritty.app"
+	local forward_terminal_args_title="Dorothy launcher default title"
 
-    # local launcher_filter="$DOROTHY/user/commands/launcher-filter"
+	# local launcher_filter="$DOROTHY/user/commands/launcher-filter"
 
-    local log_file="$DOROTHY/user/commands/launcher.log"
+	local log_file="$DOROTHY/user/commands/launcher.log"
 
-    local stdout_file="$DOROTHY/user/commands/launcher--stdout-file"
-    local tty_first=$(tty)
-    # local popup_storage
+	local stdout_file="$DOROTHY/user/commands/launcher--stdout-file"
+	local tty_first=$(tty)
+	# local popup_storage
 
-    echo "tty first: $tty_first" > "$log_file"
+	echo "tty first: $tty_first" >"$log_file"
 
-    # TODO: create temp file. Use dorothy temp
+	# TODO: create temp file. Use dorothy temp
 
-    # popup_storage="$(
-    #   fs-temp \
-    #     --file="${forward_terminal_args_title}_POPUP_CAPTURE"
-    # )"
+	# popup_storage="$(
+	#   fs-temp \
+	#     --file="${forward_terminal_args_title}_POPUP_CAPTURE"
+	# )"
 
-    # # "$forward_terminal_args_title" # only works if last line writes to tmp file?!
-    # selection=$(open -n -a "/Applications/Alacritty.app" --args -t "$forward_terminal_args_title" -e "$launcher_filter")
-    #
-    # NOTE: Here that -e is in this instance the find filter that is passed to
-    # fzf
-    #
-    # NOTE: One can use the wait flag to capture output of the open command.
-    # NOTE: It seems that one needs to pass a filter as script to alacritty -e.
-    #       Only passing the string does not seem to do anything.
-    #
-    # LINKS:
-    #     https://stackoverflow.com/questions/29510815/how-to-pass-command-line-arguments-to-a-program-run-with-the-open-command
+	# # "$forward_terminal_args_title" # only works if last line writes to tmp file?!
+	# selection=$(open -n -a "/Applications/Alacritty.app" --args -t "$forward_terminal_args_title" -e "$launcher_filter")
+	#
+	# NOTE: Here that -e is in this instance the find filter that is passed to
+	# fzf
+	#
+	# NOTE: One can use the wait flag to capture output of the open command.
+	# NOTE: It seems that one needs to pass a filter as script to alacritty -e.
+	#       Only passing the string does not seem to do anything.
+	#
+	# LINKS:
+	#     https://stackoverflow.com/questions/29510815/how-to-pass-command-line-arguments-to-a-program-run-with-the-open-command
 
-    # =====================================
-    # Arguments
+	# =====================================
+	# Arguments
 
-    function help {
-        cat <<-EOF >/dev/stderr
+	function help {
+		cat <<-EOF >/dev/stderr
 			ABOUT:
 		EOF
-        if test "$#" -ne 0; then
-            echo-error "$@"
-        fi
-        return 22 # EINVAL 22 Invalid argument
-    }
+		if test "$#" -ne 0; then
+			echo-error "$@"
+		fi
+		return 22 # EINVAL 22 Invalid argument
+	}
 
-    # TODO: Add more flags and actions?
-    # What would be other useful operations?
+	# TODO: Add more flags and actions?
+	# What would be other useful operations?
 
-    # process
-    local item
-    local option_string=''
-    local option_cmd=''
+	# process
+	local item
+	local option_string=''
+	local option_cmd=''
 
-    while test "$#" -ne 0; do
-        item="$1"
-        shift
-        case "$item" in
-        '--help' | '-h') help ;;
-        '--string='*) option_string="${item#*=}" ;;
-        '--')
-            option_cmd="$1"
-            shift $#
-            break
-            ;;
-        '--'*) help "An unrecognised flag was provided: $item" ;;
-        *) help "An unrecognised argument was provided: $item" ;;
-        esac
-    done
+	while test "$#" -ne 0; do
+		item="$1"
+		shift
+		case "$item" in
+		'--help' | '-h') help ;;
+		'--string='*) option_string="${item#*=}" ;;
+		'--')
+			option_cmd="$1"
+			shift $#
+			break
+			;;
+		'--'*) help "An unrecognised flag was provided: $item" ;;
+		*) help "An unrecognised argument was provided: $item" ;;
+		esac
+	done
 
-    if is-mac; then
+	if is-mac; then
 
-        # NOTE: default to bash -c but other shells could also be used..
+		# NOTE: default to bash -c but other shells could also be used..
 
-        local forward_terminal_cmd_args=("bash" "-c")
-        if [[ -n $option_string ]]; then
-            forward_terminal_cmd_args+=("$option_string")
-        elif [[ -n "$option_cmd" ]]; then
-            forward_terminal_cmd_args=("bash" "-c")
+		local forward_terminal_cmd_args=("bash" "-c")
+		if [[ -n $option_string ]]; then
+			forward_terminal_cmd_args+=("$option_string")
+		elif [[ -n "$option_cmd" ]]; then
+			forward_terminal_cmd_args=("bash" "-c")
 
-            # NOTE: that im pushing to the log file.
+			# NOTE: that im pushing to the log file.
 
-            forward_terminal_cmd_args+=("$option_cmd")
-            # forward_terminal_cmd_args+=("$option_cmd >> $log_file")
-        else
-            # A shell command is required!
-            # echo-style error
-            return 22
-        fi
+			forward_terminal_cmd_args+=("$option_cmd")
+			# forward_terminal_cmd_args+=("$option_cmd >> $log_file")
+		else
+			# A shell command is required!
+			# echo-style error
+			return 22
+		fi
 
-        # TODO: Maybe put the below info into a `view-helper`.
-        # https://stackoverflow.com/questions/20099333/terminal-command-to-show-connected-displays-monitors-resolutions
-        # https://apple.stackexchange.com/questions/141213/grab-the-active-window-in-applescript
-        # https://www.macscripter.net/t/possible-to-identify-screen-monitor-of-current-cursor-position/71446/2
-        # https://www.reddit.com/r/applescript/comments/za3jtv/help_with_scripting_monitor_display_mode/
-        # https://apple.stackexchange.com/questions/316213/can-i-use-applescript-to-detect-if-there-are-any-windows-on-screen
-        # https://stackoverflow.com/questions/14773974/set-focus-to-specific-window-of-an-application-using-applescript
-        # https://stackoverflow.com/questions/1146472/applescript-to-target-frontmost-application?rq=3
-        # https://www.macscripter.net/t/setting-focus-to-a-window-by-title/48824
-        # https://stackoverflow.com/questions/18372328/applescript-get-list-of-running-apps
-        # https://stackoverflow.com/questions/1562513/applescript-list-all-running-applications?rq=3
-        # https://stackoverflow.com/questions/14551419/listing-all-windows-of-all-applications?rq=3
-        # https://stackoverflow.com/questions/16064957/how-to-check-in-applescript-if-an-app-is-running-without-launching-it-via-osa?rq=3
+		# TODO: Maybe put the below info into a `view-helper`.
+		# https://stackoverflow.com/questions/20099333/terminal-command-to-show-connected-displays-monitors-resolutions
+		# https://apple.stackexchange.com/questions/141213/grab-the-active-window-in-applescript
+		# https://www.macscripter.net/t/possible-to-identify-screen-monitor-of-current-cursor-position/71446/2
+		# https://www.reddit.com/r/applescript/comments/za3jtv/help_with_scripting_monitor_display_mode/
+		# https://apple.stackexchange.com/questions/316213/can-i-use-applescript-to-detect-if-there-are-any-windows-on-screen
+		# https://stackoverflow.com/questions/14773974/set-focus-to-specific-window-of-an-application-using-applescript
+		# https://stackoverflow.com/questions/1146472/applescript-to-target-frontmost-application?rq=3
+		# https://www.macscripter.net/t/setting-focus-to-a-window-by-title/48824
+		# https://stackoverflow.com/questions/18372328/applescript-get-list-of-running-apps
+		# https://stackoverflow.com/questions/1562513/applescript-list-all-running-applications?rq=3
+		# https://stackoverflow.com/questions/14551419/listing-all-windows-of-all-applications?rq=3
+		# https://stackoverflow.com/questions/16064957/how-to-check-in-applescript-if-an-app-is-running-without-launching-it-via-osa?rq=3
 
-        if __command_missing -- yabai; then
-            # setup-window-manager --use=yabai
-            echo "requires yabai"
-            exit
-        else
-            # Get focused monitor display height and width
-            local PHYSICAL_SCREEN_WIDTH="$(yabai -m query --displays --display | jq '.frame.w*2')"
-            local PHYSICAL_SCREEN_HEIGHT="$(yabai -m query --displays --display | jq '.frame.h*2')"
-            # __print_lines "phys width: $PHYSICAL_SCREEN_WIDTH"
+		local new_term_win_id active_display_id
 
-            # TODO: set these dynamically??
-            local TERM_WIDTH=1280
-            local TERM_HEIGHT=1260
+		if __command_missing -- yabai; then
+			# setup-window-manager --use=yabai
+			echo "requires yabai"
+			exit
+		else
 
-            local X=$((PHYSICAL_SCREEN_WIDTH / 2 - TERM_WIDTH / 2))
-            local Y=$((PHYSICAL_SCREEN_HEIGHT / 2 - TERM_HEIGHT / 2))
-        fi
+			# # get active display before we spawn the new window
+			active_display_id=$(yabai -m query --displays | jq -r '.[] | select(."has-focus" == true) | .id')
 
-        # NOTE: The previously active window can be passed through to the alacritty
-        # -e cmd by supplying it with an ENV var.
+			# Get focused monitor display height and width
 
-        local alacritty_default_opts=(
-            -o window.position.x="${X}"
-            -o window.position.y="${Y}"
-            -o window.dimensions.lines=35
-            -o window.dimensions.columns=80
-            -o window.decorations=none
-            -o colors.primary.background="#74B573"
-        )
+			local PHYSICAL_SCREEN_X="$(yabai -m query --displays --display | jq '.frame.x*1')"
+			local PHYSICAL_SCREEN_Y="$(yabai -m query --displays --display | jq '.frame.y*1')"
 
-        # -W:   Wait until the new window closes
-        local open_cmd=("open" -n -a "$terminal_popup_app" --stdout "$stdout_file" --args)
+			# __print_lines "physical screen X: $PHYSICAL_SCREEN_X"
+			# __print_lines "physical screen Y: $PHYSICAL_SCREEN_Y"
 
-        # -e "${forward_terminal_cmd_args[@]}"
-        # -e "${bash_c_launch_filter[@]}"
-        # -e "$launcher_filter" "$tty_first" "popup_storage"
-        # -e "find /Applications -maxdepth 1 -name \"*.app\" | fzf > \"$log_file\""
-        # -e "find /Applications -maxdepth 1 -name \"*.app\" | fzf > \"$log_file\"; echo \$? > \"$fifo\"" &
-        # -e "echo \"hello world\"" # Should print hellow world in new terminal?
-        local popup_terminal_options=(
-            -t "$forward_terminal_args_title"
-            "${alacritty_default_opts[@]}"
-            -e "${forward_terminal_cmd_args[@]}"
-        )
+			local PHYSICAL_SCREEN_WIDTH="$(yabai -m query --displays --display | jq '.frame.w*1')"
+			local PHYSICAL_SCREEN_HEIGHT="$(yabai -m query --displays --display | jq '.frame.h*1')"
 
-        # NOTE: the bash string that is run has to be a single string of course.
-        # Could I use echo-escape to stringify and escape an incomming command sequence?
-        # So that one could call launcher by `launcher -- <cmd>..` instead of
-        # doing `launcher -- <cmd_string>`
+			# __print_lines "physical screen width: $PHYSICAL_SCREEN_WIDTH"
+			# __print_lines "physical screen height: $PHYSICAL_SCREEN_HEIGHT"
 
-        local final_cmd=("${open_cmd[@]}" "${popup_terminal_options[@]}")
+			local num_cols=75 num_lines=30
 
-        # echo "${final_cmd[@]}" >> "$log_file"
-        # echo "-----"
-        # __print_lines "${final_cmd[@]}"
-        # echo "-----"
+			local TERM_WIDTH=750 # $((num_cols * 10))
+			local TERM_HEIGHT=510 # $((num_lines * 17))
 
-        local new_term_win_id active_display_id
+            # Note: Im adding the physical display x/y values to shift the window to the correct monitor display.
+			local X=$(((PHYSICAL_SCREEN_WIDTH / 2) - (TERM_WIDTH / 2) + PHYSICAL_SCREEN_X))
+			local Y=$(((PHYSICAL_SCREEN_HEIGHT / 2) - (TERM_HEIGHT / 2) + PHYSICAL_SCREEN_Y))
 
-        # get active display before we spawn the new window
-        active_display_id=$(yabai -m query --displays | jq -r '.[] | select(."has-focus" == true) | .id')
+			# __print_lines "X:$X Y:$Y"
+		fi
 
-        # TODO: trap to the popup command, so that focus can be moved back to
-        # the previous command.
+		# NOTE: The previously active window can be passed through to the alacritty
+		# -e cmd by supplying it with an ENV var.
 
-        # Spawn the new window
-        "${final_cmd[@]}"
+		# TODO: In order to get the window to open in the correct location. I have to
+		# first query yabai for the dimensions of my displays, and then compute the
+		# coordinates for the new terminal.
 
+		local alacritty_default_opts=(
+			-o window.position.x="${X}"
+			-o window.position.y="${Y}"
+			# -o 'window.position.x=200'
+			# -o 'window.position.y=200'
+			-o "window.dimensions.lines=$num_lines"
+			-o "window.dimensions.columns=$num_cols"
+			-o 'window.startup_mode="Windowed"'
+			-o 'window.decorations=none'
+			# -o 'colors.primary.background="#009f6b"'
+		)
 
+		# -W:   Wait until the new window closes
+		local open_cmd=("open" -n -a "$terminal_popup_app" --stdout "$stdout_file" --args)
 
+		# -e "${forward_terminal_cmd_args[@]}"
+		# -e "${bash_c_launch_filter[@]}"
+		# -e "$launcher_filter" "$tty_first" "popup_storage"
+		# -e "find /Applications -maxdepth 1 -name \"*.app\" | fzf > \"$log_file\""
+		# -e "find /Applications -maxdepth 1 -name \"*.app\" | fzf > \"$log_file\"; echo \$? > \"$fifo\"" &
+		# -e "echo \"hello world\"" # Should print hellow world in new terminal?
+		local popup_terminal_options=(
+			-T "$forward_terminal_args_title"
+			"${alacritty_default_opts[@]}"
+			-e "${forward_terminal_cmd_args[@]}"
+		)
 
-        # TODO:
-        # 1. Get new window id by "label"
-        #
-        #   yabai -m query --windows --window
-        #
-        #       jq -r '.[] | select(.label == "some_name") | .id' data.json
+		# NOTE: the bash string that is run has to be a single string of course.
+		# Could I use echo-escape to stringify and escape an incomming command sequence?
+		# So that one could call launcher by `launcher -- <cmd>..` instead of
+		# doing `launcher -- <cmd_string>`
 
-        sleep 0.01
+		local final_cmd=("${open_cmd[@]}" "${popup_terminal_options[@]}")
 
-        # yabai -m query --windows | jq -r '.[].app'
-        yabai -m query --windows | jq -r '.[] | "\(.app)\t\(.title)"'
+		# echo "${final_cmd[@]}" >> "$log_file"
+		# echo "-----"
+		# __print_lines "${final_cmd[@]}"
+		# echo "-----"
 
-        # yabai -m query --windows | jq -r '.[] | select(.label == "'"$forward_terminal_args_title"'") | .id'
+		# TODO: trap to the popup command, so that focus can be moved back to
+		# the previous command.
 
-        new_term_win_id=$(yabai -m query --windows | jq -r '.[] | select(.title == "'"$forward_terminal_args_title"'") | .id')
+		# Spawn the new window
+		"${final_cmd[@]}"
 
+        exit
 
-        # move term to focused display
-        yabai -m window "$new_term_win_id" --display "$active_display_id"
+		# TODO:
+		# 1. Get new window id by "label"
+		#
+		#   yabai -m query --windows --window
+		#
+		#       jq -r '.[] | select(.label == "some_name") | .id' data.json
 
-        # set new term to float
-        yabai -m window "$new_term_win_id" --toggle float
+		# sleep 0.01
 
-        # center new term
-        yabai -m window "$new_term_win_id" --grid 5:5:1:1:3:3
+		# yabai -m query --windows | jq -r '.[].app'
+		yabai -m query --windows | jq -r '.[] | "\(.app)\t\(.title)"'
 
-        # focus new term
-        yabai -m window "$new_term_win_id" --focus
+		# yabai -m query --windows | jq -r '.[] | select(.label == "'"$forward_terminal_args_title"'") | .id'
 
+		new_term_win_id=$(yabai -m query --windows | jq -r '.[] | select(.title == "'"$forward_terminal_args_title"'") | .id')
 
-        echo "new term id: $new_term_win_id"
-        echo "active disp id: $active_display_id"
+		# # move term to focused display
+		# yabai -m window "$new_term_win_id" --display "$active_display_id"
 
-        # 2. Check if the window is in the active display space?
-        #       ^ Otherwise, move it to the active display.
+		# set new term to float
+		# yabai -m window "$new_term_win_id" --toggle float
 
-        # yabai -m window "$new_term_win_id" --display north # "$active_display_id"
-        # yabai -m window --display "$active_display_id"
+		# NOTE: This is just a fancy way of doing it. BUT in the end, the app
+		# should be oppened by giving Alacritty config options for coordinates etc.
 
+		# center new term
+		# yabai -m window "$new_term_win_id" --grid 5:5:1:1:3:3
 
-        # WARN: Moving windows from display to display requires disabling SIP AFAIK.
-        # ^ Hacky solution: move the window manually straight up...
+		# focus new term
+		# yabai -m window "$new_term_win_id" --focus
 
+		echo "new term id: $new_term_win_id"
+		echo "active disp id: $active_display_id"
 
-        local status=$?
+		echo "ALACRITTY OPTIONS: ${popup_terminal_options[*]}"
 
-        # echo "forward_terminal_cmd_args: ${forward_terminal_cmd_args[*]}"
+		# 2. Check if the window is in the active display space?
+		#       ^ Otherwise, move it to the active display.
 
-        # capture status of last command
-        if [[ status -ne 0 ]]; then
-            echo "[launcher]: command [open] failed for some reason.."
-        fi
+		# yabai -m window "$new_term_win_id" --display north # "$active_display_id"
+		# yabai -m window --display "$active_display_id"
 
-    else
-        : # TODO: Linux
-    fi
+		# WARN: Moving windows from display to display requires disabling SIP AFAIK.
+		# ^ Hacky solution: move the window manually straight up...
+
+		local status=$?
+
+		# echo "forward_terminal_cmd_args: ${forward_terminal_cmd_args[*]}"
+
+		# capture status of last command
+		if [[ status -ne 0 ]]; then
+			echo "[launcher]: command [open] failed for some reason.."
+		fi
+
+	else
+		: # TODO: Linux
+	fi
 
 )
 
 # fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-    launcher_ "$@"
+	launcher_ "$@"
 fi
