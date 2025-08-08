@@ -143,6 +143,14 @@
 # https://stackoverflow.com/questions/14551419/listing-all-windows-of-all-applications?rq=3
 # https://stackoverflow.com/questions/16064957/how-to-check-in-applescript-if-an-app-is-running-without-launching-it-via-osa?rq=3
 
+# NOTE: Screen resolution.
+# https://superuser.com/questions/196532/how-do-i-find-out-my-screen-resolution-from-a-shell-script
+# https://superuser.com/questions/447295/how-can-i-get-the-current-screen-resolution-from-the-command-line-on-os-x
+# https://stackoverflow.com/questions/24972338/get-macbook-screen-size-from-terminal-bash
+# https://osxdaily.com/2014/08/31/how-to-get-current-screen-resolution-from-command-line-in-mac-os-x/
+# https://stackoverflow.com/questions/20099333/terminal-command-to-show-connected-displays-monitors-resolutions
+# https://apple.stackexchange.com/questions/162860/how-to-view-current-display-resolution
+
 function window_helper() (
 	source "$DOROTHY/sources/bash.bash"
 

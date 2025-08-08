@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+
+# Help with managing macos system keyboard shortcuts.
+
+# NOTE: ARTICLES ON MANAGING PLIST AND PREFERENCES VIA CLI
+# https://victoronsoftware.com/posts/macos-launchd-agents-and-daemons/
+
+# WHERE PREFERENCES LIVE
+#       User-specific settings
+#
+#       Stored in ~/Library/Preferences/ as com.apple.[something].plist.
+#
+#       Example: ~/Library/Preferences/com.apple.finder.plist stores Finder prefs.
+#
+#       These are typically managed with defaults read/write.
+#
+#       System-wide settings
+#
+#       Stored in /Library/Preferences/ (affects all users).
+#
+#       Example: /Library/Preferences/com.apple.loginwindow.plist.
+#
+#       Per-app preferences
+#
+#       Each app has its own plist in ~/Library/Preferences/.
+#
+#       Example: ~/Library/Preferences/com.apple.TextEdit.plist.
+#
+#       Special system shortcuts and configurations
+#
+#       Example: ~/Library/Preferences/com.apple.symbolichotkeys.plist for global keyboard shortcuts.
+
+# WHEN SETTINGS AREN’T STORED IN PLISTS
+#       Keychain: Passwords, Wi-Fi keys, certificates — stored securely in the Keychain database.
+#
+#       TCC (Transparency, Consent, and Control): Privacy permissions (e.g., “Allow Terminal to control Finder”) are stored in a protected SQLite database at:
+#
+#       swift
+#       Copy
+#       Edit
+#       /Library/Application Support/com.apple.TCC/TCC.db
+#       Launch Services, Spotlight, QuickLook caches: Stored in SQLite databases or other binary formats, not plists.
+#
+#       iCloud-synced preferences: Some settings live in synced containers, not just local plists.
+#
+#       Hardware-level or firmware settings: Stored in NVRAM/SMC, not in files.
+
+
+# KEY THING TO REMEMBER
+#       If you can change a setting in System Settings and it’s not security/permission-related, it’s probably in a plist.
+#
+#       If it’s about security, app permissions, or credentials, it’s probably in a database or secure store.
+
+
+
+function macos_keyboard_shortcuts_helper() (
+	source "$DOROTHY/sources/bash.bash"
+
+	echo "todo..."
+	exit
+
+	declare -A HOTKEY_NAMES=(
+		[64]="Mission Control"
+		[65]="Application windows"
+		[118]="Move left a space"
+		[119]="Move right a space"
+		[120]="Show Desktop"
+		[160]="Turn Dock Hiding On/Off"
+		[162]="Turn Dock Magnification On/Off"
+		[163]="Minimize Window"
+		[175]="Show Launchpad"
+		[176]="Show Notification Center"
+		# ...add the rest from Apple's documentation or dumps
+	)
+
+	# get list of shortcuts
+	defaults read com.apple.symbolichotkeys AppleSymbolicHotKeys
+
+	local domain="com.apple.symbolichotkeys"
+	local plist=~/Library/Preferences/$domain.plist
+
+	# Read all symbolic hotkeys
+	defaults read "$domain" AppleSymbolicHotKeys |
+		awk '
+  /^\s*[0-9]+ =/ { id = $1 }
+  /enabled =/ && id { enabled = ($3 == "1;" ? 1 : 0) }
+  /parameters =/ && id {
+    getline; kv = $0
+    if (enabled) {
+      # Extract keycode and modifier
+      match(kv, /\(([^,]+),[[:space:]]*([0-9]+),[[:space:]]*([0-9]+)\)/, a)
+      keycode = a[2]
+      mods = a[3]
+      # Simple mapping: Cmd=1048576, Ctrl=262144, Alt=524288, Shift=131072
+      combo = ""
+      if (mods & 1048576) combo = combo "⌘"
+      if (mods & 262144)  combo = combo "^"
+      if (mods & 524288)  combo = combo "⌥"
+      if (mods & 131072)  combo = combo "⇧"
+      combo = combo keycode
+      print id " = " combo
+    }
+    id = ""
+  }
+'
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	macos_keyboard_shortcuts_helper "$@"
+fi
