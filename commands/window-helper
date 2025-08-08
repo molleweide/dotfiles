@@ -129,33 +129,46 @@
 #             "can-resize": bool
 #         }
 
+# TODO: Maybe put the below info into a `view-helper`.
+# https://stackoverflow.com/questions/20099333/terminal-command-to-show-connected-displays-monitors-resolutions
+# https://apple.stackexchange.com/questions/141213/grab-the-active-window-in-applescript
+# https://www.macscripter.net/t/possible-to-identify-screen-monitor-of-current-cursor-position/71446/2
+# https://www.reddit.com/r/applescript/comments/za3jtv/help_with_scripting_monitor_display_mode/
+# https://apple.stackexchange.com/questions/316213/can-i-use-applescript-to-detect-if-there-are-any-windows-on-screen
+# https://stackoverflow.com/questions/14773974/set-focus-to-specific-window-of-an-application-using-applescript
+# https://stackoverflow.com/questions/1146472/applescript-to-target-frontmost-application?rq=3
+# https://www.macscripter.net/t/setting-focus-to-a-window-by-title/48824
+# https://stackoverflow.com/questions/18372328/applescript-get-list-of-running-apps
+# https://stackoverflow.com/questions/1562513/applescript-list-all-running-applications?rq=3
+# https://stackoverflow.com/questions/14551419/listing-all-windows-of-all-applications?rq=3
+# https://stackoverflow.com/questions/16064957/how-to-check-in-applescript-if-an-app-is-running-without-launching-it-via-osa?rq=3
+
 function window_helper() (
-    source "$DOROTHY/sources/bash.bash"
+	source "$DOROTHY/sources/bash.bash"
 
-    # TODO:
-    # picker-yabai: displays, spaces, windows
-    #
+	# TODO:
+	# picker-yabai: displays, spaces, windows
+	#
 
-    local window_picker_alternatives=(displays spaces windows)
+	local window_picker_alternatives=(displays spaces windows)
 
-    selection="$(
-        echo-lines -- "${window_picker_alternatives[@]}" |
-            fzf-helper -- \
-                --border-label '🌴 [Window helper]: yabai picker' \
-                --header $'Select which query type to inspect:\n\n'
-    )"
+	selection="$(
+		echo-lines -- "${window_picker_alternatives[@]}" |
+			fzf-helper -- \
+				--border-label '🌴 [Window helper]: yabai picker' \
+				--header $'Select which query type to inspect:\n\n'
+	)"
 
-    __print_lines "$selection"
+	__print_lines "$selection"
 
+	# TODO: jq get [index:id:label]
+	# TODO: preview -> just run the yabai command for this id
 
-    # TODO: jq get [index:id:label]
-    # TODO: preview -> just run the yabai command for this id
-
-    yabai -m query "--$selection" | jq '.[].id' | fzf-helper -- --preview "yabai -m query --$selection --${selection::-1} {}"
+	yabai -m query "--$selection" | jq '.[].id' | fzf-helper -- --preview "yabai -m query --$selection --${selection::-1} {}"
 
 )
 
 # Fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-    window_helper "$@"
+	window_helper "$@"
 fi

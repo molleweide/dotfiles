@@ -1,106 +1,11 @@
 #!/usr/bin/env bash
 
-# USE CASE: You need user input but command is not run in a tty, eg. you run
-# a command from a keybind script.
-
 # FIX:
 # /Users/hjalmarjakobsson/.local/share/dorothy/user/commands/launcher: line 107: /sources/bash.bash: No such file or directory
 # /Users/hjalmarjakobsson/.local/share/dorothy/user/commands/launcher: line 125: /user/commands/launcher.log: No such file or directory
 # /Users/hjalmarjakobsson/.local/share/dorothy/commands/is-mac: line 21: /sources/bash.bash: No such file or directory
 # /Users/hjalmarjakobsson/.local/share/dorothy/user/commands/launcher: line 220: __command_missing: command not found
 # _LSOpenURLsWithCompletionHandler() failed for the application /Applications/Alacritty.app with error -10810.
-
-# NOTE: `launcher` is the core command and `launcher-*` are usage commands.
-
-# TODO: Make into -> command `spotlight-launcher-menu`
-# Attempt to create a dorothy based macos spotlight alternative.
-#
-# TODO: Absorb the launcher-filter into a func
-#
-# TODO: choose/fzf
-#
-# FIX: Currently, this command is the command responsible for spawning the
-# new terminal window, and the script to be ran in that terminal is provided
-# in the `-e` flag. -> I wonder if this is a similar issue to the FZF issues,
-# where it didnt seem to work to pass the something in a strig to the FZF cmd.
-
-# NOTE: YABAI
-# In order for operations, such as `move to display`, to take effect, the layout
-# has to be set to `bsp`
-
-# NOTE: Screen resolution.
-# https://superuser.com/questions/196532/how-do-i-find-out-my-screen-resolution-from-a-shell-script
-# https://superuser.com/questions/447295/how-can-i-get-the-current-screen-resolution-from-the-command-line-on-os-x
-# https://stackoverflow.com/questions/24972338/get-macbook-screen-size-from-terminal-bash
-# https://osxdaily.com/2014/08/31/how-to-get-current-screen-resolution-from-command-line-in-mac-os-x/
-# https://stackoverflow.com/questions/20099333/terminal-command-to-show-connected-displays-monitors-resolutions
-# https://apple.stackexchange.com/questions/162860/how-to-view-current-display-resolution
-
-# MACOS `open` COMMAND
-#
-# The open command opens a file (or a directory or URL), just as if you had double-clicked the file's icon. If no application name is specified, the default application as determined via LaunchServices is used
-# to open the specified files.
-#
-# If the file is in the form of a URL, the file will be opened as a URL.
-#
-# You can specify one or more file names (or pathnames), which are interpreted relative to the shell or Terminal window's current working directory. For example, the following command would open all Word files
-# in the current working directory:
-#
-# open *.doc
-#
-# Opened applications inherit environment variables just as if you had launched the application directly through its full path.  This behavior was also present in Tiger.
-#
-# The options are as follows:
-#
-# -a application
-#     Specifies the application to use for opening the file
-#
-# -b bundle_identifier
-#     Specifies the bundle identifier for the application to use when opening the file
-#
-# -e  Causes the file to be opened with the TextEdit application
-#
-# -t  Causes the file to be opened with the default text editor, as determined via LaunchServices
-#
-# -f  Reads input from standard input and opens the results in the default text editor.  End input by sending EOF character (type Control-D).  Also useful for piping output to open and having it open in the
-#     default text editor.
-#
-# -F  Opens the application "fresh," that is, without restoring windows. Saved persistent state is lost, except for Untitled documents.
-#
-# -W  Causes open to wait until the applications it opens (or that were already open) have exited.  Use with the -n flag to allow open to function as an appropriate app for the $EDITOR environment variable.
-#
-# -R  Reveals the file(s) in the Finder instead of opening them.
-#
-# -n  Open a new instance of the application(s) even if one is already running.
-#
-# -g  Do not bring the application to the foreground.
-#
-# -j  Launches the app hidden.
-#
-# --arch ARCH
-#     Launch with the given cpu architecture type and subtype; ARCH should be one of any, arm, arm64, arm64e, arm64_32, x86_64, x86_64h, i386.  Two integers matching the values for cpu_type_t and cpu_subtype_t
-#     can be specified as integers separated by a '/' character, like "12/13" for CPU_TYPE_ARM/CPU_SUBTYPE_ARM_V8.
-#
-# -h  Searches header locations for a header whose name matches the given string and then opens it.  Pass a full header name (such as NSView.h) for increased performance.
-#
-# -s  For -h, partial or full SDK name to use; if supplied, only SDKs whose names contain the argument value are searched. Otherwise the highest versioned SDK in each platform is used.
-#
-# -u  Opens URL with whatever application claims the url scheme, even if URL also matches a file path
-#
-# --args
-#     All remaining arguments are passed to the opened application in the argv parameter to main().  These arguments are not opened or interpreted by the open tool.
-#
-# --env VAR
-#     Adds VAR to the environment of the launched application.  VAR should be formatted NAME=VALUE or NAME.
-#
-# --stdin PATH
-#     Launches the application with stdin connected to PATH.
-#
-# --stdout PATH
-#     Launches the application with stdout connected to PATH.
-#
-# --stderr PATH
-#     Launches the application with stderr connected to PATH.
 
 # WARN: If using --tmux flag with fzf-helper, then focus is not switched to the
 # new terminal, instead, the picker is spawned in the currently active tmux session? I think?
@@ -178,6 +83,8 @@ function launcher_() (
 		case "$item" in
 		'--help' | '-h') help ;;
 		'--string='*) option_string="${item#*=}" ;;
+		# Currently, this has to be a single string. But could we instead wrap
+		# all args in a string and escape everything necessary?
 		'--')
 			option_cmd="$1"
 			shift $#
@@ -189,96 +96,40 @@ function launcher_() (
 	done
 
 	if is-mac; then
-
-		# NOTE: default to bash -c but other shells could also be used..
-
 		local forward_terminal_cmd_args=("bash" "-c")
+
 		if [[ -n $option_string ]]; then
 			forward_terminal_cmd_args+=("$option_string")
 		elif [[ -n "$option_cmd" ]]; then
 			forward_terminal_cmd_args=("bash" "-c")
-
-			# NOTE: that im pushing to the log file.
-
 			forward_terminal_cmd_args+=("$option_cmd")
-			# forward_terminal_cmd_args+=("$option_cmd >> $log_file")
 		else
 			# A shell command is required!
 			# echo-style error
 			return 22
 		fi
 
-		# TODO: Maybe put the below info into a `view-helper`.
-		# https://stackoverflow.com/questions/20099333/terminal-command-to-show-connected-displays-monitors-resolutions
-		# https://apple.stackexchange.com/questions/141213/grab-the-active-window-in-applescript
-		# https://www.macscripter.net/t/possible-to-identify-screen-monitor-of-current-cursor-position/71446/2
-		# https://www.reddit.com/r/applescript/comments/za3jtv/help_with_scripting_monitor_display_mode/
-		# https://apple.stackexchange.com/questions/316213/can-i-use-applescript-to-detect-if-there-are-any-windows-on-screen
-		# https://stackoverflow.com/questions/14773974/set-focus-to-specific-window-of-an-application-using-applescript
-		# https://stackoverflow.com/questions/1146472/applescript-to-target-frontmost-application?rq=3
-		# https://www.macscripter.net/t/setting-focus-to-a-window-by-title/48824
-		# https://stackoverflow.com/questions/18372328/applescript-get-list-of-running-apps
-		# https://stackoverflow.com/questions/1562513/applescript-list-all-running-applications?rq=3
-		# https://stackoverflow.com/questions/14551419/listing-all-windows-of-all-applications?rq=3
-		# https://stackoverflow.com/questions/16064957/how-to-check-in-applescript-if-an-app-is-running-without-launching-it-via-osa?rq=3
-
-		local new_term_win_id active_display_id
+		local new_term_win_id active_display_id PHYSICAL_SCREEN_DATA
 
 		if __command_missing -- yabai; then
 			# setup-window-manager --use=yabai
 			echo "requires yabai"
 			exit
-		else
-
-			# # get active display before we spawn the new window
-			active_display_id=$(yabai -m query --displays | jq -r '.[] | select(."has-focus" == true) | .id')
-
-			# Get focused monitor display height and width
-
-			# local PHYSICAL_SCREEN_X="$(yabai -m query --displays --display | jq '.frame.x*1')"
-			# local PHYSICAL_SCREEN_Y="$(yabai -m query --displays --display | jq '.frame.y*1')"
-			#
-			# local PHYSICAL_SCREEN_DATA="$(yabai -m query --displays --display | jq -r '"\(.frame.x*1)\n \(.frame.y*1)\n \(.frame.w*1)\n \(.frame.h*1)"')"
-
-			local PHYSICAL_SCREEN_DATA
-
-			readarray -t PHYSICAL_SCREEN_DATA < <(yabai -m query --displays --display | jq -r '.frame | [.x*1, .y*1, .w*1, .h*1][]')
-
-			# __print_lines "PHYSICAL_SCREEN_DATA: ${PHYSICAL_SCREEN_DATA[*]}"
-
-			# __print_lines "physical screen X: $PHYSICAL_SCREEN_X"
-			# __print_lines "physical screen Y: $PHYSICAL_SCREEN_Y"
-
-			# local PHYSICAL_SCREEN_WIDTH="$(yabai -m query --displays --display | jq '.frame.w*1')"
-			# local PHYSICAL_SCREEN_HEIGHT="$(yabai -m query --displays --display | jq '.frame.h*1')"
-
-			# __print_lines "physical screen width: $PHYSICAL_SCREEN_WIDTH"
-			# __print_lines "physical screen height: $PHYSICAL_SCREEN_HEIGHT"
-
-			local num_cols=75 num_lines=30
-
-			local TERM_WIDTH=750  # $((num_cols * 10))
-			local TERM_HEIGHT=510 # $((num_lines * 17))
-
-			# Note: Im adding the physical display x/y values to shift the window to the correct monitor display.
-			local X=$(((PHYSICAL_SCREEN_DATA[2] / 2) - (TERM_WIDTH / 2) + PHYSICAL_SCREEN_DATA[0]))
-			local Y=$(((PHYSICAL_SCREEN_DATA[3] / 2) - (TERM_HEIGHT / 2) + PHYSICAL_SCREEN_DATA[1]))
-
-			# __print_lines "X:$X Y:$Y"
 		fi
 
-		# NOTE: The previously active window can be passed through to the alacritty
-		# -e cmd by supplying it with an ENV var.
-
-		# TODO: In order to get the window to open in the correct location. I have to
-		# first query yabai for the dimensions of my displays, and then compute the
-		# coordinates for the new terminal.
+		# get active display before we spawn the new window
+		active_display_id=$(yabai -m query --displays | jq -r '.[] | select(."has-focus" == true) | .id')
+		readarray -t PHYSICAL_SCREEN_DATA < <(yabai -m query --displays --display | jq -r '.frame | [.x*1, .y*1, .w*1, .h*1][]')
+		local num_cols=75 num_lines=30
+		local TERM_WIDTH=750  # $((num_cols * 10))
+		local TERM_HEIGHT=510 # $((num_lines * 17))
+		# Note: Im adding the physical display x/y values to shift the window to the correct monitor display.
+		local X=$(((PHYSICAL_SCREEN_DATA[2] / 2) - (TERM_WIDTH / 2) + PHYSICAL_SCREEN_DATA[0]))
+		local Y=$(((PHYSICAL_SCREEN_DATA[3] / 2) - (TERM_HEIGHT / 2) + PHYSICAL_SCREEN_DATA[1]))
 
 		local alacritty_default_opts=(
 			-o window.position.x="${X}"
 			-o window.position.y="${Y}"
-			# -o 'window.position.x=200'
-			# -o 'window.position.y=200'
 			-o "window.dimensions.lines=$num_lines"
 			-o "window.dimensions.columns=$num_cols"
 			-o 'window.startup_mode="Windowed"'
@@ -286,95 +137,43 @@ function launcher_() (
 			# -o 'colors.primary.background="#009f6b"'
 		)
 
-		# -W:   Wait until the new window closes
+		# -a application
+		#     Specifies the application to use for opening the file
+		#
+		# -n  Open a new instance of the application(s) even if one is already running.
+		#
+		# -W  Causes open to wait until the applications it opens (or that were already open) have exited.  Use with the -n flag to allow open to function as an appropriate app for the $EDITOR environment variable.
+		#
+		# --args
+		#     All remaining arguments are passed to the opened application in the argv parameter to main().  These arguments are not opened or interpreted by the open tool.
+		#
+		# --env VAR
+		#     Adds VAR to the environment of the launched application.  VAR should be formatted NAME=VALUE or NAME.
+		#
+		# --stdin PATH
+		#     Launches the application with stdin connected to PATH.
+		#
+		# --stdout PATH
+		#     Launches the application with stdout connected to PATH.
+		#
+		# --stderr PATH
+		#     Launches the application with stderr connected to PATH.
+
 		local open_cmd=("open" -n -a "$terminal_popup_app" --stdout "$stdout_file" --args)
 
-		# -e "${forward_terminal_cmd_args[@]}"
-		# -e "${bash_c_launch_filter[@]}"
-		# -e "$launcher_filter" "$tty_first" "popup_storage"
-		# -e "find /Applications -maxdepth 1 -name \"*.app\" | fzf > \"$log_file\""
-		# -e "find /Applications -maxdepth 1 -name \"*.app\" | fzf > \"$log_file\"; echo \$? > \"$fifo\"" &
-		# -e "echo \"hello world\"" # Should print hellow world in new terminal?
 		local popup_terminal_options=(
 			-T "$forward_terminal_args_title"
 			"${alacritty_default_opts[@]}"
 			-e "${forward_terminal_cmd_args[@]}"
 		)
 
-		# NOTE: the bash string that is run has to be a single string of course.
-		# Could I use echo-escape to stringify and escape an incomming command sequence?
-		# So that one could call launcher by `launcher -- <cmd>..` instead of
-		# doing `launcher -- <cmd_string>`
-
 		local final_cmd=("${open_cmd[@]}" "${popup_terminal_options[@]}")
 
-		# echo "${final_cmd[@]}" >> "$log_file"
-		# echo "-----"
-		# __print_lines "${final_cmd[@]}"
-		# echo "-----"
-
-		# TODO: trap to the popup command, so that focus can be moved back to
-		# the previous command.
+		# ??? Wrap trap to the popup command, so that focus can be moved back to
+		# the previous command???
 
 		# Spawn the new window
 		"${final_cmd[@]}"
-
-		exit
-
-		# TODO:
-		# 1. Get new window id by "label"
-		#
-		#   yabai -m query --windows --window
-		#
-		#       jq -r '.[] | select(.label == "some_name") | .id' data.json
-
-		# sleep 0.01
-
-		# yabai -m query --windows | jq -r '.[].app'
-		# yabai -m query --windows | jq -r '.[] | "\(.app)\t\(.title)"'
-
-		# yabai -m query --windows | jq -r '.[] | select(.label == "'"$forward_terminal_args_title"'") | .id'
-
-		# new_term_win_id=$(yabai -m query --windows | jq -r '.[] | select(.title == "'"$forward_terminal_args_title"'") | .id')
-
-		# # move term to focused display
-		# yabai -m window "$new_term_win_id" --display "$active_display_id"
-
-		# set new term to float
-		# yabai -m window "$new_term_win_id" --toggle float
-
-		# NOTE: This is just a fancy way of doing it. BUT in the end, the app
-		# should be oppened by giving Alacritty config options for coordinates etc.
-
-		# center new term
-		# yabai -m window "$new_term_win_id" --grid 5:5:1:1:3:3
-
-		# focus new term
-		# yabai -m window "$new_term_win_id" --focus
-
-		echo "new term id: $new_term_win_id"
-		echo "active disp id: $active_display_id"
-
-		echo "ALACRITTY OPTIONS: ${popup_terminal_options[*]}"
-
-		# 2. Check if the window is in the active display space?
-		#       ^ Otherwise, move it to the active display.
-
-		# yabai -m window "$new_term_win_id" --display north # "$active_display_id"
-		# yabai -m window --display "$active_display_id"
-
-		# WARN: Moving windows from display to display requires disabling SIP AFAIK.
-		# ^ Hacky solution: move the window manually straight up...
-
-		local status=$?
-
-		# echo "forward_terminal_cmd_args: ${forward_terminal_cmd_args[*]}"
-
-		# capture status of last command
-		if [[ status -ne 0 ]]; then
-			echo "[launcher]: command [open] failed for some reason.."
-		fi
-
 	else
 		: # TODO: Linux
 	fi
