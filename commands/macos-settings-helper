@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 
-
 # TODO: Use choose and fzf UI to manage prefs.
 #
 # if no args, then run UI.
 
 # TODO: Later, refactor into `plist-helper`, `macos-tcc-db-helper`
-
 
 # prefctl - Simple macOS preference CLI for plist editing
 # Usage:
@@ -25,74 +23,114 @@
 # Delete a nested key:
 #       prefctl delete com.apple.finder FXPreferredViewStyle
 
+# WARN: We want to reduce maintenance, therefore, it is bad to maintain name
+# mappings, instead we/one should learn to navigate the library/preferences
+# dir instead.
+
 function macos_settings_helper() (
-  source "$DOROTHY/sources/bash.bash"
+	source "$DOROTHY/sources/bash.bash"
 
+	# TODO: So when we format these in UI, just remove the `com.apple` prefix.
+	# and learn to use the already existing names.
 
-  # Map all regular relevant settigs files to their respective value in the gui.
-  declare -A DOMAIN_PATH_MAP=(
+	# TODO: Loop and only extend names that truly need clarification. So that
+	# this list is real files first, and then we add clarifications on top.
+	# instead of keeping a map of the file paths...
 
-  # [64]="Mission Control"
-  # [65]="Application windows"
-  # [118]="Move left a space"
-  # [119]="Move right a space"
-  # [120]="Show Desktop"
-  # [160]="Turn Dock Hiding On/Off"
-  # [162]="Turn Dock Magnification On/Off"
-  # [163]="Minimize Window"
-  # [175]="Show Launchpad"
-  # [176]="Show Notification Center"
-  # ...add the rest from Apple's documentation or dumps
-)
+	# TODO: Use plist-helper to also write rule changes to user's own config
+	# file so that things can always be restored easilly?
 
+	declare -A MACOS_SETTINGS_DOMAIN_PATH_MAP=(
+		# General system preferences
+		[General]="com.apple.systempreferences"
+		[Desktop]="com.apple.desktop"
+		[Dock]="com.apple.dock"
+		[Finder]="com.apple.finder"
+		[Keyboard]="com.apple.keyboard"
+		[Trackpad]="com.apple.AppleMultitouchTrackpad"
+		[Mouse]="com.apple.AppleMultitouchMouse"
+		[Sound]="com.apple.sound"
+		[Notifications]="com.apple.ncprefs"
+		[Displays]="com.apple.windowserver"
+		[Bluetooth]="com.apple.Bluetooth"
+		[Network]="com.apple.network.identification"
+		[DateTime]="com.apple.preference.datetime"
+		[Sharing]="com.apple.sharing"
+		[Users]="com.apple.loginwindow"
+		[Accessibility]="com.apple.universalaccess"
+		[Security]="com.apple.screensaver" # some security prefs are here
+		[Privacy]="com.apple.TCC"
+		[SoftwareUpdate]="com.apple.SoftwareUpdate"
+		[TimeMachine]="com.apple.TimeMachine"
+		[EnergySaver]="com.apple.EnergySaver"
+		[Passwords]="com.apple.keychainaccess"
+		[Siri]="com.apple.assistant"
+		[Battery]="com.apple.Battery"
+		[Extensions]="com.apple.extensions"
+	)
 
+	declare -A user_prefs_plists=(
+		[AppleMusic]="com.apple.Music"
+		[AppStore]="com.apple.appstore"
+		[Bluetooth]="com.apple.Bluetooth"
+		[Calendar]="com.apple.iCal"
+		[Contacts]="com.apple.AddressBook"
+		[Dashboard]="com.apple.dashboard.client"
+		[Dock]="com.apple.dock"
+		[Finder]="com.apple.finder"
+		[FontBook]="com.apple.FontBook"
+		[GoogleChrome]="com.google.Chrome"
+		[Keyboard]="com.apple.keyboard"
+		[LaunchServices]="com.apple.LaunchServices"
+		[Mail]="com.apple.mail"
+		[Messages]="com.apple.iChat"
+		[MissionControl]="com.apple.spaces"
+		[Notifications]="com.apple.ncprefs"
+		[Photos]="com.apple.Photos"
+		[Preview]="com.apple.Preview"
+		[Safari]="com.apple.Safari"
+		[ScreenSaver]="com.apple.screensaver"
+		[SystemUIServer]="com.apple.systemuiserver"
+		[TextEdit]="com.apple.TextEdit"
+		[TimeMachine]="com.apple.TimeMachine"
+		[Trackpad]="com.apple.AppleMultitouchTrackpad"
+		[VoiceOver]="com.apple.VoiceOver4"
+		[WindowServer]="com.apple.windowserver"
+		[iCloud]="com.apple.iCloud"
+	)
 
+	declare -A user_prefs_paths=(
+		[AppleMusic]="$HOME/Library/Preferences/com.apple.Music.plist"
+		[AppStore]="$HOME/Library/Preferences/com.apple.appstore.plist"
+		[Bluetooth]="$HOME/Library/Preferences/com.apple.Bluetooth.plist"
+		[Calendar]="$HOME/Library/Preferences/com.apple.iCal.plist"
+		[Contacts]="$HOME/Library/Preferences/com.apple.AddressBook.plist"
+		[Dashboard]="$HOME/Library/Preferences/com.apple.dashboard.client.plist"
+		[Dock]="$HOME/Library/Preferences/com.apple.dock.plist"
+		[Finder]="$HOME/Library/Preferences/com.apple.finder.plist"
+		[FontBook]="$HOME/Library/Preferences/com.apple.FontBook.plist"
+		[GoogleChrome]="$HOME/Library/Preferences/com.google.Chrome.plist"
+		[Keyboard]="$HOME/Library/Preferences/com.apple.keyboard.plist"
+		[LaunchServices]="$HOME/Library/Preferences/com.apple.LaunchServices.plist"
+		[Mail]="$HOME/Library/Preferences/com.apple.mail.plist"
+		[Messages]="$HOME/Library/Preferences/com.apple.iChat.plist"
+		[MissionControl]="$HOME/Library/Preferences/com.apple.spaces.plist"
+		[Notifications]="$HOME/Library/Preferences/com.apple.ncprefs.plist"
+		[Photos]="$HOME/Library/Preferences/com.apple.Photos.plist"
+		[Preview]="$HOME/Library/Preferences/com.apple.Preview.plist"
+		[Safari]="$HOME/Library/Preferences/com.apple.Safari.plist"
+		[ScreenSaver]="$HOME/Library/Preferences/com.apple.screensaver.plist"
+		[SystemUIServer]="$HOME/Library/Preferences/com.apple.systemuiserver.plist"
+		[TextEdit]="$HOME/Library/Preferences/com.apple.TextEdit.plist"
+		[TimeMachine]="$HOME/Library/Preferences/com.apple.TimeMachine.plist"
+		[Trackpad]="$HOME/Library/Preferences/com.apple.AppleMultitouchTrackpad.plist"
+		[VoiceOver]="$HOME/Library/Preferences/com.apple.VoiceOver4.plist"
+		[WindowServer]="$HOME/Library/Preferences/com.apple.windowserver.plist"
+		[iCloud]="$HOME/Library/Preferences/com.apple.iCloud.plist"
+	)
 )
 
 # fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-  macos_settings_helper "$@"
+	macos_settings_helper "$@"
 fi
-
-
-
-PLISTBUDDY="/usr/libexec/PlistBuddy"
-
-function plist_path() {
-    if [[ "$1" == /* ]]; then
-        echo "$1"
-    else
-        echo "$HOME/Library/Preferences/$1.plist"
-    fi
-}
-
-cmd="$1"
-domain="$2"
-keypath="$3"
-
-case "$cmd" in
-    read)
-        if [[ -z "$keypath" ]]; then
-            defaults read "$domain"
-        else
-            $PLISTBUDDY -c "Print :$keypath" "$(plist_path "$domain")"
-        fi
-        ;;
-    write)
-        type="$4"
-        value="$5"
-        $PLISTBUDDY -c "Set :$keypath $value" "$(plist_path "$domain")" 2>/dev/null || \
-        $PLISTBUDDY -c "Add :$keypath $type $value" "$(plist_path "$domain")"
-        ;;
-    delete)
-        $PLISTBUDDY -c "Delete :$keypath" "$(plist_path "$domain")"
-        ;;
-    *)
-        echo "Usage:"
-        echo "  prefctl read domain [keypath]"
-        echo "  prefctl write domain keypath type value"
-        echo "  prefctl delete domain keypath"
-        echo "Types: string, bool, integer, real, dict, array"
-        exit 1
-        ;;
-esac
