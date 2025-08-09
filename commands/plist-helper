@@ -1,102 +1,108 @@
 #!/usr/bin/env bash
 
 function plist_helper() (
-	source "$DOROTHY/sources/bash.bash"
+    source "$DOROTHY/sources/bash.bash"
 
-	# TODO: Create
-	#
-	# If no args -> fzf ui
-	#
-	# plist-helper [...options] -- [...<path>]
-	#
-	# plist-helper --view-keys
-	# plist-helper --get-keys
-	# plist-helper --set-key
-	# plist-helper --set-keys
-	# plist-helper --remove-key
-	# plist-helper --remove-keys
+    # TODO: Create
+    #
+    # If no args -> fzf ui
+    #
+    # plist-helper [...options] -- [...<path>]
+    #
+    # plist-helper --view-keys
+    # plist-helper --get-keys
+    # plist-helper --set-key
+    # plist-helper --set-keys
+    # plist-helper --remove-key
+    # plist-helper --remove-keys
 
-	# NOTE: PLISTBUDDY URL RESOURCES
-	#   https://github.com/captam3rica/plistbuddy-guide
-	#   https://www.marcosantadev.com/manage-plist-files-plistbuddy/
-	#   https://victoronsoftware.com/posts/macos-launchd-agents-and-daemons/#how-to-find-the-plist-file-for-a-running-process
+    # NOTE: PLISTBUDDY URL RESOURCES
+    #   https://github.com/captam3rica/plistbuddy-guide
+    #   https://www.marcosantadev.com/manage-plist-files-plistbuddy/
+    #   https://victoronsoftware.com/posts/macos-launchd-agents-and-daemons/#how-to-find-the-plist-file-for-a-running-process
 
-	# TODO: depending on type, have a [toggle-value], [cycle-value], [incr],
-	# [decr], [maximize], [minimize]
+    # TODO: depending on type, have a [toggle-value], [cycle-value], [incr],
+    # [decr], [maximize], [minimize]
 
-	# 1. Read
-	# Retrieve the value of a key or nested key path.
-	#
-	# Optionally support reading multiple keys at once.
-	#
-	# Handle different plist domains or files.
-	#
-	# 2. Write / Set
-	# Add or update a key with a value.
-	#
-	# Support specifying the data type explicitly (string, bool, int, etc.).
-	#
-	# Support nested key paths, creating intermediate dictionaries if needed.
-	#
-	# 3. Delete / Remove
-	# Remove a key or nested key path from the plist.
-	#
-	# 4. List / Dump
-	# Show all keys and values in a plist, optionally with nested structure.
-	#
-	# Support output formatting (e.g., JSON, YAML, or plain key=value).
-	#
-	# 5. Toggle
-	# For boolean keys, toggle between true and false.
-	#
-	# Could extend to toggle integer keys between 0/1 or other common pairs.
-	#
-	# 6. Exists / Check
-	# Check if a given key or nested key exists.
-	#
-	# 7. Backup / Restore
-	# Create a backup copy of the plist before modifying.
-	#
-	# Restore from a backup.
-	#
-	# 8. Import / Export
-	# Import plist contents from JSON or XML.
-	#
-	# Export plist contents to JSON or XML.
-	#
-	# 9. Watch / Monitor (advanced)
-	# Watch a plist file for changes and react (useful for live reloading settings).
-	#
-	# | Operation     | Description                   | Typical Command Example                     |
-	# | ------------- | ----------------------------- | ------------------------------------------- |
-	# | Read          | Get key value                 | `plist-cli read com.example.key`            |
-	# | Write         | Set key value with type       | `plist-cli write com.example.key bool true` |
-	# | Delete        | Remove a key                  | `plist-cli delete com.example.key`          |
-	# | List/Dump     | List all keys and values      | `plist-cli list com.example`                |
-	# | Toggle        | Toggle boolean or 0/1 integer | `plist-cli toggle com.example.enabled`      |
-	# | Exists        | Check if key exists           | `plist-cli exists com.example.key`          |
-	# | Backup        | Backup plist                  | `plist-cli backup com.example`              |
-	# | Restore       | Restore plist backup          | `plist-cli restore com.example.bak`         |
-	# | Import/Export | Import/export JSON/XML        | `plist-cli import my.json`                  |
+    # WARN: issue with `defaults` is that it converts a plist to binary data, eg. when writing to it.
 
-	#=============================================================================
-	#== PLIST HELPER START =======================================================
-	#=============================================================================
+    # 1. Read
+    # Retrieve the value of a key or nested key path.
+    #
+    # Optionally support reading multiple keys at once.
+    #
+    # Handle different plist domains or files.
+    #
+    # 2. Write / Set
+    # Add or update a key with a value.
+    #
+    # Support specifying the data type explicitly (string, bool, int, etc.).
+    #
+    # Support nested key paths, creating intermediate dictionaries if needed.
+    #
+    # 3. Delete / Remove
+    # Remove a key or nested key path from the plist.
+    #
+    # 4. List / Dump
+    # Show all keys and values in a plist, optionally with nested structure.
+    #
+    # Support output formatting (e.g., JSON, YAML, or plain key=value).
+    #
+    # 5. Toggle
+    # For boolean keys, toggle between true and false.
+    #
+    # Could extend to toggle integer keys between 0/1 or other common pairs.
+    #
+    # 6. Exists / Check
+    # Check if a given key or nested key exists.
+    #
+    # 7. Backup / Restore
+    # Create a backup copy of the plist before modifying.
+    #
+    # Restore from a backup.
+    #
+    # 8. Import / Export
+    # Import plist contents from JSON or XML.
+    #
+    # Export plist contents to JSON or XML.
+    #
+    # 9. Watch / Monitor (advanced)
+    # Watch a plist file for changes and react (useful for live reloading settings).
+    #
+    # | Operation     | Description                   | Typical Command Example                     |
+    # | ------------- | ----------------------------- | ------------------------------------------- |
+    # | Read          | Get key value                 | `plist-cli read com.example.key`            |
+    # | Write         | Set key value with type       | `plist-cli write com.example.key bool true` |
+    # | Delete        | Remove a key                  | `plist-cli delete com.example.key`          |
+    # | List/Dump     | List all keys and values      | `plist-cli list com.example`                |
+    # | Toggle        | Toggle boolean or 0/1 integer | `plist-cli toggle com.example.enabled`      |
+    # | Exists        | Check if key exists           | `plist-cli exists com.example.key`          |
+    # | Backup        | Backup plist                  | `plist-cli backup com.example`              |
+    # | Restore       | Restore plist backup          | `plist-cli restore com.example.bak`         |
+    # | Import/Export | Import/export JSON/XML        | `plist-cli import my.json`                  |
 
-	function plist_path() {
-		if [[ "$1" == /* ]]; then
-			echo "$1"
-		else
-			echo "$HOME/Library/Preferences/$1.plist"
-		fi
-	}
+    #=============================================================================
+    #== PLIST HELPER START =======================================================
+    #=============================================================================
 
-	function help {
-		cat <<-EOF >/dev/stderr
+    function plist_path() {
+        if [[ "$1" == /* ]]; then
+            echo "$1"
+        else
+            echo "$HOME/Library/Preferences/$1.plist"
+        fi
+    }
+
+    function help {
+        cat <<-EOF >/dev/stderr
 			ABOUT
 
 			USAGE
 			plist-helper --source=<path> [...<option>] <action> -- [...<argument>]
+			plist-helper --domain=<path> --get [-- ...<key>]
+			plist-helper --domain=<path> --set -- <type1> <keypath1> <value1> [<type2> <keypath2> <value2> ...]
+			plist-helper --domain=<path> --add -- <type1> <keypath1> <value1> [<type2> <keypath2> <value2> ...]
+
 
 			EXAMPLE: PRINT BASIC OUTPUT
 			plist-helper --domain=<path> --print
@@ -124,605 +130,634 @@ function plist_helper() (
 			OPTIONS
 
 		EOF
-		if [[ $# -ne 0 ]]; then
-			echo-error "$@"
-		fi
-		return 22 # EINVAL 22 Invalid argument
-	}
-
-	# process
-	local domain='' action='' option_print_style='' option_args=()
-
-	while [[ $# -ne 0 ]]; do
-		item="$1"
-		shift
-		case "$item" in
-		'--help' | '-h') help ;;
-			# defaults read <file>
-			# plutil -p
-			# plistbuddy -c "Print" <file>
-			# plistbuddy -x -c "Print" <file>
-		'--domain='*) domain="${item#*=}" ;;
-		'--print') action='print' ;;
-		# defaults | plutil | pb | xml
-		'--print='*) action='print' option_print_style="${item#*=}" ;; # operates on the whole file
-		'--interactive') ;;                                            # plistbuddy interactive mode
-		# basic operations
-		'--get') action='get' ;;
-		'--set') action='set' ;;
-		'--add') action='add' ;;
-		'--delete') action='delete' ;;
-		# specific operations
-		'--toggle') ;;
-		'--incr') ;;
-		'--decr') ;;
-		'--maximize') ;;
-		'--minimize') ;;
-		# '--question='*) option_question+=("${item#*=}") ;;
-		# '--no-label'* | '--label'*)
-		# 	# label can be 'yes', 'no', and 'first'
-		# 	option_label="$(get-flag-value --fallback="$option_label" -- "$item")"
-		# 	;;
-		'--')
-			option_args+=("$@")
-			shift $#
-			break
-			;;
-		'--'*) help "An unrecognised flag was provided: $item" ;;
-		*) help "An unrecognised flag was provided: $item" ;;
-		esac
-	done
-
-	if [[ -z "$domain" ]]; then
-		help "No domain was provided"
-	fi
-
-	if [[ -z "$action" ]]; then
-		help "No action was provided"
-	fi
-
-	local PLISTBUDDY="/usr/libexec/PlistBuddy" \
-		plistfile=$(plist_path "$domain_or_path")
-
-	# act
-
-	if [[ "$action" == print ]]; then
-
-	elif [[ "$action" == "get" ]]; then
-
-		if [[ $# -eq 0 ]]; then
-			# Read whole plist
-			defaults read "$domain_or_path"
-			exit 0
-		fi
-		for key in "$@"; do
-			echo "$key:"
-			$PLISTBUDDY -c "Print :$key" "$plistfile" 2>/dev/null || echo "  (not found)"
-		done
-
-	elif [[ "$action" == "set" ]]; then
-
-		if [[ $# -lt 3 || $(($# % 2)) -ne 1 ]]; then
-			echo "Usage: $0 write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]"
-			exit 1
-		fi
-		type="$1"
-		shift
-
-		while (($#)); do
-			key="$1"
-			value="$2"
-			shift 2
-			# Try to Set existing key, else Add new key
-			$PLISTBUDDY -c "Set :$key $value" "$plistfile" 2>/dev/null ||
-				$PLISTBUDDY -c "Add :$key $type $value" "$plistfile"
-		done
-
-	elif [[ "$action" == "delete" ]]; then
-		if [[ $# -eq 0 ]]; then
-			echo "Usage: $0 delete <domain_or_plist_path> <keypath1> [keypath2 ...]"
-			exit 1
-		fi
-		for key in "$@"; do
-			$PLISTBUDDY -c "Delete :$key" "$plistfile" 2>/dev/null || echo "Key '$key' not found"
-		done
-
-	fi
-
-	# TODO: 1. print read/cat arbitrary plist file
-	# 2. Use awk to format the output
-	# 3. push everything into fzf
-
-	# [plutil -p] AND [defaults read] does pretty much the same thing, with just
-	# minor difference in output.
-
-	# > /usr/libexec/PlistBuddy --help                                                                                                                                                              $(vi_mode_prompt_info)
-	# Command Format:
-	#     Help - Prints this information
-	#     Exit - Exits the program, changes are not saved to the file
-	#     Save - Saves the current changes to the file
-	#     Revert - Reloads the last saved version of the file
-	#     Clear [<Type>] - Clears out all existing entries, and creates root of Type
-	#     Print [<Entry>] - Prints value of Entry.  Otherwise, prints file
-	#     Set <Entry> <Value> - Sets the value at Entry to Value
-	#     Add <Entry> <Type> [<Value>] - Adds Entry to the plist, with value Value
-	#     Copy <EntrySrc> <EntryDst> - Copies the EntrySrc property to EntryDst
-	#     Delete <Entry> - Deletes Entry from the plist
-	#     Merge <file.plist> [<Entry>] - Adds the contents of file.plist to Entry
-	#     Import <Entry> <file> - Creates or sets Entry the contents of file
-	#
-	# Entry Format:
-	#     Entries consist of property key names delimited by colons.  Array items
-	#     are specified by a zero-based integer index.  Examples:
-	#         :CFBundleShortVersionString
-	#         :CFBundleDocumentTypes:2:CFBundleTypeExtensions
-	#
-	# Types:
-	#     string
-	#     array
-	#     dict
-	#     bool
-	#     real
-	#     integer
-	#     date
-	#     data
-	#
-	# Examples:
-	#     Set :CFBundleIdentifier com.apple.plistbuddy
-	#         Sets the CFBundleIdentifier property to com.apple.plistbuddy
-	#     Add :CFBundleGetInfoString string "App version 1.0.1"
-	#         Adds the CFBundleGetInfoString property to the plist
-	#     Add :CFBundleDocumentTypes: dict
-	#         Adds a new item of type dict to the CFBundleDocumentTypes array
-	#     Add :CFBundleDocumentTypes:0 dict
-	#         Adds the new item to the beginning of the array
-	#     Delete :CFBundleDocumentTypes:0 dict
-	#         Deletes the FIRST item in the array
-	#     Delete :CFBundleDocumentTypes
-	#         Deletes the ENTIRE CFBundleDocumentTypes array
-
-	# -c flag is required to use it in CLI.
-	#       /usr/libexec/PlistBuddy -c "Add :test integer 20" ~/Desktop/test.plist
-
-	#=============================================================================
-	#== plist helper end =========================================================
-	#=============================================================================
-
-	# Only example code from here on!
-
-	#==================================================================
-	# version 1
-
-	PLISTBUDDY="/usr/libexec/PlistBuddy"
-
-	function plist_path() {
-		if [[ "$1" == /* ]]; then
-			echo "$1"
-		else
-			echo "$HOME/Library/Preferences/$1.plist"
-		fi
-	}
-
-	cmd="$1"
-	domain="$2"
-	keypath="$3"
-
-	case "$cmd" in
-	read)
-		if [[ -z "$keypath" ]]; then
-			defaults read "$domain"
-		else
-			$PLISTBUDDY -c "Print :$keypath" "$(plist_path "$domain")"
-		fi
-		;;
-	write)
-		type="$4"
-		value="$5"
-		$PLISTBUDDY -c "Set :$keypath $value" "$(plist_path "$domain")" 2>/dev/null ||
-			$PLISTBUDDY -c "Add :$keypath $type $value" "$(plist_path "$domain")"
-		;;
-	delete)
-		$PLISTBUDDY -c "Delete :$keypath" "$(plist_path "$domain")"
-		;;
-	*)
-		echo "Usage:"
-		echo "  prefctl read domain [keypath]"
-		echo "  prefctl write domain keypath type value"
-		echo "  prefctl delete domain keypath"
-		echo "Types: string, bool, integer, real, dict, array"
-		exit 1
-		;;
-	esac
-
-	#==================================================================
-	# version 2
-
-	### How to use it
-
-	# 1. **Make it executable**
-	#
-	# ```bash
-	# chmod +x plist-crud.sh
-	# ```
-	#
-	# 2. **Read a whole plist domain or plist file**
-	#
-	# ```bash
-	# ./plist-crud.sh read com.apple.finder
-	# ./plist-crud.sh read /path/to/some.plist
-	# ```
-	#
-	# 3. **Read a nested key**
-	#
-	# ```bash
-	# ./plist-crud.sh read com.apple.finder DesktopViewSettings:IconViewSettings:arrangeBy
-	# ```
-	#
-	# 4. **Write/update a nested key**
-	#
-	# ```bash
-	# ./plist-crud.sh write com.apple.finder DesktopViewSettings:IconViewSettings:arrangeBy string grid
-	# ```
-	#
-	# 5. **Delete a nested key**
-	#
-	# ```bash
-	# ./plist-crud.sh delete com.apple.finder DesktopViewSettings:IconViewSettings:arrangeBy
-	# ```
-
-	# plist-crud.sh — A simple plist Create/Read/Update/Delete CLI tool
-	# Usage:
-	#   ./plist-crud.sh read <domain_or_plist_path> [keypath]
-	#   ./plist-crud.sh write <domain_or_plist_path> <keypath> <type> <value>
-	#   ./plist-crud.sh delete <domain_or_plist_path> <keypath>
-	#
-	# keypath uses ':' as a delimiter for nested dictionaries, e.g., EnvVars:BAZ
-
-	PLISTBUDDY="/usr/libexec/PlistBuddy"
-
-	function plist_path() {
-		# If argument is a full path, use it. Otherwise, build path under ~/Library/Preferences/
-		if [[ "$1" == /* ]]; then
-			echo "$1"
-		else
-			echo "$HOME/Library/Preferences/$1.plist"
-		fi
-	}
-
-	cmd="$1"
-	domain_or_path="$2"
-	keypath="$3"
-
-	if [[ -z "$cmd" || -z "$domain_or_path" ]]; then
-		echo "Usage:"
-		echo "  $0 read <domain_or_plist_path> [keypath]"
-		echo "  $0 write <domain_or_plist_path> <keypath> <type> <value>"
-		echo "  $0 delete <domain_or_plist_path> <keypath>"
-		exit 1
-	fi
-
-	plistfile=$(plist_path "$domain_or_path")
-
-	case "$cmd" in
-	read)
-		if [[ -z "$keypath" ]]; then
-			# Read whole plist (top-level)
-			defaults read "${domain_or_path}"
-		else
-			# Read nested key
-			$PLISTBUDDY -c "Print :$keypath" "$plistfile"
-		fi
-		;;
-	write)
-		type="$4"
-		value="$5"
-		if [[ -z "$keypath" || -z "$type" || -z "$value" ]]; then
-			echo "Usage: $0 write <domain_or_plist_path> <keypath> <type> <value>"
-			exit 1
-		fi
-
-		# Try setting existing key; if it fails, add new key
-		$PLISTBUDDY -c "Set :$keypath $value" "$plistfile" 2>/dev/null ||
-			$PLISTBUDDY -c "Add :$keypath $type $value" "$plistfile"
-		;;
-	delete)
-		if [[ -z "$keypath" ]]; then
-			echo "Usage: $0 delete <domain_or_plist_path> <keypath>"
-			exit 1
-		fi
-
-		$PLISTBUDDY -c "Delete :$keypath" "$plistfile"
-		;;
-	*)
-		echo "Unknown command: $cmd"
-		echo "Usage:"
-		echo "  $0 read <domain_or_plist_path> [keypath]"
-		echo "  $0 write <domain_or_plist_path> <keypath> <type> <value>"
-		echo "  $0 delete <domain_or_plist_path> <keypath>"
-		exit 1
-		;;
-	esac
-
-	#==================================================================
-	# version 3
-
-	# ### How to use it
-	#
-	# 1. Make executable:
-	#
-	# ```bash
-	# chmod +x plist-crud-multi.sh
-	# ```
-	#
-	# 2. **Read multiple keys**:
-	#
-	# ```bash
-	# ./plist-crud-multi.sh read com.apple.finder DesktopViewSettings:IconViewSettings:arrangeBy AppleShowAllFiles
-	# ```
-	#
-	# 3. **Write multiple keys** (all with the same type):
-	#
-	# ```bash
-	# ./plist-crud-multi.sh write com.apple.finder string DesktopViewSettings:IconViewSettings:arrangeBy grid AppleShowAllFiles true
-	# ```
-	#
-	# 4. **Delete multiple keys**:
-	#
-	# ```bash
-	# ./plist-crud-multi.sh delete com.apple.finder DesktopViewSettings:IconViewSettings:arrangeBy AppleShowAllFiles
-	# ```
-
-	# plist-crud-multi.sh — plist CRUD with multi-key read/write support
-	# Usage:
-	#   ./plist-crud-multi.sh read <domain_or_plist_path> <keypath1> [keypath2 ...]
-	#   ./plist-crud-multi.sh write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]
-	#   ./plist-crud-multi.sh delete <domain_or_plist_path> <keypath1> [keypath2 ...]
-
-	PLISTBUDDY="/usr/libexec/PlistBuddy"
-
-	function plist_path() {
-		if [[ "$1" == /* ]]; then
-			echo "$1"
-		else
-			echo "$HOME/Library/Preferences/$1.plist"
-		fi
-	}
-
-	cmd="$1"
-	domain_or_path="$2"
-	shift 2
-
-	plistfile=$(plist_path "$domain_or_path")
-
-	if [[ -z "$cmd" || -z "$domain_or_path" ]]; then
-		echo "Usage:"
-		echo "  $0 read <domain_or_plist_path> <keypath1> [keypath2 ...]"
-		echo "  $0 write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]"
-		echo "  $0 delete <domain_or_plist_path> <keypath1> [keypath2 ...]"
-		exit 1
-	fi
-
-	case "$cmd" in
-	read)
-		if [[ $# -eq 0 ]]; then
-			# Read whole plist
-			defaults read "$domain_or_path"
-			exit 0
-		fi
-		for key in "$@"; do
-			echo "$key:"
-			$PLISTBUDDY -c "Print :$key" "$plistfile" 2>/dev/null || echo "  (not found)"
-		done
-		;;
-
-	write)
-		if [[ $# -lt 3 || $(($# % 2)) -ne 1 ]]; then
-			echo "Usage: $0 write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]"
-			exit 1
-		fi
-		type="$1"
-		shift
-
-		while (($#)); do
-			key="$1"
-			value="$2"
-			shift 2
-			# Try to Set existing key, else Add new key
-			$PLISTBUDDY -c "Set :$key $value" "$plistfile" 2>/dev/null ||
-				$PLISTBUDDY -c "Add :$key $type $value" "$plistfile"
-		done
-		;;
-
-	delete)
-		if [[ $# -eq 0 ]]; then
-			echo "Usage: $0 delete <domain_or_plist_path> <keypath1> [keypath2 ...]"
-			exit 1
-		fi
-		for key in "$@"; do
-			$PLISTBUDDY -c "Delete :$key" "$plistfile" 2>/dev/null || echo "Key '$key' not found"
-		done
-		;;
-
-	*)
-		echo "Unknown command: $cmd"
-		echo "Usage:"
-		echo "  $0 read <domain_or_plist_path> <keypath1> [keypath2 ...]"
-		echo "  $0 write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]"
-		echo "  $0 delete <domain_or_plist_path> <keypath1> [keypath2 ...]"
-		exit 1
-		;;
-	esac
-
-	#==================================================================
-	# Version 4 w/fzf browser
-
-	# plist-crud-multi.sh — plist CRUD with multi-key read/write/delete + browse via fzf
-	# Usage:
-	#   ./plist-crud-multi.sh read <domain_or_plist_path> <keypath1> [keypath2 ...]
-	#   ./plist-crud-multi.sh write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]
-	#   ./plist-crud-multi.sh delete <domain_or_plist_path> <keypath1> [keypath2 ...]
-	#   ./plist-crud-multi.sh browse <domain_or_plist_path>
-
-	PLISTBUDDY="/usr/libexec/PlistBuddy"
-
-	function plist_path() {
-		if [[ "$1" == /* ]]; then
-			echo "$1"
-		else
-			echo "$HOME/Library/Preferences/$1.plist"
-		fi
-	}
-
-	# Recursively print keys in dot notation with values, using PlistBuddy
-	function dump_keys() {
-		local plistfile="$1"
-		local prefix="$2"
-		local keys
-
-		# Get keys at current level
-		keys=$($PLISTBUDDY -c "Print $prefix" "$plistfile" 2>/dev/null |
-			awk '/^Dict {$/ {print "__DICT__"} /^Array {$/ {print "__ARRAY__"} /^[[:space:]]*[^ ]+ = / {print $1}' |
-			grep -v '__DICT__' | grep -v '__ARRAY__')
-
-		# If prefix is empty, we start at root:
-		if [[ "$prefix" == "" ]]; then
-			keys=$($PLISTBUDDY -c "Print" "$plistfile" 2>/dev/null |
-				awk '/^[^ ]/ {print $1}' | tr -d ';')
-		fi
-
-		# Get raw keys at current level
-		keys=$($PLISTBUDDY -c "Print $prefix" "$plistfile" 2>/dev/null |
-			awk -F'= ' '/^[[:space:]]*[^ ]+ = / {print $1}' | tr -d ' ')
-
-		# Fallback if no keys found
-		if [[ -z "$keys" ]]; then
-			return
-		fi
-
-		while IFS= read -r key; do
-			# Compose full key path
-			if [[ -z "$prefix" ]]; then
-				fullkey="$key"
-			else
-				fullkey="$prefix:$key"
-			fi
-
-			# Check type of this key
-			type=$($PLISTBUDDY -c "Print $fullkey" "$plistfile" 2>&1)
-			if [[ "$type" == *"Dict"* ]]; then
-				dump_keys "$plistfile" "$fullkey"
-			elif [[ "$type" == *"Array"* ]]; then
-				# For arrays, print each index recursively
-				count=$($PLISTBUDDY -c "Print $fullkey" "$plistfile" 2>/dev/null | grep -c '^[[:space:]]*[^ ]')
-				for ((i = 0; i < count; i++)); do
-					dump_keys "$plistfile" "$fullkey:$i"
-				done
-			else
-				# Print key and value in dot notation
-				val=$($PLISTBUDDY -c "Print $fullkey" "$plistfile" 2>/dev/null | tr -d '\n')
-				# Replace ':' by '.' for dot notation
-				dotkey="${fullkey//:/\.}"
-				echo "$dotkey = $val"
-			fi
-		done <<<"$keys"
-	}
-
-	cmd="$1"
-	domain_or_path="$2"
-	shift 2
-
-	plistfile=$(plist_path "$domain_or_path")
-
-	if [[ -z "$cmd" || -z "$domain_or_path" ]]; then
-		echo "Usage:"
-		echo "  $0 read <domain_or_plist_path> <keypath1> [keypath2 ...]"
-		echo "  $0 write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]"
-		echo "  $0 delete <domain_or_plist_path> <keypath1> [keypath2 ...]"
-		echo "  $0 browse <domain_or_plist_path>"
-		exit 1
-	fi
-
-	case "$cmd" in
-	read)
-		if [[ $# -eq 0 ]]; then
-			defaults read "$domain_or_path"
-			exit 0
-		fi
-		for key in "$@"; do
-			echo "$key:"
-			$PLISTBUDDY -c "Print :$key" "$plistfile" 2>/dev/null || echo "  (not found)"
-		done
-		;;
-
-	write)
-		if [[ $# -lt 3 || $(($# % 2)) -ne 1 ]]; then
-			echo "Usage: $0 write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]"
-			exit 1
-		fi
-		type="$1"
-		shift
-
-		while (($#)); do
-			key="$1"
-			value="$2"
-			shift 2
-			$PLISTBUDDY -c "Set :$key $value" "$plistfile" 2>/dev/null ||
-				$PLISTBUDDY -c "Add :$key $type $value" "$plistfile"
-		done
-		;;
-
-	delete)
-		if [[ $# -eq 0 ]]; then
-			echo "Usage: $0 delete <domain_or_plist_path> <keypath1> [keypath2 ...]"
-			exit 1
-		fi
-		for key in "$@"; do
-			$PLISTBUDDY -c "Delete :$key" "$plistfile" 2>/dev/null || echo "Key '$key' not found"
-		done
-		;;
-
-	browse)
-		if ! command -v fzf >/dev/null 2>&1; then
-			echo "fzf not found! Please install fzf to use browse."
-			exit 1
-		fi
-		dump_keys "$plistfile" "" | fzf --ansi --preview="echo {}"
-		;;
-
-	*)
-		echo "Unknown command: $cmd"
-		echo "Usage:"
-		echo "  $0 read <domain_or_plist_path> <keypath1> [keypath2 ...]"
-		echo "  $0 write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]"
-		echo "  $0 delete <domain_or_plist_path> <keypath1> [keypath2 ...]"
-		echo "  $0 browse <domain_or_plist_path>"
-		exit 1
-		;;
-	esac
-
-	#==================================================================
-	# Version 5 | fzf browser w/AWK
-
-	# plist-crud-multi.sh — plist CRUD + browse via fzf with fast awk formatting
-
-	PLISTBUDDY="/usr/libexec/PlistBuddy"
-
-	function plist_path() {
-		if [[ "$1" == /* ]]; then
-			echo "$1"
-		else
-			echo "$HOME/Library/Preferences/$1.plist"
-		fi
-	}
-
-	# Recursively dump keys and values in dot notation with awk formatting
-	function dump_keys_awk() {
-		local plistfile="$1"
-
-		# Dump plist to XML (or text) format to parse key-value pairs recursively
-		# We'll use PlistBuddy Print and parse its indented output:
-		$PLISTBUDDY -c "Print" "$plistfile" 2>/dev/null |
-			awk '
+        if [[ $# -ne 0 ]]; then
+            echo-error "$@"
+        fi
+        return 22 # EINVAL 22 Invalid argument
+    }
+
+    # process
+    local domain='' action='' option_verbose='no' option_print_style='' plist_action_args=()
+
+    while [[ $# -ne 0 ]]; do
+        item="$1"
+        shift
+        case "$item" in
+        '--help' | '-h') help ;;
+        '-V' | '--verbose') option_verbose='yes' ;;
+            # defaults read <file>
+            # plutil -p
+            # plistbuddy -c "Print" <file>
+            # plistbuddy -x -c "Print" <file>
+        '--domain='*) domain="${item#*=}" ;;
+        '--print') action='print' ;;
+        # defaults | plutil | pb | xml
+        '--print='*) action='print' option_print_style="${item#*=}" ;; # operates on the whole file
+        '--interactive') ;;                                            # plistbuddy interactive mode
+        # basic operations
+        '--get') action='get' ;;
+        '--set') action='set' ;;
+        '--add') action='add' ;;
+        '--delete') action='delete' ;;
+        # specific operations
+        '--toggle') ;;
+        '--incr') ;;
+        '--decr') ;;
+        '--maximize') ;;
+        '--minimize') ;;
+        # '--question='*) option_question+=("${item#*=}") ;;
+        # '--no-label'* | '--label'*)
+        # 	# label can be 'yes', 'no', and 'first'
+        # 	option_label="$(get-flag-value --fallback="$option_label" -- "$item")"
+        # 	;;
+        '--')
+            plist_action_args+=("$@")
+            # shift $#
+            break
+            ;;
+        '--'*) help "An unrecognised flag was provided: $item" ;;
+        *) help "An unrecognised flag was provided: $item" ;;
+        esac
+    done
+
+    if [[ -z "$domain" ]]; then
+        help "No domain was provided"
+    fi
+
+    if [[ -z "$action" ]]; then
+        help "No action was provided"
+    fi
+
+    local PLISTBUDDY="/usr/libexec/PlistBuddy" \
+        plistfile=''
+
+    plistfile="$(plist_path "$domain")"
+
+    # act
+
+    if [[ "$action" == "print" ]]; then
+
+        case "$option_print_style" in
+        '' | defaults) defaults read "$plistfile" ;;
+        plutil) plutil -p "$plistfile" ;;
+        pb) $PLISTBUDDY -c "print" "$plistfile" ;;
+        xml) $PLISTBUDDY -x -c "print" "$plistfile" ;;
+        *) help "Unsupported print argument [$option_print_style]" ;;
+        esac
+
+    elif [[ "$action" == "get" ]]; then
+        # Read whole plist
+        if [[ "${#plist_action_args[@]}" -eq 0 ]]; then
+            defaults read "$plistfile"
+            exit 0
+
+        elif [[ "$option_verbose" == 'yes' ]]; then
+            while (($#)); do
+                key="$1"
+                shift 1
+                echo "Key = [$key]"
+                $PLISTBUDDY -c "Print :$key" "$plistfile" 2>/dev/null || echo "  (not found)"
+            done
+        else
+            while (($#)); do
+                key="$1"
+                shift 1
+                $PLISTBUDDY -c "Print :$key" "$plistfile" 2>/dev/null || echo "  (not found)"
+            done
+        fi
+        exit 0
+
+    elif [[ "$action" == "set" ]]; then
+
+        # ensure each input is a tripple: <type> <keypath> <value>
+        if [[ "${#plist_action_args[@]}" -lt 3 || $(("${#plist_action_args[@]}" % 3)) -ne 0 ]]; then
+            echo "Each action argument has to be a triple: [<type> <key> <value>]"
+            exit 1
+        fi
+
+        while (($#)); do
+            type="$1"
+            key="$2"
+            value="$3"
+            shift 3
+            # Try to Set existing key, else Add new key
+            $PLISTBUDDY -c "Set :$key $value" "$plistfile" 2>/dev/null ||
+                $PLISTBUDDY -c "Add :$key $type $value" "$plistfile"
+        done
+
+    elif [[ "$action" == "add" ]]; then
+        :
+
+    elif [[ "$action" == "delete" ]]; then
+        :
+        # TODO:
+
+        # if [[ $# -eq 0 ]]; then
+        #     echo "Usage: $0 delete <domain_or_plist_path> <keypath1> [keypath2 ...]"
+        #     exit 1
+        # fi
+        # for key in "$@"; do
+        #     $PLISTBUDDY -c "Delete :$key" "$plistfile" 2>/dev/null || echo "Key '$key' not found"
+        # done
+
+    fi
+
+    exit 0
+
+    # TODO: 1. print read/cat arbitrary plist file
+    # 2. Use awk to format the output
+    # 3. push everything into fzf
+
+    # [plutil -p] AND [defaults read] does pretty much the same thing, with just
+    # minor difference in output.
+
+    # > /usr/libexec/PlistBuddy --help                                                                                                                                                              $(vi_mode_prompt_info)
+    # Command Format:
+    #     Help - Prints this information
+    #     Exit - Exits the program, changes are not saved to the file
+    #     Save - Saves the current changes to the file
+    #     Revert - Reloads the last saved version of the file
+    #     Clear [<Type>] - Clears out all existing entries, and creates root of Type
+    #     Print [<Entry>] - Prints value of Entry.  Otherwise, prints file
+    #     Set <Entry> <Value> - Sets the value at Entry to Value
+    #     Add <Entry> <Type> [<Value>] - Adds Entry to the plist, with value Value
+    #     Copy <EntrySrc> <EntryDst> - Copies the EntrySrc property to EntryDst
+    #     Delete <Entry> - Deletes Entry from the plist
+    #     Merge <file.plist> [<Entry>] - Adds the contents of file.plist to Entry
+    #     Import <Entry> <file> - Creates or sets Entry the contents of file
+    #
+    # Entry Format:
+    #     Entries consist of property key names delimited by colons.  Array items
+    #     are specified by a zero-based integer index.  Examples:
+    #         :CFBundleShortVersionString
+    #         :CFBundleDocumentTypes:2:CFBundleTypeExtensions
+    #
+    # Types:
+    #     string
+    #     array
+    #     dict
+    #     bool
+    #     real
+    #     integer
+    #     date
+    #     data
+    #
+    # Examples:
+    #     Set :CFBundleIdentifier com.apple.plistbuddy
+    #         Sets the CFBundleIdentifier property to com.apple.plistbuddy
+    #     Add :CFBundleGetInfoString string "App version 1.0.1"
+    #         Adds the CFBundleGetInfoString property to the plist
+    #     Add :CFBundleDocumentTypes: dict
+    #         Adds a new item of type dict to the CFBundleDocumentTypes array
+    #     Add :CFBundleDocumentTypes:0 dict
+    #         Adds the new item to the beginning of the array
+    #     Delete :CFBundleDocumentTypes:0 dict
+    #         Deletes the FIRST item in the array
+    #     Delete :CFBundleDocumentTypes
+    #         Deletes the ENTIRE CFBundleDocumentTypes array
+
+    # -c flag is required to use it in CLI.
+    #       /usr/libexec/PlistBuddy -c "Add :test integer 20" ~/Desktop/test.plist
+
+    #=============================================================================
+    #== plist helper end =========================================================
+    #=============================================================================
+
+    # Only example code from here on!
+
+    #==================================================================
+    # version 1
+
+    PLISTBUDDY="/usr/libexec/PlistBuddy"
+
+    function plist_path() {
+        if [[ "$1" == /* ]]; then
+            echo "$1"
+        else
+            echo "$HOME/Library/Preferences/$1.plist"
+        fi
+    }
+
+    cmd="$1"
+    domain="$2"
+    keypath="$3"
+
+    case "$cmd" in
+    read)
+        if [[ -z "$keypath" ]]; then
+            defaults read "$domain"
+        else
+            $PLISTBUDDY -c "Print :$keypath" "$(plist_path "$domain")"
+        fi
+        ;;
+    write)
+        type="$4"
+        value="$5"
+        $PLISTBUDDY -c "Set :$keypath $value" "$(plist_path "$domain")" 2>/dev/null ||
+            $PLISTBUDDY -c "Add :$keypath $type $value" "$(plist_path "$domain")"
+        ;;
+    delete)
+        $PLISTBUDDY -c "Delete :$keypath" "$(plist_path "$domain")"
+        ;;
+    *)
+        echo "Usage:"
+        echo "  prefctl read domain [keypath]"
+        echo "  prefctl write domain keypath type value"
+        echo "  prefctl delete domain keypath"
+        echo "Types: string, bool, integer, real, dict, array"
+        exit 1
+        ;;
+    esac
+
+    #==================================================================
+    # version 2
+
+    ### How to use it
+
+    # 1. **Make it executable**
+    #
+    # ```bash
+    # chmod +x plist-crud.sh
+    # ```
+    #
+    # 2. **Read a whole plist domain or plist file**
+    #
+    # ```bash
+    # ./plist-crud.sh read com.apple.finder
+    # ./plist-crud.sh read /path/to/some.plist
+    # ```
+    #
+    # 3. **Read a nested key**
+    #
+    # ```bash
+    # ./plist-crud.sh read com.apple.finder DesktopViewSettings:IconViewSettings:arrangeBy
+    # ```
+    #
+    # 4. **Write/update a nested key**
+    #
+    # ```bash
+    # ./plist-crud.sh write com.apple.finder DesktopViewSettings:IconViewSettings:arrangeBy string grid
+    # ```
+    #
+    # 5. **Delete a nested key**
+    #
+    # ```bash
+    # ./plist-crud.sh delete com.apple.finder DesktopViewSettings:IconViewSettings:arrangeBy
+    # ```
+
+    # plist-crud.sh — A simple plist Create/Read/Update/Delete CLI tool
+    # Usage:
+    #   ./plist-crud.sh read <domain_or_plist_path> [keypath]
+    #   ./plist-crud.sh write <domain_or_plist_path> <keypath> <type> <value>
+    #   ./plist-crud.sh delete <domain_or_plist_path> <keypath>
+    #
+    # keypath uses ':' as a delimiter for nested dictionaries, e.g., EnvVars:BAZ
+
+    PLISTBUDDY="/usr/libexec/PlistBuddy"
+
+    function plist_path() {
+        # If argument is a full path, use it. Otherwise, build path under ~/Library/Preferences/
+        if [[ "$1" == /* ]]; then
+            echo "$1"
+        else
+            echo "$HOME/Library/Preferences/$1.plist"
+        fi
+    }
+
+    cmd="$1"
+    domain_or_path="$2"
+    keypath="$3"
+
+    if [[ -z "$cmd" || -z "$domain_or_path" ]]; then
+        echo "Usage:"
+        echo "  $0 read <domain_or_plist_path> [keypath]"
+        echo "  $0 write <domain_or_plist_path> <keypath> <type> <value>"
+        echo "  $0 delete <domain_or_plist_path> <keypath>"
+        exit 1
+    fi
+
+    plistfile=$(plist_path "$domain_or_path")
+
+    case "$cmd" in
+    read)
+        if [[ -z "$keypath" ]]; then
+            # Read whole plist (top-level)
+            defaults read "${domain_or_path}"
+        else
+            # Read nested key
+            $PLISTBUDDY -c "Print :$keypath" "$plistfile"
+        fi
+        ;;
+    write)
+        type="$4"
+        value="$5"
+        if [[ -z "$keypath" || -z "$type" || -z "$value" ]]; then
+            echo "Usage: $0 write <domain_or_plist_path> <keypath> <type> <value>"
+            exit 1
+        fi
+
+        # Try setting existing key; if it fails, add new key
+        $PLISTBUDDY -c "Set :$keypath $value" "$plistfile" 2>/dev/null ||
+            $PLISTBUDDY -c "Add :$keypath $type $value" "$plistfile"
+        ;;
+    delete)
+        if [[ -z "$keypath" ]]; then
+            echo "Usage: $0 delete <domain_or_plist_path> <keypath>"
+            exit 1
+        fi
+
+        $PLISTBUDDY -c "Delete :$keypath" "$plistfile"
+        ;;
+    *)
+        echo "Unknown command: $cmd"
+        echo "Usage:"
+        echo "  $0 read <domain_or_plist_path> [keypath]"
+        echo "  $0 write <domain_or_plist_path> <keypath> <type> <value>"
+        echo "  $0 delete <domain_or_plist_path> <keypath>"
+        exit 1
+        ;;
+    esac
+
+    #==================================================================
+    # version 3
+
+    # ### How to use it
+    #
+    # 1. Make executable:
+    #
+    # ```bash
+    # chmod +x plist-crud-multi.sh
+    # ```
+    #
+    # 2. **Read multiple keys**:
+    #
+    # ```bash
+    # ./plist-crud-multi.sh read com.apple.finder DesktopViewSettings:IconViewSettings:arrangeBy AppleShowAllFiles
+    # ```
+    #
+    # 3. **Write multiple keys** (all with the same type):
+    #
+    # ```bash
+    # ./plist-crud-multi.sh write com.apple.finder string DesktopViewSettings:IconViewSettings:arrangeBy grid AppleShowAllFiles true
+    # ```
+    #
+    # 4. **Delete multiple keys**:
+    #
+    # ```bash
+    # ./plist-crud-multi.sh delete com.apple.finder DesktopViewSettings:IconViewSettings:arrangeBy AppleShowAllFiles
+    # ```
+
+    # plist-crud-multi.sh — plist CRUD with multi-key read/write support
+    # Usage:
+    #   ./plist-crud-multi.sh read <domain_or_plist_path> <keypath1> [keypath2 ...]
+    #   ./plist-crud-multi.sh write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]
+    #   ./plist-crud-multi.sh delete <domain_or_plist_path> <keypath1> [keypath2 ...]
+
+    PLISTBUDDY="/usr/libexec/PlistBuddy"
+
+    function plist_path() {
+        if [[ "$1" == /* ]]; then
+            echo "$1"
+        else
+            echo "$HOME/Library/Preferences/$1.plist"
+        fi
+    }
+
+    cmd="$1"
+    domain_or_path="$2"
+    shift 2
+
+    plistfile=$(plist_path "$domain_or_path")
+
+    if [[ -z "$cmd" || -z "$domain_or_path" ]]; then
+        echo "Usage:"
+        echo "  $0 read <domain_or_plist_path> <keypath1> [keypath2 ...]"
+        echo "  $0 write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]"
+        echo "  $0 delete <domain_or_plist_path> <keypath1> [keypath2 ...]"
+        exit 1
+    fi
+
+    case "$cmd" in
+    read)
+        if [[ $# -eq 0 ]]; then
+            # Read whole plist
+            defaults read "$domain_or_path"
+            exit 0
+        fi
+        for key in "$@"; do
+            echo "$key:"
+            $PLISTBUDDY -c "Print :$key" "$plistfile" 2>/dev/null || echo "  (not found)"
+        done
+        ;;
+
+    write)
+        if [[ $# -lt 3 || $(($# % 2)) -ne 1 ]]; then
+            echo "Usage: $0 write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]"
+            exit 1
+        fi
+        type="$1"
+        shift
+
+        while (($#)); do
+            key="$1"
+            value="$2"
+            shift 2
+            # Try to Set existing key, else Add new key
+            $PLISTBUDDY -c "Set :$key $value" "$plistfile" 2>/dev/null ||
+                $PLISTBUDDY -c "Add :$key $type $value" "$plistfile"
+        done
+        ;;
+
+    delete)
+        if [[ $# -eq 0 ]]; then
+            echo "Usage: $0 delete <domain_or_plist_path> <keypath1> [keypath2 ...]"
+            exit 1
+        fi
+        for key in "$@"; do
+            $PLISTBUDDY -c "Delete :$key" "$plistfile" 2>/dev/null || echo "Key '$key' not found"
+        done
+        ;;
+
+    *)
+        echo "Unknown command: $cmd"
+        echo "Usage:"
+        echo "  $0 read <domain_or_plist_path> <keypath1> [keypath2 ...]"
+        echo "  $0 write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]"
+        echo "  $0 delete <domain_or_plist_path> <keypath1> [keypath2 ...]"
+        exit 1
+        ;;
+    esac
+
+    #==================================================================
+    # Version 4 w/fzf browser
+
+    # plist-crud-multi.sh — plist CRUD with multi-key read/write/delete + browse via fzf
+    # Usage:
+    #   ./plist-crud-multi.sh read <domain_or_plist_path> <keypath1> [keypath2 ...]
+    #   ./plist-crud-multi.sh write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]
+    #   ./plist-crud-multi.sh delete <domain_or_plist_path> <keypath1> [keypath2 ...]
+    #   ./plist-crud-multi.sh browse <domain_or_plist_path>
+
+    PLISTBUDDY="/usr/libexec/PlistBuddy"
+
+    function plist_path() {
+        if [[ "$1" == /* ]]; then
+            echo "$1"
+        else
+            echo "$HOME/Library/Preferences/$1.plist"
+        fi
+    }
+
+    # Recursively print keys in dot notation with values, using PlistBuddy
+    function dump_keys() {
+        local plistfile="$1"
+        local prefix="$2"
+        local keys
+
+        # Get keys at current level
+        keys=$($PLISTBUDDY -c "Print $prefix" "$plistfile" 2>/dev/null |
+            awk '/^Dict {$/ {print "__DICT__"} /^Array {$/ {print "__ARRAY__"} /^[[:space:]]*[^ ]+ = / {print $1}' |
+            grep -v '__DICT__' | grep -v '__ARRAY__')
+
+        # If prefix is empty, we start at root:
+        if [[ "$prefix" == "" ]]; then
+            keys=$($PLISTBUDDY -c "Print" "$plistfile" 2>/dev/null |
+                awk '/^[^ ]/ {print $1}' | tr -d ';')
+        fi
+
+        # Get raw keys at current level
+        keys=$($PLISTBUDDY -c "Print $prefix" "$plistfile" 2>/dev/null |
+            awk -F'= ' '/^[[:space:]]*[^ ]+ = / {print $1}' | tr -d ' ')
+
+        # Fallback if no keys found
+        if [[ -z "$keys" ]]; then
+            return
+        fi
+
+        while IFS= read -r key; do
+            # Compose full key path
+            if [[ -z "$prefix" ]]; then
+                fullkey="$key"
+            else
+                fullkey="$prefix:$key"
+            fi
+
+            # Check type of this key
+            type=$($PLISTBUDDY -c "Print $fullkey" "$plistfile" 2>&1)
+            if [[ "$type" == *"Dict"* ]]; then
+                dump_keys "$plistfile" "$fullkey"
+            elif [[ "$type" == *"Array"* ]]; then
+                # For arrays, print each index recursively
+                count=$($PLISTBUDDY -c "Print $fullkey" "$plistfile" 2>/dev/null | grep -c '^[[:space:]]*[^ ]')
+                for ((i = 0; i < count; i++)); do
+                    dump_keys "$plistfile" "$fullkey:$i"
+                done
+            else
+                # Print key and value in dot notation
+                val=$($PLISTBUDDY -c "Print $fullkey" "$plistfile" 2>/dev/null | tr -d '\n')
+                # Replace ':' by '.' for dot notation
+                dotkey="${fullkey//:/\.}"
+                echo "$dotkey = $val"
+            fi
+        done <<<"$keys"
+    }
+
+    cmd="$1"
+    domain_or_path="$2"
+    shift 2
+
+    plistfile=$(plist_path "$domain_or_path")
+
+    if [[ -z "$cmd" || -z "$domain_or_path" ]]; then
+        echo "Usage:"
+        echo "  $0 read <domain_or_plist_path> <keypath1> [keypath2 ...]"
+        echo "  $0 write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]"
+        echo "  $0 delete <domain_or_plist_path> <keypath1> [keypath2 ...]"
+        echo "  $0 browse <domain_or_plist_path>"
+        exit 1
+    fi
+
+    case "$cmd" in
+    read)
+        if [[ $# -eq 0 ]]; then
+            defaults read "$domain_or_path"
+            exit 0
+        fi
+        for key in "$@"; do
+            echo "$key:"
+            $PLISTBUDDY -c "Print :$key" "$plistfile" 2>/dev/null || echo "  (not found)"
+        done
+        ;;
+
+    write)
+        if [[ $# -lt 3 || $(($# % 2)) -ne 1 ]]; then
+            echo "Usage: $0 write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]"
+            exit 1
+        fi
+        type="$1"
+        shift
+
+        while (($#)); do
+            key="$1"
+            value="$2"
+            shift 2
+            $PLISTBUDDY -c "Set :$key $value" "$plistfile" 2>/dev/null ||
+                $PLISTBUDDY -c "Add :$key $type $value" "$plistfile"
+        done
+        ;;
+
+    delete)
+        if [[ $# -eq 0 ]]; then
+            echo "Usage: $0 delete <domain_or_plist_path> <keypath1> [keypath2 ...]"
+            exit 1
+        fi
+        for key in "$@"; do
+            $PLISTBUDDY -c "Delete :$key" "$plistfile" 2>/dev/null || echo "Key '$key' not found"
+        done
+        ;;
+
+    browse)
+        if ! command -v fzf >/dev/null 2>&1; then
+            echo "fzf not found! Please install fzf to use browse."
+            exit 1
+        fi
+        dump_keys "$plistfile" "" | fzf --ansi --preview="echo {}"
+        ;;
+
+    *)
+        echo "Unknown command: $cmd"
+        echo "Usage:"
+        echo "  $0 read <domain_or_plist_path> <keypath1> [keypath2 ...]"
+        echo "  $0 write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]"
+        echo "  $0 delete <domain_or_plist_path> <keypath1> [keypath2 ...]"
+        echo "  $0 browse <domain_or_plist_path>"
+        exit 1
+        ;;
+    esac
+
+    #==================================================================
+    # Version 5 | fzf browser w/AWK
+
+    # plist-crud-multi.sh — plist CRUD + browse via fzf with fast awk formatting
+
+    PLISTBUDDY="/usr/libexec/PlistBuddy"
+
+    function plist_path() {
+        if [[ "$1" == /* ]]; then
+            echo "$1"
+        else
+            echo "$HOME/Library/Preferences/$1.plist"
+        fi
+    }
+
+    # Recursively dump keys and values in dot notation with awk formatting
+    function dump_keys_awk() {
+        local plistfile="$1"
+
+        # Dump plist to XML (or text) format to parse key-value pairs recursively
+        # We'll use PlistBuddy Print and parse its indented output:
+        $PLISTBUDDY -c "Print" "$plistfile" 2>/dev/null |
+            awk '
     BEGIN {
         FS="=";
         indent = 0;
@@ -765,78 +800,78 @@ function plist_helper() (
         }
     }
     '
-	}
+    }
 
-	cmd="$1"
-	domain_or_path="$2"
-	shift 2
+    cmd="$1"
+    domain_or_path="$2"
+    shift 2
 
-	plistfile=$(plist_path "$domain_or_path")
+    plistfile=$(plist_path "$domain_or_path")
 
-	case "$cmd" in
-	browse)
-		if ! command -v fzf >/dev/null 2>&1; then
-			echo "fzf not found! Please install fzf to use browse."
-			exit 1
-		fi
-		dump_keys_awk "$plistfile" | fzf --ansi --preview="echo {}"
-		;;
-	# ... other commands unchanged (read, write, delete)
-	*)
-		echo "Usage:"
-		echo "  $0 read <domain_or_plist_path> <keypath1> [keypath2 ...]"
-		echo "  $0 write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]"
-		echo "  $0 delete <domain_or_plist_path> <keypath1> [keypath2 ...]"
-		echo "  $0 browse <domain_or_plist_path>"
-		exit 1
-		;;
-	esac
+    case "$cmd" in
+    browse)
+        if ! command -v fzf >/dev/null 2>&1; then
+            echo "fzf not found! Please install fzf to use browse."
+            exit 1
+        fi
+        dump_keys_awk "$plistfile" | fzf --ansi --preview="echo {}"
+        ;;
+    # ... other commands unchanged (read, write, delete)
+    *)
+        echo "Usage:"
+        echo "  $0 read <domain_or_plist_path> <keypath1> [keypath2 ...]"
+        echo "  $0 write <domain_or_plist_path> <type> <keypath1> <value1> [<keypath2> <value2> ...]"
+        echo "  $0 delete <domain_or_plist_path> <keypath1> [keypath2 ...]"
+        echo "  $0 browse <domain_or_plist_path>"
+        exit 1
+        ;;
+    esac
 
-	# toggle plist bool
+    # toggle plist bool
 
-	toggle_plist_bool() {
-		local plist_path="$1"
-		local key_path="$2"
-		local plistbuddy="/usr/libexec/PlistBuddy"
+    toggle_plist_bool() {
+        local plist_path="$1"
+        local key_path="$2"
+        local plistbuddy="/usr/libexec/PlistBuddy"
 
-		# Check if plist exists
-		if [[ ! -f "$plist_path" ]]; then
-			echo "Plist file not found: $plist_path"
-			return 1
-		fi
+        # Check if plist exists
+        if [[ ! -f "$plist_path" ]]; then
+            echo "Plist file not found: $plist_path"
+            return 1
+        fi
 
-		# Check if key exists
-		if ! $plistbuddy -c "Print $key_path" "$plist_path" &>/dev/null; then
-			echo "Key '$key_path' does not exist in $plist_path"
-			return 1
-		fi
+        # Check if key exists
+        if ! $plistbuddy -c "Print $key_path" "$plist_path" &>/dev/null; then
+            echo "Key '$key_path' does not exist in $plist_path"
+            return 1
+        fi
 
-		# Check type of key
-		local type=$($plistbuddy -c "Print $key_path" "$plist_path" 2>&1 | grep -Eo '^(true|false|string|integer|real|dict|array|date|data)$' || true)
+        # Check type of key
+        local type=$($plistbuddy -c "Print $key_path" "$plist_path" 2>&1 | grep -Eo '^(true|false|string|integer|real|dict|array|date|data)$' || true)
 
-		if [[ "$type" != "true" && "$type" != "false" ]]; then
-			echo "Key '$key_path' is not a boolean (it's $type), cannot toggle."
-			return 1
-		fi
+        if [[ "$type" != "true" && "$type" != "false" ]]; then
+            echo "Key '$key_path' is not a boolean (it's $type), cannot toggle."
+            return 1
+        fi
 
-		# Read current value
-		local current=$($plistbuddy -c "Print $key_path" "$plist_path")
+        # Read current value
+        local current=$($plistbuddy -c "Print $key_path" "$plist_path")
 
-		if [[ "$current" == "true" ]]; then
-			$plistbuddy -c "Set $key_path false" "$plist_path"
-			echo "Toggled $key_path to false"
-		elif [[ "$current" == "false" ]]; then
-			$plistbuddy -c "Set $key_path true" "$plist_path"
-			echo "Toggled $key_path to true"
-		else
-			echo "Unexpected value '$current' for boolean key."
-			return 1
-		fi
-	}
+        if [[ "$current" == "true" ]]; then
+            $plistbuddy -c "Set $key_path false" "$plist_path"
+            echo "Toggled $key_path to false"
+        elif [[ "$current" == "false" ]]; then
+            $plistbuddy -c "Set $key_path true" "$plist_path"
+            echo "Toggled $key_path to true"
+        else
+            echo "Unexpected value '$current' for boolean key."
+            return 1
+        fi
+    }
 
 )
 
 # fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-	plist_helper "$@"
+    plist_helper "$@"
 fi

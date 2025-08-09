@@ -24,6 +24,12 @@
 # cmd + ctrl + alt + shift - i : yabai -m window --display next; yabai -m display --focus next
 # cmd + ctrl + alt + shift - u : yabai -m window --display 1; yabai -m display --focus 1
 
+# TODO: Put
+# ~ Alfred:     Cmd                 + space
+# ~ Launcher:   Cmd+Alt             + space
+# ~ Spotlight:  Cmd+Alt+Shift       + space
+# ~ Rofi:       Cmd+Alt+Shift+Ctrl  + space
+
 # custom launcher
 # cmd + alt - space : ~/.config/dorothy/commands/skhd-test
 cmd + alt - space : skhd-test

@@ -8,29 +8,40 @@
 # but mainly intended for mac, to make these special mappings that require
 # calling these "problematic" binaries.
 
-  # https://support.apple.com/en-gb/guide/terminal/apdc6c1077b-5d5d-4d35-9c19-60f2397b2369/mac
-  # https://iboysoft.com/wiki/library-launchagents.html
-
+# https://support.apple.com/en-gb/guide/terminal/apdc6c1077b-5d5d-4d35-9c19-60f2397b2369/mac
+# https://iboysoft.com/wiki/library-launchagents.html
 
 function setup_hotkeys() (
-	source "$DOROTHY/sources/bash.bash"
+    source "$DOROTHY/sources/bash.bash"
 
-	# TODO: support
-	# mac:
-	# ~ skhd (maintenance mode) | https://github.com/koekeishiya/skhd
-	# ~ skhd.zig (bc compat predecessor) | https://github.com/jackielii/skhd.zig
-	#   ^ Default to zig, but allow for installing the older version.
-	#   >> setup-util-skhd
-	# linux:
-	# ??
+    # TODO: support
+    # mac:
+    # ~ skhd (maintenance mode) | https://github.com/koekeishiya/skhd
+    # ~ skhd.zig (bc compat predecessor) | https://github.com/jackielii/skhd.zig
+    #   ^ Default to zig, but allow for installing the older version.
+    #   >> setup-util-skhd
+    # linux:
+    # ??
 
-	# FIX: skhd: could not lock pid-file! abort..
+    # FIX: skhd: could not lock pid-file! abort..
 
-	# local launch_agent_config=~/Library/LaunchAgents/com.koekeishiya.skhd.plist
-	local launch_agent_config="$DOROTHY/user/com.koekeishiya.skhd.plist"
+    # local launch_agent_config=~/Library/LaunchAgents/com.koekeishiya.skhd.plist
+    local launch_agent_config="$DOROTHY/user/com.koekeishiya.skhd.plist"
 
-	# TODO: Use plist helper to add the dorothy env var to the plist file
+    # TODO: Use plist helper to add the dorothy env var to the plist file
 
+    # defaults write "$launch_agent_config" EnvironmentVariables -dict-add DOROTHY "$DOROTHY"
+
+    # This works!!
+    # /usr/libexec/PlistBuddy -c "Add EnvironmentVariables:DOROTHY string $DOROTHY" "$launch_agent_config"
+    # /usr/libexec/PlistBuddy -c "delete EnvironmentVariables:DOROTHY string" "$launch_agent_config"
+
+    # plist-helper --domain="$launch_agent_config" --get -- EnvironmentVariables:PATH
+    # plist-helper --domain="$launch_agent_config" --get -- Label Nice ProcessType
+
+    plist-helper --domain="$launch_agent_config" --set -- string EnvironmentVariables:DOROTHY "$DOROTHY"
+
+    exit
 
     # print all contents
     plist-helper --target="$launch_agent_config" --read
@@ -39,60 +50,59 @@ function setup_hotkeys() (
     plist-helper --target="$launch_agent_config" --read --format
 
     # set the doro var
-	# plist-helper --target="$launch_agent_config" --set-key=EnvironmentVariables --value="$DOROTHY"
+    # plist-helper --target="$launch_agent_config" --set-key=EnvironmentVariables --value="$DOROTHY"
 
-	# print single key
-	# plist-helper --target="$launch_agent_config" --read-key=EnvironmentVariables.DOROTHY
+    # print single key
+    # plist-helper --target="$launch_agent_config" --read-key=EnvironmentVariables.DOROTHY
 
+    exit 0
 
-	exit
+    if [[ -z "${1-}" ]]; then
 
-	if [[ -z "${1-}" ]]; then
-
-		# OLD
-		setup-util --cli="skhd" BREW="koekeishiya/formulae/skhd"
+        # OLD
+        setup-util --cli="skhd" BREW="koekeishiya/formulae/skhd"
 
         # remove outdated logs
-		rm -rf "/tmp/skhd_$USER.out.log"
-		rm -rf "/tmp/skhd_$USER.out.log"
-		rm -rf "/tmp/skhd_$USER.pid"
+        rm -rf "/tmp/skhd_$USER.out.log"
+        rm -rf "/tmp/skhd_$USER.out.log"
+        rm -rf "/tmp/skhd_$USER.pid"
 
         # this should amongst other ensure that the launch agent file is created.
-		skhd --install-service
+        skhd --install-service
 
-		if defaults read "$launch_agent_config" EnvironmentVariables | grep -q 'DOROTHY ='; then
-			echo "dorothy env var exists in SKHD launc agent config"
-		else
-			echo "dorothy did not exist in launch config"
-			echo "adding it now..."
-			defaults write "$launch_agent_config" EnvironmentVariables -dict-add DOROTHY "$DOROTHY"
-		fi
+        if defaults read "$launch_agent_config" EnvironmentVariables | grep -q 'DOROTHY ='; then
+            echo "dorothy env var exists in SKHD launc agent config"
+        else
+            echo "dorothy did not exist in launch config"
+            echo "adding it now..."
+            defaults write "$launch_agent_config" EnvironmentVariables -dict-add DOROTHY "$DOROTHY"
+        fi
 
-		skhd --start-service
+        skhd --start-service
 
-		# NEW
-		# brew install jackielii/tap/skhd-zig
-		# setup-util --cli="skhd" BREW="jackielii/tap/skhd-zig"
+        # NEW
+        # brew install jackielii/tap/skhd-zig
+        # setup-util --cli="skhd" BREW="jackielii/tap/skhd-zig"
 
-	else
+    else
 
-		skhd --stop-service
-		skhd --uninstall-service
+        skhd --stop-service
+        skhd --uninstall-service
 
-		setup-util --uninstall --cli="skhd" BREW="koekeishiya/formulae/skhd"
+        setup-util --uninstall --cli="skhd" BREW="koekeishiya/formulae/skhd"
 
         # logs
-		rm -rf "/tmp/skhd_$USER.out.log"
-		rm -rf "/tmp/skhd_$USER.out.log"
-		rm -rf "/tmp/skhd_$USER.pid"
+        rm -rf "/tmp/skhd_$USER.out.log"
+        rm -rf "/tmp/skhd_$USER.out.log"
+        rm -rf "/tmp/skhd_$USER.pid"
 
-		# NEW
-		# brew uninstall jackielii/tap/skhd-zig
-		# setup-util --uninstall --cli="skhd" BREW="jackielii/tap/skhd-zig"
-	fi
+        # NEW
+        # brew uninstall jackielii/tap/skhd-zig
+        # setup-util --uninstall --cli="skhd" BREW="jackielii/tap/skhd-zig"
+    fi
 )
 
 # Fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-	setup_hotkeys "$@"
+    setup_hotkeys "$@"
 fi
