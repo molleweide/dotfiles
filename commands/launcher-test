@@ -24,6 +24,9 @@ function launcher_test_() (
 
 	# launcher -- 'echo-lines -- a b c d | fzf-helper --no-tmux'
 
+
+	echo "Dorothy: [$DOROTHY]"
+	echo "PATH: $PATH"
 	launcher -- 'pickers-various master'
 	# launcher -- pickers-various master
 

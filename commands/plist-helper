@@ -130,9 +130,12 @@ function plist_helper() (
     #     done <<<"$keys"
     # }
 
-    # NOTE: 1. Dont print `<VAR> dict { ...`
+    # TODO:: Improved output formatting that should make entries a bit more readable.
+    # 1. Dont print `<VAR> dict { ...`
     # 2. If array, print array index
-
+    # 3. Split camel cased names at last-capitalized-char-inseq
+    #   ^ NSWindowResizeTime => NS Window Resize Time
+    # ----
     # Recursively dump keys and values in dot notation with awk formatting
     function dump_keys_awk() {
         local plistfile="$1"
@@ -334,6 +337,10 @@ function plist_helper() (
         plistfile=''
 
     plistfile="$(plist_path "$domain")"
+
+    # echo "plistfile: [$plistfile]"
+
+    # exit
 
     #==================================================================
     # Act

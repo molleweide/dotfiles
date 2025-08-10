@@ -32,7 +32,8 @@
 
 # custom launcher
 # cmd + alt - space : ~/.config/dorothy/commands/skhd-test
-cmd + alt - space : skhd-test
+cmd + alt - space : ~/.config/dorothy/commands/launcher-test
+# cmd + alt - space : launcher-test
 
 
 # ################################################################ #

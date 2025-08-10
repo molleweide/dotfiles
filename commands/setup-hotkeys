@@ -25,17 +25,42 @@ function setup_hotkeys() (
 
     # FIX: skhd: could not lock pid-file! abort..
 
-    local launch_agent_config="$DOROTHY/user/com.koekeishiya.skhd.plist"
+    local launch_agent_config="$HOME/Library/LaunchAgents/com.koekeishiya.skhd.plist"
 
-    if [[ -z "${1-}" ]]; then
+    plist-helper --domain="$launch_agent_config" --add -- string EnvironmentVariables:DOROTHY "$DOROTHY"
 
-        # OLD
-        setup-util --cli="skhd" BREW="koekeishiya/formulae/skhd"
+    local action=''
 
-        # remove outdated logs
+    while test "$#" -ne 0; do
+        item="$1"
+        shift
+        case "$item" in
+        install) action='install' ;;
+        uninstall) action='uninstall' ;;
+        reset) action='reset' ;;
+        print) action='print' ;;
+        *) exit 0 ;;
+        esac
+    done
+
+    if [[ -z $action ]]; then
+        action="install"
+    fi
+
+    function rm_logs() {
         rm -rf "/tmp/skhd_$USER.out.log"
         rm -rf "/tmp/skhd_$USER.out.log"
         rm -rf "/tmp/skhd_$USER.pid"
+
+    }
+
+    if [[ "$action" == "install" ]]; then
+
+        setup-util --cli="skhd" BREW="koekeishiya/formulae/skhd"
+        # brew install jackielii/tap/skhd-zig
+        # setup-util --cli="skhd" BREW="jackielii/tap/skhd-zig"
+
+        rm_logs
 
         # this should amongst other ensure that the launch agent file is created.
         skhd --install-service
@@ -44,11 +69,26 @@ function setup_hotkeys() (
 
         skhd --start-service
 
-        # NEW
-        # brew install jackielii/tap/skhd-zig
-        # setup-util --cli="skhd" BREW="jackielii/tap/skhd-zig"
+    elif [[ "$action" == "print" ]]; then
+        plist-helper --domain="$launch_agent_config" --print
 
-    else
+    elif [[ "$action" == "reset" ]]; then
+
+        skhd --stop-service || :
+
+        rm_logs
+
+        skhd --uninstall-service
+        skhd --install-service
+
+        sudo chown -R :staff ~/Library/LaunchAgents/
+        sudo chmod -R 770 ~/Library/LaunchAgents/
+
+        plist-helper --domain="$launch_agent_config" --add --quiet -- string EnvironmentVariables:DOROTHY "$DOROTHY"
+
+        skhd --start-service
+
+    elif [[ "$action" == "uninstall" ]]; then
 
         skhd --stop-service
         skhd --uninstall-service
