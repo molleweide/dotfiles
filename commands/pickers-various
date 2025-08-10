@@ -15,8 +15,13 @@ function pickers_various() (
         # 1. All pickers above need to take args so that one can choose to only get their options.
         # 2. Then, use a function that returns a chain of action statements to update the picker.
 
+        local all_pickers="$(get_all_pickers)"
+
+        # additional pickers
+        all_pickers+=(window-helper)
+
         selection="$(
-            get_all_pickers |
+            __print_lines "${all_pickers[@]}" |
                 fzf-helper --no-tmux -- \
                     --border-label '🌴 [Dorothy]: All pickers' \
                     --header $'Select which picker to run\n\n' \
