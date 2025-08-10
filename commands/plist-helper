@@ -274,6 +274,7 @@ function plist_helper() (
 
     # process
     local domain='' action='' option_verbose='no' option_quiet='no' option_print_style='' plist_action_args=()
+    local option_output_format=''
 
     while [[ $# -ne 0 ]]; do
         item="$1"
@@ -288,6 +289,8 @@ function plist_helper() (
             # plistbuddy -x -c "Print" <file>
         '--domain='*) domain="${item#*=}" ;;
         '--print') action='print' ;;
+        '--use='*) option_output_format="${item#*=}" ;;
+
         # defaults | plutil | pb | xml
         '--print='*) action='print' option_print_style="${item#*=}" ;; # operates on the whole file
         '--interactive') ;;                                            # plistbuddy interactive mode
@@ -297,6 +300,7 @@ function plist_helper() (
         '--add' | '--add-set') action='add' ;;
         '--delete') action='delete' ;;
         '--browse') action='browse' ;;
+        '--browse-domains') action='browse_domains' ;;
         # specific operations
         '--toggle') ;;
         '--incr') ;;
@@ -318,7 +322,7 @@ function plist_helper() (
         esac
     done
 
-    if [[ -z "$domain" ]]; then
+    if [[ -z "$domain" && ! "$action" =~ ^(browse_domains|abcde)$ ]]; then
         help "No domain was provided"
     fi
 
@@ -438,6 +442,26 @@ function plist_helper() (
         fi
         dump_keys_awk "$plistfile" "" | fzf --ansi --preview="echo {}"
 
+    elif [[ "$action" == 'browse_domains' ]]; then
+        local selection title
+
+        selection="$(defaults domains | tr ',' '\n' | fzf | echo-trim-each-line --stdin)"
+
+        # xargs -I{} defaults read "{}"
+        # defaults domains | tr ',' '\n' | fzf | echo-trim-each-line --stdin | xargs -I {} defaults read "{}"
+
+        title="Displaying domain: [$selection]"
+
+        echo-style --h1="$title"
+
+        if [[ "$option_output_format" == xml ]]; then
+            "$PLISTBUDDY" -x -c "Print" "$selection"
+        else
+            defaults read "$selection"
+            # defaults read com.apple.Preferences
+        fi
+
+        echo-style --g1="$title"
     fi
 )
 
