@@ -1,0 +1,87 @@
+#!/usr/bin/env zsh
+
+function shell_zsh_helper() (
+	source "$DOROTHY/sources/bash.bash"
+
+	describe_name() {
+		emulate -L zsh
+		setopt localoptions nounset
+
+		local name=$1 found=0 kind
+		if [[ -z $name ]]; then
+			print -u2 "Usage: describe_name <name>"
+			return 2
+		fi
+
+		print "Inspecting name: '$name'"
+
+		# --- Variable ---
+		if typeset -p "$name" &>/dev/null; then
+			found=1
+			local val=${(P)name}
+			((${#val} > 60)) && val="${val[1, 57]}..."
+			print "• Variable: '$name' is set (value: '${val}')"
+		fi
+
+		# --- Alias ---
+		if alias "$name" &>/dev/null; then
+			found=1
+			print "• Alias: $(alias "$name")"
+		fi
+
+		# --- Function ---
+		if whence -w "$name" | grep -q 'function'; then
+			found=1
+			local loc
+			loc=$(whence -v "$name" | awk '{print $NF}')
+			print "• Function: defined ($loc)"
+		fi
+
+		# --- Builtin / Command / Reserved word ---
+		kind=$(whence -w "$name" 2>/dev/null)
+		case $kind in
+		*"builtin"*)
+			found=1
+			print "• Builtin: '$name' is a shell builtin"
+			;;
+		*"reserved word"*)
+			found=1
+			print "• Keyword: '$name' is a shell keyword"
+			;;
+		*"hashed"*)
+			found=1
+			print "• External command (hashed): $(whence -p "$name")"
+			;;
+		*"command"*)
+			found=1
+			print "• External command: $(whence -p "$name")"
+			;;
+		esac
+
+		# --- Summary ---
+		if ((!found)); then
+			print "✗ '$name' is unbound (no variable, alias, function, or command found)"
+			return 1
+		fi
+
+		# --- Conflicts check ---
+		local count
+		count=$(
+			{
+				typeset -p "$name" &>/dev/null && print var
+				alias "$name" &>/dev/null && print alias
+				whence -w "$name" | grep -q 'function' && print func
+				[[ -n $kind ]] && print cmd
+			} | wc -l
+		)
+		if ((count > 1)); then
+			print "⚠️  Note: '$name' is bound in multiple namespaces (${count} total)"
+		fi
+	}
+
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	shell_zsh_helper "$@"
+fi

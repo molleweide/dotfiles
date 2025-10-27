@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+function shell_helper_bash() (
+
+
+    # TODO: Get info about a <name>, if it is bound in the shell and information
+    # about it.
+
+
+    local name="$1"
+    local found=0
+    local kind
+
+    if [[ -z $name ]]; then
+        echo "Usage: describe_name <name>" >&2
+        return 2
+    fi
+
+    echo "Inspecting name: '$name'"
+
+    # --- Variable ---
+    if [[ -v $name ]]; then
+        found=1
+        local val="${!name}"
+        if [[ ${#val} -gt 60 ]]; then
+            val="${val:0:57}..."
+        fi
+        echo "• Variable: '$name' is set (value: '${val}')"
+    fi
+
+    # --- Alias ---
+    if alias "$name" &>/dev/null; then
+        found=1
+        echo "• Alias: $(alias "$name")"
+    fi
+
+    # --- Function ---
+    if declare -F "$name" &>/dev/null; then
+        found=1
+        echo "• Function: defined (line: $(declare -F "$name" | awk '{print $2}') )"
+    fi
+
+    # --- Builtin / External command ---
+    kind=$(type -t "$name" 2>/dev/null)
+    if [[ $kind == builtin ]]; then
+        found=1
+        echo "• Builtin: '$name' is a shell builtin"
+    elif [[ $kind == file ]]; then
+        found=1
+        echo "• External command: $(command -v "$name")"
+    elif [[ $kind == keyword ]]; then
+        found=1
+        echo "• Keyword: '$name' is a shell keyword"
+    fi
+
+    # --- Summary ---
+    if (( !found )); then
+        echo "✗ '$name' is unbound (no variable, alias, function, or command found)"
+        return 1
+    fi
+
+    # Detect conflicts (multiple bindings)
+    local count
+    count=$( { [[ -v $name ]] && echo var;
+               alias "$name" &>/dev/null && echo alias;
+               declare -F "$name" &>/dev/null && echo func;
+               [[ $kind ]] && echo cmd; } | wc -l )
+    if (( count > 1 )); then
+        echo "⚠️  Note: '$name' is bound in multiple namespaces (${count} total)"
+    fi
+)
+
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	shell_helper_bash "$@"
+fi
+

@@ -1,0 +1,66 @@
+#!/usr/bin/env fish
+
+function shell_fish_helper
+    if test (count $argv) -ne 1
+        echo "Usage: shell_fish_helper <name>" >&2
+        return 2
+    end
+
+    set name $argv[1]
+    set found 0
+    echo "Inspecting name: '$name'"
+
+    # --- Variable ---
+    if set -q $name
+        set found 1
+        set val (eval echo \$$name)
+        if test (string length -- $val) -gt 60
+            set val (string sub -l 57 -- $val)"..."
+        end
+        echo "• Variable: '$name' is set (value: '$val')"
+    end
+
+    # --- Function ---
+    if functions -q $name
+        set found 1
+        set def_file (functions --details $name | string match -r 'defined in (.*)' | string replace -r '^defined in ' '')
+        echo "• Function: defined ($def_file)"
+    end
+
+    # --- Builtin or External Command ---
+    set kind (type -t $name 2>/dev/null)
+    switch $kind
+        case builtin
+            set found 1
+            echo "• Builtin: '$name' is a shell builtin"
+        case function
+            # already handled above
+        case file
+            set found 1
+            echo "• External command: "(command -v $name)
+        case ''
+            # no match
+    end
+
+    # --- Summary ---
+    if test $found -eq 0
+        echo "✗ '$name' is unbound (no variable, function, or command found)"
+        return 1
+    end
+
+    # --- Conflicts check ---
+    set count 0
+    if set -q $name
+        set count (math $count + 1)
+    end
+    if functions -q $name
+        set count (math $count + 1)
+    end
+    if test -n "$kind"
+        set count (math $count + 1)
+    end
+
+    if test $count -gt 1
+        echo "⚠️  Note: '$name' is bound in multiple namespaces ($count total)"
+    end
+end

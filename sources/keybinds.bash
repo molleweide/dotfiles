@@ -87,6 +87,8 @@ __dorothy_bash__generate_keybinds() {
 				__debug_lines "key: $key" "action: $action"
 			fi
 
+			# TODO: Can I use heredocs here so that i can leverage syntax highlighting a bit better?
+
 			# setup bindings modes
 			bind -m emacs-standard '"\er":  redraw-current-line'
 			bind -m emacs-standard '"\C-z": vi-editing-mode'

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Take an input <name> and check if it exists in any other shells.
+#
+# NOTE: Helper interface to check for functionality across shells from any shell.
+# This can be used, for example, when developing features that you dont want
+# to shadow any bound name in anyother shell in order to create a more
+# aware shell experience. Eg. not accidentally create a lot of functions and
+# aliases that happen to shaow functionality in another shell that you also
+# use frequently.
+
+
+function shell_helper() (
+	source "$DOROTHY/sources/bash.bash"
+
+
+	# TODO: Check for presence of name in every shell.
+
+)
+
+# Fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	shell_helper "$@"
+fi

@@ -1,0 +1,16 @@
+@document.meta
+title: aliases
+description:
+authors: hjalmarjakobsson
+categories:
+created: 2025-10-26T13:06:37-0500
+updated: 2025-10-26T13:09:09-0500
+version: 1.1.1
+@end
+
+Aliases for posix stuff are primarily located
+in the `sh` file but functions in fish have a different
+syntax, and so those have to be in their own fish file,
+
+Any type of errors messages or context display can be done by outsourcing to
+dorothy commands.

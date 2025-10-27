@@ -4,6 +4,28 @@ function rl() {
   source "$DOROTHY/sources/interactive.sh"
 }
 
+#--------------------------------------------#
+# CROSS POSIX ALIASES (BASH, ZSH, FISH, ...) #
+#--------------------------------------------#
+
+# TEST: Fish's posix compliant subset takes precedence here because fish, as
+#       opposed to bash and zsh, parses the whole file instead of executing specific
+#       lines, and so it throws upon any syntax errors.
+# TODO: Ensure that this is cross posix shell compatible, so that it works with
+#       all of bash, zsh, and fish.
+# NOTE: Can one check for current shell and then use different syntax for each shell?
+# TODO: Live checker to ensure that the currently being edited alias does not clash
+#       with a DCA alias?
+# TODO: Have a fallback system so that if an alias is used in a shell where the
+#       a feature is not supported, then echo <not supported alias X in shell Y>
+#       so that you as a user wont get lost.
+#
+# TEST: Have a dev server that checks for file changes and sees if then new addition
+#   clashes with any built in, in all other shells, as to prevent unwanted shadowing
+#   of new/other shells.
+#   ^ this is a very over the top solution but im just putting it here to document it.
+#   it would be kinda nice but very overkill initially. this only makes sense further down the line.
+
 # # =======================================================
 # # shell switching
 # #

@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+
+# NOTE: Potential solution: Add DOROTHY env var to the launch agent plist
+# with https://commandmasters.com/commands/plutil-osx/
+
 function skhd_test() (
     # source "$DOROTHY/sources/bash.bash"
     echo "Dorothy: [$DOROTHY]" 1>&2

@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
-# FIX:
-# /Users/hjalmarjakobsson/.local/share/dorothy/user/commands/launcher: line 107: /sources/bash.bash: No such file or directory
-# /Users/hjalmarjakobsson/.local/share/dorothy/user/commands/launcher: line 125: /user/commands/launcher.log: No such file or directory
-# /Users/hjalmarjakobsson/.local/share/dorothy/commands/is-mac: line 21: /sources/bash.bash: No such file or directory
-# /Users/hjalmarjakobsson/.local/share/dorothy/user/commands/launcher: line 220: __command_missing: command not found
-# _LSOpenURLsWithCompletionHandler() failed for the application /Applications/Alacritty.app with error -10810.
+# TODO:
+# ~ ( ) opt-in tmux for fzf-helper
+# ~ ( ) yabairc rule -> make launcher window float.
+# ~ ( ) launcher -> services -> show running yes/no -> bind:reload
 
 # WARN: If using --tmux flag with fzf-helper, then focus is not switched to the
 # new terminal, instead, the picker is spawned in the currently active tmux session? I think?
@@ -24,7 +22,7 @@ function launcher_() (
 	# NOTE: Why do we open alacritty again here?
 
 	local terminal_popup_app="/Applications/Alacritty.app"
-	local forward_terminal_args_title="Dorothy launcher default title"
+	local DOROTHY_LAUNCHER_TITLE="DOROTHY LAUNCHER"
 
 	# local launcher_filter="$DOROTHY/user/commands/launcher-filter"
 
@@ -40,11 +38,11 @@ function launcher_() (
 
 	# popup_storage="$(
 	#   fs-temp \
-	#     --file="${forward_terminal_args_title}_POPUP_CAPTURE"
+	#     --file="${DOROTHY_LAUNCHER_TITLE}_POPUP_CAPTURE"
 	# )"
 
-	# # "$forward_terminal_args_title" # only works if last line writes to tmp file?!
-	# selection=$(open -n -a "/Applications/Alacritty.app" --args -t "$forward_terminal_args_title" -e "$launcher_filter")
+	# # "$DOROTHY_LAUNCHER_TITLE" # only works if last line writes to tmp file?!
+	# selection=$(open -n -a "/Applications/Alacritty.app" --args -t "$DOROTHY_LAUNCHER_TITLE" -e "$launcher_filter")
 	#
 	# NOTE: Here that -e is in this instance the find filter that is passed to
 	# fzf
@@ -120,9 +118,10 @@ function launcher_() (
 		# get active display before we spawn the new window
 		active_display_id=$(yabai -m query --displays | jq -r '.[] | select(."has-focus" == true) | .id')
 		readarray -t PHYSICAL_SCREEN_DATA < <(yabai -m query --displays --display | jq -r '.frame | [.x*1, .y*1, .w*1, .h*1][]')
-		local num_cols=75 num_lines=30
-		local TERM_WIDTH=750  # $((num_cols * 10))
-		local TERM_HEIGHT=510 # $((num_lines * 17))
+		# local num_cols=75 num_lines=30
+		local num_cols=100 num_lines=30
+		local TERM_WIDTH=$((num_cols * 10))
+		local TERM_HEIGHT=$((num_lines * 17))
 		# Note: Im adding the physical display x/y values to shift the window to the correct monitor display.
 		local X=$(((PHYSICAL_SCREEN_DATA[2] / 2) - (TERM_WIDTH / 2) + PHYSICAL_SCREEN_DATA[0]))
 		local Y=$(((PHYSICAL_SCREEN_DATA[3] / 2) - (TERM_HEIGHT / 2) + PHYSICAL_SCREEN_DATA[1]))
@@ -162,7 +161,7 @@ function launcher_() (
 		local open_cmd=("open" -n -a "$terminal_popup_app" --stdout "$stdout_file" --args)
 
 		local popup_terminal_options=(
-			-T "$forward_terminal_args_title"
+			-T "$DOROTHY_LAUNCHER_TITLE"
 			"${alacritty_default_opts[@]}"
 			-e "${forward_terminal_cmd_args[@]}"
 		)

@@ -58,7 +58,7 @@ function setup_window_manager() (
         return 22 # EINVAL 22 Invalid argument
     }
 
-    local option_action='' option_target_wm=''
+    local action='' option_target_wm=''
 
     while test "$#" -ne 0; do
         item="$1"
@@ -66,13 +66,14 @@ function setup_window_manager() (
         case "$item" in
         '--help' | '-h') help ;;
         '--use='*)
-            option_action="install"
+            action="install"
             option_target_wm="${item#*=}"
             ;;
         '--uninstall='*)
-            option_action="uninstall"
+            action="uninstall"
             option_uninstall_target="${item#*=}"
             ;;
+        '--reset') action='reset' ;;
         *) help "An unrecognised argument was provided: $item" ;;
         esac
     done
@@ -87,8 +88,8 @@ function setup_window_manager() (
     fi
 
     # choose action
-    if [[ -z "$option_action" ]]; then
-        option_action="$(
+    if [[ -z "$action" ]]; then
+        action="$(
             choose --required --linger \
                 --question='What action to perform?' \
                 -- "install" "uninstall" "restart"
@@ -109,7 +110,19 @@ function setup_window_manager() (
 
         if [[ $option_target_wm == "yabai" ]]; then
 
-            if [[ "$option_action" == "install" ]]; then
+            function yabai_rm_tmp_files() {
+                # these are logfiles that may be created when running yabai as a service.
+                rm -rf /tmp/yabai_$USER.out.log
+                rm -rf /tmp/yabai_$USER.err.log
+
+                # remove config and various temporary files
+                rm ~/.yabairc
+                rm /tmp/yabai_$USER.lock
+                rm /tmp/yabai_$USER.socket
+                rm /tmp/yabai-sa_$USER.socket
+            }
+
+            if [[ "$action" == "install" ]]; then
 
                 # TODO: ensure other window managers are not used/setup
                 # ask uninstall others?
@@ -142,37 +155,35 @@ function setup_window_manager() (
                 # TODO: how to grant accessibility permisions here? <<
 
                 yabai --restart-service
-            elif [[ "$option_action" == "uninstall" ]]; then
+            elif [[ "$action" == "reset" ]]; then
+                yabai --stop-service || :
+                yabai --uninstall-service || :
+                yabai_rm_tmp_files
+                yabai --start-service
+            elif [[ "$action" == "uninstall" ]]; then
 
                 if __command_exists yabai; then
 
-                    # yabai --stop-service
-                    # yabai --uninstall-service
+                    yabai --stop-service || :
+                    yabai --uninstall-service || :
 
                     # Can only be done with disabled SIP
-                    # sudo yabai --uninstall-sa # uninstall the scripting addition
+                    # uninstall the scripting addition
+                    sudo yabai --uninstall-sa || :
 
                     # brew uninstall yabai # replace with setup-util
                     setup-util --uninstall --cli="yabai" BREW="koekeishiya/formulae/yabai"
 
-                    # these are logfiles that may be created when running yabai as a service.
-                    rm -rf "/tmp/yabai_$USER.out.log"
-                    rm -rf "/tmp/yabai_$USER.err.log"
-
-                    # remove config and various temporary files
-                    # rm ~/.yabairc
-                    rm "/tmp/yabai_$USER.lock"
-                    rm "/tmp/yabai_$USER.socket"
-                    rm "/tmp/yabai-sa_$USER.socket"
+                    yabai_rm_tmp_files
 
                     # unload the scripting addition by forcing a restart of Dock.app
                     killall Dock
                 fi
 
-            elif [[ "$option_action" == "restart" ]]; then
+            elif [[ "$action" == "restart" ]]; then
                 yabai --restart-service
 
-            elif [[ "$option_action" == "launcher_actions" ]]; then
+            elif [[ "$action" == "launcher_actions" ]]; then
                 :
                 # TODO: Run launcher.
                 # List possible actions that could be done with yabai.
@@ -185,7 +196,7 @@ function setup_window_manager() (
         # macos: aerospace
 
         if [[ $option_target_wm == "aerospace" ]]; then
-            if [[ "$option_action" == "install" ]]; then
+            if [[ "$action" == "install" ]]; then
                 # TODO: ensure other window managers are not used/setup
                 # ask uninstall others?
 
@@ -201,7 +212,7 @@ function setup_window_manager() (
                     cp /Applications/AeroSpace.app/Contents/Resources/default-config.toml "$XDG_CONFIG_HOME/aerospace/aerospace.toml"
                 fi
 
-            elif [[ "$option_action" == "uninstall" ]]; then
+            elif [[ "$action" == "uninstall" ]]; then
                 :
             fi
 

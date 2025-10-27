@@ -151,32 +151,83 @@
 # https://stackoverflow.com/questions/20099333/terminal-command-to-show-connected-displays-monitors-resolutions
 # https://apple.stackexchange.com/questions/162860/how-to-view-current-display-resolution
 
+# NOTE: hide apps on macos
+# osascript -e 'tell application "System Events" to set visible of process "Brave" to false'
+
 function window_helper() (
-	source "$DOROTHY/sources/bash.bash"
+    source "$DOROTHY/sources/bash.bash"
 
-	# TODO:
-	# picker-yabai: displays, spaces, windows
-	#
+    # TODO:
+    # picker-yabai: displays, spaces, windows
+    #
 
-	local window_picker_alternatives=(displays spaces windows)
+    # TODO:
+    # ~ ( ) Ensure displays are properly named.
+    # ~ (x) Windows cant be named
+    #
 
-	selection="$(
-		echo-lines -- "${window_picker_alternatives[@]}" |
-			fzf-helper -- \
-				--border-label '🌴 [Window helper]: yabai picker' \
-				--header $'Select which query type to inspect:\n\n'
-	)"
+    # TODO: FZF WINDOW ACTIONS PIPELINE
+    # Select `window` -> select `action` -> select `selector`
+    # Use dict to track what `actions` map to possible `selectors`
+    #
+    # ^ Over time we will evaluate which actions are useful and which
+    # are stupid to support. This is not supposed to be a gigantic project.
+    # Just a helper that allows for managing windows a bit better.
 
-	__print_lines "$selection"
+    # picker -> only visible windows in current monitor
 
-	# TODO: jq get [index:id:label]
-	# TODO: preview -> just run the yabai command for this id
+    # picker -> focus window -> select by name
 
-	yabai -m query "--$selection" | jq '.[].id' | fzf-helper -- --preview "yabai -m query --$selection --${selection::-1} {}"
+    # TODO: MACOS PSEUDO `SPACES`
+    # Use yabai signals to write running/on-<open|close> to a text file, so that
+    # we can manage which apps that should be visible in bulk.
+    # ^ Including which display that is used.
+    # ^^ One issue tho is handling apps that go fullscreen w eg. video.
 
+
+    local window_picker_alternatives=(displays spaces windows)
+
+    selection="$(
+        echo-lines -- "${window_picker_alternatives[@]}" |
+            fzf-helper -- \
+                --border-label '🌴 [Window helper]: yabai picker' \
+                --header $'Select which query type to inspect:\n\n'
+    )"
+
+    __print_lines "$selection"
+
+    # TODO: jq get [index:id:label]
+    # TODO: preview -> just run the yabai command for this id
+
+    yabai -m query "--$selection" | jq '.[].id' | fzf-helper -- --preview "yabai -m query --$selection --${selection::-1} {}"
+
+    # Use this function as a workaround to using multiple spaces (since spaces require disabling SIP with yabai),
+    # so that we can show/hid windows in groups.
+    show_these_only() {
+        # Pass app names you want to keep visible as arguments
+        local keep_list=("$@")
+
+        # Convert Bash array to AppleScript list
+        local keep_applescript_list
+        keep_applescript_list=$(printf '"%s", ' "${keep_list[@]}" | sed 's/, $//')
+
+        osascript <<-EOF
+			tell application "System Events"
+			    set keepList to {${keep_applescript_list}}
+			    set appList to name of every process whose background only is false
+			    repeat with appName in appList
+			        if appName is in keepList or appName is "Finder" then
+			            set visible of process appName to true
+			        else
+			            set visible of process appName to false
+			        end if
+			    end repeat
+			end tell
+		EOF
+    }
 )
 
 # Fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-	window_helper "$@"
+    window_helper "$@"
 fi
