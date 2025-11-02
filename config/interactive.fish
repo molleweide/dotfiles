@@ -4,6 +4,8 @@
 # CONFIG: INTERACTIVE FISH
 #
 
+set -x DOROTHY_THEME "oz"
+
 # load cross shell `sh` files
 # source "$DOROTHY/user/config/interactive.sh"
 

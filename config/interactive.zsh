@@ -2,12 +2,14 @@
 # shellcheck disable=SC2034
 # use inline `export VAR=...` statements, for fish compatibility`
 
-# echo "user -> config/interactive.zsh"
+echo "user -> config/interactive.zsh"
 
 # prompt off
 
 export DOROTHY_THEME="oz"
 # export DOROTHY_THEME="starship"
+
+export DOROTHY_KEYBINDS_DISABLE=yes
 
 # load defaults
 # source "$DOROTHY/config/interactive.zsh"
@@ -23,6 +25,8 @@ source "$DOROTHY/user/config/interactive.sh"
 
 # echo "zsh cache before loading plugins: $ZSH_CACHE_DIR"
 
+echo "user -> config/interactive.zsh before loading sources"
+
 for f in "$DOROTHY/user/sources/"*.zsh; do
   # if [[ "$f" == *"plugins.zsh" ]]; then
   #   :
@@ -37,6 +41,8 @@ for f in "$DOROTHY/user/sources/"*.zsh; do
   fi
   source "$f"
 done
+
+echo "user -> config/interactive.zsh after loading sources."
 
 # echo "zsh cache after loading plugins: $ZSH_CACHE_DIR"
 

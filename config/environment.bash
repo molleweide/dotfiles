@@ -50,7 +50,7 @@ BROWSER="brave"
 TERMINAL="Alacritty" # or kitty | linux >> "st"
 
 # timezone
-TZ="America/New_York"
+TZ="Europe/Stockholm"
 LANG="en_US.UTF-8"
 LANGUAGE="en"
 LC_ALL="en_US.UTF-8"
@@ -113,7 +113,9 @@ GHCUP_USE_XDG_DIRS=true # force XDG
 
 HISTFILE="$XDG_DATA_HOME/history"
 LESSHISTFILE="-"
-if test "$shell" = 'zsh'; then
+
+# FIX: shell is undefined..
+if test "${shell-}" = 'zsh'; then
 	HISTFILE="$XDG_STATE_HOME/zsh/history"
 	mkdir -p "$XDG_STATE_HOME/zsh"
 	touch "$HISTFILE"

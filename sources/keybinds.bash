@@ -57,6 +57,11 @@
 # =======================================================
 # NOTE: Rewrite of BASH man `bind` to make it at least comprehensible.
 
+if [[ "$DOROTHY_KEYBINDS_DISABLE" == "yes" ]]; then
+    echo "keybinds disabled"
+    return
+fi
+
 
 source "$DOROTHY/sources/bash.bash"
 

@@ -2,6 +2,10 @@
 # KEYBINDS DEFINITION
 #
 
+# TODO: ( ) Toggle keybinds on/off
+# master switch should be here in this file, eg if it returns 1,
+# but each shell config should also be able to toggle it off.
+
 # NOTE: Maybe the leader should be exported instead?
 #
 # TODO:

@@ -157,9 +157,16 @@
 function window_helper() (
     source "$DOROTHY/sources/bash.bash"
 
+    # TODO: add flag processing.
+
     # TODO:
     # picker-yabai: displays, spaces, windows
     #
+    #
+    # TODO: Show status (Macos) quicly show which wm service that is
+    # running.
+    #
+    # Switch to other wm [yabai <-> aerospace]
 
     # TODO:
     # ~ ( ) Ensure displays are properly named.

@@ -8,13 +8,64 @@
 # aware shell experience. Eg. not accidentally create a lot of functions and
 # aliases that happen to shaow functionality in another shell that you also
 # use frequently.
-
+#
+# WARN: This logic might make sense to just put into alias helper.
+# Hmmm, or i could just reference this in alias helper
 
 function shell_helper() (
 	source "$DOROTHY/sources/bash.bash"
 
-
 	# TODO: Check for presence of name in every shell.
+
+    function help {
+        cat <<-EOF >/dev/stderr
+        Helper to for checking various things across multiple shells quickly,
+        eg. if a <name> is bound in any shell or if creating a new alias will
+        create a clash in any other shell.
+
+        shell-helper [...<option>] [-- ...<argument]
+		EOF
+        if [[ $# -ne 0 ]]; then
+            echo-error "$@"
+        fi
+        return 22 # EINVAL 22 Invalid argument
+    }
+	local option_args=() option_verbose='no'
+
+	local action=''
+
+	local option_target_shells=()
+
+	while [[ $# -ne 0 ]]; do
+		item="$1"
+		shift
+		case "$item" in
+		'--help' | '-h') help ;;
+		'--debug') option_debug='yes' ;;
+		'--verbose')
+			option_verbose='yes'
+			;;
+		'--is-bound') action='__is_bound' ;;
+		'--shells='*) option_target_shells="${item#*=}"
+		'--')
+			option_args+=("$@")
+			shift $#
+			break
+			;;
+		*)
+			help "Unknown argument was provided"
+			;;
+		esac
+	done
+
+	__is_bound() {
+		:
+	}
+
+	# =================================
+	# Act
+
+	"$action" "${option_args[@]}"
 
 )
 

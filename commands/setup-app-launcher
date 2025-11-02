@@ -1,16 +1,7 @@
 #!/usr/bin/env bash
 
-# TODO: Support
-# Alfred,
-# rofi
-# and our own `launcher` command.
-
 function setup_app_launcher() (
     source "$DOROTHY/sources/bash.bash"
-
-    # Install `rofi` on macos
-    # https://github.com/NYX-shell/Rofi-on-Mac
-    # https://www.youtube.com/watch?v=-rAMri6iG2E
 
 )
 

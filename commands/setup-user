@@ -11,15 +11,7 @@
 
 # Functions =================================
 
-function pull_molleweide_latest() {
-  pushd $DOROTHY/user >/dev/null 2>&1
-  echo "doro user pwd: $PWD"
-  popd >/dev/null 2>&1
-}
-
 # handle basic configs and special cases.
-# WARN: It turns out that the dorothy's symlink-helper command is very slow,
-# even if --quiet
 function setup_basic_xdg_config_symlinks() {
   echo-style --h1="SETTING UP USER SYMLINKS"
   local DORO_USER_XDG="$DOROTHY/user/config.xdg"

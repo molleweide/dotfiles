@@ -15,6 +15,13 @@
 # Use [od] to expose hidden special chars
 # echo -n "$line" | od -A n -t x1
 
+# echo "KEYBINDS.ZSH"
+
+if [[ "$DOROTHY_KEYBINDS_DISABLE" == "yes" ]]; then
+    echo "keybinds disabled"
+    return
+fi
+
 source "$DOROTHY/sources/zsh.zsh"
 
 

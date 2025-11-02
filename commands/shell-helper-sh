@@ -1,0 +1,66 @@
+#!/bin/sh
+# describe_name: report what kind of thing a name refers to (POSIX sh)
+
+describe_name() {
+    name=$1
+    found=0
+
+    if [ -z "$name" ]; then
+        printf '%s\n' "Usage: describe_name <name>" >&2
+        return 2
+    fi
+
+    printf '%s\n' "Inspecting name: '$name'"
+
+    # --- Variable check ---
+    # POSIX: test variable presence via parameter expansion
+    eval "test \"\${$name+x}\" = x"
+    if [ $? -eq 0 ]; then
+        found=1
+        # Safely obtain its value (truncated)
+        eval "val=\${$name}"
+        case ${#val} in
+            [6-9][0-9]|[1-9][0-9][0-9]*) val=$(printf '%s' "$val" | cut -c1-57)..." ;;
+        esac
+        printf '• Variable: %s is set (value: %s)\n' "$name" "$val"
+    fi
+
+    # --- Function check ---
+    # POSIX defines 'command -V' (verbose description)
+    command -V "$name" >/dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        kind=$(command -V "$name" 2>/dev/null)
+        case $kind in
+            *"function"*)
+                found=1
+                printf '• Function: %s\n' "$kind"
+                ;;
+            *"builtin"*)
+                found=1
+                printf '• Builtin: %s\n' "$kind"
+                ;;
+            *"alias"*)
+                found=1
+                printf '• Alias: %s\n' "$kind"
+                ;;
+            *"file"*)
+                found=1
+                path=$(command -v "$name")
+                printf '• External command: %s\n' "$path"
+                ;;
+        esac
+    fi
+
+    # --- Summary ---
+    if [ "$found" -eq 0 ]; then
+        printf "✗ '%s' is unbound (no variable, alias, function, builtin, or command found)\n" "$name"
+        return 1
+    fi
+}
+
+# Example use (remove below lines when sourcing)
+# describe_name PATH
+# describe_name cd
+# describe_name echo
+# describe_name foo
+

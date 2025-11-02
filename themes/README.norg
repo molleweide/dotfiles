@@ -1,0 +1,53 @@
+@document.meta
+title: README
+description:
+authors: hjalmarjakobsson
+categories:
+created: 2025-10-27T11:47:52-0500
+updated: 2025-11-01T03:14:07-0500
+version: 1.1.1
+@end
+
+
+* resources / code
+
+  ~ https://tldp.org/HOWTO/Bash-Prompt-HOWTO/index.html
+  ~ https://github.com/htorun/prompt-multiline
+  ~ https://github.com/gcholette/bash-ps1-themes
+  ~ https://bash-it.readthedocs.io/en/latest/themes-list/
+  ~ https://www.reddit.com/r/DistroTube/comments/phnth1/how_do_i_create_a_multiline_line_bash_prompt_like/
+
+
+* oz theme additions
+
+  ** SUPPORT MORE OPTIONS
+
+     I should copy oz theme and add more options.
+
+     Add args processing.
+
+     Put options in exported variables.
+
+     Eg. DOROTHY_THEME_OPTION_VERBOSE='yes'
+
+     So that we can have something like [dorothy theme set verbose]
+
+     And that would just override the export var and then resource the theme.
+
+    *** new options
+
+        verbose         show more info about location / context
+
+        legend          show a legend prefix for each component
+
+    *** new exports
+
+        export the location ranges for each component segment. so that we could try
+        having dynamic updating of the prompt line.
+        ^ I dont know if this is stupid but it is at least a fun thing to play
+        around with
+
+
+  ** IN CASE OF INCOMPATABILITY OR NON-SUPPORT
+
+     Then show this somehow.

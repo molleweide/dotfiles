@@ -1,0 +1,63 @@
+#!/usr/bin/env nu
+
+def shell-helper-nu [name: string] {
+    if ($name | is-empty) {
+        error make { msg: "Usage: shell-helper-nu <name>" }
+    }
+
+    let found = false
+    print $"Inspecting name: '($name)'"
+
+    # --- Variable ---
+    if (scope variables | where name == $name | is-not-empty) {
+        let val = (get $name)
+        let shown = if ($val | describe | str length) > 60 {
+            ($val | to text | str substring 0..57) + "..."
+        } else {
+            ($val | to text)
+        }
+        print $"• Variable: '($name)' is set (value: '($shown)')"
+        let found = true
+    }
+
+    # --- Alias ---
+    if (scope aliases | where name == $name | is-not-empty) {
+        let a = (scope aliases | where name == $name | get 0)
+        print $"• Alias: ($a.name) → ($a.expansion)"
+        let found = true
+    }
+
+    # --- Command (builtin, custom, or plugin) ---
+    if (scope commands | where name == $name | is-not-empty) {
+        let c = (scope commands | where name == $name | get 0)
+        let type = if $c.is_plugin { "plugin" } else if $c.is_builtin { "builtin" } else { "custom" }
+        print $"• Command: ($name) is a ($type) command"
+        let found = true
+    }
+
+    # --- Module ---
+    if (scope modules | where name == $name | is-not-empty) {
+        print $"• Module: ($name) is a loaded module"
+        let found = true
+    }
+
+    # --- Not found ---
+    if not $found {
+        print $"✗ '($name)' is unbound (no variable, alias, command, or module found)"
+        return (error make { msg: $"name '($name)' not bound" })
+    }
+
+    # --- Conflicts check ---
+    let count = (
+        [
+            (scope variables | where name == $name | length)
+            (scope aliases    | where name == $name | length)
+            (scope commands   | where name == $name | length)
+            (scope modules    | where name == $name | length)
+        ] | math sum
+    )
+    if $count > 1 {
+        print $"⚠️  Note: '($name)' is bound in multiple namespaces ($count total)"
+    }
+}
+

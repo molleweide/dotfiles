@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# NOTE: It might make sense to rename this to wm-helper and then move the installer
+# and enabling logic into each wm's setup-util-** command.
+
 # TODO: launcher -> fzf -> select yabai action -> run
 # ^ Ie. create a controller for the window manager that does not require eating
 #   up keybindings real estate
@@ -12,6 +15,9 @@
 # ^ In alacritty however, this is the message. Might be some arm64 build
 # issue
 # ^^^ This was resolved by manually removing, and readding Alacritty accessibility enabled.
+#
+# TODO: Only one window manager can be ran at once, especially on MacOS,
+# where everything is run as services in the existing desktop.
 
 # ============================================
 # TESTS FOR `SETUP_WINDOW_MANAGER`
@@ -112,20 +118,17 @@ function setup_window_manager() (
 
             function yabai_rm_tmp_files() {
                 # these are logfiles that may be created when running yabai as a service.
-                rm -rf /tmp/yabai_$USER.out.log
-                rm -rf /tmp/yabai_$USER.err.log
+                rm -rf "/tmp/yabai_$USER.out.log"
+                rm -rf "/tmp/yabai_$USER.err.log"
 
                 # remove config and various temporary files
                 rm ~/.yabairc
-                rm /tmp/yabai_$USER.lock
-                rm /tmp/yabai_$USER.socket
-                rm /tmp/yabai-sa_$USER.socket
+                rm "/tmp/yabai_$USER.lock"
+                rm "/tmp/yabai_$USER.socket"
+                rm "/tmp/yabai-sa_$USER.socket"
             }
 
             if [[ "$action" == "install" ]]; then
-
-                # TODO: ensure other window managers are not used/setup
-                # ask uninstall others?
 
                 setup-util --cli="yabai" BREW="koekeishiya/formulae/yabai"
 
