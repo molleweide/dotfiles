@@ -1,129 +1,20 @@
 #!/usr/bin/env bash
-# source "$DOROTHY/sources/strict.bash"
-
-# NOTE: [git] is assumed to exist
-
-# TODO: ORDER of install
-# ~ [x] symlink basic xdg configs
-# ~ [x] make sure GHQ_ROOT exists
-# ~ clone GHQ
-# ~ strongbox?
 
 function setup_user() (
 
-    local GITHUB_USER_REPOS_PATH="$DOROTHY_LOCAL_CODE_DIR/github.com/molleweide"
-
-    # Functions =================================
-
-    # handle basic configs and special cases.
     function __symlink_xdg_configs() {
         echo-style --h1="SETTING UP USER SYMLINKS"
-        local DORO_USER_XDG="$DOROTHY/user/config.xdg"
-        local DORO_USER_XDG_HIDDEN="$DOROTHY/user/config.local/config.xdg"
-        local CONFIG_PATHS=(
-            "$DORO_USER_XDG"
-            "$DORO_USER_XDG_HIDDEN"
-        )
-        local SPECIAL_CASES_DO_NOT_GO_INTO_CONFIG_HOME=(
-            "qutebrowser"
-        )
-        function handle_symlink_for_entry() {
-            local origin_entry_path current_tool_name
-            origin_entry_path=$1
-            current_tool_name="$(basename "$origin_entry_path")"
-            if test "$current_tool_name" = "_ignore_these"; then
-                return
-            fi
-            if ! is-needle --needle="$current_tool_name" -- "${SPECIAL_CASES_DO_NOT_GO_INTO_CONFIG_HOME[@]}"; then
-                symlink-helper --existing="$origin_entry_path" \
-                    --symlink="$XDG_CONFIG_HOME/$(basename "$origin_entry_path")" # \ --quiet
-            else
-                # handle special cases
-                case "$current_tool_name" in
-                "qutebrowser")
-                    symlink-helper --existing="$origin_entry_path" --symlink="$HOME/$current_tool_name" \
-                        --log-if-overriding-file # \ --quiet --log-if-overriding-symlink
-                    ;;
-                *)
-                    echo "How to handle symlink of config for special case tool [$current_tool_name] has not yet been setup!" ...
-                    ;;
-                esac
-            fi
-        }
-        for cp in "${CONFIG_PATHS[@]}"; do
-            for origin_entry_path in "$cp"/*; do
-                handle_symlink_for_entry "$origin_entry_path"
-            done
+        local util_name destination
+        for util_path in "$DOROTHY/user/config.xdg"/* "$DOROTHY/user/config.local/config.xdg"; do
+            util_name="$(basename "$util_path")"
+            destination="$XDG_CONFIG_HOME/$util_name"
+            # Handle special cases.
+            case "$util_name" in
+            "qutebrowser") destination="$HOME/.$util_name" ;;
+            esac
+            symlink-helper --existing="$util_path" --symlink="$destination" --log-if-overriding-file # \ --quiet --log-if-overriding-symlink
         done
         echo-style --g1="SETTING UP USER SYMLINKS"
-    }
-
-    # # depents on GHQ so it needs to be called after setting up
-    # # basic configs.
-    # function setup_doom_neovim_config() {
-    #   echo-header "SETTING UP NEOVIM..."
-    #   # doom_nvim_dir="$HOME/code/doom-nvim"
-    #   # if [ ! -d "$HOME/code/doom-nvim" ]; then
-    #   # 	git clone git@github.com:molleweide/doom-nvim.git "$doom_nvim_dir"
-    #   # fi
-    #   # local doom_path="$GHQ_ROOT_GH_USER/doom-nvim"
-    #   # echo "$doom_path"
-    #   symlink-helper --existing="$GHQ_ROOT_GH_USER/doom-nvim" --symlink="$XDG_CONFIG_HOME/nvim"
-    # }
-
-    # Add setting up plugin manager and linking config to the setup-util-tmux
-    function setup_tmux_user() {
-        local TMUX_PLUG_DIR="$HOME/.config/tmux/plugins/tpm"
-        [ ! -d "$TMUX_PLUG_DIR" ] && git clone git@github.com:tmux-plugins/tpm.git "$TMUX_PLUG_DIR"
-        install_script="$TMUX_PLUG_DIR/bin/install_plugins"
-        if [ -x "$install_script" ]; then
-            $install_script
-        fi
-    }
-
-    function setup_osx() {
-        # setup-user-osx
-        :
-    }
-
-    # FIX: setup-hammerspoon. it makes sense to have everything in a setup script
-    function setup_hammerspoon() {
-        if is-mac; then
-            HAMMERSPOON_CONFIG_DIR="$HOME/code/config_hammerspoon"
-
-            if [ ! -d "$HOME/code/config_hammerspoon" ]; then
-                git clone git@github.com:molleweide/config_hammerspoon.git "$HAMMERSPOON_CONFIG_DIR"
-            fi
-
-            github.com/molleweide/config_hammerspoon
-
-            echo-style --h1="Setting up HAMMERSPOON.."
-
-            # brew install --cask hammerspoon # --appdir=/Applications
-
-            url="https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip"
-            destination=/tmp/SpoonInstall.spoon.zip
-            spoons_dir=$HOME/.config/hammerspoon/Spoons
-
-            if [ ! -d "$spoons_dir/SpoonInstall.spoon" ]; then
-                wget -nv $url -O $destination && unzip -d "$spoons_dir" "$destination"
-            fi
-
-            defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
-
-            # fix: how should I manage the hammerspoon config
-            symlink-file "$ghq_user/config_hammerspoon" "$XDG_CONFIG_HOME/hammerspoon"
-        fi
-    }
-
-    function setup_keyboard() {
-        :
-    }
-
-    function setup_obs() {
-        # ~/Library/Application Support/obs-studio/
-        # ~/.config/obs-studio/
-        :
     }
 
     # =======================================================
@@ -131,21 +22,21 @@ function setup_user() (
 
     __symlink_xdg_configs
 
-
-    # TODO: ghm restore "<repo>" "destination"
-    # only accept one repo and allow second arg to be a symlink destination?
-
-
-    # neovim
     ghm restore "github.com/molleweide/doom-nvim" "$XDG_CONFIG_HOME/nvim"
-    # symlink-helper --existing="$GITHUB_USER_REPOS_PATH/doom-nvim" --symlink="$XDG_CONFIG_HOME/nvim"
+    ghm restore "github.com/molleweide/neorg_user" "$HOME/neorg"
 
-    # WARN: TEST THIS!!
-    ghm restore "github.com/molleweide/neorg_user" "$HOME/neorg2"
+    # setup-kmonad
 
-    setup_tmux_user
+    # setup-util-hammerspoon
 
-    setup_osx
+    # Will this be picked up by `setup-util` and moved to the setup-util segment of setup.bash?
+    setup-util-tmux
+
+    # if is-mac; then
+    #     setup-user-osx
+    # fi
+
+
 )
 
 # fire if invoked standalone

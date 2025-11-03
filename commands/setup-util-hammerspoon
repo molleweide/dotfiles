@@ -1,6 +1,21 @@
 #!/usr/bin/env bash
 
 if is-mac; then
+
+    # WARN: This has to be revised
+
+    return
+
+    # brew install --cask hammerspoon # --appdir=/Applications
+
+    HAMMERSPOON_CONFIG_DIR="$HOME/code/config_hammerspoon"
+
+    if [ ! -d "$HOME/code/config_hammerspoon" ]; then
+        git clone git@github.com:molleweide/config_hammerspoon.git "$HAMMERSPOON_CONFIG_DIR"
+    fi
+
+    github.com/molleweide/config_hammerspoon
+
     echo-style --h1="Setting up HAMMERSPOON.."
 
     # brew install --cask hammerspoon # --appdir=/Applications
@@ -9,16 +24,12 @@ if is-mac; then
     destination=/tmp/SpoonInstall.spoon.zip
     spoons_dir=$HOME/.config/hammerspoon/Spoons
 
-    [ ! -d "$spoons_dir/SpoonInstall.spoon" ] \
-        && wget -nv $url -O $destination && unzip -d "$spoons_dir" "$destination"
+    if [ ! -d "$spoons_dir/SpoonInstall.spoon" ]; then
+        wget -nv $url -O $destination && unzip -d "$spoons_dir" "$destination"
+    fi
 
-    # if xdg configure XDG config
     defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 
-    # FIX: replace with symlink-helper
-    symlink-file "$ghq_user/config_hammerspoon" "$conf_dst/hammerspoon"
+    # fix: how should I manage the hammerspoon config
+    symlink-file "$ghq_user/config_hammerspoon" "$XDG_CONFIG_HOME/hammerspoon"
 fi
-
-
-
-

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+    function setup_obs() {
+        # ~/Library/Application Support/obs-studio/
+        # ~/.config/obs-studio/
+        :
+    }
+
