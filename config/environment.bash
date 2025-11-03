@@ -22,6 +22,9 @@ for p in "${alias_dirs[@]}"; do
 done
 PATH="$path$PATH"
 
+export DOROTHY_LOCAL_CODE_DIR
+DOROTHY_LOCAL_CODE_DIR="$HOME/code"
+
 # DCA_DIR="$DOROTHY/user/commands.aliases"
 # PATH+=":$DCA_DIR"
 # for d in "$DCA_DIR"/*/; do
