@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# TODO: backup format -> keys.
-
 # TODO: Fix support for:
 # - codeberg
 # - sourcehut
@@ -12,6 +10,31 @@
 
 # TODO: look at tmux-continuum AND resurrect. > setup job backup at intervals
 
+function ghm_test() (
+
+    # TODO: use fs-temp. look at how Bens using it elsewhere.
+
+    # 1. configure: override dorothy code dir and backup file.
+
+    local test_repos=(
+        git@github.com:bevry/dorothy.git
+        https://github.com/neovim/neovim.git
+        git@github.com:kmonad/kmonad.git
+    )
+
+    # How do i use custom vars since the command
+
+    # 2. clone a bunch of repos
+    #
+    # 3. list
+    #
+    # 4. remove repos
+    #
+    # 5. restore repos
+    #
+    # remove everything.
+
+)
 function ghm() (
     source "$DOROTHY/sources/bash.bash"
 
@@ -60,12 +83,13 @@ function ghm() (
     }
 
     # process
-    local item action='' option_args=() # option_quiet='no'
+    local item action='' option_test_mode='no' option_args=() # option_quiet='no'
     while test "$#" -ne 0; do
         item="$1"
         shift
         case "$item" in
         --help | -h) help ;;
+        --test-mode) option_test_mode='yes' ;;
         --)
             option_args+=("$@")
             shift "$#"
@@ -97,20 +121,25 @@ function ghm() (
     # ======================
     # Configuration
 
-    # Use this instead of `ghq root` and just append /repos or /worktrees
-    local GHM_DIR="${DOROTHY_LOCAL_CODE_DIR:-"$HOME/.local/code"}"
-    local DOROTHY_USER_BACKUP_DIR="$DOROTHY/user/backups"
-    local GHM_BACKUP_FILE="$DOROTHY_USER_BACKUP_DIR/ghm_cloned_repos.bak"
-    local GITHUB_USER
-    local GIT_PROTOCOL="ssh"
+    if [[ "$option_test_mode" == 'no' ]]; then
+        # Use this instead of `ghq root` and just append /repos or /worktrees
+        local GHM_DIR="${DOROTHY_LOCAL_CODE_DIR:-"$HOME/.local/code"}"
+        local DOROTHY_USER_BACKUP_DIR="$DOROTHY/user/backups"
+        local GHM_BACKUP_FILE="$DOROTHY_USER_BACKUP_DIR/ghm_cloned_repos.bak"
+        local GITHUB_USER
+        local GIT_PROTOCOL="ssh"
+
+    else
+        # TODO: configure test mode
+        :
+    fi
 
     GITHUB_USER=$(git config github.user)
 
     # ======================
-    # Helpers
+    # Testing
 
     function __testing() {
-
         __print_lines "test unique in array"
         array=("apple" "banana" "apple" "orange" "banana")
         unique_array=($(printf "%s\n" "${array[@]}" | sort -u))
@@ -127,6 +156,7 @@ function ghm() (
         echo
         __print_lines "Get parts for $repo_https"
         __get_repo_host_user_and_name "$repo_https"
+
     }
 
     # =====================================
@@ -186,6 +216,50 @@ function ghm() (
         printf '%s\n' "$HOST_NAME" "$USER_NAME" "$REPO_NAME"
     }
 
+    # loop over all repos.
+    # Named "blocks" because all data blocks are expected to be passed
+    # as args
+    function __restore_backup_entry() {
+        local repo_block=$1 remotes_block=$2 host user name
+
+        # local IFS="###" test="${*}"
+        # __print_lines "$test"
+
+        # IFS=/ repo_block="${*}"
+
+        IFS=/ read host user name <<<"$repo_block"
+
+        __ensure_user_dir_exists "$GHM_DIR/repos/$host/$user"
+
+        __print_lines " ---- RESTORE: $repo_block"
+
+        # TODO: check host / protocol when building clone url
+
+        local clone_url="git@github.com:$user/$name.git"
+
+        # Clone out repo
+
+        # git clone "$clone_url" "$GHM_DIR/repos/$host/$user/$name"
+
+        # Handle remotes
+
+        local remote_entries="${remotes_block#REMOTES:}" oldIFS
+        oldIFS=$IFS
+        IFS=';'
+        local block
+        for block in $remote_entries; do
+
+            local remote_name remote_url remote_type
+
+            IFS='|' read remote_name remote_url remote_type <<<"$block"
+
+            __print_lines $'\t'"REMOTE: $remote_name $remote_url $remote_type"
+
+        done
+        IFS=$oldIFS
+
+    }
+
     # =======================================================
     # Actions
 
@@ -219,8 +293,8 @@ function ghm() (
             # TODO: Only add repos that dont yet exist??
             # ^ Add target lines to `lines_to_add` above and write last.
 
-            # WARN: only for testing purps
-            >"$GHM_BACKUP_FILE"
+            # # WARN: only for testing purps
+            # >"$GHM_BACKUP_FILE"
 
             {
                 local host user name
@@ -271,68 +345,27 @@ function ghm() (
     # which repos to restore on current machine.
     function __restore() {
 
-        local item option_use_fzf='no' option_args=()
+        local item option_do_all='no' option_use_fzf='no' option_repo_block='' option_repo_destination=''
+
         while [[ $# -ne 0 ]]; do
             item="$1"
             shift
             case "$item" in
-            --all) option_do_all='yes' ;;
-            --use-fzf) option_use_fzf='yes' ;;
-            --)
-                option_args+=("$@")
-                shift "$#"
+            --all)
+                option_do_all='yes'
                 break
                 ;;
-            # *) __unrecognised_argument "$item" || return ;;
-            *) option_args+=("$item") ;;
+            *)
+                if [[ -z "$option_repo_block" ]]; then
+                    option_repo_block="$item"
+                else
+                    option_repo_destination="$item"
+                fi
+                ;;
             esac
         done
 
         local backup_lines_selected=()
-
-        # loop over all repos.
-        # Named "blocks" because all data blocks are expected to be passed
-        # as args
-        function __restore_entry() {
-            local repo_block=$1 remotes_block=$2 host user name
-
-            # local IFS="###" test="${*}"
-            # __print_lines "$test"
-
-            # IFS=/ repo_block="${*}"
-
-            IFS=/ read host user name <<<"$repo_block"
-
-            __ensure_user_dir_exists "$GHM_DIR/repos/$host/$user"
-
-            __print_lines "restore: $repo_block -> $host $user $name"
-
-            # TODO: check host / protocol when building clone url
-
-            local clone_url="git@github.com:$user/$name.git"
-
-            # Clone out repo
-
-            # git clone "$clone_url" "$GHM_DIR/repos/$host/$user/$name"
-
-            # Handle remotes
-
-            local remote_entries="${remotes_block#REMOTES:}" oldIFS
-            oldIFS=$IFS
-            IFS=';'
-            local block
-            for block in $remote_entries; do
-
-                local remote_name remote_url remote_type
-
-                IFS='|' read remote_name remote_url remote_type <<<"$block"
-
-                __print_lines $'\t'"BLOCK: $remote_name $remote_url $remote_type"
-
-            done
-            IFS=$oldIFS
-
-        }
 
         if [[ "$option_do_all" == 'yes' ]]; then
             if confirm --ppid=$$ \
@@ -347,26 +380,40 @@ function ghm() (
 
                     # TODO: extract out
 
-                    __restore_entry $backup_line # split args
+                    __restore_backup_entry $backup_line # split args
 
                 done <"$GHM_BACKUP_FILE"
 
             fi
-        elif [[ "${#option_args[@]}" -gt 0 ]]; then
-            # restore from args <host1/user1/name1> <host2/user2/name2> ...
-            local repo_block
-            for repo_block in "$@"; do
+        elif [[ -n "$option_repo_block" ]]; then
+            local backup_line
 
-                local backup_line
+            # TODO: ( ) Get line from backup by matching the repo block
 
-                # TODO: Get line from backup by matching the repo block
+            __restore_backup_entry $backup_line
 
-                __restore_entry $backup_line
+            if [[ -n "$option_repo_destination" ]]; then
+                symlink-helper --existing="$DOROTHY_LOCAL_CODE_DIR/$option_repo_block" --symlink="$option_repo_destination"
+            fi
 
-            done
         else
-            :
-            # TODO: `choose` which to restore.
+            local selection option_confirm='yes' backup_line
+
+            # TODO: How to format data for fzf??
+
+            selection="$(
+                # echo-lines -- "${window_picker_alternatives[@]}" |
+                cat <"$GHM_BACKUP_FILE" |
+                    fzf-helper -- \
+                        --border-label '🌴 [GHM]: RESTORE' \
+                        --header $'Select repos for restoring:\n\n'
+            )"
+
+            # __print_lines "${selection[@]}"
+            while IFS= read -r backup_line; do
+                # __print_lines "RESTORE SEL: $backup_line"
+                __restore_backup_entry $backup_line
+            done <<<"$selection"
         fi
 
     }
@@ -515,14 +562,20 @@ function ghm() (
     # ======================
 
     function __clone() {
-        local item option_url='git@github.com:neovim/neovim.git'
+        local item option_url='git@github.com:neovim/neovim.git' option_destination=''
         while [[ $# -ne 0 ]]; do
             item="$1"
             shift
             case "$item" in
             --*) __unrecognised_flag "$item" || return ;;
             # *) __unrecognised_argument "$item" || return ;;
-            *) option_url="$item" ;;
+            *)
+                if [[ -z "$option_url" ]]; then
+                    option_url="$item"
+                else
+                    option_destination="$item"
+                fi
+                ;;
             esac
         done
 
@@ -552,6 +605,10 @@ function ghm() (
 
         # git clone -- "$option_url" "$repos_name_path"
 
+        if [[ -n "$option_destination" ]]; then
+            symlink-helper --existing="$DOROTHY_LOCAL_CODE_DIR/repos/$host/$user/$name" --symlink="$option_destination"
+        fi
+
         __backup "$host" "$user" "$name"
     }
 
@@ -569,8 +626,7 @@ function ghm() (
 
     # Create new repo and add github remote
     function __new() {
-
-        local item option_repo_name=''
+        local item option_repo_name='' option_destination=''
 
         while [[ $# -ne 0 ]]; do
             item="$1"
@@ -578,7 +634,13 @@ function ghm() (
             case "$item" in
             --*) __unrecognised_flag "$item" || return ;;
             # *) __unrecognised_argument "$item" || return ;;
-            *) option_repo_name="$item" ;;
+            *)
+                if [[ -z "$option_repo_name" ]]; then
+                    option_repo_name="$item"
+                else
+                    option_destination="$item"
+                fi
+                ;;
             esac
         done
 
@@ -597,6 +659,10 @@ function ghm() (
         git init "$repo_name_path"
 
         init_github_remote "$repo_name_path" "$repo_name"
+
+        if [[ -n "$option_destination" ]]; then
+            symlink-helper --existing="$DOROTHY_LOCAL_CODE_DIR/repos/$host/$user/$name" --symlink="$option_destination"
+        fi
 
         __backup "$host" "$user" "$name"
     }
@@ -656,7 +722,7 @@ function ghm() (
     # Action
 
     case "$action" in
-    testing) __testing "${option_args[@]}" ;;
+    test) __test "${option_args[@]}" ;;
     backup) __backup "${option_args[@]}" ;;
     remove) __remove "${option_args[@]}" ;;
     restore) __restore "${option_args[@]}" ;;
@@ -676,5 +742,9 @@ function ghm() (
 
 # fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-    ghm "$@"
+    if [[ $* == '--test' ]]; then
+        ghm_test
+    else
+        ghm "$@"
+    fi
 fi
