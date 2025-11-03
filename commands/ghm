@@ -13,13 +13,13 @@
 # TODO: look at tmux-continuum AND resurrect. > setup job backup at intervals
 
 function ghm() (
-	source "$DOROTHY/sources/bash.bash"
+    source "$DOROTHY/sources/bash.bash"
 
-	# =====================================
-	# Arguments
+    # =====================================
+    # Arguments
 
-	function help {
-		__print_help "$@" <<-EOF || return
+    function help {
+        __print_help "$@" <<-EOF || return
 			ABOUT:
 			Helper that manages local code repos, worktrees, etc.
 			New repos are cloned to or created at \`\$DOROTHY_LOCAL_CODE_DIR/repos/<host>/<user>/<name.\`
@@ -56,600 +56,625 @@ function ghm() (
 			NOTE:
 			<repo>s can be in the form of either SSH or HTTPS string, or on the form of \`<host>/<user>/<name>\`
 		EOF
-		return 22 # EINVAL 22 Invalid argument
-	}
+        return 22 # EINVAL 22 Invalid argument
+    }
 
-	# process
-	local item action='' option_args=() # option_quiet='no'
-	while test "$#" -ne 0; do
-		item="$1"
-		shift
-		case "$item" in
-		--help | -h) help ;;
-		--)
-			option_args+=("$@")
-			shift "$#"
-			break
-			;;
-		'--'*)
-			if [[ -z $action ]]; then
-				help 'An unrecognised global flag argument was provided: ' --variable-value={item}
-			else
-				option_args+=("$item") # forward to action
-			fi
-			;;
-		*)
-			if [[ -z $action ]]; then
-				action="$item"
-			else
-				option_args+=("$item")
-			fi
-			;;
-		esac
-	done
+    # process
+    local item action='' option_args=() # option_quiet='no'
+    while test "$#" -ne 0; do
+        item="$1"
+        shift
+        case "$item" in
+        --help | -h) help ;;
+        --)
+            option_args+=("$@")
+            shift "$#"
+            break
+            ;;
+        '--'*)
+            if [[ -z $action ]]; then
+                help 'An unrecognised global flag argument was provided: ' --variable-value={item}
+            else
+                option_args+=("$item") # forward to action
+            fi
+            ;;
+        *)
+            if [[ -z $action ]]; then
+                action="$item"
+            else
+                option_args+=("$item")
+            fi
+            ;;
+        esac
+    done
 
-	# check
-	if [[ -z $action ]]; then
-		action="testing"
-		# help 'No ' --code='<action>' ' was provided.'
-	fi
+    # check
+    if [[ -z $action ]]; then
+        action="testing"
+        # help 'No ' --code='<action>' ' was provided.'
+    fi
 
-	# ======================
-	# Configuration
+    # ======================
+    # Configuration
 
-	# Use this instead of `ghq root` and just append /repos or /worktrees
-	local \
-		GHM_DIR="${DOROTHY_LOCAL_CODE_DIR:-"$HOME/.local/code"}" \
-		GHM_BACKUP_FILE="$DOROTHY/user/backups/ghm_cloned_repos.bak" \
-		GITHUB_USER \
-		GIT_PROTOCOL="ssh"
+    # Use this instead of `ghq root` and just append /repos or /worktrees
+    local GHM_DIR="${DOROTHY_LOCAL_CODE_DIR:-"$HOME/.local/code"}"
+    local DOROTHY_USER_BACKUP_DIR="$DOROTHY/user/backups"
+    local GHM_BACKUP_FILE="$DOROTHY_USER_BACKUP_DIR/ghm_cloned_repos.bak"
+    local GITHUB_USER
+    local GIT_PROTOCOL="ssh"
 
-	GITHUB_USER=$(git config github.user)
+    GITHUB_USER=$(git config github.user)
 
-	# ======================
-	# Helpers
+    # ======================
+    # Helpers
 
-	function __testing() {
+    function __testing() {
 
-		__print_lines "test unique in array"
-		array=("apple" "banana" "apple" "orange" "banana")
-		unique_array=($(printf "%s\n" "${array[@]}" | sort -u))
-		echo "Original Array: ${array[*]}"
-		echo "Unique Array: ${unique_array[*]}"
+        __print_lines "test unique in array"
+        array=("apple" "banana" "apple" "orange" "banana")
+        unique_array=($(printf "%s\n" "${array[@]}" | sort -u))
+        echo "Original Array: ${array[*]}"
+        echo "Unique Array: ${unique_array[*]}"
 
-		local repo_ssh=git@github.com:bevry/dorothy.git
-		local repo_https=https://github.com/bevry/dorothy.git
+        local repo_ssh=git@github.com:bevry/dorothy.git
+        local repo_https=https://github.com/bevry/dorothy.git
 
-		echo
-		__print_lines "Get parts for $repo_ssh"
-		__get_repo_host_user_and_name "$repo_ssh"
+        echo
+        __print_lines "Get parts for $repo_ssh"
+        __get_repo_host_user_and_name "$repo_ssh"
 
-		echo
-		__print_lines "Get parts for $repo_https"
-		__get_repo_host_user_and_name "$repo_https"
-	}
+        echo
+        __print_lines "Get parts for $repo_https"
+        __get_repo_host_user_and_name "$repo_https"
+    }
 
-	# =====================================
-	# Helpers
+    # =====================================
+    # Helpers
 
-	# this has been moved to its own command?
-	load_locate() {
-		# https://egeek.me/2020/04/18/enabling-locate-on-osx/
-		gupdatedb --localpaths=$HOME --prunepaths=/Volumes --output=$HOME/locatedb
-	}
+    # this has been moved to its own command?
+    load_locate() {
+        # https://egeek.me/2020/04/18/enabling-locate-on-osx/
+        gupdatedb --localpaths=$HOME --prunepaths=/Volumes --output=$HOME/locatedb
+    }
 
-	function __ensure_user_dir_exists() {
-		if [[ ! -d $1 ]]; then
-			mkdir -p "$1" || return
-		fi
-	}
+    function __ensure_user_dir_exists() {
+        if [[ ! -d $1 ]]; then
+            mkdir -p "$1" || return
+        fi
+    }
 
-	# Input: <host> <user> <name>
-	# Output: ```
-	#   <host>/<repo>/<name> REMOTES:<name>|<url>|<type>;...;...
-	# ```
-	function __format_backup_line() {
-		local repo_block="" remotes_block="REMOTES:"
+    # Input: <host> <user> <name>
+    # Output: ```
+    #   <host>/<repo>/<name> REMOTES:<name>|<url>|<type>;...;...
+    # ```
+    function __format_backup_line() {
+        local repo_block="" remotes_block="REMOTES:"
 
-		IFS=/ repo_block="${*}"
+        IFS=/ repo_block="${*}"
+
+        __print_lines "repo_block: $repo_block" >/dev/tty
 
         # Capture git remotes
         # Take output from git remotes -v and then format it with awk
         local remote
-		while IFS= read -r remote; do
-			remotes_block+="$remote;"
-		done < <(git -C "$GHM_DIR/repos/$1/$2/$3" remote -v | awk '{gsub(/[()]/,"",$3); print $1 "|" $2 "|" $3}')
+        while IFS= read -r remote; do
+            remotes_block+="$remote;"
+        done < <(git -C "$GHM_DIR/repos/$1/$2/$3" remote -v | awk '{gsub(/[()]/,"",$3); print $1 "|" $2 "|" $3}')
 
         # Each block is separated with whitespace.
-		__print_lines "$repo_block $remotes_block"
-	}
-
-	# TEST: Does this work with both https and ssh?
-	#
-	# get host, user, and repo from a repo url.
-	# This function is a bit hacky.
-	#
-	# Supported formats are SSH and HTTPS
-	#
-	function __get_repo_host_user_and_name() {
-		url="$1"
-
-		git_trimmed=${url%.git}
-		REPO_NAME="${git_trimmed##*/}"
-
-		repo_trimmed="${git_trimmed%/*}"
-		USER_NAME=$(echo "$repo_trimmed" | sed -E 's/.*[:\/]([^\/]*)$/\1/')
-
-		left="${repo_trimmed%?$USER_NAME}"
-		HOST_NAME="${left##*[\/@]}"
-
-		# echo "$REPO_NAME, $repo_trimmed  >> $USER_NAME >>>>> $left"
-		printf '%s\n' "$HOST_NAME" "$USER_NAME" "$REPO_NAME"
-	}
-
-	# =======================================================
-	# Actions
-
-	function __backup() {
-		local host=${1-} user=${2-} name=${3-}
-
-		local item option_all='no' option_args=()
-
-		while [[ $# -ne 0 ]]; do
-			item="$1"
-			shift
-			case "$item" in
-			--all) option_all='yes' ;;
-			--)
-				option_args+=("$@")
-				shift "$#"
-				break
-				;;
-			# *) __unrecognised_argument "$item" || return ;;
-			*) option_args+=("$item") ;;
-			esac
-		done
-
-		local lines_to_add=()
-
-		if [[ ! -f "$GHM_BACKUP_FILE" ]]; then
-			mkdir -p "$GHM_BACKUP_FILE"
-		fi
-
-		# backup all / single
-		if [[ "$option_all" == 'yes' ]]; then
-
-			# TODO: Only add repos that dont yet exist??
-
-			# WARN: only for testing purps
-			>"$GHM_BACKUP_FILE"
-
-			{
-				local line
-				while read -r host user name; do
+        __print_lines "$repo_block $remotes_block"
+    }
 
-					# ensure that the repo we are operating on is a git repo
-					# and not an accidentally empty repo
-					if [[ ! -d $GHM_DIR/repos/$host/$user/$name/.git ]]; then
-						__print_lines "$GHM_DIR/repos/$host/$user/$name is NOT a git repo!"
-						continue
-					fi
-
-					__format_backup_line $host $user $name
+    # get host, user, and repo from a repo url.
+    # This function is a bit hacky.
+    #
+    # Supported formats are SSH and HTTPS
+    function __get_repo_host_user_and_name() {
+        url="$1"
 
-				done < <(ghm list)
+        git_trimmed=${url%.git}
+        REPO_NAME="${git_trimmed##*/}"
 
-			} >"$GHM_BACKUP_FILE" # overwrite backup file here
-			return
-		else
-			if [[ ! "${#option_args[@]}" -eq 3 ]]; then
-				help "__backup: ${#option_args[*]} args were given but requires 4."
-			fi
-			local backup_line_formatted="$(__format_backup_line "${option_args[@]}")"
-			lines_to_add+=("$backup_line_formatted")
-		fi
+        repo_trimmed="${git_trimmed%/*}"
+        USER_NAME=$(echo "$repo_trimmed" | sed -E 's/.*[:\/]([^\/]*)$/\1/')
+
+        left="${repo_trimmed%?$USER_NAME}"
+        HOST_NAME="${left##*[\/@]}"
+
+        # echo "$REPO_NAME, $repo_trimmed  >> $USER_NAME >>>>> $left"
+        printf '%s\n' "$HOST_NAME" "$USER_NAME" "$REPO_NAME"
+    }
+
+    # =======================================================
+    # Actions
+
+    function __backup() {
+        local host=${1-} user=${2-} name=${3-}
+
+        local item option_all='no' option_args=()
+
+        while [[ $# -ne 0 ]]; do
+            item="$1"
+            shift
+            case "$item" in
+            --all) option_all='yes' ;;
+            --)
+                option_args+=("$@")
+                shift "$#"
+                break
+                ;;
+            # *) __unrecognised_argument "$item" || return ;;
+            *) option_args+=("$item") ;;
+            esac
+        done
+
+        local lines_to_add=()
 
-		# append data to backup
-		# __print_lines "${lines_to_add[@]}" >>"$GHM_BACKUP_FILE"
-
-		local tmp="$DOROTHY/user/backups/ghm_backup_tmp_file"
+        mkdir -p "$DOROTHY_USER_BACKUP_DIR"
 
-		# sort and replace backup file
-		{
-			cat "$GHM_BACKUP_FILE"
-			__print_lines "${lines_to_add[@]}"
-		} | sort -u >"$tmp" && mv "$tmp" "$GHM_BACKUP_FILE"
-
-		# TODO: sort lines
-
-		# locatedb-load >/dev/null 2>&1 &
-	}
+        # backup all / single
+        if [[ "$option_all" == 'yes' ]]; then
 
-	# restore all, selection, or single.
-	# pass either the host/user/name key/string or use choose/fuzzy to select
-	# which repos to restore on current machine.
-	function __restore() {
+            # TODO: Only add repos that dont yet exist??
+            # ^ Add target lines to `lines_to_add` above and write last.
 
-		local item option_use_fzf='no' option_args=()
-		while [[ $# -ne 0 ]]; do
-			item="$1"
-			shift
-			case "$item" in
-			--all) option_do_all='yes' ;;
-			--use-fzf) option_use_fzf='yes' ;;
-			--)
-				option_args+=("$@")
-				shift "$#"
-				break
-				;;
-			# *) __unrecognised_argument "$item" || return ;;
-			*) help "An unrecognized argument was provided to __restore" ;;
-			esac
-		done
+            # WARN: only for testing purps
+            >"$GHM_BACKUP_FILE"
 
-		local backup_lines_selected=()
+            {
+                local host user name
+                while IFS=$' \t' read -r host user name; do
 
-		# loop over all repos.
-		function __restore_single_backup() {
-			local host=$1 user=$2 name=$3 _rest=$4
+                    # ensure that the repo we are operating on is a git repo
+                    # and not an accidentally empty repo
+                    if [[ ! -d $GHM_DIR/repos/$host/$user/$name/.git ]]; then
+                        __print_lines "$GHM_DIR/repos/$host/$user/$name is NOT a git repo!" >/dev/tty
+                        continue
+                    fi
 
-			__ensure_user_dir_exists "$GHM_DIR/repos/$host/$user"
-
-			# git clone "$GHM_DIR/repos/$host/$user/$name"
-
-			local block
-			for block in $_rest; do
-
-				local remote_name remote_url remote_type
-
-				IFS='|' read remote_name remote_url remote_type <<<"$block"
-
-				# TODO: Restore remotes data
-				__print_lines "BLOCK: $remote_name $remote_url $remote_type"
-
-			done
-
-		}
-
-		if [[ "$option_do_all" == 'yes' ]]; then
-			if confirm --ppid=$$ \
-				--question="Are you sure you want to restore all local github repos from backup file?" \
-				--negative; then
-
-				local host user name _rest
-				while read -r host user name _rest; do
-
-					# __print_lines "$host $user $name | $_rest"
-
-					# TODO: for each line clone out the repo and add remotes.
-					__restore_single_backup "$host" "$user" "$name" "$_rest"
-
-				done <"$GHM_BACKUP_FILE"
-
-			fi
-		elif [[ "${#option_args[@]}" -gt 0 ]]; then
-			# restore from args <host1/user1/name1> <host2/user2/name2> ...
-			local n
-			for n in "$@"; do
-				local host user name
-				IFS='/' read host user name <<<"$n"
-
-				# TODO: check that the input names actually exist in backups data
-
-				__restore_single_backup $host $user $name
-
-			done
-		else
-			:
-			# TODO: `choose` which to restore.
-		fi
-
-	}
-
-	# if repo from backup does not exist/hasn't been cloned, then remove
-	# that repo. Ask before!!
-	function __clean() {
-		:
-	}
-
-	# Remove repo locally, and remove it from backup file.
-	# Wont delete any remotes.
-	# @args host user name
-	function __remove() {
-
-		# TODO:
-		# get host from $1
-		# get user from $2
-		# get repo from $3
-
-		# Specify the GitHub repo URL you want to remove
-		github_url="https:\/\/github\.com\/username\/repo"
-
-		# Specify the input file
-		input_file="input_file.txt"
-
-		# Create a temporary file for storing modified content
-		temp_file=$(mktemp)
-
-		# Use grep to filter out lines that match the GitHub URL
-		grep -v "$github_url" "$input_file" >"$temp_file"
-
-		# Replace the original file with the modified content
-		mv "$temp_file" "$input_file"
-
-		echo "Lines with the GitHub URL removed."
-	}
-
-	# What is this func??!!
-	#
-	# for each repo store the remotes as space separated entries on the same line
-	# ^<repo> <remoteName,repoUrl> <remoteName,repoUrl> ..
-	#
-	# NOTE:This function looks at all locally cloned repos, and then checks if
-	# the they exist in the database backup file. If they exist, then we update the
-	# values for remotes, else we call `add_new_repo_to_database` which then in turn
-	# is responsible for collecting the remote data anew and store everything..
-	#
-	# NOTE: This func has slight overlapping with backup?
-	#
-	# TODO: Rename to __sync -> Maybe use the git-helper sync command.
-	#   ~ 1
-	#
-	# TODO:
-	# 1. loop over
-	#
-	#
-	capture_and_overwrite_local_repos_remotes() {
-		local ghq_all_repos remotes repo_match_line_to_append_remotes=''
-
-		# TODO: Replace with inhouse implementation
-		ghq_all_repos=$(ghq list)
-
-		# set -x
-
-		# A. loop over all repos
-		while IFS= read -r ghq_list_single_repo; do
-			# always outputs a dot as first entry for some reason?
-			if [[ "$ghq_list_single_repo" == "." ]]; then
-				continue
-			fi
-
-			remotes=$(git -C "$GHQ_ROOT/$ghq_list_single_repo" remote -v)
-
-			# # echoing / debugging
-			# while IFS= read -r remote; do
-			#   __print_line "- $remote"
-			# done < <(echo "$remotes")
-
-			# TODO: grep handle duplicates, eg.:
-			# github.com/LukeSmithxyz/dwm
-			# github.com/LukeSmithxyz/dwmblocks
-
-			local grep_status_repo_exists grep_out=()
-			eval_capture --statusvar=grep_status_repo_exists --stdoutvar=grep_out -- \
-				grep "^$ghq_list_single_repo" "$GHQ_BACKUP_FILE"
-
-			local print_status='x'
-			local num_duplicates
-			if test "$grep_status_repo_exists" -eq 0; then
-				num_duplicates="${#grep_out[@]}"
-			else
-				num_duplicates=0
-				print_status=" "
-			fi
-
-			echo-style --h1="Repo single [#$num_duplicates], #$num_duplicates: $ghq_list_single_repo"
-
-			if test "$num_duplicates" = 0; then
-				echo-style --notice="No item found in database for current repo. Needs to be added to DB first."
-				continue
-			fi
-
-			if test "$num_duplicates" -gt 1; then
-				echo-style --warning="I need to ensure I dont get duplicates back from grep."
-				continue
-			fi
-
-			# These are the final remote string chunks that I should put between
-			# the <REMOTES> keyword and the next special keyword ??
-			remotes_string_chunk=()
-			while IFS= read -r remote; do
-				local stripped_line comma_replaced repo_match_line_to_append_remotes
-				stripped_line="${remote% *}"
-				comma_replaced="${stripped_line//$'\t'/,}"
-				repo_match_line_to_append_remotes="$repo_match_line_to_append_remotes $comma_replaced"
-				remotes_string_chunk+=("$comma_replaced")
-			done < <(echo "$remotes")
-
-			__print_lines "${remotes_string_chunk[@]}"
-			# echo "$repo_match_line_to_append_remotes"
-			echo-style --g2="$ghq_list_single_repo"
-
-			# TODO: put together the full new line string.
-			#
-			#
-			# TODO: revers insert lines?
-
-			# suffix="suffix"
-			# target="target"
-			# input_file="input_file.txt"
-			# sed -i "/$target/ s/$/ $suffix/" "$input_file"
-
-		done <<<"$ghq_all_repos"
-	}
-
-	function init_github_remote() {
-		local local_repo_path=${1-}
-
-		__print_lines "# README is empty" >README.md
-
-		git add --all && git commit -m 'first'
-		gh repo create --source="$local_repo_path" --private --push
-	}
-
-	# ======================
-
-	function __clone() {
-		local item option_url='git@github.com:neovim/neovim.git'
-		while [[ $# -ne 0 ]]; do
-			item="$1"
-			shift
-			case "$item" in
-			--*) __unrecognised_flag "$item" || return ;;
-			# *) __unrecognised_argument "$item" || return ;;
-			*) option_url="$item" ;;
-			esac
-		done
-
-		if [[ -z "$option_url" ]]; then
-			help '__clone requires at least one valid URL for cloing.'
-		fi
-
-		local parts=()
-		mapfile -t parts <<<"$(__get_repo_host_user_and_name "${option_url[@]}")"
-		local host="${parts[0]}" user="${parts[1]}" name="${parts[2]}"
-
-		local parts_concat="$host/$user/$name"
-
-		local repo_user_dir="$GHM_DIR/repos/$host/$user"
-		local repos_name_path="$repo_user_dir/$name"
+                    __format_backup_line $host $user $name
 
-		__print_lines "$repos_name_path"
-
-		# if [[ -d "$repos_name_path" ]]; then
-		#     __print_lines "Repo [$parts_concat] already exists!"
-		#     return
-		# fi
+                done < <(ghm list)
 
-		# git@github.com:neovim/neovim.git
-
-		# __ensure_user_dir_exists "$repo_user_dir"
-
-		# git clone -- "$option_url" "$repos_name_path"
-
-		__backup "$host" "$user" "$name"
-	}
-
-	function __list() {
-		{
-			for host_dir in "$GHM_DIR/repos/"*; do
-				for user_dir in "$host_dir/"*; do
-					for repo_dir in "$user_dir/"*; do
-						__print_lines "$repo_dir"
-					done
-				done
-			done
-		} | awk -F/ '{print $(NF-2)" "$(NF-1)" "$NF}'
-	}
-
-	# Create new repo and add github remote
-	function __new() {
-
-		local item option_repo_name=''
-
-		while [[ $# -ne 0 ]]; do
-			item="$1"
-			shift
-			case "$item" in
-			--*) __unrecognised_flag "$item" || return ;;
-			# *) __unrecognised_argument "$item" || return ;;
-			*) option_repo_name="$item" ;;
-			esac
-		done
-
-		local host=github.com user="$GITHUB_USER" name="$option_repo_name"
-
-		if [[ -z "$GITHUB_USER" ]]; then
-			__print_lines "Error: github user was empty.."
-		fi
-
-		local repo_user_dir="$GHM_DIR/repos/github.com/$GITHUB_USER"
-
-		local repo_name_path="$repo_user_dir/$option_repo_name"
-
-		__ensure_user_dir_exists "$repo_user_dir"
-
-		git init "$repo_name_path"
-
-		init_github_remote "$repo_name_path" "$repo_name"
-
-		__backup "$host" "$user" "$name"
-	}
-
-	function __fork() {
-		repo_url=$1
-
-		# TODO: refactor the user strings into function above `get_repo_name_and_user`
-
-		# if url is an ssh string
-		if [[ "$1" =~ ^git@.* ]]; then
-			repo_url="$(echo "$1" | cut -f2 -d":")"
-		fi
-
-		# extract names
-		repo_user=$(basename $(dirname "$repo_url"))
-		repo_name_str=$(basename "$repo_url")
-		repo_name=${repo_name_str%.*}
-
-		echo "ru: $repo_url"
-
-		# TODO: Replace with inhouse implementation
-		ghq get -p "$repo_url"
-
-		__backup "github.com/$repo_user/$repo_name" true
-
-		# enter repo and perform actions
-		pushd "$GHQ_GITHUB/$repo_user/$repo_name" >/dev/null 2>&1
-		# echo $PWD
-		# TODO: ADD FLAGS
-		gh repo fork
-
-		# TODO: molleweide branch; first push;
-
-		popd >/dev/null 2>&1
-	}
-
-	function create_new_nvim_plugin() {
-		# initial check
-		local repo_name=$1
-
-		if ! command-exists boilit; then
-			echo "This command requires $(boilit) package." >/dev/stderr
-			return 1
-		fi
-
-		repo_name="$repo_name.nvim"
-
-		# SPAWN NEW PLUGIN
-		# boilit >> need to fix it so that it strips the `.nvim` string within the plugin/code
-		boilit -p "$GHQ_GH_USER_PATH" "$repo_name" || exit 1
-		init_github_remote "$GHQ_GH_USER_PATH" "$repo_name"
-		__backup "github.com/$GITHUB_USER/$repo_name" true
-	}
-
-	# =====================================
-	# Action
-
-	case "$action" in
-	testing) __testing "${option_args[@]}" ;;
-	backup) __backup "${option_args[@]}" ;;
-	remove) __remove "${option_args[@]}" ;;
-	restore) __restore "${option_args[@]}" ;;
-	list) __list "${option_args[@]}" ;;
-	new | create) __new "${option_args[@]}" ;;
-	clone) __clone "${option_args[@]}" ;;
-	fork) __fork "${option_args[@]}" ;;
-
-	# ??
-	capture_and_overwrite_local_repos_remotes) capture_and_overwrite_local_repos_remotes ;;
-
-	# create nvim plugin
-	nvim-plugin) __nvim-plugin "${option_args[@]}" ;;
-
-	esac
+            } >"$GHM_BACKUP_FILE" # overwrite backup file here
+            return
+        else
+            if [[ ! "${#option_args[@]}" -eq 3 ]]; then
+                help "__backup: ${#option_args[*]} args were given but requires 4."
+            fi
+
+            # TODO: check that input repo exists.
+
+            local backup_line_formatted="$(__format_backup_line "${option_args[@]}")"
+            lines_to_add+=("$backup_line_formatted")
+        fi
+
+        # append data to backup
+        # __print_lines "${lines_to_add[@]}" >>"$GHM_BACKUP_FILE"
+
+        local tmp="$DOROTHY/user/backups/ghm_backup_tmp_file"
+
+        # sort and replace backup file
+        {
+            cat "$GHM_BACKUP_FILE"
+            __print_lines "${lines_to_add[@]}"
+        } | sort -u >"$tmp" && mv "$tmp" "$GHM_BACKUP_FILE"
+
+        # TODO: sort lines
+
+        # locatedb-load >/dev/null 2>&1 &
+    }
+
+    # restore all, selection, or single.
+    # pass either the host/user/name key/string or use choose/fuzzy to select
+    # which repos to restore on current machine.
+    function __restore() {
+
+        local item option_use_fzf='no' option_args=()
+        while [[ $# -ne 0 ]]; do
+            item="$1"
+            shift
+            case "$item" in
+            --all) option_do_all='yes' ;;
+            --use-fzf) option_use_fzf='yes' ;;
+            --)
+                option_args+=("$@")
+                shift "$#"
+                break
+                ;;
+            # *) __unrecognised_argument "$item" || return ;;
+            *) option_args+=("$item") ;;
+            esac
+        done
+
+        local backup_lines_selected=()
+
+        # loop over all repos.
+        # Named "blocks" because all data blocks are expected to be passed
+        # as args
+        function __restore_entry() {
+            local repo_block=$1 remotes_block=$2 host user name
+
+            # local IFS="###" test="${*}"
+            # __print_lines "$test"
+
+            # IFS=/ repo_block="${*}"
+
+            IFS=/ read host user name <<<"$repo_block"
+
+            __ensure_user_dir_exists "$GHM_DIR/repos/$host/$user"
+
+            __print_lines "restore: $repo_block -> $host $user $name"
+
+            # TODO: check host / protocol when building clone url
+
+            local clone_url="git@github.com:$user/$name.git"
+
+            # Clone out repo
+
+            # git clone "$clone_url" "$GHM_DIR/repos/$host/$user/$name"
+
+            # Handle remotes
+
+            local remote_entries="${remotes_block#REMOTES:}" oldIFS
+            oldIFS=$IFS
+            IFS=';'
+            local block
+            for block in $remote_entries; do
+
+                local remote_name remote_url remote_type
+
+                IFS='|' read remote_name remote_url remote_type <<<"$block"
+
+                __print_lines $'\t'"BLOCK: $remote_name $remote_url $remote_type"
+
+            done
+            IFS=$oldIFS
+
+        }
+
+        if [[ "$option_do_all" == 'yes' ]]; then
+            if confirm --ppid=$$ \
+                --question="Are you sure you want to restore all local github repos from backup file?" \
+                --negative; then
+
+                # loop over all backup entries
+                local backup_line
+                while read -r backup_line; do
+
+                    # __print_lines "$repo_block $user $name | $_remotes_blockrest"
+
+                    # TODO: extract out
+
+                    __restore_entry $backup_line # split args
+
+                done <"$GHM_BACKUP_FILE"
+
+            fi
+        elif [[ "${#option_args[@]}" -gt 0 ]]; then
+            # restore from args <host1/user1/name1> <host2/user2/name2> ...
+            local repo_block
+            for repo_block in "$@"; do
+
+                local backup_line
+
+                # TODO: Get line from backup by matching the repo block
+
+                __restore_entry $backup_line
+
+            done
+        else
+            :
+            # TODO: `choose` which to restore.
+        fi
+
+    }
+
+    # if repo from backup does not exist/hasn't been cloned, then remove
+    # that repo. Ask before!!
+    function __clean() {
+        :
+    }
+
+    # Remove repo locally, and remove it from backup file.
+    # Wont delete any remotes.
+    # @args host user name
+    function __remove() {
+
+        # TODO:
+        # get host from $1
+        # get user from $2
+        # get repo from $3
+
+        # Specify the GitHub repo URL you want to remove
+        github_url="https:\/\/github\.com\/username\/repo"
+
+        # Specify the input file
+        input_file="input_file.txt"
+
+        # Create a temporary file for storing modified content
+        temp_file=$(mktemp)
+
+        # Use grep to filter out lines that match the GitHub URL
+        grep -v "$github_url" "$input_file" >"$temp_file"
+
+        # Replace the original file with the modified content
+        mv "$temp_file" "$input_file"
+
+        echo "Lines with the GitHub URL removed."
+    }
+
+    # What is this func??!!
+    #
+    # for each repo store the remotes as space separated entries on the same line
+    # ^<repo> <remoteName,repoUrl> <remoteName,repoUrl> ..
+    #
+    # NOTE:This function looks at all locally cloned repos, and then checks if
+    # the they exist in the database backup file. If they exist, then we update the
+    # values for remotes, else we call `add_new_repo_to_database` which then in turn
+    # is responsible for collecting the remote data anew and store everything..
+    #
+    # NOTE: This func has slight overlapping with backup?
+    #
+    # TODO: Rename to __sync -> Maybe use the git-helper sync command.
+    #   ~ 1
+    #
+    # TODO:
+    # 1. loop over
+    #
+    #
+    capture_and_overwrite_local_repos_remotes() {
+        local ghq_all_repos remotes repo_match_line_to_append_remotes=''
+
+        # TODO: Replace with inhouse implementation
+        ghq_all_repos=$(ghq list)
+
+        # set -x
+
+        # A. loop over all repos
+        while IFS= read -r ghq_list_single_repo; do
+            # always outputs a dot as first entry for some reason?
+            if [[ "$ghq_list_single_repo" == "." ]]; then
+                continue
+            fi
+
+            remotes=$(git -C "$GHQ_ROOT/$ghq_list_single_repo" remote -v)
+
+            # # echoing / debugging
+            # while IFS= read -r remote; do
+            #   __print_line "- $remote"
+            # done < <(echo "$remotes")
+
+            # TODO: grep handle duplicates, eg.:
+            # github.com/LukeSmithxyz/dwm
+            # github.com/LukeSmithxyz/dwmblocks
+
+            local grep_status_repo_exists grep_out=()
+            eval_capture --statusvar=grep_status_repo_exists --stdoutvar=grep_out -- \
+                grep "^$ghq_list_single_repo" "$GHQ_BACKUP_FILE"
+
+            local print_status='x'
+            local num_duplicates
+            if test "$grep_status_repo_exists" -eq 0; then
+                num_duplicates="${#grep_out[@]}"
+            else
+                num_duplicates=0
+                print_status=" "
+            fi
+
+            echo-style --h1="Repo single [#$num_duplicates], #$num_duplicates: $ghq_list_single_repo"
+
+            if test "$num_duplicates" = 0; then
+                echo-style --notice="No item found in database for current repo. Needs to be added to DB first."
+                continue
+            fi
+
+            if test "$num_duplicates" -gt 1; then
+                echo-style --warning="I need to ensure I dont get duplicates back from grep."
+                continue
+            fi
+
+            # These are the final remote string chunks that I should put between
+            # the <REMOTES> keyword and the next special keyword ??
+            remotes_string_chunk=()
+            while IFS= read -r remote; do
+                local stripped_line comma_replaced repo_match_line_to_append_remotes
+                stripped_line="${remote% *}"
+                comma_replaced="${stripped_line//$'\t'/,}"
+                repo_match_line_to_append_remotes="$repo_match_line_to_append_remotes $comma_replaced"
+                remotes_string_chunk+=("$comma_replaced")
+            done < <(echo "$remotes")
+
+            __print_lines "${remotes_string_chunk[@]}"
+            # echo "$repo_match_line_to_append_remotes"
+            echo-style --g2="$ghq_list_single_repo"
+
+            # TODO: put together the full new line string.
+            #
+            #
+            # TODO: revers insert lines?
+
+            # suffix="suffix"
+            # target="target"
+            # input_file="input_file.txt"
+            # sed -i "/$target/ s/$/ $suffix/" "$input_file"
+
+        done <<<"$ghq_all_repos"
+    }
+
+    function init_github_remote() {
+        local local_repo_path=${1-}
+
+        __print_lines "# README is empty" >README.md
+
+        git add --all && git commit -m 'first'
+        gh repo create --source="$local_repo_path" --private --push
+    }
+
+    # ======================
+
+    function __clone() {
+        local item option_url='git@github.com:neovim/neovim.git'
+        while [[ $# -ne 0 ]]; do
+            item="$1"
+            shift
+            case "$item" in
+            --*) __unrecognised_flag "$item" || return ;;
+            # *) __unrecognised_argument "$item" || return ;;
+            *) option_url="$item" ;;
+            esac
+        done
+
+        if [[ -z "$option_url" ]]; then
+            help '__clone requires at least one valid URL for cloing.'
+        fi
+
+        local parts=()
+        mapfile -t parts <<<"$(__get_repo_host_user_and_name "${option_url[@]}")"
+        local host="${parts[0]}" user="${parts[1]}" name="${parts[2]}"
+
+        local parts_concat="$host/$user/$name"
+
+        local repo_user_dir="$GHM_DIR/repos/$host/$user"
+        local repos_name_path="$repo_user_dir/$name"
+
+        __print_lines "$repos_name_path"
+
+        # if [[ -d "$repos_name_path" ]]; then
+        #     __print_lines "Repo [$parts_concat] already exists!"
+        #     return
+        # fi
+
+        # git@github.com:neovim/neovim.git
+
+        # __ensure_user_dir_exists "$repo_user_dir"
+
+        # git clone -- "$option_url" "$repos_name_path"
+
+        __backup "$host" "$user" "$name"
+    }
+
+    function __list() {
+        {
+            for host_dir in "$GHM_DIR/repos/"*; do
+                for user_dir in "$host_dir/"*; do
+                    for repo_dir in "$user_dir/"*; do
+                        __print_lines "$repo_dir"
+                    done
+                done
+            done
+        } | awk -F/ '{print $(NF-2)" "$(NF-1)" "$NF}'
+    }
+
+    # Create new repo and add github remote
+    function __new() {
+
+        local item option_repo_name=''
+
+        while [[ $# -ne 0 ]]; do
+            item="$1"
+            shift
+            case "$item" in
+            --*) __unrecognised_flag "$item" || return ;;
+            # *) __unrecognised_argument "$item" || return ;;
+            *) option_repo_name="$item" ;;
+            esac
+        done
+
+        local host=github.com user="$GITHUB_USER" name="$option_repo_name"
+
+        if [[ -z "$GITHUB_USER" ]]; then
+            __print_lines "Error: github user was empty.."
+        fi
+
+        local repo_user_dir="$GHM_DIR/repos/github.com/$GITHUB_USER"
+
+        local repo_name_path="$repo_user_dir/$option_repo_name"
+
+        __ensure_user_dir_exists "$repo_user_dir"
+
+        git init "$repo_name_path"
+
+        init_github_remote "$repo_name_path" "$repo_name"
+
+        __backup "$host" "$user" "$name"
+    }
+
+    function __fork() {
+        repo_url=$1
+
+        # TODO: refactor the user strings into function above `get_repo_name_and_user`
+
+        # if url is an ssh string
+        if [[ "$1" =~ ^git@.* ]]; then
+            repo_url="$(echo "$1" | cut -f2 -d":")"
+        fi
+
+        # extract names
+        repo_user=$(basename $(dirname "$repo_url"))
+        repo_name_str=$(basename "$repo_url")
+        repo_name=${repo_name_str%.*}
+
+        echo "ru: $repo_url"
+
+        # TODO: Replace with inhouse implementation
+        ghq get -p "$repo_url"
+
+        __backup "github.com/$repo_user/$repo_name" true
+
+        # enter repo and perform actions
+        pushd "$GHQ_GITHUB/$repo_user/$repo_name" >/dev/null 2>&1
+        # echo $PWD
+        # TODO: ADD FLAGS
+        gh repo fork
+
+        # TODO: molleweide branch; first push;
+
+        popd >/dev/null 2>&1
+    }
+
+    function create_new_nvim_plugin() {
+        # initial check
+        local repo_name=$1
+
+        if ! command-exists boilit; then
+            echo "This command requires $(boilit) package." >/dev/stderr
+            return 1
+        fi
+
+        repo_name="$repo_name.nvim"
+
+        # SPAWN NEW PLUGIN
+        # boilit >> need to fix it so that it strips the `.nvim` string within the plugin/code
+        boilit -p "$GHQ_GH_USER_PATH" "$repo_name" || exit 1
+        init_github_remote "$GHQ_GH_USER_PATH" "$repo_name"
+        __backup "github.com/$GITHUB_USER/$repo_name" true
+    }
+
+    # =====================================
+    # Action
+
+    case "$action" in
+    testing) __testing "${option_args[@]}" ;;
+    backup) __backup "${option_args[@]}" ;;
+    remove) __remove "${option_args[@]}" ;;
+    restore) __restore "${option_args[@]}" ;;
+    list) __list "${option_args[@]}" ;;
+    new | create) __new "${option_args[@]}" ;;
+    clone) __clone "${option_args[@]}" ;;
+    fork) __fork "${option_args[@]}" ;;
+
+    # ??
+    capture_and_overwrite_local_repos_remotes) capture_and_overwrite_local_repos_remotes ;;
+
+    # create nvim plugin
+    nvim-plugin) __nvim-plugin "${option_args[@]}" ;;
+
+    esac
 )
 
 # fire if invoked standalone
 if test "$0" = "${BASH_SOURCE[0]}"; then
-	ghm "$@"
+    ghm "$@"
 fi
