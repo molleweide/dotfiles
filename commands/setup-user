@@ -2,6 +2,11 @@
 
 function setup_user() (
 
+    function __get_special_case_destination() {
+        :
+        # How can special cases be handled?? Maybe on a custom setup-util- basis.
+    }
+
     function __symlink_xdg_configs() {
         echo-style --h1="SETTING UP USER SYMLINKS"
         local util_name destination
@@ -20,9 +25,11 @@ function setup_user() (
     # =======================================================
     # Action
 
-    __symlink_xdg_configs
+    # TODO: Move this into util-config-helper
+    __symlink_xdg_configs # -> util-config-helper --setup-xdg-all
 
     ghm restore "github.com/molleweide/doom-nvim" "$XDG_CONFIG_HOME/nvim"
+
     ghm restore "github.com/molleweide/neorg_user" "$HOME/neorg"
 
     # setup-kmonad
@@ -36,6 +43,8 @@ function setup_user() (
     #     setup-user-osx
     # fi
 
+    # confirm -> do you want to setup system?
+    # setup-system
 
 )
 

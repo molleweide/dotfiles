@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+
+function util_config_helper() (
+    if [[ "$DOROTHY_SETUP_UTIL_CONFIGS" == 'no' ]]; then
+        return
+    fi
+
+    source "$DOROTHY/sources/bash.bash"
+
+    # =====================================
+    # Arguments
+
+    function help {
+        __print_help "$@" <<-EOF || return
+			ABOUT:
+			Looks for utility configs in standardized locations.
+			Order of operations from first to last:
+			1. Looks under \`$dorothy/user/config.{xdg,local.xdg}/*\`
+			    Based on users XDG pref symlik to XDG_HOME or HOME
+			2. Looks under GHM backup dirs.
+			3. Looks for a remote in users list of \`used_remotes\`
+			This feature is opt-in by setting \`DOROTHY_SETUP_UTIL_CONFIGS='yes'\`
+
+			!!! TODO: This command should be used in \`setup-util\` so that the process
+			of adding configs is automated. !!!
+
+
+			USAGE:
+			???
+
+			OPTIONS:
+
+
+
+			ACTIONS:
+			setup [...arguments]
+			    --setup-xdg-all
+			        Tries to symlink all simple configs.
+			    <util_name>
+			        Try to setup <util_name> by following 1-3 above.
+
+		EOF
+        return 22 # EINVAL 22 Invalid argument
+    }
+
+    # process
+    local item action='' option_test_mode='no' option_args=() # option_quiet='no'
+    while test "$#" -ne 0; do
+        item="$1"
+        shift
+        case "$item" in
+        --help | -h) help ;;
+        --)
+            option_args+=("$@")
+            shift "$#"
+            break
+            ;;
+        '--'*)
+            if [[ -z $action ]]; then
+                help 'An unrecognised global flag argument was provided: ' --variable-value={item}
+            else
+                option_args+=("$item") # forward to action
+            fi
+            ;;
+        *)
+            if [[ -z $action ]]; then
+                action="$item"
+            else
+                option_args+=("$item")
+            fi
+            ;;
+        esac
+    done
+
+    # check
+    if [[ -z $action ]]; then
+        action="testing"
+        # help 'No ' --code='<action>' ' was provided.'
+    fi
+
+    # =======================================================
+    # Configuration
+
+    # TODO: If ghm backup is parsed, then export it once so that
+    # it doesnt need to be done every time the command is called?
+
+    # =======================================================
+    # Helpers
+
+    function __symlink_xdg_configs() {
+        echo-style --h1="SETTING UP USER SYMLINKS"
+        local util_name destination
+        for util_path in "$DOROTHY/user/config.xdg"/* "$DOROTHY/user/config.local/config.xdg"; do
+            util_name="$(basename "$util_path")"
+            destination="$XDG_CONFIG_HOME/$util_name"
+            # Handle special cases.
+            case "$util_name" in
+            "qutebrowser") destination="$HOME/.$util_name" ;;
+            esac
+            symlink-helper --existing="$util_path" --symlink="$destination" --log-if-overriding-file # \ --quiet --log-if-overriding-symlink
+        done
+        echo-style --g1="SETTING UP USER SYMLINKS"
+    }
+
+    # =======================================================
+    # Action
+
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+    util_config_helper "$@"
+fi

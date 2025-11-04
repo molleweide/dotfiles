@@ -78,6 +78,9 @@ function ghm() (
 
 			NOTE:
 			<repo>s can be in the form of either SSH or HTTPS string, or on the form of \`<host>/<user>/<name>\`
+
+			QUIRKS:
+			For <repo> inputs, if you only specify a single name without forward slashes, then GHM will assume that you are targeting a user repository, ie <host>/<current_user>/<name
 		EOF
         return 22 # EINVAL 22 Invalid argument
     }
@@ -222,11 +225,6 @@ function ghm() (
     function __restore_backup_entry() {
         local repo_block=$1 remotes_block=$2 host user name
 
-        # local IFS="###" test="${*}"
-        # __print_lines "$test"
-
-        # IFS=/ repo_block="${*}"
-
         IFS=/ read host user name <<<"$repo_block"
 
         __ensure_user_dir_exists "$GHM_DIR/repos/$host/$user"
@@ -345,8 +343,7 @@ function ghm() (
     # which repos to restore on current machine.
     function __restore() {
 
-        local item option_do_all='no' option_use_fzf='no' option_repo_block='' option_repo_destination=''
-
+        local item option_do_all='no' option_repo_block='' option_repo_destination=''
         while [[ $# -ne 0 ]]; do
             item="$1"
             shift
@@ -386,12 +383,12 @@ function ghm() (
 
             fi
         elif [[ -n "$option_repo_block" ]]; then
-            local backup_line
-
-            # TODO: ( ) Get line from backup by matching the repo block
-
+            local backup_line=''
+            if ! backup_line="$(grep -F "$option_repo_block" "$GHM_BACKUP_FILE")"; then
+                __print_lines "__restore: Target repo [$option_repo_block] does not exist, or an error occured while querying the backup file."
+                return
+            fi
             __restore_backup_entry $backup_line
-
             if [[ -n "$option_repo_destination" ]]; then
                 symlink-helper --existing="$DOROTHY_LOCAL_CODE_DIR/$option_repo_block" --symlink="$option_repo_destination"
             fi
@@ -562,7 +559,7 @@ function ghm() (
     # ======================
 
     function __clone() {
-        local item option_url='git@github.com:neovim/neovim.git' option_destination=''
+        local item option_url='' option_destination=''
         while [[ $# -ne 0 ]]; do
             item="$1"
             shift
@@ -668,35 +665,56 @@ function ghm() (
     }
 
     function __fork() {
-        repo_url=$1
+        local item option_url='' option_destination=''
+        while [[ $# -ne 0 ]]; do
+            item="$1"
+            shift
+            case "$item" in
+            --*) __unrecognised_flag "$item" || return ;;
+            # *) __unrecognised_argument "$item" || return ;;
+            *)
+                if [[ -z "$option_url" ]]; then
+                    option_url="$item"
+                else
+                    option_destination="$item"
+                fi
+                ;;
+            esac
+        done
 
-        # TODO: refactor the user strings into function above `get_repo_name_and_user`
-
-        # if url is an ssh string
-        if [[ "$1" =~ ^git@.* ]]; then
-            repo_url="$(echo "$1" | cut -f2 -d":")"
+        if [[ -z "$option_url" ]]; then
+            help '__fork requires at least one valid URL for cloning.'
         fi
 
-        # extract names
-        repo_user=$(basename $(dirname "$repo_url"))
-        repo_name_str=$(basename "$repo_url")
-        repo_name=${repo_name_str%.*}
+        local parts=()
+        mapfile -t parts <<<"$(__get_repo_host_user_and_name "${option_url[@]}")"
+        local host="${parts[0]}" user="${parts[1]}" name="${parts[2]}"
 
-        echo "ru: $repo_url"
+        local parts_concat="$host/$user/$name"
 
-        # TODO: Replace with inhouse implementation
-        ghq get -p "$repo_url"
+        local repo_user_dir="$GHM_DIR/repos/$host/$user"
+        local repos_name_path="$repo_user_dir/$name"
 
-        __backup "github.com/$repo_user/$repo_name" true
+        __print_lines "$repos_name_path"
 
-        # enter repo and perform actions
-        pushd "$GHQ_GITHUB/$repo_user/$repo_name" >/dev/null 2>&1
-        # echo $PWD
-        # TODO: ADD FLAGS
+        # if [[ -d "$repos_name_path" ]]; then
+        #     __print_lines "Repo [$parts_concat] already exists!"
+        #     return
+        # fi
+
+        # __ensure_user_dir_exists "$repo_user_dir"
+
+        # git clone -- "$option_url" "$repos_name_path"
+
+        # if [[ -n "$option_destination" ]]; then
+        #     symlink-helper --existing="$repos_name_path" --symlink="$option_destination"
+        # fi
+
+        __backup "$host" "$user" "$name"
+
+        # checkout default / set default branch?
+        pushd "$repos_name_path" >/dev/null 2>&1
         gh repo fork
-
-        # TODO: molleweide branch; first push;
-
         popd >/dev/null 2>&1
     }
 
