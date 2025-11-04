@@ -14,16 +14,41 @@ function util_config_helper() (
         __print_help "$@" <<-EOF || return
 			ABOUT:
 			Looks for utility configs in standardized locations.
-			Order of operations from first to last:
-			1. Looks under \`$dorothy/user/config.{xdg,local.xdg}/*\`
-			    Based on users XDG pref symlik to XDG_HOME or HOME
-			2. Looks under GHM backup dirs.
-			3. Looks for a remote in users list of \`used_remotes\`
-			This feature is opt-in by setting \`DOROTHY_SETUP_UTIL_CONFIGS='yes'\`
 
-			!!! TODO: This command should be used in \`setup-util\` so that the process
-			of adding configs is automated. !!!
+			This feature should ideally be located in a post_install,
+			or action in \`setup-util\`.
 
+			Opt-in by setting \`DOROTHY_SETUP_UTIL_CONFIGS='yes'\`.
+
+			TYPES OF CONFIG
+
+            ~ public / private
+			~ simple configs
+			~ complex configs (hosted in their own repos)
+
+            SCENARIOS / SOURCES
+
+            ~ use external package manager (1)
+            ~ use setup-util-* (2)
+
+            You can either [install], or just [setup configs]
+
+            For (1)
+
+            1. check confix.xdg ??
+            2. check GHM
+            3. Query known/supported hosts for complex configs
+
+            For (2)
+
+            1. check confix.xdg ??
+            2. check GHM
+            3. Query known/supported hosts for complex configs
+
+            ^ In the above, for each CLI/APP, user can export their own complex
+            repo override names, by eg. \`__UC_NEOVIM=doom-neovim\`
+
+            ^^ I believe, that this handles all special cases that are possible.
 
 			USAGE:
 			???

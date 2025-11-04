@@ -7,6 +7,9 @@ function setup_user() (
         # How can special cases be handled?? Maybe on a custom setup-util- basis.
     }
 
+
+    # Special cases should be handled in their own `setup-util-*` file.
+    # Otherwise it is assumed that simple configs all should go into XDG_CONFIG_HOME
     function __symlink_xdg_configs() {
         echo-style --h1="SETTING UP USER SYMLINKS"
         local util_name destination
