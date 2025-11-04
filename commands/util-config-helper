@@ -127,8 +127,11 @@ function util_config_helper() (
         echo-style --g1="SETTING UP USER SYMLINKS"
     }
 
+    # TODO: ( ) Support other hosts than github.com
     __setup_config_for_utility() {
-        local util_name=$1 repo_block
+        local util_name=$1 repo_block GITHUB_USER
+
+        GITHUB_USER=$(git config github.user)
 
         __print_lines "---- Setup configuration symlink for UTIL = [$util_name] ----"
 
@@ -163,26 +166,31 @@ function util_config_helper() (
         # ---------------------------------
         # 3. QUERY KNOWN/SUPPORTED HOSTS FOR COMPLEX CONFIGS
 
-        local repo_url custom_config_repo_name default_config_name="$util_name-repo"
+        local repo_url repo_slug custom_config_repo_name default_config_name="$util_name-config"
+        local util_config_override_prefix="UCO_"
 
-        # Build ENV var name
-        local custom_config_repo_name="UCO_${util_name}"
-
-        # Build the URL to query for.
-        # Check if ENV var override exists, and use it
+        # Handle env var overrides
+        local custom_config_repo_name="$util_config_override_prefix${util_name^^}"
         if [[ -n "${!custom_config_repo_name}" ]]; then
-            repo_url="github.com/$user/$custom_config_repo_name"
+            repo_slug="$GITHUB_USER/$custom_config_repo_name"
         else
-            repo_url="github.com/$user/$default_config_name" # default repo name
+            repo_slug+="$GITHUB_USER/$default_config_name" # default repo name
         fi
 
-        if repo_url="$(check if repo exists in host)"; then
-        # ~ check if user has exported override for current util,
-        # ~ loop supported hosts (gh, glab, codeberg, sourcehut) + merge with users exported hosts, eg. private servers.
-        #   ^ if mult, then prompt user to select which to use
-        # ~ ghm clone <util> <destination>
-         __print_lines "Remote config was found. Clone and linking..."
+        local repo_url="sss@github.com:$repo_slug.git"
+
+        if gh repo view "$repo_slug" &>dev/null; then
+            #   ^ if mult, then prompt user to select which to use
+            # ~ ghm clone <util> <destination>
+            __print_lines "Remote config was found. Clone and linking..."
+
+            ghm clone "$repo_url" "$destination"
         fi
+
+        # ---------------------------------
+        # No config was found
+
+        __print_lines "No config could be found for util [$util_name]"
 
     }
 
