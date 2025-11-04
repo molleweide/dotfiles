@@ -73,6 +73,10 @@ function ghm() (
 			    Clone out selected repos from backup with fetch and push remotes, etc. included.
 			fork <repo>
 			    Same as clone but creating a fork and syncing it to server/remote.
+			is-cloned <repo>
+			    Check if <repo> exists and print the backupline.
+			is-tracked <repo>
+			    Check if <repo> exists in database.
 			nvim-plugin
 			    Create a new repo that is an nvim plugin. NOTE: Since this is a rather niche use case and it is a composition of atomic actions, maybe this should be exported from user or at least be defined in somekind of hook or override.
 
@@ -620,6 +624,30 @@ function ghm() (
             done
         } | awk -F/ '{print $(NF-2)" "$(NF-1)" "$NF}'
     }
+
+    function __is_cloned() {
+        local repo_block=$1
+        local clone_path="$GHM_DIR/repos/$repo_block"
+
+        # if has been cloned on this machine
+        if [[ ! -d "$clone_path/.git" ]]; then
+            return 0
+        fi
+        __print_lines "$clone_path"
+    }
+
+    function __is_tracked() {
+        local repo_block=$1 backup_line=''
+        if ! backup_line="$(grep -F "$option_repo_block" "$GHM_BACKUP_FILE")"; then
+            return 0
+        fi
+        __print_lines "$backup_line"
+    }
+
+# Combine the above somehow.
+function __is_managed() {
+    :
+}
 
     # Create new repo and add github remote
     function __new() {

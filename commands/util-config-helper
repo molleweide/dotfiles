@@ -22,33 +22,33 @@ function util_config_helper() (
 
 			TYPES OF CONFIG
 
-            ~ public / private
+			            ~ public / private
 			~ simple configs
 			~ complex configs (hosted in their own repos)
 
-            SCENARIOS / SOURCES
+			            SCENARIOS / SOURCES
 
-            ~ use external package manager (1)
-            ~ use setup-util-* (2)
+			            ~ use external package manager (1)
+			            ~ use setup-util-* (2)
 
-            You can either [install], or just [setup configs]
+			            You can either [install], or just [setup configs]
 
-            For (1)
+			            For (1)
 
-            1. check confix.xdg ??
-            2. check GHM
-            3. Query known/supported hosts for complex configs
+			            1. check confix.xdg ??
+			            2. check GHM
+			            3. Query known/supported hosts for complex configs
 
-            For (2)
+			            For (2)
 
-            1. check confix.xdg ??
-            2. check GHM
-            3. Query known/supported hosts for complex configs
+			            1. check confix.xdg ??
+			            2. check GHM
+			            3. Query known/supported hosts for complex configs
 
-            ^ In the above, for each CLI/APP, user can export their own complex
-            repo override names, by eg. \`__UC_NEOVIM=doom-neovim\`
+			            ^ In the above, for each CLI/APP, user can export their own complex
+			            repo override names, by eg. \`__UC_NEOVIM=doom-neovim\`
 
-            ^^ I believe, that this handles all special cases that are possible.
+			            ^^ I believe, that this handles all special cases that are possible.
 
 			USAGE:
 			???
@@ -125,6 +125,65 @@ function util_config_helper() (
             symlink-helper --existing="$util_path" --symlink="$destination" --log-if-overriding-file # \ --quiet --log-if-overriding-symlink
         done
         echo-style --g1="SETTING UP USER SYMLINKS"
+    }
+
+    __setup_config_for_utility() {
+        local util_name=$1 repo_block
+
+        __print_lines "---- Setup configuration symlink for UTIL = [$util_name] ----"
+
+        # ---------------------------------
+        # 1. CHECK FOR SIMPLE CONFIG
+        __print_lines "Check if a simple config exists, ie. user/config.{xdg,xdg.local}"
+
+        local config_simple_public config_simple_private
+        if [[ -f "$DOROTHY/user/config.xdg/$util_name" ]]; then
+            config_simple_public="$DOROTHY/user/config.xdg/$util_name"
+        fi
+        if [[ -f "$DOROTHY/user/config.local/config.xdg/$util_name" ]]; then
+            config_simple_private="$DOROTHY/user/config.local/config.xdg/$util_name"
+        fi
+
+        # ---------------------------------
+        # 2. CHECK FOR REPO STORAGE CONFIG
+        __print_lines "Check if a complex config is managed with GHM"
+
+        local cloned_path tracked_key
+
+        repo_block="$(get repo block from name)"
+
+        if cloned_path="$(ghm is-cloned "$repo_block")"; then
+            # only link
+            __print_lines "Found repo in GHM already cloned out. Linking..."
+        elif tracked_key="$(ghm is-tracked "$repo_block")"; then
+            # restore and link
+            __print_lines "Found repo is tracked in GHM database. Restore and linking..."
+        fi
+
+        # ---------------------------------
+        # 3. QUERY KNOWN/SUPPORTED HOSTS FOR COMPLEX CONFIGS
+
+        local repo_url custom_config_repo_name default_config_name="$util_name-repo"
+
+        # Build ENV var name
+        local custom_config_repo_name="UCO_${util_name}"
+
+        # Build the URL to query for.
+        # Check if ENV var override exists, and use it
+        if [[ -n "${!custom_config_repo_name}" ]]; then
+            repo_url="github.com/$user/$custom_config_repo_name"
+        else
+            repo_url="github.com/$user/$default_config_name" # default repo name
+        fi
+
+        if repo_url="$(check if repo exists in host)"; then
+        # ~ check if user has exported override for current util,
+        # ~ loop supported hosts (gh, glab, codeberg, sourcehut) + merge with users exported hosts, eg. private servers.
+        #   ^ if mult, then prompt user to select which to use
+        # ~ ghm clone <util> <destination>
+         __print_lines "Remote config was found. Clone and linking..."
+        fi
+
     }
 
     # =======================================================
