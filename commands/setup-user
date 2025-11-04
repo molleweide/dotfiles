@@ -2,11 +2,16 @@
 
 function setup_user() (
 
-    util-config-helper __symlink_all_simple
+    util-config-helper --symlink-simple
 
-    export UCO_NEOVIM=doom-nvim
+    # Opt-in to create links
+    export SETUP_UTIL_LINK_CONFIGS=yes
 
     ghm restore "github.com/molleweide/doom-nvim" "$XDG_CONFIG_HOME/nvim"
+
+
+    # TEST: to see that the user exported config vars exist.
+    setup-util-neovim-test
 
     # Notes
     ghm restore "github.com/molleweide/neorg_user" "$HOME/neorg"

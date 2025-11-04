@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# NOTE: 1. qutebrowser now works on both linux and macos!!!!
+# 2. I have my own dark mode config for qute.
+# 3. Needs to be symlinked to $HOME on macos...
+
+function setup_util_neovim_test() (
+    source "$DOROTHY/sources/bash.bash"
+
+    util-config-helper --override-test neovim
+
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+    setup_util_neovim_test "$@"
+fi

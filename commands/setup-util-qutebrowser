@@ -7,19 +7,24 @@
 function setup_util_qutebrowser() (
     source "$DOROTHY/sources/bash.bash"
 
-    local name=qutebrowser
+    # setup
+    local options=(
+        --name='Qute Browser'
+        --cli=qutebrowser
+        "$@"
+        BREW='qutebrowser'
+    )
+    setup-util "${options[@]}"
 
-    # TODO: Should we export the
-
-    util-config-helper __setup_for_utility "$name" "$HOME/.$name"
+    local config_destination
 
     if is-mac; then
-        :
-        # symlink to ~
+        config_destination="$HOME/.qutebrowser"
     else
-        :
-        # symlink to .config
+        config_destination="$XDG_CONFIG_HOME/qutebrowser"
     fi
+
+    util-config-helper qutebrowser "$config_destination"
 
 )
 

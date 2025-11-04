@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+    # TODO: ( ) Support other hosts than github.com
+    #
+    # Rename command to util-config-link?
+
 function util_config_helper() (
     if [[ "$DOROTHY_SETUP_UTIL_CONFIGS" == 'no' ]]; then
         return
@@ -69,63 +73,42 @@ function util_config_helper() (
     }
 
     # process
-    local item action='' option_test_mode='no' option_args=() # option_quiet='no'
+    local item action=''
     while test "$#" -ne 0; do
         item="$1"
         shift
         case "$item" in
         --help | -h) help ;;
+        --symlink-simple) action="symlink_all_simple" ;;
         --)
             option_args+=("$@")
             shift "$#"
             break
             ;;
-        '--'*)
-            if [[ -z $action ]]; then
-                help 'An unrecognised global flag argument was provided: ' --variable-value={item}
-            else
-                option_args+=("$item") # forward to action
-            fi
-            ;;
         *)
-            if [[ -z $action ]]; then
-                action="$item"
-            else
-                option_args+=("$item")
-            fi
+            help 'An unrecognised flag was provided: ' --variable-value={item}
             ;;
         esac
     done
 
-    # check
-    if [[ -z $action ]]; then
-        action="testing"
-        # help 'No ' --code='<action>' ' was provided.'
-    fi
-
     # =======================================================
-    # Configuration
+    # Actions
 
-    # TODO: If ghm backup is parsed, then export it once so that
-    # it doesnt need to be done every time the command is called?
-
-    # =======================================================
-    # Helpers
+    # WARN: Ask Ben about naming convention for setup utils, how should it be??
+    # should it be the name of the CLI?
+    # ^ Maybe the setup-util database map needs to be used check for special
+    # case name maps, sqlite -> sqlite3; neovim -> nvim
 
     function __symlink_all_simple() {
         echo-style --h1="SETTING UP USER SYMLINKS"
         local util_name destination
 
         for util_path in "$DOROTHY/user/config.xdg"/* "$DOROTHY/user/config.local/config.xdg"; do
+
             util_name="$(basename "$util_path")"
             destination="$XDG_CONFIG_HOME/$util_name"
 
-            # WARN: Ask Ben about naming convention for setup utils, how should it be??
-            # should it be the name of the CLI?
-            # ^ Maybe the setup-util database map needs to be used check for special
-            # case name maps, sqlite -> sqlite3; neovim -> nvim
-
-            if [[ -f "$DOROTHY/commands/setup-util-$util_name" ]] ; then
+            if [[ -f "$DOROTHY/commands/setup-util-$util_name" ]]; then
                 __print_lines "[$util_name] is handled by setup-util-$util_name"
                 continue
             fi
@@ -136,7 +119,6 @@ function util_config_helper() (
         echo-style --g1="SETTING UP USER SYMLINKS"
     }
 
-    # TODO: ( ) Support other hosts than github.com
     __setup_config_for_utility() {
         local util_name=$1 repo_block GITHUB_USER destination repo_slug repo_block
         local util_config_override_prefix="UCO_"
@@ -158,12 +140,12 @@ function util_config_helper() (
             config_simple_path="$DOROTHY/user/config.local/config.xdg/$util_name"
         fi
 
-        if [[ -n "$config_simple_path" ]] ; then
+        if [[ -n "$config_simple_path" ]]; then
             __print_lines "Found simple config: $config_simple_path"
             # symlink-helper --existing="$config_simple_path" --symlink="$destination" --log-if-overriding-file # \ --quiet --log-if-overriding-symlink
             return
         fi
-            __print_lines "Could not find simple config. Proceeding to check for compex config."
+        __print_lines "Could not find simple config. Proceeding to check for compex config."
 
         # ---------------------------------
         # 2. CHECK FOR REPO STORAGE CONFIG
@@ -215,6 +197,12 @@ function util_config_helper() (
 
     # =======================================================
     # Action
+
+    if [[ "$action" == "symlink_all_simple" ]]; then
+        __symlink_all_simple
+    else
+        __setup_config_for_utility "${option_args[@]}"
+    fi
 
 )
 
