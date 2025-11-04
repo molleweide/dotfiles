@@ -112,24 +112,35 @@ function util_config_helper() (
     # =======================================================
     # Helpers
 
-    function __symlink_xdg_configs() {
+    function __symlink_all_simple() {
         echo-style --h1="SETTING UP USER SYMLINKS"
         local util_name destination
+
         for util_path in "$DOROTHY/user/config.xdg"/* "$DOROTHY/user/config.local/config.xdg"; do
             util_name="$(basename "$util_path")"
             destination="$XDG_CONFIG_HOME/$util_name"
-            # Handle special cases.
-            case "$util_name" in
-            "qutebrowser") destination="$HOME/.$util_name" ;;
-            esac
+
+            # WARN: Ask Ben about naming convention for setup utils, how should it be??
+            # should it be the name of the CLI?
+            # ^ Maybe the setup-util database map needs to be used check for special
+            # case name maps, sqlite -> sqlite3; neovim -> nvim
+
+            if [[ -f "$DOROTHY/commands/setup-util-$util_name" ]] ; then
+                __print_lines "[$util_name] is handled by setup-util-$util_name"
+                continue
+            fi
+
             symlink-helper --existing="$util_path" --symlink="$destination" --log-if-overriding-file # \ --quiet --log-if-overriding-symlink
         done
+
         echo-style --g1="SETTING UP USER SYMLINKS"
     }
 
     # TODO: ( ) Support other hosts than github.com
     __setup_config_for_utility() {
-        local util_name=$1 repo_block GITHUB_USER
+        local util_name=$1 repo_block GITHUB_USER destination repo_slug repo_block
+        local util_config_override_prefix="UCO_"
+        local config_override_name default_config_name="$util_name-config"
 
         GITHUB_USER=$(git config github.user)
 
@@ -137,45 +148,53 @@ function util_config_helper() (
 
         # ---------------------------------
         # 1. CHECK FOR SIMPLE CONFIG
-        __print_lines "Check if a simple config exists, ie. user/config.{xdg,xdg.local}"
+        __print_lines ":: Check if a simple config exists, ie. user/config.{xdg,xdg.local} ::"
 
-        local config_simple_public config_simple_private
+        local config_simple_path
         if [[ -f "$DOROTHY/user/config.xdg/$util_name" ]]; then
-            config_simple_public="$DOROTHY/user/config.xdg/$util_name"
+            config_simple_path="$DOROTHY/user/config.xdg/$util_name"
         fi
         if [[ -f "$DOROTHY/user/config.local/config.xdg/$util_name" ]]; then
-            config_simple_private="$DOROTHY/user/config.local/config.xdg/$util_name"
+            config_simple_path="$DOROTHY/user/config.local/config.xdg/$util_name"
         fi
+
+        if [[ -n "$config_simple_path" ]] ; then
+            __print_lines "Found simple config: $config_simple_path"
+            # symlink-helper --existing="$config_simple_path" --symlink="$destination" --log-if-overriding-file # \ --quiet --log-if-overriding-symlink
+            return
+        fi
+            __print_lines "Could not find simple config. Proceeding to check for compex config."
 
         # ---------------------------------
         # 2. CHECK FOR REPO STORAGE CONFIG
-        __print_lines "Check if a complex config is managed with GHM"
+        __print_lines ":: Check if a complex config is managed with GHM ::"
 
         local cloned_path tracked_key
 
-        repo_block="$(get repo block from name)"
+        # Handle env var overrides
+        local config_override_name="$util_config_override_prefix${util_name^^}"
+        if [[ -n "${!config_override_name}" ]]; then
+            repo_slug="$GITHUB_USER/$config_override_name"
+        else
+            repo_slug+="$GITHUB_USER/$default_config_name" # default repo name
+        fi
+
+        repo_block="github.com/$repo_slug"
 
         if cloned_path="$(ghm is-cloned "$repo_block")"; then
-            # only link
             __print_lines "Found repo in GHM already cloned out. Linking..."
+            # symlink-helper --existing="$cloned_path" --symlink="$destination" --log-if-overriding-file # \ --quiet --log-if-overriding-symlink
         elif tracked_key="$(ghm is-tracked "$repo_block")"; then
-            # restore and link
             __print_lines "Found repo is tracked in GHM database. Restore and linking..."
+            # ghm restore "repo_block" "$destination"
         fi
 
         # ---------------------------------
         # 3. QUERY KNOWN/SUPPORTED HOSTS FOR COMPLEX CONFIGS
 
-        local repo_url repo_slug custom_config_repo_name default_config_name="$util_name-config"
-        local util_config_override_prefix="UCO_"
+        __print_lines ":: Check for remote config ::"
 
-        # Handle env var overrides
-        local custom_config_repo_name="$util_config_override_prefix${util_name^^}"
-        if [[ -n "${!custom_config_repo_name}" ]]; then
-            repo_slug="$GITHUB_USER/$custom_config_repo_name"
-        else
-            repo_slug+="$GITHUB_USER/$default_config_name" # default repo name
-        fi
+        local repo_url
 
         local repo_url="sss@github.com:$repo_slug.git"
 

@@ -2,37 +2,13 @@
 
 function setup_user() (
 
-    function __get_special_case_destination() {
-        :
-        # How can special cases be handled?? Maybe on a custom setup-util- basis.
-    }
+    util-config-helper __symlink_all_simple
 
-
-    # Special cases should be handled in their own `setup-util-*` file.
-    # Otherwise it is assumed that simple configs all should go into XDG_CONFIG_HOME
-    function __symlink_xdg_configs() {
-        echo-style --h1="SETTING UP USER SYMLINKS"
-        local util_name destination
-        for util_path in "$DOROTHY/user/config.xdg"/* "$DOROTHY/user/config.local/config.xdg"; do
-            util_name="$(basename "$util_path")"
-            destination="$XDG_CONFIG_HOME/$util_name"
-            # Handle special cases.
-            case "$util_name" in
-            "qutebrowser") destination="$HOME/.$util_name" ;;
-            esac
-            symlink-helper --existing="$util_path" --symlink="$destination" --log-if-overriding-file # \ --quiet --log-if-overriding-symlink
-        done
-        echo-style --g1="SETTING UP USER SYMLINKS"
-    }
-
-    # =======================================================
-    # Action
-
-    # TODO: Move this into util-config-helper
-    __symlink_xdg_configs # -> util-config-helper --setup-xdg-all
+    export UCO_NEOVIM=doom-nvim
 
     ghm restore "github.com/molleweide/doom-nvim" "$XDG_CONFIG_HOME/nvim"
 
+    # Notes
     ghm restore "github.com/molleweide/neorg_user" "$HOME/neorg"
 
     # setup-kmonad
