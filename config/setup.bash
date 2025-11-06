@@ -7,6 +7,9 @@ source "$DOROTHY/config/setup.bash"
 # NOTE: Cool projects:
 # https://github.com/Slackadays/Clipboard
 
+# =======================================================
+# SETUP INSTALLERS
+
 APK_INSTALL=(
   'tree'
 )
@@ -107,7 +110,6 @@ HOMEBREW_FORMULAS=(
   subversion
   terminal-notifier
   the_silver_searcher
-  tmux
   universal-ctags
   urlview
   watchman
@@ -388,7 +390,6 @@ APT_INSTALL=(
   'kitty'
   'libnotify-bin'
   'ranger'
-  'tmux'
   'traceroute'
 )
 

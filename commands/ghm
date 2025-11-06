@@ -97,7 +97,7 @@ function ghm() (
         case "$item" in
         --help | -h) help ;;
         --test-mode) option_test_mode='yes' ;;
-        override-test) action='override_test' ;;
+        --override-test) action='override_test' ;;
         --)
             option_args+=("$@")
             shift "$#"

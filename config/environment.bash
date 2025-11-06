@@ -17,8 +17,8 @@ export TERM
 path='' alias_dirs=()
 mapfile -t alias_dirs < <(find "$DOROTHY/user/commands.aliases" -type d)
 for p in "${alias_dirs[@]}"; do
-  # echo "Add [$p] to path">/dev/tty
-	path+="$p:"
+    # echo "Add [$p] to path">/dev/tty
+    path+="$p:"
 done
 PATH="$path$PATH"
 
@@ -62,12 +62,12 @@ LC_ALL="en_US.UTF-8"
 
 # mac
 if is-mac; then
-	XDG_DESKTOP_DIR="$HOME/Desktop"
-	XDG_DOCUMENTS_DIR="$HOME/Documents"
-	XDG_DOWNLOAD_DIR="$HOME/Downloads"
-	XDG_MUSIC_DIR="$HOME/Music"
-	XDG_PICTURES_DIR="$HOME/Pictures"
-	XDG_VIDEOS_DIR="$HOME/Videos"
+    XDG_DESKTOP_DIR="$HOME/Desktop"
+    XDG_DOCUMENTS_DIR="$HOME/Documents"
+    XDG_DOWNLOAD_DIR="$HOME/Downloads"
+    XDG_MUSIC_DIR="$HOME/Music"
+    XDG_PICTURES_DIR="$HOME/Pictures"
+    XDG_VIDEOS_DIR="$HOME/Videos"
 fi
 
 # TMUX_TMPDIR="$XDG_RUNTIME_DIR"
@@ -119,9 +119,9 @@ LESSHISTFILE="-"
 
 # FIX: shell is undefined..
 if test "${shell-}" = 'zsh'; then
-	HISTFILE="$XDG_STATE_HOME/zsh/history"
-	mkdir -p "$XDG_STATE_HOME/zsh"
-	touch "$HISTFILE"
+    HISTFILE="$XDG_STATE_HOME/zsh/history"
+    mkdir -p "$XDG_STATE_HOME/zsh"
+    touch "$HISTFILE"
 fi
 
 # Why do I check the path?
@@ -190,4 +190,13 @@ PAGER='less' # alt. `most`
 # fi
 #
 
+# =======================================================
+# SETUP UTIL
+
+export SETUP_UTIL_ALLOW_SETTING_UP_USER_CONFIGS
+SETUP_UTIL_ALLOW_SETTING_UP_USER_CONFIGS=yes
+
+# Handle user config special cases.
+export USE_CONFIG_NVIM
+USE_CONFIG_NVIM=doom-nvim
 

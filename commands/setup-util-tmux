@@ -6,18 +6,40 @@
 
 function setup_util_tmux() (
 
-    # Install CLI
+    # setup
+    local options=(
+        --name='Tmux'
+        --cli=tmux
+        "$@"
+        APK='tmux' # ALPINE
+        APT='tmux' # UBUNTU
+        AUR='tmux' # ARCH
+        BREW='tmux'
+    )
+
+    # NOTE: Now this should pick up on my config and symlink it
+
+    setup-util "${options[@]}"
 
     # Setup plugins
+    local config_dir="$XDG_CONFIG_HOME/tmux" tmux_plug_dir
+    if [[ -d "$config_dir" ]]; then
 
-    local TMUX_PLUG_DIR="$HOME/.config/tmux/plugins/tpm"
+        if confirm --positive --ppid=$$ -- "Do you want to setup the tmux plugin manager inside your config?"; then
 
-    [ ! -d "$TMUX_PLUG_DIR" ] && git clone git@github.com:tmux-plugins/tpm.git "$TMUX_PLUG_DIR"
+            tmux_plug_dir="$config_dir/plugins/tpm"
 
-    install_script="$TMUX_PLUG_DIR/bin/install_plugins"
+            if [[ ! -d "$tmux_plug_dir" ]]; then
+                mkdir -p "$config_dir/plugins"
+                git clone git@github.com:tmux-plugins/tpm.git "$tmux_plug_dir"
+            fi
 
-    if [ -x "$install_script" ]; then
-        $install_script
+            install_script="$tmux_plug_dir/bin/install_plugins"
+
+            if [ -x "$install_script" ]; then
+                $install_script
+            fi
+        fi
     fi
 
 )
