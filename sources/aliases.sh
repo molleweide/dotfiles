@@ -287,7 +287,20 @@ function ranger_custom() {
   fi
   command rm -f -- "$tempfile" 2>/dev/null
 }
-#
+
+# =======================================================
+# THEME switcher
+
+function dtheme() {
+    local option=${1-}
+
+    case "$option" in
+        verbose) export DOROTHY_THEME_VERBOSE=yes;;
+    esac
+
+    . "$DOROTHY/sources/theme.sh"
+}
+
 # # #-----------------------
 # # #---       VIM       ---
 # # #-----------------------

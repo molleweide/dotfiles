@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function setup_user() (
-    # setup-util-user-config --symlink-simple
+    # util-config-helper --symlink-simple
 
     # Notes
     ghm restore "github.com/molleweide/neorg_user" "$HOME/neorg"

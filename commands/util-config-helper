@@ -1,0 +1,206 @@
+#!/usr/bin/env bash
+
+# TODO: Rename to [user/config.utils]
+
+# TODO: Take either `cli` name or `app` name, eg. Brave browser could have a config
+# and so would be an app instead of cli
+
+function util_config_helper() (
+	source "$DOROTHY/sources/bash.bash"
+
+	# =====================================
+	# Arguments
+
+	function help {
+		__print_help "$@" <<-EOF || return
+			ABOUT:
+			Intended to be used by \`setup-util\`.
+
+			Looks for utility configs in standardized locations.
+
+			This feature should ideally be located in a post_install,
+			or action in \`setup-util\`.
+
+			Opt-in by setting \`DOROTHY_SETUP_UTIL_CONFIGS='yes'\`.
+
+			TYPES OF CONFIG
+
+			            ~ public / private
+			~ simple configs
+			~ complex configs (hosted in their own repos)
+
+			            SCENARIOS / SOURCES
+
+			            ~ use external package manager (1)
+			            ~ use setup-util-* (2)
+
+			            You can either [install], or just [setup configs]
+
+			            For (1)
+
+			            1. check confix.xdg ??
+			            2. check GHM
+			            3. Query known/supported hosts for complex configs
+
+			            For (2)
+
+			            1. check confix.xdg ??
+			            2. check GHM
+			            3. Query known/supported hosts for complex configs
+
+			            ^ In the above, for each CLI/APP, user can export their own complex
+			            repo override names, by eg. \`__UC_NEOVIM=doom-neovim\`
+
+			            ^^ I believe, that this handles all special cases that are possible.
+
+			USAGE:
+			util-config-helper --symlink-simple
+			    Symlinks all simple configs from user/config.{xdg,xdg.local} to XDG_CONFIG_HOME/
+
+			util-config-helper <name> [<destination>]
+			    Will ensure configuration exists, if it did not exist, try to restor
+			    or clone config repo into repo store via \`repo-manager\`, and then
+			    symlink to target destination.
+
+		EOF
+		return 22 # EINVAL 22 Invalid argument
+	}
+
+	# process
+	local item action='' option_environment_enabled='no' option_force='' option_args=()
+	while test "$#" -ne 0; do
+		item="$1"
+		shift
+		case "$item" in
+		--help | -h) help ;;
+		--symlink-simple) action="symlink_all_simple" ;;
+		'--force='*) option_force="${item#*=}" ;;
+		--)
+			option_args+=("$@")
+			shift "$#"
+			break
+			;;
+		*)
+			option_args+=("$item")
+			;;
+		esac
+	done
+
+	if [[ "${#option_args[@]}" -eq 0 ]]; then
+		help "Requires <name> and [<destination>] args. You supplied none."
+	fi
+
+	# =======================================================
+	# Actions
+
+	# WARN: Ask Ben about naming convention for setup utils, how should it be??
+	# should it be the name of the CLI?
+	# ^ Maybe the setup-util database map needs to be used check for special
+	# case name maps, sqlite -> sqlite3; neovim -> nvim
+
+	function symlink_all_simple_configs() {
+		echo-style --h1="SETTING UP USER SYMLINKS"
+		local u_name dest_dir
+		for util_path in "$DOROTHY/user/config.xdg"/* "$DOROTHY/user/config.local/config.xdg"; do
+
+			u_name="$(basename "$util_path")"
+			dest_dir="$XDG_CONFIG_HOME/$u_name"
+
+			if [[ -f "$DOROTHY/commands/setup-util-$u_name" ]]; then
+				__print_lines "[$u_name] is handled by setup-util-$u_name"
+				continue
+			fi
+
+			symlink-helper --existing="$util_path" --symlink="$dest_dir" --log-if-overriding-file # \ --quiet --log-if-overriding-symlink
+		done
+
+		echo-style --g1="SETTING UP USER SYMLINKS"
+	}
+
+	setup_user_config_for_utility() {
+		local option_util_name=${1-} option_destination_dir=${2-}
+		local override_source_name_env='', override_remote_env='', override_remote_env='' source_name='', target_dir='', remote_name=''
+
+		if [[ -z "$option_util_name" ]]; then
+			__print_lines "ERROR: setup_user_config_for_utility requires two args: option_util_name, option_destination_dir"
+		fi
+
+		# Can we proceed?
+		if [[ "${SETUP_UTIL_ALLOW_SETTING_UP_USER_CONFIGS-}" == 'yes' || "$option_force" == 'yes' ]]; then
+			if [[ "$option_force" == 'no' ]]; then
+				__print_style "setup_util: User config DISABLED explicitly. Exiting..."
+				return
+			else
+				__print_style "setup_util: User config ENABLED. Setting up user config for <${option_util_name}>"
+			fi
+		else
+			__print_style "setup-util: Setting up utility user configurations hasn't been enabled AND was not explicitly enabled via flag option. Ignoring for <${option_util_name}>"
+			return
+		fi
+
+		# ---------------------------------
+		# Handle overrides
+
+		# Handle env var USE_CONFIG_<CLI>_<FILENAME>
+		# ^ Override the config file name that should be looked for/used when symlinking.
+		# ^^ This might be a bit overkill to accomodate for.
+		override_source_name_env="USE_CONFIG_${option_util_name}_FILENAME"
+		source_name="${!override_source_name_env:-$option_util_name}"
+
+		# Handle env var USE_CONFIG_<CLI>_<DIR>
+		# ^ Override the target directory wherein <cli>s config is expected to be.
+ 	 	override_target_dir_env="USE_CONFIG_${option_util_name^^}_DIR"
+		target_dir="${!override_target_dir_env:-$XDG_CONFIG_HOME}"
+		# Passed as option takes precedence.
+		if [[ -n "$option_destination_dir" ]]; then
+			target_dir="$option_destination_dir"
+		fi
+		# ^ Is this the optimal way to handle target paths? This would prevent
+		# user overrides, but maybe that is exactly the way to do it?
+
+		# Handle env var USE_CONFIG_<CLI>_<REMOTE>
+		# ^ Override the remove repo to pull config from
+		override_remote_env="USE_CONFIG_${option_util_name^^}_REMOTE"
+		remote_name="${!override_remote_env:-$source_name-config}"
+
+		# Handle config.utils configs first
+
+		local simple_dir="$DOROTHY/user/config.utils" source_path='' destination_path=''
+
+		if [[ -e "$simple_dir/$option_util_name" ]]; then
+			source_path="$simple_dir/$source_name"
+		elif [[ -e "$simple_dir.local" ]]; then
+			source_path="$simple_dir.local/$source_name"
+		fi
+
+		destination_path="$target_dir/$source_name"
+
+		# What happens/How to handle if the target path parent dir does not exist??
+		if [[ -n "$source_path" ]]; then
+			__print_lines "Found simple config: [$source_path]. Linking..."
+			false && fs-move --symlink -- "$source_path" "$destination_path"
+			return
+		fi
+
+		# Try syncing the config with repo-manager
+		if repo-manager sync "$remote_name" "$destination_path"; then
+			__print_lines "Failure to setup configuration for util [$option_util_name]. No remote config was found."
+		fi
+
+	}
+
+	# =======================================================
+	# Action
+
+	if [[ "$action" == "symlink_all_simple" ]]; then
+		symlink_all_simple_configs
+	else
+		setup_user_config_for_utility "${option_args[@]}"
+	fi
+
+)
+
+# fire if invoked standalone
+if test "$0" = "${BASH_SOURCE[0]}"; then
+	util_config_helper "$@"
+fi

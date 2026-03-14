@@ -396,3 +396,9 @@ APT_INSTALL=(
 # HASKEL_INSTALL=(
 #   'yesod-bin'
 # )
+DOROTHY_LOGIN_SHELLS=(
+	zsh
+	bash
+	fish
+	sh
+)

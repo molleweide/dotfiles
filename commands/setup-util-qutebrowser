@@ -18,9 +18,9 @@ function setup_util_qutebrowser() (
     # NOTE: Pass down the custom config location to setup-util.
 
     if is-mac; then
-        options+=(--user-config-target="$HOME/.qutebrowser")
+        options+=(--user-config-target-dir="$HOME")
     else
-        options+=(--user-config-target="$XDG_CONFIG_HOME/qutebrowser")
+        options+=(--user-config-target-dir="$XDG_CONFIG_HOME")
     fi
 
     setup-util "${options[@]}"

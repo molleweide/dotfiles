@@ -61,7 +61,7 @@ LC_ALL="en_US.UTF-8"
 # https://github.com/HaleTom/dotfiles/blob/master/bash/.config/bash/xdg
 
 # mac
-if is-mac; then
+if is-system --mac; then
     XDG_DESKTOP_DIR="$HOME/Desktop"
     XDG_DOCUMENTS_DIR="$HOME/Documents"
     XDG_DOWNLOAD_DIR="$HOME/Downloads"
@@ -197,6 +197,6 @@ export SETUP_UTIL_ALLOW_SETTING_UP_USER_CONFIGS
 SETUP_UTIL_ALLOW_SETTING_UP_USER_CONFIGS=yes
 
 # Handle user config special cases.
-export USE_CONFIG_NVIM
-USE_CONFIG_NVIM=doom-nvim
+export USE_CONFIG_NVIM_REMOTE
+USE_CONFIG_NVIM_REMOTE=doom-nvim
 

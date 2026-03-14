@@ -7,6 +7,9 @@ echo "user -> config/interactive.zsh"
 # prompt off
 
 export DOROTHY_THEME="oz"
+export DOROTHY_THEME_LINE_VERBOSE="yes"
+export DOROTHY_THEME_LINE_SEPARATOR="yes"
+export DOROTHY_THEME_LINE_MEASURE="yes"
 # export DOROTHY_THEME="starship"
 
 export DOROTHY_KEYBINDS_DISABLE=yes
